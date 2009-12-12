@@ -1,0 +1,60 @@
+BUGS:
+- Required star only switches the css class two times. After that, the value is updated in the database but the class doesn't change. Switch it to a replace instead of a class change
+
+FREE VERSION
+- clear default option on radio field
+- Statistics Dashboard widget that just shows the top 5 forms for impressions and the top 5 for entries. Put this near the top of the page and put some advertising space on it, Pretty Link style.
+
+
+
+PRO FEATURES:
+** add option to use other entries as select/radio choices **
+- add field options:
+    -Radio/checkboxes: label position option (top, left, right, bottom), display vertically or horizontally
+- easier way to manage radio/select/checkbox options
+- add form options (styling, email notifications to user/admin, show description or select help icon or word for popup, success message, submit button name)
+- Form option to enable entry tracking management -- if this is enabled for a form, the entries could have some statuses like unread/read/resolved and contain a notes area. In case someone wants to use Formidable for bug tracking or something. Eventually you could do conversation threads in here ... maybe integrate with mingle for that? :)
+- create a WIDGET that you can select a form to embed on it -- after the form is filled out the stats can be displayed?
+- EXPORT/IMPORT -- provide a link to export a set of entries -- I like the way I did it in Pretty Link -- just throw a link at the bottom of the entries table. That way users can dump the whole list or if they're looking at entries for a particular form they can just dump those.
+- STATISTICS -- I'd implement this the way that Google Docs does it. Each field in the form can have a simple graph to show the responses. For multiple choice, Google does a simple, horizontal bar chart for each response -- for mutually exclusive questions (radio buttons) google does a pie chart and for text boxes they show about 5 random responses.
+- add multiple fields at a time (first name/last name, address/city/state/postal code/country)
+- easy front-end display of data
+     
+- add option to change field type after creation (from text box <-> rte, text field <-> title ... )
+- add onchange options 
+    - ie when check box is checked/unchecked, text field shows beneath it
+    - ie when option is selected from drop down, specific field is displayed
+    - add option: 'Show when option [text field] is selected from field [dropdown]'
+- onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;
+- Default value options: Client IP Address, Date, HTTP User Agent, HTTP Referer URL, User Display Name, User Email, User Login
+- Ability to disallow users from filling a form out more than once (just set a cookie) 
+- Allow users to select a custom url that the form can redirect to after the user has filled out the form. Also, give the user's the option to post (well GET should be fine) data to that page in case they want to capture data on the other page.
+- Bulk add radio/select/checkbox choices
+
+2. Additional Templates:
+  a. Defect/Bug/Issue Report Form Template
+  b. Extended Contact Form (with full street address, social media contact info, etc) Template
+  c. Credit Card Info with Billing / Shipping Info Form Template
+  d. Suggestion/Feedback Form Template
+3. Pro Statistics:
+  a. Form by Form stats for each question.
+  b. More in-depth overall stats.
+4. In Admin Formidable ads stop displaying ads for Formidable -- but for other stuff :)
+5. Additional Form Options:
+  a. Only logged-in users can see and submit form if used in a page or post
+  b. Allow front-end edits
+  c. Disallow Resubmits (basic cookie based tracking)
+  d. Optionally disallow emailing of info because we'll have the entries displayed
+6. Entries (as is + IP address, etc)
+7. Export Entries via CSV
+8. (eventually) entry tracking management
+9. (eventually) Formidable Poll widget / with or without results
+
+
+Tasks & Possible Timelines:
+3. Add / Modify Formidable free features
+4. Get some icons, etc. -- I'm on it -- I'm going to try to get russ to create some iconography/typography for us.
+5. Release the free version on to the WordPress Repository asap (I think you could possibly do it by the first week in December -- maybe sooner knowing you :) )
+6. Polish and refine the pro features
+7. Build Pro Updates system
+8. Release -- probably early January? It will rock.
