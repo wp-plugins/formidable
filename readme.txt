@@ -1,10 +1,10 @@
 === Formidable ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, drag, drop, widget, wordpress, plugin, template
+Tags: WPMU, form, builder, drag, drop, widget, wordpress, plugin, template, contact, captcha, email
 Requires at least: 2.0
 Tested up to: 2.8.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
