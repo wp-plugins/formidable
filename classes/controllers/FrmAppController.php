@@ -265,19 +265,19 @@ class FrmAppController{
       $plugin     = $this->get_param('plugin');
       $action     = $this->get_param('action');
       $controller = $this->get_param('controller');
-
-      if( !empty($plugin) and $plugin == FRM_PLUGIN_NAME and !empty($controller) and !empty($action) ){
+      
+      if( !empty($plugin) and $plugin == FRM_PLUGIN_NAME and !empty($controller) ){
         $this->standalone_route($controller, $action);
         exit;
       }
     }
 
     // Routes for standalone / ajax requests
-    function standalone_route($controller, $action){
+    function standalone_route($controller, $action=''){
       global $frm_forms_controller;
-
+      
       if($controller=='forms'){
-        if($action=='preview')
+        //if($action=='preview')
           $frm_forms_controller->preview($this->get_param('form'));
       }
     }

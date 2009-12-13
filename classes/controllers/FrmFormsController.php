@@ -138,6 +138,8 @@ class FrmFormsController{
 
         header("Content-Type: text/html; charset=utf-8");
 
+        $plugin     = FrmAppController::get_param('plugin');
+        $controller = FrmAppController::get_param('controller');
         $key = (isset($_GET['form'])?$_GET['form']:(isset($_POST['form'])?$_POST['form']:''));
         $form = $frm_form->getAll("form_key='$key'",'',' LIMIT 1');
         if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
