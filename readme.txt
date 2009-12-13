@@ -4,16 +4,20 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, drag, drop, widget, wordpress, plugin, template
 Requires at least: 2.0
 Tested up to: 2.8.6
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
 == Description ==
-Quickly and easily build forms with a simple drag-and-drop interface. Build custom forms or create them from a template.
+Quickly and easily build forms with a simple drag-and-drop interface.
 
 = Features =
-* Integrates with Pretty Link, and WPreCAPTCHA
+* Integrates with Pretty Link, and WP reCAPTCHA
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
+* Create forms from existing templates or add your own
+* Direct links available with and without integration with your current theme
+* Select an email address to send form responses under "Advanced Form Options"
+* Saves responses to the database for future retrieval, reports, and display (Pro version Coming Soon)
 
 Feedback and requests are welcome.
 
