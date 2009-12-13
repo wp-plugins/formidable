@@ -2,7 +2,7 @@
 
 class FrmEntriesController{
     function FrmEntriesController(){
-        add_action('admin_menu', array( $this, 'menu' ));
+        //add_action('admin_menu', array( $this, 'menu' ));
         $this->views = FRM_VIEWS_PATH.'/frm-entries/';
     }
     

@@ -57,7 +57,7 @@ if ($display['options']){ ?>
     <div class="postbox">
         <h3 class="trigger">Field Options</h3> 
         <div class="toggle_container inside">
-            <? if ($field['type'] == 'text' || $field['type'] == 'textarea' || $display['size']){ ?>
+            <? if ($display['size']){ ?>
             <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Columns':'Field Size' ?></label>
                 <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5">
             </p>

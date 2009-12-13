@@ -297,7 +297,7 @@ class FrmAppController{
 
     function widget_text_filter( $content ){
     	$regex = '/\[\s*formidable\s+.*\]/';
-    	return preg_replace_callback( $regex, 'widget_text_filter_callback', $content );
+    	return preg_replace_callback( $regex, array($this, 'widget_text_filter_callback'), $content );
     }
 
 

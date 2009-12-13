@@ -23,7 +23,7 @@
             } ?>
      </ul>
      
-     <h4>Pro Fields</h4>
+     <h4>Pro Fields <span style="font-weight:normal; font-style:italic;">Coming Soon</span></h4>
      <ul class="field_type_list">
      <?php 
      if($frmpro_is_installed){  
@@ -43,7 +43,9 @@
          <li><span class="frm_inactive_icon ui-icon ui-icon-star alignleft"></span> = not required</li>
          <li><span class="ui-icon ui-icon-trash alignleft"></span> = delete field and all inputed data</li>
      </ul>
+     <?php if($frmpro_is_installed){ ?>
      <p class="howto">Enter or select default values into fields on this form.</p>
+     <?php } ?>
 </div>
 
 <script>

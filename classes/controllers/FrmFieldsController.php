@@ -13,6 +13,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_field_option_ipe', array($this, 'edit_option') );
         add_action('wp_ajax_frm_delete_field_option',array($this, 'delete_option'));
         add_action('wp_ajax_frm_update_field_order', array($this, 'update_order') );
+        add_filter('frm_display_field_options', array($this, 'display_field_options'));
     }
     
     function create(){
@@ -144,6 +145,18 @@ class FrmFieldsController{
             $type = 'text';
 
         return $type;
+    }
+    
+    function display_field_options($display){
+        if ($display['type'] == 'captcha'){
+            $display['required'] = false;
+        }else if ($display['type'] == 'text'){
+            $display['size'] = true;
+        }else if ($display['type'] == 'textarea'){
+            $display['size'] = true;
+        }
+        
+        return $display;
     }
 }
 ?>
