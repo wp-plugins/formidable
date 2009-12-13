@@ -8,7 +8,7 @@
 <? } ?>
 
 <input type="hidden" name="form_id" value="<?php echo $form->id ?>">
-<?php if (isset($controller) && isset($plugin){ ?>
+<?php if (isset($controller) && isset($plugin)){ ?>
 <input type="hidden" name="controller" value="<?php echo $controller; ?>">
 <input type="hidden" name="plugin" value="<?php echo $plugin; ?>">
 <?php } ?>
