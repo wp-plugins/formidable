@@ -32,3 +32,11 @@ Feedback and requests are welcome.
 1. List forms.
 2. List templates.
 3. Form builder.
+
+== Changelog ==
+= 1.0.2 =
+* Fixed error on submission from direct link
+
+= 1.0.1 =
+* Fixed shortcode for text widget
+* Removed extra menu item
