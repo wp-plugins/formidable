@@ -130,10 +130,9 @@ COMMENT_FORM;
 
     	$use_ssl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? true : false;
 
-    	if (IS_WPMU){
-       	    $error = $errors->get_error_message('captcha');
-            echo($error ? '<p class="error">'.$error.'</p>' : '');
-       	}
+    	if (IS_WPMU)
+            echo ($error['captcha'] ? '<p class="error">'.$error['captcha'].'</p>' : '');
+            
         echo $format . recaptcha_wp_get_html(isset($_GET['rerror'])?$_GET['rerror']:'', $use_ssl);
     }
     

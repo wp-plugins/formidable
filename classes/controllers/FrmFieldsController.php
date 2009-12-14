@@ -137,11 +137,10 @@ class FrmFieldsController{
     function change_type($type){
         global $frm_field_selection, $frmpro_is_installed;
 
-        if($frmpro_is_installed)
-            return $type;
+        if ($frmpro_is_installed) return $type;
 
         $types = array_keys($frm_field_selection);
-        if (!in_array($type, $types))
+        if (!in_array($type, $types) && $type != 'captcha')
             $type = 'text';
 
         return $type;

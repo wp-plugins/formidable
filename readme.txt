@@ -35,6 +35,10 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.4 =
+* Fix captcha for WPMU
+* Hide captcha field if WP reCAPTCHA is not installed
+
 = 1.0.3 =
 * Allow <?php echo FrmEntriesController::show_form(id, key, title, description);?> to be used in a template
 
