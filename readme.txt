@@ -14,6 +14,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 = Features =
 * Integrates with Pretty Link, and WP reCAPTCHA
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
+* Alternatively use <?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?> in your template
 * Create forms from existing templates or add your own
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
@@ -34,6 +35,9 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.3 =
+* Allow <?php echo FrmEntriesController::show_form(id, key, title, description);?> to be added in a template
+
 = 1.0.2 =
 * Fixed error on submission from direct link
 

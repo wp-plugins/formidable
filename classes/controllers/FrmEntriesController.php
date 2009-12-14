@@ -1,6 +1,8 @@
 <?php
 
 class FrmEntriesController{
+    var $views;
+    
     function FrmEntriesController(){
         //add_action('admin_menu', array( $this, 'menu' ));
         $this->views = FRM_VIEWS_PATH.'/frm-entries/';
@@ -16,7 +18,7 @@ class FrmEntriesController{
         require_once($this->views .'list.php');
     }
     
-    function show_form($id, $key, $title, $description){
+    function show_form($id='', $key='', $title=false, $description=false){
         global $frm_form, $user_ID;
         if ($id) $form = $frm_form->getOne($id);
         else if ($key) $form = $frm_form->getOneByKey($key);
@@ -25,7 +27,7 @@ class FrmEntriesController{
         else if ($form->logged_in and !$user_ID)
             return 'You must log in';
         else 
-            return $this->get_form($this->views.'frm-entry.php', $form, $title, $description);
+            return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);
     }
     
     function new_entry($form){
