@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, wordpress, plugin, template, contact, captcha, email
 Requires at least: 2.0
 Tested up to: 2.8.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -36,7 +36,7 @@ Feedback and requests are welcome.
 
 == Changelog ==
 = 1.0.3 =
-* Allow <?php echo FrmEntriesController::show_form(id, key, title, description);?> to be added in a template
+* Allow <?php echo FrmEntriesController::show_form(id, key, title, description);?> to be used in a template
 
 = 1.0.2 =
 * Fixed error on submission from direct link
