@@ -32,14 +32,12 @@ jQuery(document).ready(function(){
     }
   });
 
-//jQuery(document).ready(function(){
-     jQuery('.toggle_container').hide(); 
-     jQuery('.trigger').toggle(
+   jQuery('.toggle_container').hide(); 
+   jQuery('.trigger').toggle(
        	function(){jQuery(this).addClass("active");}, 
        	function(){jQuery(this).removeClass("active");}
-     );
-     jQuery('.trigger').click(function(){jQuery(this).next(".toggle_container").slideToggle("slow");});
-//});
+   );
+   jQuery('.trigger').click(function(){jQuery(this).next(".toggle_container").slideToggle("slow");});
 
 jQuery('.ui-icon-trash.frm_delete_field_option').hide();
 jQuery('.frm_single_option').hover(
@@ -51,16 +49,15 @@ jQuery('.edit_form_item .ui-icon-trash').hide();
 jQuery('.edit_form_item .ui-icon-arrowthick-2-n-s').hide();
 jQuery('.edit_form_item .postbox').hide();
 jQuery('.ui-state-default').hover(
-    function(){jQuery(this).children(".ui-icon-trash").show();jQuery(this).children(".ui-icon-arrowthick-2-n-s").show(); jQuery(this).children(".postbox").show();},
-    function(){jQuery(this).children(".ui-icon-trash").hide();jQuery(this).children(".ui-icon-arrowthick-2-n-s").hide(); jQuery(this).children(".postbox").hide();}
+    function(){
+		jQuery(this).children(".ui-icon-trash").show();
+		jQuery(this).children(".ui-icon-arrowthick-2-n-s").show(); 
+		jQuery(this).children(".postbox").show();
+	},
+    function(){
+		jQuery(this).children(".ui-icon-trash").hide();
+		jQuery(this).children(".ui-icon-arrowthick-2-n-s").hide(); 
+		jQuery(this).children(".postbox").hide();
+	}
 );
-  
-/*  jQuery('.form_field').hide();
-  jQuery('.form_only').show();
-      
-  jQuery('.get_form_fields').change(function() {
-      jQuery('.form_field').hide();
-      jQuery('.form_' + jQuery(this).val() + 'only').show();
-      jQuery('.form_only').show();
-  });*/
 });

@@ -13,23 +13,24 @@
 <input type="hidden" name="plugin" value="<?php echo $plugin; ?>">
 <?php } ?>
 <div id="frm_form_fields">
-<?php
-global $frm_in_section;
-$frm_in_section = false;
+    <div>
+    <?php
 
-if (is_array($errors))
-    $error_keys = array_keys($errors);
-foreach($values['fields'] as $field){
-    $field_name = "item_meta[". $field['id'] ."]";
-    if (apply_filters('frm_show_normal_field_type', true, $field))
-        require(FRM_VIEWS_PATH.'/frm-fields/show.php');
-    else
-        do_action('frm_show_other_field_type', $field);
-}    
-global $frm_in_section;
-if($frm_in_section)
-    echo "</div>\n";
-?>
+    if (is_array($errors))
+        $error_keys = array_keys($errors);
+        
+    foreach($values['fields'] as $field){
+        $field_name = "item_meta[". $field['id'] ."]";
+        if (apply_filters('frm_show_normal_field_type', true, $field))
+            require(FRM_VIEWS_PATH.'/frm-fields/show.php');
+        else
+            do_action('frm_show_other_field_type', $field);
+        
+        do_action('frm_get_field_scripts', $field);
+    }    
+
+    ?>
+    </div>
 </div>
 </div>
 <?php do_action('frm_entries_footer_scripts',$values['fields']); ?>

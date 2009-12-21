@@ -81,12 +81,25 @@ class FrmField{
   }
 
   function getAll($where = '', $order_by = '', $limit = ''){
-      global $wpdb, $frm_form, $frm_utils;
+      global $wpdb, $frm_form, $frm_app_helper;
       $query = 'SELECT fi.*, ' .
-               'gr.name as form_name ' . 
+               'fr.name as form_name ' . 
                'FROM '. $this->table_name . ' fi ' .
-               'LEFT OUTER JOIN ' . $frm_form->table_name . ' gr ON fi.form_id=gr.id' . 
-               $frm_utils->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+               'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON fi.form_id=fr.id' . 
+               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+      if ($limit == ' LIMIT 1')
+          $results = $wpdb->get_row($query);
+      else
+          $results = $wpdb->get_results($query);
+      return $results;
+  }
+  
+  function getIds($where = '', $order_by = '', $limit = ''){
+      global $wpdb, $frm_form, $frm_app_helper;
+      $query = 'SELECT fi.id ' . 
+               'FROM '. $this->table_name . ' fi ' .
+               'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON fi.form_id=fr.id' . 
+               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
       if ($limit == ' LIMIT 1')
           $results = $wpdb->get_row($query);
       else
@@ -96,8 +109,8 @@ class FrmField{
 
   // Pagination Methods
   function getRecordCount($where=""){
-    global $wpdb, $frm_utils;
-    $query = 'SELECT COUNT(*) FROM ' . $this->table_name . ' fi' . $frm_utils->prepend_and_or_where(' WHERE ', $where);
+    global $wpdb, $frm_app_helper;
+    $query = 'SELECT COUNT(*) FROM ' . $this->table_name . ' fi' . $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
     return $wpdb->get_var($query);
   }
 
@@ -106,21 +119,21 @@ class FrmField{
   }
 
   function getPage($current_p,$p_size, $where = "", $order_by = ''){
-    global $wpdb, $frm_utils, $frm_form;
+    global $wpdb, $frm_app_helper, $frm_form;
     $end_index = $current_p * $p_size;
     $start_index = $end_index - $p_size;
     $query = 'SELECT fi.*, ' .
-             'gr.name as form_name ' .
+             'fr.name as form_name ' .
              'FROM ' . $this->table_name . ' fi ' .
-             'LEFT OUTER JOIN ' . $frm_form->table_name . ' gr ON fi.form_id=gr.id' . 
-             $frm_utils->prepend_and_or_where(' WHERE', $where) . $order_by . ' ' . 
+             'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON fi.form_id=fr.id' . 
+             $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by . ' ' . 
              'LIMIT ' . $start_index . ',' . $p_size . ';';
     $results = $wpdb->get_results($query);
     return $results;
   }
 
   function validate( $values ){
-    global $wpdb, $frm_utils, $frm_blogurl;
+    global $wpdb, $frm_blogurl;
 
     $errors = array();
 

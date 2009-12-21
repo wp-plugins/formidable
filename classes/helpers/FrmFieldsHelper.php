@@ -19,7 +19,7 @@ class FrmFieldsHelper{
         if ($type == 'radio' || ($type == 'checkbox'))
             $values['options'] = serialize(array(1 => 'Option 1', 2 => 'Option 2'));
         else if ( $type == 'select')
-            $values['options'] = serialize(array(1 => '', 2 => 'Option 1', 3 => 'Option 2'));
+            $values['options'] = serialize(array(1 => '', 2 => 'Option 1'));
         else if ($type == 'textarea'){
             $values['field_options']['size'] = '45';
             $values['field_options']['max'] = '5';
@@ -33,7 +33,7 @@ class FrmFieldsHelper{
         
         $values = array();
         $values['id'] = $record->id;
-
+        $values['form_id'] = $record->form_id;
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
               $values[$var] = htmlspecialchars(stripslashes($frm_app_controller->get_param($var, $default)));
 

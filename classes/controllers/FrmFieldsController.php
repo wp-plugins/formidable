@@ -2,17 +2,16 @@
 
 class FrmFieldsController{
     function FrmFieldsController(){
-        add_filter('frm_field_type',array( $this, 'change_type'));
         add_action('wp_ajax_frm_insert_field', array($this, 'create') );
         add_action('wp_ajax_frm_field_name_in_place_edit', array($this, 'edit_name') );
         add_action('wp_ajax_frm_field_desc_in_place_edit', array($this, 'edit_description') );
         add_action('wp_ajax_frm_mark_required', array($this, 'mark_required') );
-        add_action('wp_ajax_frm_unmark_required', array($this, 'unmark_required') );
         add_action('wp_ajax_frm_delete_field', array($this, 'destroy') );
         add_action('wp_ajax_frm_add_field_option',array($this, 'add_option'));
         add_action('wp_ajax_frm_field_option_ipe', array($this, 'edit_option') );
         add_action('wp_ajax_frm_delete_field_option',array($this, 'delete_option'));
         add_action('wp_ajax_frm_update_field_order', array($this, 'update_order') );
+        add_filter('frm_field_type',array( $this, 'change_type'));
         add_filter('frm_display_field_options', array($this, 'display_field_options'));
     }
     
@@ -59,15 +58,7 @@ class FrmFieldsController{
     
     function mark_required(){
         global $frm_field;
-        $id = str_replace('req_field_', '', $_POST['field']);
-        $frm_field->update($id, array('required' => '1'));
-        die();
-    }
-
-    function unmark_required(){
-        global $frm_field;
-        $id = str_replace('req_field_', '', $_POST['field']);
-        $frm_field->update($id, array('required' => '0'));
+        $frm_field->update($_POST['field'], array('required' => $_POST['required']));
         die();
     }
     

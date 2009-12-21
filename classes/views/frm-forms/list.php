@@ -68,7 +68,7 @@
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=destroy&id=<?php echo $form->id; ?>"  onclick="return confirm('Are you sure you want to delete your <?php echo $form->name; ?> Form?');" title="Delete <?php echo $form->form_key; ?>">Delete</a>
                 </div>
               </td>
-              <td><?php echo $form->description ?></td>
+              <td><?php echo stripslashes($form->description) ?></td>
               <td><?php echo $form->form_key ?></td>
               <td><?php echo apply_filters('frm_view_entries_link', $frm_entry->getRecordCount("it.form_id=$form->id") . ' Entries', $form->id); ?></td>
               <td>

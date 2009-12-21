@@ -103,7 +103,7 @@ class FrmEntryMeta{
   }
     
   function getAll($where = '', $order_by = '', $limit = ''){
-    global $wpdb, $frm_field, $frm_utils;
+    global $wpdb, $frm_field, $frm_app_helper;
     $query = 'SELECT it.*, ' .
               'fi.type as field_type, ' .
               'fi.required as required, ' .
@@ -111,7 +111,8 @@ class FrmEntryMeta{
               'fi.name as field_name ' .
               'FROM '. $this->table_name . ' it ' .
               'LEFT OUTER JOIN ' . $frm_field->table_name . ' fi ON it.field_id=fi.id' . 
-              $frm_utils->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+              $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+
     if ($limit == ' LIMIT 1')
         $results = $wpdb->get_row($query);
     else    
@@ -120,8 +121,8 @@ class FrmEntryMeta{
   }
   
   function getEntryIds($where = '', $order_by = '', $limit = ''){
-    global $wpdb, $frm_field, $frm_utils;
-    $query = "SELECT DISTINCT it.item_id FROM $this->table_name it LEFT OUTER JOIN $frm_field->table_name fi ON it.field_id=fi.id". $frm_utils->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+    global $wpdb, $frm_field, $frm_app_helper;
+    $query = "SELECT DISTINCT it.item_id FROM $this->table_name it LEFT OUTER JOIN $frm_field->table_name fi ON it.field_id=fi.id". $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
     if ($limit == ' LIMIT 1')
         $results = $wpdb->get_var($query);
     else    
@@ -131,15 +132,15 @@ class FrmEntryMeta{
   }
   
   function getRecordCount($where=""){
-    global $wpdb, $frm_utils, $frm_field;
+    global $wpdb, $frm_app_helper, $frm_field;
     $query = 'SELECT COUNT(*) FROM ' . $this->table_name . ' it ' .
         'LEFT OUTER JOIN ' . $frm_field->table_name . ' fi ON it.field_id=fi.id' .
-        $frm_utils->prepend_and_or_where(' WHERE ', $where);
+        $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
     return $wpdb->get_var($query);
   }
   
   function search_entry_metas($search, $meta_key='', $operator){
-      global $wpdb, $frm_utils;
+      global $wpdb, $frm_app_helper;
       if (is_array($search)){
           $where = '';
             foreach ($search as $field => $value){
@@ -151,7 +152,7 @@ class FrmEntryMeta{
                   $where .= " meta_value {$operator} '%/{$value}/%' and";      
             }
             $where .= " meta_key='{$meta_key}'";
-            $query = "SELECT DISTINCT item_id FROM {$this->table_name}". $frm_utils->prepend_and_or_where(' WHERE ', $where);
+            $query = "SELECT DISTINCT item_id FROM {$this->table_name}". $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
         }else{
             if ($operator == 'LIKE')
                 $search = "%{$search}%";
@@ -161,7 +162,7 @@ class FrmEntryMeta{
   }
   
   function validate( $errors, $field, $key, $value, $values ){
-      global $wpdb, $frm_utils, $frm_field;
+      global $wpdb, $frm_field;
       
       $field_options = unserialize($field->field_options);
 

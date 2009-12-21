@@ -11,7 +11,7 @@ class FrmApiController{
 
         $form_key = sanitize_title($args[0]);
 
-        $where = '';//" gr.form_key = '$form_key'";
+        $where = '';//" fr.form_key = '$form_key'";
     	$items = $frm_entry->getAll($where);
 
     	$list = $form_key;
@@ -36,7 +36,7 @@ class FrmApiController{
 
         $form = $frm_form->getOneByKey($r['form_key']);
 
-        $where = " (it.form_id='". $form->id ."' or gr.form_id='". $form->id ."')";
+        $where = " (it.form_id='". $form->id ."' or fr.form_id='". $form->id ."')";
         if (!($r['parent_id'] == ''))
             $where .= " and it.parent_item_id='". $r['parent_id'] ."'";
 

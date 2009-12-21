@@ -21,9 +21,9 @@ class FrmAppController{
         
         add_menu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 8, FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), FRM_URL . '/images/icon_16.png');
         
-        if(!$frmpro_is_installed){
-            add_submenu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE .' | Pro Statistics', 'Pro Statistics', 8, FRM_PLUGIN_TITLE.'-statistics',array($this,''));
-        }
+        //if(!$frmpro_is_installed)
+            //add_submenu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE .' | Pro Statistics', 'Pro Statistics', 8, FRM_PLUGIN_TITLE.'-statistics',array($this,''));
+        
     }
     
     function head(){
@@ -48,7 +48,7 @@ class FrmAppController{
     }
   
     function install(){
-      global $wpdb, $frm_utils, $frm_form, $frm_field;
+      global $wpdb, $frm_form, $frm_field;
       $db_version = 1.0; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
@@ -250,41 +250,42 @@ class FrmAppController{
     
     // Routes for wordpress pages -- we're just replacing content here folks.
     function page_route($content){
-      global $post, $frm_settings, $frm_forms_controller;
+        global $post, $frm_settings, $frm_forms_controller;
 
-      if( $post->ID == $frm_settings->preview_page_id){  
-          $frm_forms_controller->page_preview();
-          return '';
-      }
+        if( $post->ID == $frm_settings->preview_page_id){  
+            $frm_forms_controller->page_preview();
+            return '';
+        }
 
-      return $content;
+        return $content;
     }
 
     // The tight way to process standalone requests dogg...
     function parse_standalone_request(){
-      $plugin     = $this->get_param('plugin');
-      $action     = $this->get_param('action');
-      $controller = $this->get_param('controller');
-      
-      if( !empty($plugin) and $plugin == FRM_PLUGIN_NAME and !empty($controller) ){
-        $this->standalone_route($controller, $action);
-        exit;
-      }
+        $plugin     = $this->get_param('plugin');
+        $action     = $this->get_param('action');
+        $controller = $this->get_param('controller');
+
+        if( !empty($plugin) and $plugin == FRM_PLUGIN_NAME and !empty($controller) ){
+          $this->standalone_route($controller, $action);
+          exit;
+        }
     }
 
     // Routes for standalone / ajax requests
     function standalone_route($controller, $action=''){
-      global $frm_forms_controller;
-      
-      if($controller=='forms'){
-        //if($action=='preview')
-          $frm_forms_controller->preview($this->get_param('form'));
-      }
+        global $frm_forms_controller;
+
+        if($controller=='forms'){
+          //if($action=='preview')
+            $frm_forms_controller->preview($this->get_param('form'));
+        }else
+            do_action('frm_standalone_route', $controller, $action);
     }
 
     // Utility function to grab the parameter whether it's a get or post
     function get_param($param, $default=''){
-      return (isset($_POST[$param])?$_POST[$param]:(isset($_GET[$param])?$_GET[$param]:$default));
+        return (isset($_POST[$param])?$_POST[$param]:(isset($_GET[$param])?$_GET[$param]:$default));
     }
 
 

@@ -1,24 +1,8 @@
-.options-table {
-  width: 67%;
-  margin-top: 10px;
-}
+.options-table {width: 67%; margin-top: 10px;}
+.options-table td {padding: 10px; background-color: #f4f0db;}
+.options-table h3 {padding: 0px; margin: 0px; padding-left: 10px;}
 
-.options-table td {
-  padding: 10px;
-  background-color: #f4f0db;
-}
-
-.options-table h3 {
-  padding: 0px;
-  margin: 0px;
-  padding-left: 10px;
-}
-
-.pane {
-  background-color: #f4f0db;
-  padding-left: 10px;
-}
-
+.pane {background-color: #f4f0db; padding-left: 10px;}
 ul.pane li {padding: 0px; margin: 0px;}
 
 .edit_item {height: 50px;}
@@ -53,6 +37,8 @@ ul.pane li {padding: 0px; margin: 0px;}
 .frm_form_builder{width:60%;}
 #frm_form_options{width:250px;}
 
+.frm_form_builder a:hover{text-decoration:underline;}
+
 .frm_field_box{padding:5px;}
 
 .frm_pos_top{display:block;}
@@ -61,13 +47,13 @@ ul.pane li {padding: 0px; margin: 0px;}
 
 .postbox{margin-bottom:5px;}
 .postbox h3{cursor:pointer;}
+.postbox label{float:left; width:120px; text-align:right; padding-right:5px; clear:both;}
 .edit_form_item .postbox, .edit_form_item .ui-icon-arrowthick-2-n-s, .edit_form_item .ui-icon-trash{display:none;}
-
 #new_fields span.ui-icon{width:16px;}
 
 .ui-icon-arrowthick-2-n-s{cursor:move;}
 
-.frm_inactive_icon, .frm_mark_required{
+.frm_inactive_icon, .frm_required0{
     opacity:.2;
     filter:alpha(opacity=20);
 }

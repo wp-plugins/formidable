@@ -2,13 +2,15 @@
 /*
 Plugin Name: Formidable
 Description: Easily create drag-and-drop forms
-Version: 1.0.4
+Version: 1.0.05
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
 */
 
-require_once(ABSPATH . WPINC . '/pluggable.php');
+if (!function_exists('set_current_user'))
+    require_once(ABSPATH . WPINC . '/pluggable.php');
+    
 define('FRM_PLUGIN_TITLE','Formidable');
 define('FRM_PLUGIN_NAME','formidable');
 define('FRM_PATH',WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
@@ -18,17 +20,12 @@ define('FRM_HELPERS_PATH',FRM_PATH.'/classes/helpers');
 define('FRM_CONTROLLERS_PATH',FRM_PATH.'/classes/controllers');
 define('FRM_URL',WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);
 define('FRM_SCRIPT_URL', get_option('home') . '/index.php?plugin=' . FRM_PLUGIN_NAME);
+define('FRM_IMAGES_URL',FRM_URL.'/images');
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
-global $frmpro_is_installed;
-$frmpro_is_installed = false; //$frm_utils->pro_is_installed();
-
-if($frmpro_is_installed)
-  require_once(FRM_PATH.'/pro/formidable-pro.php');
-
 global $frm_version;
-$frm_version = '1.0';
+$frm_version = '1.0.05';
 
 
 // Check for WPMU installation
@@ -64,21 +61,21 @@ require_once(FRM_MODELS_PATH.'/FrmForm.php');
 require_once(FRM_MODELS_PATH.'/FrmEntry.php');
 require_once(FRM_MODELS_PATH.'/FrmEntryMeta.php');
 require_once(FRM_MODELS_PATH.'/FrmNotification.php');
-require_once(FRM_MODELS_PATH.'/FrmUtils.php');
+require_once(FRM_MODELS_PATH.'/FrmUpdate.php');
 
 global $frm_field;
 global $frm_form;
 global $frm_entry;
 global $frm_entry_meta;
 global $frm_notification;
-global $frm_utils;
+global $frm_update;
 
 $frm_field          = new FrmField();
 $frm_form           = new FrmForm();
 $frm_entry          = new FrmEntry();
 $frm_entry_meta     = new FrmEntryMeta();
 $frm_notification   = new FrmNotification();
-$frm_utils          = new FrmUtils(); 
+$frm_update         = new FrmUpdate();
 
 
 // Instansiate Controllers
@@ -116,6 +113,11 @@ $frm_app_helper = new FrmAppHelper();
 $frm_fields_helper = new FrmFieldsHelper();
 $frm_settings_helper = new FrmSettingsHelper();
 
+global $frmpro_is_installed;
+$frmpro_is_installed = false;//$frm_update->pro_is_installed_and_authorized();
+
+if($frmpro_is_installed)
+  require_once(FRM_PATH.'/pro/formidable-pro.php');
     
 // The number of items per page on a table
 global $frm_page_size;
@@ -151,7 +153,8 @@ $frm_pro_field_selection = array(
     'hidden' => 'Hidden Field', 
     'user_id' => 'Hidden User Id',
     'website' => 'Website',
-    '10radio' => '1-10 radio'
+    '10radio' => '1-10 radio',
+    'data' => 'Data from Entries'
     //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
     //'title' => 'Entry Title', 
     //'key' => 'Entry Key',// (for calling entry from template) 
@@ -159,8 +162,7 @@ $frm_pro_field_selection = array(
     //'city_selector' => 'US State/County/City selector', 
     //'full_name' => 'First and Last Name', 
     //'terms' => 'Terms of Use',// checkbox or show terms (use with Terms of use plugin)
-    //'quiz' => 'Question and Answer',// for captcha alternative
-    //'parent' => 'Parent Entry', //link entries -- event to course, testimonial to item
+    //'quiz' => 'Question and Answer' // for captcha alternative
 );
 
 ?>

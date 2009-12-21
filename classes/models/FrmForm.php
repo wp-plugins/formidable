@@ -26,7 +26,7 @@ class FrmForm{
   }
   
   function duplicate( $id, $template=false ){
-    global $wpdb, $frm_utils, $frm_form, $frm_field;
+    global $wpdb, $frm_form, $frm_field;
     
     $values = $frm_form->getOne( $id );
     
@@ -76,7 +76,13 @@ class FrmForm{
     
     $query_results = $wpdb->update( $this->table_name, $new_values, array( 'id' => $id ) );
 
-    if (isset($values['item_meta'])){
+    $all_fields = $frm_field->getAll("fi.form_id=$id");
+    if ($all_fields && isset($values['item_meta'])){
+        $existing_keys = array_keys($values['item_meta']);
+        foreach ($all_fields as $fid){
+            if (!in_array($fid->id, $existing_keys))
+                $values['item_meta'][$fid->id] = '';
+        }
         foreach ($values['item_meta'] as $field_id => $default_value){
             $field_options = array();
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
@@ -160,8 +166,8 @@ class FrmForm{
   }
 
   function getAll( $where = '', $order_by = '', $limit = '' ){
-      global $wpdb, $frm_utils;
-      $query = 'SELECT * FROM ' . $this->table_name . $frm_utils->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+      global $wpdb, $frm_app_helper;
+      $query = 'SELECT * FROM ' . $this->table_name . $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
       if ($limit == ' LIMIT 1')
         $results = $wpdb->get_row($query);
       else
@@ -171,8 +177,8 @@ class FrmForm{
 
   // Pagination Methods
   function getRecordCount($where=""){
-      global $wpdb, $frm_utils;
-      $query = 'SELECT COUNT(*) FROM ' . $this->table_name . $frm_utils->prepend_and_or_where(' WHERE ', $where);
+      global $wpdb, $frm_app_helper;
+      $query = 'SELECT COUNT(*) FROM ' . $this->table_name . $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
       return $wpdb->get_var($query);
   }
 
@@ -181,16 +187,16 @@ class FrmForm{
   }
 
   function getPage($current_p,$p_size, $where = "", $order_by = ''){
-      global $wpdb, $frm_utils;
+      global $wpdb, $frm_app_helper;
       $end_index = $current_p * $p_size;
       $start_index = $end_index - $p_size;
-      $query = 'SELECT *  FROM ' . $this->table_name . $frm_utils->prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
+      $query = 'SELECT *  FROM ' . $this->table_name . $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
       $results = $wpdb->get_results($query);
       return $results;
   }
 
   function validate( $values ){
-      global $frm_utils, $frm_field, $frm_entry_meta;
+      global $frm_field, $frm_entry_meta;
       $errors = array();
 
       /*if( $values['form_key'] == null or $values['form_key'] == '' ){

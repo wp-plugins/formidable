@@ -78,7 +78,7 @@ class FrmAppHelper{
                       'default_value' => stripslashes($field->default_value),
                       'name' => stripslashes($field->name),
                       'description' => stripslashes($field->description),
-                      'type' => apply_filters('frm_field_type',$field->type),
+                      'type' => apply_filters('frm_field_type',$field->type, $field),
                       'options' => stripslashes_deep(unserialize($field->options)),
                       'required' => $field->required,
                       'field_key' => $field->field_key,
@@ -129,11 +129,41 @@ END;
 COMMENT_FORM;
 
     	$use_ssl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? true : false;
-
-    	if (IS_WPMU)
-            echo ($error['captcha'] ? '<p class="error">'.$error['captcha'].'</p>' : '');
             
         echo $format . recaptcha_wp_get_html(isset($_GET['rerror'])?$_GET['rerror']:'', $use_ssl);
+    }
+    
+    function truncate($str, $length, $minword = 3){
+        $sub = '';
+        $len = 0;
+
+        foreach (explode(' ', $str) as $word){
+            $part = (($sub != '') ? ' ' : '') . $word;
+            $sub .= $part;
+            $len += strlen($part);
+
+            if (strlen($word) > $minword && strlen($sub) >= $length)
+                break;
+        }
+
+        return $sub . (($len < strlen($str)) ? '...' : '');
+    }
+    
+    function prepend_and_or_where( $starts_with = ' WHERE', $where = '' ){
+      return (( $where == '' )?'':$starts_with . $where);
+    }
+    
+    // For Pagination
+    function getLastRecordNum($r_count,$current_p,$p_size){
+      return (($r_count < ($current_p * $p_size))?$r_count:($current_p * $p_size));
+    }
+
+    // For Pagination
+    function getFirstRecordNum($r_count,$current_p,$p_size){
+      if($current_p == 1)
+        return 1;
+      else
+        return ($this->getLastRecordNum($r_count,($current_p - 1),$p_size) + 1);
     }
     
 }

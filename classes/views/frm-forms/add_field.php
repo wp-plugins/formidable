@@ -1,10 +1,11 @@
-<?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false)); ?>
+<?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false)); ?>
+
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?>">
     <span class="ui-icon ui-icon-arrowthick-2-n-s alignright"></span>
     <a href="javascript:void(0);" class="ui-icon ui-icon-trash alignright" id="frm_delete_field<?php echo $field['id']; ?>"></a>
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:void(0);" class="ui-icon ui-icon-star alignleft" id="req_field_<?php echo $field['id']; ?>"></a>
+        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="ui-icon ui-icon-star alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>"></a>
     </span>
     <?php } ?>
     <div class="frm_ipe_field_label frm_pos_<?php echo $field['label']; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></div>
@@ -34,6 +35,7 @@
  ?>
     <div id="frm_add_field_<?php echo $field['id']; ?>">
         <a href="javascipt:void(0)" class="frm_add_field_option" id="field_<?php echo $field['id']; ?>"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
+        <?php do_action('frm_add_multiple_opts', $field); ?>
     </div>
 
 <?php }else if ($field['type'] == 'captcha'){
@@ -43,7 +45,7 @@
             <span class="howto">Hint: Change colors in the "Registration Options" <a href="<?php echo $frm_siteurl ?>/wp-admin/options-general.php?page=wp-recaptcha/wp-recaptcha.php">reCAPTCHA settings</a></span>
             <input type="hidden" name="<?php echo $field_name ?>" value="1"/>
 <?php   }else
-            echo 'Please download, install, and activate the WP reCAPTCHA plugin to enable this feature.';
+            echo 'Please download and activate the WP reCAPTCHA plugin to enable this feature.';
       
     }else
         do_action('frm_display_added_fields',$field);
@@ -55,7 +57,7 @@ if ($display['description']){ ?>
 
 if ($display['options']){ ?>  
     <div class="postbox">
-        <h3 class="trigger">Field Options</h3> 
+        <h3 class="trigger">Field Options:</h3> 
         <div class="toggle_container inside">
             <? if ($display['size']){ ?>
             <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Columns':'Field Size' ?></label>
@@ -66,7 +68,7 @@ if ($display['options']){ ?>
             </p>
             <? } ?>
             <?php if ($display['label_position']){ ?>
-            <p><label>Label Position</label>
+            <p><label>Label Position:</label>
                 <select name="field_options[label_<?php echo $field['id'] ?>]">
                     <option value="top"<?php echo ($field['label'] == 'top')?(' selected="true"'):(''); ?>>Top</option>
                     <option value="left"<?php echo ($field['label'] == 'left')?(' selected="true"'):(''); ?>>Left</option>
@@ -75,16 +77,16 @@ if ($display['options']){ ?>
             </p>
             <?php } ?>
             <?php if ($display['required']){ ?>
-            <p><label>Required label</label>
+            <p><label>Required label:</label>
                 <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo $field['required_indicator']; ?>">
             </p>
-            <p><label class="frm_pos_top">Validation phrase for blank required field</label>    
-            <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" size="75">
+            <p><label>Validation phrase for blank required field:</label>    
+            <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" size="50">
             </p>
             <?php } ?>
             <? if ($display['invalid']){ ?>
-            <p><label class="frm_pos_top">Validation phrase for wrong format</label>    
-            <input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="75">
+            <p><label>Validation phrase for wrong format:</label>    
+            <input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50">
             </p>
             <?php } ?>
             <?php do_action('frm_field_options_form', $field, $display); ?>
@@ -92,10 +94,11 @@ if ($display['options']){ ?>
     </div>   
 <?php } ?>         
 </li>
-<?php $frm_required_class = ($field['required'] == '0')?('frm_mark_required'):('frm_unmark_required'); ?> 
+ 
 <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery("#frm_delete_field<?php echo $field['id']; ?>").click(function(){  
+            if(confirm("<?php _e('Are you sure you want to delete this field and all data associated with it?', FRM_PLUGIN_NAME); ?>")){
             jQuery.ajax({
                type:"POST",
                url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
@@ -106,11 +109,9 @@ if ($display['options']){ ?>
                }
             });
             return false;
+            }
         });
           
         function callback(){setTimeout(function(){jQuery("#frm_delete_field<?php echo $field['id']; ?>:hidden").removeAttr('style').hide().fadeIn();}, 1000);};
-        
-        
-        jQuery('#req_field_<?php echo $field['id']; ?>').addClass('<?php echo $frm_required_class ?>');
     });
 </script>

@@ -3,8 +3,8 @@ Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, wordpress, plugin, template, contact, captcha, email
 Requires at least: 2.0
-Tested up to: 2.8.6
-Stable tag: 1.0.4
+Tested up to: 2.9
+Stable tag: 1.0.05
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -14,7 +14,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 = Features =
 * Integrates with Pretty Link, and WP reCAPTCHA
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
-* Alternatively use <?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?> in your template
+* Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Create forms from existing templates or add your own
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
@@ -35,12 +35,19 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.05 =
+* Added loading indicator to required star and when field is added by dragging
+* Added confirmation before field is deleted
+* Fixed field options for radio buttons to correctly save
+* Don't call pluggable.php if functions are already defined (To remove conflict with Role Scoper)
+* Added Pro auto-update code for testing
+
 = 1.0.4 =
 * Fix captcha for WPMU
 * Hide captcha field if WP reCAPTCHA is not installed
 
 = 1.0.3 =
-* Allow <?php echo FrmEntriesController::show_form(id, key, title, description);?> to be used in a template
+* Allow `<?php echo FrmEntriesController::show_form(id, key, title, description);?>` to be used in a template
 
 = 1.0.2 =
 * Fixed error on submission from direct link

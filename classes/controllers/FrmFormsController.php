@@ -52,7 +52,7 @@ class FrmFormsController{
     }
     
     function create(){
-        global $frm_app_controller, $frm_app_helper, $frm_field_selection, $frm_entry, $frm_form, $frm_field, $frm_recaptcha_enabled, $frm_pro_field_selection, $frm_utils, $frmpro_is_installed;
+        global $frm_app_controller, $frm_app_helper, $frm_field_selection, $frm_entry, $frm_form, $frm_field, $frm_recaptcha_enabled, $frm_pro_field_selection, $frmpro_is_installed;
         $errors = $frm_form->validate($_POST);
         $id = $frm_app_controller->get_param('id');
         
@@ -166,7 +166,7 @@ class FrmFormsController{
     }
 
     function display_forms_list($params=false, $message='', $page_params_ov = false, $current_page_ov = false, $errors = array()){
-        global $wpdb, $frm_utils, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
+        global $wpdb, $frm_app_helper, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
         
         if(!$params)
             $params = $this->get_params();
@@ -202,8 +202,8 @@ class FrmFormsController{
         $record_count = $frm_form->getRecordCount($form_vars['where_clause']);
         $page_count = $frm_form->getPageCount($frm_page_size,$form_vars['where_clause']);
         $forms = $frm_form->getPage($current_page,$frm_page_size,$form_vars['where_clause'],$form_vars['order_by']);
-        $page_last_record = $frm_utils->getLastRecordNum($record_count,$current_page,$frm_page_size);
-        $page_first_record = $frm_utils->getFirstRecordNum($record_count,$current_page,$frm_page_size);
+        $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
+        $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
         require_once($this->views . 'list.php');
     }
     
@@ -267,7 +267,7 @@ class FrmFormsController{
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
-        global $frm_app_helper, $frm_field_selection, $frm_entry, $frm_form, $frm_field, $frm_recaptcha_enabled, $frm_pro_field_selection, $frm_utils, $frmpro_is_installed;
+        global $frm_app_helper, $frm_field_selection, $frm_entry, $frm_form, $frm_field, $frm_recaptcha_enabled, $frm_pro_field_selection, $frmpro_is_installed;
         $record = $frm_form->getOne( $id );
         $items = $frm_entry->getAll('',' ORDER BY it.name');
 

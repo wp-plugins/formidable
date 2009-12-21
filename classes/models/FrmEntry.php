@@ -101,31 +101,31 @@ class FrmEntry{
     function getOne( $id ){
       global $wpdb, $frm_form;
       $query = 'SELECT it.*, ' .
-                'gr.name as form_name, ' .
-                'gr.form_key as form_key ' .
+                'fr.name as form_name, ' .
+                'fr.form_key as form_key ' .
                 'FROM '. $this->table_name . ' it ' .
-                'LEFT OUTER JOIN ' . $frm_form->table_name . ' gr ON it.form_id=gr.id' .
+                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' .
                 ' WHERE it.id=' . $id;
       return $wpdb->get_row($query);
     }
 
     function getAll($where = '', $order_by = '', $limit = ''){
-      global $wpdb, $frm_form, $frm_utils;
+      global $wpdb, $frm_form, $frm_app_helper;
       $query = 'SELECT it.*, ' .
-                'gr.name as form_name, ' .
-                'gr.form_key as form_key ' .
+                'fr.name as form_name, ' .
+                'fr.form_key as form_key ' .
                 'FROM '. $this->table_name . ' it ' .
-                'LEFT OUTER JOIN ' . $frm_form->table_name . ' gr ON it.form_id=gr.id' . 
-                $frm_utils->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' . 
+                $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
       return $wpdb->get_results($query);
     }
 
     // Pagination Methods
     function getRecordCount($where=""){
-      global $wpdb, $frm_utils, $frm_form;
+      global $wpdb, $frm_app_helper, $frm_form;
       $query = 'SELECT COUNT(*) FROM ' . $this->table_name . ' it ' .
-          'LEFT OUTER JOIN ' . $frm_form->table_name . ' gr ON it.form_id=gr.id' .
-          $frm_utils->prepend_and_or_where(' WHERE ', $where);
+          'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' .
+          $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
       return $wpdb->get_var($query);
     }
 
@@ -134,21 +134,21 @@ class FrmEntry{
     }
 
     function getPage($current_p,$p_size, $where = "", $order_by = ''){
-      global $wpdb, $frm_utils, $frm_form;
+      global $wpdb, $frm_app_helper, $frm_form;
       $end_index = $current_p * $p_size;
       $start_index = $end_index - $p_size;
       $query = 'SELECT it.*, ' .
-                'gr.name as form_name ' .
+                'fr.name as form_name ' .
                'FROM ' . $this->table_name . ' it ' .
-               'LEFT OUTER JOIN ' . $frm_form->table_name . ' gr ON it.form_id=gr.id' . 
-               $frm_utils->prepend_and_or_where(' WHERE', $where) . $order_by . ' ' . 
+               'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' . 
+               $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by . ' ' . 
                'LIMIT ' . $start_index . ',' . $p_size . ';';
       $results = $wpdb->get_results($query);
       return $results;
     }
 
     function validate( $values ){
-        global $wpdb, $frm_utils, $frm_field, $frm_entry_meta;
+        global $wpdb, $frm_field, $frm_entry_meta;
 
         $errors = array();   
         
