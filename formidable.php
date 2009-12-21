@@ -114,7 +114,7 @@ $frm_fields_helper = new FrmFieldsHelper();
 $frm_settings_helper = new FrmSettingsHelper();
 
 global $frmpro_is_installed;
-$frmpro_is_installed = false;//$frm_update->pro_is_installed_and_authorized();
+$frmpro_is_installed = $frm_update->pro_is_installed_and_authorized();
 
 if($frmpro_is_installed)
   require_once(FRM_PATH.'/pro/formidable-pro.php');
