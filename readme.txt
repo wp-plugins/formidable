@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin
 Requires at least: 2.0
 Tested up to: 2.9
-Stable tag: 1.0.05
+Stable tag: 1.0.06
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
