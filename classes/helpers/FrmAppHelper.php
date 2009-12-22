@@ -85,7 +85,7 @@ class FrmAppHelper{
                       'field_order' => $field->field_order,
                       'form_id' => $field->form_id);
 
-                foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '') as $opt => $default_opt)
+                foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0) as $opt => $default_opt)
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt]: $default_opt);
                   
                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', $field_array, $field);   

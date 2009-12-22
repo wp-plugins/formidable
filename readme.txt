@@ -1,7 +1,7 @@
 === Formidable ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, builder, drag, drop, widget, wordpress, plugin, template, contact, captcha, email
+Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin
 Requires at least: 2.0
 Tested up to: 2.9
 Stable tag: 1.0.05
@@ -19,6 +19,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
 * Saves responses to the database for future retrieval, reports, and display (Pro version Coming Soon)
+* PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
 
 Feedback and requests are welcome.
 
@@ -35,6 +36,12 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.06 =
+* Added option to rename submit button
+* Added option to customize success message
+* Moved default form values from pro to free version
+* Added option to clear default text when field is clicked
+
 = 1.0.05 =
 * Added loading indicator to required star and when field is added by dragging
 * Added confirmation before field is deleted

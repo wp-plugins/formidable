@@ -41,11 +41,13 @@
      <ul class="ui-state-default" style="border:none; font-weight:normal">
          <li><span class="ui-icon ui-icon-star alignleft"></span> = required field</li>
          <li><span class="frm_inactive_icon ui-icon ui-icon-star alignleft"></span> = not required</li>
+         <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = clear default data on click</li>
+         <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = do not clear default data on click</li>
          <li><span class="ui-icon ui-icon-trash alignleft"></span> = delete field and all inputed data</li>
      </ul>
-     <?php if($frmpro_is_installed){ ?>
+
      <p class="howto">Enter or select default values into fields on this form.</p>
-     <?php } ?>
+
 </div>
 
 <script>

@@ -9,7 +9,7 @@
 
         <?php if (!$form->is_template){ ?>
         <p class="submit">
-        <input type="submit" name="Submit" value="Submit" />
+        <input type="submit" name="<?php echo $submit ?>" value="<?php echo $submit ?>" />
         </p>
         <?php } ?>
 

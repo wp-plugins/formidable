@@ -7,7 +7,7 @@ class FrmEntriesHelper{
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
             $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
-            
+        
         $values['fields'] = array();
         if ($fields){
             foreach($fields as $field){
@@ -30,7 +30,7 @@ class FrmEntriesHelper{
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id);
               
-              foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '') as $opt => $default_opt)
+              foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0) as $opt => $default_opt)
                   $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
                 
              $values['fields'][] = apply_filters('frm_setup_new_fields_vars', $field_array, $field);

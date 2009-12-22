@@ -34,3 +34,7 @@
 </div>
 </div>
 <?php do_action('frm_entries_footer_scripts',$values['fields']); ?>
+<script type="text/javascript">
+function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';}
+function frmReplaceDefault(default_value,thefield){if(thefield.value=='')thefield.value=default_value;}
+</script>

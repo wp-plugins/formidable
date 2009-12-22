@@ -9,7 +9,7 @@ class FrmEntry{
 
     function create( $values ){
         global $wpdb, $frm_entry_meta;
-
+        
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $this->table_name, 'item_key');
         $new_values['name'] = isset($values['name']) ? $values['name'] : $values['item_key'];

@@ -2,16 +2,17 @@
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?>">
     <span class="ui-icon ui-icon-arrowthick-2-n-s alignright"></span>
-    <a href="javascript:void(0);" class="ui-icon ui-icon-trash alignright" id="frm_delete_field<?php echo $field['id']; ?>"></a>
+    <a href="javascript:void(0);" class="ui-icon ui-icon-trash alignright" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"></a>
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="ui-icon ui-icon-star alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>"></a>
+        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="ui-icon ui-icon-star alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"></a>
     </span>
     <?php } ?>
     <div class="frm_ipe_field_label frm_pos_<?php echo $field['label']; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></div>
     
 <?php if ($display['type'] == 'text'){ ?>
-    <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" size="<?php echo $field['size']; ?>"/>
+    <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" size="<?php echo $field['size']; ?>"/> 
+    <a href="javascript:frm_clear_on_focus( <?php echo $field['id']; ?>,  <?php echo $field['clear_on_focus']; ?>)" class="<?php echo ($field['clear_on_focus']) ?'':'frm_inactive_icon'; ?>" id="clear_field_<?php echo $field['id']; ?>" title="Set this field to <?php echo ($field['clear_on_focus'])?'not ':''; ?>clear on click"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
     
 <?php }else if ($field['type'] == 'textarea'){ ?>
     <textarea name="<?php echo $field_name ?>" cols="<?php echo $field['size']; ?>" rows="<?php echo $field['max']; ?>"><?php echo $field['default_value']; ?></textarea> 

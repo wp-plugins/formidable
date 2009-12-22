@@ -49,9 +49,9 @@ class FrmField{
       
       if (isset($values['field_key']))
           $values['field_key'] = FrmAppHelper::get_unique_key($values['field_key'], $this->table_name, 'field_key', $id);
-
+          
       if (isset($values['field_options']))
-          $values['field_options'] = serialize(stripslashes_deep($values['field_options']));
+          $values['field_options'] = serialize($values['field_options']);
       
       $query_results = $wpdb->update( $this->table_name, $values, array( 'id' => $id ) );
       

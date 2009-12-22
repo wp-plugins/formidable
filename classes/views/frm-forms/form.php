@@ -30,6 +30,14 @@ if (isset($values['fields'])){
         <p><label>Email Form Responses to</label>
             <input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" />
         </p> 
+        
+        <p><label>Submit Button Label</label>
+            <input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" />
+        </p>
+        
+        <p><label>Success Message</label>
+            <input type="text" name="options[success_msg]" value="<?php echo $values['success_msg']; ?>" />
+        </p>
         <?php do_action('frm_additional_form_options', $values); ?> 
     </div>
 </div>

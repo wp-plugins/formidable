@@ -6,6 +6,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_field_name_in_place_edit', array($this, 'edit_name') );
         add_action('wp_ajax_frm_field_desc_in_place_edit', array($this, 'edit_description') );
         add_action('wp_ajax_frm_mark_required', array($this, 'mark_required') );
+        add_action('wp_ajax_frm_clear_on_focus', array($this, 'clear_on_focus') );
         add_action('wp_ajax_frm_delete_field', array($this, 'destroy') );
         add_action('wp_ajax_frm_add_field_option',array($this, 'add_option'));
         add_action('wp_ajax_frm_field_option_ipe', array($this, 'edit_option') );
@@ -59,6 +60,15 @@ class FrmFieldsController{
     function mark_required(){
         global $frm_field;
         $frm_field->update($_POST['field'], array('required' => $_POST['required']));
+        die();
+    }
+    
+    function clear_on_focus(){
+        global $frm_field;
+        $field = $frm_field->getOne($_POST['field']);
+        $field_options = unserialize($field->field_options);
+        $field_options['clear_on_focus'] = $_POST['active'];
+        $frm_field->update($_POST['field'], array('field_options' => $field_options));
         die();
     }
     

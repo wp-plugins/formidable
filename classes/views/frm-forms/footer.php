@@ -111,4 +111,22 @@ function frm_mark_required(field_id, required){
         success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required( '+field_id+',  '+switch_to+')" class="ui-icon ui-icon-star alignleft frm_required'+switch_to+'" id="'+thisid+'"></a>');}
     });
 };
+
+function frm_clear_on_focus(field_id, active){
+    var thisid= 'clear_field_' + field_id;
+    if (active == '1'){
+        var switch_to = '0';
+        var new_class = 'frm_inactive_icon';
+    }else{
+        var switch_to = '1';
+        var new_class = '';
+    }
+    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+    jQuery.ajax({
+        type:"POST",
+        url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+        data:"action=frm_clear_on_focus&field="+field_id+"&active="+switch_to,
+        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus( '+field_id+',  '+switch_to+')" class="'+new_class +'" id="'+thisid+'"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>');}
+    });
+};
 </script>

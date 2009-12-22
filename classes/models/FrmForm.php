@@ -65,6 +65,8 @@ class FrmForm{
     
     $options = array();
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
+    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : ''; 
+    $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
     $options = apply_filters('frm_form_options_before_update', $options, $values);
     
     $new_values = array();
@@ -84,11 +86,13 @@ class FrmForm{
                 $values['item_meta'][$fid->id] = '';
         }
         foreach ($values['item_meta'] as $field_id => $default_value){
-            $field_options = array();
+            $field = $frm_field->getOne($field_id);
+            $field_options = unserialize($field->field_options);
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
                 $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? $values['field_options'][$opt.'_'.$field_id] : '';
-            $field_values = apply_filters('frm_update_field_options', array('default_value' => '', 'field_options' => $field_options), $field_id, $values);
-            $frm_field->update($field_id, $field_values);
+            $field_options = apply_filters('frm_update_field_options', $field_options, $field_id, $values);
+            $default_value = maybe_serialize($values['item_meta'][$field_id]);
+            $frm_field->update($field_id, array('default_value' => $default_value, 'field_options' => $field_options));
         }
     }    
     

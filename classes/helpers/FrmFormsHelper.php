@@ -35,6 +35,8 @@ class FrmFormsHelper{
             
         $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frm_form->table_name, 'form_key'));
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : '';
+        $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
+        $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
         
         return apply_filters('frm_setup_new_form_vars', $values);
     }

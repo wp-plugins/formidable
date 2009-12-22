@@ -13,7 +13,7 @@ class FrmFieldsHelper{
             $values[$var] = $default;
         
         $values['field_options'] = array();
-        foreach (array('size' => '50', 'max' => '', 'label' => 'top', 'required_indicator' => '*') as $var => $default)
+        foreach (array('size' => '50', 'max' => '', 'label' => 'top', 'required_indicator' => '*', 'clear_on_focus' => 0) as $var => $default)
             $values['field_options'][$var] = $default;
             
         if ($type == 'radio' || ($type == 'checkbox'))
