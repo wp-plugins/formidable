@@ -22,7 +22,7 @@ define('FRM_IMAGES_URL',FRM_URL.'/images');
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
 global $frm_version;
-$frm_version = '1.0.06';
+$frm_version = '1.0.07';
 
 
 // Check for WPMU installation

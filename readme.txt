@@ -1,10 +1,10 @@
 === Formidable ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin
+Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin, akismet
 Requires at least: 2.0
-Tested up to: 2.9
-Stable tag: 1.0.06
+Tested up to: 2.9.1
+Stable tag: 1.0.07
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -12,7 +12,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 Quickly and easily build forms with a simple drag-and-drop interface.
 
 = Features =
-* Integrates with Pretty Link, and WP reCAPTCHA
+* Integrates with Pretty Link, WP reCAPTCHA, and Akismet
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Create forms from existing templates or add your own
