@@ -60,14 +60,14 @@ if ($display['options']){ ?>
     <div class="postbox">
         <h3 class="trigger">Field Options:</h3> 
         <div class="toggle_container inside">
-            <? if ($display['size']){ ?>
+            <?php if ($display['size']){ ?>
             <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Columns':'Field Size' ?></label>
                 <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5">
             </p>
             <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Rows':'Max length of input' ?></label>
                 <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5">
             </p>
-            <? } ?>
+            <?php } ?>
             <?php if ($display['label_position']){ ?>
             <p><label>Label Position:</label>
                 <select name="field_options[label_<?php echo $field['id'] ?>]">
@@ -85,7 +85,7 @@ if ($display['options']){ ?>
             <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" size="50">
             </p>
             <?php } ?>
-            <? if ($display['invalid']){ ?>
+            <?php if ($display['invalid']){ ?>
             <p><label>Validation phrase for wrong format:</label>    
             <input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50">
             </p>

@@ -38,6 +38,11 @@ if (isset($values['fields'])){
         <p><label>Success Message</label>
             <input type="text" name="options[success_msg]" value="<?php echo $values['success_msg']; ?>" />
         </p>
+        
+        <?php if (function_exists( 'akismet_http_post' )){ ?>
+        <p><input type="checkbox" name="options[akismet]" id="akismet" value="1" <?php checked($values['akismet'], 1); ?> /> Use Akismet to check entries for spam</p>
+        <?php } ?>
+        
         <?php do_action('frm_additional_form_options', $values); ?> 
     </div>
 </div>

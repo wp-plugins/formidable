@@ -28,7 +28,7 @@ Feedback and requests are welcome.
 2. Activate the plugin through the 'Plugins' menu
 3. Go to the Formidable 'Settings' menu to select a front-end preview page.
 4. Create a new custom form or use the existing Contact Form template.
-5. Use shortcode [formidable id=x] in pages, posts, or text widgets. (Requires WordPress version 2.8)
+5. Use shortcode [formidable id=x] in pages, posts, or text widgets. (Requires WordPress version 2.8 or higher)
 
 == Screenshots ==
 1. List forms.
@@ -36,6 +36,11 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.07 =
+* Added Akismet integration
+* Replaced all instances of `<?` with `<?php`
+* Fixed bug preventing multiple forms from showing on the same page
+
 = 1.0.06 =
 * Added option to rename submit button
 * Added option to customize success message

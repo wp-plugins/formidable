@@ -1,5 +1,5 @@
 <span id="frm_delete_field_<?php echo $field['id']; ?>-<?php echo $opt_key ?>_container" class="frm_single_option">
-    <? if ($field['type'] != 'select'){ ?>
+    <?php if ($field['type'] != 'select'){ ?>
     <input type='<?php echo $field['type'] ?>' name='<?php echo $field_name ?><?php echo ($field['type'] == 'checkbox')?'[]':''; ?>' value='<?php echo $opt ?>'<?php echo isset($checked)? $checked : ''; ?>/> 
     <?php } ?>
     <span class="frm_ipe_field_option" id="field_<?php echo $field['id']?>-<?php echo $opt_key ?>"><?php echo $opt ?></span>

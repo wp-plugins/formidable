@@ -58,7 +58,7 @@ class FrmEntriesController{
         
         $submit = isset($form_options['submit_value'])?$form_options['submit_value']:'Submit';
         $failed_message = "We're sorry. There was an error processing your responses.";
-        $saved_message = isset($form_options['success_msg'])? $form_options['success_msg'] :"Your responses were successfully submitted. Thank you!";
+        $saved_message = (isset($form_options['success_msg']) && $form_options['success_msg'] != '') ? $form_options['success_msg'] :"Your responses were successfully submitted. Thank you!";
 
         $params = $this->get_params($form);
         $message = '';
@@ -97,7 +97,7 @@ class FrmEntriesController{
             $form = $frm_form->getAll('',' ORDER BY name',' LIMIT 1');
         $action = apply_filters('frm_show_new_entry_page','new',$form);
         $values = array();
-        foreach (array('id' => '','form_name' => '', 'paged' => 1,'form' => $form->id,'field_id' => '', 'search' => '','sort' => '','sdir' => '', 'form' => $form->id, 'action' => $action) as $var => $default)
+        foreach (array('id' => '', 'form_name' => '', 'paged' => 1, 'form' => $form->id, 'form_id' => $form->id, 'field_id' => '', 'search' => '', 'sort' => '', 'sdir' => '', 'action' => $action) as $var => $default)
             $values[$var] = $frm_app_controller->get_param($var, $default);
 
         return $values;

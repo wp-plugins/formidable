@@ -17,13 +17,13 @@
     <?php foreach ($frm_field_selection as $field_key => $field_type){ ?>
         <li class="frmbutton" id="<?php echo $field_key ?>"><a href="javascript:void(0);" class="add_frm_field_link" id="<?php echo $field_key ?>"><?php echo $field_type ?></a></li>
      <?php } ?>
-     <?php if (!$frm_recaptcha_enabled){
+     <?php if (!$frm_recaptcha_enabled && !function_exists( 'akismet_http_post' )){
             global $frm_siteurl;
-            echo '<p class="howto">Hint: Download and activate <a href="'.$frm_siteurl.'/wp-admin/plugin-install.php?tab=plugin-information&amp;plugin=wp-recaptcha&amp;TB_iframe=true&amp;width=640&amp;height=593" class="thickbox onclick" title="WP-reCAPTCHA 2.9.6">WP-reCAPTCHA</a> to add a captcha to your form.</p>';
+            echo '<p class="howto">Hint: Download and activate <a href="'.$frm_siteurl.'/wp-admin/plugin-install.php?tab=plugin-information&amp;plugin=wp-recaptcha&amp;TB_iframe=true&amp;width=640&amp;height=593" class="thickbox onclick" title="WP-reCAPTCHA 2.9.6">WP-reCAPTCHA</a> to add a captcha to your form. Alternatively activate Akismet for captcha-free spam screening.</p>';
             } ?>
      </ul>
      
-     <h4>Pro Fields <span style="font-weight:normal; font-style:italic;">Coming Soon</span></h4>
+     <h4>Pro Fields <span class="howto" style="display:inline;">Coming Soon</span></h4>
      <ul class="field_type_list">
      <?php 
      if($frmpro_is_installed){  

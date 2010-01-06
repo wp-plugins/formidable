@@ -1,7 +1,7 @@
 <div class="frm_forms">
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 
-    <form name="form1" method="post" action="">
+    <form action="" enctype="multipart/form-data" method="post" class="frm-show-form">
         <input type="hidden" name="action" value="create">
         <?php wp_nonce_field('update-options'); ?>
 

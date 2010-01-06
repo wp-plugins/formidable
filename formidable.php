@@ -2,15 +2,12 @@
 /*
 Plugin Name: Formidable
 Description: Easily create drag-and-drop forms
-Version: 1.0.06
+Version: 1.0.07
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
 */
 
-if (!function_exists('set_current_user'))
-    require_once(ABSPATH . WPINC . '/pluggable.php');
-    
 define('FRM_PLUGIN_TITLE','Formidable');
 define('FRM_PLUGIN_NAME','formidable');
 define('FRM_PATH',WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
@@ -144,7 +141,7 @@ global $frm_pro_field_selection;
 $frm_pro_field_selection = array(
     'divider' => 'Section Divider',
     'image' => 'Image URL', 
-    //'upload' => 'File Upload',
+    'file' => 'File Upload',
     //'rte' => 'Rich Text Editor', 
     'phone' => 'Phone', 
     'email' => 'Email',
@@ -156,7 +153,6 @@ $frm_pro_field_selection = array(
     '10radio' => '1-10 radio',
     'data' => 'Data from Entries'
     //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
-    //'title' => 'Entry Title', 
     //'key' => 'Entry Key',// (for calling entry from template) 
     //'address' => 'Address', //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
     //'city_selector' => 'US State/County/City selector', 

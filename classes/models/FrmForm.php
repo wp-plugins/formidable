@@ -67,6 +67,7 @@ class FrmForm{
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
     $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : ''; 
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
+    $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
     $options = apply_filters('frm_form_options_before_update', $options, $values);
     
     $new_values = array();
@@ -200,7 +201,7 @@ class FrmForm{
   }
 
   function validate( $values ){
-      global $frm_field, $frm_entry_meta;
+      global $wpcom_api_key;
       $errors = array();
 
       /*if( $values['form_key'] == null or $values['form_key'] == '' ){
@@ -208,14 +209,10 @@ class FrmForm{
               $errors[] = "Key can't be blank";
           else 
              $_POST['form_key'] = $values['name'];
-      }
-
-      if( $values['name'] == null or $values['name'] == '' )
-        $errors[] = "Form must have a name."; 
-
-      */
-
+      }*/
+      
       return apply_filters('frm_validate_form', $errors, $values);
   }
+
 }
 ?>

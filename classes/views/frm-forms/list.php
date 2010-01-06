@@ -52,7 +52,7 @@
                 </div>
               </td>
               <td><?php echo $form->description ?></td>
-          <? }else{ ?>
+          <?php }else{ ?>
               <td><?php do_action('frm_first_col', $form->id); ?> <?php echo $form->id ?></td>
               <td class="edit_item">
                   <a class="item_name" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="Edit <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>

@@ -22,7 +22,7 @@ class FrmEntry{
 
         $query_results = $wpdb->insert( $this->table_name, $new_values );
 
-        if($query_results){ //TODO: save checkbox values in serialized array
+        if($query_results){
             $entry_id = $wpdb->insert_id;
             if (isset($values['item_meta']))
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
@@ -66,7 +66,7 @@ class FrmEntry{
       
       if (isset($values['item_meta']))
           $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
-
+      do_action('frm_after_update_entry', $id);
       return $query_results;
     }
 
@@ -193,7 +193,53 @@ class FrmEntry{
             }
         }
         
+        if ( empty($errors) && function_exists( 'akismet_http_post' ) && (get_option('wordpress_api_key') || $wpcom_api_key) && $this->akismet($values)){
+            global $frm_form;
+            $form = $frm_form->getOne($field->form_id);
+            $form_options = stripslashes_deep(unserialize($form->options));
+
+            if (isset($form_options['akismet']) && $form_options['akismet'])
+    	        $errors['spam'] = 'Your entry appears to be spam!';
+    	}
+        
       return $errors;
+    }
+    
+    //Check entries for spam -- returns true if is spam
+    function akismet($values) {
+	    global $akismet_api_host, $akismet_api_port, $frm_blogurl;
+
+		$content = '';
+		foreach ( $values as $val ) {
+			if ( $content != '' )
+				$content .= "\n\n";
+			$content .= $val;
+		}
+		
+		if ($content == '')
+		    return false;
+        
+        $datas = array();
+		$datas['blog'] = $frm_blogurl;
+		$datas['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
+		$datas['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+		$datas['referrer'] = $_SERVER['HTTP_REFERER'];
+		$datas['comment_type'] = 'formidable';
+		if ( $permalink = get_permalink() )
+			$datas['permalink'] = $permalink;
+
+		$datas['comment_content'] = $content;
+
+		foreach ( $_SERVER as $key => $value )
+			if ( !in_array($key, array('HTTP_COOKIE', 'argv')) )
+				$datas["$key"] = $value;
+
+		$query_string = '';
+		foreach ( $datas as $key => $data )
+			$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
+
+		$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+		return ( $response[1] == 'true' ) ? true : false;
     }
     
 }

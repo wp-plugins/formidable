@@ -63,7 +63,7 @@
 
 do_action('frm_before_table', $footer); ?>
 
-<? if(isset($select_forms)){?>
+<?php if(isset($select_forms)){?>
 Entries from: 
 <select id="select_form" name="select_form" onChange='getFrmEntries(this.value)'>
     <?php foreach ($form_select as $g){ 
@@ -78,6 +78,6 @@ Entries from:
 <script type="text/javascript">
     function getFrmEntries(form){window.location='<?php $_SERVER["REQUEST_URI"] ?>?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form='+form}
 </script>    
-<? } ?>
+<?php } ?>
 </div>
 <div style="clear:both;"></div>

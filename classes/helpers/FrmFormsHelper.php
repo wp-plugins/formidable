@@ -21,7 +21,7 @@ class FrmFormsHelper{
         <script type="text/javascript">
             function createFromFrmTemplate(form){window.location='<?php $_SERVER["REQUEST_URI"] ?>?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id='+form}
         </script>
-    <?    
+    <?php    
     }
     
     function setup_new_vars(){
@@ -37,6 +37,7 @@ class FrmFormsHelper{
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : '';
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
+        $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
         
         return apply_filters('frm_setup_new_form_vars', $values);
     }

@@ -1,4 +1,5 @@
 <?php
+
 global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $frm_recaptcha_enabled, $user_ID;
 $fields = $frm_field->getAll("fi.form_id='$form->id'", ' ORDER BY field_order');
 $values = FrmEntriesHelper::setup_new_vars($fields);
@@ -13,12 +14,12 @@ $params = FrmEntriesController::get_params($form);
 $message = '';
 $errors = '';
 
-if($params['action'] == 'create'){
+if($params['action'] == 'create' && $params['form_id'] == $form->id){
     $errors = $frm_entry->validate($_POST);
 
-    if( count($errors) > 0 ){
+    if( !empty($errors) ){
         $values = FrmEntriesHelper::setup_new_vars($fields);
-        require_once('new.php');
+        require('new.php');
     }else{
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
         if (apply_filters('frm_continue_to_create', true)){
@@ -32,7 +33,7 @@ if($params['action'] == 'create'){
     do_action('frm_display_form_action', $params, $fields, $form, $title, $description);
     if (apply_filters('frm_continue_to_new', true)){
         $values = FrmEntriesHelper::setup_new_vars($fields);
-        require_once('new.php');
+        require('new.php');
     }
 }
 

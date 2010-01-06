@@ -16,6 +16,7 @@ class FrmEntryMeta{
     $new_values['item_id'] = $item_id;
     $new_values['field_id'] = $field_id;
     $new_values['created_at'] = current_time('mysql', 1);
+    $new_values = apply_filters('frm_add_entry_meta', $new_values);
     
     return $wpdb->insert( $this->table_name, $new_values );
   }
@@ -44,18 +45,12 @@ class FrmEntryMeta{
 
   function delete_entry_meta($item_id, $field_id){
     global $wpdb;
-
-    $query_str = "DELETE FROM {$this->table_name} WHERE field_id=%d AND item_id=%d";
-    $query = $wpdb->prepare($query_str, $field_id, $item_id);
-    return $wpdb->query($query);
+    return $wpdb->query("DELETE FROM {$this->table_name} WHERE field_id={$field_id} AND item_id={$item_id}");
   }
   
   function delete_entry_metas($item_id){
     global $wpdb;
-
-    $query_str = "DELETE FROM {$this->table_name} WHERE item_id=%d";
-    $query = $wpdb->prepare($query_str, $item_id);
-    return $wpdb->query($query);
+    return $wpdb->query("DELETE FROM {$this->table_name} WHERE item_id={$item_id}");
   }
   
   function get_entry_meta_by_field($item_id, $field_id, $return_var=false){
@@ -80,18 +75,12 @@ class FrmEntryMeta{
 
   function get_entry_metas($item_id){
       global $wpdb;
-      $query_str = "SELECT meta_value FROM {$this->table_name} WHERE item_id=%d";
-      $query = $wpdb->prepare($query_str,$item_id);
-
-      return $wpdb->get_col($query, 0);
+      return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE item_id={$item_id}");
   }
   
   function get_entry_meta_info($item_id){
       global $wpdb;
-      $query_str = "SELECT * FROM {$this->table_name} WHERE item_id=%d";
-      $query = $wpdb->prepare($query_str,$item_id);
-
-      return $wpdb->get_results($query, 0);
+      return $wpdb->get_results("SELECT * FROM {$this->table_name} WHERE item_id={$item_id}");
   }
   
   function get_entry_meta_info_by_key($item_id, $meta_key){
@@ -133,8 +122,7 @@ class FrmEntryMeta{
   
   function getRecordCount($where=""){
     global $wpdb, $frm_app_helper, $frm_field;
-    $query = 'SELECT COUNT(*) FROM ' . $this->table_name . ' it ' .
-        'LEFT OUTER JOIN ' . $frm_field->table_name . ' fi ON it.field_id=fi.id' .
+    $query = "SELECT COUNT(*) FROM {$this->table_name} it LEFT OUTER JOIN  {$frm_field->table_name} fi ON it.field_id=fi.id" .
         $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
     return $wpdb->get_var($query);
   }
@@ -160,13 +148,6 @@ class FrmEntryMeta{
       }
       return $wpdb->get_col($query, 0);
   }
-  
-  function validate( $errors, $field, $key, $value, $values ){
-      global $wpdb, $frm_field;
-      
-      $field_options = unserialize($field->field_options);
 
-      return $errors;      
-  } 
 }
 ?>

@@ -11,16 +11,15 @@
     
 <?php }else if ($field['type'] == 'radio'){
             if (is_array($field['options'])){
-                foreach($field['options'] as $opt){
-                    $checked = ($field['value'] == $opt ) ?' checked="true"':''; ?>
-                    <input type='radio' name='<?php echo $field_name ?>' value='<?php echo $opt ?>'<?php echo $checked ?>/> 
+                foreach($field['options'] as $opt){ ?>
+                    <input type='radio' name='<?php echo $field_name ?>' value='<?php echo $opt ?>' <?php if ($field['value'] == $opt) echo 'checked="checked"'; ?>/> 
                     <?php echo $opt ?><br/>
         <?php   }  
             } ?>   
 <?php }else if ($field['type'] == 'select'){?>
     <select name="<?php echo $field_name ?>" id="<?php echo $field_name ?>">
         <?php foreach ($field['options'] as $opt){ ?>
-            <option value='<?php echo $opt ?>'<?php echo ($field['value'] == $opt)?(' selected="true"'):(''); ?>><?php echo $opt ?></option>
+            <option value='<?php echo $opt ?>' <?php if ($field['value'] == $opt) echo 'selected="selected"'; ?>><?php echo $opt ?></option>
         <?php } ?>
     </select>
 <?php }else if ($field['type'] == 'captcha'){

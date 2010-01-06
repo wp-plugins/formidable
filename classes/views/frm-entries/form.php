@@ -1,11 +1,11 @@
 <div id="poststuff">
 <?php if ($title == true || $title == 'true'){ ?>
 <h3><?php echo $form->name ?></h3>
-<? } ?>
+<?php } ?>
 
 <?php if ($description == true || $description == 'true'){ ?>
 <p class="frm_description"><?php echo $form->description ?></p>
-<? } ?>
+<?php } ?>
 
 <input type="hidden" name="form_id" value="<?php echo $form->id ?>">
 <?php if (isset($controller) && isset($plugin)){ ?>
@@ -16,7 +16,7 @@
     <div>
     <?php
 
-    if (is_array($errors))
+    if (isset($errors) && is_array($errors))
         $error_keys = array_keys($errors);
         
     foreach($values['fields'] as $field){
