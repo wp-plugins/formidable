@@ -149,12 +149,6 @@ class FrmForm{
       return $wpdb->get_var($query);
   }
   
-  function getOneByKey( $key ){
-      global $wpdb;
-      $query = 'SELECT * FROM ' . $this->table_name . ' WHERE form_key="' . $key . '";';
-      return $wpdb->get_row($query);
-  }
-  
   function getIdByName( $name ){
       global $wpdb;
       $query = 'SELECT id FROM ' . $this->table_name . ' WHERE name="' . $name . '";';
@@ -177,26 +171,6 @@ class FrmForm{
         $results = $wpdb->get_row($query);
       else
         $results = $wpdb->get_results($query);
-      return $results;
-  }
-
-  // Pagination Methods
-  function getRecordCount($where=""){
-      global $wpdb, $frm_app_helper;
-      $query = 'SELECT COUNT(*) FROM ' . $this->table_name . $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
-      return $wpdb->get_var($query);
-  }
-
-  function getPageCount($p_size, $where=""){
-      return ceil((int)$this->getRecordCount($where) / (int)$p_size);
-  }
-
-  function getPage($current_p,$p_size, $where = "", $order_by = ''){
-      global $wpdb, $frm_app_helper;
-      $end_index = $current_p * $p_size;
-      $start_index = $end_index - $p_size;
-      $query = 'SELECT *  FROM ' . $this->table_name . $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
-      $results = $wpdb->get_results($query);
       return $results;
   }
 

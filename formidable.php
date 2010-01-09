@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Easily create drag-and-drop forms
-Version: 1.0.07
+Version: 1.0.08
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
@@ -22,7 +22,7 @@ define('FRM_IMAGES_URL',FRM_URL.'/images');
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
 global $frm_version;
-$frm_version = '1.0.07';
+$frm_version = '1.0.08';
 
 
 // Check for WPMU installation
@@ -76,6 +76,7 @@ $frm_update         = new FrmUpdate();
 
 
 // Instansiate Controllers
+require_once(FRM_CONTROLLERS_PATH . "/FrmApiController.php");
 require_once(FRM_CONTROLLERS_PATH . "/FrmAppController.php");
 require_once(FRM_CONTROLLERS_PATH . "/FrmFieldsController.php");
 require_once(FRM_CONTROLLERS_PATH . "/FrmFormsController.php");
@@ -83,12 +84,14 @@ require_once(FRM_CONTROLLERS_PATH . "/FrmEntriesController.php");
 require_once(FRM_CONTROLLERS_PATH . "/FrmSettingsController.php");
 require_once(FRM_CONTROLLERS_PATH . "/FrmStatisticsController.php");
 
+global $frm_api_controller;
 global $frm_app_controller;
 global $frm_entries_controller;
 global $frm_fields_controller;
 global $frm_forms_controller;
 global $frm_settings_controller;
 
+$frm_api_controller         = new FrmApiController();
 $frm_app_controller         = new FrmAppController();
 $frm_entries_controller     = new FrmEntriesController();
 $frm_fields_controller      = new FrmFieldsController();

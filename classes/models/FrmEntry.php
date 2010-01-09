@@ -104,8 +104,11 @@ class FrmEntry{
                 'fr.name as form_name, ' .
                 'fr.form_key as form_key ' .
                 'FROM '. $this->table_name . ' it ' .
-                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' .
-                ' WHERE it.id=' . $id;
+                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id';
+      if(is_numeric($id))
+        $query .= ' WHERE it.id=' . $id;
+      else
+        $query .= " WHERE it.item_key='" . $id ."'";
       return $wpdb->get_row($query);
     }
 

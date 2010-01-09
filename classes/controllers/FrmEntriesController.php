@@ -21,7 +21,7 @@ class FrmEntriesController{
     function show_form($id='', $key='', $title=false, $description=false){
         global $frm_form, $user_ID;
         if ($id) $form = $frm_form->getOne($id);
-        else if ($key) $form = $frm_form->getOneByKey($key);
+        else if ($key) $form = $frm_form->getOne($key);
         if (!$form or $form->is_template or $form->status == 'draft')
             return 'Please select a valid form';
         else if ($form->logged_in and !$user_ID)

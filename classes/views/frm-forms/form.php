@@ -36,7 +36,7 @@ if (isset($values['fields'])){
         </p>
         
         <p><label>Success Message</label>
-            <input type="text" name="options[success_msg]" value="<?php echo $values['success_msg']; ?>" />
+            <input type="text" name="options[success_msg]" size="60" value="<?php echo $values['success_msg']; ?>" />
         </p>
         
         <?php if (function_exists( 'akismet_http_post' )){ ?>

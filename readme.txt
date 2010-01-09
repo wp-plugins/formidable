@@ -36,6 +36,11 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.08 =
+* Allow required indicator to be blank
+* Hide paragraph tags if field description is empty
+* General code cleanup
+
 = 1.0.07 =
 * Added Akismet integration
 * Replaced all instances of `<?` with `<?php`

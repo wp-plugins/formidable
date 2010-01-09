@@ -3,9 +3,9 @@
 class FrmFieldsHelper{
     
     function setup_new_vars($type='',$form_id=''){
-        global $frm_field;
+        global $frm_field, $frm_app_helper;
         
-        $field_count = $frm_field->getRecordCount("form_id=$form_id");
+        $field_count = $frm_app_helper->getRecordCount("form_id=$form_id", $frm_field->table_name);
         $key = FrmAppHelper::get_unique_key('', $frm_field->table_name, 'field_key');
         
         $values = array();

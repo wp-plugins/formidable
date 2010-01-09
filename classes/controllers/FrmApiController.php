@@ -34,7 +34,7 @@ class FrmApiController{
 
         $r = wp_parse_args( $args, $defaults ); 
 
-        $form = $frm_form->getOneByKey($r['form_key']);
+        $form = $frm_form->getOne($r['form_key']);
 
         $where = " (it.form_id='". $form->id ."' or fr.form_id='". $form->id ."')";
         if (!($r['parent_id'] == ''))
@@ -65,7 +65,7 @@ class FrmApiController{
 
     function get_frm_item($item_key){
         global $frm_entry;
-        return $frm_entry->getOneByKey( $item_key );
+        return $frm_entry->getOne( $item_key );
     }
 
     function get_frm_item_by_id($id){

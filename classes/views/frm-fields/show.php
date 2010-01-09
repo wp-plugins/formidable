@@ -34,5 +34,7 @@
         }
       }else do_action('frm_form_fields',$field, $field_name);
 ?>
+<?php if (!empty($field['description'])){ ?>
     <p class="description"><?php echo $field['description']; ?></p>
+<?php } ?>    
 </div>

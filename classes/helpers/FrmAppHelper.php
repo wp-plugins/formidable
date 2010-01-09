@@ -7,14 +7,19 @@ class FrmAppHelper{
       return get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'order_by' => 'post_title', 'order' => 'ASC'));
     }
   
-    function value_is_selected($field_name, $field_value, $selected_value){
-      if( (isset($_POST[$field_name]) and $_POST[$field_name] == $selected_value) or (!isset($_POST[$field_name]) and $field_value == $selected_value) )
-        echo ' selected="selected"';
-    }
-
-    function value_is_checked($field_name, $field_value){
-      if( (isset($_POST) and $_POST[$field_name] == '1') or (!isset($_POST) and $field_value == '1') )
-        echo ' checked="checked"';
+    function wp_pages_dropdown($field_name, $page_id){
+        global $frm_app_controller;
+        
+        $field_value = $frm_app_controller->get_param($field_name);
+        $pages = get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'order_by' => 'post_title', 'order' => 'ASC'));
+    ?>
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
+            <option value=""></option>
+            <?php foreach($pages as $page){ ?>
+                <option value="<?php echo $page->ID; ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $page->ID) or (!isset($_POST[$field_name]) and $page_id == $page->ID))?' selected="selected"':''); ?>><?php echo $page->post_title; ?> </option>
+            <?php } ?>
+        </select>
+    <?php
     }
 
     function value_is_checked_with_array($field_name, $index, $field_value){
@@ -56,7 +61,7 @@ class FrmAppHelper{
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
               $values[$var] = stripslashes($frm_app_controller->get_param($var, $default_val));
 
-        $values['form_name'] = ($record->form_id)?($frm_form->getName( $record->form_id )):('');
+        $values['form_name'] = (isset($record->form_id))?($frm_form->getName( $record->form_id )):('');
 
         $values['fields'] = array();
         if ($fields){ 
@@ -153,17 +158,35 @@ COMMENT_FORM;
       return (( $where == '' )?'':$starts_with . $where);
     }
     
-    // For Pagination
+    // Pagination Methods
     function getLastRecordNum($r_count,$current_p,$p_size){
       return (($r_count < ($current_p * $p_size))?$r_count:($current_p * $p_size));
     }
 
-    // For Pagination
     function getFirstRecordNum($r_count,$current_p,$p_size){
       if($current_p == 1)
         return 1;
       else
         return ($this->getLastRecordNum($r_count,($current_p - 1),$p_size) + 1);
+    }
+    
+    function getRecordCount($where="", $table_name){
+        global $wpdb, $frm_app_helper;
+        $query = 'SELECT COUNT(*) FROM ' . $table_name . $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
+        return $wpdb->get_var($query);
+    }
+
+    function getPageCount($p_size, $where="", $table_name){
+        return ceil((int)$this->getRecordCount($where, $table_name) / (int)$p_size);
+    }
+
+    function getPage($current_p,$p_size, $where = "", $order_by = '', $table_name){
+        global $wpdb, $frm_app_helper;
+        $end_index = $current_p * $p_size;
+        $start_index = $end_index - $p_size;
+        $query = 'SELECT *  FROM ' . $table_name . $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
+        $results = $wpdb->get_results($query);
+        return $results;
     }
     
 }

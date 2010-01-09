@@ -48,7 +48,7 @@ class FrmAppController{
     }
   
     function install(){
-      global $wpdb, $frm_form, $frm_field;
+      global $wpdb, $frm_form, $frm_field, $frm_app_helper;
       $db_version = 1.0; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
@@ -56,14 +56,6 @@ class FrmAppController{
       $forms_table      = $wpdb->prefix . "frm_forms";
       $items_table      = $wpdb->prefix . "frm_items";
       $item_metas_table = $wpdb->prefix . "frm_item_metas";
-
-      $charset_collate = '';
-      if( $wpdb->has_cap( 'collation' ) ){
-        if( !empty($wpdb->charset) )
-          $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-        if( !empty($wpdb->collate) )
-          $charset_collate .= " COLLATE $wpdb->collate";
-      }
 
       if ($db_version != $old_db_version){
       require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -139,7 +131,7 @@ class FrmAppController{
       dbDelta($sql);
 
       /**** ADD DEFAULT FORMS ****/
-      if ($frm_form->getRecordCount("form_key='contact' and is_template='1'") <= 0){
+      if ($frm_app_helper->getRecordCount("form_key='contact' and is_template='1'", $forms_table) <= 0){
           $values = FrmFormsHelper::setup_new_vars();
             $values['name'] = 'Contact Us';
             $values['form_key'] = 'contact';
@@ -245,6 +237,7 @@ class FrmAppController{
       /***** SAVE DB VERSION *****/
         update_option('frm_db_version',$db_version);
       }
+      do_action('frm_after_install');
     }
     
     

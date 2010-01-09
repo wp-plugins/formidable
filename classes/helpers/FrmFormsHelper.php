@@ -24,6 +24,22 @@ class FrmFormsHelper{
     <?php    
     }
     
+    function forms_dropdown( $field_name, $field_value, $blank=true ){
+        global $frm_app_controller, $frm_form;
+
+        $forms = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')",' ORDER BY name');
+        ?>
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown">
+            <?php if ($blank){ ?>
+            <option value=""></option>
+            <?php } ?>
+            <?php foreach($forms as $form){ ?>
+                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo $form->name; ?></option>
+            <?php } ?>
+        </select>
+        <?php
+    }
+    
     function setup_new_vars(){
         global $frm_app_controller, $frm_form;
         $values = array();

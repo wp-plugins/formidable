@@ -15,7 +15,7 @@
             <tr class="form-field">
               <td valign="top" width="10%"><?php _e('Preview Page', FRM_PLUGIN_NAME); ?>*: </td>
               <td>
-                <?php FrmSettingsHelper::wp_pages_dropdown( $frm_settings->preview_page_id_str, $frm_settings->preview_page_id )?>
+                <?php FrmAppHelper::wp_pages_dropdown( $frm_settings->preview_page_id_str, $frm_settings->preview_page_id )?>
               </td>
             </tr>
         </table>

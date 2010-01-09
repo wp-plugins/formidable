@@ -158,9 +158,9 @@ class FrmFormsController{
     }
     
     function destroy_wo_fields(){
-        global $frm_field, $frm_form;
+        global $frm_field, $frm_form, $frm_app_helper;
         $id = $_POST['form_id'];
-        if ($frm_field->getRecordCount('fi.form_id='.$id) <= 0)
+        if ($frm_app_helper->getRecordCount('fi.form_id='.$id, $frm_field->table_name) <= 0)
             $frm_form->destroy($id);
         die();
     }
@@ -199,9 +199,9 @@ class FrmFormsController{
         $sdir_str = $form_vars['sdir_str'];
         $search_str = $form_vars['search_str'];
 
-        $record_count = $frm_form->getRecordCount($form_vars['where_clause']);
-        $page_count = $frm_form->getPageCount($frm_page_size,$form_vars['where_clause']);
-        $forms = $frm_form->getPage($current_page,$frm_page_size,$form_vars['where_clause'],$form_vars['order_by']);
+        $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frm_form->table_name);
+        $page_count = $frm_app_helper->getPageCount($frm_page_size,$form_vars['where_clause'], $frm_form->table_name);
+        $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frm_form->table_name);
         $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
         $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
         require_once($this->views . 'list.php');
