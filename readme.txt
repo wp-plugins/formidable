@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin, akismet
 Requires at least: 2.0
 Tested up to: 2.9.1
-Stable tag: 1.0.07
+Stable tag: 1.0.08
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -18,6 +18,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 * Create forms from existing templates or add your own
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
+* Input default data into form fields with the option to clear when clicked
 * Saves responses to the database for future retrieval, reports, and display (Pro version Coming Soon)
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
 
