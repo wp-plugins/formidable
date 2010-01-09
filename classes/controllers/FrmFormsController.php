@@ -160,7 +160,7 @@ class FrmFormsController{
     function destroy_wo_fields(){
         global $frm_field, $frm_form, $frm_app_helper;
         $id = $_POST['form_id'];
-        if ($frm_app_helper->getRecordCount('fi.form_id='.$id, $frm_field->table_name) <= 0)
+        if ($frm_app_helper->getRecordCount('form_id='.$id, $frm_field->table_name) <= 0)
             $frm_form->destroy($id);
         die();
     }
