@@ -4,7 +4,7 @@ global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $frm_recaptcha_enable
 $fields = $frm_field->getAll("fi.form_id='$form->id'", ' ORDER BY field_order');
 $values = FrmEntriesHelper::setup_new_vars($fields);
 $form_name = $form->name;
-$form_options = stripslashes_deep(unserialize($form->options));
+$form_options = stripslashes_deep(maybe_unserialize($form->options));
 
 $submit = isset($form_options['submit_value'])?$form_options['submit_value']:'Submit';
 $failed_message = "We're sorry. There was an error processing your responses.";

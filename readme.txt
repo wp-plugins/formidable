@@ -37,6 +37,9 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.09 =
+* Fixes for PHP 4 compatibility
+
 = 1.0.08 =
 * Allow required indicator to be blank
 * Hide paragraph tags if field description is empty

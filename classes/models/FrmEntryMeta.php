@@ -32,7 +32,8 @@ class FrmEntryMeta{
     global $frm_field;
     $this->delete_entry_metas($item_id);
     foreach($values as $field_id => $meta_value){
-        $meta_key = $frm_field->getOne( $field_id )->field_key;
+        $field = $frm_field->getOne( $field_id );
+        $meta_key = $field->field_key;
         $meta_value = maybe_serialize($values[$field_id]);
         $this->update_entry_meta($item_id, $field_id, $meta_key, $meta_value);
     }

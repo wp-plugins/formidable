@@ -73,16 +73,6 @@ class FrmApiController{
         return $frm_entry->getOne( $id );
     }
 
-    function get_frm_edit_link($id){
-        global $current_user, $frm_siteurl;
-
-    	$output = '';
-    	if($current_user->wp_capabilities['administrator'] == 1) {
-    		$output = "<span class='frm_edit'>[<a href='{$frm_siteurl}/wp-admin/admin.php?page=". FRM_PLUGIN_NAME ."-entries&action=edit&id={$id}'>Edit</a>]</span>";
-    	}
-    	return $output;
-    }
-
 }
 
 ?>

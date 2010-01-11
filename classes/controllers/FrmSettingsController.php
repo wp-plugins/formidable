@@ -4,7 +4,6 @@ class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', array( $this, 'menu' ), 25);
         add_action('admin_head-'.FRM_PLUGIN_NAME.'-settings', array($this,'head'));
-        $this->views = FRM_VIEWS_PATH.'/frm-settings/';
     }
 
     function menu(){
@@ -21,15 +20,14 @@ class FrmSettingsController{
 
     function display_form(){
       global $frm_settings;
-
-      require_once($this->views . 'form.php');
+      require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 
     function process_form(){
       global $frm_settings;
 
-      $errors = $frm_settings->validate($_POST,array());
-
+      //$errors = $frm_settings->validate($_POST,array());
+      $errors = array();
       $frm_settings->update($_POST);
 
       if( empty($errors) ){
@@ -37,7 +35,7 @@ class FrmSettingsController{
         $message = 'Settings Saved';
       }
 
-      require_once($this->views . 'form.php');
+      require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
     
     function route(){

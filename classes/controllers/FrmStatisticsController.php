@@ -3,7 +3,6 @@
 class FrmStatisticsController{
     function FrmStatisticsController(){
         add_action('admin_menu', array( $this, 'menu' ), 30);
-        $this->views = FRM_VIEWS_PATH.'/frm-statistics/';
     }
     
     function menu(){
@@ -13,7 +12,7 @@ class FrmStatisticsController{
     }
     
     function list_entries(){
-        require_once($this->views .'list.php');
+        require_once(FRM_VIEWS_PATH . '/frm-statistics/list.php');
     }
 
 }

@@ -18,6 +18,12 @@ class FrmForm{
     $new_values['is_template'] = isset($values['is_template'])?(int)$values['is_template']:0;
     $new_values['default_template'] = isset($values['default_template'])?(int)$values['default_template']:0;
     $new_values['prli_link_id'] = isset($link_id)?(int)$link_id:0;
+    $options = array();
+    $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
+    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
+    $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
+    $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
+    $new_values['options'] = serialize($options);
     $new_values['created_at'] = current_time('mysql', 1);
 
     $query_results = $wpdb->insert( $this->table_name, $new_values );
@@ -65,7 +71,7 @@ class FrmForm{
     
     $options = array();
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
-    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : ''; 
+    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
     $options = apply_filters('frm_form_options_before_update', $options, $values);

@@ -138,7 +138,7 @@ COMMENT_FORM;
         echo $format . recaptcha_wp_get_html(isset($_GET['rerror'])?$_GET['rerror']:'', $use_ssl);
     }
     
-    function truncate($str, $length, $minword = 3){
+    function truncate($str, $length, $minword = 3, $continue = '...'){
         $sub = '';
         $len = 0;
 
@@ -151,7 +151,7 @@ COMMENT_FORM;
                 break;
         }
 
-        return $sub . (($len < strlen($str)) ? '...' : '');
+        return $sub . (($len < strlen($str)) ? $continue : '');
     }
     
     function prepend_and_or_where( $starts_with = ' WHERE', $where = '' ){

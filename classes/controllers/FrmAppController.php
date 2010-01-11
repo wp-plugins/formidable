@@ -23,7 +23,6 @@ class FrmAppController{
         
         //if(!$frmpro_is_installed)
             //add_submenu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE .' | Pro Statistics', 'Pro Statistics', 8, FRM_PLUGIN_TITLE.'-statistics',array($this,''));
-        
     }
     
     function head(){
@@ -138,6 +137,7 @@ class FrmAppController{
             $values['description'] = 'We would like to hear from you. Please send us a message by filling out the form below and we will get back with you shortly.';
             $values['is_template'] = 1;
             $values['default_template'] = 1;
+            $values['options'] = array('email_to' => '', 'submit_value' => 'Submit', 'success_msg' => 'Your responses were successfully submitted. Thank you!', 'akismet' => 0);
             $form_id = $frm_form->create( $values );
 
             $field_options = array();
@@ -243,11 +243,12 @@ class FrmAppController{
     
     // Routes for wordpress pages -- we're just replacing content here folks.
     function page_route($content){
-        global $post, $frm_settings, $frm_forms_controller;
+        global $post, $frm_settings;
 
-        if( $post->ID == $frm_settings->preview_page_id){  
+        if( $post->ID == $frm_settings->preview_page_id && isset($_GET['form'])){
+            global $frm_forms_controller;
             $frm_forms_controller->page_preview();
-            return '';
+            return;
         }
 
         return $content;

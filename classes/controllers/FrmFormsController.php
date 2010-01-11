@@ -9,7 +9,6 @@ class FrmFormsController{
         add_action('wp_ajax_frm_form_name_in_place_edit', array($this, 'edit_name') );
         add_action('wp_ajax_frm_form_desc_in_place_edit', array($this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array($this, 'destroy_wo_fields'));
-        $this->views = FRM_VIEWS_PATH.'/frm-forms/';
     }
     
     function menu(){
@@ -44,10 +43,10 @@ class FrmFormsController{
         else if ($action == 'new'){    
             $values = FrmFormsHelper::setup_new_vars();
             $id = $frm_form->create( $values );
-            require_once($this->views . 'new.php');
+            require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $all_templates = $frm_form->getAll('is_template=1',' ORDER BY name');
-            require_once($this->views . 'new-selection.php');
+            require_once(FRM_VIEWS_PATH.'/frm-forms/new-selection.php');
         }
     }
     
@@ -60,7 +59,7 @@ class FrmFormsController{
             $record = $frm_form->getOne( $id );
             $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
             $values = $frm_app_helper->setup_edit_vars($record,'forms',$fields,true);
-            require_once($this->views . 'new.php');
+            require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $items = $frm_entry->getAll('',' ORDER BY it.name');
             $record = $frm_form->update( $id, $_POST, true );
@@ -152,6 +151,7 @@ class FrmFormsController{
     function destroy(){
         global $frm_form;
         $params = $this->get_params();
+        $message = '';
         if ($frm_form->destroy( $params['id'] ))
             $message = "Form was Successfully Deleted";
         $this->display_forms_list($params, $message, '', 1);
@@ -204,7 +204,7 @@ class FrmFormsController{
         $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frm_form->table_name);
         $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
         $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
-        require_once($this->views . 'list.php');
+        require_once(FRM_VIEWS_PATH.'/frm-forms/list.php');
     }
     
     function get_form_sort_vars($params,$where_clause = ''){
@@ -276,9 +276,9 @@ class FrmFormsController{
         if ($values['default_template'])
             wp_die('That template cannot be edited');
         else if($create_link)
-            require_once($this->views . 'new.php');
+            require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         else
-            require_once($this->views . 'edit.php');
+            require_once(FRM_VIEWS_PATH.'/frm-forms/edit.php');
     }
     
     function get_params(){

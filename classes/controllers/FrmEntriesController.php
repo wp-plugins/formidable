@@ -5,7 +5,6 @@ class FrmEntriesController{
     
     function FrmEntriesController(){
         //add_action('admin_menu', array( $this, 'menu' ));
-        $this->views = FRM_VIEWS_PATH.'/frm-entries/';
     }
     
     function menu(){
@@ -15,7 +14,7 @@ class FrmEntriesController{
     }
     
     function list_entries(){
-        require_once($this->views .'list.php');
+        require_once(FRM_VIEWS_PATH.'/frm-entries/list.php');
     }
     
     function show_form($id='', $key='', $title=false, $description=false){
@@ -45,7 +44,7 @@ class FrmEntriesController{
         do_action('frm_display_form_action', $params, $fields, $form, $title, $description);
         if (apply_filters('frm_continue_to_new', true)){
             $values = FrmEntriesHelper::setup_new_vars($fields);
-            require_once($this->views .'new.php');
+            require_once(FRM_VIEWS_PATH.'/frm-entries/new.php');
         }
     }
     
@@ -67,7 +66,7 @@ class FrmEntriesController{
 
         if( count($errors) > 0 ){
             $values = FrmEntriesHelper::setup_new_vars($fields);
-            require_once($this->views.'new.php');
+            require_once(FRM_VIEWS_PATH.'/frm-entries/new.php');
         }else{
             do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
             if (apply_filters('frm_continue_to_create', true)){
