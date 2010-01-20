@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin, akismet
 Requires at least: 2.0
 Tested up to: 2.9.1
-Stable tag: 1.0.09
+Stable tag: 1.0.10
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -15,7 +15,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 * Integrates with Pretty Link, WP reCAPTCHA, and Akismet
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
-* Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow )
+* Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow... and documentation too)
 * Create forms from existing templates or add your own
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
@@ -39,7 +39,8 @@ Feedback and requests are welcome.
 
 == Changelog ==
 = 1.0.10 =
-* Started HTML customization. Will be updated, but for now you can only edit the HTML when editng the form.
+* Started HTML customization. Will be updated, but for now you can only edit the HTML when editing the form.
+* Added 'Settings' link on plugin page
 
 = 1.0.09 =
 * Fixes for PHP 4 compatibility
