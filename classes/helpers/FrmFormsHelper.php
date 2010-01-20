@@ -54,6 +54,8 @@ class FrmFormsHelper{
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
         $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
+        $values['before_html'] = FrmFormsHelper::get_default_html('before');
+        $values['after_html'] = FrmFormsHelper::get_default_html('after');
         
         return apply_filters('frm_setup_new_form_vars', $values);
     }
@@ -70,8 +72,55 @@ class FrmFormsHelper{
             foreach ($options as $opt => $value)
                 $values[$opt] = $frm_app_controller->get_param($opt, $value);
         }
+        if (!isset($values['email_to']))
+            $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : '';
+        
+        if (!isset($values['submit_value']))
+            $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
+        if (!isset($values['success_msg']))
+            $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
+            
+        if (!isset($values['akismet']))
+            $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
+        
+        if (!isset($values['before_html']))
+            $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
+        
+        if (!isset($values['after_html']))
+            $values['after_html'] = (isset($_POST['options']['after_html'])?$_POST['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
 
         return apply_filters('frm_setup_edit_form_vars', $values);
+    }
+    
+    function get_default_html($loc){
+        if ($loc == 'before'){
+            $default_html = <<<BEFORE_HTML
+[if form_name]<h3>[form_name]</h3>[/if form_name]
+[if form_description]<p class="frm_description">[form_description]</p>[/if form_description]
+BEFORE_HTML;
+        }else{
+            $default_html = '';
+        }
+        return $default_html;
+    }
+    
+    function replace_shortcodes($html, $form, $title=false, $description=false){
+        foreach (array('form_name' => $title,'form_description' => $description) as $code => $show){
+            if ($code == 'form_name')
+                $replace_with = $form->name;
+            else if ($code == 'form_description')
+                $replace_with = $form->description;
+                
+            if (($show == true || $show == 'true') && $replace_with != '' ){
+                $html = str_replace('[if '.$code.']','',$html); 
+        	    $html = str_replace('[/if '.$code.']','',$html);
+            }else{
+                $html = preg_replace('/(\[if\s+'.$code.'\])(.*?)(\[\/if\s+'.$code.'\])/mis', '', $html);
+            }
+            $html = str_replace('['.$code.']', $replace_with, $html);   
+        }   
+        
+        return $html;
     }
 
 }

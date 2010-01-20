@@ -57,7 +57,10 @@ class FrmEntry{
     function update( $id, $values ){
       global $wpdb, $frm_entry_meta, $frm_field;
        
-      $new_values = array();     
+      $new_values = array();
+      if (isset($values['item_key']))
+          $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $this->table_name, 'item_key', $id);
+          
       $new_values['name'] = isset($values['name'])?$values['name']:'';
       $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']: null;
       //$new_values['parent_item_id'] = isset($values['parent_item_id'])?(int)$values['parent_item_id']: null;

@@ -65,7 +65,7 @@ class FrmEntriesController{
         $errors = $frm_entry->validate($_POST);
 
         if( count($errors) > 0 ){
-            $values = FrmEntriesHelper::setup_new_vars($fields);
+            $values = FrmEntriesHelper::setup_new_vars($fields, $form);
             require_once(FRM_VIEWS_PATH.'/frm-entries/new.php');
         }else{
             do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);

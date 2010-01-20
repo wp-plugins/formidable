@@ -15,6 +15,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 * Integrates with Pretty Link, WP reCAPTCHA, and Akismet
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
+* Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow )
 * Create forms from existing templates or add your own
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
@@ -37,6 +38,9 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.10 =
+* Started HTML customization. Will be updated, but for now you can only edit the HTML when editng the form.
+
 = 1.0.09 =
 * Fixes for PHP 4 compatibility
 

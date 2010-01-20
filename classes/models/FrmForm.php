@@ -23,6 +23,8 @@ class FrmForm{
     $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
+    $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
+    $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
     $new_values['options'] = serialize($options);
     $new_values['created_at'] = current_time('mysql', 1);
 
@@ -74,6 +76,8 @@ class FrmForm{
     $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
+    $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
+    $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
     $options = apply_filters('frm_form_options_before_update', $options, $values);
     
     $new_values = array();
@@ -92,14 +96,16 @@ class FrmForm{
             if (!in_array($fid->id, $existing_keys))
                 $values['item_meta'][$fid->id] = '';
         }
-        foreach ($values['item_meta'] as $field_id => $default_value){
+        foreach ($values['item_meta'] as $field_id => $default_value){ 
             $field = $frm_field->getOne($field_id);
             $field_options = unserialize($field->field_options);
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
                 $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? $values['field_options'][$opt.'_'.$field_id] : '';
+            $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : FrmFieldsHelper::get_default_html($field->type);
             $field_options = apply_filters('frm_update_field_options', $field_options, $field_id, $values);
             $default_value = maybe_serialize($values['item_meta'][$field_id]);
-            $frm_field->update($field_id, array('default_value' => $default_value, 'field_options' => $field_options));
+            $field_key = (isset($values['field_options']['field_key_'.$field_id]))? $values['field_options']['field_key_'.$field_id] : $field->field_key;
+            $frm_field->update($field_id, array('field_key' => $field_key, 'default_value' => $default_value, 'field_options' => $field_options));
         }
     }    
     

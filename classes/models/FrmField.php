@@ -73,7 +73,7 @@ class FrmField{
         if (is_numeric($id))
             $query = "SELECT * FROM {$this->table_name} WHERE id=" . $id;
         else
-            $query = 'SELECT * FROM ' . $this->table_name . ' WHERE field_key="' . $id . '";';
+            $query = "SELECT * FROM {$this->table_name} WHERE field_key='" . $id . "'";
         return $wpdb->get_row($query);
     }
 

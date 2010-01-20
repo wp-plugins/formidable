@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Easily create drag-and-drop forms
-Version: 1.0.09
+Version: 1.0.10
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
@@ -131,7 +131,7 @@ $frm_field_selection = array(
 
 global $frm_recaptcha_enabled;
 
-$frm_recaptcha_enabled = ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) )?(true):(false);
+$frm_recaptcha_enabled = ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) )? true : false;
 if ($frm_recaptcha_enabled)
     $frm_field_selection['captcha'] = 'reCAPTCHA Field';
     
@@ -141,7 +141,7 @@ $frm_pro_field_selection = array(
     'divider' => 'Section Divider',
     'image' => 'Image URL', 
     'file' => 'File Upload',
-    //'rte' => 'Rich Text Editor', 
+    'rte' => 'Rich Text Editor', 
     'phone' => 'Phone', 
     'email' => 'Email',
     'date' => 'Date', 

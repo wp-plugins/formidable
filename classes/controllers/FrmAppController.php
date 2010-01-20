@@ -3,6 +3,7 @@
 class FrmAppController{
     function FrmAppController(){
         add_action('admin_menu', array( $this, 'menu' ));
+        add_filter( 'plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this, 'settings_link'), 10, 2 );
         add_filter('the_content', array( $this, 'page_route' ), 1);
         add_action('init', array($this, 'front_head'));
         add_action('admin_init', array( $this, 'admin_js'));
@@ -24,16 +25,24 @@ class FrmAppController{
         //if(!$frmpro_is_installed)
             //add_submenu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE .' | Pro Statistics', 'Pro Statistics', 8, FRM_PLUGIN_TITLE.'-statistics',array($this,''));
     }
+
+    // Adds a settings link to the plugins page
+    function settings_link($links, $file){
+        $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings') . '</a>';
+        array_unshift($links, $settings);
+        return $links;
+    }
     
     function head(){
-        $css_file = 'frm_admin.css';
+        global $frm_settings;
+        $css_file = array($frm_settings->theme_css,  FRM_URL. '/css/frm_admin.css');
         $js_file  = 'list-items.js';
         require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
     
     function admin_js(){
         wp_enqueue_script('jQuery');
-        wp_enqueue_script('jQuery-custom', FRM_URL.'/js/jquery/jquery-ui-1.7.1.custom.min.js'); 
+        wp_enqueue_script('jQuery-datepicker', FRM_URL.'/js/jquery/jquery-ui-1.7.1.custom.min.js'); 
         wp_enqueue_script('jQuery-in-place-edit-patched', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
 
         add_action( 'admin_print_footer_scripts', 'wp_tiny_mce', 25 );
@@ -245,7 +254,7 @@ class FrmAppController{
     function page_route($content){
         global $post, $frm_settings;
 
-        if( $post->ID == $frm_settings->preview_page_id && isset($_GET['form'])){
+        if( $post && $post->ID == $frm_settings->preview_page_id && isset($_GET['form'])){
             global $frm_forms_controller;
             $frm_forms_controller->page_preview();
             return;

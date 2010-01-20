@@ -1,11 +1,5 @@
 <div id="poststuff">
-<?php if ($title == true || $title == 'true'){ ?>
-<h3><?php echo $form->name ?></h3>
-<?php } ?>
-
-<?php if ($description == true || $description == 'true'){ ?>
-<p class="frm_description"><?php echo $form->description ?></p>
-<?php } ?>
+    <?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
 
 <input type="hidden" name="form_id" value="<?php echo $form->id ?>">
 <?php if (isset($controller) && isset($plugin)){ ?>
@@ -18,11 +12,12 @@
 
     if (isset($errors) && is_array($errors))
         $error_keys = array_keys($errors);
-        
+    $error_keys = (isset($error_keys)) ? $error_keys : array();
+    
     foreach($values['fields'] as $field){
         $field_name = "item_meta[". $field['id'] ."]";
-        if (apply_filters('frm_show_normal_field_type', true, $field))
-            require(FRM_VIEWS_PATH.'/frm-fields/show.php');
+        if (apply_filters('frm_show_normal_field_type', true, $field['type']))
+            echo FrmFieldsHelper::replace_shortcodes($field['custom_html'], $field, $error_keys);
         else
             do_action('frm_show_other_field_type', $field);
         
@@ -30,6 +25,12 @@
     }    
 
     ?>
+    <?php if (is_admin()){ ?>
+        <div class="form_field">
+        <label class="frm_pos_top">Entry Key</label>   
+        <input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
+        </div>
+    <?php } ?>
     </div>
 </div>
 </div>

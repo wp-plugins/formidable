@@ -3,7 +3,7 @@
 class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', array( $this, 'menu' ), 25);
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'-settings', array($this,'head'));
+        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-settings', array($this,'head'));
     }
 
     function menu(){
@@ -13,9 +13,18 @@ class FrmSettingsController{
     }
 
     function head(){
-      $css_file = 'frm_admin.css';
-      $js_file  = 'list-items.js';
-      require_once(FRM_VIEWS_PATH . '/shared/admin_head.php');
+        global $frm_settings;
+        $css_file = array($frm_settings->theme_css,  FRM_URL. '/css/frm_admin.css');
+        $js_file  = 'jquery/jquery-ui-themepicker.js';
+      ?>
+        <link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" />
+          <script>
+          jQuery(document).ready(function($){
+            $('#frm_switcher').themeswitcher();
+          });
+          </script>
+        <?php
+        require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
 
     function display_form(){

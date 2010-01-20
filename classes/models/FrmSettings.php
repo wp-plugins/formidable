@@ -3,9 +3,8 @@ class FrmSettings{
     // Page Setup Variables
     var $preview_page_id;
     var $preview_page_id_str;
-
-    // Is the setup sufficiently completed?
-    var $setup_complete;
+    var $theme_css;
+    var $theme_name;
 
     function FrmSettings(){
         $this->set_default_options();
@@ -16,11 +15,11 @@ class FrmSettings{
           $this->preview_page_id = 0;
           
         $this->preview_page_id_str = 'frm-preview-page-id';
-
-        if( $this->preview_page_id == 0 )
-          $this->setup_complete = 0;
-        else
-          $this->setup_complete = 1;
+        
+        if(!isset($this->theme_css)){
+            $this->theme_css = FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css';
+            $this->theme_name = 'UI lightness';
+        }
     }
 
     function validate($params,$errors){   
@@ -32,6 +31,11 @@ class FrmSettings{
 
     function update($params){
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
+        if (isset($params[ 'frm_themepicker_css' ]))
+            $this->theme_css = $params[ 'frm_themepicker_css' ];
+        
+        if (isset($params[ 'frm_themepicker_name' ])) 
+            $this->theme_name = $params[ 'frm_themepicker_name' ];
     }
 
     function store(){

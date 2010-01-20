@@ -18,6 +18,8 @@
                 <?php FrmAppHelper::wp_pages_dropdown( $frm_settings->preview_page_id_str, $frm_settings->preview_page_id )?>
               </td>
             </tr>
+            
+            <?php do_action('frm_settings_form', $frm_settings); ?>
         </table>
 
         <p class="submit">
