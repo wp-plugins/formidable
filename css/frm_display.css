@@ -1,0 +1,6 @@
+.frm_pos_top{display:block;}
+.frm_pos_left{float:left; padding-right:10px;}
+.frm_pos_none{display:none;}
+.frm_10radio{margin-right:10px; text-align:center; float:left;}
+.frm_blank_field input[type='text'], .frm_blank_field textarea, .frm_blank_field select{border:1px solid red;}
+ul#frm_errors{list-style: square inside url(../images/error.png);}
