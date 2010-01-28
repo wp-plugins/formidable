@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Formidable
-Description: Easily create drag-and-drop forms
+Description: Quickly and easily create drag-and-drop forms
 Version: 1.0.11
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com

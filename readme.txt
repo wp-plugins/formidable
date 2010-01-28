@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, 
 Requires at least: 2.5
 Tested up to: 2.9.1
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
