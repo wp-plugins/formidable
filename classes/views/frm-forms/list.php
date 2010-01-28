@@ -63,6 +63,7 @@
                   <?php if($frmpro_is_installed){ ?>
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&action=new&form=<?php echo $form->id; ?>" title="New <?php echo $form->name; ?> Entry">New Entry</a> |
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Entries">View Entries</a> |
+                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-reports&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Reports">View Reports</a> |
                   <?php } ?>
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="Copy <?php echo $form->name; ?>">Duplicate</a> |
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>&template=1" title="Create <?php echo $form->name; ?> Template">Create Template</a> |
