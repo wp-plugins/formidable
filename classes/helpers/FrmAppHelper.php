@@ -39,13 +39,13 @@ class FrmAppHelper{
             
         $query = "SELECT $column FROM $table_name WHERE $column = %s AND ID != %d LIMIT 1";
         $key_check = $wpdb->get_var($wpdb->prepare($query, $key, $id));
-        if ($key_check){
+        if ($key_check || is_numeric($key_check)){
             $suffix = 2;
 			do {
 				$alt_post_name = substr($key, 0, 200-(strlen($suffix)+1)). "$suffix";
 				$key_check = $wpdb->get_var($wpdb->prepare($query, $alt_post_name, $id));
 				$suffix++;
-			} while ($key_check);
+			} while ($key_check || is_numeric($key_check));
 			$key = $alt_post_name;
         }
         return $key;
@@ -60,8 +60,6 @@ class FrmAppHelper{
 
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
               $values[$var] = stripslashes($frm_app_controller->get_param($var, $default_val));
-
-        $values['form_name'] = (isset($record->form_id))?($frm_form->getName( $record->form_id )):('');
 
         $values['fields'] = array();
         if ($fields){ 
@@ -90,19 +88,50 @@ class FrmAppHelper{
                       'field_order' => $field->field_order,
                       'form_id' => $field->form_id);
 
-                foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field)) as $opt => $default_opt)
+                foreach (array('size' => 50,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt]: $default_opt);
                   
-               $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field);   
+               $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);   
             }
       }
       
       if ($table == 'entries')
-          $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
+          $form = $frm_form->getOne( $record->form_id );
       else if ($table == 'forms')
-          $values = FrmFormsHelper::setup_edit_vars( $values, $record );
+          $form = $frm_form->getOne( $record->id );
 
-      return $values;
+      if ($form){
+          $values['form_name'] = (isset($record->form_id))?($form->name):('');
+          $options = stripslashes_deep(unserialize($form->options));
+          if (is_array($options)){
+              foreach ($options as $opt => $value)
+                  $values[$opt] = $frm_app_controller->get_param($opt, $value);
+          }
+      }
+          if (!isset($values['email_to']))
+              $values['email_to'] = '';
+
+          if (!isset($values['submit_value']))
+              $values['submit_value'] = 'Submit';
+
+          if (!isset($values['success_msg']))
+              $values['success_msg'] = 'Your responses were successfully submitted. Thank you!';
+
+          if (!isset($values['akismet']))
+              $values['akismet'] = 0;
+
+          if (!isset($values['before_html']))
+              $values['before_html'] = FrmFormsHelper::get_default_html('before');
+
+          if (!isset($values['after_html']))
+              $values['after_html'] = FrmFormsHelper::get_default_html('after');
+
+          if ($table == 'entries')
+              $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
+          else if ($table == 'forms')
+              $values = FrmFormsHelper::setup_edit_vars( $values, $record );
+
+          return $values;
     }
     
     function frm_get_main_message( $message = ''){

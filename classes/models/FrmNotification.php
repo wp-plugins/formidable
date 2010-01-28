@@ -4,9 +4,10 @@ class FrmNotification{
         add_action('frm_after_create_entry', array($this, 'entry_created'));
     }
     
-    function entry_created($entry){
-        global $frm_blogname, $frm_blogurl, $frm_form, $frm_entry_meta;
+    function entry_created($entry_id){
+        global $frm_blogname, $frm_blogurl, $frm_form, $frm_entry, $frm_entry_meta;
 
+        $entry = $frm_entry->getOne($entry_id);
         $form = $frm_form->getOne($entry->form_id);
         $values = $frm_entry_meta->getAll("it.item_id = $entry->id", " ORDER BY fi.field_order");
         
@@ -22,7 +23,7 @@ class FrmNotification{
             $val = maybe_unserialize($value->meta_value);
             if (is_array($val))
                 $val = implode(', ', $val);
-            $entry_data .= $value->field_name . ': ' . $val . "\n";
+            $entry_data .= $value->field_name . ': ' . $val . "\n\n";
         }
           
         $data = unserialize($entry->description);  
@@ -55,7 +56,7 @@ MAIL_BODY;
         $header        = "From: {$from_name} <{$from_email}>\r\n"; //optional headerfields
         $subject       = html_entity_decode(strip_tags(stripslashes($subject)));
         $message       = html_entity_decode(strip_tags(stripslashes($message)));
-        $signature     = $this->get_mail_signature();
+        $signature     = '';//$this->get_mail_signature();
 
         //$to_email      = $user->email;
         //$to_name       = $user->full_name;

@@ -26,7 +26,7 @@ class FrmApiController{
         global $frm_entry, $frm_form, $frm_entry_meta;
 
         $defaults = array(
-        	'form_key' => '', 'parent_id' => '',
+        	'form_key' => '',
         	'order' => '', 'limit' => '',
         	'search' =>'', 'search_type' => '',
         	'search_field' => '', 'search_operator' => 'LIKE'
@@ -36,9 +36,7 @@ class FrmApiController{
 
         $form = $frm_form->getOne($r['form_key']);
 
-        $where = " (it.form_id='". $form->id ."' or fr.form_id='". $form->id ."')";
-        if (!($r['parent_id'] == ''))
-            $where .= " and it.parent_item_id='". $r['parent_id'] ."'";
+        $where = " (it.form_id='". $form->id ."')";
 
         if (!($r['order'] == ''))
             $r['order'] = " ORDER BY {$r['order']}";

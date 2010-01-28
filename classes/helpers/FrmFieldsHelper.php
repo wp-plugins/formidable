@@ -13,7 +13,7 @@ class FrmFieldsHelper{
             $values[$var] = $default;
         
         $values['field_options'] = array();
-        foreach (array('size' => '50', 'max' => '', 'label' => 'top', 'required_indicator' => '*', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($type)) as $var => $default)
+        foreach (array('size' => '50', 'max' => '', 'label' => 'top', 'required_indicator' => '*', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($type), 'default_blank' => 0) as $var => $default)
             $values['field_options'][$var] = $default;
             
         if ($type == 'radio' || ($type == 'checkbox'))
@@ -51,6 +51,8 @@ class FrmFieldsHelper{
         $values['blank'] = (isset($field_options['blank']))?($field_options['blank']):(''); 
         $values['required_indicator'] = (isset($field_options['required_indicator']))?($field_options['required_indicator']):('*'); 
         $values['invalid'] = (isset($field_options['invalid']))?($field_options['invalid']):('');
+        $values['clear_on_focus'] = (isset($field_options['clear_on_focus']))?($field_options['clear_on_focus']):(0);
+        $values['default_blank'] = (isset($field_options['default_blank']))?($field_options['default_blank']):(0);
         $values['custom_html'] = (isset($field_options['custom_html']))? stripslashes($field_options['custom_html']): FrmFieldsHelper::get_default_html($record->type);
         
         return $values;
@@ -113,6 +115,16 @@ DEFAULT_HTML;
         $html = str_replace('[input]', $contents, $html);
         
         return $html;
+    }
+    
+    function show_onfocus_js($field_id, $clear_on_focus){ ?>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon'; ?>" id="clear_field_<?php echo $field_id; ?>" title="Set this field to <?php echo ($clear_on_focus)?'not ':''; ?>clear on click"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
+    <?php
+    }
+    
+    function show_default_blank_js($field_id, $default_blank){ ?>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon'; ?>" id="default_blank_<?php echo $field_id; ?>" title="This default value should <?php echo ($default_blank)?'not ':''; ?>be considered blank"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
+    <?php
     }
     
 }

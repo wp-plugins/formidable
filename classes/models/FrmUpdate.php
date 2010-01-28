@@ -30,13 +30,13 @@ class FrmUpdate{
 
   function FrmUpdate(){
     // Where all the vitals are defined for this plugin
-    $this->plugin_name    = FRM_PLUGIN_NAME.'/formidable.php';
-    $this->plugin_slug    = FRM_PLUGIN_NAME;
-    $this->plugin_url     = 'http://blog.strategy11.com/formidable-wordpress-plugin';
-    $this->pro_script     = FRM_PATH . '/pro/'. FRM_PLUGIN_NAME .'-pro.php';
-    $this->pro_mothership = 'http://blog.strategy11.com';
-    $this->pro_cred_store = 'frmpro-credentials';
-    $this->pro_auth_store = 'frmpro-authorized';
+    $this->plugin_name          = FRM_PLUGIN_NAME.'/formidable.php';
+    $this->plugin_slug          = FRM_PLUGIN_NAME;
+    $this->plugin_url           = 'http://blog.strategy11.com/formidable-wordpress-plugin';
+    $this->pro_script           = FRM_PATH . '/pro/'. FRM_PLUGIN_NAME .'-pro.php';
+    $this->pro_mothership       = 'http://formidablepro.com';
+    $this->pro_cred_store       = 'frmpro-credentials';
+    $this->pro_auth_store       = 'frmpro-authorized';
     $this->pro_last_checked_store = 'frmpro_last_checked_update';
     $this->pro_username_label    = __(FRM_PLUGIN_TITLE .' Pro Username', FRM_PLUGIN_NAME);
     $this->pro_password_label    = __(FRM_PLUGIN_TITLE .' Pro Password', FRM_PLUGIN_NAME);
@@ -141,10 +141,9 @@ class FrmUpdate{
 
   function display_pro_cred_form(){
     // Yah, this is the view for the credentials form -- this class isn't a true model
-    $this_uri = preg_replace('#&.*?$#', '', str_replace( '%7E', '~', $_SERVER['REQUEST_URI']));
     extract($this->get_pro_cred_form_vals());
     ?>
-<form name="cred_form" method="post" action="<?php echo $this_uri; ?>">
+<form name="cred_form" method="post" action="">
   <input type="hidden" name="process_cred_form" value="Y">
   <?php wp_nonce_field('cred_form'); ?>
 
@@ -200,10 +199,10 @@ class FrmUpdate{
 
     $client = new IXR_Client( $this->pro_mothership_xmlrpc_url );
 
-    if( !$client->query( 'proplug.get_download_url', $this->pro_username, $this->pro_password, $version ) )
-      return false;
+    if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version ) )
+        return false;
 
-    return $client->getResponse();
+    return base64_decode($client->getResponse());
   }
 
   function get_current_version(){

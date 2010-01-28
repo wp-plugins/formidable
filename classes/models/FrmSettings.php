@@ -5,6 +5,7 @@ class FrmSettings{
     var $preview_page_id_str;
     var $theme_css;
     var $theme_name;
+    var $lock_keys;
 
     function FrmSettings(){
         $this->set_default_options();
@@ -20,6 +21,9 @@ class FrmSettings{
             $this->theme_css = FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css';
             $this->theme_name = 'UI lightness';
         }
+        
+        if(!isset($this->lock_keys))
+            $this->lock_keys = true;
     }
 
     function validate($params,$errors){   
@@ -36,6 +40,8 @@ class FrmSettings{
         
         if (isset($params[ 'frm_themepicker_name' ])) 
             $this->theme_name = $params[ 'frm_themepicker_name' ];
+        
+        $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
     }
 
     function store(){

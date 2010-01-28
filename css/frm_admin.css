@@ -43,8 +43,9 @@ ul.pane li {padding: 0px; margin: 0px;}
 
 .frm_pos_top{display:block;}
 .frm_pos_left{float:left;}
-.frm_pos_none{display:none;}
+.frm_pos_none, .form-wrap label.frm_pos_none{display:none;}
 .frm_spacer{float:left; width:16px; height:16px;}
+.frm_charts object{background:transparent;}
 
 .postbox{margin-bottom:5px;}
 .postbox h3{cursor:pointer;}

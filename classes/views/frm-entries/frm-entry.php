@@ -31,7 +31,7 @@ if($params['action'] == 'create' && $params['form_id'] == $form->id){
     }
 }else{
     do_action('frm_display_form_action', $params, $fields, $form, $title, $description);
-    if (apply_filters('frm_continue_to_new', true)){
+    if (apply_filters('frm_continue_to_new', true, $params['action'])){
         $values = FrmEntriesHelper::setup_new_vars($fields);
         require('new.php');
     }

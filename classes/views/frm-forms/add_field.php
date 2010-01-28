@@ -1,4 +1,4 @@
-<?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false)); ?>
+<?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false, 'clear_on_focus' => false, 'default_blank' => true)); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?>">
     <span class="ui-icon ui-icon-arrowthick-2-n-s alignright"></span>
@@ -12,8 +12,6 @@
     
 <?php if ($display['type'] == 'text'){ ?>
     <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" size="<?php echo $field['size']; ?>"/> 
-    <a href="javascript:frm_clear_on_focus( <?php echo $field['id']; ?>,  <?php echo $field['clear_on_focus']; ?>)" class="<?php echo ($field['clear_on_focus']) ?'':'frm_inactive_icon'; ?>" id="clear_field_<?php echo $field['id']; ?>" title="Set this field to <?php echo ($field['clear_on_focus'])?'not ':''; ?>clear on click"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
-    
 <?php }else if ($field['type'] == 'textarea'){ ?>
     <textarea name="<?php echo $field_name ?>" cols="<?php echo $field['size']; ?>" rows="<?php echo $field['max']; ?>"><?php echo $field['default_value']; ?></textarea> 
     
@@ -30,7 +28,9 @@
             $selected = ($field['default_value'] == $opt)?(' selected="selected"'):(''); ?>
             <option value="<?php echo $opt ?>"<?php echo $selected ?>><?php echo $opt ?></option>
         <?php } ?>
-    </select><br/>
+    </select>
+    <?php if ($display['default_blank']) FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
+    <br/>
     <?php foreach ($field['options'] as $opt_key => $opt)
             require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
  ?>
@@ -50,6 +50,13 @@
       
     }else
         do_action('frm_display_added_fields',$field);
+
+if ($display['clear_on_focus']){
+    FrmFieldsHelper::show_onfocus_js($field['id'], $field['clear_on_focus']);
+
+    if ($display['default_blank'])
+        FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']);
+}
 
 if ($display['description']){ ?> 
     <div class="frm_ipe_field_desc description" id="field_<?php echo $field['id']; ?>"><?php echo $field['description']; ?></div> 

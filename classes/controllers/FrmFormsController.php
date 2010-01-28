@@ -274,7 +274,7 @@ class FrmFormsController{
 
         $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
         $values = $frm_app_helper->setup_edit_vars($record,'forms',$fields,true);
-        if ($values['default_template'])
+        if (isset($values['default_template']) && $values['default_template'])
             wp_die('That template cannot be edited');
         else if($create_link)
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');

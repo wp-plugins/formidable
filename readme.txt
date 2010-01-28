@@ -1,8 +1,8 @@
 === Formidable ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, builder, drag, drop, widget, sidebar, wordpress, plugin, template, contact, captcha, email, database, save, admin, akismet
-Requires at least: 2.0
+Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, 
+Requires at least: 2.5
 Tested up to: 2.9.1
 Stable tag: 1.0.10
 
@@ -38,6 +38,12 @@ Feedback and requests are welcome.
 3. Form builder.
 
 == Changelog ==
+= 1.0.11 =
+* Added a selectable shortcode on the forms listing page
+* Fixed the before and after HTML fields to display properly
+* Added option to clear default text on a textarea (paragraph input)
+* Added option for validation to ignore default values
+
 = 1.0.10 =
 * Started HTML customization. Will be updated, but for now you can only edit the HTML when editing the form.
 * Added 'Settings' link on plugin page

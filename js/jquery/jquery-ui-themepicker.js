@@ -66,11 +66,11 @@ jQuery.fn.themeswitcher = function(settings){
 	var button_default = {
 		fontFamily: 'Trebuchet MS, Verdana, sans-serif',
 		fontSize: '11px',
-		color: '#666',
-		background: '#eee url(http://jqueryui.com/themeroller/themeswitchertool/images/buttonbg.png) 50% 50% repeat-x',
-		border: '1px solid #ccc',
-		'-moz-border-radius': '6px',
-		'-webkit-border-radius': '6px',
+		color: '#000',
+		background: '#fff',
+		border: '1px solid #dfdfdf',
+		'-moz-border-radius': '4px',
+		'-webkit-border-radius': '4px',
 		textDecoration: 'none',
 		padding: '3px 3px 3px 8px',
 		width: options.width - 11,//minus must match left and right padding 

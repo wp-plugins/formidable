@@ -1,5 +1,4 @@
-<div id="poststuff">
-    <?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
+<?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
 
 <input type="hidden" name="form_id" value="<?php echo $form->id ?>">
 <?php if (isset($controller) && isset($plugin)){ ?>
@@ -24,8 +23,9 @@
         do_action('frm_get_field_scripts', $field);
     }    
 
+    global $frm_settings;
     ?>
-    <?php if (is_admin()){ ?>
+    <?php if (is_admin() && !$frm_settings->lock_keys){ ?>
         <div class="form_field">
         <label class="frm_pos_top">Entry Key</label>   
         <input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
@@ -33,7 +33,7 @@
     <?php } ?>
     </div>
 </div>
-</div>
+
 <?php do_action('frm_entries_footer_scripts',$values['fields']); ?>
 <script type="text/javascript">
 function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';}

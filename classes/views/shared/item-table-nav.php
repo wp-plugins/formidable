@@ -71,9 +71,10 @@ Entries from:
         <option value="<?php echo $g->id ?>"<?php echo $selected ?>><?php echo $g->name ?></option>
     <?php } ?>        
 </select>
-<?php if ($params['form'])
-        echo "<small><a href='?page=".FRM_PLUGIN_NAME."&action=edit&id=".$params['form']."'>Edit Form</a></small>";
-?>
+<?php if ($params['form']){ ?>
+        <small><a href='?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $params['form']; ?>'>Edit Form</a></small>
+        <small><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&action=new&form=<?php echo $params['form']; ?>">Add an Entry</a></small>
+<?php } ?>
 
 <script type="text/javascript">
     function getFrmEntries(form){window.location='<?php $_SERVER["REQUEST_URI"] ?>?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form='+form}

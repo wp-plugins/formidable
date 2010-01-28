@@ -2,7 +2,7 @@
 
 class FrmEntriesHelper{
 
-    function setup_new_vars($fields, $form=false){
+    function setup_new_vars($fields){
         global $frm_app_controller, $frm_form;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
@@ -30,13 +30,16 @@ class FrmEntriesHelper{
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id);
 
-              foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field)) as $opt => $default_opt)
+              foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
                   $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
                 
              $values['fields'][] = apply_filters('frm_setup_new_fields_vars', stripslashes_deep($field_array), $field);
+             
+             if (!isset($form))
+                 $form = $frm_form->getOne($field->form_id);
             }
 
-            $options = stripslashes_deep(unserialize($form['options']));
+            $options = stripslashes_deep(unserialize($form->options));
 
             if (is_array($options)){
                 foreach ($options as $opt => $value)

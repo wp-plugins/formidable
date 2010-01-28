@@ -29,12 +29,13 @@
             <th class="manage-column" width="70px"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=form_key<?php echo (($sort_str == 'form_key' and $sdir_str == 'asc')?'&sdir=desc':''); ?>">Key<?php echo (($sort_str == 'form_key')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a></th>
             <th class="manage-column" width="70px">Entries</th>
             <th class="manage-column">Direct Link</th>
+            <th class="manage-column" width="115px">ShortCode</th>
         <?php } ?>
     </tr>
     </thead>
 <?php if($record_count <= 0){ ?>
     <tr>
-      <td colspan="<?php echo ($params['template'])? '2':'6'; ?>">No Forms Found</td>
+      <td colspan="<?php echo ($params['template'])? '2':'7'; ?>">No Forms Found</td>
     </tr>
 <?php
 }else{
@@ -74,6 +75,7 @@
               <td>
                   <input type='text' style="font-size: 10px; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='<?php echo $target_url = FrmFormsHelper::get_direct_link($form->form_key, $form->prli_link_id); ?>' /><br/><a href="<?php echo $target_url; ?>" target="blank">View Form</a>
               </td>
+              <td><input type='text' style="font-size: 10px; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable id=<?php echo $form->id; ?>]' /></td>
         <?php } ?>
       </tr>
       <?php
@@ -92,6 +94,7 @@
             <th class="manage-column">Key</th>
             <th class="manage-column">Entries</th>
             <th class="manage-column">Direct Link</th>
+            <th class="manage-column">ShortCode</th>
         <?php } ?>
     </tr>
     </tfoot>

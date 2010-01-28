@@ -157,7 +157,11 @@ class FrmForm{
   
   function getName( $id ){
       global $wpdb;
-      $query = 'SELECT name FROM ' . $this->table_name . ' WHERE id=' . $id . ';';
+      if (is_numeric($id))
+          $query = 'SELECT name FROM ' . $this->table_name . ' WHERE id=' . $id;
+      else
+          $query = "SELECT name FROM {$this->table_name} WHERE form_key='{$id}'";
+      
       return $wpdb->get_var($query);
   }
   

@@ -65,14 +65,14 @@ class FrmEntriesController{
         $errors = $frm_entry->validate($_POST);
 
         if( count($errors) > 0 ){
-            $values = FrmEntriesHelper::setup_new_vars($fields, $form);
+            $values = FrmEntriesHelper::setup_new_vars($fields);
             require_once(FRM_VIEWS_PATH.'/frm-entries/new.php');
         }else{
             do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
             if (apply_filters('frm_continue_to_create', true)){
-                if ($frm_entry->create( $_POST ))
+                if ($frm_entry->create( $_POST )){
                     echo $saved_message;
-                else
+                }else
                     echo $failed_message;
             }
         }

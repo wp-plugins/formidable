@@ -79,6 +79,11 @@ class FrmEntryMeta{
       return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE item_id={$item_id}");
   }
   
+  function get_entry_metas_for_field($field_id){
+      global $wpdb;
+      return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE field_id={$field_id}");
+  }
+  
   function get_entry_meta_info($item_id){
       global $wpdb;
       return $wpdb->get_results("SELECT * FROM {$this->table_name} WHERE item_id={$item_id}");

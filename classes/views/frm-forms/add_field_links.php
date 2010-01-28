@@ -43,6 +43,8 @@
          <li><span class="frm_inactive_icon ui-icon ui-icon-star alignleft"></span> = not required</li>
          <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = clear default data on click</li>
          <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = do not clear default data on click</li>
+         <li><span><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> = default value will NOT pass validation</li>
+          <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> = default value will pass validation</li>
          <li><span class="ui-icon ui-icon-trash alignleft"></span> = delete field and all inputed data</li>
      </ul>
 

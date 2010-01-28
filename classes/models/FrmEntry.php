@@ -26,8 +26,7 @@ class FrmEntry{
             $entry_id = $wpdb->insert_id;
             if (isset($values['item_meta']))
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
-            $entry = $this->getOne($entry_id);
-            do_action('frm_after_create_entry', $entry);
+            do_action('frm_after_create_entry', $entry_id);
             return $entry_id;
         }else
            return false;
@@ -175,9 +174,11 @@ class FrmEntry{
         if (isset($values['item_meta'])){    
             foreach($values['item_meta'] as $key => $value){
                 $field = $frm_field->getOne($key);
-                if ($field->required == '1' and ($values['item_meta'][$key] == null or $values['item_meta'][$key] == '') and ($field->form_id == $values['form_id'])){
+                if ($field->required == '1' and ($field->form_id == $values['form_id'])){
                     $field_options = unserialize($field->field_options);
-                    $errors['field'.$field->id] = ($field_options['blank'] == 'Untitled cannot be blank' || $field_options['blank'] == '')?($field->name." can't be blank"):$field_options['blank'];  
+                    
+                    if ($values['item_meta'][$key] == null or $values['item_meta'][$key] == '' or (isset($field_options['default_blank']) and $field_options['default_blank'] and $value == $field->default_value))
+                        $errors['field'.$field->id] = ($field_options['blank'] == 'Untitled cannot be blank' || $field_options['blank'] == '')?($field->name." can't be blank"):$field_options['blank'];  
                 }
                 $errors = apply_filters('frm_validate_field_entry', $errors, $key, $value);
             }
