@@ -166,10 +166,7 @@ class FrmEntry{
         }
 
         if( !isset($values['item_key']) or $values['item_key'] == '' )
-            $_POST['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');;
-            
-        //if( $values['name'] == null or $values['name'] == '' )
-        //    $errors[] = "Name can't be blank";
+            $_POST['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');
         
         if (isset($values['item_meta'])){    
             foreach($values['item_meta'] as $key => $value){

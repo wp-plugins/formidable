@@ -52,7 +52,7 @@ class FrmFormsHelper{
             $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
             
         $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frm_form->table_name, 'form_key'));
-        $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : '';
+        $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : get_option('admin_email');
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
         $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
@@ -68,28 +68,6 @@ class FrmFormsHelper{
         $values['form_key'] = $frm_app_controller->get_param('form_key', $record->form_key);
         $values['default_template'] = $frm_app_controller->get_param('default_template', $record->default_template);
         $values['is_template'] = $frm_app_controller->get_param('is_template', $record->is_template);
-        $options = stripslashes_deep(unserialize($record->options));
-
-        if (is_array($options)){
-            foreach ($options as $opt => $value)
-                $values[$opt] = $frm_app_controller->get_param($opt, $value);
-        }
-        if (!isset($values['email_to']))
-            $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : '';
-        
-        if (!isset($values['submit_value']))
-            $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
-        if (!isset($values['success_msg']))
-            $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
-            
-        if (!isset($values['akismet']))
-            $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
-        
-        if (!isset($values['before_html']))
-            $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
-        
-        if (!isset($values['after_html']))
-            $values['after_html'] = (isset($_POST['options']['after_html'])?$_POST['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
 
         return apply_filters('frm_setup_edit_form_vars', $values);
     }

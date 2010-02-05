@@ -12,7 +12,7 @@ class FrmEntryMeta{
 
     $new_values = array();
     $new_values['meta_key'] = $meta_key;
-    $new_values['meta_value'] = $meta_value;
+    $new_values['meta_value'] = trim($meta_value);
     $new_values['item_id'] = $item_id;
     $new_values['field_id'] = $field_id;
     $new_values['created_at'] = current_time('mysql', 1);

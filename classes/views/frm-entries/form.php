@@ -1,12 +1,12 @@
 <?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
 
-<input type="hidden" name="form_id" value="<?php echo $form->id ?>">
-<?php if (isset($controller) && isset($plugin)){ ?>
-<input type="hidden" name="controller" value="<?php echo $controller; ?>">
-<input type="hidden" name="plugin" value="<?php echo $plugin; ?>">
-<?php } ?>
 <div id="frm_form_fields">
     <div>
+        <input type="hidden" name="form_id" value="<?php echo $form->id ?>" />
+        <?php if (isset($controller) && isset($plugin)){ ?>
+        <input type="hidden" name="controller" value="<?php echo $controller; ?>" />
+        <input type="hidden" name="plugin" value="<?php echo $plugin; ?>" />
+        <?php } ?>
     <?php
 
     if (isset($errors) && is_array($errors))
@@ -33,6 +33,8 @@
     <?php } ?>
     </div>
 </div>
+
+<?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
 
 <?php do_action('frm_entries_footer_scripts',$values['fields']); ?>
 <script type="text/javascript">

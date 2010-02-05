@@ -14,7 +14,7 @@ class FrmSettingsController{
 
     function head(){
         global $frm_settings;
-        $css_file = array($frm_settings->theme_css,  FRM_URL. '/css/frm_admin.css');
+        $css_file = array($frm_settings->theme_nicename => $frm_settings->theme_css,  'frm_admin' => FRM_URL. '/css/frm_admin.css');
         $js_file  = 'jquery/jquery-ui-themepicker.js';
       ?>
         <link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" />

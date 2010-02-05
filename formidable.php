@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.0.11
+Version: 1.0.12
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
@@ -15,6 +15,7 @@ define('FRM_MODELS_PATH',FRM_PATH.'/classes/models');
 define('FRM_VIEWS_PATH',FRM_PATH.'/classes/views');
 define('FRM_HELPERS_PATH',FRM_PATH.'/classes/helpers');
 define('FRM_CONTROLLERS_PATH',FRM_PATH.'/classes/controllers');
+define('FRM_TEMPLATES_PATH',FRM_PATH.'/classes/templates');
 define('FRM_URL',WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);
 define('FRM_SCRIPT_URL', get_option('home') . '/index.php?plugin=' . FRM_PLUGIN_NAME);
 define('FRM_IMAGES_URL',FRM_URL.'/images');
@@ -138,7 +139,7 @@ if ($frm_recaptcha_enabled)
 global $frm_pro_field_selection;
 
 $frm_pro_field_selection = array(
-    'divider' => 'Section Divider',
+    'divider' => 'Section Divider/Heading',
     'file' => 'File Upload',
     //'rte' => 'Rich Text Editor', 
     'phone' => 'Phone', 

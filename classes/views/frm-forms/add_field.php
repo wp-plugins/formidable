@@ -70,8 +70,8 @@ if ($display['options']){ ?>
             <?php if ($display['size']){ ?>
             <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Columns':'Field Size' ?></label>
                 <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5">
-            </p>
-            <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Rows':'Max length of input' ?></label>
+            
+                <label class="nofloat"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Rows':'Max length of input' ?></label>
                 <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5">
             </p>
             <?php } ?>
@@ -85,15 +85,15 @@ if ($display['options']){ ?>
             </p>
             <?php } ?>
             <?php if ($display['required']){ ?>
-            <p><label>Required label:</label>
+            <p><label>Indicate required field with:</label>
                 <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo $field['required_indicator']; ?>">
             </p>
-            <p><label>Validation phrase for blank required field:</label>    
+            <p><label>Error message if required field is left blank:</label>    
             <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" size="50">
             </p>
             <?php } ?>
             <?php if ($display['invalid']){ ?>
-            <p><label>Validation phrase for wrong format:</label>    
+            <p><label>Error message if entry is an invalid format:</label>    
             <input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50">
             </p>
             <?php } ?>

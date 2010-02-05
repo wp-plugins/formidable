@@ -1,5 +1,5 @@
 <?php if ($field['type'] == 'text'){ ?>
-    <input type="text" id="<?php echo $field['field_key'] ?>" name="<?php echo $field_name ?>" value="<?php echo $field['value'] ?>" size="<?php echo $field['size'] ?>" maxlength="<?php echo $field['max'] ?>" <?php echo ($field['clear_on_focus']) ? 'onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"':''; ?>/>
+    <input type="text" id="field_<?php echo $field['field_key'] ?>" name="<?php echo $field_name ?>" value="<?php echo $field['value'] ?>" size="<?php echo $field['size'] ?>" maxlength="<?php echo $field['max'] ?>" <?php echo ($field['clear_on_focus']) ? 'onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"':''; ?>/>
     
 <?php }else if ($field['type'] == 'textarea'){ ?>
     <textarea name="<?php echo $field_name ?>" cols="<?php echo $field['size'] ?>" rows="<?php echo $field['max'] ?>" <?php echo ($field['clear_on_focus']) ? 'onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"':''; ?>><?php echo $field['value'] ?></textarea> 

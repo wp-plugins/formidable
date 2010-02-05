@@ -35,14 +35,14 @@ class FrmAppController{
     
     function head(){
         global $frm_settings;
-        $css_file = array($frm_settings->theme_css,  FRM_URL. '/css/frm_admin.css');
+        $css_file = array($frm_settings->theme_nicename => $frm_settings->theme_css,  'frm_admin' => FRM_URL. '/css/frm_admin.css');
         $js_file  = 'list-items.js';
         require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
     
     function admin_js(){
         wp_enqueue_script('jQuery');
-        wp_enqueue_script('jQuery-datepicker', FRM_URL.'/js/jquery/jquery-ui-1.7.1.custom.min.js'); 
+        wp_enqueue_script('jQuery-ui-1.7.2', FRM_URL.'/js/jquery/jquery-ui-1.7.2.min.js'); 
         wp_enqueue_script('jQuery-in-place-edit-patched', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
 
         add_action( 'admin_print_footer_scripts', 'wp_tiny_mce', 25 );
@@ -52,7 +52,8 @@ class FrmAppController{
     }
     
     function front_head(){
-        wp_enqueue_style('frm-forms', FRM_URL.'/css/frm_display.css');
+        if (!is_admin())
+            wp_enqueue_style('frm-forms', FRM_URL.'/css/frm_display.css');
     }
   
     function install(){
@@ -138,114 +139,20 @@ class FrmAppController{
 
       dbDelta($sql);
 
-      /**** ADD DEFAULT FORMS ****/
-      if ($frm_app_helper->getRecordCount("form_key='contact' and is_template='1'", $forms_table) <= 0){
-          $values = FrmFormsHelper::setup_new_vars();
-            $values['name'] = 'Contact Us';
-            $values['form_key'] = 'contact';
-            $values['description'] = 'We would like to hear from you. Please send us a message by filling out the form below and we will get back with you shortly.';
-            $values['is_template'] = 1;
-            $values['default_template'] = 1;
-            $values['options'] = array('email_to' => '', 'submit_value' => 'Submit', 'success_msg' => 'Your responses were successfully submitted. Thank you!', 'akismet' => 0);
-            $form_id = $frm_form->create( $values );
-
-            $field_options = array();
-            $field_options['label'] = 'top';
-            $field_options['size'] = '75';
-            $field_options['max'] = '';
-            $field_options['required_indicator'] = '*';
-
-
-            $field_options['blank'] = 'Name cannot be blank';
-            $field_options['invalid'] = '';
-            $frm_field->create( array(
-                'field_key' => 'name', 
-                'name' => 'Name', 
-                'description' => '', 
-                'type' => 'text', 
-                'default_value' => '', 
-                'options' => '', 
-                'form_id' => $form_id, 
-                'field_order' => 1, 
-                'required' => true, 
-                'field_options' => $field_options ));
-
-            $field_options['blank'] = 'Email cannot be blank';
-            $field_options['invalid'] = 'Please enter a valid email address';
-            $frm_field->create( array(
-                  'field_key' => 'email', 
-                  'name' => 'Email', 
-                  'description' => '', 
-                  'type' => 'email', 
-                  'default_value' => '', 
-                  'options' => '', 
-                  'form_id' => $form_id, 
-                  'field_order' => 2, 
-                  'required' => true, 
-                  'field_options' => $field_options ));
-
-          $field_options['blank'] = 'Website cannot be blank';
-          $field_options['invalid'] = 'Website is an invalid format';
-          $frm_field->create( array(
-                'field_key' => 'website', 
-                'name' => 'Website', 
-                'description' => '', 
-                'type' => 'website', 
-                'default_value' => '', 
-                'options' => '', 
-                'form_id' => $form_id, 
-                'field_order' => 3, 
-                'required' => false, 
-                'field_options' => $field_options ));
-
-          $field_options['blank'] = 'Subject cannot be blank';
-          $field_options['invalid'] = '';
-          $frm_field->create( array(
-                'field_key' => 'subject', 
-                'name' => 'Subject', 
-                'description' => '', 
-                'type' => 'text', 
-                'default_value' => '', 
-                'options' => '', 
-                'form_id' => $form_id, 
-                'field_order' => 4, 
-                'required' => true, 
-                'field_options' => $field_options ));
-
-          $field_options['size'] = '65';
-          $field_options['max'] = '5';
-          $field_options['blank'] = 'Message cannot be blank';
-          $frm_field->create( array(
-                'field_key' => 'message', 
-                'name' => 'Message', 
-                'description' => '', 
-                'type' => 'textarea', 
-                'default_value' => '', 
-                'options' => '', 
-                'form_id' => $form_id, 
-                'field_order' => 5, 
-                'required' => true, 
-                'field_options' => $field_options ));
-                
-            $field_options['label'] = 'none';
-            $field_options['size'] = '';
-            $field_options['max'] = '';
-            $frm_field->create( array(
-                  'field_key' => 'captcha', 
-                  'name' => 'Captcha', 
-                  'description' => '', 
-                  'type' => 'captcha', 
-                  'default_value' => '', 
-                  'options' => '', 
-                  'form_id' => $form_id, 
-                  'field_order' => 6, 
-                  'required' => false, 
-                  'field_options' => $field_options ));
-        }
-
       /***** SAVE DB VERSION *****/
-        update_option('frm_db_version',$db_version);
+      update_option('frm_db_version',$db_version);
       }
+      
+      /**** ADD DEFAULT TEMPLATES ****/
+      $templates = glob(FRM_TEMPLATES_PATH."/*.php");
+
+      for($i = count($templates) - 1; $i >= 0; $i--){
+          $filename = preg_replace("#".FRM_TEMPLATES_PATH."/#","",$templates[$i]);
+          $filename = str_replace('.php','', $filename);
+          $form = $frm_form->getAll("form_key='{$filename}' and is_template='1' and default_template='1'", '', ' LIMIT 1');
+          require_once($templates[$i]);
+      }
+      
       do_action('frm_after_install');
     }
     

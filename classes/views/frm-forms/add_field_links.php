@@ -49,7 +49,7 @@
      </ul>
 
      <p class="howto">Enter or select default values into fields on this form.</p>
-
+     <?php do_action('frm_extra_form_instructions'); ?>
 </div>
 
 <script>

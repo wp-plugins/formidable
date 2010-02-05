@@ -36,6 +36,9 @@ class FrmAppHelper{
             $key = base_convert( rand($min_slug_value,$max_slug_value), 10, 36 );
         }else
             $key = sanitize_title_with_dashes($name);
+        
+        if (is_numeric($key))
+            $key = $key .'a';
             
         $query = "SELECT $column FROM $table_name WHERE $column = %s AND ID != %d LIMIT 1";
         $key_check = $wpdb->get_var($wpdb->prepare($query, $key, $id));
@@ -71,17 +74,16 @@ class FrmAppHelper{
                     $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
 
                 $field_options = stripslashes_deep(unserialize($field->field_options));
-                
+                $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
-                if ($field->type != 'checkbox')
-                    $new_value = stripslashes($new_value);
+                $new_value = stripslashes(maybe_unserialize($new_value));
                     
                 $field_array = array('id' => $field->id,
                       'value' => $new_value,
                       'default_value' => stripslashes($field->default_value),
                       'name' => stripslashes($field->name),
                       'description' => stripslashes($field->description),
-                      'type' => apply_filters('frm_field_type',$field->type, $field),
+                      'type' => apply_filters('frm_field_type',$field_type, $field),
                       'options' => stripslashes_deep(unserialize($field->options)),
                       'required' => $field->required,
                       'field_key' => $field->field_key,
@@ -93,61 +95,55 @@ class FrmAppHelper{
                   
                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);   
             }
-      }
+        }
       
-      if ($table == 'entries')
-          $form = $frm_form->getOne( $record->form_id );
-      else if ($table == 'forms')
-          $form = $frm_form->getOne( $record->id );
+        if ($table == 'entries')
+            $form = $frm_form->getOne( $record->form_id );
+        else if ($table == 'forms')
+            $form = $frm_form->getOne( $record->id );
 
-      if ($form){
-          $values['form_name'] = (isset($record->form_id))?($form->name):('');
-          $options = stripslashes_deep(unserialize($form->options));
-          if (is_array($options)){
-              foreach ($options as $opt => $value)
-                  $values[$opt] = $frm_app_controller->get_param($opt, $value);
-          }
-      }
-          if (!isset($values['email_to']))
-              $values['email_to'] = '';
+        if ($form){
+            $values['form_name'] = (isset($record->form_id))?($form->name):('');
+            $options = stripslashes_deep(unserialize($form->options));
+            if (is_array($options)){
+                foreach ($options as $opt => $value)
+                    $values[$opt] = $frm_app_controller->get_param($opt, $value);
+            }
+        }
 
-          if (!isset($values['submit_value']))
-              $values['submit_value'] = 'Submit';
+        $email = get_option('admin_email');
+        foreach (array('email_to' => $email, 'submit_value' => 'Submit', 'success_msg' => 'Your responses were successfully submitted. Thank you!') as $opt => $default){
+            if (!isset($values[$opt]))
+                $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+        }
 
-          if (!isset($values['success_msg']))
-              $values['success_msg'] = 'Your responses were successfully submitted. Thank you!';
+        if (!isset($values['akismet']))
+            $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
 
-          if (!isset($values['akismet']))
-              $values['akismet'] = 0;
+        if (!isset($values['before_html']))
+            $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
 
-          if (!isset($values['before_html']))
-              $values['before_html'] = FrmFormsHelper::get_default_html('before');
+        if (!isset($values['after_html']))
+            $values['after_html'] = (isset($_POST['options']['after_html'])?$_POST['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
 
-          if (!isset($values['after_html']))
-              $values['after_html'] = FrmFormsHelper::get_default_html('after');
+        if ($table == 'entries')
+            $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
+        else if ($table == 'forms')
+            $values = FrmFormsHelper::setup_edit_vars( $values, $record );
 
-          if ($table == 'entries')
-              $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
-          else if ($table == 'forms')
-              $values = FrmFormsHelper::setup_edit_vars( $values, $record );
-
-          return $values;
+        return $values;
     }
     
     function frm_get_main_message( $message = ''){
-      /*
-      global $frmpro_is_installed;
-      include_once(ABSPATH."/wp-includes/class-IXR.php");
+        global $frmpro_is_installed;
+        include_once(ABSPATH."/wp-includes/class-IXR.php");
 
-      if($frmpro_is_installed){
-        $client = new IXR_Client('http://prettylinkpro.com/xmlrpc.php');
-        if ($client->query('prlipro.get_main_message'))
-          $message = $client->getResponse();
-      }else{
-        $client = new IXR_Client('http://blairwilliams.com/xmlrpc.php');
-        if ($client->query('prli.get_main_message'))
-          $message = $client->getResponse();
-      } */
+        $url = ($frmpro_is_installed) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
+        $client = new IXR_Client($url.'xmlrpc.php');
+        
+        if ($client->query('frm.get_main_message'))
+            $message = $client->getResponse();
+
       return $message;
     }
     

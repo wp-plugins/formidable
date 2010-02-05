@@ -12,11 +12,11 @@ class FrmEntriesHelper{
         if ($fields){
             foreach($fields as $field){
               $default = $field->default_value;
-
+              
               $field_options = unserialize($field->field_options);
               $new_value = ($_POST and isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $default;
               if ($field->type != 'checkbox')
-                $new_value = stripslashes($new_value);
+                $new_value = apply_filters('frm_get_default_value', stripslashes($new_value));
                 
               $field_array = array('id' => $field->id,
                     'value' => $new_value,
@@ -32,7 +32,7 @@ class FrmEntriesHelper{
 
               foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
                   $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
-                
+
              $values['fields'][] = apply_filters('frm_setup_new_fields_vars', stripslashes_deep($field_array), $field);
              
              if (!isset($form))
@@ -69,17 +69,18 @@ class FrmEntriesHelper{
     function setup_edit_vars($values, $record){
         //$values['description'] = unserialize( $record->description );
         $values['item_key'] = ($_POST and isset($_POST['item_key']))?$_POST['item_key']:$record->item_key;
-        return $values;
+        $values['form_id'] = $record->form_id;
+        return apply_filters('frm_setup_edit_entry_vars', $values);
     }
     
-    function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true ){
+    function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='' ){
         global $frm_app_controller, $frm_entry;
 
         $entries = $frm_entry->getAll("it.form_id=".$form_id,' ORDER BY name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown">
             <?php if ($blank){ ?>
-            <option value=""></option>
+            <option value=""><?php echo $blank_label; ?></option>
             <?php } ?>
             <?php foreach($entries as $entry){ ?>
                 <option value="<?php echo $entry->id; ?>" <?php selected($field_value, $entry->id); ?>><?php echo (!empty($entry->name)) ? $entry->name : $entry->item_key; ?></option>

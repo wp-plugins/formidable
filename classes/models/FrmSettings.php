@@ -5,6 +5,7 @@ class FrmSettings{
     var $preview_page_id_str;
     var $theme_css;
     var $theme_name;
+    var $theme_nicename;
     var $lock_keys;
 
     function FrmSettings(){
@@ -21,6 +22,8 @@ class FrmSettings{
             $this->theme_css = FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css';
             $this->theme_name = 'UI lightness';
         }
+        
+        $this->theme_nicename = sanitize_title_with_dashes($this->theme_name);
         
         if(!isset($this->lock_keys))
             $this->lock_keys = true;

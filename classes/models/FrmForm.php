@@ -100,12 +100,13 @@ class FrmForm{
             $field = $frm_field->getOne($field_id);
             $field_options = unserialize($field->field_options);
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
-                $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? $values['field_options'][$opt.'_'.$field_id] : '';
+                $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
             $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : FrmFieldsHelper::get_default_html($field->type);
             $field_options = apply_filters('frm_update_field_options', $field_options, $field_id, $values);
             $default_value = maybe_serialize($values['item_meta'][$field_id]);
             $field_key = (isset($values['field_options']['field_key_'.$field_id]))? $values['field_options']['field_key_'.$field_id] : $field->field_key;
-            $frm_field->update($field_id, array('field_key' => $field_key, 'default_value' => $default_value, 'field_options' => $field_options));
+            $field_type = (isset($values['field_options']['type_'.$field_id]))? $values['field_options']['type_'.$field_id] : $field->type;
+            $frm_field->update($field_id, array('field_key' => $field_key, 'type' => $field_type, 'default_value' => $default_value, 'field_options' => $field_options));
         }
     }    
     
@@ -130,8 +131,8 @@ class FrmForm{
             $link_id = prli_create_pretty_link(FrmFormsHelper::get_direct_link($values['form_key']), $values['form_key'], $form->name, $form->description, $group_id = '' );
             $wpdb->update( $this->table_name, array('prli_link_id' => $link_id), array( 'id' => $id ) );
         }
-        do_action('frm_update_form', $id, $values);
     }    
+    do_action('frm_update_form', $id, $values);
      
     return $query_results;
   }

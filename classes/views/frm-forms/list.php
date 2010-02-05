@@ -9,7 +9,7 @@
 
 <?php if ($params['template']) require('default-templates.php'); ?>
         
-<form class="form-fields item-list-form" name="item_list_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+<form class="form-fields item-list-form" name="item_list_form" method="post" action="">
   <input type="hidden" name="action" value="list-form"/> 
   <input type="hidden" name="template" value="<?php echo $params['template'] ?>" />   
 <?php $footer = false; require(FRM_VIEWS_PATH.'/shared/item-table-nav.php'); ?>
@@ -62,8 +62,8 @@
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="Edit <?php echo $form->name; ?>">Edit</a> |
                   <?php if($frmpro_is_installed){ ?>
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&action=new&form=<?php echo $form->id; ?>" title="New <?php echo $form->name; ?> Entry">New Entry</a> |
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Entries">View Entries</a> |
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-reports&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Reports">View Reports</a> |
+                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Entries">Entries</a> |
+                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-reports&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Reports">Reports</a> |
                   <?php } ?>
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="Copy <?php echo $form->name; ?>">Duplicate</a> |
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>&template=1" title="Create <?php echo $form->name; ?> Template">Create Template</a> |

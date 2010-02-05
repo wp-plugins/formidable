@@ -20,6 +20,10 @@
              <br/>
              <div class="item_actions">
                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="Copy <?php echo $form->name; ?>">Create Form from Template</a> |
+               <?php global $frm_settings; 
+               if ($frm_settings->preview_page_id > 0)
+                   $url = add_query_arg('form', $form->form_key, get_permalink($frm_settings->preview_page_id));
+               ?>
                <a href="<?php echo $url ?>" title="View <?php echo stripslashes($form->name); ?>" target="blank">View</a>
              </div>
            </td>

@@ -8,7 +8,7 @@
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
 
     <div class="frm_form_builder alignleft" id="poststuff">
-        <form name="form1" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+        <form name="form1" method="post" action="">
             <input type="hidden" name="action" value="create">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <?php wp_nonce_field('update-options'); ?>

@@ -7,7 +7,7 @@
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
 
-    <form name="frm_settings_form" method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
+    <form name="frm_settings_form" method="post" action="">
         <input type="hidden" name="action" value="process-form">
         <?php wp_nonce_field('update-options'); ?>
 

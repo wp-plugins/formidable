@@ -18,7 +18,7 @@ class FrmFormsController{
     }
     
     function head(){
-        $css_file = array(FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css',  FRM_URL. '/css/frm_admin.css');
+        $css_file = array('jquery-ui-1.7.2.custom' => FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css', 'frm_admin' => FRM_URL. '/css/frm_admin.css');
         $js_file  = 'list-items.js';
         require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
@@ -143,8 +143,7 @@ class FrmFormsController{
         $form = $frm_form->getAll("form_key='$key'",'',' LIMIT 1');
         if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
         $form_options = stripslashes_deep(maybe_unserialize($form->options));
-        $description = true;
-        $title = true;
+        $description = $title = true;
 
         require_once(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
     }
