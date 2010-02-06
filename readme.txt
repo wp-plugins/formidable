@@ -20,7 +20,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 * Direct links available with and without integration with your current theme
 * Select an email address to send form responses under "Advanced Form Options"
 * Input default data into form fields with the option to clear when clicked
-* Saves responses to the database for future retrieval, reports, and display (Pro version Coming Soon)
+* Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
 
 Feedback and requests are welcome.
