@@ -23,7 +23,7 @@
             } ?>
      </ul>
      
-     <h4>Pro Fields <span class="howto" style="display:inline;">Coming Soon</span></h4>
+     <h4>Pro Fields</h4>
      <ul class="field_type_list">
      <?php 
      if($frmpro_is_installed){  
