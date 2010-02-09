@@ -35,6 +35,8 @@ Feedback and requests are welcome.
 == Screenshots ==
 [Formidable Screenshots](http://blog.strategy11.com/formidable-wordpress-plugin/ "Formidable Screenshots")
 
+[Formidable Pro Screenshots](http://blog.strategy11.com/formidablepro/ "Formidable Pro Screenshots")
+
 == Frequently Asked Questions ==
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
