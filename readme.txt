@@ -33,9 +33,10 @@ Feedback and requests are welcome.
 5. Use shortcode [formidable id=x] in pages, posts, or text widgets. (Requires WordPress version 2.8 or higher)
 
 == Screenshots ==
-1. List forms.
-2. List templates.
-3. Form builder.
+[Formidable Screenshots](http://blog.strategy11.com/formidable-wordpress-plugin/ "Formidable Screenshots")
+
+== Frequently Asked Questions ==
+[Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
 = 1.0.12 =
