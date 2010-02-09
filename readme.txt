@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback
 Requires at least: 2.6
 Tested up to: 2.9.1
-Stable tag: 1.0.12
+Stable tag: 1.01.0
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -42,20 +42,25 @@ Feedback and requests are welcome.
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
-= 1.1.0 =
+= 1.01.0 =
 * Added checkboxes to optionally include default stylesheet
 * Completely validated HTML this time (hopefully)
-
-= PRO =
-* Added a FREAKING AWESOME form styling editor
-* Made the link to view entries pretty if default permalinks are not in use
-* Fixed bug preventing external shortcodes from getting replaced when custom displayed data is not inserted automatically
-* Added shortcode for front-end search
+* PRO: Added a FREAKING AWESOME form styling editor
+* PRO: Made the link to view entries pretty if default permalinks are not in use
+* PRO: Fixed bug preventing external shortcodes from getting replaced when custom displayed data is not inserted automatically
+* PRO: Added shortcode for front-end search
 
 = 1.0.12 =
 * Validated HTML markup for front-end form
 * Simplified the way a default template is created so it will also get updated with any changes
 * Really fixed the after HTML field this time
+* Changed option to email form to default to admin's email address instead of blank
+* PRO: Ability to switch from one field type to another
+* PRO: Finished the 'Data from Entries' field
+* PRO: Added the first overall report (daily submissions)
+* PRO: Added two new form templates (more to come of course)
+* PRO: Editable Submit button and Success message for editing entries
+* PRO: Added option to sort by most fields when creating/editing the custom display settings
 
 = 1.0.11 =
 * Added a selectable shortcode on the forms listing page
