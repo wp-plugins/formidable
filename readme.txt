@@ -46,6 +46,7 @@ Feedback and requests are welcome.
 * Validated HTML markup for front-end form
 * Simplified the way a default template is created so it will also get updated with any changes
 * Really fixed the after HTML field this time
+* Changed option to email form to default to admin's email address instead of blank
 
 = 1.0.11 =
 * Added a selectable shortcode on the forms listing page
