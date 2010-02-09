@@ -118,8 +118,7 @@ class FrmFormsController{
     
     function page_preview(){
         global $frm_form;
-        $description = true;
-        $title = true;
+        $description = $title = true;
         $params = $this->get_params();
         if (!$params['form']) return;
         $form = $frm_form->getOne($params['form']);
@@ -127,7 +126,7 @@ class FrmFormsController{
     }
 
     function preview(){
-        global $frm_form;
+        global $frm_form, $frm_settings;
         if ( !defined( 'ABSPATH' ) && !defined( 'XMLRPC_REQUEST' )) {
             $root = dirname(dirname(dirname(dirname(__FILE__))));
             include_once( $root.'/wp-config.php' );
@@ -144,7 +143,8 @@ class FrmFormsController{
         if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
         $form_options = stripslashes_deep(maybe_unserialize($form->options));
         $description = $title = true;
-
+        $custom_style = (isset($form_options['custom_style'])) ? $form_options['custom_style'] : $frm_settings->custom_style;
+        
         require_once(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
     }
     

@@ -43,7 +43,7 @@ class FrmFormsHelper{
     }
     
     function setup_new_vars(){
-        global $frm_app_controller, $frm_form;
+        global $frm_app_controller, $frm_form, $frm_settings;
         $values = array();
         foreach (array('name' => 'Untitled Form', 'description' => '') as $var => $default)
             $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
@@ -53,6 +53,7 @@ class FrmFormsHelper{
             
         $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frm_form->table_name, 'form_key'));
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : get_option('admin_email');
+        $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
         $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;

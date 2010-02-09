@@ -3,7 +3,7 @@
 class FrmEntriesHelper{
 
     function setup_new_vars($fields){
-        global $frm_app_controller, $frm_form;
+        global $frm_app_controller, $frm_form, $frm_settings;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
             $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
@@ -30,7 +30,7 @@ class FrmEntriesHelper{
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id);
 
-              foreach (array('size' => 75,'max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
+              foreach (array('size' => '','max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
                   $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
 
              $values['fields'][] = apply_filters('frm_setup_new_fields_vars', stripslashes_deep($field_array), $field);
@@ -45,6 +45,10 @@ class FrmEntriesHelper{
                 foreach ($options as $opt => $value)
                     $values[$opt] = $frm_app_controller->get_param($opt, $value);
             }
+            
+            if (!isset($values['custom_style']))
+                $values['custom_style'] = $frm_settings->custom_style;
+                
             if (!isset($values['email_to']))
                 $values['email_to'] = '';
 

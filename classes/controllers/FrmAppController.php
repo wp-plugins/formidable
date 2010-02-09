@@ -34,8 +34,8 @@ class FrmAppController{
     }
     
     function head(){
-        global $frm_settings;
-        $css_file = array($frm_settings->theme_nicename => $frm_settings->theme_css,  'frm_admin' => FRM_URL. '/css/frm_admin.css');
+        $css_file = array('frm_admin' => FRM_URL. '/css/frm_admin.css');
+        $css_file = apply_filters('frm_app_css', $css_file);
         $js_file  = 'list-items.js';
         require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
@@ -52,8 +52,10 @@ class FrmAppController{
     }
     
     function front_head(){
-        if (!is_admin())
-            wp_enqueue_style('frm-forms', FRM_URL.'/css/frm_display.css');
+        //if (!is_admin()){
+            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+            wp_enqueue_style('frm-forms', $css);
+        //}
     }
   
     function install(){
@@ -150,6 +152,9 @@ class FrmAppController{
           $filename = preg_replace("#".FRM_TEMPLATES_PATH."/#","",$templates[$i]);
           $filename = str_replace('.php','', $filename);
           $form = $frm_form->getAll("form_key='{$filename}' and is_template='1' and default_template='1'", '', ' LIMIT 1');
+          $values = FrmFormsHelper::setup_new_vars();
+          $values['form_key'] = $filename;
+          $values['is_template'] = $values['default_template'] = 1;
           require_once($templates[$i]);
       }
       

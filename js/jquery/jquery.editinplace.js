@@ -267,7 +267,7 @@ jQuery.fn.editInPlace = function(options) {
                 }
 
 				/* hit esc key */
-				$(document).keyup(function(event){
+				jQuery(document).keyup(function(event){
 				    if (event.keyCode == 27) {
 						cancelAction();
 				    }

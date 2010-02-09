@@ -1,10 +1,7 @@
 <?php
 
-$values = FrmFormsHelper::setup_new_vars();
 $values['name'] = 'Contact Us';
-$values['form_key'] = 'contact';
 $values['description'] = 'We would like to hear from you. Please send us a message by filling out the form below and we will get back with you shortly.';
-$values['is_template'] = $values['default_template'] = 1;
 
 if ($form){
     $form_id = $form->id;

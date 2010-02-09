@@ -21,4 +21,4 @@ return false;}
 original_element.children("form").children(".inplace_field").focus().select();original_element.children("form").children(".inplace_cancel").click(cancelAction);original_element.children("form").children(".inplace_save").click(saveAction);if(!settings.show_buttons){if(settings.on_blur=="save")
 original_element.children("form").children(".inplace_field").blur(saveAction);else
 original_element.children("form").children(".inplace_field").blur(cancelAction);}
-$(document).keyup(function(event){if(event.keyCode==27){cancelAction();}});original_element.children("form").submit(saveAction);}});});};
+jQuery(document).keyup(function(event){if(event.keyCode==27){cancelAction();}});original_element.children("form").submit(saveAction);}});});};

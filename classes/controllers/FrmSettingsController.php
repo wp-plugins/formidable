@@ -13,18 +13,8 @@ class FrmSettingsController{
     }
 
     function head(){
-        global $frm_settings;
-        $css_file = array($frm_settings->theme_nicename => $frm_settings->theme_css,  'frm_admin' => FRM_URL. '/css/frm_admin.css');
-        $js_file  = 'jquery/jquery-ui-themepicker.js';
-      ?>
-        <link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" />
-          <script>
-          jQuery(document).ready(function($){
-            $('#frm_switcher').themeswitcher();
-          });
-          </script>
-        <?php
-        require_once(FRM_VIEWS_PATH . '/shared/head.php');
+        $css_file = array('frm_admin' => FRM_URL. '/css/frm_admin.css');
+        require(FRM_VIEWS_PATH . '/shared/head.php');
     }
 
     function display_form(){
@@ -38,7 +28,7 @@ class FrmSettingsController{
       //$errors = $frm_settings->validate($_POST,array());
       $errors = array();
       $frm_settings->update($_POST);
-
+      
       if( empty($errors) ){
         $frm_settings->store();
         $message = 'Settings Saved';

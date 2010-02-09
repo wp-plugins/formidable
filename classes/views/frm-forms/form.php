@@ -26,6 +26,10 @@ if (isset($values['fields']) && !empty($values['fields'])){
         
         <p><label>Form Key</label>
             <input type="text" name="form_key" value="<?php echo $values['form_key']; ?>" />
+        </p>
+        
+        <p><label>Styling</label><input type="checkbox" name="options[custom_style]" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
+            Use Formidable styling for this form
         </p> 
         
         <p><label>Email Form Responses to</label>

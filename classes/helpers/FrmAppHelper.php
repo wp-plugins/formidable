@@ -56,7 +56,7 @@ class FrmAppHelper{
 
     function setup_edit_vars($record, $table, $fields='', $default=false){
         if(!$record) return false;
-        global $frm_entry_meta, $frm_form, $frm_app_controller;
+        global $frm_entry_meta, $frm_form, $frm_app_controller, $frm_settings;
         $values = array();
 
         $values['id'] = $record->id;
@@ -90,7 +90,7 @@ class FrmAppHelper{
                       'field_order' => $field->field_order,
                       'form_id' => $field->form_id);
 
-                foreach (array('size' => 50,'max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
+                foreach (array('size' => '','max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt]: $default_opt);
                   
                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);   
@@ -112,10 +112,13 @@ class FrmAppHelper{
         }
 
         $email = get_option('admin_email');
-        foreach (array('email_to' => $email, 'submit_value' => 'Submit', 'success_msg' => 'Your responses were successfully submitted. Thank you!') as $opt => $default){
+        foreach (array('custom_style' => $frm_settings->custom_style, 'email_to' => $email, 'submit_value' => 'Submit', 'success_msg' => 'Your responses were successfully submitted. Thank you!') as $opt => $default){
             if (!isset($values[$opt]))
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }
+        
+        if (!isset($values['custom_style']))
+            $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
 
         if (!isset($values['akismet']))
             $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;

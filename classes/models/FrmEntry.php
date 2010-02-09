@@ -90,15 +90,6 @@ class FrmEntry{
       $form_id = isset($value) ? $form_id : NULL;
       return $wpdb->update( $this->table_name, array('form_id' => $form_id), array( 'id' => $id ) );
     }
-
-    function getOneByKey( $key ){
-      global $wpdb, $frm_entry_meta;
-      $query = "SELECT it.*".//", meta.* " .
-                "FROM {$this->table_name} it ".
-                //"LEFT OUTER JOIN {$frm_entry_meta->table_name} meta ON meta.item_id=it.id " .
-                "WHERE it.item_key='" . $key . "'";
-      return $wpdb->get_row($query);
-    }
     
     function getOne( $id ){
       global $wpdb, $frm_form;
@@ -112,6 +103,20 @@ class FrmEntry{
       else
         $query .= " WHERE it.item_key='" . $id ."'";
       return $wpdb->get_row($query);
+    }
+    
+    function exists( $id ){
+        global $wpdb, $frm_form;
+        $query = 'SELECT id FROM '. $this->table_name;
+        if(is_numeric($id))
+            $query .= ' WHERE id=' . $id;
+        else
+            $query .= " WHERE item_key='" . $id ."'";
+        $id = $wpdb->get_var($query);
+        if ($id && $id > 0)
+            return true;
+        else
+            return false;
     }
 
     function getAll($where = '', $order_by = '', $limit = ''){

@@ -10,6 +10,7 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 
 == Description ==
 Quickly and easily build forms with a simple drag-and-drop interface.
+There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can create custom forms or create them from a template. Shortcodes can be used as well as spam catching services.
 
 = Features =
 * Integrates with Pretty Link, WP reCAPTCHA, and Akismet
@@ -41,6 +42,16 @@ Feedback and requests are welcome.
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.1.0 =
+* Added checkboxes to optionally include default stylesheet
+* Completely validated HTML this time (hopefully)
+
+= PRO =
+* Added a FREAKING AWESOME form styling editor
+* Made the link to view entries pretty if default permalinks are not in use
+* Fixed bug preventing external shortcodes from getting replaced when custom displayed data is not inserted automatically
+* Added shortcode for front-end search
+
 = 1.0.12 =
 * Validated HTML markup for front-end form
 * Simplified the way a default template is created so it will also get updated with any changes

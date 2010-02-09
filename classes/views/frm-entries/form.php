@@ -2,7 +2,11 @@
 
 <div id="frm_form_fields">
     <div>
+        <input type="hidden" name="action" value="<?php echo $form_action ?>" />
         <input type="hidden" name="form_id" value="<?php echo $form->id ?>" />
+        <?php if (isset($id)){ ?>
+        <input type="hidden" name="id" value="<?php echo $id ?>" />
+        <?php } ?>
         <?php if (isset($controller) && isset($plugin)){ ?>
         <input type="hidden" name="controller" value="<?php echo $controller; ?>" />
         <input type="hidden" name="plugin" value="<?php echo $plugin; ?>" />
@@ -26,8 +30,8 @@
     global $frm_settings;
     ?>
     <?php if (is_admin() && !$frm_settings->lock_keys){ ?>
-        <div class="form_field">
-        <label class="frm_pos_top">Entry Key</label>   
+        <div class="form-field">
+        <label>Entry Key</label>   
         <input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
         </div>
     <?php } ?>
