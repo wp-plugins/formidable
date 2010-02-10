@@ -1,6 +1,7 @@
 <?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
 
 <div id="frm_form_fields">
+    <fieldset>
     <div>
         <input type="hidden" name="action" value="<?php echo $form_action ?>" />
         <input type="hidden" name="form_id" value="<?php echo $form->id ?>" />
@@ -36,6 +37,7 @@
         </div>
     <?php } ?>
     </div>
+    </fieldset>
 </div>
 
 <?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>

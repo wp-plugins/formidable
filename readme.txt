@@ -42,6 +42,10 @@ Feedback and requests are welcome.
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.01.01 =
+* Fixed bug preventing stylesheet override on individual forms
+* PRO: Backed out pretty permalinks and bug duplicating displayed data
+
 = 1.01.0 =
 * Added checkboxes to optionally include default stylesheet
 * Completely validated HTML this time (hopefully)

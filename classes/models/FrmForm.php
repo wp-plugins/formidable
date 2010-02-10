@@ -76,6 +76,7 @@ class FrmForm{
     $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
+    $options['custom_style'] = isset($values['options']['custom_style']) ? 1 : 0;
     $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
     $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
     $options = apply_filters('frm_form_options_before_update', $options, $values);
