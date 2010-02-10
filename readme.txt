@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback
 Requires at least: 2.6
 Tested up to: 2.9.1
-Stable tag: 1.01.0
+Stable tag: 1.01.01
 
 Quickly and easily build forms with a simple drag-and-drop interface.
 
@@ -44,7 +44,8 @@ Feedback and requests are welcome.
 == Changelog ==
 = 1.01.01 =
 * Fixed bug preventing stylesheet override on individual forms
-* PRO: Backed out pretty permalinks and bug duplicating displayed data
+* PRO: Backed out pretty permalinks 
+* PRO: Fixed bug duplicating displayed data
 
 = 1.01.0 =
 * Added checkboxes to optionally include default stylesheet
