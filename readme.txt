@@ -13,12 +13,12 @@ Quickly and easily build forms with a simple drag-and-drop interface.
 There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can create custom forms or create them from a template. Shortcodes can be used as well as spam catching services.
 
 = Features =
-* Integrates with Pretty Link, WP reCAPTCHA, and Akismet
+* Integrates with WP reCAPTCHA and Akismet for Spam control
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow... and documentation too)
 * Create forms from existing templates or add your own
-* Direct links available with and without integration with your current theme
+* Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
 * Select an email address to send form responses under "Advanced Form Options"
 * Input default data into form fields with the option to clear when clicked
 * Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
