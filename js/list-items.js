@@ -48,16 +48,17 @@ jQuery('.frm_single_option').hover(
 jQuery('.edit_form_item .ui-icon-trash').hide();
 jQuery('.edit_form_item .ui-icon-arrowthick-2-n-s').hide();
 jQuery('.edit_form_item .postbox').hide();
-jQuery('.ui-state-default').hover(
+jQuery('li.ui-state-default').hover(
     function(){
 		jQuery(this).children(".ui-icon-trash").show();
 		jQuery(this).children(".ui-icon-arrowthick-2-n-s").show(); 
-		jQuery(this).children(".postbox").show();
+		jQuery(this).children(".ui-accordion-header").show();
 	},
     function(){
 		jQuery(this).children(".ui-icon-trash").hide();
 		jQuery(this).children(".ui-icon-arrowthick-2-n-s").hide(); 
-		jQuery(this).children(".postbox").hide();
+		jQuery(this).children(".ui-accordion-header").hide();
+		jQuery(this).children(".ui-accordion-header.ui-state-active").show();
 	}
 );
 });

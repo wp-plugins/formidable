@@ -16,8 +16,10 @@
     <textarea name="<?php echo $field_name ?>" cols="<?php echo $field['size']; ?>" rows="<?php echo $field['max']; ?>"><?php echo $field['default_value']; ?></textarea> 
     
 <?php }else if ($field['type'] == 'radio' || $field['type'] == 'checkbox'){
-        $field['value'] = maybe_unserialize($field['default_value']);
-        require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   ?>
+        $field['value'] = maybe_unserialize($field['default_value']); ?>
+        <div <?php if (count($field['options']) > 10) echo 'class="frm_mult_options"'; ?>>
+        <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   ?>
+        </div>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
             <a href="javascipt:void(0)" class="frm_add_field_option" id="field_<?php echo $field['id']; ?>"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
         </div>
@@ -31,9 +33,11 @@
     </select>
     <?php if ($display['default_blank']) FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
     <br/>
+    <div <?php if (count($field['options']) > 9) echo 'class="frm_mult_options"'; ?>>
     <?php foreach ($field['options'] as $opt_key => $opt)
             require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
  ?>
+    </div>
     <div id="frm_add_field_<?php echo $field['id']; ?>">
         <a href="javascipt:void(0)" class="frm_add_field_option" id="field_<?php echo $field['id']; ?>"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
         <?php do_action('frm_add_multiple_opts', $field); ?>
@@ -64,41 +68,44 @@ if ($display['description']){ ?>
 }
 
 if ($display['options']){ ?>  
-    <div class="postbox">
-        <h3 class="trigger">Field Options:</h3> 
-        <div class="toggle_container inside">
-            <?php if ($display['size']){ ?>
-            <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Columns':'Field Size' ?></label>
-                <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5">
-            
-                <label class="nofloat"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Rows':'Max length of input' ?></label>
-                <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5">
-            </p>
-            <?php } ?>
-            <?php if ($display['label_position']){ ?>
-            <p><label>Label Position:</label>
-                <select name="field_options[label_<?php echo $field['id'] ?>]">
-                    <option value="top"<?php echo ($field['label'] == 'top')?(' selected="true"'):(''); ?>>Top</option>
-                    <option value="left"<?php echo ($field['label'] == 'left')?(' selected="true"'):(''); ?>>Left</option>
-                    <option value="none"<?php echo ($field['label'] == 'none')?(' selected="true"'):(''); ?>>Hidden</option>
-                </select>    
-            </p>
-            <?php } ?>
-            <?php if ($display['required']){ ?>
-            <p><label>Indicate required field with:</label>
-                <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo $field['required_indicator']; ?>">
-            </p>
-            <p><label>Error message if required field is left blank:</label>    
-            <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" size="50">
-            </p>
-            <?php } ?>
-            <?php if ($display['invalid']){ ?>
-            <p><label>Error message if entry is an invalid format:</label>    
-            <input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50">
-            </p>
-            <?php } ?>
-            <?php do_action('frm_field_options_form', $field, $display); ?>
-        </div>
+    <div class="frm_options_spacer"></div>
+    <h3 class="ui-accordion-header ui-state-default">
+        <span class="ui-icon ui-icon-triangle-1-e"></span>
+        <a href="#">Field Options</a>
+    </h3> 
+    <div class="ui-widget-content ui-corner-bottom">
+        <?php if ($display['size']){ ?>
+        <p><label><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Columns':'Field Size' ?>:</label>
+            <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5">
+        
+            <label class="nofloat"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')?'Rows':'Max length of input' ?>:</label>
+            <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5">
+        </p>
+        <?php } ?>
+        <?php if ($display['label_position']){ ?>
+        <p><label>Label Position:</label>
+            <select name="field_options[label_<?php echo $field['id'] ?>]">
+                <option value="top"<?php echo ($field['label'] == 'top')?(' selected="true"'):(''); ?>>Top</option>
+                <option value="left"<?php echo ($field['label'] == 'left')?(' selected="true"'):(''); ?>>Left</option>
+                <option value="none"<?php echo ($field['label'] == 'none')?(' selected="true"'):(''); ?>>Hidden</option>
+            </select>    
+        </p>
+        <?php } ?>
+        <?php if ($display['required']){ ?>
+        <p><label>Indicate required field with:</label>
+            <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo $field['required_indicator']; ?>">
+        </p>
+        <p><label>Error message if required field is left blank:</label>    
+        <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" size="50">
+        </p>
+        <?php } ?>
+        <?php if ($display['invalid']){ ?>
+        <p><label>Error message if entry is an invalid format:</label>    
+        <input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50">
+        </p>
+        <?php } ?>
+        <?php do_action('frm_field_options_form', $field, $display); ?>
+
     </div>   
 <?php } ?>         
 </li>

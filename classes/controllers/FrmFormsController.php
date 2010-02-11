@@ -19,7 +19,7 @@ class FrmFormsController{
     
     function head(){
         $css_file = array('jquery-ui-1.7.2.custom' => FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css', 'frm_admin' => FRM_URL. '/css/frm_admin.css');
-        $js_file  = 'list-items.js';
+        $js_file  = array('list-items.js', 'jquery/jquery-ui-themepicker.js');
         require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
     

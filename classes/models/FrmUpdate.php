@@ -135,6 +135,11 @@ class FrmUpdate{
     }
 
     $this->display_pro_cred_form(); ?>
+    
+    <p>Ready to take your forms to the next level?<br/>
+    Formidable Pro will help you style forms, manage data, and get reports.</p>
+
+    <a href="http://formidablepro.com">Learn More &raquo;</a>
 </div>
     <?php    
   }

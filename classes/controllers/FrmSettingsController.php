@@ -3,12 +3,16 @@
 class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', array( $this, 'menu' ), 25);
+        add_action('admin_menu', array( $this, 'pro_menu' ), 19);
         add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-settings', array($this,'head'));
     }
 
     function menu(){
-        global $frm_update;
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | Settings', 'Settings', 8, FRM_PLUGIN_NAME.'-settings', array($this,'route'));
+    }
+    
+    function pro_menu(){
+        global $frm_update;
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. FRM_PLUGIN_TITLE . ' Pro', FRM_PLUGIN_TITLE . ' Pro', 8, FRM_PLUGIN_NAME.'-pro-settings', array($frm_update,'pro_cred_form'));
     }
 
