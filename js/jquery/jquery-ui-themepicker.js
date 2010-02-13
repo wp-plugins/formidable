@@ -314,7 +314,7 @@ jQuery(document).ready(function($){
 	$("#datepicker_sample").datepicker();
     
     $('div.theme-group .theme-group-header').addClass('corner-all').spinDown();
-	$('#new_fields .ui-accordion-header').addClass('ui-corner-all').spinDown();
+	$('#frm_form_editor_container .ui-accordion-header').addClass('ui-corner-all').spinDown();
     
     // focus and blur classes in form
 	$('input, select').focus(function(){

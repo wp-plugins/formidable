@@ -13,6 +13,9 @@ class FrmSettingsController{
     
     function pro_menu(){
         global $frm_update;
+        if (IS_WPMU and !is_site_admin() and get_site_option($frm_update->pro_wpmu_store))
+            return;
+            
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. FRM_PLUGIN_TITLE . ' Pro', FRM_PLUGIN_TITLE . ' Pro', 8, FRM_PLUGIN_NAME.'-pro-settings', array($frm_update,'pro_cred_form'));
     }
 

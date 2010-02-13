@@ -4,8 +4,8 @@ class FrmAppController{
     function FrmAppController(){
         add_action('admin_menu', array( $this, 'menu' ));
         add_filter( 'plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this, 'settings_link'), 10, 2 );
-        add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this,'frmpro_action_needed'));
-        add_action('admin_notices', array( $this,'frmpro_get_started_headline'));
+        //add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this,'frmpro_action_needed'));
+        //add_action('admin_notices', array( $this,'frmpro_get_started_headline'));
         add_filter('the_content', array( $this, 'page_route' ), 1);
         add_action('init', array($this, 'front_head'));
         add_action('admin_init', array( $this, 'admin_js'));
@@ -33,31 +33,36 @@ class FrmAppController{
     }
     
     function frmpro_action_needed( $plugin ){
-      global $frm_update;
+        global $frm_update;
        
-      if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
-        $frm_update->queue_update(true);
-        $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $plugin, 'upgrade-plugin_' . $plugin);
+        if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
+            if (IS_WPMU and $frm_update->pro_wpmu and !is_site_admin())
+                return;
+            $frm_update->queue_update(true);
+            $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $plugin, 'upgrade-plugin_' . $plugin);
     ?>
       <td colspan="3" class="plugin-update"><div class="update-message" style="-moz-border-radius:5px; border:1px solid #CC0000;; margin:5px; background-color:#FFEBE8; padding:3px 5px;"><?php printf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', FRM_PLUGIN_NAME), '<a href="'.$inst_install_url.'">', '</a>'); ?></div></td>
     <?php
-      }
+        }
     }
 
     function frmpro_get_started_headline(){
-      global $frm_update;
+        global $frm_update;
 
-      // Don't display this error as we're upgrading the thing... cmon
-      if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
-        return;
-
-      if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed()){
-        $frm_update->queue_update(true);
-        $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $frm_update->plugin_name, 'upgrade-plugin_' . $frm_update->plugin_name);
+        // Don't display this error as we're upgrading the thing... cmon
+        if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
+            return;
+    
+        if (IS_WPMU and $frm_update->pro_wpmu and !is_site_admin())
+            return;
+            
+        if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed()){
+            $frm_update->queue_update(true);
+            $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $frm_update->plugin_name, 'upgrade-plugin_' . $frm_update->plugin_name);
         ?>
     <div class="error" style="padding:7px;"><?php printf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', FRM_PLUGIN_NAME), '<a href="'.$inst_install_url.'">','</a>'); ?></div>  
         <?php 
-      }
+        }
     }
     
     function head(){
@@ -79,9 +84,15 @@ class FrmAppController{
     }
     
     function front_head(){
+        if (IS_WPMU){
+            $db_version = 1.0; // this is the version of the database we're moving to
+            $old_db_version = get_option('frm_db_version');
+            if ($db_version != $old_db_version)
+                $this->install();
+        }
         //if (!is_admin()){
-            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
-            wp_enqueue_style('frm-forms', $css);
+        $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+        wp_enqueue_style('frm-forms', $css);
         //}
     }
   

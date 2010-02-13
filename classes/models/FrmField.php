@@ -32,10 +32,11 @@ class FrmField{
       }
     }
 
-    function duplicate($old_form_id,$form_id){
+    function duplicate($old_form_id,$form_id, $copy_keys){
         foreach ($this->getAll("fi.form_id = $old_form_id") as $field){
             $values = array();
-            $values['field_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'field_key');
+            $new_key = ($copy_keys) ? $values->form_key : '';
+            $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $this->table_name, 'field_key');
             $values['field_options'] = unserialize($field->field_options);
             $values['form_id'] = $form_id;
             foreach (array('name','description','type','default_value','options','field_order','required') as $col)

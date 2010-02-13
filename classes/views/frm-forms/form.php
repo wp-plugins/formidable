@@ -1,4 +1,4 @@
-
+<div id="frm_form_editor_container">
 <div id="form_desc" class="edit_form_item frm_field_box frm_head_box">
     <h2 class="frm_ipe_form_name" id="frmform_<?php echo $id; ?>"><?php echo $values['name']; ?></h2>
     <div class="frm_ipe_form_desc"><?php echo wpautop($values['description']); ?></div>
@@ -15,9 +15,11 @@ if (isset($values['fields']) && !empty($values['fields'])){
 </ul>
 
 <?php if (!$values['is_template']){ ?>
-<div class="postbox">
-    <h3 class="trigger">Advanced Form Options</h3> 
-    <div class="toggle_container inside">  
+    <h3 class="ui-accordion-header ui-state-default">
+        <span class="ui-icon ui-icon-triangle-1-e"></span>
+        <a href="#">Advanced Form Options</a>
+    </h3> 
+    <div class="ui-widget-content ui-corner-bottom">
         <span class="alignright"><a title="<?php _e("Edit HTML" , FRM_PLUGIN_NAME) ?>" href="#TB_inline?height=500&width=700&inlineId=frm_editable_html" class="thickbox button"><?php _e("Edit HTML" , FRM_PLUGIN_NAME)  ?></a></span>
           
         <p style="clear:both;"><label>Form ShortCodes:</label> 
@@ -90,5 +92,6 @@ if (isset($values['fields']) && !empty($values['fields'])){
             <li><b>Add class name if field has an error on form submit:</b> [error_class]</li>
         </ul>
     </div>    
-</div>    
+    
 <?php } ?>
+</div>

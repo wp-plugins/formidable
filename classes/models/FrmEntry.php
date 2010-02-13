@@ -76,7 +76,7 @@ class FrmEntry{
       global $wpdb, $frm_entry_meta;
       
       // Disconnect the child items from this parent item
-      $query_results = $wpdb->update( $this->table_name, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
+      //$query_results = $wpdb->update( $this->table_name, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
 
       $reset = 'DELETE FROM ' . $frm_entry_meta->table_name .  ' WHERE item_id=' . $id;
       $destroy = 'DELETE FROM ' . $this->table_name .  ' WHERE id=' . $id;

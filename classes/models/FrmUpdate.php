@@ -12,12 +12,14 @@ class FrmUpdate{
   
   var $pro_cred_store;
   var $pro_auth_store;
+  var $pro_wpmu_store;
   
   var $pro_username_label;
   var $pro_password_label;
   
   var $pro_username_str;
   var $pro_password_str;
+  var $pro_wpmu_str;
   
   var $pro_error_message_str;
   
@@ -37,6 +39,7 @@ class FrmUpdate{
     $this->pro_mothership       = 'http://formidablepro.com';
     $this->pro_cred_store       = 'frmpro-credentials';
     $this->pro_auth_store       = 'frmpro-authorized';
+    $this->pro_auth_store       = 'frmpro-wpmu-sitewide';
     $this->pro_last_checked_store = 'frmpro_last_checked_update';
     $this->pro_username_label    = __(FRM_PLUGIN_TITLE .' Pro Username', FRM_PLUGIN_NAME);
     $this->pro_password_label    = __(FRM_PLUGIN_TITLE .' Pro Password', FRM_PLUGIN_NAME);
@@ -46,10 +49,17 @@ class FrmUpdate{
     $this->pro_check_interval = 60*60; // Checking every hour
     $this->pro_username_str = 'proplug-username';
     $this->pro_password_str = 'proplug-password';
+    $this->pro_wpmu_str = 'proplug-wpmu';
     $this->pro_mothership_xmlrpc_url = $this->pro_mothership . '/xmlrpc.php';
     
     // Retrieve Pro Credentials
-    $creds = get_option($this->pro_cred_store);
+    $this->pro_wpmu = false;
+    if (IS_WPMU and get_site_option($this->pro_wpmu_store)){
+        $creds = get_site_option($this->pro_cred_store);
+        $this->pro_wpmu = true;
+    }else
+        $creds = get_option($this->pro_cred_store);
+        
     if($creds and is_array($creds)){
       extract($creds);
       $this->pro_username = ((isset($username) and !empty($username))?$username:'');
@@ -68,14 +78,20 @@ class FrmUpdate{
 
   function pro_is_authorized($force_check=false){
     if( !empty($this->pro_username) and !empty($this->pro_password) ){
-      $authorized = get_option($this->pro_auth_store);
-      if(!$force_check and isset($authorized))
-        return $authorized;
-      else{
-        $new_auth = $this->authorize_user($this->pro_username,$this->pro_password);
-        update_option($this->pro_auth_store, $new_auth);
-        return $new_auth;
-      }
+        if (IS_WPMU and $this->pro_wpmu)
+            $authorized = get_site_option($this->pro_auth_store);
+        else
+            $authorized = get_option($this->pro_auth_store);
+        if(!$force_check and isset($authorized))
+            return $authorized;
+        else{
+            $new_auth = $this->authorize_user($this->pro_username,$this->pro_password);
+            if (IS_WPMU and $this->pro_wpmu)
+                update_site_option($this->pro_auth_store, $new_auth);
+            else
+                update_option($this->pro_auth_store, $new_auth);
+            return $new_auth;
+        }
     }
 
     return false;
@@ -160,11 +176,20 @@ class FrmUpdate{
       </td>
     </tr>
     <tr class="form-field">
-      <td valign="top" width="15%"><?php echo $this->pro_password_label; ?>:</td>
+      <td valign="top"><?php echo $this->pro_password_label; ?>:</td>
       <td width="85%">
         <input type="password" name="<?php echo $this->pro_password_str; ?>" value="<?php echo $password; ?>"/>
       </td>
     </tr>
+    <?php if (IS_WPMU){ ?>
+        <tr>
+            <td valign="top"><?php _e('WordPress MU', FRM_PLUGIN_NAME); ?>:</td>
+            <td valign="top">
+                <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?>>
+                <?php _e('Use this username and password to enable Formidable Pro site-wide', FRM_PLUGIN_NAME); ?>
+            </td>
+        </tr>
+    <?php } ?>
   </table>
   <p class="submit">
     <input type="submit" name="Submit" value="<?php _e('Save', FRM_PLUGIN_NAME); ?>" />
@@ -178,15 +203,23 @@ class FrmUpdate{
     $user_authorized = $this->authorize_user($creds['username'], $creds['password']);
 
     if(!empty($user_authorized) and $user_authorized){
-      update_option($this->pro_cred_store, $creds);
-      update_option($this->pro_auth_store, $user_authorized);
+        if (IS_WPMU)
+            update_site_option($this->pro_wpmu_store, $creds['wpmu']);
 
-      extract($creds);
-      $this->pro_username = ((isset($username) and !empty($username))?$username:'');
-      $this->pro_password = ((isset($password) and !empty($password))?$password:'');
+        if ($creds['wpmu']){
+            update_site_option($this->pro_cred_store, $creds);
+            update_site_option($this->pro_auth_store, $user_authorized);
+        }else{
+            update_option($this->pro_cred_store, $creds);
+            update_option($this->pro_auth_store, $user_authorized);
+        }
 
-      if(!$this->pro_is_installed())
-        $this->queue_update(true);
+        extract($creds);
+        $this->pro_username = ((isset($username) and !empty($username))?$username:'');
+        $this->pro_password = ((isset($password) and !empty($password))?$password:'');
+
+        if(!$this->pro_is_installed())
+          $this->queue_update(true);
     }
 
     return $user_authorized;
@@ -195,8 +228,9 @@ class FrmUpdate{
   function get_pro_cred_form_vals(){
     $username = ((isset($_POST[$this->pro_username_str]))?$_POST[$this->pro_username_str]:$this->pro_username);
     $password = ((isset($_POST[$this->pro_password_str]))?$_POST[$this->pro_password_str]:$this->pro_password);
+    $wpmu = (isset($_POST[$this->pro_wpmu_str])) ? true : $this->pro_wpmu;
 
-    return compact('username','password');
+    return compact('username','password','wpmu');
   }
 
   function get_download_url($version){
