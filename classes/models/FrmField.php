@@ -32,10 +32,10 @@ class FrmField{
       }
     }
 
-    function duplicate($old_form_id,$form_id, $copy_keys){
-        foreach ($this->getAll("fi.form_id = $old_form_id") as $field){
+    function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
+        foreach ($this->getAll("fi.form_id = $old_form_id",'','',$blog_id) as $field){
             $values = array();
-            $new_key = ($copy_keys) ? $values->form_key : '';
+            $new_key = ($copy_keys) ? $field->field_key : '';
             $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $this->table_name, 'field_key');
             $values['field_options'] = unserialize($field->field_options);
             $values['form_id'] = $form_id;
@@ -78,11 +78,16 @@ class FrmField{
         return $wpdb->get_row($query);
     }
 
-    function getAll($where = '', $order_by = '', $limit = ''){
+    function getAll($where = '', $order_by = '', $limit = '', $blog_id=false){
         global $wpdb, $frm_form, $frm_app_helper;
+        if ($blog_id and IS_WPMU){
+            global $wpmuBaseTablePrefix;
+            $table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_fields";
+        }else
+            $table_name = $this->table_name;
         $query = 'SELECT fi.*, ' .
                  'fr.name as form_name ' . 
-                 'FROM '. $this->table_name . ' fi ' .
+                 'FROM '. $table_name . ' fi ' .
                  'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON fi.form_id=fr.id' . 
                  $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         if ($limit == ' LIMIT 1')

@@ -44,6 +44,8 @@ class FrmForm{
     $new_values['name'] = $values->name;
     $new_values['description'] = $values->description;
     $new_values['status'] = (!$template)?'draft':'';
+    if ($blog_id)
+        $new_values['status'] = 'published';
     $new_values['options'] = $values->options;
     $new_values['logged_in'] = $values->logged_in ? $values->logged_in : 0;
     $new_values['editable'] = $values->editable ? $values->editable : 0;
@@ -54,7 +56,7 @@ class FrmForm{
     
    if($query_results){
        $form_id = $wpdb->insert_id;
-       $frm_field->duplicate($id, $form_id, $copy_keys);
+       $frm_field->duplicate($id, $form_id, $copy_keys, $blog_id);
            
       return $form_id;
    }else
@@ -155,7 +157,10 @@ class FrmForm{
     $query_results = $wpdb->query($query);
 
     $destroy = 'DELETE FROM ' . $this->table_name .  ' WHERE id=' . $id;
-    return $wpdb->query($destroy);
+    $query_results = $wpdb->query($destroy);
+    if ($query_results)
+        do_action('frm_destroy_form', $id);
+    return $query_results;
   }
   
   function getName( $id ){

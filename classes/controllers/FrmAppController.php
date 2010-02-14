@@ -98,7 +98,7 @@ class FrmAppController{
   
     function install(){
       global $wpdb, $frm_form, $frm_field, $frm_app_helper;
-      $db_version = 1.0; // this is the version of the database we're moving to
+      $db_version = 1.01; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
       $fields_table     = $wpdb->prefix . "frm_fields";
@@ -108,6 +108,14 @@ class FrmAppController{
 
       if ($db_version != $old_db_version){
       require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+      
+      $charset_collate = '';
+      if( $wpdb->has_cap( 'collation' ) ){
+          if( !empty($wpdb->charset) )
+            $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+          if( !empty($wpdb->collate) )
+            $charset_collate .= " COLLATE $wpdb->collate";
+      }
 
       /* Create/Upgrade Fields Table */
       $sql = "CREATE TABLE {$fields_table} (
@@ -125,7 +133,7 @@ class FrmAppController{
                 created_at datetime NOT NULL,
                 PRIMARY KEY  (id),
                 KEY form_id (form_id)
-              );";
+              ) {$charset_collate};";
 
       dbDelta($sql);
 
@@ -144,7 +152,7 @@ class FrmAppController{
                 options longtext default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY  (id)
-              );";
+              ) {$charset_collate};";
 
       dbDelta($sql);
 
@@ -160,7 +168,7 @@ class FrmAppController{
                 PRIMARY KEY  (id),
                 KEY form_id (form_id),
                 KEY parent_item_id (parent_item_id)
-              );";
+              ) {$charset_collate};";
 
       dbDelta($sql);
 
@@ -175,7 +183,7 @@ class FrmAppController{
                 PRIMARY KEY  (id),
                 KEY field_id (field_id),
                 KEY item_id (item_id)
-              );";
+              ) {$charset_collate};";
 
       dbDelta($sql);
 
