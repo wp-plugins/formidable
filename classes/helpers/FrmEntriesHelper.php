@@ -18,6 +18,8 @@ class FrmEntriesHelper{
               if ($field->type != 'checkbox')
                 $new_value = apply_filters('frm_get_default_value', stripslashes($new_value));
                 
+              $new_value = stripslashes_deep(maybe_unserialize($new_value));
+                
               $field_array = array('id' => $field->id,
                     'value' => $new_value,
                     'default_value' => $new_value,

@@ -48,6 +48,12 @@ Feedback and requests are welcome.
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.01.03 =
+* Fixed bug preventing field options from showing on a newly-added field
+* PRO: Added option to activate Pro sitewide for WPMU
+* PRO: Added option to copy forms and entry displays to other blogs in WPMU
+* PRO: Fixed checkbox bug when editing an entry
+
 = 1.01.02 =
 * Updated the form builder page with a little more simplicity and less clutter
 * PRO: Added a warning message if Pro is not activated

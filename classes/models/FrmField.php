@@ -83,12 +83,15 @@ class FrmField{
         if ($blog_id and IS_WPMU){
             global $wpmuBaseTablePrefix;
             $table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_fields";
-        }else
+            $form_table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_forms";
+        }else{
             $table_name = $this->table_name;
+            $form_table_name = $frm_form->table_name;
+        }
         $query = 'SELECT fi.*, ' .
                  'fr.name as form_name ' . 
                  'FROM '. $table_name . ' fi ' .
-                 'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON fi.form_id=fr.id' . 
+                 'LEFT OUTER JOIN ' . $form_table_name . ' fr ON fi.form_id=fr.id' . 
                  $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         if ($limit == ' LIMIT 1')
             $results = $wpdb->get_row($query);

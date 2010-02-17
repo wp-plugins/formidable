@@ -1,20 +1,23 @@
 <script>
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
     jQuery('#frm_field_id_<?php echo $field['id']; ?> .ui-icon-trash').hide();
     jQuery('#frm_field_id_<?php echo $field['id']; ?> .ui-icon-arrowthick-2-n-s').hide();
-    jQuery('#frm_field_id_<?php echo $field['id']; ?> .postbox').hide();
     jQuery('#frm_field_id_<?php echo $field['id']; ?>.ui-state-default').hover(
-        function(){jQuery(this).children(".ui-icon-trash").show();jQuery(this).children(".ui-icon-arrowthick-2-n-s").show(); jQuery(this).children(".postbox").show();},
-        function(){jQuery(this).children(".ui-icon-trash").hide();jQuery(this).children(".ui-icon-arrowthick-2-n-s").hide(); jQuery(this).children(".postbox").hide();}
+        function(){
+    		jQuery(this).children(".ui-icon-trash").show();
+    		jQuery(this).children(".ui-icon-arrowthick-2-n-s").show(); 
+    		jQuery(this).children(".ui-accordion-header").show();
+    	},
+        function(){
+    		jQuery(this).children(".ui-icon-trash").hide();
+    		jQuery(this).children(".ui-icon-arrowthick-2-n-s").hide(); 
+    		jQuery(this).children(".ui-accordion-header").hide();
+    		jQuery(this).children(".ui-accordion-header.ui-state-active").show();
+    	}
     );
     
+    $('#frm_form_editor_container #frm_field_id_<?php echo $field['id']; ?> .ui-accordion-header').addClass('ui-corner-all').spinDown();
     
-    jQuery('#frm_field_id_<?php echo $field['id']; ?> .toggle_container').hide(); 
-    jQuery('#frm_field_id_<?php echo $field['id']; ?> .trigger').toggle(
-      	function(){jQuery(this).addClass("active");}, 
-      	function(){jQuery(this).removeClass("active");}
-    );
-    jQuery('#frm_field_id_<?php echo $field['id']; ?> .trigger').click(function(){jQuery(this).next(".toggle_container").slideToggle("slow");});
 
     jQuery('#frm_field_id_<?php echo $field['id']; ?> .ui-icon-trash.frm_delete_field_option').hide();
     jQuery('#frm_field_id_<?php echo $field['id']; ?> .frm_single_option').hover(

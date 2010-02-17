@@ -76,7 +76,7 @@ class FrmAppHelper{
                 $field_options = stripslashes_deep(unserialize($field->field_options));
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
-                $new_value = stripslashes(maybe_unserialize($new_value));
+                $new_value = stripslashes_deep(maybe_unserialize($new_value));
                     
                 $field_array = array('id' => $field->id,
                       'value' => $new_value,

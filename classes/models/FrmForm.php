@@ -44,9 +44,15 @@ class FrmForm{
     $new_values['name'] = $values->name;
     $new_values['description'] = $values->description;
     $new_values['status'] = (!$template)?'draft':'';
-    if ($blog_id)
+    if ($blog_id){
         $new_values['status'] = 'published';
-    $new_values['options'] = $values->options;
+        $new_options = unserialize($values->options);
+        $new_options['email_to'] = get_option('admin_email');
+        $new_options['copy'] = false;
+        $new_values['options'] = serialize($new_options);
+    }else
+        $new_values['options'] = $values->options;
+        
     $new_values['logged_in'] = $values->logged_in ? $values->logged_in : 0;
     $new_values['editable'] = $values->editable ? $values->editable : 0;
     $new_values['created_at'] = current_time('mysql', 1);
@@ -176,6 +182,12 @@ class FrmForm{
   function getIdByName( $name ){
       global $wpdb;
       $query = 'SELECT id FROM ' . $this->table_name . ' WHERE name="' . $name . '";';
+      return $wpdb->get_var($query);
+  }
+  
+  function getIdByKey( $key ){
+      global $wpdb;
+      $query = "SELECT id FROM $this->table_name WHERE form_key='$key' LIMIT 1";
       return $wpdb->get_var($query);
   }
 

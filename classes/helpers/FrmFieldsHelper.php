@@ -41,7 +41,7 @@ class FrmFieldsHelper{
         
         foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
             $values[$var] = $frm_app_controller->get_param($var, $default);
-            
+        
         $values['options'] = unserialize($record->options);
         $field_options = unserialize($record->field_options);
         $values['field_options'] = $field_options;

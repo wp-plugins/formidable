@@ -22,7 +22,7 @@
         if ($frm_recaptcha_enabled)
             FrmAppHelper::display_recaptcha($errors);
       }else if ($field['type'] == 'checkbox'){
-        $checked_values = stripslashes_deep(maybe_unserialize($field['value']));
+        $checked_values = $field['value'];
         foreach ($field['options'] as $opt){
             $checked = ((!is_array($checked_values) && $checked_values == $opt ) || (is_array($checked_values) && in_array($opt, $checked_values)))?' checked="true"':''; ?>
             <div class="frm_checkbox"><input type="checkbox" name="<?php echo $field_name ?>[]" value="<?php echo $opt ?>" <?php echo $checked ?> /><span><?php echo $opt ?></span></div>

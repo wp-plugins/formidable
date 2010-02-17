@@ -4,8 +4,8 @@ class FrmAppController{
     function FrmAppController(){
         add_action('admin_menu', array( $this, 'menu' ));
         add_filter( 'plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this, 'settings_link'), 10, 2 );
-        //add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this,'frmpro_action_needed'));
-        //add_action('admin_notices', array( $this,'frmpro_get_started_headline'));
+        add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this,'frmpro_action_needed'));
+        add_action('admin_notices', array( $this,'frmpro_get_started_headline'));
         add_filter('the_content', array( $this, 'page_route' ), 1);
         add_action('init', array($this, 'front_head'));
         add_action('admin_init', array( $this, 'admin_js'));

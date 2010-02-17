@@ -1,13 +1,12 @@
 .with_frm_style .frm_pos_top{display:block;}
-.with_frm_style .frm_pos_left{float:left; padding-right:10px;}
+.with_frm_style .frm_pos_left{float:left; padding-right:10px; width:150px;}
 .with_frm_style .frm_pos_none{display:none;}
 .with_frm_style .frm_10radio{margin-right:10px; text-align:center; float:left;}
+.with_frm_style .form-field{margin-top:15px;}
 .with_frm_style .frm_blank_field input[type='text'], .with_frm_style .frm_blank_field textarea,
 .with_frm_style .frm_blank_field select{border:1px solid red;}
 .with_frm_style ul#frm_errors{list-style: square inside url(../images/error.png);}
-.with_frm_style .frm_checkbox,
-.with_frm_style .frm_radio{
-	display:block;
-}
+.with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;}
 .with_frm_style input[type="radio"], 
 .with_frm_style input[type="checkbox"]{width:auto;}
+.with_frm_style fieldset{border:none; margin:0; padding:0;}
