@@ -92,7 +92,7 @@ class FrmFieldsController{
     function add_option(){
         global $frm_field;
 
-        $id = str_replace('field_', '', $_POST['field']);
+        $id = $_POST['field_id'];
         $field = $frm_field->getOne($id);
         $options = unserialize($field->options);
         $last = max(array_keys($options));
@@ -127,12 +127,10 @@ class FrmFieldsController{
 
     function delete_option(){
         global $frm_field;
-        $ids = explode('-',$_POST['field']);
-        $id = str_replace('frm_delete_field_', '', $ids[0]);
-        $field = $frm_field->getOne($id);
+        $field = $frm_field->getOne($_POST['field_id']);
         $options = unserialize($field->options);
-        unset($options[$ids[1]]);
-        $frm_field->update($id, array('options' => serialize($options)));
+        unset($options[$_POST['opt_key']]);
+        $frm_field->update($_POST['field_id'], array('options' => serialize($options)));
         die();
     }
     

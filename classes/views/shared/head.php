@@ -11,9 +11,9 @@ if (isset($css_file)){
 if (isset($js_file)){ 
     if (is_array($js_file)){
         foreach ($js_file as $file)
-            echo '<script type="text/javascript" src="'.FRM_URL.'/js/'. $file .'"></script>';
+            echo '<script type="text/javascript" src="'. $file .'"></script>';
     }else{?>
-<script type="text/javascript" src="<?php echo FRM_URL; ?>/js/<?php echo $js_file; ?>"></script>
+<script type="text/javascript" src="<?php echo $js_file; ?>"></script>
 <?php 
     }
 }

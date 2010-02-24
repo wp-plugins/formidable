@@ -8,7 +8,7 @@
     <p>
         <?php FrmFormsHelper::get_template_dropdown($all_templates); ?>
         or
-        <a href="<?php echo add_query_arg('action','new',str_replace( '%7E', '~', $_SERVER['REQUEST_URI'])) ?>">Create Custom Form</a>
+        <a href="<?php echo add_query_arg('action','new') ?>">Create New Form</a>
     </p>
 
 </div>

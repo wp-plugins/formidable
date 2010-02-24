@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
   jQuery('.form_item_actions').hide();
   jQuery('.edit_form_item').hover(
       function(){jQuery(this).children(".form_item_actions").show();},
@@ -32,33 +32,21 @@ jQuery(document).ready(function(){
     }
   });
 
-   jQuery('.toggle_container').hide(); 
-   jQuery('.trigger').toggle(
-       	function(){jQuery(this).addClass("active");}, 
-       	function(){jQuery(this).removeClass("active");}
-   );
-   jQuery('.trigger').click(function(){jQuery(this).next(".toggle_container").slideToggle("slow");});
-
-jQuery('.ui-icon-trash.frm_delete_field_option').hide();
+jQuery('.frm_single_show_hover').hide();
 jQuery('.frm_single_option').hover(
-  function(){jQuery(this).children(".ui-icon-trash.frm_delete_field_option").show(); jQuery(this).children(".frm_spacer").hide();},
-  function(){jQuery(this).children(".ui-icon-trash.frm_delete_field_option").hide(); jQuery(this).children(".frm_spacer").show();}
+  function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_spacer").hide();},
+  function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_spacer").show();}
 );
 
-jQuery('.edit_form_item .ui-icon-trash').hide();
-jQuery('.edit_form_item .ui-icon-arrowthick-2-n-s').hide();
-jQuery('.edit_form_item .postbox').hide();
 jQuery('li.ui-state-default').hover(
-    function(){
-		jQuery(this).children(".ui-icon-trash").show();
-		jQuery(this).children(".ui-icon-arrowthick-2-n-s").show(); 
-		jQuery(this).children(".ui-accordion-header").show();
-	},
-    function(){
-		jQuery(this).children(".ui-icon-trash").hide();
-		jQuery(this).children(".ui-icon-arrowthick-2-n-s").hide(); 
-		jQuery(this).children(".ui-accordion-header").hide();
-		jQuery(this).children(".ui-accordion-header.ui-state-active").show();
-	}
+    function(){jQuery(this).children(".frm-show-hover").show();},
+    function(){if(jQuery(this).is('.selected')){}else{ jQuery(this).children(".frm-show-hover").hide();}}
 );
+
+jQuery('li.ui-state-default').click(function(){
+	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show(); 
+	$('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
+	$(".ui-accordion-header").hide(); $(this).children(".ui-accordion-header").show();
+	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
+});
 });

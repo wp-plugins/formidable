@@ -126,6 +126,8 @@ jQuery.fn.editInPlace = function(options) {
 
 			if(!editing)
 			{
+				jQuery('.inplace_field').blur();
+				
 				editing = true;
 
 				//save original text - for cancellation functionality
@@ -185,7 +187,7 @@ jQuery.fn.editInPlace = function(options) {
 
                     var this_elem = jQuery(this);
 
-					var new_html = escape((this_elem.is('form')) ? this_elem.children(0).val() : this_elem.parent().children(0).val());
+					var new_html = encodeURIComponent((this_elem.is('form')) ? this_elem.children(0).val() : this_elem.parent().children(0).val());
 
 					/* set saving message */
 					if(settings.saving_image != ""){

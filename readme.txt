@@ -3,14 +3,14 @@ Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback
 Requires at least: 2.8
-Tested up to: 2.9.1
+Tested up to: 2.9.2
 Stable tag: 1.01.03
 
-Quickly and easily build forms with a simple drag-and-drop interface.
+Quickly and easily build forms with a simple drag-and-drop interface and in-place editing..
 
 == Description ==
-Quickly and easily build forms with a simple drag-and-drop interface.
-There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can create custom forms or create them from a template. Shortcodes can be used as well as spam catching services.
+Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
+There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
 
 = Upgrade to Formidable Pro =
 
@@ -48,6 +48,17 @@ Feedback and requests are welcome.
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.01.04 =
+* Updated in-place edit to work with more characters and function without the save buttons
+* Fixed bug causing several form options to be lost when the form name or description was edited without also clicking update for the whole form
+* Made more user interface modifications
+* PRO: Added dynamic default values for GET/POST variables
+* PRO: Added shortcode for fetching field-wide calculations `[frm-stats id=5 type=(count, total, average, or median)]`
+* PRO: Added icon link to duplicate an individual field
+* PRO: Increased the WPMU efficiency so the templates are only updated if the database version is changed
+* PRO: Added functionality to the 'Data From Entries' field to use another observed 'Data From Entries' field to join a third form
+* PRO: Fixed admin entry searches to start on first page of results if search was submitted from a higher page
+
 = 1.01.03 =
 * Fixed bug preventing field options from showing on a newly-added field
 * PRO: Added option to activate Pro sitewide for WPMU

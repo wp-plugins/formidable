@@ -27,7 +27,7 @@
                 <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=name<?php echo (($sort_str == 'name' and $sdir_str == 'asc')?'&sdir=desc':''); ?>">Name<?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a></th>
             <th class="manage-column"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=description<?php echo (($sort_str == 'description' and $sdir_str == 'asc')?'&sdir=desc':''); ?>">Description<?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a></th>
             <th class="manage-column" width="70px"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=form_key<?php echo (($sort_str == 'form_key' and $sdir_str == 'asc')?'&sdir=desc':''); ?>">Key<?php echo (($sort_str == 'form_key')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a></th>
-            <th class="manage-column" width="70px">Entries</th>
+            <th class="manage-column" width="60px">Entries</th>
             <th class="manage-column">Direct Link</th>
             <th class="manage-column" width="115px">ShortCode</th>
         <?php } ?>

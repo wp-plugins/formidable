@@ -1,8 +1,7 @@
 <div id="frm_form_options" class="alignright">
     <?php if (!$values['is_template']){ ?>
-    <div>Copy this code and paste it into your post, page or text widget: 
-        <h4 class="frmcenter">[formidable id=<?php echo $id ?>]</h4>
-    </div>
+    <p class="howto">Copy this code and paste it into your post, page or text widget:</p>
+    <input type='text' style="text-align:center; font-weight:bold; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /><br/><br/>
     <?php } ?>
     
     <ul class="frmbutton nodrag">
@@ -12,6 +11,7 @@
     <?php } ?>
     </ul>
     
+    <p class="howto">Click on or drag a field into your form</p>
     <div id="themeRoller" class="clearfix">
     	<div id="rollerTabs">
 
@@ -25,7 +25,7 @@
                     <div class="clearfix">
     					<ul class="field_type_list">
                         <?php foreach ($frm_field_selection as $field_key => $field_type){ ?>
-                            <li class="frmbutton button" id="<?php echo $field_key ?>"><a href="javascript:void(0);" class="add_frm_field_link" id="<?php echo $field_key ?>"><?php echo $field_type ?></a></li>
+                            <li class="frmbutton button" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>');"><?php echo $field_type ?></a></li>
                          <?php } ?>
                          <?php if (!$frm_recaptcha_enabled && !function_exists( 'akismet_http_post' )){
                                 global $frm_siteurl;
@@ -48,7 +48,7 @@
                          <?php 
                          if($frmpro_is_installed){  
                              foreach ($frm_pro_field_selection as $field_key => $field_type){ ?>
-                                 <li class="frmbutton button" id="<?php echo $field_key ?>"><a href="javascript:void(0);" class="add_frm_field_link" id="<?php echo $field_key ?>"><?php echo $field_type ?></a></li>
+                                 <li class="frmbutton button" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>');"><?php echo $field_type ?></a></li>
                         <?php }
                          }else
                              foreach ($frm_pro_field_selection as $field_key => $field_type) 
@@ -72,11 +72,13 @@
                         <ul class="ui-state-default">
                             <li><span class="ui-icon ui-icon-star alignleft"></span> = required field</li>
                             <li><span class="frm_inactive_icon ui-icon ui-icon-star alignleft"></span> = not required</li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = clear default data on click</li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = do not clear default data on click</li>
+                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = clear default text on click</li>
+                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> = do not clear default text on click</li>
                             <li><span><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> = default value will NOT pass validation</li>
                              <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> = default value will pass validation</li>
-                            <li><span class="ui-icon ui-icon-trash alignleft"></span> = delete field and all inputed data</li>
+                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete"></span> = delete field and all inputed data</li>
+                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move"></span> = duplicate field</li>
+                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move"></span> = move field</li>
                         </ul>
                         
     				</div>
@@ -91,16 +93,3 @@
      <p class="howto">Enter or select default values into fields on this form.</p>
      
 </div>
-
-<script>
-jQuery(document).ready(function(){    
-jQuery(".add_frm_field_link").click(function(){
-    jQuery.ajax({
-       type:"POST",
-       url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-       data:"action=frm_insert_field&form_id=<?php echo $id; ?>&field="+this.getAttribute('id'),
-       success:function(msg){jQuery('#new_fields').append(msg);}
-    });
- });
- })
-</script>

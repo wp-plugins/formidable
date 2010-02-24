@@ -1,7 +1,6 @@
 <?php
 global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $frm_recaptcha_enabled, $user_ID;
 $fields = $frm_field->getAll("fi.form_id='$form->id'", ' ORDER BY field_order');
-//$values = FrmEntriesHelper::setup_new_vars($fields);
 $form_name = $form->name;
 $form_options = stripslashes_deep(maybe_unserialize($form->options));
 

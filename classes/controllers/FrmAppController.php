@@ -68,7 +68,7 @@ class FrmAppController{
     function head(){
         $css_file = array('frm_admin' => FRM_URL. '/css/frm_admin.css');
         $css_file = apply_filters('frm_app_css', $css_file);
-        $js_file  = 'list-items.js';
+        $js_file  = FRM_URL . '/js/list-items.js';
         require_once(FRM_VIEWS_PATH . '/shared/head.php');
     }
     
@@ -101,13 +101,13 @@ class FrmAppController{
       $db_version = 1.01; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
-      $fields_table     = $wpdb->prefix . "frm_fields";
-      $forms_table      = $wpdb->prefix . "frm_forms";
-      $items_table      = $wpdb->prefix . "frm_items";
-      $item_metas_table = $wpdb->prefix . "frm_item_metas";
-
       if ($db_version != $old_db_version){
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+          $fields_table     = $wpdb->prefix . "frm_fields";
+          $forms_table      = $wpdb->prefix . "frm_forms";
+          $items_table      = $wpdb->prefix . "frm_items";
+          $item_metas_table = $wpdb->prefix . "frm_item_metas";
+          
+          require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
       
       $charset_collate = '';
       if( $wpdb->has_cap( 'collation' ) ){
@@ -186,10 +186,6 @@ class FrmAppController{
               ) {$charset_collate};";
 
       dbDelta($sql);
-
-      /***** SAVE DB VERSION *****/
-      update_option('frm_db_version',$db_version);
-      }
       
       /**** ADD DEFAULT TEMPLATES ****/
       $templates = glob(FRM_TEMPLATES_PATH."/*.php");
@@ -202,6 +198,10 @@ class FrmAppController{
           $values['form_key'] = $filename;
           $values['is_template'] = $values['default_template'] = 1;
           require_once($templates[$i]);
+      }
+      
+      /***** SAVE DB VERSION *****/
+      update_option('frm_db_version',$db_version);
       }
       
       do_action('frm_after_install');

@@ -8,6 +8,11 @@
 
     <div class="frm_form_builder alignleft" id="poststuff">
     <form name="form1" method="post" action="">
+        <p class="submit">
+            <input type="submit" name="Submit" value="Update" class="button-primary" /> or
+            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>">Cancel</a>
+        </p>
+        
         <input type="hidden" name="action" value="update">
         <input type="hidden" name="id" value="<?php echo $id; ?>">
         <?php wp_nonce_field('update-options'); ?>

@@ -1,8 +1,10 @@
 <?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false, 'clear_on_focus' => false, 'default_blank' => true)); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?>">
-    <span class="ui-icon ui-icon-arrowthick-2-n-s alignright"></span>
-    <a href="javascript:void(0);" class="ui-icon ui-icon-trash alignright" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"></a>
+    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move"></a>
+    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete"></a>
+    <?php do_action('frm_extra_field_actions', $field['id']); ?>
+    
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
         <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="ui-icon ui-icon-star alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"></a>
@@ -17,15 +19,14 @@
     
 <?php }else if ($field['type'] == 'radio' || $field['type'] == 'checkbox'){
         $field['value'] = maybe_unserialize($field['default_value']); ?>
-        <div <?php if (count($field['options']) > 10) echo 'class="frm_mult_options"'; ?>>
         <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   ?>
-        </div>
-        <div id="frm_add_field_<?php echo $field['id']; ?>">
-            <a href="javascipt:void(0)" class="frm_add_field_option" id="field_<?php echo $field['id']; ?>"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
+
+        <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
+            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>)"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
         </div>
 
 <?php }else if ($field['type'] == 'select'){ ?>
-    <select name='<?php echo $field_name ?>' id='<?php echo $field_name ?>'>
+    <select name="<?php echo $field_name ?>" id="<?php echo $field_name ?>">
         <?php foreach ($field['options'] as $opt){ 
             $selected = ($field['default_value'] == $opt)?(' selected="selected"'):(''); ?>
             <option value="<?php echo $opt ?>"<?php echo $selected ?>><?php echo $opt ?></option>
@@ -33,13 +34,13 @@
     </select>
     <?php if ($display['default_blank']) FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
     <br/>
-    <div <?php if (count($field['options']) > 9) echo 'class="frm_mult_options"'; ?>>
+    <div class="frm-show-click">
     <?php foreach ($field['options'] as $opt_key => $opt)
             require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
  ?>
     </div>
-    <div id="frm_add_field_<?php echo $field['id']; ?>">
-        <a href="javascipt:void(0)" class="frm_add_field_option" id="field_<?php echo $field['id']; ?>"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
+    <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
+        <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>)"><span class="ui-icon ui-icon-plusthick alignleft"></span> Add an Option</a>
         <?php do_action('frm_add_multiple_opts', $field); ?>
     </div>
 
@@ -68,7 +69,6 @@ if ($display['description']){ ?>
 }
 
 if ($display['options']){ ?>  
-    <div class="frm_options_spacer"></div>
     <h3 class="ui-accordion-header ui-state-default">
         <span class="ui-icon ui-icon-triangle-1-e"></span>
         <a href="#">Field Options</a>
@@ -109,24 +109,3 @@ if ($display['options']){ ?>
     </div>   
 <?php } ?>         
 </li>
- 
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery("#frm_delete_field<?php echo $field['id']; ?>").click(function(){  
-            if(confirm("<?php _e('Are you sure you want to delete this field and all data associated with it?', FRM_PLUGIN_NAME); ?>")){
-            jQuery.ajax({
-               type:"POST",
-               url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-               data:"action=frm_delete_field&field_id=<?php echo $field['id']; ?>",
-               success:function(msg){
-                   jQuery('#new_fields').append(msg);
-                   jQuery("#frm_field_id_<?php echo $field['id']; ?>").hide('highlight',{},500,callback);
-               }
-            });
-            return false;
-            }
-        });
-          
-        function callback(){setTimeout(function(){jQuery("#frm_delete_field<?php echo $field['id']; ?>:hidden").removeAttr('style').hide().fadeIn();}, 1000);};
-    });
-</script>

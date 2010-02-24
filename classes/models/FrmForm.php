@@ -80,22 +80,25 @@ class FrmForm{
     
     $form_fields = array('form_key','name','description','status','prli_link_id');
     
-    $options = array();
-    $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
-    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
-    $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
-    $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
-    $options['custom_style'] = isset($values['options']['custom_style']) ? 1 : 0;
-    $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
-    $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
-    $options = apply_filters('frm_form_options_before_update', $options, $values);
-    
     $new_values = array();
+    
+    if (isset($values['options'])){
+        $options = array();
+        $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
+        $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
+        $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
+        $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
+        $options['custom_style'] = isset($values['options']['custom_style']) ? 1 : 0;
+        $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
+        $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
+        $options = apply_filters('frm_form_options_before_update', $options, $values);
+        $new_values['options'] = serialize($options);
+    }
+    
     foreach ($values as $value_key => $value){
         if (in_array($value_key, $form_fields))
             $new_values[$value_key] = $value;
     }
-    $new_values['options'] = serialize($options);
     
     $query_results = $wpdb->update( $this->table_name, $new_values, array( 'id' => $id ) );
 
@@ -111,7 +114,7 @@ class FrmForm{
             $field_options = unserialize($field->field_options);
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
                 $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
-            $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : FrmFieldsHelper::get_default_html($field->type);
+            $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field_options['custom_html']) ? $field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
             $field_options = apply_filters('frm_update_field_options', $field_options, $field_id, $values);
             $default_value = maybe_serialize($values['item_meta'][$field_id]);
             $field_key = (isset($values['field_options']['field_key_'.$field_id]))? $values['field_options']['field_key_'.$field_id] : $field->field_key;
