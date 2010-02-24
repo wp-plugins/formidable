@@ -267,6 +267,7 @@ jQuery.fn.spinDown = function() {
 		$this.next().slideToggle(100);
 		$this.prev().toggleClass('not-active');
 		$this.find('.icon').toggleClass('icon-triangle-1-s').end().toggleClass('state-active');
+		//jQuery('li.ui-state-default .ui-state-active').removeClass('ui-state-active');
 		$this.find('.ui-icon').toggleClass('ui-icon-triangle-1-s').end().toggleClass('ui-state-active');
 		if($this.is('.corner-all')) { $this.removeClass('corner-all').addClass('corner-top'); }
 		else if($this.is('.corner-top')) { $this.removeClass('corner-top').addClass('corner-all'); }

@@ -75,6 +75,7 @@ textarea.inplace_field{width:100%;}
 #frm_form_editor_container .ui-accordion-header a:hover{text-decoration:none;}
 #frm_form_editor_container .ui-accordion-header.ui-state-default{}
 #frm_form_editor_container .ui-accordion-header.ui-state-active{display:block; border-bottom:none;}
+#new_fields li.ui-state-default.selected .ui-accordion-header{display:block;}
 
 #frm_form_options .ui-state-default,
 #new_fields li.ui-state-default{

@@ -3,7 +3,6 @@ jQuery(document).ready(function($){
     jQuery('#frm_field_id_<?php echo $field['id']; ?>.ui-state-default').click(function(){
     	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show(); 
         $('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
-        $(".ui-accordion-header").hide(); $(this).children(".ui-accordion-header").show();
         $('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
     });
     

@@ -46,7 +46,6 @@ jQuery('li.ui-state-default').hover(
 jQuery('li.ui-state-default').click(function(){
 	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show(); 
 	$('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
-	$(".ui-accordion-header").hide(); $(this).children(".ui-accordion-header").show();
 	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
 });
 });
