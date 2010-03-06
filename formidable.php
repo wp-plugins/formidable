@@ -30,13 +30,9 @@ if (!defined ('IS_WPMU')){
 
 global $frm_blogurl;
 global $frm_siteurl;
-global $frm_blogname;
-global $frm_blogdescription;
 
 $frm_blogurl = ((get_option('home'))?get_option('home'):get_option('siteurl'));
 $frm_siteurl = get_option('siteurl');
-$frm_blogname = get_option('blogname');
-$frm_blogdescription = get_option('blogdescription');
 
 /***** SETUP SETTINGS OBJECT *****/
 global $frm_settings;

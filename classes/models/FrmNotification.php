@@ -5,8 +5,9 @@ class FrmNotification{
     }
     
     function entry_created($entry_id){
-        global $frm_blogname, $frm_blogurl, $frm_form, $frm_entry, $frm_entry_meta;
+        global $frm_blogurl, $frm_form, $frm_entry, $frm_entry_meta;
 
+        $frm_blogname = get_option('blogname');
         $entry = $frm_entry->getOne($entry_id);
         $form = $frm_form->getOne($entry->form_id);
         $values = $frm_entry_meta->getAll("it.item_id = $entry->id", " ORDER BY fi.field_order");
@@ -55,9 +56,7 @@ MAIL_BODY;
     }
   
     function send_notification_email($to_email, $subject, $message, $from_email=''){
-        global $frm_blogname;
-
-        $from_name     = $frm_blogname; //senders name
+        $from_name     = get_option('blogname'); //senders name
         $from_email    = ($from_email == '') ? get_option('admin_email') : $from_email; //senders e-mail address
         $recipient     = $to_email; //recipient
         $header        = "From: {$from_name} <{$from_email}>\r\n"; //optional headerfields
@@ -79,10 +78,8 @@ MAIL_BODY;
     }
     
     function get_mail_signature(){
-        global $frm_blogname;
-
         $thanks              = __('Thanks!', FRM_PLUGIN_NAME);
-        $team                = sprintf(__('%s Team', FRM_PLUGIN_NAME), $frm_blogname);
+        $team                = sprintf(__('%s Team', FRM_PLUGIN_NAME), get_option('blogname'));
         //$manage_subscription = sprintf(__('If you want to stop future emails like this from coming to you, please modify your form settings.', FRM_PLUGIN_NAME));
 
         $signature =<<<MAIL_SIGNATURE
