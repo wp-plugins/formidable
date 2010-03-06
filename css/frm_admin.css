@@ -9,6 +9,7 @@ ul.pane li {padding: 0px; margin: 0px;}
 
 .item_name {font-size: 12px; font-weight: bold;}
 .item_actions {padding-top: 5px; display:none;}
+.form_item_actions{display:none;}
 
 .frmcenter{text-align:center;}
 .frmicon {
@@ -42,7 +43,10 @@ ul.pane li {padding: 0px; margin: 0px;}
 .form-field input{width:auto;}
 textarea.inplace_field{width:100%;}
 .inplace_field{width:80%;}
-
+.frm_rte{background:url(../images/rte.gif) no-repeat; border-bottom:1px solid #dfdfdf;}
+.frm_rte .howto{margin:10px 0 45px 0;}
+.frm_rte textarea{width:650px; border:none; background:#fff; margin:1px; }
+.with_frm_style .frm_full_rte textarea{width:100%; padding:0;}
 .frm_field_box{padding:5px;}
 
 .frm_pos_top{display:block;}
@@ -52,6 +56,7 @@ textarea.inplace_field{width:100%;}
 .frm_charts object{background:transparent;}
 
 .frm-show-hover, .frm_single_show_hover, .frm-show-click{display:none;}
+li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-show-hover{display:inline;}
 #new_fields span.ui-icon{width:16px;}
 
 .frm_inactive_icon, .frm_required0{
@@ -76,7 +81,7 @@ textarea.inplace_field{width:100%;}
 #frm_form_editor_container .ui-accordion-header.ui-state-default{}
 #frm_form_editor_container .ui-accordion-header.ui-state-active{display:block; border-bottom:none;}
 #new_fields li.ui-state-default.selected .ui-accordion-header{display:block;}
-
+#new_fields{min-height:200px;}
 #frm_form_options .ui-state-default,
 #new_fields li.ui-state-default{
 	border:none; 
@@ -108,6 +113,8 @@ textarea.inplace_field{width:100%;}
 #frm_form_options #themeRoller{
 	background:transparent;
 	width:240px;
+	position:fixed;
+	z-index:5;
 }
 
 .form-table td #themeRoller{

@@ -30,7 +30,6 @@ http://formidablepro.com
 * Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
 
-Feedback and requests are welcome.
 
 == Installation ==
 1. Upload `formidable` folder to the `/wp-content/plugins/` directory
@@ -48,6 +47,25 @@ Feedback and requests are welcome.
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.02.0 =
+* Updated in-place edit to save more easily and not wipe HTML when editing
+* Updated email notifications to hopefully work for more users, send from the first email address submitted in the form, and send one email per email address in the form options
+* Changed form to show after being submitted instead of only showing the success message.
+* Fixed bug causing newly added fields to be ordered incorrectly when dragged into the form
+* Made the field list sticky temporarily until the UI gets further updates
+* Fixed quotation marks and apostrophes in form input fields so data won't be lost after them
+* Radio buttons and check boxes are now truly required
+* PRO: Added a Page Break field for multiple paged forms
+* PRO: Added a Rich Text Editor field
+* PRO: Added a widget to list entries linking to entry detail page to be used along-side a single custom display
+* PRO: Added an option to order entries by ascending or descending in the entry display settings
+* PRO: Added front-end pagination for displaying entries
+* PRO: Fixed bug with multiple forms on single page causing 2nd form to be hidden when 1st form submitted with errors
+* PRO: Updated custom displays for faster front-end loading and more efficiency
+* PRO: Added `size` option parameter to file upload shortcodes and `show` parameter to data from entries field for use in custom displays
+* PRO: Added customizable HTML for section divider and page break
+* PRO: Added page to view entries in a read-only format in the admin
+
 = 1.01.04 =
 * Updated in-place edit to work with more characters and function without the save buttons
 * Fixed bug causing several form options to be lost when the form name or description was edited without also clicking update for the whole form

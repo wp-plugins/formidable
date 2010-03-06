@@ -139,12 +139,12 @@ jQuery.fn.editInPlace = function(options) {
 
 				if (settings.field_type == "textarea")
 				{
-					var use_field_type = '<textarea name="inplace_value" class="inplace_field" rows="' + settings.textarea_rows + '" cols="' + settings.textarea_cols + '">' + jQuery(this).text().trim().escape_html() + '</textarea>';
+					var use_field_type = '<textarea name="inplace_value" class="inplace_field" rows="' + settings.textarea_rows + '" cols="' + settings.textarea_cols + '">' + jQuery(this).html().trim().escape_html() + '</textarea>';
 				}
 				else if(settings.field_type == "text")
 				{
 					var use_field_type = '<input type="text" name="inplace_value" class="inplace_field" value="' +
-											jQuery(this).text().trim().escape_html() + '" />';
+											jQuery(this).html().trim().escape_html() + '" />';
 				}
 				else if(settings.field_type == "select")
 				{

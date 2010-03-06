@@ -13,7 +13,7 @@ class FrmFormsHelper{
     
     function get_template_dropdown($templates){ ?>
         <select id="select_form" name="select_form" onChange='createFromFrmTemplate(this.value)'>
-            <option value="">Create Form from Template: </option>
+            <option value=""><?php _e('Create Form from Template', FRM_PLUGIN_NAME) ?>: </option>
             <?php foreach ($templates as $temp){ ?>
                 <option value="<?php echo $temp->id ?>"><?php echo $temp->name ?></option>
             <?php }?>
@@ -45,17 +45,19 @@ class FrmFormsHelper{
     function setup_new_vars(){
         global $frm_app_controller, $frm_form, $frm_settings;
         $values = array();
-        foreach (array('name' => 'Untitled Form', 'description' => '') as $var => $default)
+        foreach (array('name' => __('Untitled Form', FRM_PLUGIN_NAME), 'description' => '') as $var => $default)
             $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
+        
+        $values['description'] = wpautop($values['description']);
         
         foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default)
             $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
             
         $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frm_form->table_name, 'form_key'));
-        $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : get_option('admin_email');
+        $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : $frm_settings->email_to;
         $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
-        $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : 'Submit';
-        $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : 'Your responses were successfully submitted. Thank you!';
+        $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : $frm_settings->submit_value;
+        $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : $frm_settings->success_msg;
         $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
         $values['after_html'] = FrmFormsHelper::get_default_html('after');
@@ -88,9 +90,9 @@ BEFORE_HTML;
     function replace_shortcodes($html, $form, $title=false, $description=false){
         foreach (array('form_name' => $title,'form_description' => $description) as $code => $show){
             if ($code == 'form_name')
-                $replace_with = $form->name;
+                $replace_with = stripslashes($form->name);
             else if ($code == 'form_description')
-                $replace_with = $form->description;
+                $replace_with = wpautop(stripslashes($form->description));
                 
             if (($show == true || $show == 'true') && $replace_with != '' ){
                 $html = str_replace('[if '.$code.']','',$html); 

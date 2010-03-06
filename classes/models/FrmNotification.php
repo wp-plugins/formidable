@@ -15,22 +15,28 @@ class FrmNotification{
         $to_email = $form_options['email_to'];
         if ($to_email == '')
             return;
+        $to_emails = explode(',', $to_email);
+        
+        $from_email = '';
             
         $opener = sprintf(__('%1$s form has been submitted on %2$s.', FRM_PLUGIN_NAME), $form->name, $frm_blogname);
         
         $entry_data = '';
         foreach ($values as $value){
-            $val = maybe_unserialize($value->meta_value);
+            $val = apply_filters('frm_email_value', maybe_unserialize($value->meta_value), $value);
             if (is_array($val))
                 $val = implode(', ', $val);
+            
             $entry_data .= $value->field_name . ': ' . $val . "\n\n";
+            if ($from_email == '' and is_email($val))
+                $from_email = $val;
         }
           
         $data = unserialize($entry->description);  
-        $user_data = "User Information\n";
-        $user_data .= "IP Address: ". $data['ip'] ."\n";
-        $user_data .= "User-Agent (Browser/OS): ". $data['browser']."\n";
-        $user_data .= "Referrer: ". $data['referrer']."\n";
+        $user_data = __('User Information', FRM_PLUGIN_NAME) ."\n";
+        $user_data .= __('IP Address', FRM_PLUGIN_NAME) . ": ". $data['ip'] ."\n";
+        $user_data .= __('User-Agent (Browser/OS)', FRM_PLUGIN_NAME) . ": ". $data['browser']."\n";
+        $user_data .= __('Referrer', FRM_PLUGIN_NAME) . ": ". $data['referrer']."\n";
 
         $mail_body =<<<MAIL_BODY
 {$opener}
@@ -41,18 +47,19 @@ class FrmNotification{
 MAIL_BODY;
         $subject = sprintf(__('%1$s Form submitted on %2$s', FRM_PLUGIN_NAME), $form->name, $frm_blogname); //subject
 
-        $this->send_notification_email($to_email, $subject, $mail_body, 'friend_request');
+        if(is_array($to_emails)){
+            foreach($to_emails as $to_email)
+                $this->send_notification_email(trim($to_email), $subject, $mail_body, $from_email);
+        }else
+            $this->send_notification_email($to_email, $subject, $mail_body, $from_email);
     }
   
-    function send_notification_email($to_email, $subject, $message, $message_type){
+    function send_notification_email($to_email, $subject, $message, $from_email=''){
         global $frm_blogname;
 
-        if(isset($user->hide_notifications[$message_type]))
-          return;
-
         $from_name     = $frm_blogname; //senders name
-        $from_email    = get_option('admin_email'); //senders e-mail address
-        $recipient     = "<{$to_email}>"; //recipient
+        $from_email    = ($from_email == '') ? get_option('admin_email') : $from_email; //senders e-mail address
+        $recipient     = $to_email; //recipient
         $header        = "From: {$from_name} <{$from_email}>\r\n"; //optional headerfields
         $subject       = html_entity_decode(strip_tags(stripslashes($subject)));
         $message       = html_entity_decode(strip_tags(stripslashes($message)));
@@ -62,9 +69,13 @@ MAIL_BODY;
         //$to_name       = $user->full_name;
         //$full_to_email = "{$to_name} <{$to_email}>";
 
-        wp_mail($to_email, $subject, $message.$signature, $header);
+        if (!wp_mail($recipient, $subject, $message.$signature, $header)){
+            $headers = "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
+            $headers .= $header;
+            mail($recipient, $subject, $message, $headers);
+        }
 
-        do_action('frm_notification', $to_email, $subject, $message.$signature);
+        do_action('frm_notification', $recipient, $subject, $message.$signature);
     }
     
     function get_mail_signature(){

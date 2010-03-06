@@ -4,7 +4,7 @@
     <div class="error">
         <ul id="frm_errors">
             <?php foreach( $errors as $error )
-                echo '<li>' . $error . '</li>';
+                echo '<li>' . stripslashes($error) . '</li>';
             ?>
         </ul>
     </div>

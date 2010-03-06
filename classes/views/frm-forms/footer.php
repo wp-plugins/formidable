@@ -50,8 +50,15 @@ $("#new_fields").sortable({
         jQuery.ajax({
             type:"POST",
             url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-            data:"action=frm_insert_field&form_id=<?php echo $id; ?>&position="+ui.position+"&field="+new_id,
-            success:function(msg){ $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);}
+            data:"action=frm_insert_field&form_id=<?php echo $id; ?>&field="+new_id,
+            success:function(msg){ $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);
+                var order= $('#new_fields').sortable('serialize');
+                jQuery.ajax({
+                    type:"POST",
+                    url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+                    data:"action=frm_update_field_order&"+order
+                });
+            }
         });
     },
     update:function(){

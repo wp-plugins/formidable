@@ -2,10 +2,10 @@ jQuery.fn.editInPlace=function(options){var settings={url:"",params:"",field_typ
 if(settings.saving_image!=""){var loading_image=new Image();loading_image.src=settings.saving_image;}
 String.prototype.trim=function(){return this.replace(/^\s+/,'').replace(/\s+$/,'');};String.prototype.escape_html=function(){return this.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");};return this.each(function(){if(jQuery(this).html()=="")jQuery(this).html(settings.default_text);var editing=false;var original_element=jQuery(this);var click_count=0;jQuery(this).mouseover(function(){jQuery(this).css("background",settings.bg_over);}).mouseout(function(){jQuery(this).css("background",settings.bg_out);}).click(function(){click_count++;if(!editing)
 {jQuery('.inplace_field').blur();editing=true;var original_html=jQuery(this).html();var buttons_code=(settings.show_buttons)?settings.save_button+' '+settings.cancel_button:'';if(original_html==settings.default_text)jQuery(this).html('');if(settings.field_type=="textarea")
-{var use_field_type='<textarea name="inplace_value" class="inplace_field" rows="'+settings.textarea_rows+'" cols="'+settings.textarea_cols+'">'+jQuery(this).text().trim().escape_html()+'</textarea>';}
+{var use_field_type='<textarea name="inplace_value" class="inplace_field" rows="'+settings.textarea_rows+'" cols="'+settings.textarea_cols+'">'+jQuery(this).html().trim().escape_html()+'</textarea>';}
 else if(settings.field_type=="text")
 {var use_field_type='<input type="text" name="inplace_value" class="inplace_field" value="'+
-jQuery(this).text().trim().escape_html()+'" />';}
+jQuery(this).html().trim().escape_html()+'" />';}
 else if(settings.field_type=="select")
 {var optionsArray=settings.select_options.split(',');var use_field_type='<select name="inplace_value" class="inplace_field"><option value="">'+settings.select_text+'</option>';for(var i=0;i<optionsArray.length;i++){var optionsValuesArray=optionsArray[i].split(':');var use_value=optionsValuesArray[1]||optionsValuesArray[0];var selected=use_value==original_html?'selected="selected" ':'';use_field_type+='<option '+selected+'value="'+use_value.trim().escape_html()+'">'+optionsValuesArray[0].trim().escape_html()+'</option>';}
 use_field_type+='</select>';}

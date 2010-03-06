@@ -14,13 +14,12 @@
 <?php }else if ($field['type'] == 'select'){?>
     <select name="<?php echo $field_name ?>" id="item_meta<?php echo $field['id'] ?>" <?php echo $auto_width ?>>
         <?php foreach ($field['options'] as $opt){ ?>
-            <option value='<?php echo $opt ?>' <?php if ($field['value'] == $opt) echo 'selected="selected"'; ?>><?php echo $opt ?></option>
+            <option value="<?php echo $opt ?>" <?php if ($field['value'] == $opt) echo 'selected="selected"'; ?>><?php echo $opt ?></option>
         <?php } ?>
     </select>
 <?php }else if ($field['type'] == 'captcha'){
-        global $frm_recaptcha_enabled;
-        if ($frm_recaptcha_enabled)
-            FrmAppHelper::display_recaptcha($errors);
+        if (array_key_exists('captcha', FrmFieldsHelper::field_selection()))
+            FrmAppHelper::display_recaptcha();
       }else if ($field['type'] == 'checkbox'){
         $checked_values = $field['value'];
         foreach ($field['options'] as $opt){

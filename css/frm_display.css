@@ -1,5 +1,6 @@
 .with_frm_style .frm_pos_top{display:block;}
 .with_frm_style .frm_pos_left{float:left; padding-right:10px; width:150px;}
+.with_frm_style .frm_pos_right{float:right; padding-left:10px; width:150px;}
 .with_frm_style .frm_pos_none{display:none;}
 .with_frm_style .frm_10radio{margin-right:10px; text-align:center; float:left;}
 .with_frm_style .form-field{margin-top:15px;}

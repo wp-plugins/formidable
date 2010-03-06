@@ -56,7 +56,10 @@ class FrmEntryMeta{
   
   function get_entry_meta_by_field($item_id, $field_id, $return_var=false){
       global $wpdb;
-      $query = "SELECT meta_value FROM {$this->table_name} WHERE field_id='{$field_id}' and item_id='{$item_id}'";
+      if (is_numeric($field_id))
+          $query = "SELECT meta_value FROM {$this->table_name} WHERE field_id='{$field_id}' and item_id='{$item_id}'";
+      else
+          $query = "SELECT meta_value FROM {$this->table_name} it LEFT OUTER JOIN $frm_field->table_name fi ON it.field_id=fi.id WHERE fi.field_key='{$field_id}' and item_id='{$item_id}'";
       if($return_var)
           return $wpdb->get_var("{$query} LIMIT 1");
       else
@@ -101,9 +104,11 @@ class FrmEntryMeta{
     global $wpdb, $frm_field, $frm_app_helper;
     $query = 'SELECT it.*, ' .
               'fi.type as field_type, ' .
+              'fi.field_key as field_key, ' .
               'fi.required as required, ' .
               'fi.form_id as field_form_id, ' .
-              'fi.name as field_name ' .
+              'fi.name as field_name, ' .
+              'fi.options as fi_options '.
               'FROM '. $this->table_name . ' it ' .
               'LEFT OUTER JOIN ' . $frm_field->table_name . ' fi ON it.field_id=fi.id' . 
               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;

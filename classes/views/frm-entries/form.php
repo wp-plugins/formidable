@@ -32,7 +32,7 @@
     ?>
     <?php if (is_admin() && !$frm_settings->lock_keys){ ?>
         <div class="form-field">
-        <label>Entry Key</label>   
+        <label><?php _e('Entry Key', FRM_PLUGIN_NAME) ?></label>   
         <input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
         </div>
     <?php } ?>
@@ -42,8 +42,8 @@
 
 <?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
 
-<?php do_action('frm_entries_footer_scripts',$values['fields']); ?>
 <script type="text/javascript">
+<?php do_action('frm_entries_footer_scripts',$values['fields']); ?>
 function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';}
 function frmReplaceDefault(default_value,thefield){if(thefield.value=='')thefield.value=default_value;}
 </script>

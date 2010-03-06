@@ -6,6 +6,12 @@ class FrmSettings{
     var $lock_keys;
     
     var $custom_style;
+    
+    var $success_msg;
+    var $failed_msg;
+    var $submit_value;
+    
+    var $email_to;
 
     function FrmSettings(){
         $this->set_default_options();
@@ -22,6 +28,12 @@ class FrmSettings{
         
         if(!isset($this->custom_style))
             $this->custom_style = true;
+            
+        $this->success_msg = __('Your responses were successfully submitted. Thank you!', FRM_PLUGIN_NAME);
+        $this->failed_msg = __('We\'re sorry. There was an error processing your responses.', FRM_PLUGIN_NAME);
+        $this->submit_value = __('Submit', FRM_PLUGIN_NAME);
+        
+        $this->email_to = get_option('admin_email');
     }
 
     function validate($params,$errors){   

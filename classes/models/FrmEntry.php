@@ -17,7 +17,6 @@ class FrmEntry{
                                                 'browser' => $_SERVER['HTTP_USER_AGENT'], 
                                                 'referrer' => $_SERVER['HTTP_REFERER']));
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
-        //$new_values['parent_item_id'] = isset($values['parent_item_id'])?(int)$values['parent_item_id']: null;
         $new_values['created_at'] = current_time('mysql', 1);
 
         $query_results = $wpdb->insert( $this->table_name, $new_values );
@@ -26,7 +25,7 @@ class FrmEntry{
             $entry_id = $wpdb->insert_id;
             if (isset($values['item_meta']))
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
-            do_action('frm_after_create_entry', $entry_id);
+            do_action('frm_after_create_entry', $entry_id, $new_values['form_id']);
             return $entry_id;
         }else
            return false;
@@ -41,7 +40,6 @@ class FrmEntry{
         $new_values['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');
         $new_values['name'] = $values->name;
         $new_values['form_id'] = ($values->form_id)?(int)$values->form_id: null;
-        //$new_values['parent_item_id'] = ($values->parent_item_id)?(int)$values->parent_item_id: null;
         $new_values['created_at'] = current_time('mysql', 1);
 
         $query_results = $wpdb->insert( $this->table_name, $new_values );
@@ -151,7 +149,7 @@ class FrmEntry{
                 'fr.name as form_name ' .
                'FROM ' . $this->table_name . ' it ' .
                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' . 
-               $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by . ' ' . 
+               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . ' ' . 
                'LIMIT ' . $start_index . ',' . $p_size . ';';
       $results = $wpdb->get_results($query);
       return $results;
@@ -160,31 +158,29 @@ class FrmEntry{
     function validate( $values ){
         global $wpdb, $frm_field, $frm_entry_meta;
 
-        $errors = array();   
-        
-        if (!isset($values['name']) and isset($values['item_meta'])){
-            foreach($values['item_meta'] as $key => $value){
-                $field = $frm_field->getOne($key);
-                if ($field->required == '1' and $field->type == 'text' and !isset($_POST['name']))
-                    $_POST['name'] = $value;
-            }
-        }
+        $errors = array();
 
         if( !isset($values['item_key']) or $values['item_key'] == '' )
-            $_POST['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');
+            $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');
         
-        if (isset($values['item_meta'])){    
-            foreach($values['item_meta'] as $key => $value){
-                $field = $frm_field->getOne($key);
-                if ($field->required == '1' and ($field->form_id == $values['form_id'])){
-                    $field_options = unserialize($field->field_options);
-                    
-                    if ($values['item_meta'][$key] == null or $values['item_meta'][$key] == '' or (isset($field_options['default_blank']) and $field_options['default_blank'] and $value == $field->default_value))
-                        $errors['field'.$field->id] = ($field_options['blank'] == 'Untitled cannot be blank' || $field_options['blank'] == '')?($field->name." can't be blank"):$field_options['blank'];  
-                }
-                $errors = apply_filters('frm_validate_field_entry', $errors, $key, $value);
-            }
+        $where = apply_filters('frm_posted_field_ids', 'fi.form_id='.$values['form_id']);
+        $posted_fields = $frm_field->getAll($where, ' ORDER BY fi.field_order');
+
+        foreach($posted_fields as $posted_field){ 
+            $value = '';
+            $field_options = unserialize($posted_field->field_options);
+            if (isset($values['item_meta'][$posted_field->id]))
+                $value = $values['item_meta'][$posted_field->id];
                 
+            if (isset($field_options['default_blank']) and $field_options['default_blank'] and $value == $posted_field->default_value)
+                $value = '';            
+                  
+            if ($posted_field->required == '1' and $value == ''){
+                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', FRM_PLUGIN_NAME) or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('can\'t be blank', FRM_PLUGIN_NAME)) : $field_options['blank'];  
+            }else if ($posted_field->type == 'text' and !isset($_POST['name']))
+                $_POST['name'] = $value;
+                
+            $errors = apply_filters('frm_validate_field_entry', $errors, $posted_field, $value);
         }
 
         if (isset($_POST['recaptcha_challenge_field']) and $_POST['action'] == 'create'){
@@ -208,7 +204,7 @@ class FrmEntry{
             $form_options = stripslashes_deep(unserialize($form->options));
 
             if (isset($form_options['akismet']) && $form_options['akismet'])
-    	        $errors['spam'] = 'Your entry appears to be spam!';
+    	        $errors['spam'] = __('Your entry appears to be spam!', FRM_PLUGIN_NAME);
     	}
         
       return $errors;

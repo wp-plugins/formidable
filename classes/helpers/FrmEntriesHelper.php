@@ -2,7 +2,7 @@
 
 class FrmEntriesHelper{
 
-    function setup_new_vars($fields){
+    function setup_new_vars($fields, $form='', $reset=false){
         global $frm_app_controller, $frm_form, $frm_settings;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
@@ -14,11 +14,15 @@ class FrmEntriesHelper{
               $default = $field->default_value;
               
               $field_options = unserialize($field->field_options);
-              $new_value = ($_POST and isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $default;
+              if ($reset)
+                $new_value = $default;
+              else
+                  $new_value = ($_POST and isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $default;
+                  
               if ($field->type != 'checkbox')
-                $new_value = apply_filters('frm_get_default_value', stripslashes($new_value));
+                $new_value = apply_filters('frm_get_default_value', stripslashes_deep($new_value));
                 
-              $new_value = stripslashes_deep(maybe_unserialize($new_value));
+              $new_value = str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($new_value)));
                 
               $field_array = array('id' => $field->id,
                     'value' => $new_value,
@@ -26,18 +30,21 @@ class FrmEntriesHelper{
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
                     'type' => apply_filters('frm_field_type',$field->type, $field),
-                    'options' => stripslashes_deep(unserialize($field->options)),
+                    'options' => str_replace('"', '&quot;', stripslashes_deep(unserialize($field->options))),
                     'required' => $field->required,
                     'field_key' => $field->field_key,
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id);
 
-              foreach (array('size' => '','max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
+              foreach (array('size' => '','max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
                   $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
+                  
+              if ($field_array['custom_html'] == '')
+                  $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);
 
              $values['fields'][] = apply_filters('frm_setup_new_fields_vars', stripslashes_deep($field_array), $field);
              
-             if (!isset($form))
+             if (!$form or !isset($form->id))
                  $form = $frm_form->getOne($field->form_id);
             }
 
@@ -55,10 +62,10 @@ class FrmEntriesHelper{
                 $values['email_to'] = '';
 
             if (!isset($values['submit_value']))
-                $values['submit_value'] = 'Submit';
+                $values['submit_value'] = $frm_settings->submit_value;
 
             if (!isset($values['success_msg']))
-                $values['success_msg'] = 'Your responses were successfully submitted. Thank you!';
+                $values['success_msg'] = $frm_settings->success_msg;
 
             if (!isset($values['akismet']))
                 $values['akismet'] = 0;
@@ -89,7 +96,7 @@ class FrmEntriesHelper{
             <option value=""><?php echo $blank_label; ?></option>
             <?php } ?>
             <?php foreach($entries as $entry){ ?>
-                <option value="<?php echo $entry->id; ?>" <?php selected($field_value, $entry->id); ?>><?php echo (!empty($entry->name)) ? $entry->name : $entry->item_key; ?></option>
+                <option value="<?php echo $entry->id; ?>" <?php selected($field_value, $entry->id); ?>><?php echo (!empty($entry->name)) ? stripslashes($entry->name) : $entry->item_key; ?></option>
             <?php } ?>
         </select>
         <?php

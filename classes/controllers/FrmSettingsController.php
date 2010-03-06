@@ -8,7 +8,7 @@ class FrmSettingsController{
     }
 
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | Settings', 'Settings', 8, FRM_PLUGIN_NAME.'-settings', array($this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', FRM_PLUGIN_NAME), __('Settings', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME.'-settings', array($this,'route'));
     }
     
     function pro_menu(){
@@ -38,7 +38,7 @@ class FrmSettingsController{
       
       if( empty($errors) ){
         $frm_settings->store();
-        $message = 'Settings Saved';
+        $message = __('Settings Saved', FRM_PLUGIN_NAME);
       }
 
       require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');

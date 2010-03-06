@@ -8,7 +8,7 @@ class FrmForm{
   }
 
   function create( $values ){
-    global $wpdb;
+    global $wpdb, $frm_settings;
     
     $new_values = array();
     $new_values['form_key'] = FrmAppHelper::get_unique_key($values['form_key'], $this->table_name, 'form_key');
@@ -20,8 +20,8 @@ class FrmForm{
     $new_values['prli_link_id'] = isset($link_id)?(int)$link_id:0;
     $options = array();
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
-    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
-    $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
+    $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value; 
+    $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : $frm_settings->success_msg;
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
     $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
     $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
@@ -70,7 +70,7 @@ class FrmForm{
   }
 
   function update( $id, $values, $create_link = false ){
-    global $wpdb, $frm_field;
+    global $wpdb, $frm_field, $frm_settings;
 
     if ($create_link)
         $values['status'] = 'published';
@@ -85,8 +85,8 @@ class FrmForm{
     if (isset($values['options'])){
         $options = array();
         $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
-        $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : 'Submit'; 
-        $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : '';
+        $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value; 
+        $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : $frm_settings->success_msg;
         $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
         $options['custom_style'] = isset($values['options']['custom_style']) ? 1 : 0;
         $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
@@ -111,6 +111,7 @@ class FrmForm{
         }
         foreach ($values['item_meta'] as $field_id => $default_value){ 
             $field = $frm_field->getOne($field_id);
+            if (!$field) continue;
             $field_options = unserialize($field->field_options);
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
                 $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';

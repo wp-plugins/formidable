@@ -12,15 +12,15 @@ class FrmFormsController{
     }
     
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | Forms', 'Forms', 8, FRM_PLUGIN_NAME, array($this,'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | Create a Form', 'Create a Form', 8, FRM_PLUGIN_NAME.'-new', array($this,'new_form'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | Templates', 'Templates', 8, FRM_PLUGIN_NAME.'-templates', array($this, 'template_list'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', FRM_PLUGIN_NAME), __('Forms', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME, array($this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', FRM_PLUGIN_NAME), __('Create a Form', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME.'-new', array($this,'new_form'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', FRM_PLUGIN_NAME), __('Templates', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME.'-templates', array($this, 'template_list'));
     }
     
     function head(){
-        $css_file = array('jquery-ui-1.7.2.custom' => FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css', 'frm_admin' => FRM_URL. '/css/frm_admin.css');
-        $js_file  = array(FRM_URL . '/js/list-items.js', FRM_URL . '/js/jquery/jquery-ui-themepicker.js');
-        require_once(FRM_VIEWS_PATH . '/shared/head.php');
+        $css_file = array(FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css', FRM_URL. '/css/frm_admin.css');
+        $js_file  = array(FRM_URL . '/js/formidable.js', FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
+        require(FRM_VIEWS_PATH . '/shared/head.php');
     }
     
     function list_form(){
@@ -35,12 +35,13 @@ class FrmFormsController{
     }
     
     function new_form(){
-        global $frm_app_controller, $frm_form, $frm_field_selection, $frm_recaptcha_enabled, $frm_pro_field_selection, $frmpro_is_installed;
+        global $frm_app_controller, $frm_form, $frmpro_is_installed;
         
         $action = $frm_app_controller->get_param('action');
         if ($action == 'create')
             return $this->create();
-        else if ($action == 'new'){    
+        else if ($action == 'new'){
+            $frm_field_selection = FrmFieldsHelper::field_selection();  
             $values = FrmFormsHelper::setup_new_vars();
             $id = $frm_form->create( $values );
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
@@ -51,19 +52,20 @@ class FrmFormsController{
     }
     
     function create(){
-        global $frm_app_controller, $frm_app_helper, $frm_field_selection, $frm_entry, $frm_form, $frm_field, $frm_recaptcha_enabled, $frm_pro_field_selection, $frmpro_is_installed;
+        global $frm_app_controller, $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $errors = $frm_form->validate($_POST);
         $id = $frm_app_controller->get_param('id');
         
         if( count($errors) > 0 ){
+            $frm_field_selection = FrmFieldsHelper::field_selection();
             $record = $frm_form->getOne( $id );
             $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
-            $values = $frm_app_helper->setup_edit_vars($record,'forms',$fields,true);
+            $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $items = $frm_entry->getAll('',' ORDER BY it.name');
             $record = $frm_form->update( $id, $_POST, true );
-            $message = "Form was Successfully Created";
+            $message = __('Form was Successfully Created', FRM_PLUGIN_NAME);
             $params = $this->get_params();
             return $this->display_forms_list($params, $message);
         }
@@ -99,7 +101,7 @@ class FrmFormsController{
             return $this->get_edit_vars($id, $errors);
         }else{
             $record = $frm_form->update( $_POST['id'], $_POST );
-            $message = "Form was Successfully Updated";
+            $message = __('Form was Successfully Updated', FRM_PLUGIN_NAME);
             return $this->get_edit_vars($id, '', $message);
         }
     }
@@ -109,11 +111,11 @@ class FrmFormsController{
         
         $params = $this->get_params();
         $record = $frm_form->duplicate( $params['id'], $params['template'] );
-        $message = ($params['template'])?('Form template was Successfully Created'):('Form was Successfully Copied');
+        $message = ($params['template']) ? __('Form template was Successfully Created', FRM_PLUGIN_NAME) : __('Form was Successfully Copied', FRM_PLUGIN_NAME);
         if ($record)
             return $this->get_edit_vars($record, '', $message, true);
         else
-            return $this->display_forms_list($params, 'There was a problem creating new template.');
+            return $this->display_forms_list($params, __('There was a problem creating new template.', FRM_PLUGIN_NAME));
     }
     
     function page_preview(){
@@ -122,7 +124,7 @@ class FrmFormsController{
         $params = $this->get_params();
         if (!$params['form']) return;
         $form = $frm_form->getOne($params['form']);
-        require_once(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php');
+        require(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php');
     }
 
     function preview(){
@@ -138,7 +140,7 @@ class FrmFormsController{
 
         $plugin     = FrmAppController::get_param('plugin');
         $controller = FrmAppController::get_param('controller');
-        $key = (isset($_GET['form'])?$_GET['form']:(isset($_POST['form'])?$_POST['form']:''));
+        $key = (isset($_GET['form']) ? $_GET['form'] : (isset($_POST['form']) ? $_POST['form'] : ''));
         $form = $frm_form->getAll("form_key='$key'",'',' LIMIT 1');
         if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
         $form_options = stripslashes_deep(maybe_unserialize($form->options));
@@ -153,7 +155,7 @@ class FrmFormsController{
         $params = $this->get_params();
         $message = '';
         if ($frm_form->destroy( $params['id'] ))
-            $message = "Form was Successfully Deleted";
+            $message = __('Form was Successfully Deleted', FRM_PLUGIN_NAME);
         $this->display_forms_list($params, $message, '', 1);
     }
     
@@ -267,14 +269,14 @@ class FrmFormsController{
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
-        global $frm_app_helper, $frm_field_selection, $frm_entry, $frm_form, $frm_field, $frm_recaptcha_enabled, $frm_pro_field_selection, $frmpro_is_installed;
+        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $record = $frm_form->getOne( $id );
         $items = $frm_entry->getAll('',' ORDER BY it.name');
-
+        $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
-        $values = $frm_app_helper->setup_edit_vars($record,'forms',$fields,true);
+        $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
         if (isset($values['default_template']) && $values['default_template'])
-            wp_die('That template cannot be edited');
+            wp_die(__('That template cannot be edited', FRM_PLUGIN_NAME));
         else if($create_link)
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         else
@@ -291,8 +293,7 @@ class FrmFormsController{
     }
 
     function route(){
-        global $frm_app_controller;
-        $action = $frm_app_controller->get_param('action');
+        $action = FrmAppController::get_param('action');
         if($action=='new')
             return $this->new_form();
         else if($action=='create')

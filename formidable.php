@@ -120,44 +120,4 @@ if($frmpro_is_installed)
 global $frm_page_size;
 $frm_page_size = 10;
 
-global $frm_field_selection;
-
-$frm_field_selection = array(
-    'text' => 'Text Input (One Line)',
-    'textarea' => 'Paragraph Input (Multiple Lines)',
-    'checkbox' => 'Multiple Selection (Check Boxes)',
-    'radio' => 'Select One (Radio)',
-    'select' => 'Drop-Down (Select)'
-);
-
-global $frm_recaptcha_enabled;
-
-$frm_recaptcha_enabled = ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) )? true : false;
-if ($frm_recaptcha_enabled)
-    $frm_field_selection['captcha'] = 'reCAPTCHA Field';
-    
-global $frm_pro_field_selection;
-
-$frm_pro_field_selection = array(
-    'divider' => 'Section Divider/Heading',
-    'file' => 'File Upload',
-    //'rte' => 'Rich Text Editor', 
-    'phone' => 'Phone', 
-    'email' => 'Email',
-    'date' => 'Date', 
-    //'time' => 'Time',
-    'hidden' => 'Hidden Field', 
-    'user_id' => 'Hidden User Id',
-    'website' => 'Website/URL',
-    'image' => 'Image URL', 
-    '10radio' => '1-10 radio',
-    'data' => 'Data from Entries',
-    //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
-    //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
-    //'city_selector' => 'US State/County/City selector', 
-    //'full_name' => 'First and Last Name', 
-    //'terms' => 'Terms of Use',// checkbox or show terms (integrate with Terms of use plugin)
-    //'quiz' => 'Question and Answer' // for captcha alternative
-);
-
 ?>

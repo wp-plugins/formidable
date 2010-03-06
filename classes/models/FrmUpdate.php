@@ -126,7 +126,7 @@ class FrmUpdate{
   function pro_cred_form(){ ?>
 <div class="wrap">
     <div id="icon-options-general" class="icon32"><br></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: Pro Account Information</h2>      
+    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Account Information', FRM_PLUGIN_NAME)?></h2>      
     <?php
     if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
       if($this->process_pro_cred_form()){
@@ -152,10 +152,9 @@ class FrmUpdate{
 
     $this->display_pro_cred_form(); ?>
     
-    <p>Ready to take your forms to the next level?<br/>
-    Formidable Pro will help you style forms, manage data, and get reports.</p>
+    <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', FRM_PLUGIN_NAME) ?></p>
 
-    <a href="http://formidablepro.com">Learn More &raquo;</a>
+    <a href="http://formidablepro.com"><?php _e('Learn More', FRM_PLUGIN_NAME) ?> &raquo;</a>
 </div>
     <?php    
   }

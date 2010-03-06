@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frmicon"><br></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: Edit Form</h2>
+    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Edit Form', 'formidable') ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 
@@ -9,8 +9,8 @@
     <div class="frm_form_builder alignleft" id="poststuff">
     <form name="form1" method="post" action="">
         <p class="submit">
-            <input type="submit" name="Submit" value="Update" class="button-primary" /> or
-            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>">Cancel</a>
+            <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" /> <?php _e('or', 'formidable') ?>
+            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
         
         <input type="hidden" name="action" value="update">
@@ -20,8 +20,8 @@
         <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>
 
         <p class="submit">
-            <input type="submit" name="Submit" value="Update" class="button-primary" /> or
-            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>">Cancel</a>
+            <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" /> <?php _e('or', 'formidable') ?>
+            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
     </form>
     </div>

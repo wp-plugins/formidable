@@ -1,30 +1,30 @@
 <?php FrmFormsHelper::get_template_dropdown($all_templates); ?>
 
-<h3>Default Templates</h3>
+<h3><?php _e('Default Templates', 'formidable') ?></h3>
 <table class="widefat post fixed" cellspacing="0">
     <thead>
     <tr>
-        <th class="manage-column" width="30%">Name</th>
-        <th class="manage-column">Description</th>
+        <th class="manage-column" width="30%"><?php _e('Name', 'formidable') ?></th>
+        <th class="manage-column"><?php _e('Description', 'formidable') ?></th>
     </tr>
     </thead>
 <?php if(empty($default_templates)){ ?>
-    <tr><td colspan="2">No Templates Found</td></tr>
+    <tr><td colspan="2"><?php _e('No Templates Found', 'formidable') ?></td></tr>
 <?php
 }else{
     foreach($default_templates as $form){
 ?>
       <tr style="min-height: 60px; height: 60px;">
           <td class="edit_item">
-               <a class="item_name" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="Preview <?php echo stripslashes($form->name); ?>" target="blank"><?php echo stripslashes($form->name); ?></a>
+               <a class="item_name" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo stripslashes($form->name); ?>" target="blank"><?php echo stripslashes($form->name); ?></a>
              <br/>
              <div class="item_actions">
-               <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="Copy <?php echo $form->name; ?>">Create Form from Template</a> |
+               <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo $form->name; ?>"><?php _e('Create Form from Template', 'formidable') ?></a> |
                <?php global $frm_settings; 
                if ($frm_settings->preview_page_id > 0)
                    $url = add_query_arg('form', $form->form_key, get_permalink($frm_settings->preview_page_id));
                ?>
-               <a href="<?php echo $url ?>" title="View <?php echo stripslashes($form->name); ?>" target="blank">View</a>
+               <a href="<?php echo $url ?>" title="View <?php echo stripslashes($form->name); ?>" target="blank"><?php _e('View', 'formidable') ?></a>
              </div>
            </td>
            <td><?php echo $form->description ?></td>
@@ -35,10 +35,10 @@
 ?>
     <tfoot>
     <tr>
-        <th class="manage-column">Name</th>
-        <th class="manage-column">Description</th>
+        <th class="manage-column"><?php _e('Name', 'formidable') ?></th>
+        <th class="manage-column"><?php _e('Description', 'formidable') ?></th>
     </tr>
     </tfoot>
 </table>
 
-<br/><br/><h3>Custom Templates</h3>
+<br/><br/><h3><?php _e('Custom Templates', 'formidable') ?></h3>

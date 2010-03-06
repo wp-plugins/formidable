@@ -27,7 +27,7 @@ class FrmAppController{
 
     // Adds a settings link to the plugins page
     function settings_link($links, $file){
-        $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings') . '</a>';
+        $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings', FRM_PLUGIN_NAME) . '</a>';
         array_unshift($links, $settings);
         return $links;
     }
@@ -66,20 +66,14 @@ class FrmAppController{
     }
     
     function head(){
-        $css_file = array('frm_admin' => FRM_URL. '/css/frm_admin.css');
-        $css_file = apply_filters('frm_app_css', $css_file);
-        $js_file  = FRM_URL . '/js/list-items.js';
-        require_once(FRM_VIEWS_PATH . '/shared/head.php');
+        $css_file = FRM_URL. '/css/frm_admin.css';
+        $js_file  = FRM_URL . '/js/formidable.js';
+        require(FRM_VIEWS_PATH . '/shared/head.php');
     }
     
     function admin_js(){
         wp_enqueue_script('jQuery');
-        wp_enqueue_script('jQuery-ui-1.7.2', FRM_URL.'/js/jquery/jquery-ui-1.7.2.min.js'); 
-        wp_enqueue_script('jQuery-in-place-edit-patched', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
-
-        add_action( 'admin_print_footer_scripts', 'wp_tiny_mce', 25 );
-        if ( user_can_richedit() )
-        	wp_enqueue_script('editor');
+        wp_enqueue_script('jQuery-ui', FRM_URL.'/js/jquery/jquery-ui-1.7.2.min.js', '', '1.7.2'); 
         add_thickbox();
     }
     
@@ -163,11 +157,9 @@ class FrmAppController{
                 name varchar(255) default NULL,
                 description text default NULL,
                 form_id int(11) default NULL,
-                parent_item_id int(11) default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY  (id),
-                KEY form_id (form_id),
-                KEY parent_item_id (parent_item_id)
+                KEY form_id (form_id)
               ) {$charset_collate};";
 
       dbDelta($sql);

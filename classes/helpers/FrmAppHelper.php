@@ -54,6 +54,7 @@ class FrmAppHelper{
         return $key;
     }
 
+    //Editing a Form or Entry
     function setup_edit_vars($record, $table, $fields='', $default=false){
         if(!$record) return false;
         global $frm_entry_meta, $frm_form, $frm_app_controller, $frm_settings;
@@ -63,7 +64,7 @@ class FrmAppHelper{
 
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
               $values[$var] = stripslashes($frm_app_controller->get_param($var, $default_val));
-
+        $values['description'] = wpautop($values['description']);
         $values['fields'] = array();
         if ($fields){ 
             foreach($fields as $field){
@@ -79,19 +80,22 @@ class FrmAppHelper{
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
                     
                 $field_array = array('id' => $field->id,
-                      'value' => $new_value,
-                      'default_value' => stripslashes($field->default_value),
+                      'value' => str_replace('"', '&quot;', $new_value),
+                      'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
                       'name' => stripslashes($field->name),
                       'description' => stripslashes($field->description),
                       'type' => apply_filters('frm_field_type',$field_type, $field),
-                      'options' => stripslashes_deep(unserialize($field->options)),
+                      'options' => str_replace('"', '&quot;', stripslashes_deep(unserialize($field->options))),
                       'required' => $field->required,
                       'field_key' => $field->field_key,
                       'field_order' => $field->field_order,
                       'form_id' => $field->form_id);
 
-                foreach (array('size' => '','max' => '','label' => 'top','invalid' => '','required_indicator' => '*','blank' => '', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($field), 'default_blank' => 0) as $opt => $default_opt)
-                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt]: $default_opt);
+                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
+                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
+                
+                if ($field_array['custom_html'] == '')
+                    $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
                   
                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);   
             }
@@ -112,7 +116,7 @@ class FrmAppHelper{
         }
 
         $email = get_option('admin_email');
-        foreach (array('custom_style' => $frm_settings->custom_style, 'email_to' => $email, 'submit_value' => 'Submit', 'success_msg' => 'Your responses were successfully submitted. Thank you!') as $opt => $default){
+        foreach (array('custom_style' => $frm_settings->custom_style, 'email_to' => $email, 'submit_value' => $frm_settings->submit_value, 'success_msg' => $frm_settings->success_msg) as $opt => $default){
             if (!isset($values[$opt]))
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }
@@ -150,7 +154,7 @@ class FrmAppHelper{
       return $message;
     }
     
-    function display_recaptcha($errors) {
+    function display_recaptcha() {
     	global $recaptcha_opt;
 
     	$format = <<<END
@@ -182,7 +186,7 @@ COMMENT_FORM;
         return $sub . (($len < strlen($str)) ? $continue : '');
     }
     
-    function prepend_and_or_where( $starts_with = ' WHERE', $where = '' ){
+    function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
       return (( $where == '' )?'':$starts_with . $where);
     }
     

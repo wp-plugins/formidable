@@ -6,14 +6,8 @@ jQuery(document).ready(function($){
         $('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
     });
     
-    jQuery('#frm_field_id_<?php echo $field['id']; ?>.ui-state-default').hover(
-        function(){jQuery(this).children(".frm-show-hover").show();},
-        function(){if(jQuery(this).is('.selected')){}else{ jQuery(this).children(".frm-show-hover").hide();}}
-    );
-    
     $('#frm_form_editor_container #frm_field_id_<?php echo $field['id']; ?> .ui-accordion-header').addClass('ui-corner-all').spinDown();
 
-    jQuery('#frm_field_id_<?php echo $field['id']; ?> .frm_single_show_hover').hide();
     jQuery('#frm_field_id_<?php echo $field['id']; ?> .frm_single_option').hover(
       function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_spacer").hide();},
       function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_spacer").show();}
@@ -21,7 +15,7 @@ jQuery(document).ready(function($){
     
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option").editInPlace({
          url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-         params:"action=frm_field_option_ipe", default_text:'(Blank)'
+         params:"action=frm_field_option_ipe", default_text:"<?php _e('(Blank)', 'formidable') ?>"
     });
      
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_label").editInPlace({
@@ -32,7 +26,7 @@ jQuery(document).ready(function($){
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_desc").editInPlace({
          url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
          params:"action=frm_field_desc_in_place_edit",
-         default_text:"(Click here to add optional description or instructions)",
+         default_text:"<?php _e('(Click here to add optional description or instructions)', 'formidable') ?>",
          field_type:'textarea', textarea_rows:1
     });
 });

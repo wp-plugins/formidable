@@ -18,13 +18,11 @@ class FrmFieldsController{
     }
     
     function create(){
-        global $frm_field, $frm_recaptcha_enabled;
+        global $frm_field;
         $field_data = $_POST['field'];
         $form_id = $_POST['form_id'];
         
         $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars($field_data, $form_id));
-        if (isset($_POST['position']))
-            $field_values['field_order'] = $_POST['position'];
         
         $field_id = $frm_field->create( $field_values );
         
@@ -142,12 +140,12 @@ class FrmFieldsController{
         die();
     }
     
-    
     function change_type($type){
-        global $frm_field_selection, $frmpro_is_installed;
+        global $frmpro_is_installed;
 
         if ($frmpro_is_installed) return $type;
-
+        
+        $frm_field_selection = FrmFieldsHelper::field_selection();
         $types = array_keys($frm_field_selection);
         if (!in_array($type, $types) && $type != 'captcha')
             $type = 'text';

@@ -1,6 +1,6 @@
 <div class="wrap">
     <div id="icon-options-general" class="icon32"><br></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: Settings</h2>
+    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Settings', FRM_PLUGIN_NAME); ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 
@@ -23,7 +23,7 @@
                 <td>
                     <input type="checkbox" value="1" id="frm_custom_style" name="frm_custom_style" <?php checked($frm_settings->custom_style, 1) ?>>
                     <?php _e('Use Formidable styling settings for my forms', FRM_PLUGIN_NAME); ?>
-                    <p class="description">You can override this setting on individual forms.</p>
+                    <p class="description"><?php _e('You can override this setting on individual forms.', FRM_PLUGIN_NAME); ?></p>
                 </td>
             </tr> 
             
