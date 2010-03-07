@@ -1,7 +1,7 @@
 === Formidable ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback
+Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, forms, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback
 Requires at least: 2.8
 Tested up to: 2.9.2
 Stable tag: 1.02.0
@@ -29,6 +29,15 @@ http://formidablepro.com
 * Input default data into form fields with the option to clear when clicked
 * Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
+
+= PRO Features =
+* Visual form styling editor
+* Additional fields which include page breaks for multiple paged forms, file uploads, section headers, rich text editor, date with calendar, email, phone, website, and a dynamic field populated with data from other entries.
+* View graphical reports for the form results (replace Google docs surveys)
+* Add, edit, search, and export entries from the WordPress admin
+* Make your default values dynamic
+* Conditionally hide and show fields
+* Display your gathered data in a page, post, or widget
 
 
 == Installation ==
