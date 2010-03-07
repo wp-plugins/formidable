@@ -1,7 +1,7 @@
 === Formidable Forms ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, forms, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback
+Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, forms, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback, anti-spam
 Requires at least: 2.8
 Tested up to: 2.9.2
 Stable tag: 1.02.0
@@ -26,12 +26,12 @@ http://formidablepro.com
 * Create forms from existing templates or add your own
 * Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
 * Select an email address to send form responses under "Advanced Form Options"
-* Input default data into form fields with the option to clear when clicked
+* Input default values into form fields with the option to clear when clicked
 * Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
 
 = PRO Features =
-* Visual form styling editor
+* Visual form styling editor. Want to [check it out](http://formidablepro.com/customer-service?test=1 "check it out")?
 * Additional fields which include page breaks for multiple paged forms, file uploads, section headers, rich text editor, date with calendar, email, phone, website, and a dynamic field populated with data from other entries.
 * View graphical reports for the form results (replace Google docs surveys)
 * Add, edit, search, and export entries from the WordPress admin
