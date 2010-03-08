@@ -34,7 +34,7 @@ http://formidablepro.com
 * Visual form styling editor. Want to [check it out](http://formidablepro.com/customer-service?test=1 "check it out")?
 * Additional fields which include page breaks for multiple paged forms, file uploads, section headers, rich text editor, date with calendar, email, phone, website, and a dynamic field populated with data from other entries.
 * View graphical reports for the form results (replace Google docs surveys)
-* Add, edit, search, and export entries from the WordPress admin
+* Add, edit, search, and CSV export entries from the WordPress admin
 * Make your default values dynamic
 * Conditionally hide and show fields
 * Display your gathered data in a page, post, or widget 
