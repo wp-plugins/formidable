@@ -79,7 +79,7 @@ class FrmFormsHelper{
         if ($loc == 'before'){
             $default_html = <<<BEFORE_HTML
 [if form_name]<h3>[form_name]</h3>[/if form_name]
-[if form_description]<p class="frm_description">[form_description]</p>[/if form_description]
+[if form_description]<div class="frm_description">[form_description]</div>[/if form_description]
 BEFORE_HTML;
         }else{
             $default_html = '';

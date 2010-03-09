@@ -20,7 +20,7 @@ class FrmNotification{
         
         $from_email = '';
             
-        $opener = sprintf(__('%1$s form has been submitted on %2$s.', FRM_PLUGIN_NAME), $form->name, $frm_blogname);
+        $opener = sprintf(__('%1$s form has been submitted on %2$s.', FRM_PLUGIN_NAME), $form->name, $frm_blogname) ."\r\n\r\n";
         
         $entry_data = '';
         foreach ($values as $value){
@@ -28,24 +28,18 @@ class FrmNotification{
             if (is_array($val))
                 $val = implode(', ', $val);
             
-            $entry_data .= $value->field_name . ': ' . $val . "\n\n";
+            $entry_data .= $value->field_name . ': ' . $val . "\r\n\r\n";
             if ($from_email == '' and is_email($val))
                 $from_email = $val;
         }
           
         $data = unserialize($entry->description);  
-        $user_data = __('User Information', FRM_PLUGIN_NAME) ."\n";
-        $user_data .= __('IP Address', FRM_PLUGIN_NAME) . ": ". $data['ip'] ."\n";
-        $user_data .= __('User-Agent (Browser/OS)', FRM_PLUGIN_NAME) . ": ". $data['browser']."\n";
-        $user_data .= __('Referrer', FRM_PLUGIN_NAME) . ": ". $data['referrer']."\n";
+        $user_data = __('User Information', FRM_PLUGIN_NAME) ."\r\n";
+        $user_data .= __('IP Address', FRM_PLUGIN_NAME) . ": ". $data['ip'] ."\r\n";
+        $user_data .= __('User-Agent (Browser/OS)', FRM_PLUGIN_NAME) . ": ". $data['browser']."\r\n";
+        $user_data .= __('Referrer', FRM_PLUGIN_NAME) . ": ". $data['referrer']."\r\n";
 
-        $mail_body =<<<MAIL_BODY
-{$opener}
-
-{$entry_data}
-
-{$user_data}
-MAIL_BODY;
+        $mail_body = $opener . $entry_data ."\r\n". $user_data;
         $subject = sprintf(__('%1$s Form submitted on %2$s', FRM_PLUGIN_NAME), $form->name, $frm_blogname); //subject
 
         if(is_array($to_emails)){
@@ -59,7 +53,7 @@ MAIL_BODY;
         $from_name     = get_option('blogname'); //senders name
         $from_email    = ($from_email == '') ? get_option('admin_email') : $from_email; //senders e-mail address
         $recipient     = $to_email; //recipient
-        $header        = "From: {$from_name} <{$from_email}>\r\n"; //optional headerfields
+        $header        = "From: {$from_email}\r\n"; //optional headerfields
         $subject       = html_entity_decode(strip_tags(stripslashes($subject)));
         $message       = html_entity_decode(strip_tags(stripslashes($message)));
         $signature     = '';//$this->get_mail_signature();
@@ -69,9 +63,8 @@ MAIL_BODY;
         //$full_to_email = "{$to_name} <{$to_email}>";
 
         if (!wp_mail($recipient, $subject, $message.$signature, $header)){
-            $headers = "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
-            $headers .= $header;
-            mail($recipient, $subject, $message, $headers);
+            $header .= "Reply-To: {$from_email}\r\n Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\r\n";
+            mail($recipient, $subject, $message, $header);
         }
 
         do_action('frm_notification', $recipient, $subject, $message.$signature);

@@ -50,7 +50,7 @@ textarea.inplace_field{width:100%;}
 .frm_field_box{padding:5px;}
 
 .frm_pos_top{display:block;}
-.frm_pos_left{float:left;}
+.frm_pos_left{float:left; width:150px;}
 .frm_pos_none, .form-wrap label.frm_pos_none{display:none;}
 .frm_spacer{float:left; width:16px; height:16px;}
 .frm_charts object{background:transparent;}
@@ -87,12 +87,19 @@ li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-
 	border:none; 
 	font-weight:normal; 
 	background-color:transparent; background-image:none;
-	margin-bottom:20px;
+	padding:6px; margin:20px 0;
+}
+#new_fields li.ui-state-default.edit_field_type_break{border-top:1px dashed; padding-top:5px;}
+#new_fields .edit_field_type_divider .frm_ipe_field_label,
+#new_fields .edit_field_type_break .frm_ipe_field_label{
+	font-size:116%;
 }
 #frm_form_options .ui-state-default{color:#000;}
-#new_fields li.ui-state-default{padding:6px; margin-bottom:10px;}
-#new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected{border:1px solid #fbcb09; padding:5px; background:#ffe;}
+#new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected{
+	border:1px solid #fbcb09; padding:5px; background:#ffe;
+}
 #new_fields li.ui-state-default.selected{background:#fdf5ce;}
+
 
 
 /*hide elements if js is avail*/

@@ -104,7 +104,7 @@ class FrmFieldsHelper{
     }
     
     function get_default_html($type){
-        if (apply_filters('frm_show_normal_field_type', true, $type)){
+        if (apply_filters('frm_normal_field_type_html', true, $type)){
             $default_html = <<<DEFAULT_HTML
 <div id="frm_field_[id]_container" class="form-field [required_class] [error_class]">
     <label class="frm_pos_[label_position]">[field_name]

@@ -3,7 +3,7 @@
 
 <head profile="http://gmpg.org/xfn/11">
     <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
-
+    <title><?php bloginfo('name'); ?></title>
     <?php global $frm_blogurl; ?>
     <?php if ($custom_style){
         $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css'); 

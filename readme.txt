@@ -56,6 +56,13 @@ http://formidablepro.com
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.02.01 =
+* Emailer now works for everyone! (hopefully)
+* Optionally Reset HTML. Just clear out the box for the HTML for that field and hit update.
+* PRO: Fixed collapsable section to use correct default HTML. 
+* PRO: Only call rich text javascript on entries pages
+* PRO: A few small reports modifications. Report for the User ID field will show the percentage of your users who have submitted the form if you are allowing edits with only one submission per user.
+
 = 1.02.0 =
 * Updated in-place edit to save more easily and not wipe HTML when editing
 * Updated email notifications to hopefully work for more users, send from the first email address submitted in the form, and send one email per email address in the form options
