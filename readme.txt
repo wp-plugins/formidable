@@ -23,7 +23,7 @@ http://formidablepro.com
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow... and documentation too)
-* Create forms from existing templates or add your own
+* Create forms from existing templates or add your own. A contact form template is included.
 * Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
 * Select an email address to send form responses under "Advanced Form Options"
 * Input default values into form fields with the option to clear when clicked
