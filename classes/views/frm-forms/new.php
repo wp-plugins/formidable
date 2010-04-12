@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="frmicon"><br></div>
+    <div class="frmicon icon32"><br></div>
     
     <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Create Form', FRM_PLUGIN_NAME) ?></h2>
 
@@ -7,7 +7,7 @@
 
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
 
-    <div class="frm_form_builder alignleft" id="poststuff">
+    <div class="frm_form_builder alignleft<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>" id="poststuff">
         <form name="form1" method="post" action="">
             <input type="hidden" name="action" value="create">
             <input type="hidden" name="id" value="<?php echo $id; ?>">

@@ -24,19 +24,19 @@ class FrmFormsHelper{
     <?php    
     }
     
-    function forms_dropdown( $field_name, $field_value='', $blank=true, $field_id=false ){
+    function forms_dropdown( $field_name, $field_value='', $blank=true, $field_id=false, $onchange=false ){
         global $frm_app_controller, $frm_form;
         if (!$field_id)
             $field_id = $field_name;
             
         $forms = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')",' ORDER BY name');
         ?>
-        <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown">
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>
             <option value=""></option>
             <?php } ?>
             <?php foreach($forms as $form){ ?>
-                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo $form->name; ?></option>
+                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo stripslashes($form->name); ?></option>
             <?php } ?>
         </select>
         <?php
@@ -58,6 +58,7 @@ class FrmFormsHelper{
         $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : $frm_settings->submit_value;
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : $frm_settings->success_msg;
+        $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? 1 : 0;
         $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
         $values['after_html'] = FrmFormsHelper::get_default_html('after');
@@ -103,7 +104,32 @@ BEFORE_HTML;
             $html = str_replace('['.$code.']', $replace_with, $html);   
         }   
         
-        return $html;
+        return apply_filters('frm_form_replace_shortcodes', $html, $form);
+    }
+    
+    function get_default_email(){
+        $email = <<<DEFAULT_EMAIL
+            <table style="border-bottom: 1px solid rgb(238, 238, 238); width: 100%; font-size: 12px; line-height: 135%; font-family: Lucida Grande,Tahoma,Arial,sans-serif;" cellspacing="0">
+            			<tbody><tr style="background-color: rgb(245, 245, 245);">
+            		<th style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px; vertical-align: top; color: rgb(34, 34, 34); text-align: left;">
+            			Number 
+            					</th>
+            		<td style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px 7px 0pt; vertical-align: top; color: rgb(51, 51, 51); width: 60%;">
+            			<div>89</div>
+
+            		</td>
+            	</tr>
+            	<tr style="background-color: rgb(255, 255, 255);">
+            		<th style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px; vertical-align: top; color: rgb(34, 34, 34); text-align: left;">
+            			Email 
+            					</th>
+            		<td style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px 7px 0pt; vertical-align: top; color: rgb(51, 51, 51); width: 60%;">
+            		<a href="mailto:stephywells@gmail.com" target="_blank">stephywells@gmail.com</a>
+            		</td>
+            	</tr>
+            </tbody></table>
+DEFAULT_EMAIL;
+        return $email;
     }
 
 }

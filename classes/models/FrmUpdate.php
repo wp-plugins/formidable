@@ -269,7 +269,7 @@ class FrmUpdate{
       if(!$this->pro_is_installed())
         $force=true;
 
-      $plugin_updates = ((function_exists('get_transient'))?get_transient("update_plugins"):get_option("update_plugins")); 
+      $plugin_updates = (function_exists('get_site_transient'))?get_site_transient("update_plugins"):get_transient("update_plugins"); 
 
       $curr_version = $this->get_current_version();
       $installed_version = $plugin_updates->checked[$this->plugin_name];
@@ -293,14 +293,14 @@ class FrmUpdate{
           unset($plugin_updates->response[$this->plugin_name]);
       }
 
-      if ( function_exists('set_transient') and !$already_set_transient ){
+      if ( function_exists('set_site_transient') and !$already_set_transient ){
         $already_set_transient = true;
-        set_transient("update_plugins", $plugin_updates); // for WordPress 2.8+
+        set_site_transient("update_plugins", $plugin_updates); // for WordPress 2.9+
       }
 
       if( !$already_set_option ){
         $already_set_option = true;
-        update_option("update_plugins", $plugin_updates); // for WordPress 2.7
+        set_transient("update_plugins", $plugin_updates); // for WordPress 2.8
       }
     }
   }

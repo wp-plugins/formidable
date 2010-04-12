@@ -54,7 +54,7 @@ jQuery.fn.editInPlace = function(options) {
 		select_options:		"",
 		textarea_cols:		"25",
 		textarea_rows:		"10",
-		bg_over:			"#ffc",
+		bg_over:			"#ffffde",
 		bg_out:				"transparent",
 		saving_text:		"Saving...",
 		saving_image:		"",
@@ -160,7 +160,7 @@ jQuery.fn.editInPlace = function(options) {
 				}
 
 				/* insert the new in place form after the element they click, then empty out the original element */
-				jQuery(this).html('<form class="inplace_form" style="display: inline; margin: 0; padding: 0;">' + use_field_type + ' ' + buttons_code + '</form>');
+				jQuery(this).html(use_field_type + ' ' + buttons_code);
 
 			}/* END- if(!editing) -END */
 
@@ -181,7 +181,7 @@ jQuery.fn.editInPlace = function(options) {
 				}
 
 				function saveAction()
-				{
+				{ 
 					/* put the original background color in */
 					original_element.css("background", settings.bg_out);
 
@@ -250,22 +250,22 @@ jQuery.fn.editInPlace = function(options) {
 				}
 
 				/* set the focus to the new input element */
-				original_element.children("form").children(".inplace_field").focus().select();
+				original_element.children(".inplace_field").focus().select();
 
 				/* CLICK CANCEL BUTTON functionality */
-				original_element.children("form").children(".inplace_cancel").click(cancelAction);
+				original_element.children(".inplace_cancel").click(cancelAction);
 
 				/* CLICK SAVE BUTTON functionality */
-				original_element.children("form").children(".inplace_save").click(saveAction);
+				original_element.children(".inplace_save").click(saveAction);
 
                 /* if cancel/save buttons should be shown, cancel blur functionality */
                 if(!settings.show_buttons){
                     /* if on_blur is set to save, set the save funcion */
     				if(settings.on_blur == "save")
-    					original_element.children("form").children(".inplace_field").blur(saveAction);
+    					original_element.children(".inplace_field").blur(saveAction);
     				/* if on_blur is set to cancel, set the cancel funcion */
     				else
-    					original_element.children("form").children(".inplace_field").blur(cancelAction);
+    					original_element.children(".inplace_field").blur(cancelAction);
                 }
 
 				/* hit esc key */
@@ -275,7 +275,7 @@ jQuery.fn.editInPlace = function(options) {
 				    }
 				});
 
-                original_element.children("form").submit(saveAction);
+                original_element.submit(saveAction);
 
 			}/* END- if(click_count == 1) -END */
 		});

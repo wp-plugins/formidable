@@ -18,20 +18,23 @@ class FrmFieldsHelper{
     
     function pro_field_selection(){
         return apply_filters('frm_pro_available_fields', array(
-            'divider' => __('Section Divider/Heading', FRM_PLUGIN_NAME),
+            'divider' => __('Section Heading', FRM_PLUGIN_NAME),
             'break' => __('Page Break', FRM_PLUGIN_NAME),
             'file' => __('File Upload', FRM_PLUGIN_NAME),
             'rte' => __('Rich Text Editor', FRM_PLUGIN_NAME), 
-            'phone' => __('Phone', FRM_PLUGIN_NAME), 
-            'email' => __('Email', FRM_PLUGIN_NAME),
+            'number' => __('Number', FRM_PLUGIN_NAME), 
+            'phone' => __('Phone Number', FRM_PLUGIN_NAME), 
+            'email' => __('Email Address', FRM_PLUGIN_NAME),
             'date' => __('Date', FRM_PLUGIN_NAME), 
             //'time' => 'Time',
-            'hidden' => __('Hidden Field', FRM_PLUGIN_NAME), 
-            'user_id' => __('Hidden User Id', FRM_PLUGIN_NAME),
             'website' => __('Website/URL', FRM_PLUGIN_NAME),
             'image' => __('Image URL', FRM_PLUGIN_NAME), 
             '10radio' => __('Scale', FRM_PLUGIN_NAME),
-            'data' => __('Data from Entries', FRM_PLUGIN_NAME)
+            //'grid' => __('Grid', FRM_PLUGIN_NAME),
+            'data' => __('Data from Entries', FRM_PLUGIN_NAME),
+            'hidden' => __('Hidden Field', FRM_PLUGIN_NAME), 
+            'user_id' => __('Hidden User Id', FRM_PLUGIN_NAME),
+            'tag' => __('Tags', FRM_PLUGIN_NAME)
             //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
             //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
             //'city_selector' => 'US State/County/City selector', 
@@ -92,7 +95,7 @@ class FrmFieldsHelper{
         $values['default_blank'] = (isset($field_options['default_blank']))?($field_options['default_blank']):(0);
         $values['custom_html'] = (isset($field_options['custom_html']))? stripslashes($field_options['custom_html']): FrmFieldsHelper::get_default_html($record->type);
         
-        return $values;
+        return apply_filters('frm_setup_edit_field_vars',$values);
     }
     
     function get_form_fields($form_id, $error=false){ 

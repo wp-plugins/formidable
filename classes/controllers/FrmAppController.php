@@ -22,7 +22,7 @@ class FrmAppController{
     function menu(){
         global $frm_forms_controller;
         
-        add_menu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 8, FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), FRM_URL . '/images/icon_16.png');
+        add_menu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'administrator', FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), FRM_URL . '/images/icon_16.png');
     }
 
     // Adds a settings link to the plugins page
@@ -65,16 +65,17 @@ class FrmAppController{
         }
     }
     
-    function head(){
-        $css_file = FRM_URL. '/css/frm_admin.css';
-        $js_file  = FRM_URL . '/js/formidable.js';
-        require(FRM_VIEWS_PATH . '/shared/head.php');
-    }
-    
     function admin_js(){
-        wp_enqueue_script('jQuery');
-        wp_enqueue_script('jQuery-ui', FRM_URL.'/js/jquery/jquery-ui-1.7.2.min.js', '', '1.7.2'); 
-        add_thickbox();
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui-core');
+        wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.1.2');
+        if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
+            wp_enqueue_script('jquery-ui-sortable');
+            wp_enqueue_script('jquery-ui-draggable');
+            wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'));
+            wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css');
+            add_thickbox();
+        }
     }
     
     function front_head(){
@@ -84,15 +85,16 @@ class FrmAppController{
             if ($db_version != $old_db_version)
                 $this->install();
         }
-        //if (!is_admin()){
-        $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
-        wp_enqueue_style('frm-forms', $css);
-        //}
+        if (!is_admin()){
+            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+            wp_enqueue_style('frm-forms', $css);
+        }
+        wp_enqueue_script( 'jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery') );
     }
   
     function install(){
       global $wpdb, $frm_form, $frm_field, $frm_app_helper;
-      $db_version = 1.01; // this is the version of the database we're moving to
+      $db_version = 1.03; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
       if ($db_version != $old_db_version){
@@ -144,6 +146,7 @@ class FrmAppController{
                 status varchar(255) default NULL,
                 prli_link_id int(11) default NULL,
                 options longtext default NULL,
+                notifications longtext default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY  (id)
               ) {$charset_collate};";
@@ -156,6 +159,7 @@ class FrmAppController{
                 item_key varchar(255) default NULL,
                 name varchar(255) default NULL,
                 description text default NULL,
+                ip text default NULL,
                 form_id int(11) default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY  (id),
@@ -179,18 +183,20 @@ class FrmAppController{
 
       dbDelta($sql);
       
-      /**** ADD DEFAULT TEMPLATES ****/
-      $templates = glob(FRM_TEMPLATES_PATH."/*.php");
-
-      for($i = count($templates) - 1; $i >= 0; $i--){
-          $filename = preg_replace("#".FRM_TEMPLATES_PATH."/#","",$templates[$i]);
-          $filename = str_replace('.php','', $filename);
-          $form = $frm_form->getAll("form_key='{$filename}' and is_template='1' and default_template='1'", '', ' LIMIT 1');
-          $values = FrmFormsHelper::setup_new_vars();
-          $values['form_key'] = $filename;
-          $values['is_template'] = $values['default_template'] = 1;
-          require_once($templates[$i]);
+      /**** MIGRATE DATA ****/
+      if ($db_version == 1.03){
+          global $frm_entry;
+          $all_entries = $frm_entry->getAll();
+          foreach($all_entries as $ent){
+              $opts = maybe_unserialize($ent->description);
+              if(is_array($opts))
+                $wpdb->update( $frm_entry->table_name, array('ip' => $opts['ip']), array( 'id' => $ent->id ) );
+          }
       }
+      
+      /**** ADD DEFAULT TEMPLATES ****/
+      FrmFormsController::add_default_templates(FRM_TEMPLATES_PATH);
+
       
       /***** SAVE DB VERSION *****/
       update_option('frm_db_version',$db_version);
@@ -229,10 +235,9 @@ class FrmAppController{
     function standalone_route($controller, $action=''){
         global $frm_forms_controller;
 
-        if($controller=='forms'){
-          //if($action=='preview')
+        if($controller=='forms' and $action != 'export' and $action != 'import')
             $frm_forms_controller->preview($this->get_param('form'));
-        }else
+        else
             do_action('frm_standalone_route', $controller, $action);
     }
 
@@ -244,7 +249,8 @@ class FrmAppController{
 
     function get_form_shortcode($atts){
         global $frm_entries_controller;
-        extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false), $atts));
+        extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false), $atts));
+        do_action('formidable_shortcode_atts', array('id' => $id, 'key' => $key, 'title' => $title, 'description' => $description, 'readonly' => $readonly, 'entry_id' => $entry_id));
         return $frm_entries_controller->show_form($id, $key, $title, $description); 
     }
 

@@ -15,43 +15,70 @@ if (isset($values['fields']) && !empty($values['fields'])){
 </ul>
 
 <?php if (!$values['is_template']){ ?>
-    <h3 class="ui-accordion-header ui-state-default">
-        <span class="ui-icon ui-icon-triangle-1-e"></span>
-        <a href="#"><?php _e('Advanced Form Options', 'formidable') ?></a>
-    </h3> 
-    <div class="ui-widget-content ui-corner-bottom">
-        <span class="alignright"><a title="<?php _e('Edit HTML', 'formidable') ?>" href="#TB_inline?height=500&width=700&inlineId=frm_editable_html" class="thickbox button"><?php _e('Edit HTML', 'formidable') ?></a></span>
-          
-        <p style="clear:both;"><label><?php _e('Form ShortCodes') ?>:</label> 
-            [formidable id=<?php echo $id; ?> title=true description=true]  [formidable key=<?php echo $values['form_key']; ?>]
-        </p>
-        
-        <p><label><?php _e('Form Key') ?></label>
-            <input type="text" name="form_key" value="<?php echo $values['form_key']; ?>" />
-        </p>
-        
-        <p><label><?php _e('Styling', 'formidable') ?></label><input type="checkbox" name="options[custom_style]" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
-            <?php _e('Use Formidable styling for this form', 'formidable') ?>
-        </p> 
-        
-        <p><label><?php _e('Email Form Responses to', 'formidable') ?></label>
-            <input type="text" name="options[email_to]" size="55" value="<?php echo $values['email_to']; ?>" />
-        </p> 
-        
-        <p><label><?php _e('New Entry Submit Button Label', 'formidable') ?></label>
-            <input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" />
-        </p>
-        
-        <p><label><?php _e('New Entry Success Message', 'formidable') ?></label>
-            <input type="text" name="options[success_msg]" size="55" value="<?php echo $values['success_msg']; ?>" />
-        </p>
-        
-        <?php do_action('frm_additional_form_options', $values); ?> 
-        
-        <?php if (function_exists( 'akismet_http_post' )){ ?>
-        <p><input type="checkbox" name="options[akismet]" id="akismet" value="1" <?php checked($values['akismet'], 1); ?> /> <?php _e('Use Akismet to check entries for spam', 'formidable') ?></p>
-        <?php } ?>
-    </div>
+<div class="themeRoller clearfix">
+    <div class="theme-group clearfix">
+	    <div class="theme-group-header state-default">
+		    <span class="icon icon-triangle-1-e"><?php _e('Collapse', FRM_PLUGIN_NAME) ?></span>
+		    <a href="#"><?php _e('Advanced Form Options', 'formidable') ?></a>
+		</div><!-- /theme group Error -->
+		<div class="theme-group-content corner-bottom clearfix">
+            <div class="clearfix">
+			    <span class="alignright"><a title="<?php _e('Edit HTML', 'formidable') ?>" href="#TB_inline?height=500&width=700&inlineId=frm_editable_html" class="thickbox button"><?php _e('Edit HTML', 'formidable') ?></a></span>
+                <table class="form-table">
+                    <tr>
+                        <td width="200px"><label><?php _e('Form ShortCodes') ?>:</label> <a href="http://formidablepro.com/user-manual/insert-a-form/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', FRM_PLUGIN_NAME) ?>" /></a></td>
+                        <td>[formidable id=<?php echo $id; ?> title=true description=true]  or [formidable key=<?php echo $values['form_key']; ?>]</td>
+                    </tr>
+
+                    <tr>
+                        <td><label><?php _e('Form Key', FRM_PLUGIN_NAME) ?>:</label></td>
+                        <td><input type="text" name="form_key" value="<?php echo $values['form_key']; ?>" /></td>
+                    </tr>
+
+                    <tr><td><label><?php _e('Styling', FRM_PLUGIN_NAME) ?>:</label></td>
+                        <td><input type="checkbox" name="options[custom_style]" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
+                        <?php _e('Use Formidable styling for this form', 'formidable') ?></td>
+                    </tr> 
+
+                    <tr><td><label><?php _e('Submit Button Text', FRM_PLUGIN_NAME) ?>:</label></td>
+                        <td><input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" /></td>
+                    </tr>
+
+                    <tr><td><label><?php _e('Confirmation Message', FRM_PLUGIN_NAME) ?>:</label></td>
+                        <td><textarea name="options[success_msg]" cols="50" class="frm_elastic_text"><?php echo $values['success_msg']; ?></textarea> <br/>
+                        <input type="checkbox" name="options[show_form]" value="1" <?php checked($values['show_form'], 1) ?>> <?php _e('Show the form with the success message.', 'formidable')?>
+                        <td>
+                    </tr>
+
+                    <?php do_action('frm_additional_form_options', $values); ?> 
+
+                    <?php if (function_exists( 'akismet_http_post' )){ ?>
+                    <tr><td colspan="2"><input type="checkbox" name="options[akismet]" id="akismet" value="1" <?php checked($values['akismet'], 1); ?> /> <?php _e('Use Akismet to check entries for spam', 'formidable') ?></td></tr>
+                    <?php } ?>
+                </table>
+			</div>
+		</div><!-- /theme group content -->
+	</div><!-- /theme group -->
+	
+	<div class="theme-group clearfix">
+		<div class="theme-group-header state-default">
+			<span class="icon icon-triangle-1-e"><?php _e('Collapse', FRM_PLUGIN_NAME) ?></span>
+			<a href="#"><?php _e('Form Notification Options', 'formidable') ?></a>
+		</div><!-- /theme group Error -->
+		<div class="theme-group-content corner-bottom clearfix">
+            <div class="clearfix">
+				 <table class="form-table">
+                      <tr>
+                          <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?>:</label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', FRM_PLUGIN_NAME) ?>" /></td>
+                          <td><input type="text" name="options[email_to]" size="55" value="<?php echo $values['email_to']; ?>" /></td>
+                     </tr>
+                     <?php do_action('frm_additional_form_notification_options', $values); ?> 
+                  </table>
+			</div>
+		</div><!-- /theme group content -->
+	</div><!-- /theme group -->
+</div>
+
 </div>
 <div id="frm_editable_html" style="display:none;">
     <div class="alignleft" style="width:500px">
@@ -91,7 +118,6 @@ if (isset($values['fields']) && !empty($values['fields'])){
             <li><b><?php _e('Add class name if field is required', 'formidable') ?>:</b> [required_class]</li>
             <li><b><?php _e('Add class name if field has an error on form submit', 'formidable') ?>:</b> [error_class]</li>
         </ul>
-    </div>    
-    
+    </div> 
 <?php } ?>
 </div>

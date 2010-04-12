@@ -55,7 +55,7 @@ class FrmEntryMeta{
   }
   
   function get_entry_meta_by_field($item_id, $field_id, $return_var=false){
-      global $wpdb;
+      global $wpdb, $frm_field;
       if (is_numeric($field_id))
           $query = "SELECT meta_value FROM {$this->table_name} WHERE field_id='{$field_id}' and item_id='{$item_id}'";
       else
@@ -82,9 +82,9 @@ class FrmEntryMeta{
       return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE item_id={$item_id}");
   }
   
-  function get_entry_metas_for_field($field_id){
+  function get_entry_metas_for_field($field_id, $order='', $limit=''){
       global $wpdb;
-      return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE field_id={$field_id}");
+      return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE field_id={$field_id}{$order}{$limit}");
   }
   
   function get_entry_meta_info($item_id){

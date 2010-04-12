@@ -13,8 +13,8 @@ class FrmEntry{
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $this->table_name, 'item_key');
         $new_values['name'] = isset($values['name']) ? $values['name'] : $values['item_key'];
-        $new_values['description'] = serialize(array('ip' => $_SERVER['REMOTE_ADDR'], 
-                                                'browser' => $_SERVER['HTTP_USER_AGENT'], 
+        $new_values['ip'] = $_SERVER['REMOTE_ADDR'];
+        $new_values['description'] = serialize(array('browser' => $_SERVER['HTTP_USER_AGENT'], 
                                                 'referrer' => $_SERVER['HTTP_REFERER']));
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
         $new_values['created_at'] = current_time('mysql', 1);
@@ -173,7 +173,7 @@ class FrmEntry{
                 $value = $values['item_meta'][$posted_field->id];
                 
             if (isset($field_options['default_blank']) and $field_options['default_blank'] and $value == $posted_field->default_value)
-                $value = '';            
+                $_POST['item_meta'][$posted_field->id] = $value = '';            
                   
             if ($posted_field->required == '1' and $value == ''){
                 $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', FRM_PLUGIN_NAME) or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('can\'t be blank', FRM_PLUGIN_NAME)) : $field_options['blank'];  

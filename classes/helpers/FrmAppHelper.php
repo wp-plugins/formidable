@@ -37,12 +37,13 @@ class FrmAppHelper{
         }else
             $key = sanitize_title_with_dashes($name);
         
-        if (is_numeric($key))
+        if (is_numeric($key) or in_array($key, array('id','key','created-at', 'detaillink', 'editlink', 'siteurl', 'evenodd')))
             $key = $key .'a';
             
         $query = "SELECT $column FROM $table_name WHERE $column = %s AND ID != %d LIMIT 1";
         $key_check = $wpdb->get_var($wpdb->prepare($query, $key, $id));
-        if ($key_check || is_numeric($key_check)){
+        
+        if ($key_check or is_numeric($key_check)){
             $suffix = 2;
 			do {
 				$alt_post_name = substr($key, 0, 200-(strlen($suffix)+1)). "$suffix";
@@ -66,7 +67,7 @@ class FrmAppHelper{
               $values[$var] = stripslashes($frm_app_controller->get_param($var, $default_val));
         $values['description'] = wpautop($values['description']);
         $values['fields'] = array();
-        if ($fields){ 
+        if ($fields){
             foreach($fields as $field){
 
                 if ($default)
@@ -90,13 +91,18 @@ class FrmAppHelper{
                       'field_key' => $field->field_key,
                       'field_order' => $field->field_order,
                       'form_id' => $field->form_id);
-
-                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
+ 
+                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
-                
+                    if($opt == 'blank' and $field_array[$opt] == '')
+                        $field_array[$opt] = $field_array['name'] . ' ' . __('can\'t be blank', FRM_PLUGIN_NAME);
+                    else if($opt == 'invalid' and $field_array[$opt] == '')
+                        $field_array[$opt] = $field_array['name'] . ' ' . __('is an invalid format', FRM_PLUGIN_NAME);
+                }
+                    
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
-                  
+
                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);   
             }
         }
@@ -116,11 +122,18 @@ class FrmAppHelper{
         }
 
         $email = get_option('admin_email');
-        foreach (array('custom_style' => $frm_settings->custom_style, 'email_to' => $email, 'submit_value' => $frm_settings->submit_value, 'success_msg' => $frm_settings->success_msg) as $opt => $default){
+        foreach (array('custom_style' => $frm_settings->custom_style, 'email_to' => $email) as $opt => $default){
             if (!isset($values[$opt]))
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }
         
+        foreach (array('submit_value' => $frm_settings->submit_value, 'success_msg' => $frm_settings->success_msg, 'show_form' => 1) as $opt => $default){
+            if (!isset($values[$opt]) or $values[$opt] == '')
+                $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+        }
+        if (!isset($values['show_form']))
+            $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? 1 : 0;
+            
         if (!isset($values['custom_style']))
             $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
 

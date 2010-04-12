@@ -1,5 +1,4 @@
 <?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
-
 <div id="frm_form_fields">
     <fieldset>
     <div>
@@ -39,11 +38,9 @@
     </div>
     </fieldset>
 </div>
-
 <?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
-
 <script type="text/javascript">
-<?php do_action('frm_entries_footer_scripts',$values['fields']); ?>
+<?php do_action('frm_entries_footer_scripts',$values['fields'], $form); ?>
 function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';}
 function frmReplaceDefault(default_value,thefield){if(thefield.value=='')thefield.value=default_value;}
 </script>

@@ -15,10 +15,11 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_update_field_order', array($this, 'update_order') );
         add_filter('frm_field_type',array( $this, 'change_type'));
         add_filter('frm_display_field_options', array($this, 'display_field_options'));
+        add_action('frm_field_input_html', array($this,'input_html'));
     }
     
     function create(){
-        global $frm_field;
+        global $frm_field, $frm_ajax_url;
         $field_data = $_POST['field'];
         $form_id = $_POST['form_id'];
         
@@ -88,7 +89,7 @@ class FrmFieldsController{
 
     /* Field Options */
     function add_option(){
-        global $frm_field;
+        global $frm_field, $frm_ajax_url;
 
         $id = $_POST['field_id'];
         $field = $frm_field->getOne($id);
@@ -168,6 +169,15 @@ class FrmFieldsController{
         }
         
         return $display;
+    }
+    
+    function input_html($field){
+        if(isset($field['size']) && $field['size'] > 0) 
+            echo ' size="'. $field['size'] .'" class="auto_width"';
+        if(isset($field['max']) and !in_array($field['type'], array('textarea','rte')))
+            echo ' maxlength="'. $field['max'] .'"';
+        if(isset($field['clear_on_focus']) and $field['clear_on_focus'])
+            echo ' onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"';
     }
 }
 ?>

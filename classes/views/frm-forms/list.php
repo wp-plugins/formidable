@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="frmicon"><br></div>
+    <div class="frmicon icon32"><br></div>
     <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php echo ($params['template'])? __('Templates', FRM_PLUGIN_NAME) : __('Forms', FRM_PLUGIN_NAME); ?></h2>
   
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
@@ -9,15 +9,15 @@
 
 <?php if ($params['template']) require('default-templates.php'); ?>
         
-<form class="form-fields item-list-form" name="item_list_form" method="post" action="">
-  <input type="hidden" name="action" value="list-form"/> 
+<form class="form-fields item-list-form" name="item_list_form" id="posts-filter" method="post" action="">
+  <input type="hidden" name="action" value="list-form"/>
   <input type="hidden" name="template" value="<?php echo $params['template'] ?>" />   
 <?php $footer = false; require(FRM_VIEWS_PATH.'/shared/item-table-nav.php'); ?>
 <table class="widefat post fixed" cellspacing="0">
     <thead>
     <tr>
         <?php if ($params['template']){ ?>
-            <th class="manage-column" width="30%">
+            <th class="manage-column" width="">
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&sort=name<?php echo (($sort_str == 'name' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Name', FRM_PLUGIN_NAME) ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column">
@@ -37,7 +37,7 @@
                 <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=form_key<?php echo (($sort_str == 'form_key' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Key', FRM_PLUGIN_NAME) ?><?php echo (($sort_str == 'form_key')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column" width="60px"><?php _e('Entries', FRM_PLUGIN_NAME) ?></th>
-            <th class="manage-column"><?php _e('Direct Link', FRM_PLUGIN_NAME) ?></th>
+            <th class="manage-column" width="115px"><?php _e('Direct Link', FRM_PLUGIN_NAME) ?></th>
             <th class="manage-column" width="115px"><?php _e('ShortCode', FRM_PLUGIN_NAME) ?></th>
         <?php } ?>
     </tr>
@@ -50,33 +50,34 @@
 }else{
     foreach($forms as $form){
 ?>
-      <tr style="min-height: 75px; height: 75px;">
+      <tr style="min-height: 75px; height: 75px;" class="iedit">
           <?php if ($params['template']){ ?>
-              <td class="edit_item">
-                  <a class="item_name" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>
+              <td class="post-title">
+                  <a class="row-title" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>
                 <br/>
-                <div class="item_actions">
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Create Form from Template', FRM_PLUGIN_NAME) ?></a>
-                  | <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Edit', FRM_PLUGIN_NAME) ?></a>
-                  | <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=destroy&id=<?php echo $form->id; ?>"  onclick="return confirm(<?php printf(__('Are you sure you want to delete your %1$s Form?'), $form->name) ?>);" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a>
+                <div class="row-actions">
+                    <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Create Form from Template', FRM_PLUGIN_NAME) ?></a></span>
+                  | <span class="edit"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Edit', FRM_PLUGIN_NAME) ?></a></span>
+                  <?php do_action('frm_template_action_links', $form); ?>
+                  | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=destroy&id=<?php echo $form->id; ?>"  onclick="return confirm(<?php printf(__('Are you sure you want to delete your %1$s Form?'), $form->name) ?>);" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a></span>
                 </div>
               </td>
               <td><?php echo $form->description ?></td>
           <?php }else{ ?>
               <td><?php do_action('frm_first_col', $form->id); ?> <?php echo $form->id ?></td>
-              <td class="edit_item">
-                  <a class="item_name" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>
+              <td class="post-title">
+                  <a class="row-title" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>
                 <br/>
-                <div class="item_actions">
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Edit', FRM_PLUGIN_NAME) ?></a> |
+                <div class="row-actions">
+                  <span class="edit"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=edit&id=<?php echo $form->id; ?>" title="<?php _e('Edit', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Edit', FRM_PLUGIN_NAME) ?></a></span> |
                   <?php if($frmpro_is_installed){ ?>
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&action=new&form=<?php echo $form->id; ?>" title="<?php _e('New', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?> <?php _e('Entry', FRM_PLUGIN_NAME) ?>"><?php _e('New Entry', FRM_PLUGIN_NAME) ?></a> |
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Entries"><?php _e('Entries', FRM_PLUGIN_NAME) ?></a> |
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-reports&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Reports"><?php _e('Reports', FRM_PLUGIN_NAME) ?></a> |
+                  <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&action=new&form=<?php echo $form->id; ?>" title="<?php _e('New', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?> <?php _e('Entry', FRM_PLUGIN_NAME) ?>"><?php _e('New Entry', FRM_PLUGIN_NAME) ?></a></span> |
+                  <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Entries"><?php _e('Entries', FRM_PLUGIN_NAME) ?></a></span> |
+                  <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-reports&form=<?php echo $form->id; ?>" title="<?php echo $form->name; ?> Reports"><?php _e('Reports', FRM_PLUGIN_NAME) ?></a></span> |
                   <?php } ?>
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Duplicate', FRM_PLUGIN_NAME) ?></a> |
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>&template=1" title="<?php _e('Create', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?> <?php _e('Template', FRM_PLUGIN_NAME) ?>"><?php _e('Create Template', FRM_PLUGIN_NAME) ?></a> |
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=destroy&id=<?php echo $form->id; ?>"  onclick="return confirm(<?php printf(__('Are you sure you want to delete your %1$s Form?'), $form->name) ?>);" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a>
+                  <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?>"><?php _e('Duplicate', FRM_PLUGIN_NAME) ?></a></span> |
+                  <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>&template=1" title="<?php _e('Create', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?> <?php _e('Template', FRM_PLUGIN_NAME) ?>"><?php _e('Create Template', FRM_PLUGIN_NAME) ?></a></span> |
+                  <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=destroy&id=<?php echo $form->id; ?>"  onclick="return confirm(<?php printf(__('Are you sure you want to delete your %1$s Form?'), $form->name) ?>);" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a></span>
                 </div>
               </td>
               <td><?php echo stripslashes($form->description) ?></td>

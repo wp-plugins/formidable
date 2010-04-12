@@ -12,14 +12,14 @@ class FrmFormsController{
     }
     
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', FRM_PLUGIN_NAME), __('Forms', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME, array($this,'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', FRM_PLUGIN_NAME), __('Create a Form', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME.'-new', array($this,'new_form'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', FRM_PLUGIN_NAME), __('Templates', FRM_PLUGIN_NAME), 8, FRM_PLUGIN_NAME.'-templates', array($this, 'template_list'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', FRM_PLUGIN_NAME), __('Forms', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME, array($this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', FRM_PLUGIN_NAME), __('Create a Form', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME.'-new', array($this,'new_form'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', FRM_PLUGIN_NAME), __('Templates', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME.'-templates', array($this, 'template_list'));
     }
     
     function head(){
-        $css_file = array(FRM_URL.'/css/ui-lightness/jquery-ui-1.7.2.custom.css', FRM_URL. '/css/frm_admin.css');
-        $js_file  = array(FRM_URL . '/js/formidable.js', FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
+        $css_file = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+        $js_file  = array(FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
         require(FRM_VIEWS_PATH . '/shared/head.php');
     }
     
@@ -35,7 +35,7 @@ class FrmFormsController{
     }
     
     function new_form(){
-        global $frm_app_controller, $frm_form, $frmpro_is_installed;
+        global $frm_app_controller, $frm_form, $frmpro_is_installed, $frm_ajax_url;
         
         $action = $frm_app_controller->get_param('action');
         if ($action == 'create')
@@ -269,7 +269,7 @@ class FrmFormsController{
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
-        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
+        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
         $items = $frm_entry->getAll('',' ORDER BY it.name');
         $frm_field_selection = FrmFieldsHelper::field_selection();
@@ -290,6 +290,27 @@ class FrmFormsController{
             $values[$var] = $frm_app_controller->get_param($var, $default);
 
         return $values;
+    }
+    
+    function add_default_templates($path, $default=true){
+        global $frm_form, $frm_field;
+        $templates = glob($path."/*.php");
+        
+        for($i = count($templates) - 1; $i >= 0; $i--){
+            $filename = preg_replace("#".$path."/#","",$templates[$i]);
+            $filename = str_replace('.php','', $filename);
+            $template_query = "form_key='{$filename}' and is_template='1'";
+            if($default) $template_query .= " and default_template='1'";
+            $form = $frm_form->getAll($template_query, '', ' LIMIT 1');
+            
+            $values = FrmFormsHelper::setup_new_vars();
+            $values['form_key'] = $filename;
+            $values['is_template'] = 1;
+            $values['status'] = 'published';
+            if($default) $values['default_template'] = 1;
+            
+            require_once($templates[$i]);
+        }
     }
 
     function route(){

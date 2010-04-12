@@ -22,6 +22,7 @@ class FrmForm{
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
     $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value; 
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : $frm_settings->success_msg;
+    $options['show_form'] = isset($values['options']['show_form']) ? 1 : 0;
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
     $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
     $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
@@ -87,6 +88,7 @@ class FrmForm{
         $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
         $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value; 
         $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : $frm_settings->success_msg;
+        $options['show_form'] = isset($values['options']['show_form']) ? 1 : 0;
         $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
         $options['custom_style'] = isset($values['options']['custom_style']) ? 1 : 0;
         $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
@@ -206,7 +208,7 @@ class FrmForm{
               $table_name = $this->table_name;
           $query = "SELECT * FROM $table_name WHERE id='$id'";
       }else
-          $query = 'SELECT * FROM ' . $this->table_name . ' WHERE form_key="' . $id . '";';
+          $query = "SELECT * FROM $this->table_name WHERE form_key='$id'";
       return $wpdb->get_row($query);
   }
 
@@ -221,7 +223,6 @@ class FrmForm{
   }
 
   function validate( $values ){
-      global $wpcom_api_key;
       $errors = array();
 
       /*if( $values['form_key'] == null or $values['form_key'] == '' ){

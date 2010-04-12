@@ -19,10 +19,11 @@ class FrmEntriesHelper{
               else
                   $new_value = ($_POST and isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $default;
                   
-              if ($field->type != 'checkbox')
-                $new_value = apply_filters('frm_get_default_value', stripslashes_deep($new_value));
+              $new_value = stripslashes_deep(maybe_unserialize($new_value));
+              if (!is_array($new_value))
+                $new_value = apply_filters('frm_get_default_value', $new_value, $field);
                 
-              $new_value = str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($new_value)));
+              $new_value = str_replace('"', '&quot;', $new_value);
                 
               $field_array = array('id' => $field->id,
                     'value' => $new_value,
@@ -85,13 +86,13 @@ class FrmEntriesHelper{
         $values['form_id'] = $record->form_id;
         return apply_filters('frm_setup_edit_entry_vars', $values);
     }
-    
-    function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='' ){
+
+    function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
         global $frm_app_controller, $frm_entry;
 
         $entries = $frm_entry->getAll("it.form_id=".$form_id,' ORDER BY name');
         ?>
-        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown">
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>
             <option value=""><?php echo $blank_label; ?></option>
             <?php } ?>
@@ -100,6 +101,10 @@ class FrmEntriesHelper{
             <?php } ?>
         </select>
         <?php
+    }
+    
+    function enqueue_scripts($params){
+        do_action('frm_enqueue_form_scripts', $params);
     }
 }
 

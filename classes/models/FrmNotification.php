@@ -5,6 +5,7 @@ class FrmNotification{
     }
     
     function entry_created($entry_id){
+        if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
         global $frm_blogurl, $frm_form, $frm_entry, $frm_entry_meta;
 
         $frm_blogname = get_option('blogname');
@@ -18,7 +19,7 @@ class FrmNotification{
             return;
         $to_emails = explode(',', $to_email);
         
-        $from_email = '';
+        $reply_to = '';
             
         $opener = sprintf(__('%1$s form has been submitted on %2$s.', FRM_PLUGIN_NAME), $form->name, $frm_blogname) ."\r\n\r\n";
         
@@ -29,13 +30,13 @@ class FrmNotification{
                 $val = implode(', ', $val);
             
             $entry_data .= $value->field_name . ': ' . $val . "\r\n\r\n";
-            if ($from_email == '' and is_email($val))
-                $from_email = $val;
+            if ($reply_to == '' and is_email($val))
+                $reply_to = $val;
         }
           
         $data = unserialize($entry->description);  
         $user_data = __('User Information', FRM_PLUGIN_NAME) ."\r\n";
-        $user_data .= __('IP Address', FRM_PLUGIN_NAME) . ": ". $data['ip'] ."\r\n";
+        $user_data .= __('IP Address', FRM_PLUGIN_NAME) . ": ". $entry->ip ."\r\n";
         $user_data .= __('User-Agent (Browser/OS)', FRM_PLUGIN_NAME) . ": ". $data['browser']."\r\n";
         $user_data .= __('Referrer', FRM_PLUGIN_NAME) . ": ". $data['referrer']."\r\n";
 
@@ -44,47 +45,27 @@ class FrmNotification{
 
         if(is_array($to_emails)){
             foreach($to_emails as $to_email)
-                $this->send_notification_email(trim($to_email), $subject, $mail_body, $from_email);
+                $this->send_notification_email(trim($to_email), $subject, $mail_body, $reply_to);
         }else
-            $this->send_notification_email($to_email, $subject, $mail_body, $from_email);
+            $this->send_notification_email($to_email, $subject, $mail_body, $reply_to);
     }
   
-    function send_notification_email($to_email, $subject, $message, $from_email=''){
-        $from_name     = get_option('blogname'); //senders name
-        $from_email    = ($from_email == '') ? get_option('admin_email') : $from_email; //senders e-mail address
-        $recipient     = $to_email; //recipient
-        $header        = "From: {$from_email}\r\n"; //optional headerfields
-        $subject       = html_entity_decode(strip_tags(stripslashes($subject)));
-        $message       = html_entity_decode(strip_tags(stripslashes($message)));
-        $signature     = '';//$this->get_mail_signature();
+    function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true){
+        $content_type   = ($plain_text) ? 'text/plain' : 'text/html';
+        $reply_to_name  = ($reply_to_name == '') ? get_option('blogname') : $reply_to_name; //senders name
+        $reply_to       = ($reply_to == '') ? get_option('admin_email') : $reply_to; //senders e-mail address
+        $recipient      = $to_email; //recipient
+        $header         = "From: {$reply_to_name} <{$reply_to}>\r\n Reply-To: {$reply_to_name} <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
+        $subject        = html_entity_decode(strip_tags(stripslashes($subject)));
+        $message        = stripslashes($message);
+        if($plain_text)
+            $message    = html_entity_decode(strip_tags($message));
 
-        //$to_email      = $user->email;
-        //$to_name       = $user->full_name;
-        //$full_to_email = "{$to_name} <{$to_email}>";
-
-        if (!wp_mail($recipient, $subject, $message.$signature, $header)){
-            $header .= "Reply-To: {$from_email}\r\n Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\r\n";
+        if (!wp_mail($recipient, $subject, $message, $header))
             mail($recipient, $subject, $message, $header);
-        }
 
-        do_action('frm_notification', $recipient, $subject, $message.$signature);
+        do_action('frm_notification', $recipient, $subject, $message);
     }
-    
-    function get_mail_signature(){
-        $thanks              = __('Thanks!', FRM_PLUGIN_NAME);
-        $team                = sprintf(__('%s Team', FRM_PLUGIN_NAME), get_option('blogname'));
-        //$manage_subscription = sprintf(__('If you want to stop future emails like this from coming to you, please modify your form settings.', FRM_PLUGIN_NAME));
 
-        $signature =<<<MAIL_SIGNATURE
-
-
-{$thanks}
-
-{$team}
-
-MAIL_SIGNATURE;
-
-        return $signature;
-    }
 }
 ?>

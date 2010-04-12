@@ -6,7 +6,7 @@ jQuery(document).ready(function($){
         $('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
     });
     
-    $('#frm_form_editor_container #frm_field_id_<?php echo $field['id']; ?> .ui-accordion-header').addClass('ui-corner-all').spinDown();
+    $('#frm_form_editor_container #frm_field_id_<?php echo $field['id']; ?> .theme-group-header').addClass('corner-all').spinDown();
 
     jQuery('#frm_field_id_<?php echo $field['id']; ?> .frm_single_option').hover(
       function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_spacer").hide();},

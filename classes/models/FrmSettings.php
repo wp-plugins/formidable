@@ -10,6 +10,7 @@ class FrmSettings{
     var $success_msg;
     var $failed_msg;
     var $submit_value;
+    var $login_msg;
     
     var $email_to;
 
@@ -29,9 +30,17 @@ class FrmSettings{
         if(!isset($this->custom_style))
             $this->custom_style = true;
             
-        $this->success_msg = __('Your responses were successfully submitted. Thank you!', FRM_PLUGIN_NAME);
-        $this->failed_msg = __('We\'re sorry. There was an error processing your responses.', FRM_PLUGIN_NAME);
-        $this->submit_value = __('Submit', FRM_PLUGIN_NAME);
+        if(!isset($this->success_msg))
+            $this->success_msg = __('Your responses were successfully submitted. Thank you!', FRM_PLUGIN_NAME);
+        
+        if(!isset($this->failed_msg))
+            $this->failed_msg = __('We\'re sorry. There was an error processing your responses.', FRM_PLUGIN_NAME);
+        
+        if(!isset($this->submit_value))
+            $this->submit_value = __('Submit', FRM_PLUGIN_NAME);
+        
+        if(!isset($this->login_msg))    
+            $this->login_msg = __('You must log in', FRM_PLUGIN_NAME);
         
         $this->email_to = get_option('admin_email');
     }
@@ -47,6 +56,11 @@ class FrmSettings{
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
         $this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
+        
+        $this->success_msg = isset($params['frm_success_msg']) ? $params['frm_success_msg'] : __('Your responses were successfully submitted. Thank you!', 'formidable');
+        $this->failed_msg = isset($params['frm_failed_msg']) ? $params['frm_failed_msg'] : __('We\'re sorry. There was an error processing your responses.', 'formidable');
+        $this->submit_value = isset($params['frm_submit_value']) ? $params['frm_submit_value'] : __('Submit', 'formidable');
+        $this->login_msg = isset($params['frm_login_msg']) ? $params['frm_login_msg'] : __('You must log in', 'formidable');
         
         do_action( 'frm_update_settings', $params );
     }

@@ -8,7 +8,7 @@ class FrmStatisticsController{
     function menu(){
         global $frmpro_is_installed;
         if(!$frmpro_is_installed)
-            add_submenu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE .' | Statistics', 'Statistics', 8, FRM_PLUGIN_TITLE.'-statistics',array($this,''));
+            add_submenu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE .' | Statistics', 'Statistics', 'administrator', FRM_PLUGIN_TITLE.'-statistics',array($this,''));
     }
     
     function list_entries(){

@@ -1,7 +1,7 @@
 <?php FrmFormsHelper::get_template_dropdown($all_templates); ?>
 
 <h3><?php _e('Default Templates', 'formidable') ?></h3>
-<table class="widefat post fixed" cellspacing="0">
+<table class="widefat post fixed" id="posts-filter" cellspacing="0">
     <thead>
     <tr>
         <th class="manage-column" width="30%"><?php _e('Name', 'formidable') ?></th>
@@ -15,16 +15,16 @@
     foreach($default_templates as $form){
 ?>
       <tr style="min-height: 60px; height: 60px;">
-          <td class="edit_item">
-               <a class="item_name" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo stripslashes($form->name); ?>" target="blank"><?php echo stripslashes($form->name); ?></a>
+          <td class="post-title">
+               <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo stripslashes($form->name); ?>" target="blank"><?php echo stripslashes($form->name); ?></a>
              <br/>
-             <div class="item_actions">
-               <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo $form->name; ?>"><?php _e('Create Form from Template', 'formidable') ?></a> |
+             <div class="row-actions">
+               <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo $form->name; ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span> |
                <?php global $frm_settings; 
                if ($frm_settings->preview_page_id > 0)
                    $url = add_query_arg('form', $form->form_key, get_permalink($frm_settings->preview_page_id));
                ?>
-               <a href="<?php echo $url ?>" title="View <?php echo stripslashes($form->name); ?>" target="blank"><?php _e('View', 'formidable') ?></a>
+               <span><a href="<?php echo $url ?>" title="View <?php echo stripslashes($form->name); ?>" target="blank"><?php _e('View', 'formidable') ?></a></span>
              </div>
            </td>
            <td><?php echo $form->description ?></td>

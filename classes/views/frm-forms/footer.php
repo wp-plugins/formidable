@@ -1,5 +1,18 @@
 <script type="text/javascript">
 jQuery(document).ready(function($){
+$(".frm_ipe_form_name").editInPlace({
+	url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+	params:"action=frm_form_name_in_place_edit&form_id=<?php echo $id; ?>",
+	value_required:"true", bg_out:'#fff'
+});
+
+$(".frm_ipe_form_desc").editInPlace({
+	url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+	params:"action=frm_form_desc_in_place_edit&form_id=<?php echo $id; ?>",
+	field_type:"textarea",textarea_rows:3,textarea_cols:60,
+	default_text:"<?php _e('(Click here to add form description or instructions)', 'formidable') ?>"
+});
+
 $(".frm_ipe_field_option").editInPlace({
     url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
     params:"action=frm_field_option_ipe",
@@ -12,20 +25,7 @@ $(".frm_ipe_field_option_select").editInPlace({
     default_text:'(Blank)'
 });
     
-$(".frm_ipe_form_name").editInPlace({
-    url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-    params:"action=frm_form_name_in_place_edit&form_id=<?php echo $id; ?>",
-    value_required:"true", bg_out:'#fff'
-});
 
-$(".frm_ipe_form_desc").editInPlace({
-    url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-    params:"action=frm_form_desc_in_place_edit&form_id=<?php echo $id; ?>",
-    field_type:"textarea",
-    textarea_rows:3,
-    textarea_cols:60,
-    default_text:"(Click here to add form description or instructions)"
-});
 $(".frm_ipe_field_label").editInPlace({
     url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
     params:"action=frm_field_name_in_place_edit",
@@ -39,7 +39,7 @@ $(".frm_ipe_field_desc").editInPlace({
     field_type:'textarea',
     textarea_rows:1
 });
-     
+
 $("#new_fields").sortable({
     cursor:'move',
     accepts:'field_type_list',
@@ -70,21 +70,7 @@ $("#new_fields").sortable({
         });
     }
 });
-
 });
-jQuery('.field_type_list > li').draggable({connectToSortable:'#new_fields',cursor:'move',helper:'clone',revert:'invalid',delay:10});
-jQuery("ul.field_type_list, .field_type_list li").disableSelection();
-
-//window.onunload = function(){jQuery.ajax({type:"POST",url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",data:"action=frm_delete_form_wo_fields&form_id=<?php echo $id; ?>"});return false;};
-
-function add_frm_field_link(form_id, field_type){
-    jQuery.ajax({
-       type:"POST",
-       url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-       data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
-       success:function(msg){jQuery('#new_fields').append(msg);}
-    });
-};
 
 function frm_mark_required(field_id, required){
     var thisid= 'req_field_' + field_id;
@@ -97,7 +83,7 @@ function frm_mark_required(field_id, required){
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
         data:"action=frm_mark_required&field="+field_id+"&required="+switch_to,
-        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required( '+field_id+',  '+switch_to+')" class="ui-icon ui-icon-star alignleft frm_required'+switch_to+'" id="'+thisid+'"></a>');}
+        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required( '+field_id+',  '+switch_to+')" class="alignleft frm_required'+switch_to+'" id="'+thisid+'"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>');}
     });
 };
 
@@ -137,12 +123,20 @@ function frm_default_blank(field_id, active){
     });
 };
 
-function frm_duplicate_field(field_id){  
+function frm_read_only(field_id, active){
+    var thisid= 'read_only_' + field_id;
+    if (active == '1'){
+        var switch_to = '0';
+        var new_class = 'frm_inactive_icon';
+    }else{
+        var switch_to = '1';
+        var new_class = '';
+    }
+    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
     jQuery.ajax({
-       type:"POST",
-       url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-       data:"action=frm_duplicate_field&field_id="+field_id,
-       success:function(msg){jQuery('#new_fields').append(msg);}
+        type:"POST",url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+        data:"action=frm_read_only&field="+field_id+"&active="+switch_to,
+        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_read_only('+field_id+', '+switch_to+')" class="'+new_class +' frm-show-hover" id="'+thisid+'"><img src="<?php echo FRM_IMAGES_URL?>/readonly.png"></a>');}
     });
 };
 
@@ -152,28 +146,9 @@ function frm_delete_field(field_id){
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
         data:"action=frm_delete_field&field_id="+field_id,
-        success:function(msg){
-            jQuery('#new_fields').append(msg);
-            jQuery("#frm_field_id_"+field_id).hide('highlight',{},500, setTimeout(function(){ jQuery("#frm_delete_field"+field_id+":hidden").removeAttr('style').hide().fadeIn(); }, 1000));
-        }
+        success:function(msg){jQuery("#frm_field_id_"+field_id).fadeOut("slow");}
     });
     }
 };
 
-function frm_add_field_option(field_id){
-    jQuery.ajax({
-        type:"POST",
-        url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-        data:"action=frm_add_field_option&field_id="+field_id,
-        success:function(msg){jQuery('#frm_add_field_'+field_id).before(msg);}
-    });
-};
-
-function frm_delete_field_option(field_id, opt_key){
-    jQuery.ajax({
-        type:"POST",url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
-        data:"action=frm_delete_field_option&field_id="+field_id+"&opt_key="+opt_key,
-        success:function(msg){ jQuery('#frm_delete_field_'+field_id+'-'+opt_key+'_container').hide('highlight');}
-    });
-};
 </script>
