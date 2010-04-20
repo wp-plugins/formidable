@@ -60,6 +60,7 @@ http://formidablepro.com
 * Added the option of showing the form with the success message or not
 * Added settings options for default messages
 * PRO: Added auto responder and made the notification email customizable
+* PRO: Added options to redirect or render content from another page
 * PRO: Added option to only allow only submission per user, IP, or cookie
 * PRO: Added option to export a custom template as a PHP file so it can be used on other sites
 * PRO: Added option to specify alternate folder from which to import templates
@@ -67,7 +68,7 @@ http://formidablepro.com
 * PRO: Added auto increment default value [auto_id start=1]
 * PRO: Added a field width option to the sidebar widget
 * PRO: Added a rich text editor to the custom display page
-* PRO: Added and edit link shortcode for use in custom displays [editllink]
+* PRO: Added an edit link shortcode for use in custom displays [editlink]
 * PRO: Added a drop-down select to insert the field shortcodes for custom displays
 * PRO: Added year range option to date fields
 * PRO: Fixed bug causing collapsed section to open and immediately close if there are multiple forms on the same page
@@ -75,6 +76,8 @@ http://formidablepro.com
 * PRO: Added styling options: disable submit button styling, field border style and thickness, form border color and thickness, submit button border and background image
 * PRO: Added read-only fields with option to enable all fields in the shortcode [formidable id=x readonly=disabled]
 * PRO: Added entry_id option to form shortcode [formidable id=x entry_id=x]. The entry_id can either be the number of the entry id or use "last" to get the last entry.
+* PRO: Added taxonomy support with a tags field
+* PRO: Added "where" options to custom displays so only specified entries will be shown.
 
 = 1.02.01 =
 * Emailer now works for everyone! (hopefully)

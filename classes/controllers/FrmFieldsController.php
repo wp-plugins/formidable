@@ -40,7 +40,7 @@ class FrmFieldsController{
     function edit_name(){
         global $frm_field;
         $id = str_replace('field_', '', $_POST['element_id']);
-        $values = array('name' => $_POST['update_value']);
+        $values = array('name' => trim($_POST['update_value']));
         if ($_POST['original_html'] == 'Untitled')
             $values['field_key'] = $_POST['update_value'];
         $form = $frm_field->update($id, $values);

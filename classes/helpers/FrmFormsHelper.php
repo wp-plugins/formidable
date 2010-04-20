@@ -57,6 +57,7 @@ class FrmFormsHelper{
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : $frm_settings->email_to;
         $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : $frm_settings->submit_value;
+        $values['success_action'] = ($_POST and isset($_POST['options']['success_action'])) ? $_POST['options']['success_action'] : 'message';
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : $frm_settings->success_msg;
         $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? 1 : 0;
         $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;

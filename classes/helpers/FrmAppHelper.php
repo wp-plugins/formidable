@@ -127,7 +127,7 @@ class FrmAppHelper{
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }
         
-        foreach (array('submit_value' => $frm_settings->submit_value, 'success_msg' => $frm_settings->success_msg, 'show_form' => 1) as $opt => $default){
+        foreach (array('submit_value' => $frm_settings->submit_value, 'success_action' => 'message', 'success_msg' => $frm_settings->success_msg, 'show_form' => 1) as $opt => $default){
             if (!isset($values[$opt]) or $values[$opt] == '')
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }

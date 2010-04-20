@@ -86,6 +86,8 @@ li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-
 }
 #new_fields li.ui-state-default.selected{background:#cfddec; border:1px dotted #9ebad8;}
 
+.success_action_box{display:none;}
+
 .frm_shortcode_select optgroup option{margin-left:1em;}
 .frm_shortcode_select optgroup{padding-top:5px;}
 .frm_shortcode_select .frm_subopt{margin-left:2em;}

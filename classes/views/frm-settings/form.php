@@ -30,7 +30,7 @@
                 <td><?php _e('Default Messages', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override the success message and submit button settings on individual forms.', FRM_PLUGIN_NAME) ?>" /></td>
                 <td>
                     <?php _e('Success Message', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('The default message seen after a form is submitted.', FRM_PLUGIN_NAME) ?>" /><br/>
-                    <textarea id="frm_success_msg" name="frm_success_msg" class="frm_elastic_text"><?php echo $frm_settings->success_msg ?></textarea>
+                    <textarea id="frm_success_msg" name="frm_success_msg" class="frm_elastic_text"><?php echo stripslashes($frm_settings->success_msg) ?></textarea>
                 </td>
             </tr>
             
@@ -38,7 +38,7 @@
                 <td></td>
                 <td>        
                     <?php _e('Failed Message', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong. You will likely never see this error.', FRM_PLUGIN_NAME) ?>" /><br/>
-                    <textarea id="frm_failed_msg" name="frm_failed_msg" class="frm_elastic_text"><?php echo $frm_settings->failed_msg ?></textarea>
+                    <textarea id="frm_failed_msg" name="frm_failed_msg" class="frm_elastic_text"><?php echo stripslashes($frm_settings->failed_msg) ?></textarea>
                 </td>
             </tr>
             
@@ -46,7 +46,7 @@
                 <td></td>
                 <td>        
                     <?php _e('Login Message', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', FRM_PLUGIN_NAME) ?>" /><br/>
-                    <textarea id="frm_login_msg" name="frm_login_msg" class="frm_elastic_text"><?php echo $frm_settings->login_msg ?></textarea>
+                    <textarea id="frm_login_msg" name="frm_login_msg" class="frm_elastic_text"><?php echo stripslashes($frm_settings->login_msg) ?></textarea>
                 </td>
             </tr>
             

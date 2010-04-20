@@ -4,6 +4,23 @@ $(".frm_elastic_text").elastic();
 window.onscroll = document.documentElement.onscroll = frmSetMenuOffset;
 frmSetMenuOffset();
 
+if ($("input[name='options[success_action]']:checked").val() == 'redirect')
+    $('.success_action_redirect_box.success_action_box').show();
+else if ($("input[name='options[success_action]']:checked").val() == 'page')
+	$('.success_action_page_box.success_action_box').show();
+else
+	$('.success_action_message_box.success_action_box').show();
+              
+$("input[name='options[success_action]']").change(function(){
+	$('.success_action_box').hide();
+    if ($(this).val() == 'redirect')
+        $('.success_action_redirect_box.success_action_box').show();
+    else if ($(this).val() == 'page')
+        $('.success_action_page_box.success_action_box').show();
+	else
+		$('.success_action_message_box.success_action_box').show();
+});
+
 jQuery('.select-all-item-action-checkboxes').change(function(){
 if (jQuery(this).attr("checked")){
 jQuery(".item-action-checkbox").attr("checked","checked");

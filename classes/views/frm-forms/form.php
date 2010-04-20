@@ -36,17 +36,25 @@ if (isset($values['fields']) && !empty($values['fields'])){
                     </tr>
 
                     <tr><td><label><?php _e('Styling', FRM_PLUGIN_NAME) ?>:</label></td>
-                        <td><input type="checkbox" name="options[custom_style]" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
-                        <?php _e('Use Formidable styling for this form', 'formidable') ?></td>
+                        <td><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
+                        <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                     </tr> 
 
                     <tr><td><label><?php _e('Submit Button Text', FRM_PLUGIN_NAME) ?>:</label></td>
                         <td><input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" /></td>
                     </tr>
-
-                    <tr><td><label><?php _e('Confirmation Message', FRM_PLUGIN_NAME) ?>:</label></td>
+                    
+                    <tr><td valign="top"><label><?php _e('Action After Form Submission', FRM_PLUGIN_NAME) ?>:</label></td>
+                        <td>
+                            <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?>/> <label for="success_action_message"><?php _e('Display a Message', FRM_PLUGIN_NAME) ?></label>
+                            <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page"><?php _e('Display content from another page', FRM_PLUGIN_NAME) ?></label>
+                            <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect"><?php _e('Redirect', FRM_PLUGIN_NAME) ?></label>
+                        </td>
+                    </tr>
+                    
+                    <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', FRM_PLUGIN_NAME) ?>:</label></td>
                         <td><textarea name="options[success_msg]" cols="50" class="frm_elastic_text"><?php echo $values['success_msg']; ?></textarea> <br/>
-                        <input type="checkbox" name="options[show_form]" value="1" <?php checked($values['show_form'], 1) ?>> <?php _e('Show the form with the success message.', 'formidable')?>
+                        <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                         <td>
                     </tr>
 

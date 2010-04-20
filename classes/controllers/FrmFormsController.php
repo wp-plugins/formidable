@@ -80,7 +80,7 @@ class FrmFormsController{
     
     function edit_name(){
         global $frm_form;
-        $values = array('name' => $_POST['update_value']);
+        $values = array('name' => trim($_POST['update_value']));
         $form = $frm_form->update($_POST['form_id'], $values);
         echo stripslashes($_POST['update_value']);  
         die();
