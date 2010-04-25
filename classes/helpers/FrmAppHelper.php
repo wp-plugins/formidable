@@ -29,14 +29,14 @@ class FrmAppHelper{
     
     function get_unique_key($name='', $table_name, $column, $id = 0,$num_chars = 6){
         global $wpdb;
-    
+
         if ($name == ''){
             $max_slug_value = pow(36,$num_chars);
             $min_slug_value = 37; // we want to have at least 2 characters in the slug
             $key = base_convert( rand($min_slug_value,$max_slug_value), 10, 36 );
         }else
             $key = sanitize_title_with_dashes($name);
-        
+
         if (is_numeric($key) or in_array($key, array('id','key','created-at', 'detaillink', 'editlink', 'siteurl', 'evenodd')))
             $key = $key .'a';
             
@@ -79,7 +79,7 @@ class FrmAppHelper{
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
-                    
+                  
                 $field_array = array('id' => $field->id,
                       'value' => str_replace('"', '&quot;', $new_value),
                       'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
@@ -91,7 +91,7 @@ class FrmAppHelper{
                       'field_key' => $field->field_key,
                       'field_order' => $field->field_order,
                       'form_id' => $field->form_id);
- 
+                
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == '')

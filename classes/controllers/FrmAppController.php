@@ -74,22 +74,25 @@ class FrmAppController{
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'));
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css');
+            wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
             add_thickbox();
         }
     }
     
     function front_head(){
+        global $frm_settings;
+        
         if (IS_WPMU){
             $db_version = 1.0; // this is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             if ($db_version != $old_db_version)
                 $this->install();
         }
-        if (!is_admin()){
+        
+        if(!is_admin() and !$frm_settings->custom_stylesheet){
             $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
             wp_enqueue_style('frm-forms', $css);
         }
-        wp_enqueue_script( 'jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery') );
     }
   
     function install(){

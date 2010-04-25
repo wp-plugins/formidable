@@ -9,7 +9,7 @@
         <?php if (!$form->is_template){ ?>
         <p class="submit">
         <?php if (!isset($submit)) $submit = $frm_settings->submit_value;?>
-        <input type="submit" name="<?php echo $submit ?>" value="<?php echo $submit ?>" />
+        <input type="submit" name="<?php echo $submit ?>" value="<?php echo $submit ?>" <?php do_action('frm_submit_button', $form, $form_action); ?>/>
         </p>
         <?php } ?>
 

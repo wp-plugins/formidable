@@ -74,16 +74,19 @@ $("#new_fields").sortable({
 
 function frm_mark_required(field_id, required){
     var thisid= 'req_field_' + field_id;
-    if (required == '0')
+    if (required == '0'){
         var switch_to = '1';
-    else
+        var atitle = 'Click to Mark as Not Required';
+    }else{
         var switch_to = '0';
+        var atitle = 'Click to Mark as Required';
+    }
     jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" class="ui-icon alignleft" src="<?php echo FRM_IMAGES_URL; ?>/required_loader.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
     jQuery.ajax({
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
         data:"action=frm_mark_required&field="+field_id+"&required="+switch_to,
-        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required( '+field_id+',  '+switch_to+')" class="alignleft frm_required'+switch_to+'" id="'+thisid+'"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>');}
+        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+')" class="alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>');}
     });
 };
 

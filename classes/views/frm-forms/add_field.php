@@ -7,7 +7,7 @@
     
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>
+        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_pos_<?php echo $field['label']; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
@@ -17,8 +17,8 @@
 <?php }else if ($field['type'] == 'textarea'){ ?>
     <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' cols="'.$field['size'].'"' ?> rows="<?php echo $field['max']; ?>"><?php echo $field['default_value']; ?></textarea> 
     
-<?php }else if ($field['type'] == 'radio' || $field['type'] == 'checkbox'){
-        $field['value'] = maybe_unserialize($field['default_value']); ?>
+<?php }else if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
+        $field['default_value'] = maybe_unserialize($field['default_value']); ?>
         <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   ?>
 
         <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
@@ -37,7 +37,7 @@
     <div class="frm-show-click">
         <?php foreach ($field['options'] as $opt_key => $opt) require(FRM_VIEWS_PATH.'/frm-fields/single-option.php'); ?>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
-            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>, <?php echo $frm_ajax_url ?>)" class="frm_orange"><?php _e('Add an Option', FRM_PLUGIN_NAME) ?></a>
+            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>, '<?php echo $frm_ajax_url ?>')" class="frm_orange">+ <?php _e('Add an Option', FRM_PLUGIN_NAME) ?></a>
             <?php do_action('frm_add_multiple_opts', $field); ?>
         </div>
     </div>

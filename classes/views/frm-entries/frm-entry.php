@@ -27,7 +27,7 @@ if($params['action'] == 'create' && $params['form_id'] == $form->id){
             $created = $frm_entry->create( $_POST );
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form_options);
             if (!$created or $conf_method == 'message'){
-                echo '<div class="frm_message">hello '.($created) ? $saved_message : $frm_settings->failed_msg.'</div>';
+                echo '<div class="frm_message">'.(($created) ? $saved_message : $frm_settings->failed_msg).'</div>';
                 if (!isset($form_options['show_form']) or $form_options['show_form'])
                     require('new.php');
             }else

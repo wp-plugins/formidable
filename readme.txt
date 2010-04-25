@@ -3,7 +3,7 @@ Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, forms, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback, anti-spam
 Requires at least: 2.8
-Tested up to: 2.9.2
+Tested up to: 3.0
 Stable tag: 1.02.01
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
@@ -25,7 +25,7 @@ http://formidablepro.com
 * Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow... and documentation too)
 * Create forms from existing templates or add your own. A contact form template is included.
 * Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
-* Select an email address to send form responses under "Advanced Form Options"
+* Select an email address to send form responses under "Form Notification Options"
 * Input default values into form fields with the option to clear when clicked
 * Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
@@ -58,7 +58,7 @@ http://formidablepro.com
 == Changelog ==
 = 1.03.0 =
 * Added the option of showing the form with the success message or not
-* Added settings options for default messages
+* Added settings options for default messages and option to exclude the stylesheet from your header
 * PRO: Added auto responder and made the notification email customizable
 * PRO: Added options to redirect or render content from another page
 * PRO: Added option to only allow only submission per user, IP, or cookie
@@ -78,6 +78,7 @@ http://formidablepro.com
 * PRO: Added entry_id option to form shortcode [formidable id=x entry_id=x]. The entry_id can either be the number of the entry id or use "last" to get the last entry.
 * PRO: Added taxonomy support with a tags field
 * PRO: Added "where" options to custom displays so only specified entries will be shown.
+* PRO: Fixed bug preventing file upload fields from accurately requiring a file
 
 = 1.02.01 =
 * Emailer now works for everyone! (hopefully)

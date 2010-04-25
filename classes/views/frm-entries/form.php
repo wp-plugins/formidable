@@ -34,6 +34,8 @@
         <label><?php _e('Entry Key', FRM_PLUGIN_NAME) ?></label>   
         <input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
         </div>
+    <?php }else{ ?>
+        <input type="hidden" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
     <?php } ?>
     </div>
     </fieldset>

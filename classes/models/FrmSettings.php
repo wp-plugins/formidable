@@ -6,6 +6,8 @@ class FrmSettings{
     var $lock_keys;
     
     var $custom_style;
+    var $custom_stylesheet;
+    var $accordion_js;
     
     var $success_msg;
     var $failed_msg;
@@ -29,6 +31,10 @@ class FrmSettings{
         
         if(!isset($this->custom_style))
             $this->custom_style = true;
+        if(!isset($this->custom_stylesheet))
+            $this->custom_stylesheet = false;
+        if(!isset($this->accordion_js))
+            $this->accordion_js = false;
             
         if(!isset($this->success_msg))
             $this->success_msg = __('Your responses were successfully submitted. Thank you!', FRM_PLUGIN_NAME);
@@ -58,7 +64,10 @@ class FrmSettings{
     function update($params){
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
+        
         $this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
+        $this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;
+        $this->accordion_js = isset($params['frm_accordion_js']) ? 1 : 0;
         
         $this->success_msg = isset($params['frm_success_msg']) ? $params['frm_success_msg'] : __('Your responses were successfully submitted. Thank you!', 'formidable');
         $this->failed_msg = isset($params['frm_failed_msg']) ? $params['frm_failed_msg'] : __('We\'re sorry. There was an error processing your responses.', 'formidable');

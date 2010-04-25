@@ -23,7 +23,7 @@
       }else if ($field['type'] == 'checkbox'){
         $checked_values = $field['value'];
         foreach ($field['options'] as $opt){
-            $checked = ((!is_array($checked_values) && $checked_values == $opt ) || (is_array($checked_values) && in_array($opt, $checked_values)))?' checked="true"':''; ?>
+            $checked = ((!is_array($checked_values) && $checked_values == $opt ) || (is_array($checked_values) && in_array($opt, $checked_values)))?' checked="checked"':''; ?>
             <div class="frm_checkbox"><input type="checkbox" name="<?php echo $field_name ?>[]" id="item_meta_val<?php echo sanitize_title_with_dashes($opt) ?>" value="<?php echo $opt ?>" <?php echo $checked ?> /><label for="item_meta_val<?php echo sanitize_title_with_dashes($opt) ?>"><?php echo $opt ?></label></div>
         <?php
         }

@@ -19,15 +19,7 @@
             </tr>
             
             <tr class="form-field">
-                <td><?php _e('Styling', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override this setting on individual forms.', FRM_PLUGIN_NAME) ?>" /></td>
-                <td>
-                    <input type="checkbox" value="1" id="frm_custom_style" name="frm_custom_style" <?php checked($frm_settings->custom_style, 1) ?>>
-                    <?php _e('Use Formidable styling settings for my forms', FRM_PLUGIN_NAME); ?>
-                </td>
-            </tr>
-            
-            <tr class="form-field">
-                <td><?php _e('Default Messages', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override the success message and submit button settings on individual forms.', FRM_PLUGIN_NAME) ?>" /></td>
+                <td valign="top"><?php _e('Default Messages', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override the success message and submit button settings on individual forms.', FRM_PLUGIN_NAME) ?>" /></td>
                 <td>
                     <?php _e('Success Message', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('The default message seen after a form is submitted.', FRM_PLUGIN_NAME) ?>" /><br/>
                     <textarea id="frm_success_msg" name="frm_success_msg" class="frm_elastic_text"><?php echo stripslashes($frm_settings->success_msg) ?></textarea>
@@ -57,14 +49,26 @@
                     <input type="text" value="<?php echo $frm_settings->submit_value ?>" id="frm_submit_value" name="frm_submit_value">
                 </td>
             </tr>
-        
+            
+            
+            <tr class="form-field">
+                <td valign="top"><?php _e('Stylesheet', FRM_PLUGIN_NAME); ?>: </td>
+                <td>
+                    <p><input type="checkbox" value="1" id="frm_custom_style" name="frm_custom_style" <?php checked($frm_settings->custom_style, 1) ?>>
+                    <?php _e('Use Formidable styling settings for my forms', FRM_PLUGIN_NAME); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override this setting on individual forms.', FRM_PLUGIN_NAME) ?>" />
+                    </p>
+                    
+                    <p><input type="checkbox" value="1" id="frm_custom_stylesheet" name="frm_custom_stylesheet" <?php checked($frm_settings->custom_stylesheet, 1) ?>>
+                    <?php _e('Exclude the Formidable stylesheet from ALL forms', FRM_PLUGIN_NAME); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You cannot override this setting on individual forms, so only check this box if you will not be using the stylesheet on any forms.', FRM_PLUGIN_NAME) ?>" /></p>
+                </td>
+            </tr>
             
             <?php do_action('frm_settings_form', $frm_settings); ?>
             
         </table>
 
         <p class="submit">
-        <input type="submit" name="Submit" value="<?php _e('Update Options', FRM_PLUGIN_NAME) ?>" />
+        <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', FRM_PLUGIN_NAME) ?>" />
         </p>
 
     </form>
