@@ -79,7 +79,7 @@ class FrmAppController{
     
     function front_head(){
         if (IS_WPMU){
-            $db_version = 1.0; // this is the version of the database we're moving to
+            $db_version = 1.01; // this is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             if ($db_version != $old_db_version)
                 $this->install();
