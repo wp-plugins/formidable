@@ -56,6 +56,9 @@ http://formidablepro.com
 [Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
 
 == Changelog ==
+= 1.03.01 =
+* PRO: Fix auto-update for WP 2.9
+
 = 1.03.0 =
 * Added the option of showing the form with the success message or not
 * Added settings options for default messages and option to exclude the stylesheet from your header

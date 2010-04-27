@@ -270,6 +270,8 @@ class FrmUpdate{
         $force=true;
 
       $plugin_updates = (function_exists('get_site_transient'))?get_site_transient("update_plugins"):get_transient("update_plugins"); 
+      if(!$plugin_updates and function_exists('get_transient'))
+        $plugin_updates = get_transient("update_plugins");
 
       $curr_version = $this->get_current_version();
       $installed_version = $plugin_updates->checked[$this->plugin_name];
@@ -298,13 +300,13 @@ class FrmUpdate{
         set_site_transient("update_plugins", $plugin_updates); // for WordPress 2.9+
       }
 
-      if( !$already_set_option ){
+      if( function_exists('set_transient') and and !$already_set_option ){
         $already_set_option = true;
         set_transient("update_plugins", $plugin_updates); // for WordPress 2.8
       }
     }
   }
-
+  
   function check_for_update_now(){
     $this->queue_update();
   }
