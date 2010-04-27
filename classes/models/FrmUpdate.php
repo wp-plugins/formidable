@@ -300,7 +300,7 @@ class FrmUpdate{
         set_site_transient("update_plugins", $plugin_updates); // for WordPress 2.9+
       }
 
-      if( function_exists('set_transient') and and !$already_set_option ){
+      if( function_exists('set_transient') and !$already_set_option ){
         $already_set_option = true;
         set_transient("update_plugins", $plugin_updates); // for WordPress 2.8
       }
