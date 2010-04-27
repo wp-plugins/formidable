@@ -79,6 +79,7 @@ http://formidablepro.com
 * PRO: Added taxonomy support with a tags field
 * PRO: Added "where" options to custom displays so only specified entries will be shown.
 * PRO: Fixed bug preventing file upload fields from accurately requiring a file
+* PRO: Added type=collapsible to the frm-entry-links shortcode for a collapsible archive list
 
 = 1.02.01 =
 * Emailer now works for everyone! (hopefully)
