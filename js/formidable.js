@@ -98,7 +98,7 @@ function frmSetMenuOffset() {
 	var fields = jQuery('#frm_form_options .themeRoller');
 	if (!fields) return;
 	var currentOffset = document.documentElement.scrollTop || document.body.scrollTop; // body for Safari
-	var desiredOffset = 290 - currentOffset;
+	var desiredOffset = 315 - currentOffset;
 	if (desiredOffset < 10) desiredOffset = 10;
 	//if (desiredOffset != parseInt(header.style.top)) 
 		fields.attr('style', 'top:'+desiredOffset + 'px;');
@@ -126,7 +126,7 @@ function frmInsertFieldCode(element_id, variable){
 	else if(content_box[0].selectionStart){obj = content_box[0];obj.value=obj.value.substr(0,obj.selectionStart)+variable+obj.value.substr(obj.selectionEnd,obj.value.length);}
 	else{content_box.val(variable+content_box.val());}
 }
-
+/*
 delete_row = function(field_id,row){
 	jQuery(function(){
 		if (jQuery('#frm-table-' + field_id + ' tr').length == 2){ // header row and only one data row
@@ -145,7 +145,7 @@ delete_row = function(field_id,row){
 		}
 	});
 }
-/*
+
 adjust_row_numbers = function(field_id){
 	var row_num;
 	jQuery('#frm-table-' + field_id + ' tr').each(function(){
