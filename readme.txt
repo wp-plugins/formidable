@@ -1,7 +1,7 @@
 === Formidable Forms ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, form, builder, drag, drop, widget, sidebar, Post, posts, page, wordpress, plugin, template, contact, contact form, forms, captcha, email, database, save, admin, akismet, AJAX, links, javascript, jquery, theme, spam, content, image, images, poll, survey, feedback, anti-spam
+Tags: WPMU, widget, Post, plugin, template, contact, contact form, form, forms, captcha, spam, email, database, admin, AJAX, javascript, jquery, poll, survey, feedback
 Requires at least: 2.8
 Tested up to: 3.0
 Stable tag: 1.03.01
@@ -27,18 +27,8 @@ http://formidablepro.com
 * Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
 * Select an email address to send form responses under "Form Notification Options"
 * Input default values into form fields with the option to clear when clicked
-* Saves responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
+* Saves all responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
-
-= PRO Features =
-* Visual form styling editor. Want to [check it out](http://formidablepro.com/customer-service?test=1 "check it out")?
-* Additional fields which include page breaks for multiple paged forms, file uploads, section headers, rich text editor, date with calendar, email, phone, website, and a dynamic field populated with data from other entries.
-* View graphical reports for the form results (replace Google docs surveys)
-* Add, edit, search, and CSV export entries from the WordPress admin
-* Make your default values dynamic
-* Conditionally hide and show fields
-* Display your gathered data in a page, post, or widget
-
 
 == Installation ==
 1. Upload `formidable` folder to the `/wp-content/plugins/` directory
@@ -48,16 +38,36 @@ http://formidablepro.com
 5. Use shortcode [formidable id=x] in pages, posts, or text widgets. (Requires WordPress version 2.8 or higher)
 
 == Screenshots ==
-[Formidable Screenshots](http://blog.strategy11.com/formidable-wordpress-plugin/ "Formidable Screenshots")
+1. Form creation page
 
-[Formidable Pro Screenshots](http://blog.strategy11.com/formidablepro/ "Formidable Pro Screenshots")
 
 == Frequently Asked Questions ==
-[Formidable FAQs](http://blog.strategy11.com/formidable-faqs/ "Formidable FAQs")
+= Q. Why aren’t I getting any emails? =
+
+A. As of version 1.02.01, I believe any obstacles in the code have been removed. Try the following steps:
+
+   1. Double check to make sure your email address is present and correct under “Advanced Form Options” at the bottom of your form editor page
+   2. Check your SPAM box
+   3. Try a different email address.
+   4. Install WP Mail SMPT
+   5. If none of these steps fix the problem, let me know and I’ll try to help you find the bottleneck.
+
+= Q. How do I make a field required? =
+
+A. I have tried to keep the Formidable user interface as quick and simple as possible. Just click on the star next to the field you would like required.
+
+= Q. How do I edit the field name? =
+
+A. The field and form names and descriptions are all changed with in-place edit. Just click on the text you would like to change, and it will turn into a text field. Don’t forget to hit save!
+
+= Q. Why isn’t the form builder page working right after I updated? =
+
+A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+
 = 1.03.01 =
-* PRO: Fix auto-update for WP 2.9
+* PRO: Fixed auto-update for WP 2.9
 
 = 1.03.0 =
 * Added the option of showing the form with the success message or not
