@@ -12,13 +12,8 @@ Quickly and easily build forms with a simple drag-and-drop interface and in-plac
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
 
-= Upgrade to Formidable Pro =
-
-Formidable Pro is an upgrade to Formidable with more form fields, flexibility, and power. Learn more at:
-
-http://formidablepro.com
-
 = Features =
+* Saves all responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
 * Integrates with WP reCAPTCHA and Akismet for Spam control
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
@@ -27,7 +22,6 @@ http://formidablepro.com
 * Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
 * Select an email address to send form responses under "Form Notification Options"
 * Input default values into form fields with the option to clear when clicked
-* Saves all responses to the database for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
 
 == Installation ==
