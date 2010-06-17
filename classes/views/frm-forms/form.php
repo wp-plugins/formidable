@@ -44,7 +44,11 @@ if (isset($values['fields']) && !empty($values['fields'])){
                         <td><input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" /></td>
                     </tr>
                     
-                    <tr><td valign="top"><label><?php _e('Action After Form Submission', FRM_PLUGIN_NAME) ?>:</label></td>
+                    <tr><td valign="top"><label><?php _e('Action After Form Submission', FRM_PLUGIN_NAME) ?>:</label>
+                        <?php if(!$frmpro_is_installed){ ?>
+                        <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To use the second two options, you must upgrade to Formidable Pro.', FRM_PLUGIN_NAME) ?>" />
+                        <?php } ?>
+                        </td>
                         <td>
                             <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?>/> <label for="success_action_message"><?php _e('Display a Message', FRM_PLUGIN_NAME) ?></label>
                             <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page"><?php _e('Display content from another page', FRM_PLUGIN_NAME) ?></label>

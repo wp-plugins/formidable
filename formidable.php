@@ -2,11 +2,28 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.03.01
+Version: 1.03.02
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
 */
+
+/*  Copyright 2010  Stephanie Wells  (email : steph@strategy11.com)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
 
 define('FRM_PLUGIN_TITLE','Formidable');
 define('FRM_PLUGIN_NAME','formidable');
@@ -28,6 +45,9 @@ if (!defined ('IS_WPMU')){
     define('IS_WPMU', ($wpmu_version) ? 1 : 0);
 }
 
+global $frm_version;
+$frm_version = '1.03.02';
+
 global $frm_blogurl;
 global $frm_siteurl;
 global $frm_ajax_url;
@@ -47,7 +67,8 @@ if(!$frm_settings){
   update_option('frm_options',$frm_settings);
 }else
   $frm_settings->set_default_options(); // Sets defaults for unset options
-  
+
+require_once(FRM_MODELS_PATH.'/FrmDb.php');  
 require_once(FRM_MODELS_PATH.'/FrmField.php');
 require_once(FRM_MODELS_PATH.'/FrmForm.php');
 require_once(FRM_MODELS_PATH.'/FrmEntry.php');
@@ -55,6 +76,7 @@ require_once(FRM_MODELS_PATH.'/FrmEntryMeta.php');
 require_once(FRM_MODELS_PATH.'/FrmNotification.php');
 require_once(FRM_MODELS_PATH.'/FrmUpdate.php');
 
+global $frmdb;
 global $frm_field;
 global $frm_form;
 global $frm_entry;
@@ -62,6 +84,7 @@ global $frm_entry_meta;
 global $frm_notification;
 global $frm_update;
 
+$frmdb              = new FrmDb();
 $frm_field          = new FrmField();
 $frm_form           = new FrmForm();
 $frm_entry          = new FrmEntry();

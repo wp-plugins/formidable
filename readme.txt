@@ -59,6 +59,22 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.03.02 =
+* Fixed admin pagination to navigate correctly with the arrow
+* Fixed most Internet Explorer admin issues
+* PRO: Added option to only show certain fields in a shortcode [formidable id=x fields="field1,field2,field3"]
+* PRO: Added a user_id parameter to the frm-stats shortcode to get only the averages and totals for that user [frm-stats id=8 user_id=19]
+* PRO: Fixed custom display to correctly show a single entry for all users.
+* PRO: Fixed bug that prevented some of the dynamic default values from getting replaced if the was no value to replace it with
+* PRO: Fixed bug causing "Array" to be shown in the email notification if more than one check box was selected
+* PRO: Fixed "Data from Entries" check box javascript and display on entries page
+* PRO: Fixed new fields to default to position set on the Formidable settings
+* PRO: Updated country field in the User Information template
+* PRO: Fixed hidden field to not lose its value if updated from the admin
+* PRO: If using [frm-entry-links] with type=collapse, the first year and month now default to open and fixed div uneveness 
+* PRO: Corrected values when using a "Data from Entries" drop down from an image url field to show the url
+* PRO: Editable 'You have already submitted that form' message
+* Other fixes
 
 = 1.03.01 =
 * PRO: Fixed auto-update for WP 2.9

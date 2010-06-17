@@ -127,6 +127,7 @@ jQuery.fn.editInPlace = function(options) {
 			if(!editing)
 			{
 				jQuery('.inplace_field').blur();
+				jQuery(this).focus();
 				
 				editing = true;
 

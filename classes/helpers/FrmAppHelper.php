@@ -11,7 +11,7 @@ class FrmAppHelper{
         global $frm_app_controller;
         
         $field_value = $frm_app_controller->get_param($field_name);
-        $pages = get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'order_by' => 'post_title', 'order' => 'ASC'));
+        $pages = get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'orderby' => 'title', 'order' => 'ASC'));
     ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
             <option value=""></option>

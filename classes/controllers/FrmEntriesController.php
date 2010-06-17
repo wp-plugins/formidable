@@ -56,7 +56,7 @@ class FrmEntriesController{
         if ($posted_form_id == '')
             $posted_form_id = $frm_app_controller->get_param('form');
             
-        if ($form->id == $posted_form_id){
+        if ($form->id == $posted_form_id){ //if there are two forms on the same page, make sure not to submit both
             foreach ($default_values as $var => $default)
             $values[$var] = $frm_app_controller->get_param($var, $default);
         }else{

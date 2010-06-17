@@ -1,4 +1,8 @@
-<?php if($current_page > 1){ // Only show the prev page button if the current page is not the first page ?>
+<?php 
+if(!is_numeric($current_page))
+    $current_page = FrmAppController::get_param($page_param, '1');
+    
+if($current_page > 1){ // Only show the prev page button if the current page is not the first page ?>
 <a class='prev page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page - 1)); ?>">&laquo;</a> <?php 
 }
       

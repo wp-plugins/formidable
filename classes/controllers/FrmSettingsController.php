@@ -42,7 +42,7 @@ class FrmSettingsController{
     function route(){
         global $frm_app_controller;
         $action = $frm_app_controller->get_param('action');
-        if($action=='process-form')
+        if($action == 'process-form')
             return $this->process_form();
         else
             return $this->display_form();

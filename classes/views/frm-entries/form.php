@@ -37,6 +37,7 @@
     <?php }else{ ?>
         <input type="hidden" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
     <?php } ?>
+    <?php do_action('frm_entry_form', $form) ?>
     </div>
     </fieldset>
 </div>

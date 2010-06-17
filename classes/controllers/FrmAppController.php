@@ -2,8 +2,8 @@
 
 class FrmAppController{
     function FrmAppController(){
-        add_action('admin_menu', array( $this, 'menu' ));
-        add_filter( 'plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this, 'settings_link'), 10, 2 );
+        add_action('admin_menu', array( $this, 'menu' ), 1);
+        add_filter('plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this, 'settings_link'), 10, 2 );
         add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( $this,'frmpro_action_needed'));
         add_action('admin_notices', array( $this,'frmpro_get_started_headline'));
         add_filter('the_content', array( $this, 'page_route' ), 1);
@@ -66,24 +66,26 @@ class FrmAppController{
     }
     
     function admin_js(){
+        global $frm_version;
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
-        wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.1.2');
+        if(!(isset($_GET) and isset($_GET['page'])) or (isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])))
+            wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.1.2');
         if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
-            wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'));
-            wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css');
+            wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version);
+            wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
             wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
             add_thickbox();
         }
     }
     
     function front_head(){
-        global $frm_settings;
+        global $frm_settings, $frm_version;
         
         if (IS_WPMU){
-            $db_version = 1.0; // this is the version of the database we're moving to
+            $db_version = 1.03; // this is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             if ($db_version != $old_db_version)
                 $this->install();
@@ -91,121 +93,13 @@ class FrmAppController{
         
         if(!is_admin() and !$frm_settings->custom_stylesheet){
             $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
-            wp_enqueue_style('frm-forms', $css);
+            wp_enqueue_style('frm-forms', $css, array(), $frm_version);
         }
     }
   
     function install(){
-      global $wpdb, $frm_form, $frm_field, $frm_app_helper;
-      $db_version = 1.03; // this is the version of the database we're moving to
-      $old_db_version = get_option('frm_db_version');
-
-      if ($db_version != $old_db_version){
-          $fields_table     = $wpdb->prefix . "frm_fields";
-          $forms_table      = $wpdb->prefix . "frm_forms";
-          $items_table      = $wpdb->prefix . "frm_items";
-          $item_metas_table = $wpdb->prefix . "frm_item_metas";
-          
-          require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      
-      $charset_collate = '';
-      if( $wpdb->has_cap( 'collation' ) ){
-          if( !empty($wpdb->charset) )
-            $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-          if( !empty($wpdb->collate) )
-            $charset_collate .= " COLLATE $wpdb->collate";
-      }
-
-      /* Create/Upgrade Fields Table */
-      $sql = "CREATE TABLE {$fields_table} (
-                id int(11) NOT NULL auto_increment,
-                field_key varchar(255) default NULL,
-                name varchar(255) default NULL,
-                description text default NULL,
-                type text default NULL,
-                default_value longtext default NULL,
-                options longtext default NULL,
-                field_order int(11) default 0,
-                required int(1) default NULL,
-                field_options longtext default NULL,
-                form_id int(11) default NULL,
-                created_at datetime NOT NULL,
-                PRIMARY KEY  (id),
-                KEY form_id (form_id)
-              ) {$charset_collate};";
-
-      dbDelta($sql);
-
-      /* Create/Upgrade Forms Table */
-      $sql = "CREATE TABLE {$forms_table} (
-                id int(11) NOT NULL auto_increment,
-                form_key varchar(255) default NULL,
-                name varchar(255) default NULL,
-                description text default NULL,
-                logged_in boolean default NULL,
-                editable boolean default NULL,
-                is_template boolean default 0,
-                default_template boolean default 0,
-                status varchar(255) default NULL,
-                prli_link_id int(11) default NULL,
-                options longtext default NULL,
-                notifications longtext default NULL,
-                created_at datetime NOT NULL,
-                PRIMARY KEY  (id)
-              ) {$charset_collate};";
-
-      dbDelta($sql);
-
-      /* Create/Upgrade Items Table */
-      $sql = "CREATE TABLE {$items_table} (
-                id int(11) NOT NULL auto_increment,
-                item_key varchar(255) default NULL,
-                name varchar(255) default NULL,
-                description text default NULL,
-                ip text default NULL,
-                form_id int(11) default NULL,
-                created_at datetime NOT NULL,
-                PRIMARY KEY  (id),
-                KEY form_id (form_id)
-              ) {$charset_collate};";
-
-      dbDelta($sql);
-
-      /* Create/Upgrade Meta Table */
-      $sql = "CREATE TABLE {$item_metas_table} (
-                id int(11) NOT NULL auto_increment,
-                meta_key varchar(255) default NULL,
-                meta_value longtext default NULL,
-                field_id int(11) NOT NULL,
-                item_id int(11) NOT NULL,
-                created_at datetime NOT NULL,
-                PRIMARY KEY  (id),
-                KEY field_id (field_id),
-                KEY item_id (item_id)
-              ) {$charset_collate};";
-
-      dbDelta($sql);
-      
-      /**** MIGRATE DATA ****/
-      if ($db_version == 1.03){
-          global $frm_entry;
-          $all_entries = $frm_entry->getAll();
-          foreach($all_entries as $ent){
-              $opts = maybe_unserialize($ent->description);
-              if(is_array($opts))
-                $wpdb->update( $frm_entry->table_name, array('ip' => $opts['ip']), array( 'id' => $ent->id ) );
-          }
-      }
-      
-      /**** ADD DEFAULT TEMPLATES ****/
-      FrmFormsController::add_default_templates(FRM_TEMPLATES_PATH);
-
-      
-      /***** SAVE DB VERSION *****/
-      update_option('frm_db_version',$db_version);
-      }
-      
-      do_action('frm_after_install');
+        global $frmdb;
+        $frmdb->upgrade();
     }
     
     
@@ -252,8 +146,8 @@ class FrmAppController{
 
     function get_form_shortcode($atts){
         global $frm_entries_controller;
-        extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false), $atts));
-        do_action('formidable_shortcode_atts', array('id' => $id, 'key' => $key, 'title' => $title, 'description' => $description, 'readonly' => $readonly, 'entry_id' => $entry_id));
+        extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array()), $atts));
+        do_action('formidable_shortcode_atts', compact('id', 'key', 'title', 'description', 'readonly', 'entry_id', 'fields'));
         return $frm_entries_controller->show_form($id, $key, $title, $description); 
     }
 

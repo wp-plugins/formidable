@@ -172,12 +172,28 @@ class FrmFieldsController{
     }
     
     function input_html($field){
-        if(isset($field['size']) && $field['size'] > 0) 
-            echo ' size="'. $field['size'] .'" class="auto_width"';
+        $class = $field['type'];
+        if($field['type'] == 'date')
+            $class .= " frm_date";
+            
+        $action = FrmAppController::get_param('action');
+        if(isset($field['required']) and $field['required']){
+            if($field['type'] == 'file' and $action == 'edit'){
+                //don't add the required class if this is a file upload when editing
+            }else
+                $class .= " required";
+        }
+            
+        if(isset($field['size']) and $field['size'] > 0){ 
+            if($field['type'] != 'textarea')
+                echo ' size="'. $field['size'] .'"';
+            $class .= " auto_width";
+        }
         if(isset($field['max']) and !in_array($field['type'], array('textarea','rte')))
             echo ' maxlength="'. $field['max'] .'"';
         if(isset($field['clear_on_focus']) and $field['clear_on_focus'])
             echo ' onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"';
+        echo ' class="'.$class.'"';
     }
 }
 ?>

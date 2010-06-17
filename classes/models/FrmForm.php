@@ -105,7 +105,9 @@ class FrmForm{
     $query_results = $wpdb->update( $this->table_name, $new_values, array( 'id' => $id ) );
 
     $all_fields = $frm_field->getAll("fi.form_id=$id");
-    if ($all_fields && isset($values['item_meta'])){
+    if ($all_fields and isset($values['options'])){
+        if(!isset($values['item_meta']))
+            $values['item_meta'] = array();
         $existing_keys = array_keys($values['item_meta']);
         foreach ($all_fields as $fid){
             if (!in_array($fid->id, $existing_keys))

@@ -9,6 +9,17 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 	height:155px; width:310px; padding:30px;
 }
 
+#editorcontainer #dyncontent{
+	margin:0; width:100%;
+	padding: 6px;
+	line-height: 150%;
+	border: 0 none;
+	outline: none;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-khtml-box-sizing: border-box;
+	box-sizing: border-box;
+}
 .frmcenter{text-align:center;}
 #wpbody-content .frmicon.icon32{background: url(../images/icon_32.png) no-repeat top center !important;}
 
@@ -53,6 +64,9 @@ li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-
 
 .frm_key_icons img, .frm_required0, .frm_required1{width:16px;}
 .frm_inactive_icon, .frm_required0{opacity:.2; filter:alpha(opacity=20);}
+.frm_inactive_icon, .frm_inactive_icon img, .frm_required0{
+opacity:.2; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=20)"; filter: alpha(opacity=20);
+}
 .frm-move{cursor:move;}
 .howto{font-weight:normal;}
 #frm_form_editor_container .themeRoller span.howto{display:inline;}
@@ -113,6 +127,7 @@ li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-
 	margin-right:10px;
 	position:fixed;
 	z-index:5;
+	width:270px;
 }
 
 #new_fields .form-field .themeRoller{ display:none;}

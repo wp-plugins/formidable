@@ -43,10 +43,10 @@ class FrmEntry{
         $new_values['created_at'] = current_time('mysql', 1);
 
         $query_results = $wpdb->insert( $this->table_name, $new_values );
-
         if($query_results){
+            $entry_id = $wpdb->insert_id;
             $frm_entry_meta->duplicate_entry_metas($id);
-            return $wpdb->insert_id;
+            return $entry_id;
         }else
             return false;
     }

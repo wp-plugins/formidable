@@ -123,7 +123,8 @@ class FrmUpdate{
     return $client->getResponse();
   }
 
-  function pro_cred_form(){ ?>
+  function pro_cred_form(){ 
+      global $frmpro_is_installed; ?>
 <div class="wrap">
     <div id="icon-options-general" class="icon32"><br></div>
     <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Account Information', FRM_PLUGIN_NAME)?></h2>      
@@ -150,11 +151,23 @@ class FrmUpdate{
       }
     }
 
-    $this->display_pro_cred_form(); ?>
+    $this->display_pro_cred_form(); 
     
+    if($frmpro_is_installed){ ?>
+    
+    <div>
+        <p><strong>Formidable Pro is Installed</strong></p>
+        <p><strong>Edit/Update Your Profile:</strong><br/><span class="howto">Use your account username and password to log in to your Account and Affiliate Control Panel</span></p>
+        <p><a href="http://formidablepro.com/payments/member.php">Account</a> |
+            <a href="http://formidablepro.com/payments/aff_member.php">Affiliate Control Panel</a>
+        </p>
+    </div>
+
+<?php }else{ ?>          
     <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', FRM_PLUGIN_NAME) ?></p>
 
     <a href="http://formidablepro.com"><?php _e('Learn More', FRM_PLUGIN_NAME) ?> &raquo;</a>
+    <?php } ?>
 </div>
     <?php    
   }

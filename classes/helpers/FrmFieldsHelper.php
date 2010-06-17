@@ -59,9 +59,9 @@ class FrmFieldsHelper{
             $values['field_options'][$var] = $default;
             
         if ($type == 'radio' || ($type == 'checkbox'))
-            $values['options'] = serialize(array(1 => 'Option 1', 2 => 'Option 2'));
+            $values['options'] = serialize(array('Option 1', 'Option 2'));
         else if ( $type == 'select')
-            $values['options'] = serialize(array(1 => '', 2 => 'Option 1'));
+            $values['options'] = serialize(array('','Option 1'));
         else if ($type == 'textarea')
             $values['field_options']['max'] = '5';
         

@@ -162,9 +162,9 @@ class FrmFormsController{
     }
     
     function destroy_wo_fields(){
-        global $frm_field, $frm_form, $frm_app_helper;
+        global $frm_field, $frm_form, $frmdb;
         $id = $_POST['form_id'];
-        if ($frm_app_helper->getRecordCount('form_id='.$id, $frm_field->table_name) <= 0)
+        if ($frmdb->get_count($frmdb->fields, array('form_id' => $id)) <= 0)
             $frm_form->destroy($id);
         die();
     }
@@ -299,7 +299,7 @@ class FrmFormsController{
         $templates = glob($path."/*.php");
         
         for($i = count($templates) - 1; $i >= 0; $i--){
-            $filename = preg_replace("#".$path."/#","",$templates[$i]);
+            $filename = str_replace($path."/","",$templates[$i]);
             $filename = str_replace('.php','', $filename);
             $template_query = "form_key='{$filename}' and is_template='1'";
             if($default) $template_query .= " and default_template='1'";
@@ -317,7 +317,7 @@ class FrmFormsController{
 
     function route(){
         $action = FrmAppController::get_param('action');
-        if($action=='new')
+        if($action == 'new')
             return $this->new_form();
         else if($action=='create')
             return $this->create();

@@ -84,7 +84,10 @@ class FrmEntryMeta{
   
   function get_entry_metas_for_field($field_id, $order='', $limit=''){
       global $wpdb;
-      return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE field_id={$field_id}{$order}{$limit}");
+      $query = "SELECT meta_value FROM {$this->table_name} WHERE field_";
+      $query .= (is_numeric($field_id)) ? "id" : "key";
+      $query .= "='{$field_id}'{$order}{$limit}";
+      return $wpdb->get_col($query);
   }
   
   function get_entry_meta_info($item_id){
