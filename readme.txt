@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, widget, Post, plugin, template, contact, contact form, form, forms, captcha, spam, email, database, admin, AJAX, javascript, jquery, poll, survey, feedback
 Requires at least: 2.8
 Tested up to: 3.0
-Stable tag: 1.03.01
+Stable tag: 1.03.02
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 
