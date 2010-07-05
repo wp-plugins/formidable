@@ -72,7 +72,7 @@ if ($display['options']){ ?>
         <div class="theme-group clearfix">
     	    <div class="theme-group-header state-default">
     		    <span class="icon icon-triangle-1-e"><?php _e('Collapse', FRM_PLUGIN_NAME) ?></span>
-    		    <a href="#"><?php _e('Field Options', 'formidable') ?></a>
+    		    <a href="#"><?php _e('Field Options', 'formidable') ?> (ID <?php echo $field['id'] ?>)</a>
     		</div><!-- /theme group Error -->
     		<div class="theme-group-content corner-bottom clearfix">
                 <div class="clearfix">

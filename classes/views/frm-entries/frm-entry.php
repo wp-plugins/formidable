@@ -12,7 +12,7 @@ $errors = '';
 
 FrmEntriesHelper::enqueue_scripts($params);
 
-if($params['action'] == 'create' && $params['form_id'] == $form->id){
+if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
     $errors = $frm_entry->validate($_POST);
 
     if( !empty($errors) ){

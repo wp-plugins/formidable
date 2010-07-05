@@ -52,11 +52,11 @@ class FrmEntriesController{
         $action = apply_filters('frm_show_new_entry_page', $frm_app_controller->get_param('action', 'new'), $form);
         $default_values = array('id' => '', 'form_name' => '', 'paged' => 1, 'form' => $form->id, 'form_id' => $form->id, 'field_id' => '', 'search' => '', 'sort' => '', 'sdir' => '', 'action' => $action);
         
-        $posted_form_id = $frm_app_controller->get_param('form_id');
-        if ($posted_form_id == '')
-            $posted_form_id = $frm_app_controller->get_param('form');
-            
-        if ($form->id == $posted_form_id){ //if there are two forms on the same page, make sure not to submit both
+        $values['posted_form_id'] = $frm_app_controller->get_param('form_id');
+        if (!is_numeric($values['posted_form_id']))
+            $values['posted_form_id'] = $frm_app_controller->get_param('form');
+
+        if ($form->id == $values['posted_form_id']){ //if there are two forms on the same page, make sure not to submit both
             foreach ($default_values as $var => $default)
             $values[$var] = $frm_app_controller->get_param($var, $default);
         }else{
