@@ -2,19 +2,19 @@
 
 class FrmFormsController{
     function FrmFormsController(){
-        add_action('admin_menu', array( $this, 'menu' ));
-        add_action('admin_head-toplevel_page_'.FRM_PLUGIN_NAME, array($this,'head'));
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-new', array($this,'head'));
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-templates', array($this,'head'));
-        add_action('wp_ajax_frm_form_name_in_place_edit', array($this, 'edit_name') );
-        add_action('wp_ajax_frm_form_desc_in_place_edit', array($this, 'edit_description') );
-        add_action('wp_ajax_frm_delete_form_wo_fields',array($this, 'destroy_wo_fields'));
+        add_action('admin_menu', array( &$this, 'menu' ));
+        add_action('admin_head-toplevel_page_'.FRM_PLUGIN_NAME, array(&$this,'head'));
+        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-new', array(&$this,'head'));
+        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-templates', array(&$this,'head'));
+        add_action('wp_ajax_frm_form_name_in_place_edit', array(&$this, 'edit_name') );
+        add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
+        add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
     }
     
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', FRM_PLUGIN_NAME), __('Forms', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME, array($this,'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', FRM_PLUGIN_NAME), __('Create a Form', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME.'-new', array($this,'new_form'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', FRM_PLUGIN_NAME), __('Templates', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME.'-templates', array($this, 'template_list'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', FRM_PLUGIN_NAME), __('Forms', FRM_PLUGIN_NAME), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', FRM_PLUGIN_NAME), __('Create a Form', FRM_PLUGIN_NAME), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this,'new_form'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', FRM_PLUGIN_NAME), __('Templates', FRM_PLUGIN_NAME), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
     }
     
     function head(){
@@ -37,9 +37,9 @@ class FrmFormsController{
     }
     
     function new_form(){
-        global $frm_app_controller, $frm_form, $frmpro_is_installed, $frm_ajax_url;
+        global $frm_form, $frmpro_is_installed, $frm_ajax_url;
         
-        $action = $frm_app_controller->get_param('action');
+        $action = FrmAppHelper::get_param('action');
         if ($action == 'create')
             return $this->create();
         else if ($action == 'new'){
@@ -54,9 +54,9 @@ class FrmFormsController{
     }
     
     function create(){
-        global $frm_app_controller, $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
+        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $errors = $frm_form->validate($_POST);
-        $id = $frm_app_controller->get_param('id');
+        $id = FrmAppHelper::get_param('id');
         
         if( count($errors) > 0 ){
             $frm_field_selection = FrmFieldsHelper::field_selection();
@@ -75,8 +75,7 @@ class FrmFormsController{
     }
     
     function edit(){
-        global $frm_app_controller;
-        $id = $frm_app_controller->get_param('id');
+        $id = FrmAppHelper::get_param('id');
         return $this->get_edit_vars($id);
     }
     
@@ -96,9 +95,9 @@ class FrmFormsController{
     }
     
     function update(){
-        global $frm_form, $frm_app_controller;
+        global $frm_form;
         $errors = $frm_form->validate($_POST);
-        $id = $frm_app_controller->get_param('id');
+        $id = FrmAppHelper::get_param('id');
         if( count($errors) > 0 ){
             return $this->get_edit_vars($id, $errors);
         }else{
@@ -140,8 +139,8 @@ class FrmFormsController{
 
         header("Content-Type: text/html; charset=utf-8");
 
-        $plugin     = FrmAppController::get_param('plugin');
-        $controller = FrmAppController::get_param('controller');
+        $plugin     = FrmAppHelper::get_param('plugin');
+        $controller = FrmAppHelper::get_param('controller');
         $key = (isset($_GET['form']) ? $_GET['form'] : (isset($_POST['form']) ? $_POST['form'] : ''));
         $form = $frm_form->getAll("form_key='$key'",'',' LIMIT 1');
         if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
@@ -153,6 +152,9 @@ class FrmFormsController{
     }
     
     function destroy(){
+        if(!current_user_can('frm_delete_forms'))
+            wp_die(__('You don\'t have permission to delete forms', 'formidable'));
+            
         global $frm_form;
         $params = $this->get_params();
         $message = '';
@@ -286,10 +288,9 @@ class FrmFormsController{
     }
     
     function get_params(){
-        global $frm_app_controller;
         $values = array();
         foreach (array('template' => 0,'id' => '','paged' => 1,'form' => '','search' => '','sort' => '','sdir' => '') as $var => $default)
-            $values[$var] = $frm_app_controller->get_param($var, $default);
+            $values[$var] = FrmAppHelper::get_param($var, $default);
 
         return $values;
     }
@@ -316,7 +317,7 @@ class FrmFormsController{
     }
 
     function route(){
-        $action = FrmAppController::get_param('action');
+        $action = FrmAppHelper::get_param('action');
         if($action == 'new')
             return $this->new_form();
         else if($action=='create')

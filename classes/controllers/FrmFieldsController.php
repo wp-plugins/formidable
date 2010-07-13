@@ -2,20 +2,20 @@
 
 class FrmFieldsController{
     function FrmFieldsController(){
-        add_action('wp_ajax_frm_insert_field', array($this, 'create') );
-        add_action('wp_ajax_frm_field_name_in_place_edit', array($this, 'edit_name') );
-        add_action('wp_ajax_frm_field_desc_in_place_edit', array($this, 'edit_description') );
-        add_action('wp_ajax_frm_mark_required', array($this, 'mark_required') );
-        add_action('wp_ajax_frm_clear_on_focus', array($this, 'clear_on_focus') );
-        add_action('wp_ajax_frm_default_blank', array($this, 'default_blank') );
-        add_action('wp_ajax_frm_delete_field', array($this, 'destroy') );
-        add_action('wp_ajax_frm_add_field_option',array($this, 'add_option'));
-        add_action('wp_ajax_frm_field_option_ipe', array($this, 'edit_option') );
-        add_action('wp_ajax_frm_delete_field_option',array($this, 'delete_option'));
-        add_action('wp_ajax_frm_update_field_order', array($this, 'update_order') );
-        add_filter('frm_field_type',array( $this, 'change_type'));
-        add_filter('frm_display_field_options', array($this, 'display_field_options'));
-        add_action('frm_field_input_html', array($this,'input_html'));
+        add_action('wp_ajax_frm_insert_field', array(&$this, 'create') );
+        add_action('wp_ajax_frm_field_name_in_place_edit', array(&$this, 'edit_name') );
+        add_action('wp_ajax_frm_field_desc_in_place_edit', array(&$this, 'edit_description') );
+        add_action('wp_ajax_frm_mark_required', array(&$this, 'mark_required') );
+        add_action('wp_ajax_frm_clear_on_focus', array(&$this, 'clear_on_focus') );
+        add_action('wp_ajax_frm_default_blank', array(&$this, 'default_blank') );
+        add_action('wp_ajax_frm_delete_field', array(&$this, 'destroy') );
+        add_action('wp_ajax_frm_add_field_option',array(&$this, 'add_option'));
+        add_action('wp_ajax_frm_field_option_ipe', array(&$this, 'edit_option') );
+        add_action('wp_ajax_frm_delete_field_option',array(&$this, 'delete_option'));
+        add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
+        add_filter('frm_field_type',array( &$this, 'change_type'));
+        add_filter('frm_display_field_options', array(&$this, 'display_field_options'));
+        add_action('frm_field_input_html', array(&$this,'input_html'));
     }
     
     function create(){
@@ -176,7 +176,7 @@ class FrmFieldsController{
         if($field['type'] == 'date')
             $class .= " frm_date";
             
-        $action = FrmAppController::get_param('action');
+        $action = FrmAppHelper::get_param('action');
         if(isset($field['required']) and $field['required']){
             if($field['type'] == 'file' and $action == 'edit'){
                 //don't add the required class if this is a file upload when editing

@@ -2,7 +2,7 @@
 
 class FrmStatisticsController{
     function FrmStatisticsController(){
-        add_action('admin_menu', array( $this, 'menu' ), 30);
+        add_action('admin_menu', array( &$this, 'menu' ), 30);
     }
     
     function menu(){

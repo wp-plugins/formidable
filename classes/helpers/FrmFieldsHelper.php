@@ -69,18 +69,18 @@ class FrmFieldsHelper{
     }
     
     function setup_edit_vars($record){
-        global $frm_entry_meta, $frm_form, $frm_app_controller;
+        global $frm_entry_meta, $frm_form;
         
         $values = array();
         $values['id'] = $record->id;
         $values['form_id'] = $record->form_id;
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
-              $values[$var] = htmlspecialchars(stripslashes($frm_app_controller->get_param($var, $default)));
+              $values[$var] = htmlspecialchars(stripslashes(FrmAppHelper::get_param($var, $default)));
 
         $values['form_name'] = ($record->form_id)?($frm_form->getName( $record->form_id )):('');
         
         foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
-            $values[$var] = $frm_app_controller->get_param($var, $default);
+            $values[$var] = FrmAppHelper::get_param($var, $default);
         
         $values['options'] = unserialize($record->options);
         $field_options = unserialize($record->field_options);

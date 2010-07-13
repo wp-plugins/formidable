@@ -3,10 +3,10 @@
 class FrmEntriesHelper{
 
     function setup_new_vars($fields, $form='', $reset=false){
-        global $frm_app_controller, $frm_form, $frm_settings;
+        global $frm_form, $frm_settings;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
-            $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
+            $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
             
         $values['fields'] = array();
         if ($fields){
@@ -53,7 +53,7 @@ class FrmEntriesHelper{
 
             if (is_array($options)){
                 foreach ($options as $opt => $value)
-                    $values[$opt] = $frm_app_controller->get_param($opt, $value);
+                    $values[$opt] = FrmAppHelper::get_param($opt, $value);
             }
             
             if (!isset($values['custom_style']))
@@ -88,7 +88,7 @@ class FrmEntriesHelper{
     }
 
     function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
-        global $frm_app_controller, $frm_entry;
+        global $frm_entry;
 
         $entries = $frm_entry->getAll("it.form_id=".$form_id,' ORDER BY name');
         ?>

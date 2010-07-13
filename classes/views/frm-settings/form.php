@@ -9,7 +9,9 @@
     <form name="frm_settings_form" method="post" action="">
         <input type="hidden" name="action" value="process-form">
         <?php wp_nonce_field('update-options'); ?>
-
+        <p class="submit" style="padding-bottom:0;">
+            <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', FRM_PLUGIN_NAME) ?>" />
+        </p>
         <table class="form-table">
             <tr class="form-field">
               <td valign="top" width="200px"><?php _e('Preview Page', FRM_PLUGIN_NAME); ?>: </td>
@@ -28,6 +30,16 @@
                     <p><input type="checkbox" value="1" id="frm_custom_stylesheet" name="frm_custom_stylesheet" <?php checked($frm_settings->custom_stylesheet, 1) ?>>
                     <?php _e('Exclude the Formidable stylesheet from ALL forms', FRM_PLUGIN_NAME); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You cannot override this setting on individual forms, so only check this box if you will not be using the stylesheet on any forms.', FRM_PLUGIN_NAME) ?>" /></p>
                 </td>
+            </tr>
+            
+            <tr class="form-field">
+                <td valign="top"><?php _e('User Permissions', FRM_PLUGIN_NAME); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Select users that are allowed access to Formidable. Without access to View Forms, users will be unable to see the Formidable menu.', FRM_PLUGIN_NAME) ?>" /></td>
+                <td>
+                    <?php foreach($frm_roles as $frm_role => $frm_role_description){ ?>
+                        <label style="width:200px;float:left;text-align:right;padding-right:10px;"><?php echo $frm_role_description ?>:</label> <?php FrmAppHelper::wp_roles_dropdown( $frm_role, $frm_settings->$frm_role ) ?><br/>
+                    <?php } ?>
+                    
+                </td>    
             </tr>
             
             <tr class="form-field">
@@ -61,9 +73,6 @@
                     <input type="text" value="<?php echo $frm_settings->submit_value ?>" id="frm_submit_value" name="frm_submit_value">
                 </td>
             </tr>
-            
-            
-
             
             <?php do_action('frm_settings_form', $frm_settings); ?>
             

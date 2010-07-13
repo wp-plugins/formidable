@@ -82,11 +82,13 @@ class FrmEntryMeta{
       return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE item_id={$item_id}");
   }
   
-  function get_entry_metas_for_field($field_id, $order='', $limit=''){
-      global $wpdb;
-      $query = "SELECT meta_value FROM {$this->table_name} WHERE field_";
-      $query .= (is_numeric($field_id)) ? "id" : "key";
-      $query .= "='{$field_id}'{$order}{$limit}";
+  function get_entry_metas_for_field($field_id, $order='', $limit='', $value=false){
+      global $wpdb, $frmdb;
+      $query = "SELECT em.meta_value FROM $frmdb->entry_metas em ";
+      $query .= (is_numeric($field_id)) ? "WHERE em.field_id='{$field_id}'" : "LEFT JOIN $frmdb->fields fi ON (em.field_id = fi.id) WHERE fi.field_key='{$field_id}'";
+      if($value)
+        $query .= " AND meta_value='$value'";
+      $query .= "{$order}{$limit}";
       return $wpdb->get_col($query);
   }
   

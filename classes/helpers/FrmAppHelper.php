@@ -3,15 +3,17 @@
 class FrmAppHelper{
     function FrmAppHelper(){}
     
+    function get_param($param, $default=''){
+        return (isset($_POST[$param])?$_POST[$param]:(isset($_GET[$param])?$_GET[$param]:$default));
+    }
+    
     function get_pages(){
-      return get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'order_by' => 'post_title', 'order' => 'ASC'));
+      return get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'orderby' => 'title', 'order' => 'ASC'));
     }
   
     function wp_pages_dropdown($field_name, $page_id){
-        global $frm_app_controller;
-        
-        $field_value = $frm_app_controller->get_param($field_name);
-        $pages = get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'orderby' => 'title', 'order' => 'ASC'));
+        $field_value = FrmAppHelper::get_param($field_name);
+        $pages = FrmAppHelper::get_pages();
     ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
             <option value=""></option>
@@ -20,6 +22,51 @@ class FrmAppHelper{
             <?php } ?>
         </select>
     <?php
+    }
+    
+    function wp_roles_dropdown($field_name, $capability){
+        $field_value = FrmAppHelper::get_param($field_name);
+    	$editable_roles = get_editable_roles();
+
+    ?>
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
+            <?php foreach($editable_roles as $role => $details){ 
+                $name = translate_user_role($details['name'] ); ?>
+                <option value="<?php echo esc_attr($role) ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $role) or (!isset($_POST[$field_name]) and $capability == $role))?' selected="selected"':''); ?>><?php echo $name ?> </option>
+            <?php } ?>
+        </select>
+    <?php
+    }
+    
+    function frm_capabilities(){
+        global $frmpro_is_installed;
+        $cap = array(
+            'frm_view_forms' => __('View Forms and Templates', 'formidable'),
+            'frm_edit_forms' => __('Create/Edit Forms and Templates', 'formidable'),
+            'frm_delete_forms' => __('Delete Forms and Templates', 'formidable'),
+            'frm_change_settings' => __('Access this Settings Page', 'formidable')
+        );
+        if($frmpro_is_installed){
+            $cap['frm_view_entries'] = __('View Entries from Admin Area', 'formidable');
+            $cap['frm_create_entries'] = __('Create Entries from Admin Area', 'formidable');
+            $cap['frm_edit_entries'] = __('Edit Entries from Admin Area', 'formidable');
+            $cap['frm_delete_entries'] = __('Delete Entries from Admin Area', 'formidable');
+            $cap['frm_view_reports'] = __('View Reports', 'formidable');
+            $cap['frm_edit_displays'] = __('Create/Edit Custom Displays', 'formidable');
+        }
+        return $cap;
+    }
+    
+    function user_has_permission($needed_role){
+        if ($needed_role == '' or 
+            ($needed_role == 'administrator' and current_user_can('administrator')) or 
+            ($needed_role == 'subscriber' and current_user_can('level_0')) or
+            ($needed_role == 'contributer' and current_user_can('level_1')) or
+            ($needed_role == 'author' and (current_user_can('author') or current_user_can('editor') or current_user_can('administrator'))) or
+            ($needed_role == 'editor' and (current_user_can('editor') or current_user_can('administrator'))) )
+            return true;
+        else
+            return false;
     }
 
     function value_is_checked_with_array($field_name, $index, $field_value){
@@ -58,13 +105,13 @@ class FrmAppHelper{
     //Editing a Form or Entry
     function setup_edit_vars($record, $table, $fields='', $default=false){
         if(!$record) return false;
-        global $frm_entry_meta, $frm_form, $frm_app_controller, $frm_settings;
+        global $frm_entry_meta, $frm_form, $frm_settings;
         $values = array();
 
         $values['id'] = $record->id;
 
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
-              $values[$var] = stripslashes($frm_app_controller->get_param($var, $default_val));
+              $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default_val));
         $values['description'] = wpautop($values['description']);
         $values['fields'] = array();
         if ($fields){
@@ -117,7 +164,7 @@ class FrmAppHelper{
             $options = stripslashes_deep(unserialize($form->options));
             if (is_array($options)){
                 foreach ($options as $opt => $value)
-                    $values[$opt] = $frm_app_controller->get_param($opt, $value);
+                    $values[$opt] = FrmAppHelper::get_param($opt, $value);
             }
         }
 

@@ -2,13 +2,13 @@
 
 class FrmSettingsController{
     function FrmSettingsController(){
-        add_action('admin_menu', array( $this, 'menu' ), 25);
-        add_action('admin_menu', array( $this, 'pro_menu' ), 19);
+        add_action('admin_menu', array( &$this, 'menu' ), 25);
+        add_action('admin_menu', array( &$this, 'pro_menu' ), 19);
         //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-settings', array($this,'head'));
     }
 
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', FRM_PLUGIN_NAME), __('Settings', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME.'-settings', array($this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', FRM_PLUGIN_NAME), __('Settings', FRM_PLUGIN_NAME), 'frm_change_settings', FRM_PLUGIN_NAME.'-settings', array($this,'route'));
     }
     
     function pro_menu(){
@@ -21,6 +21,7 @@ class FrmSettingsController{
 
     function display_form(){
       global $frm_settings;
+      $frm_roles = FrmAppHelper::frm_capabilities();
       require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 
@@ -35,13 +36,12 @@ class FrmSettingsController{
         $frm_settings->store();
         $message = __('Settings Saved', FRM_PLUGIN_NAME);
       }
-
+      $frm_roles = FrmAppHelper::frm_capabilities();
       require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
     
     function route(){
-        global $frm_app_controller;
-        $action = $frm_app_controller->get_param('action');
+        $action = FrmAppHelper::get_param('action');
         if($action == 'process-form')
             return $this->process_form();
         else

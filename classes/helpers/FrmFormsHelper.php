@@ -25,7 +25,7 @@ class FrmFormsHelper{
     }
     
     function forms_dropdown( $field_name, $field_value='', $blank=true, $field_id=false, $onchange=false ){
-        global $frm_app_controller, $frm_form;
+        global $frm_form;
         if (!$field_id)
             $field_id = $field_name;
             
@@ -43,15 +43,15 @@ class FrmFormsHelper{
     }
     
     function setup_new_vars(){
-        global $frm_app_controller, $frm_form, $frm_settings;
+        global $frm_form, $frm_settings;
         $values = array();
         foreach (array('name' => __('Untitled Form', FRM_PLUGIN_NAME), 'description' => '') as $var => $default)
-            $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
+            $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
         
         $values['description'] = wpautop($values['description']);
         
         foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default)
-            $values[$var] = stripslashes($frm_app_controller->get_param($var, $default));
+            $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
             
         $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frm_form->table_name, 'form_key'));
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : $frm_settings->email_to;
@@ -68,11 +68,11 @@ class FrmFormsHelper{
     }
     
     function setup_edit_vars($values, $record){
-        global $frm_form, $frm_app_controller;
+        global $frm_form;
 
-        $values['form_key'] = $frm_app_controller->get_param('form_key', $record->form_key);
-        $values['default_template'] = $frm_app_controller->get_param('default_template', $record->default_template);
-        $values['is_template'] = $frm_app_controller->get_param('is_template', $record->is_template);
+        $values['form_key'] = FrmAppHelper::get_param('form_key', $record->form_key);
+        $values['default_template'] = FrmAppHelper::get_param('default_template', $record->default_template);
+        $values['is_template'] = FrmAppHelper::get_param('is_template', $record->is_template);
 
         return apply_filters('frm_setup_edit_form_vars', $values);
     }

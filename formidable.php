@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.03.02
+Version: 1.03.03
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
@@ -23,7 +23,6 @@ Author: Stephanie Wells
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 
 define('FRM_PLUGIN_TITLE','Formidable');
 define('FRM_PLUGIN_NAME','formidable');
@@ -46,7 +45,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version;
-$frm_version = '1.03.02';
+$frm_version = '1.03.03';
 
 global $frm_blogurl;
 global $frm_siteurl;
@@ -55,6 +54,10 @@ global $frm_ajax_url;
 $frm_blogurl = ((get_option('home'))?get_option('home'):get_option('siteurl'));
 $frm_siteurl = get_option('siteurl');
 $frm_ajax_url = $frm_siteurl .'/wp-admin/admin-ajax.php';
+
+require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
+global $frm_app_helper;
+$frm_app_helper = new FrmAppHelper();
 
 /***** SETUP SETTINGS OBJECT *****/
 global $frm_settings;
@@ -117,17 +120,14 @@ $frm_forms_controller       = new FrmFormsController();
 $frm_settings_controller    = new FrmSettingsController();
 
 // Instansiate Helpers
-require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 require_once(FRM_HELPERS_PATH. "/FrmEntriesHelper.php");
 require_once(FRM_HELPERS_PATH. "/FrmFieldsHelper.php");
 require_once(FRM_HELPERS_PATH. "/FrmFormsHelper.php");
 require_once(FRM_HELPERS_PATH. "/FrmSettingsHelper.php");
 
-global $frm_app_helper;
 global $frm_fields_helper;
 global $frm_settings_helper;
 
-$frm_app_helper = new FrmAppHelper();
 $frm_fields_helper = new FrmFieldsHelper();
 $frm_settings_helper = new FrmSettingsHelper();
 

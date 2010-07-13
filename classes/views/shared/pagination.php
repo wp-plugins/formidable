@@ -1,16 +1,18 @@
 <?php 
 if(!is_numeric($current_page))
-    $current_page = FrmAppController::get_param($page_param, '1');
+    $current_page = FrmAppHelper::get_param($page_param, '1');
+
+$page_params = (isset($page_params)) ? $page_params : '';
     
 if($current_page > 1){ // Only show the prev page button if the current page is not the first page ?>
-<a class='prev page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page - 1)); ?>">&laquo;</a> <?php 
+<a class='prev page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page - 1)); echo $page_params; ?>">&laquo;</a> <?php 
 }
       
 // First page is always displayed
 if($current_page==1){ ?>
 <span class='page-numbers current'>1</span><?php 
 }else{ ?>
-<a class='page-numbers' href="<?php echo add_query_arg(array($page_param => 1)); ?>">1</a> <?php 
+<a class='page-numbers' href="<?php echo add_query_arg(array($page_param => 1)); echo $page_params; ?>">1</a> <?php 
 }
 
 // If the current page is more than 2 spaces away from the first page then we put some dots in here
@@ -25,7 +27,7 @@ for($i = $low_page; $i <= $high_page; $i++){
     if($current_page==$i){  ?>
         <span class='page-numbers current'><?php print $i; ?></span> <?php
     }else{ ?>
-        <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $i)); ?>"><?php print $i; ?></a> <?php
+        <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $i)); echo $page_params; ?>"><?php print $i; ?></a> <?php
     }
 }
       
@@ -38,10 +40,10 @@ if($current_page < ($page_count - 3)){ ?>
 if($current_page == $page_count){ ?>
     <span class='page-numbers current'><?php print $page_count; ?></span><?php 
 }else{ ?>
-    <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $page_count)); ?>"><?php print $page_count; ?></a><?php 
+    <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $page_count)); echo $page_params; ?>"><?php print $page_count; ?></a><?php 
 }
       
 // Display the next page icon if there is a next page
 if($current_page < $page_count){ ?>
-    <a class='next page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page + 1)); ?>">&raquo;</a><?php 
+    <a class='next page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page + 1)); echo $page_params; ?>">&raquo;</a><?php 
 } ?>

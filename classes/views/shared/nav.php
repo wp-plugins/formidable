@@ -1,7 +1,7 @@
 <div id="button_bar">
 <ul class="subsubsub">
     <?php $current_page = (isset($_GET['page'])) ? $_GET['page'] : 'None'; ?>
-    <?php $nav_items = apply_filters('frm_nav_array', array(FRM_PLUGIN_NAME => __('Forms', FRM_PLUGIN_NAME), FRM_PLUGIN_NAME . '-new' => __('Create a Form', FRM_PLUGIN_NAME), FRM_PLUGIN_NAME . '-templates' => __('Templates', FRM_PLUGIN_NAME))); 
+    <?php $nav_items = apply_filters('frm_nav_array', array()); 
         $nav_count = count($nav_items);
         $i = 1;
     ?>

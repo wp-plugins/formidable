@@ -59,6 +59,12 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.03.03 =
+* Fixed multiple submissions for pages with multiple forms
+* PRO: Added "value" parameter to the frm-stats shortcode for counting number of entries with specified value [frm-stats id=8 value="Hello" type=count]
+* PRO: Added a field drop-down for searching specific fields on the entries page
+* PRO: Added option to allow users to edit any entry instead of only their own
+
 = 1.03.02 =
 * Fixed admin pagination to navigate correctly with the arrow
 * Fixed most Internet Explorer admin issues
