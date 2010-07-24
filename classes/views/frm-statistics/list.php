@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="frmicon icon32"><br></div>
+    <div class="frmicon icon32"><br/></div>
     <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Statistics', FRM_PLUGIN_NAME) ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>

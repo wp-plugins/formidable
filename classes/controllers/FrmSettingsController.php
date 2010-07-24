@@ -20,13 +20,13 @@ class FrmSettingsController{
     }
 
     function display_form(){
-      global $frm_settings;
+      global $frm_settings, $frm_ajax_url;
       $frm_roles = FrmAppHelper::frm_capabilities();
       require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 
     function process_form(){
-      global $frm_settings;
+      global $frm_settings, $frm_ajax_url;
 
       //$errors = $frm_settings->validate($_POST,array());
       $errors = array();

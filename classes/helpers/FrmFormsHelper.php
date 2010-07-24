@@ -43,7 +43,7 @@ class FrmFormsHelper{
     }
     
     function setup_new_vars(){
-        global $frm_form, $frm_settings;
+        global $frmdb, $frm_settings;
         $values = array();
         foreach (array('name' => __('Untitled Form', FRM_PLUGIN_NAME), 'description' => '') as $var => $default)
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
@@ -53,7 +53,7 @@ class FrmFormsHelper{
         foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default)
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
             
-        $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frm_form->table_name, 'form_key'));
+        $values['form_key'] = ($_POST and isset($_POST['form_key']))?$_POST['form_key']:(FrmAppHelper::get_unique_key('', $frmdb->forms, 'form_key'));
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : $frm_settings->email_to;
         $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : $frm_settings->submit_value;
@@ -90,11 +90,13 @@ BEFORE_HTML;
     }
     
     function replace_shortcodes($html, $form, $title=false, $description=false){
-        foreach (array('form_name' => $title,'form_description' => $description) as $code => $show){
+        foreach (array('form_name' => $title,'form_description' => $description, 'entry_key' => true) as $code => $show){
             if ($code == 'form_name')
                 $replace_with = stripslashes($form->name);
             else if ($code == 'form_description')
                 $replace_with = wpautop(stripslashes($form->description));
+            else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry']))
+                $replace_with = $_GET['entry'];
                 
             if (($show == true || $show == 'true') && $replace_with != '' ){
                 $html = str_replace('[if '.$code.']','',$html); 

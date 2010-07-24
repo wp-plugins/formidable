@@ -3,12 +3,10 @@ class FrmEntryMeta{
   var $table_name;
 
   function FrmEntryMeta(){
-    global $wpdb;
-    $this->table_name = "{$wpdb->prefix}frm_item_metas";
   }
 
   function add_entry_meta($item_id, $field_id, $meta_key, $meta_value){
-    global $wpdb;
+    global $wpdb, $frmdb;
 
     $new_values = array();
     $new_values['meta_key'] = $meta_key;
@@ -18,7 +16,7 @@ class FrmEntryMeta{
     $new_values['created_at'] = current_time('mysql', 1);
     $new_values = apply_filters('frm_add_entry_meta', $new_values);
     
-    return $wpdb->insert( $this->table_name, $new_values );
+    return $wpdb->insert( $frmdb->entry_metas, $new_values );
   }
 
   function update_entry_meta($item_id, $field_id, $meta_key, $meta_value){
@@ -45,21 +43,21 @@ class FrmEntryMeta{
   }
 
   function delete_entry_meta($item_id, $field_id){
-    global $wpdb;
-    return $wpdb->query("DELETE FROM {$this->table_name} WHERE field_id={$field_id} AND item_id={$item_id}");
+    global $wpdb, $frmdb;
+    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id={$field_id} AND item_id={$item_id}");
   }
   
   function delete_entry_metas($item_id){
-    global $wpdb;
-    return $wpdb->query("DELETE FROM {$this->table_name} WHERE item_id={$item_id}");
+    global $wpdb, $frmdb;
+    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE item_id={$item_id}");
   }
   
   function get_entry_meta_by_field($item_id, $field_id, $return_var=false){
-      global $wpdb, $frm_field;
+      global $wpdb, $frmdb;
       if (is_numeric($field_id))
-          $query = "SELECT meta_value FROM {$this->table_name} WHERE field_id='{$field_id}' and item_id='{$item_id}'";
+          $query = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id='{$field_id}' and item_id='{$item_id}'";
       else
-          $query = "SELECT meta_value FROM {$this->table_name} it LEFT OUTER JOIN $frm_field->table_name fi ON it.field_id=fi.id WHERE fi.field_key='{$field_id}' and item_id='{$item_id}'";
+          $query = "SELECT meta_value FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id WHERE fi.field_key='{$field_id}' and item_id='{$item_id}'";
       if($return_var)
           return $wpdb->get_var("{$query} LIMIT 1");
       else
@@ -67,8 +65,8 @@ class FrmEntryMeta{
   }
   
   function get_entry_meta($item_id,$meta_key,$return_var=true){
-      global $wpdb;
-      $query_str = "SELECT meta_value FROM {$this->table_name} WHERE meta_key=%s and item_id=%d";
+      global $wpdb, $frmdb;
+      $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE meta_key=%s and item_id=%d";
       $query = $wpdb->prepare($query_str,$meta_key,$item_id);
 
       if($return_var)
@@ -78,8 +76,8 @@ class FrmEntryMeta{
   }
 
   function get_entry_metas($item_id){
-      global $wpdb;
-      return $wpdb->get_col("SELECT meta_value FROM {$this->table_name} WHERE item_id={$item_id}");
+      global $wpdb, $frmdb;
+      return $wpdb->get_col("SELECT meta_value FROM $frmdb->entry_metas WHERE item_id={$item_id}");
   }
   
   function get_entry_metas_for_field($field_id, $order='', $limit='', $value=false){
@@ -93,29 +91,23 @@ class FrmEntryMeta{
   }
   
   function get_entry_meta_info($item_id){
-      global $wpdb;
-      return $wpdb->get_results("SELECT * FROM {$this->table_name} WHERE item_id={$item_id}");
+      global $wpdb, $frmdb;
+      return $wpdb->get_results("SELECT * FROM $frmdb->entry_metas WHERE item_id={$item_id}");
   }
   
   function get_entry_meta_info_by_key($item_id, $meta_key){
-      global $wpdb;
-      $query_str = "SELECT * FROM {$this->table_name} WHERE meta_key=%s and item_id=%d";
+      global $wpdb, $frmdb;
+      $query_str = "SELECT * FROM $frmdb->entry_metas WHERE meta_key=%s and item_id=%d";
       $query = $wpdb->prepare($query_str,$meta_key,$item_id);
 
       return $wpdb->get_results($query, 0);
   }
     
   function getAll($where = '', $order_by = '', $limit = ''){
-    global $wpdb, $frm_field, $frm_app_helper;
-    $query = 'SELECT it.*, ' .
-              'fi.type as field_type, ' .
-              'fi.field_key as field_key, ' .
-              'fi.required as required, ' .
-              'fi.form_id as field_form_id, ' .
-              'fi.name as field_name, ' .
-              'fi.options as fi_options '.
-              'FROM '. $this->table_name . ' it ' .
-              'LEFT OUTER JOIN ' . $frm_field->table_name . ' fi ON it.field_id=fi.id' . 
+    global $wpdb, $frmdb, $frm_field, $frm_app_helper;
+    $query = "SELECT it.*, fi.type as field_type, fi.field_key as field_key, 
+              fi.required as required, fi.form_id as field_form_id, fi.name as field_name, fi.options as fi_options 
+              FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id" . 
               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
 
     if ($limit == ' LIMIT 1')
@@ -126,8 +118,8 @@ class FrmEntryMeta{
   }
   
   function getEntryIds($where = '', $order_by = '', $limit = ''){
-    global $wpdb, $frm_field, $frm_app_helper;
-    $query = "SELECT DISTINCT it.item_id FROM $this->table_name it LEFT OUTER JOIN $frm_field->table_name fi ON it.field_id=fi.id". $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+    global $wpdb, $frmdb, $frm_app_helper;
+    $query = "SELECT DISTINCT it.item_id FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id". $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
     if ($limit == ' LIMIT 1')
         $results = $wpdb->get_var($query);
     else    
@@ -137,14 +129,14 @@ class FrmEntryMeta{
   }
   
   function getRecordCount($where=""){
-    global $wpdb, $frm_app_helper, $frm_field;
-    $query = "SELECT COUNT(*) FROM {$this->table_name} it LEFT OUTER JOIN  {$frm_field->table_name} fi ON it.field_id=fi.id" .
+    global $wpdb, $frmdb, $frm_app_helper;
+    $query = "SELECT COUNT(*) FROM $frmdb->entry_metas it LEFT OUTER JOIN  $frmdb->fields fi ON it.field_id=fi.id" .
         $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
     return $wpdb->get_var($query);
   }
   
   function search_entry_metas($search, $meta_key='', $operator){
-      global $wpdb, $frm_app_helper;
+      global $wpdb, $frmdb, $frm_app_helper;
       if (is_array($search)){
           $where = '';
             foreach ($search as $field => $value){
@@ -156,11 +148,11 @@ class FrmEntryMeta{
                   $where .= " meta_value {$operator} '%/{$value}/%' and";      
             }
             $where .= " meta_key='{$meta_key}'";
-            $query = "SELECT DISTINCT item_id FROM {$this->table_name}". $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
+            $query = "SELECT DISTINCT item_id FROM $frmdb->entry_metas". $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
         }else{
             if ($operator == 'LIKE')
                 $search = "%{$search}%";
-            $query = $wpdb->prepare("SELECT DISTINCT item_id FROM {$this->table_name} WHERE meta_value {$operator} '{$search}' and meta_key='{$meta_key}'");
+            $query = $wpdb->prepare("SELECT DISTINCT item_id FROM $frmdb->entry_metas WHERE meta_value {$operator} '{$search}' and meta_key='{$meta_key}'");
       }
       return $wpdb->get_col($query, 0);
   }

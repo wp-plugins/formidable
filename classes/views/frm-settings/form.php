@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div id="icon-options-general" class="icon32"><br></div>
+    <div id="icon-options-general" class="icon32"><br/></div>
     <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Settings', FRM_PLUGIN_NAME); ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
@@ -77,7 +77,8 @@
             <?php do_action('frm_settings_form', $frm_settings); ?>
             
         </table>
-
+        
+        <p class="alignright frm_uninstall"><a href="<?php echo $frm_ajax_url ?>?action=frm_uninstall" onClick="confirm('<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>')"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">
         <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', FRM_PLUGIN_NAME) ?>" />
         </p>

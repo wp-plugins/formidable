@@ -114,6 +114,9 @@ opacity:.2; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=20)"; fi
 
 .frm-table td, .frm-table th{padding:5px; border:1px solid black;}
 
+.frm_uninstall{padding:1.5em;}
+.frm_uninstall a{border:1px solid red; background:#D54E21; padding:.5em; text-decoration:none;color:#fff;font-weight:bold;}
+.frm_uninstall a:hover{background:#264761;color:#fff;}
 /*hide elements if js is avail*/
 .js .theme-group-content, .js #submitBtn, .js select.texture, .js #themeGallery, .js #help{display: none;}
 

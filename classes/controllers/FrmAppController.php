@@ -11,6 +11,7 @@ class FrmAppController{
         add_action('init', array(&$this, 'front_head'));
         add_action('admin_init', array( &$this, 'admin_js'));
         register_activation_hook(FRM_PATH."/formidable.php", array( &$this, 'install' ));
+        add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
 
         // Used to process standalone requests
         add_action('init', array(&$this,'parse_standalone_request'));
@@ -54,6 +55,7 @@ class FrmAppController{
     function settings_link($links, $file){
         $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings', FRM_PLUGIN_NAME) . '</a>';
         array_unshift($links, $settings);
+        
         return $links;
     }
     
@@ -127,6 +129,14 @@ class FrmAppController{
         $frmdb->upgrade();
     }
     
+    function uninstall(){
+        if(current_user_can('administrator')){
+            global $frmdb;
+            $frmdb->uninstall();
+            wp_die(__('Formidable was successfully uninstalled.', 'formidable'));
+        }else
+            wp_die(__('You don\'t have permission to do that!', 'formidable'));
+    }
     
     // Routes for wordpress pages -- we're just replacing content here folks.
     function page_route($content){

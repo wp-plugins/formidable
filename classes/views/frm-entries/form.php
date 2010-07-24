@@ -17,6 +17,7 @@
         $error_keys = array_keys($errors);
     $error_keys = (isset($error_keys)) ? $error_keys : array();
     
+    if($values['fields']){
     foreach($values['fields'] as $field){
         $field_name = "item_meta[". $field['id'] ."]";
         if (apply_filters('frm_show_normal_field_type', true, $field['type']))
@@ -26,6 +27,7 @@
         
         do_action('frm_get_field_scripts', $field);
     }    
+    }
 
     global $frm_settings;
     ?>

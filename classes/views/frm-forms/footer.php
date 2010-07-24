@@ -135,11 +135,11 @@ function frm_read_only(field_id, active){
         var switch_to = '1';
         var new_class = '';
     }
-    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+    jQuery('#'+thisid).replaceWith('<img id="'+thisid+'" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
     jQuery.ajax({
         type:"POST",url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
         data:"action=frm_read_only&field="+field_id+"&active="+switch_to,
-        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_read_only('+field_id+', '+switch_to+')" class="'+new_class +' frm-show-hover" id="'+thisid+'"><img src="<?php echo FRM_IMAGES_URL?>/readonly.png"></a>');}
+        success:function(msg){ jQuery('#'+thisid).replaceWith('<a href="javascript:frm_read_only('+field_id+', '+switch_to+')" class="'+new_class+' frm-show-hover" id="'+thisid+'"><img src="<?php echo FRM_IMAGES_URL?>/readonly.png"></a>');}
     });
 };
 

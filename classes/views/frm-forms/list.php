@@ -1,5 +1,5 @@
 <div class="wrap">
-    <div class="frmicon icon32"><br></div>
+    <div class="frmicon icon32"><br/></div>
     <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php echo ($params['template'])? __('Templates', FRM_PLUGIN_NAME) : __('Forms', FRM_PLUGIN_NAME); ?></h2>
   
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
@@ -66,7 +66,7 @@
                 <?php } ?>
                 <?php do_action('frm_template_action_links', $form); ?>
                 <?php if(current_user_can('frm_delete_forms')){ ?>
-                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm(<?php printf(__('Are you sure you want to delete your %1$s Form?'), $form->name) ?>);" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a></span>
+                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?'), stripslashes($form->name)) ?>');" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a></span>
                 <?php } ?>
             </div>
         </td>
@@ -98,7 +98,7 @@
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>&amp;template=1" title="<?php _e('Create', FRM_PLUGIN_NAME) ?> <?php echo $form->name; ?> <?php _e('Template', FRM_PLUGIN_NAME) ?>"><?php _e('Create Template', FRM_PLUGIN_NAME) ?></a></span>
                 <?php } ?>
                 <?php if(current_user_can('frm_delete_forms')){ ?>
-                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm(<?php printf(__('Are you sure you want to delete your %1$s Form?'), stripslashes($form->name)) ?>);" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a></span>
+                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?'), stripslashes($form->name)) ?>');" title="<?php _e('Delete', FRM_PLUGIN_NAME) ?> <?php echo $form->form_key; ?>"><?php _e('Delete', FRM_PLUGIN_NAME) ?></a></span>
                 <?php } ?>
             </div>
         </td>

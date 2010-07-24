@@ -172,7 +172,7 @@ class FrmFormsController{
     }
 
     function display_forms_list($params=false, $message='', $page_params_ov = false, $current_page_ov = false, $errors = array()){
-        global $wpdb, $frm_app_helper, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
+        global $wpdb, $frmdb, $frm_app_helper, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
         
         if(!$params)
             $params = $this->get_params();
@@ -205,9 +205,9 @@ class FrmFormsController{
         $sdir_str = $form_vars['sdir_str'];
         $search_str = $form_vars['search_str'];
 
-        $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frm_form->table_name);
-        $page_count = $frm_app_helper->getPageCount($frm_page_size,$form_vars['where_clause'], $frm_form->table_name);
-        $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frm_form->table_name);
+        $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frmdb->forms);
+        $page_count = $frm_app_helper->getPageCount($frm_page_size,$form_vars['where_clause'], $frmdb->forms);
+        $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
         $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
         $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
         require_once(FRM_VIEWS_PATH.'/frm-forms/list.php');

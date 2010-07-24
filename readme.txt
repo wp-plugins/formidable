@@ -38,17 +38,17 @@ There are dozens of form-building plugins out there to create forms, but most ar
 == Frequently Asked Questions ==
 = Q. Why aren’t I getting any emails? =
 
-A. As of version 1.02.01, I believe any obstacles in the code have been removed. Try the following steps:
+A. Try the following steps:
 
    1. Double check to make sure your email address is present and correct under “Advanced Form Options” at the bottom of your form editor page
    2. Check your SPAM box
    3. Try a different email address.
-   4. Install WP Mail SMPT
+   4. Install WP Mail SMPT or another similar plugin
    5. If none of these steps fix the problem, let me know and I’ll try to help you find the bottleneck.
 
 = Q. How do I make a field required? =
 
-A. I have tried to keep the Formidable user interface as quick and simple as possible. Just click on the star next to the field you would like required.
+A. I have tried to keep the Formidable user interface as quick and simple as possible. Just click on the star next to the field you would like to be required.
 
 = Q. How do I edit the field name? =
 
@@ -61,15 +61,21 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 == Changelog ==
 = 1.03.03 =
 * Fixed multiple submissions for pages with multiple forms
-* PRO: Added "value" parameter to the frm-stats shortcode for counting number of entries with specified value [frm-stats id=8 value="Hello" type=count]
+* Added options to allow users other than admins to access Formidable
+* Added uninstall button
+* PRO: Added [frm-graph] shortcode for front-end graphical reports! Default values: `[frm-graph id=x include_js=1 colors="#EF8C08,#21759B,#1C9E05" bg_color="#FFFFFF" height=400 width=400]`. Show multiple fields with `[frm-graph id="x,y,z"]`
+* PRO: Added "value" parameter to the frm-stats shortcode for counting number of entries with specified value `[frm-stats id=8 value="Hello" type=count]`
 * PRO: Added a field drop-down for searching specific fields on the entries page
-* PRO: Added option to allow users to edit any entry instead of only their own
+* PRO: Added option to allow users to edit any entry instead of only their own and other user-role options
+* PRO: Added calendar format option on the Formidable Settings page
+* PRO: Changed "entry_id" in the "display-frm-data" to accept multiple entry IDs. ex: `[display-frm-data id=x entry_id="34,35,36"]`
+* PRO: Added "equals" option to if statements. ex: `[if 283 equals=hello]show this if the field with id 283 equals hello[/if 283]`
 
 = 1.03.02 =
 * Fixed admin pagination to navigate correctly with the arrow
 * Fixed most Internet Explorer admin issues
-* PRO: Added option to only show certain fields in a shortcode [formidable id=x fields="field1,field2,field3"]
-* PRO: Added a user_id parameter to the frm-stats shortcode to get only the averages and totals for that user [frm-stats id=8 user_id=19]
+* PRO: Added option to only show certain fields in a shortcode `[formidable id=x fields="field1,field2,field3"]`
+* PRO: Added a user_id parameter to the frm-stats shortcode to get only the averages and totals for that user `[frm-stats id=8 user_id=19]`
 * PRO: Fixed custom display to correctly show a single entry for all users.
 * PRO: Fixed bug that prevented some of the dynamic default values from getting replaced if the was no value to replace it with
 * PRO: Fixed bug causing "Array" to be shown in the email notification if more than one check box was selected
@@ -77,7 +83,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Fixed new fields to default to position set on the Formidable settings
 * PRO: Updated country field in the User Information template
 * PRO: Fixed hidden field to not lose its value if updated from the admin
-* PRO: If using [frm-entry-links] with type=collapse, the first year and month now default to open and fixed div uneveness 
+* PRO: If using `[frm-entry-links]` with type=collapse, the first year and month now default to open and fixed div uneveness 
 * PRO: Corrected values when using a "Data from Entries" drop down from an image url field to show the url
 * PRO: Editable 'You have already submitted that form' message
 * Other fixes
@@ -94,17 +100,17 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Added option to export a custom template as a PHP file so it can be used on other sites
 * PRO: Added option to specify alternate folder from which to import templates
 * PRO: Added number field
-* PRO: Added auto increment default value [auto_id start=1]
+* PRO: Added auto increment default value `[auto_id start=1]`
 * PRO: Added a field width option to the sidebar widget
 * PRO: Added a rich text editor to the custom display page
-* PRO: Added an edit link shortcode for use in custom displays [editlink]
+* PRO: Added an edit link shortcode for use in custom displays `[editlink]`
 * PRO: Added a drop-down select to insert the field shortcodes for custom displays
 * PRO: Added year range option to date fields
 * PRO: Fixed bug causing collapsed section to open and immediately close if there are multiple forms on the same page
 * PRO: Fixed bug preventing styling options from saving for some users
 * PRO: Added styling options: disable submit button styling, field border style and thickness, form border color and thickness, submit button border and background image
 * PRO: Added read-only fields with option to enable all fields in the shortcode [formidable id=x readonly=disabled]
-* PRO: Added entry_id option to form shortcode [formidable id=x entry_id=x]. The entry_id can either be the number of the entry id or use "last" to get the last entry.
+* PRO: Added entry_id option to form shortcode `[formidable id=x entry_id=x]`. The entry_id can either be the number of the entry id or use "last" to get the last entry.
 * PRO: Added taxonomy support with a tags field
 * PRO: Added "where" options to custom displays so only specified entries will be shown.
 * PRO: Fixed bug preventing file upload fields from accurately requiring a file

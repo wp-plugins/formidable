@@ -45,10 +45,10 @@ class FrmFieldsHelper{
     }
     
     function setup_new_vars($type='',$form_id=''){
-        global $frm_field, $frm_app_helper;
+        global $frmdb, $frm_app_helper;
         
-        $field_count = $frm_app_helper->getRecordCount("form_id=$form_id", $frm_field->table_name);
-        $key = FrmAppHelper::get_unique_key('', $frm_field->table_name, 'field_key');
+        $field_count = $frm_app_helper->getRecordCount("form_id=$form_id", $frmdb->fields);
+        $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
         
         $values = array();
         foreach (array('name' => __('Untitled', FRM_PLUGIN_NAME), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('Untitled can\'t be blank', FRM_PLUGIN_NAME), 'invalid' => __('Untitled is an invalid format', FRM_PLUGIN_NAME), 'form_id' => $form_id) as $var => $default)
@@ -153,6 +153,10 @@ DEFAULT_HTML;
         //replace [error_class] 
         $error_class = in_array('field'.$field['id'], $error_keys) ? ' frm_blank_field':''; 
         $html = str_replace('[error_class]', $error_class, $html);
+        
+        //replace [entry_key]
+        $entry_key = (isset($_GET) and isset($_GET['entry'])) ? $_GET['entry'] : '';
+        $html = str_replace('[entry_key]', $entry_key, $html);
         
         //replace [input]
         ob_start();

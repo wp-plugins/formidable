@@ -3,16 +3,14 @@ class FrmField{
     var $table_name;
 
     function FrmField(){
-        global $wpdb;
-        $this->table_name = "{$wpdb->prefix}frm_fields";
     }
 
     function create( $values, $return=true ){
-        global $wpdb;
+        global $wpdb, $frmdb;
 
         $new_values = array();
         $key = isset($values['field_key']) ? $values['field_key'] : $values['name'];
-        $new_values['field_key'] = FrmAppHelper::get_unique_key($key, $this->table_name, 'field_key');
+        $new_values['field_key'] = FrmAppHelper::get_unique_key($key, $frmdb->fields, 'field_key');
 
         foreach (array('name','description','type','default_value','options') as $col)
             $new_values[$col] = stripslashes($values[$col]);
@@ -23,7 +21,7 @@ class FrmField{
         $new_values['field_options'] = serialize($values['field_options']);
         $new_values['created_at'] = current_time('mysql', 1);
 
-        $query_results = $wpdb->insert( $this->table_name, $new_values );
+        $query_results = $wpdb->insert( $frmdb->fields, $new_values );
         if($return){
             if($query_results)
                 return $wpdb->insert_id;
@@ -33,10 +31,11 @@ class FrmField{
     }
 
     function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
+        global $frmdb;
         foreach ($this->getAll("fi.form_id = $old_form_id",'','',$blog_id) as $field){
             $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
-            $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $this->table_name, 'field_key');
+            $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $frmdb->fields, 'field_key');
             $values['field_options'] = unserialize($field->field_options);
             $values['form_id'] = $form_id;
             foreach (array('name','description','type','default_value','options','field_order','required') as $col)
@@ -46,47 +45,47 @@ class FrmField{
     }
 
     function update( $id, $values ){
-        global $wpdb;
+        global $wpdb, $frmdb;
 
         if (isset($values['field_key']))
-            $values['field_key'] = FrmAppHelper::get_unique_key($values['field_key'], $this->table_name, 'field_key', $id);
+            $values['field_key'] = FrmAppHelper::get_unique_key($values['field_key'], $frmdb->fields, 'field_key', $id);
 
         if (isset($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
 
-        $query_results = $wpdb->update( $this->table_name, $values, array( 'id' => $id ) );
+        $query_results = $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
 
         return $query_results;
     }
 
     function destroy( $id ){
-      global $wpdb, $frm_entry_meta;
+      global $wpdb, $frmdb;
 
-      $reset = 'DELETE FROM ' . $frm_entry_meta->table_name .  ' WHERE field_id=' . $id;
-      $destroy = 'DELETE FROM ' . $this->table_name .  ' WHERE id=' . $id;
+      $reset = "DELETE FROM $frmdb->entry_metas WHERE field_id=$id";
+      $destroy = "DELETE FROM $frmdb->fields WHERE id=$id";
 
       $wpdb->query($reset);
       return $wpdb->query($destroy);
     }
 
     function getOne( $id ){
-        global $wpdb;
+        global $wpdb, $frmdb;
         if (is_numeric($id))
-            $query = "SELECT * FROM {$this->table_name} WHERE id=" . $id;
+            $query = "SELECT * FROM $frmdb->fields WHERE id=$id";
         else
-            $query = "SELECT * FROM {$this->table_name} WHERE field_key='" . $id . "'";
+            $query = "SELECT * FROM $frmdb->fields WHERE field_key='$id'";
         return $wpdb->get_row($query);
     }
 
     function getAll($where = '', $order_by = '', $limit = '', $blog_id=false){
-        global $wpdb, $frm_form, $frm_app_helper;
+        global $wpdb, $frmdb, $frm_app_helper;
         if ($blog_id and IS_WPMU){
             global $wpmuBaseTablePrefix;
             $table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_fields";
             $form_table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_forms";
         }else{
-            $table_name = $this->table_name;
-            $form_table_name = $frm_form->table_name;
+            $table_name = $frmdb->fields;
+            $form_table_name = $frmdb->forms;
         }
         $query = 'SELECT fi.*, ' .
                  'fr.name as form_name ' . 
@@ -101,9 +100,9 @@ class FrmField{
     }
 
     function getIds($where = '', $order_by = '', $limit = ''){
-        global $wpdb, $frm_form, $frm_app_helper;
-        $query = "SELECT fi.id  FROM $this->table_name fi " .
-                 'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON fi.form_id=fr.id' . 
+        global $wpdb, $frmdb, $frm_app_helper;
+        $query = "SELECT fi.id  FROM $frmdb->fields fi " .
+                 "LEFT OUTER JOIN $frmdb->forms fr ON fi.form_id=fr.id" . 
                  $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         if ($limit == ' LIMIT 1')
             $results = $wpdb->get_row($query);

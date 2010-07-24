@@ -14,13 +14,11 @@ class FrmDb{
     }
     
     function upgrade(){
-      global $wpdb, $frm_form, $frm_field, $frm_app_helper;
+      global $wpdb, $frm_form, $frm_field;
       $db_version = 1.03; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
       if ($db_version != $old_db_version){
-          
-          
           require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
       
       $charset_collate = '';
@@ -180,6 +178,25 @@ class FrmDb{
       $query = "SELECT * FROM {$table}{$where}{$order_by}{$limit}";
       $query = $wpdb->prepare($query, $values);
       return $wpdb->get_results($query);
+    }
+    
+    function uninstall(){
+        if(!current_user_can('administrator'))
+            wp_die(__('You don\'t have permission to do that!', 'formidable'));
+        
+        global $frm_update, $wpdb;
+        $wpdb->query('DROP TABLE IF EXISTS '. $this->fields);
+        $wpdb->query('DROP TABLE IF EXISTS '. $this->forms);
+        $wpdb->query('DROP TABLE IF EXISTS '. $this->entries);
+        $wpdb->query('DROP TABLE IF EXISTS '. $this->entry_metas);
+        
+        delete_option('frm_options');
+        delete_option('frm_db_version');
+        delete_option($frm_update->pro_last_checked_store);
+        delete_option($frm_update->pro_auth_store);
+        delete_option($frm_update->pro_cred_store);
+        
+        do_action('frm_after_uninstall');
     }
 }
 ?>

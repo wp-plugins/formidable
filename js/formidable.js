@@ -47,7 +47,7 @@ jQuery('li.ui-state-default').click(function(evt){
 	$('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
 	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show(); 
 	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
-	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
+	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_desc').children() && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
 });
 $("img.frm_help[title]").tooltip({tip:'#frm_tooltip',lazy:true});
 $("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',lazy:true});
@@ -72,17 +72,14 @@ function frm_duplicate_field(field_id, ajax_url){
 };
 
 function frm_add_field_option(field_id, ajax_url){
-    jQuery.ajax({
-        type:"POST",
-        url:ajax_url,
+    jQuery.ajax({type:"POST",url:ajax_url,
         data:"action=frm_add_field_option&field_id="+field_id,
         success:function(msg){jQuery('#frm_add_field_'+field_id).before(msg);}
     });
 };
 
 function frm_delete_field_option(field_id, opt_key, ajax_url){
-    jQuery.ajax({
-        type:"POST",url:ajax_url,
+    jQuery.ajax({type:"POST",url:ajax_url,
         data:"action=frm_delete_field_option&field_id="+field_id+"&opt_key="+opt_key,
         success:function(msg){ jQuery('#frm_delete_field_'+field_id+'-'+opt_key+'_container').fadeOut("slow");}
     });

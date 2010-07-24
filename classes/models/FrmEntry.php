@@ -3,15 +3,13 @@ class FrmEntry{
     var $table_name;
 
     function FrmEntry(){
-      global $wpdb;
-      $this->table_name = "{$wpdb->prefix}frm_items";
     }
 
     function create( $values ){
-        global $wpdb, $frm_entry_meta;
+        global $wpdb, $frmdb, $frm_entry_meta;
         
         $new_values = array();
-        $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $this->table_name, 'item_key');
+        $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key');
         $new_values['name'] = isset($values['name']) ? $values['name'] : $values['item_key'];
         $new_values['ip'] = $_SERVER['REMOTE_ADDR'];
         $new_values['description'] = serialize(array('browser' => $_SERVER['HTTP_USER_AGENT'], 
@@ -19,7 +17,7 @@ class FrmEntry{
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
         $new_values['created_at'] = current_time('mysql', 1);
 
-        $query_results = $wpdb->insert( $this->table_name, $new_values );
+        $query_results = $wpdb->insert( $frmdb->entries, $new_values );
 
         if($query_results){
             $entry_id = $wpdb->insert_id;
@@ -32,17 +30,17 @@ class FrmEntry{
     }
     
     function duplicate( $id ){
-        global $wpdb, $frm_entry, $frm_entry_meta;
+        global $wpdb, $frmdb, $frm_entry, $frm_entry_meta;
 
         $values = $frm_entry->getOne( $id );
 
         $new_values = array();
-        $new_values['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');
+        $new_values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         $new_values['name'] = $values->name;
         $new_values['form_id'] = ($values->form_id)?(int)$values->form_id: null;
         $new_values['created_at'] = current_time('mysql', 1);
 
-        $query_results = $wpdb->insert( $this->table_name, $new_values );
+        $query_results = $wpdb->insert( $frmdb->entries, $new_values );
         if($query_results){
             $entry_id = $wpdb->insert_id;
             $frm_entry_meta->duplicate_entry_metas($id);
@@ -52,18 +50,18 @@ class FrmEntry{
     }
 
     function update( $id, $values ){
-      global $wpdb, $frm_entry_meta, $frm_field;
+      global $wpdb, $frmdb, $frm_entry_meta, $frm_field;
        
       $new_values = array();
 
       if (isset($values['item_key']))
-          $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $this->table_name, 'item_key', $id);
+          $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key', $id);
 
       $new_values['name'] = isset($values['name'])?$values['name']:'';
       $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']: null;
       //$new_values['parent_item_id'] = isset($values['parent_item_id'])?(int)$values['parent_item_id']: null;
 
-      $query_results = $wpdb->update( $this->table_name, $new_values, array( 'id' => $id ) );
+      $query_results = $wpdb->update( $frmdb->entries, $new_values, array( 'id' => $id ) );
       
       if (isset($values['item_meta']))
           $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
@@ -72,31 +70,28 @@ class FrmEntry{
     }
 
     function destroy( $id ){
-      global $wpdb, $frm_entry_meta;
+      global $wpdb, $frmdb;
       
       // Disconnect the child items from this parent item
-      //$query_results = $wpdb->update( $this->table_name, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
+      //$query_results = $wpdb->update( $frmdb->entries, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
 
-      $reset = 'DELETE FROM ' . $frm_entry_meta->table_name .  ' WHERE item_id=' . $id;
-      $destroy = 'DELETE FROM ' . $this->table_name .  ' WHERE id=' . $id;
+      $reset = 'DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id;
+      $destroy = 'DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id;
 
       $wpdb->query($reset);
       return $wpdb->query($destroy);
     }
     
     function update_form( $id, $value, $form_id ){
-      global $wpdb;
+      global $wpdb, $frmdb;
       $form_id = isset($value) ? $form_id : NULL;
-      return $wpdb->update( $this->table_name, array('form_id' => $form_id), array( 'id' => $id ) );
+      return $wpdb->update( $frmdb->entries, array('form_id' => $form_id), array( 'id' => $id ) );
     }
     
     function getOne( $id ){
-      global $wpdb, $frm_form;
-      $query = 'SELECT it.*, ' .
-                'fr.name as form_name, ' .
-                'fr.form_key as form_key ' .
-                'FROM '. $this->table_name . ' it ' .
-                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id';
+      global $wpdb, $frmdb;
+      $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
+                LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id";
       if(is_numeric($id))
         $query .= ' WHERE it.id=' . $id;
       else
@@ -105,8 +100,8 @@ class FrmEntry{
     }
     
     function exists( $id ){
-        global $wpdb, $frm_form;
-        $query = 'SELECT id FROM '. $this->table_name;
+        global $wpdb, $frmdb;
+        $query = "SELECT id FROM $frmdb->entries";
         if(is_numeric($id))
             $query .= ' WHERE id=' . $id;
         else
@@ -119,21 +114,17 @@ class FrmEntry{
     }
 
     function getAll($where = '', $order_by = '', $limit = ''){
-      global $wpdb, $frm_form, $frm_app_helper;
-      $query = 'SELECT it.*, ' .
-                'fr.name as form_name, ' .
-                'fr.form_key as form_key ' .
-                'FROM '. $this->table_name . ' it ' .
-                'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' . 
+      global $wpdb, $frmdb, $frm_app_helper;
+      $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
+                FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" . 
                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
       return $wpdb->get_results($query);
     }
 
     // Pagination Methods
     function getRecordCount($where=""){
-      global $wpdb, $frm_app_helper, $frm_form;
-      $query = 'SELECT COUNT(*) FROM ' . $this->table_name . ' it ' .
-          'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' .
+      global $wpdb, $frmdb, $frm_app_helper;
+      $query = "SELECT COUNT(*) FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
           $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
       return $wpdb->get_var($query);
     }
@@ -143,26 +134,24 @@ class FrmEntry{
     }
 
     function getPage($current_p,$p_size, $where = "", $order_by = ''){
-      global $wpdb, $frm_app_helper, $frm_form;
+      global $wpdb, $frmdb, $frm_app_helper;
       $end_index = $current_p * $p_size;
       $start_index = $end_index - $p_size;
-      $query = 'SELECT it.*, ' .
-                'fr.name as form_name ' .
-               'FROM ' . $this->table_name . ' it ' .
-               'LEFT OUTER JOIN ' . $frm_form->table_name . ' fr ON it.form_id=fr.id' . 
-               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . ' ' . 
-               'LIMIT ' . $start_index . ',' . $p_size . ';';
+      $query = "SELECT it.*, fr.name as form_name FROM $frmdb->entries it
+               LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" . 
+               $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by .
+               " LIMIT $start_index,$p_size;";
       $results = $wpdb->get_results($query);
       return $results;
     }
 
     function validate( $values ){
-        global $wpdb, $frm_field, $frm_entry_meta;
+        global $wpdb, $frmdb, $frm_field, $frm_entry_meta;
 
         $errors = array();
 
         if( !isset($values['item_key']) or $values['item_key'] == '' )
-            $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $this->table_name, 'item_key');
+            $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         
         $where = apply_filters('frm_posted_field_ids', 'fi.form_id='.$values['form_id']);
         $posted_fields = $frm_field->getAll($where, ' ORDER BY fi.field_order');

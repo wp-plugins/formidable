@@ -74,6 +74,17 @@ class FrmAppHelper{
         echo ' checked="checked"';
     }
     
+    function get_file_contents($filename){
+        if (is_file($filename)){
+            ob_start();
+            include $filename;
+            $contents = ob_get_contents();
+            ob_end_clean();
+            return $contents;
+        }
+        return false;
+    }
+    
     function get_unique_key($name='', $table_name, $column, $id = 0,$num_chars = 6){
         global $wpdb;
 
