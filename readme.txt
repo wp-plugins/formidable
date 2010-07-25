@@ -4,7 +4,7 @@ Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, widget, Post, plugin, template, contact, contact form, form, forms, captcha, spam, email, database, admin, AJAX, javascript, jquery, poll, survey, feedback
 Requires at least: 2.8
 Tested up to: 3.0
-Stable tag: 1.03.02
+Stable tag: 1.03.03
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 
@@ -54,15 +54,15 @@ A. I have tried to keep the Formidable user interface as quick and simple as pos
 
 A. The field and form names and descriptions are all changed with in-place edit. Just click on the text you would like to change, and it will turn into a text field. Don’t forget to hit save!
 
-= Q. Why isn’t the form builder page working right after I updated? =
+= Q. Why isn’t the form builder page working after I updated? =
 
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
 = 1.03.03 =
-* Fixed multiple submissions for pages with multiple forms
 * Added options to allow users other than admins to access Formidable
 * Added uninstall button
+* Fixed multiple submissions for pages with multiple forms
 * PRO: Added [frm-graph] shortcode for front-end graphical reports! Default values: `[frm-graph id=x include_js=1 colors="#EF8C08,#21759B,#1C9E05" bg_color="#FFFFFF" height=400 width=400]`. Show multiple fields with `[frm-graph id="x,y,z"]`
 * PRO: Added "value" parameter to the frm-stats shortcode for counting number of entries with specified value `[frm-stats id=8 value="Hello" type=count]`
 * PRO: Added a field drop-down for searching specific fields on the entries page
