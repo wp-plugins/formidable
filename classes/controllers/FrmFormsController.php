@@ -9,6 +9,7 @@ class FrmFormsController{
         add_action('wp_ajax_frm_form_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
+        add_filter('frm_submit_button', array(&$this, 'submit_button_label'));
     }
     
     function menu(){
@@ -152,8 +153,10 @@ class FrmFormsController{
     }
     
     function destroy(){
-        if(!current_user_can('frm_delete_forms'))
-            wp_die(__('You don\'t have permission to delete forms', 'formidable'));
+        if(!current_user_can('frm_delete_forms')){
+            global $frm_settings;
+            wp_die($frm_settings->admin_permission);
+        }
             
         global $frm_form;
         $params = $this->get_params();
@@ -169,6 +172,14 @@ class FrmFormsController{
         if ($frmdb->get_count($frmdb->fields, array('form_id' => $id)) <= 0)
             $frm_form->destroy($id);
         die();
+    }
+    
+    function submit_button_label($submit){
+        if (!$submit or empty($submit)){ 
+            global $frm_settings;
+            $submit = $frm_settings->submit_value;
+        }
+        return $submit;
     }
 
     function display_forms_list($params=false, $message='', $page_params_ov = false, $current_page_ov = false, $errors = array()){

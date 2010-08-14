@@ -59,7 +59,7 @@ class FrmEntryMeta{
       else
           $query = "SELECT meta_value FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id WHERE fi.field_key='{$field_id}' and item_id='{$item_id}'";
       if($return_var)
-          return $wpdb->get_var("{$query} LIMIT 1");
+          return stripslashes($wpdb->get_var("{$query} LIMIT 1"));
       else
           return $wpdb->get_col($query, 0);
   }

@@ -74,10 +74,11 @@ class FrmEntry{
       
       // Disconnect the child items from this parent item
       //$query_results = $wpdb->update( $frmdb->entries, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
-
+      do_action('frm_before_destroy_entry', $id);
+      
       $reset = 'DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id;
       $destroy = 'DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id;
-
+      
       $wpdb->query($reset);
       return $wpdb->query($destroy);
     }

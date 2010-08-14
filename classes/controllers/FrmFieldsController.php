@@ -94,7 +94,10 @@ class FrmFieldsController{
         $id = $_POST['field_id'];
         $field = $frm_field->getOne($id);
         $options = unserialize($field->options);
-        $last = max(array_keys($options));
+        if(!empty($options))
+            $last = max(array_keys($options));
+        else
+            $last = 0;
         $opt_key = $last + 1;
         $opt = 'Option '.(count($options)+1);
         $options[$opt_key] = $opt;

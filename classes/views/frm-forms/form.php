@@ -1,7 +1,9 @@
 <div id="frm_form_editor_container">
+<div id="titlediv">
 <div id="form_desc" class="edit_form_item frm_field_box frm_head_box">
     <h2 class="frm_ipe_form_name" id="frmform_<?php echo $id; ?>"><?php echo $values['name']; ?></h2>
     <div class="frm_ipe_form_desc"><?php echo $values['description']; ?></div>
+</div>
 </div>
 
 <ul id="new_fields">
@@ -23,7 +25,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
 		</div><!-- /theme group Error -->
 		<div class="theme-group-content corner-bottom clearfix">
             <div class="clearfix">
-			    <span class="alignright"><a title="<?php _e('Edit HTML', 'formidable') ?>" href="#TB_inline?height=500&width=700&inlineId=frm_editable_html" class="thickbox button"><?php _e('Edit HTML', 'formidable') ?></a></span>
+			    <span class="alignright"><a title="<?php _e('Edit HTML', 'formidable') ?>" href="#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Edit HTML', 'formidable') ?></a></span>
                 <table class="form-table">
                     <tr>
                         <td width="200px"><label><?php _e('Form ShortCodes') ?>:</label> <a href="http://formidablepro.com/user-manual/insert-a-form/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', FRM_PLUGIN_NAME) ?>" /></a></td>
@@ -57,7 +59,8 @@ if (isset($values['fields']) && !empty($values['fields'])){
                     </tr>
                     
                     <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', FRM_PLUGIN_NAME) ?>:</label></td>
-                        <td><textarea name="options[success_msg]" cols="50" class="frm_elastic_text"><?php echo $values['success_msg']; ?></textarea> <br/>
+                        <td><?php if($frmpro_is_installed){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
+                            <textarea id="success_msg" name="options[success_msg]" cols="50" class="frm_elastic_text"><?php echo $values['success_msg']; ?></textarea> <br/>
                         <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                         <td>
                     </tr>

@@ -15,7 +15,7 @@ class FrmDb{
     
     function upgrade(){
       global $wpdb, $frm_form, $frm_field;
-      $db_version = 1.03; // this is the version of the database we're moving to
+      $db_version = 2; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
       if ($db_version != $old_db_version){
@@ -77,6 +77,7 @@ class FrmDb{
                 description text default NULL,
                 ip text default NULL,
                 form_id int(11) default NULL,
+                post_id int(11) default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY  (id),
                 KEY form_id (form_id)
@@ -154,17 +155,17 @@ class FrmDb{
       return compact('where','values');
     }
 
-    function get_one_record($table, $args=array()){
+    function get_one_record($table, $args=array(), $fields='*'){
       global $wpdb;
 
       extract(FrmDb::get_where_clause_and_values( $args ));
 
-      $query = "SELECT * FROM {$table}{$where} LIMIT 1";
+      $query = "SELECT {$fields} FROM {$table}{$where} LIMIT 1";
       $query = $wpdb->prepare($query, $values);
       return $wpdb->get_row($query);
     }
 
-    function get_records($table, $args=array(), $order_by='', $limit=''){
+    function get_records($table, $args=array(), $order_by='', $limit='', $fields='*'){
       global $wpdb;
 
       extract(FrmDb::get_where_clause_and_values( $args ));
@@ -175,14 +176,16 @@ class FrmDb{
       if(!empty($limit))
         $limit = " LIMIT {$limit}";
 
-      $query = "SELECT * FROM {$table}{$where}{$order_by}{$limit}";
+      $query = "SELECT {$fields} FROM {$table}{$where}{$order_by}{$limit}";
       $query = $wpdb->prepare($query, $values);
       return $wpdb->get_results($query);
     }
     
     function uninstall(){
-        if(!current_user_can('administrator'))
-            wp_die(__('You don\'t have permission to do that!', 'formidable'));
+        if(!current_user_can('administrator')){
+            global $frm_settings;
+            wp_die($frm_settings->admin_permission);
+        }
         
         global $frm_update, $wpdb;
         $wpdb->query('DROP TABLE IF EXISTS '. $this->fields);

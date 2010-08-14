@@ -15,7 +15,7 @@ class FrmEntriesHelper{
               
               $field_options = unserialize($field->field_options);
               if ($reset)
-                $new_value = $default;
+                  $new_value = $default;
               else
                   $new_value = ($_POST and isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $default;
                   

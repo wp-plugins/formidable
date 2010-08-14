@@ -23,7 +23,6 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 .frmcenter{text-align:center;}
 #wpbody-content .frmicon.icon32{background: url(../images/icon_32.png) no-repeat top center !important;}
 
-.frm_form_builder{width:60%;min-width:600px;}
 .frm_form_builder a:hover{text-decoration:underline;}
 
 #frm_form_options{width:270px;}
@@ -41,7 +40,7 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 	font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
 }
 
-.form-field input{width:auto;}
+.form-table .form-field input{width:auto;}
 textarea.inplace_field{width:100%;}
 .inplace_field{width:80%;}
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
@@ -63,9 +62,8 @@ li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-
 #new_fields span.ui-icon{width:16px;}
 
 .frm_key_icons img, .frm_required0, .frm_required1{width:16px;}
-.frm_inactive_icon, .frm_required0{opacity:.2; filter:alpha(opacity=20);}
 .frm_inactive_icon, .frm_inactive_icon img, .frm_required0{
-opacity:.2; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=20)"; filter: alpha(opacity=20);
+opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; filter: alpha(opacity=40);
 }
 .frm-move{cursor:move;}
 .howto{font-weight:normal;}

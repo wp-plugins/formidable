@@ -19,11 +19,11 @@
     
 <?php }else if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
         $field['default_value'] = maybe_unserialize($field['default_value']); ?>
-        <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   ?>
+    <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   ?>
 
-        <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
-            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="frm_orange">+ <?php _e('Add an Option', FRM_PLUGIN_NAME) ?></a>
-        </div>
+    <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
+        <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', FRM_PLUGIN_NAME) ?></a>
+    </div>
 
 <?php }else if ($field['type'] == 'select'){ ?>
     <select name="<?php echo $field_name ?>" id="<?php echo $field_name ?>">
@@ -37,7 +37,7 @@
     <div class="frm-show-click">
         <?php foreach ($field['options'] as $opt_key => $opt) require(FRM_VIEWS_PATH.'/frm-fields/single-option.php'); ?>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
-            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>, '<?php echo $frm_ajax_url ?>')" class="frm_orange">+ <?php _e('Add an Option', FRM_PLUGIN_NAME) ?></a>
+            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>, '<?php echo $frm_ajax_url ?>')" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', FRM_PLUGIN_NAME) ?></a>
             <?php do_action('frm_add_multiple_opts', $field); ?>
         </div>
     </div>

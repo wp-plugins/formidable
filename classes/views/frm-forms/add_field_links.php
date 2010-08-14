@@ -1,4 +1,4 @@
-<div id="frm_form_options" class="alignright">
+<div id="frm_form_options" class="inner-sidebar">
     <?php if (!$values['is_template']){ ?>
     <p class="howto"><?php _e('Copy this code and paste it into your post, page or text widget', FRM_PLUGIN_NAME) ?>:
     <input type='text' style="text-align:center; font-weight:bold; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /></p>

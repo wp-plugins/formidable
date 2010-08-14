@@ -6,7 +6,7 @@
 
         <?php if (!$form->is_template){ ?>
         <p class="submit">
-        <?php if (!isset($submit)) $submit = $frm_settings->submit_value; ?>
+        <?php $submit = apply_filters('frm_submit_button', $submit); ?>
         <input type="submit" name="<?php echo $submit ?>" value="<?php echo $submit ?>" <?php do_action('frm_submit_button', $form, $form_action); ?>/>
         </p>
         <?php } ?>

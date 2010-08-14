@@ -8,7 +8,7 @@ class FrmAppHelper{
     }
     
     function get_pages(){
-      return get_posts( array('post_type' => 'page', 'post_status' => 'published', 'numberposts' => 99, 'orderby' => 'title', 'order' => 'ASC'));
+      return get_posts( array('post_type' => 'page', 'post_status' => 'publish', 'numberposts' => 999, 'orderby' => 'title', 'order' => 'ASC'));
     }
   
     function wp_pages_dropdown($field_name, $page_id){
@@ -127,13 +127,17 @@ class FrmAppHelper{
         $values['fields'] = array();
         if ($fields){
             foreach($fields as $field){
-
+                $field_options = stripslashes_deep(unserialize($field->field_options));
+                
                 if ($default)
                     $meta_value = $field->default_value;
-                else
-                    $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
-
-                $field_options = stripslashes_deep(unserialize($field->field_options));
+                else{
+                    if(isset($field_options['post_field']) and $field_options['post_field']){
+                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('sep' => ',', 'truncate' => false, 'type' => $field->type));
+                    }else
+                        $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
+                }
+                
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));

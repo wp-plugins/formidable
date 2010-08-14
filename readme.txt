@@ -59,6 +59,15 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.0 =
+* PRO: Added post integration. Pro forms can now be used for creating and editing posts.
+* PRO: Added page_id parameter to `[frm-entry-links]` shortcode to remove the requirement to place entry list on the same page as the form for editing entries
+* PRO: Updated custom displays to work with the `[frm-search]` shortcode
+* PRO: Named submit buttons according the the page break name if using multi-paged forms
+* PRO: Added boxes for before/after custom display content box for non-repeating content
+* PRO: Use entry values in the success message
+* PRO: Fixed the confirmation options to work when editing an entry
+
 = 1.03.03 =
 * Added options to allow users other than admins to access Formidable
 * Added uninstall button

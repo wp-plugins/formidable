@@ -47,7 +47,7 @@ jQuery('li.ui-state-default').click(function(evt){
 	$('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
 	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show(); 
 	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
-	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_desc').children() && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
+	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
 });
 $("img.frm_help[title]").tooltip({tip:'#frm_tooltip',lazy:true});
 $("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',lazy:true});

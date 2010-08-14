@@ -7,8 +7,7 @@ $submit = isset($form_options['submit_value'])?$form_options['submit_value'] : $
 $saved_message = isset($form_options['success_msg'])? $form_options['success_msg'] : $frm_settings->success_msg;
 
 $params = FrmEntriesController::get_params($form);
-$message = '';
-$errors = '';
+$message = $errors = '';
 
 FrmEntriesHelper::enqueue_scripts($params);
 
@@ -25,9 +24,10 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
         if (apply_filters('frm_continue_to_create', true, $form->id)){
             $values = FrmEntriesHelper::setup_new_vars($fields, $form, true);
             $created = $frm_entry->create( $_POST );
+            $saved_message = apply_filters('frm_content', $saved_message, $form, $created);
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form_options);
             if (!$created or !is_numeric($created) or $conf_method == 'message'){
-                echo '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? $saved_message : $frm_settings->failed_msg).'</div>';
+                echo '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? apply_filters('the_content', $saved_message) : $frm_settings->failed_msg).'</div>';
                 if (!isset($form_options['show_form']) or $form_options['show_form'])
                     require('new.php');
             }else

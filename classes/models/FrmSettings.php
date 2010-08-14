@@ -13,6 +13,7 @@ class FrmSettings{
     var $failed_msg;
     var $submit_value;
     var $login_msg;
+    var $admin_permission;
     
     var $email_to;
     
@@ -62,6 +63,10 @@ class FrmSettings{
         if(!isset($this->login_msg))    
             $this->login_msg = __('You do not have permission to view this form.', FRM_PLUGIN_NAME);
         $this->login_msg = stripslashes($this->login_msg);
+        
+        if(!isset($this->admin_permission))
+            $this->admin_permission = __("You do not have permission to do that", 'formidable');
+        $this->admin_permission = stripslashes($this->admin_permission);
         
         $this->email_to = get_option('admin_email');
         

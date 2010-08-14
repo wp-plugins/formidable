@@ -11,3 +11,4 @@
 .with_frm_style input[type="radio"], 
 .with_frm_style input[type="checkbox"]{width:auto;}
 .with_frm_style fieldset{border:none; margin:0; padding:0;}
+.with_frm_style p.submit{padding-top:20px;padding-bottom:20px;}
