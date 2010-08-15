@@ -67,6 +67,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Added boxes for before/after custom display content box for non-repeating content
 * PRO: Use entry values in the success message
 * PRO: Fixed the confirmation options to work when editing an entry
+* PRO: Added default value for [time]
 
 = 1.03.03 =
 * Added options to allow users other than admins to access Formidable
@@ -76,7 +77,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Added "value" parameter to the frm-stats shortcode for counting number of entries with specified value `[frm-stats id=8 value="Hello" type=count]`
 * PRO: Added a field drop-down for searching specific fields on the entries page
 * PRO: Added option to allow users to edit any entry instead of only their own and other user-role options
-* PRO: Added calendar format option on the Formidable Settings page
+* PRO: Added calendar date format option on the Formidable Settings page
 * PRO: Changed "entry_id" in the "display-frm-data" to accept multiple entry IDs. ex: `[display-frm-data id=x entry_id="34,35,36"]`
 * PRO: Added "equals" option to if statements. ex: `[if 283 equals=hello]show this if the field with id 283 equals hello[/if 283]`
 

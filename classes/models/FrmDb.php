@@ -15,7 +15,7 @@ class FrmDb{
     
     function upgrade(){
       global $wpdb, $frm_form, $frm_field;
-      $db_version = 2; // this is the version of the database we're moving to
+      $db_version = 3; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
       if ($db_version != $old_db_version){
@@ -88,7 +88,6 @@ class FrmDb{
       /* Create/Upgrade Meta Table */
       $sql = "CREATE TABLE {$this->entry_metas} (
                 id int(11) NOT NULL auto_increment,
-                meta_key varchar(255) default NULL,
                 meta_value longtext default NULL,
                 field_id int(11) NOT NULL,
                 item_id int(11) NOT NULL,

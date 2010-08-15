@@ -132,8 +132,8 @@ class FrmAppHelper{
                 if ($default)
                     $meta_value = $field->default_value;
                 else{
-                    if(isset($field_options['post_field']) and $field_options['post_field']){
-                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('sep' => ',', 'truncate' => false, 'type' => $field->type));
+                    if(class_exists('FrmProEntryMetaHelper') and isset($field_options['post_field']) and $field_options['post_field']){
+                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('truncate' => false, 'type' => $field->type));
                     }else
                         $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
                 }

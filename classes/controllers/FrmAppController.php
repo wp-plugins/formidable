@@ -85,9 +85,9 @@ class FrmAppController{
          
         if(!isset($_GET['activate'])){  
             $db_version = get_option('frm_db_version');
-            if((int)$db_version < 2){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < 3){ //this number should match the db_version in FrmDb.php
             ?>
-            <div class="error" style="padding:7px;"><?php _e('Your Formidable database isn\'t up to date.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?></div>  
+            <div class="error" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?></div>  
             <?php
             }
         }

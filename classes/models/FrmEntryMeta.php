@@ -5,11 +5,10 @@ class FrmEntryMeta{
   function FrmEntryMeta(){
   }
 
-  function add_entry_meta($item_id, $field_id, $meta_key, $meta_value){
+  function add_entry_meta($item_id, $field_id, $meta_key='', $meta_value){
     global $wpdb, $frmdb;
 
     $new_values = array();
-    $new_values['meta_key'] = $meta_key;
     $new_values['meta_value'] = trim($meta_value);
     $new_values['item_id'] = $item_id;
     $new_values['field_id'] = $field_id;
@@ -19,7 +18,7 @@ class FrmEntryMeta{
     return $wpdb->insert( $frmdb->entry_metas, $new_values );
   }
 
-  function update_entry_meta($item_id, $field_id, $meta_key, $meta_value){
+  function update_entry_meta($item_id, $field_id, $meta_key='', $meta_value){
     global $wpdb;
     //$this->delete_entry_meta($item_id, $field_id);
     if ($meta_value)
@@ -31,15 +30,14 @@ class FrmEntryMeta{
     $this->delete_entry_metas($item_id);
     foreach($values as $field_id => $meta_value){
         $field = $frm_field->getOne( $field_id );
-        $meta_key = $field->field_key;
         $meta_value = maybe_serialize($values[$field_id]);
-        $this->update_entry_meta($item_id, $field_id, $meta_key, $meta_value);
+        $this->update_entry_meta($item_id, $field_id, '', $meta_value);
     }
   }
   
   function duplicate_entry_metas($item_id){
       foreach ($this->get_entry_meta_info($item_id) as $meta)
-          $this->update_entry_meta($item_id, $meta->field_id, $meta->meta_key, $meta->meta_value);
+          $this->update_entry_meta($item_id, $meta->field_id, '', $meta->meta_value);
   }
 
   function delete_entry_meta($item_id, $field_id){
@@ -64,10 +62,10 @@ class FrmEntryMeta{
           return $wpdb->get_col($query, 0);
   }
   
-  function get_entry_meta($item_id,$meta_key,$return_var=true){
+  function get_entry_meta($item_id,$field_id,$return_var=true){
       global $wpdb, $frmdb;
-      $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE meta_key=%s and item_id=%d";
-      $query = $wpdb->prepare($query_str,$meta_key,$item_id);
+      $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id=%d and item_id=%d";
+      $query = $wpdb->prepare($query_str,$field_id,$item_id);
 
       if($return_var)
         return stripslashes($wpdb->get_var("{$query} LIMIT 1"));
@@ -93,14 +91,6 @@ class FrmEntryMeta{
   function get_entry_meta_info($item_id){
       global $wpdb, $frmdb;
       return $wpdb->get_results("SELECT * FROM $frmdb->entry_metas WHERE item_id={$item_id}");
-  }
-  
-  function get_entry_meta_info_by_key($item_id, $meta_key){
-      global $wpdb, $frmdb;
-      $query_str = "SELECT * FROM $frmdb->entry_metas WHERE meta_key=%s and item_id=%d";
-      $query = $wpdb->prepare($query_str,$meta_key,$item_id);
-
-      return $wpdb->get_results($query, 0);
   }
     
   function getAll($where = '', $order_by = '', $limit = ''){
@@ -135,7 +125,7 @@ class FrmEntryMeta{
     return $wpdb->get_var($query);
   }
   
-  function search_entry_metas($search, $meta_key='', $operator){
+  function search_entry_metas($search, $field_id='', $operator){
       global $wpdb, $frmdb, $frm_app_helper;
       if (is_array($search)){
           $where = '';
@@ -147,12 +137,12 @@ class FrmEntryMeta{
               if ($field == 'day' and $value > 0)
                   $where .= " meta_value {$operator} '%/{$value}/%' and";      
             }
-            $where .= " meta_key='{$meta_key}'";
+            $where .= " field_id='{$field_id}'";
             $query = "SELECT DISTINCT item_id FROM $frmdb->entry_metas". $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
         }else{
             if ($operator == 'LIKE')
                 $search = "%{$search}%";
-            $query = $wpdb->prepare("SELECT DISTINCT item_id FROM $frmdb->entry_metas WHERE meta_value {$operator} '{$search}' and meta_key='{$meta_key}'");
+            $query = $wpdb->prepare("SELECT DISTINCT item_id FROM $frmdb->entry_metas WHERE meta_value {$operator} '{$search}' and field_id='{$field_id}'");
       }
       return $wpdb->get_col($query, 0);
   }
