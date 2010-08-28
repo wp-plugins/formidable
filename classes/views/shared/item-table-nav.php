@@ -5,7 +5,7 @@
 <?php
   // Only show the pager bar if there is more than 1 page
   if($page_count > 1){ ?>
-      <div class='tablenav-pages'><span class="displaying-num"><?php printf(__('Displaying %1$s&#8211;%2$s of %3$s', FRM_PLUGIN_NAME), $page_first_record, $page_last_record, $record_count); ?></span>
+      <div class='tablenav-pages'><span class="displaying-num"><?php printf(__('Displaying %1$s&#8211;%2$s of %3$s', 'formidable'), $page_first_record, $page_last_record, $record_count); ?></span>
         
     <?php $page_param = 'paged'; require('pagination.php'); ?>
     </div>  

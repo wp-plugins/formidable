@@ -21,7 +21,7 @@ class FrmNotification{
         
         $reply_to = '';
             
-        $opener = sprintf(__('%1$s form has been submitted on %2$s.', FRM_PLUGIN_NAME), $form->name, $frm_blogname) ."\r\n\r\n";
+        $opener = sprintf(__('%1$s form has been submitted on %2$s.', 'formidable'), $form->name, $frm_blogname) ."\r\n\r\n";
         
         $entry_data = '';
         foreach ($values as $value){
@@ -35,13 +35,13 @@ class FrmNotification{
         }
           
         $data = unserialize($entry->description);  
-        $user_data = __('User Information', FRM_PLUGIN_NAME) ."\r\n";
-        $user_data .= __('IP Address', FRM_PLUGIN_NAME) . ": ". $entry->ip ."\r\n";
-        $user_data .= __('User-Agent (Browser/OS)', FRM_PLUGIN_NAME) . ": ". $data['browser']."\r\n";
-        $user_data .= __('Referrer', FRM_PLUGIN_NAME) . ": ". $data['referrer']."\r\n";
+        $user_data = __('User Information', 'formidable') ."\r\n";
+        $user_data .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
+        $user_data .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
+        $user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
 
         $mail_body = $opener . $entry_data ."\r\n". $user_data;
-        $subject = sprintf(__('%1$s Form submitted on %2$s', FRM_PLUGIN_NAME), $form->name, $frm_blogname); //subject
+        $subject = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, $frm_blogname); //subject
 
         if(is_array($to_emails)){
             foreach($to_emails as $to_email)

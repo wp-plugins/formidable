@@ -41,9 +41,9 @@ class FrmUpdate{
     $this->pro_auth_store       = 'frmpro-authorized';
     $this->pro_auth_store       = 'frmpro-wpmu-sitewide';
     $this->pro_last_checked_store = 'frmpro_last_checked_update';
-    $this->pro_username_label    = __(FRM_PLUGIN_TITLE .' Pro Username', FRM_PLUGIN_NAME);
-    $this->pro_password_label    = __(FRM_PLUGIN_TITLE .' Pro Password', FRM_PLUGIN_NAME);
-    $this->pro_error_message_str = __('Your '.FRM_PLUGIN_TITLE.' Pro Username or Password was Invalid', FRM_PLUGIN_NAME);
+    $this->pro_username_label    = __(FRM_PLUGIN_TITLE .' Pro Username', 'formidable');
+    $this->pro_password_label    = __(FRM_PLUGIN_TITLE .' Pro Password', 'formidable');
+    $this->pro_error_message_str = __('Your '.FRM_PLUGIN_TITLE.' Pro Username or Password was Invalid', 'formidable');
     
     // Don't modify these variables
     $this->pro_check_interval = 60*60; // Checking every hour
@@ -127,7 +127,7 @@ class FrmUpdate{
       global $frmpro_is_installed; ?>
 <div class="wrap">
     <div id="icon-options-general" class="icon32"><br/></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Account Information', FRM_PLUGIN_NAME)?></h2>      
+    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Account Information', 'formidable')?></h2>      
     <?php
     if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
       if($this->process_pro_cred_form()){
@@ -136,7 +136,7 @@ class FrmUpdate{
 
           ?>
 <div id="message" class="updated fade">
-<strong><?php printf(__('Your Username & Password was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', FRM_PLUGIN_NAME), "<a href=\"{$inst_install_url}\">","</a>"); ?></strong>
+<strong><?php printf(__('Your Username & Password was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href=\"{$inst_install_url}\">","</a>"); ?></strong>
 </div>
           <?php
         }
@@ -144,7 +144,7 @@ class FrmUpdate{
         ?>
 <div class="error">
   <ul>
-    <li><strong><?php _e('ERROR', FRM_PLUGIN_NAME); ?></strong>: <?php echo $this->pro_error_message_str; ?></li>
+    <li><strong><?php _e('ERROR', 'formidable'); ?></strong>: <?php echo $this->pro_error_message_str; ?></li>
   </ul>
 </div>
         <?php
@@ -164,9 +164,9 @@ class FrmUpdate{
     </div>
 
 <?php }else{ ?>          
-    <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', FRM_PLUGIN_NAME) ?></p>
+    <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
 
-    <a href="http://formidablepro.com"><?php _e('Learn More', FRM_PLUGIN_NAME) ?> &raquo;</a>
+    <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &raquo;</a>
     <?php } ?>
 </div>
     <?php    
@@ -195,16 +195,16 @@ class FrmUpdate{
     </tr>
     <?php if (IS_WPMU){ ?>
         <tr>
-            <td valign="top"><?php _e('WordPress MU', FRM_PLUGIN_NAME); ?>:</td>
+            <td valign="top"><?php _e('WordPress MU', 'formidable'); ?>:</td>
             <td valign="top">
                 <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?>>
-                <?php _e('Use this username and password to enable Formidable Pro site-wide', FRM_PLUGIN_NAME); ?>
+                <?php _e('Use this username and password to enable Formidable Pro site-wide', 'formidable'); ?>
             </td>
         </tr>
     <?php } ?>
   </table>
   <p class="submit">
-    <input type="submit" name="Submit" value="<?php _e('Save', FRM_PLUGIN_NAME); ?>" />
+    <input type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" />
   </p>
 </form>
     <?php

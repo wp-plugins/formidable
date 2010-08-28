@@ -10,12 +10,14 @@ class FrmFormsController{
         add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
         add_filter('frm_submit_button', array(&$this, 'submit_button_label'));
+        add_filter('media_buttons_context', array(&$this,'insert_form_button'));
+        add_action('admin_footer',  array(&$this, 'insert_form_popup'));
     }
     
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', FRM_PLUGIN_NAME), __('Forms', FRM_PLUGIN_NAME), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this,'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', FRM_PLUGIN_NAME), __('Create a Form', FRM_PLUGIN_NAME), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this,'new_form'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', FRM_PLUGIN_NAME), __('Templates', FRM_PLUGIN_NAME), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', 'formidable'), __('Create a Form', 'formidable'), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this,'new_form'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
     }
     
     function head(){
@@ -68,7 +70,7 @@ class FrmFormsController{
         }else{
             $items = $frm_entry->getAll('',' ORDER BY it.name');
             $record = $frm_form->update( $id, $_POST, true );
-            $message = __('Form was Successfully Created', FRM_PLUGIN_NAME);
+            $message = __('Form was Successfully Created', 'formidable');
             $params = $this->get_params();
             return $this->display_forms_list($params, $message);
         }
@@ -103,7 +105,7 @@ class FrmFormsController{
             return $this->get_edit_vars($id, $errors);
         }else{
             $record = $frm_form->update( $_POST['id'], $_POST );
-            $message = __('Form was Successfully Updated', FRM_PLUGIN_NAME);
+            $message = __('Form was Successfully Updated', 'formidable');
             return $this->get_edit_vars($id, '', $message);
         }
     }
@@ -113,11 +115,11 @@ class FrmFormsController{
         
         $params = $this->get_params();
         $record = $frm_form->duplicate( $params['id'], $params['template'] );
-        $message = ($params['template']) ? __('Form template was Successfully Created', FRM_PLUGIN_NAME) : __('Form was Successfully Copied', FRM_PLUGIN_NAME);
+        $message = ($params['template']) ? __('Form template was Successfully Created', 'formidable') : __('Form was Successfully Copied', 'formidable');
         if ($record)
             return $this->get_edit_vars($record, '', $message, true);
         else
-            return $this->display_forms_list($params, __('There was a problem creating new template.', FRM_PLUGIN_NAME));
+            return $this->display_forms_list($params, __('There was a problem creating new template.', 'formidable'));
     }
     
     function page_preview(){
@@ -162,7 +164,7 @@ class FrmFormsController{
         $params = $this->get_params();
         $message = '';
         if ($frm_form->destroy( $params['id'] ))
-            $message = __('Form was Successfully Deleted', FRM_PLUGIN_NAME);
+            $message = __('Form was Successfully Deleted', 'formidable');
         $this->display_forms_list($params, $message, '', 1);
     }
     
@@ -181,6 +183,22 @@ class FrmFormsController{
         }
         return $submit;
     }
+    
+    function insert_form_button($content){
+        $content .= '<a href="#TB_inline?width=450&height=500&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'.FRM_IMAGES_URL.'/icon_16_bw.png" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
+        return $content;
+    }
+    
+    function insert_form_popup(){
+        $page = basename($_SERVER['PHP_SELF']);
+        if(in_array($page, array('post.php', 'page.php', 'page-new.php', 'post-new.php'))){
+            if(class_exists('FrmProDisplay')){
+                global $frmpro_display;
+                $displays = $frmpro_display->getAll();
+            }
+            require_once(FRM_VIEWS_PATH.'/frm-forms/insert_form_popup.php');   
+        }
+    }
 
     function display_forms_list($params=false, $message='', $page_params_ov = false, $current_page_ov = false, $errors = array()){
         global $wpdb, $frmdb, $frm_app_helper, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
@@ -192,7 +210,7 @@ class FrmFormsController{
             $message = FrmAppHelper::frm_get_main_message();
 
         $controller_file = FRM_PLUGIN_NAME;
-        $page_params = '';
+        $page_params = '&action=0';
         $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
 
         if ($params['template']){
@@ -291,7 +309,7 @@ class FrmFormsController{
         $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
         $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
         if (isset($values['default_template']) && $values['default_template'])
-            wp_die(__('That template cannot be edited', FRM_PLUGIN_NAME));
+            wp_die(__('That template cannot be edited', 'formidable'));
         else if($create_link)
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         else

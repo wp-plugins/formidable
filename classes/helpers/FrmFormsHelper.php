@@ -13,7 +13,7 @@ class FrmFormsHelper{
     
     function get_template_dropdown($templates){ ?>
         <select id="select_form" name="select_form" onChange='createFromFrmTemplate(this.value)'>
-            <option value=""><?php _e('Create Form from Template', FRM_PLUGIN_NAME) ?>: </option>
+            <option value=""><?php _e('Create Form from Template', 'formidable') ?>: </option>
             <?php foreach ($templates as $temp){ ?>
                 <option value="<?php echo $temp->id ?>"><?php echo $temp->name ?></option>
             <?php }?>
@@ -45,7 +45,7 @@ class FrmFormsHelper{
     function setup_new_vars(){
         global $frmdb, $frm_settings;
         $values = array();
-        foreach (array('name' => __('Untitled Form', FRM_PLUGIN_NAME), 'description' => '') as $var => $default)
+        foreach (array('name' => __('Untitled Form', 'formidable'), 'description' => '') as $var => $default)
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
         
         $values['description'] = wpautop($values['description']);

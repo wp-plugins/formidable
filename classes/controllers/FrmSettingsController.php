@@ -8,7 +8,7 @@ class FrmSettingsController{
     }
 
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', FRM_PLUGIN_NAME), __('Settings', FRM_PLUGIN_NAME), 'frm_change_settings', FRM_PLUGIN_NAME.'-settings', array($this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', 'formidable'), __('Settings', 'formidable'), 'frm_change_settings', FRM_PLUGIN_NAME.'-settings', array($this,'route'));
     }
     
     function pro_menu(){
@@ -34,7 +34,7 @@ class FrmSettingsController{
       
       if( empty($errors) ){
         $frm_settings->store();
-        $message = __('Settings Saved', FRM_PLUGIN_NAME);
+        $message = __('Settings Saved', 'formidable');
       }
       $frm_roles = FrmAppHelper::frm_capabilities();
       require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');

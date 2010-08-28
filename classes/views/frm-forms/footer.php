@@ -46,7 +46,7 @@ $("#new_fields").sortable({
     revert:true,
     receive:function(event,ui){
         var new_id = (ui.item).attr('id');
-        jQuery('#new_fields .frmbutton#'+new_id).replaceWith('<img class="frmbutton frmbutton_loadingnow" id="' + new_id + '" src="<?php echo FRM_IMAGES_URL; ?>/ajax_loader.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+        jQuery('#new_fields .frmbutton#'+new_id).replaceWith('<img class="frmbutton frmbutton_loadingnow" id="' + new_id + '" src="<?php echo FRM_IMAGES_URL; ?>/ajax_loader.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
         jQuery.ajax({
             type:"POST",
             url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
@@ -81,7 +81,7 @@ function frm_mark_required(field_id, required){
         var switch_to = '0';
         var atitle = 'Click to Mark as Required';
     }
-    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" class="ui-icon alignleft" src="<?php echo FRM_IMAGES_URL; ?>/required_loader.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" class="ui-icon alignleft" src="<?php echo FRM_IMAGES_URL; ?>/required_loader.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
     jQuery.ajax({
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
@@ -99,7 +99,7 @@ function frm_clear_on_focus(field_id, active){
         var switch_to = '1';
         var new_class = '';
     }
-    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
     jQuery.ajax({
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
@@ -117,7 +117,7 @@ function frm_default_blank(field_id, active){
         var switch_to = '1';
         var new_class = '';
     }
-    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
     jQuery.ajax({
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
@@ -135,7 +135,7 @@ function frm_read_only(field_id, active){
         var switch_to = '1';
         var new_class = '';
     }
-    jQuery('#'+thisid).replaceWith('<img id="'+thisid+'" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', FRM_PLUGIN_NAME); ?>" />');
+    jQuery('#'+thisid).replaceWith('<img id="'+thisid+'" src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
     jQuery.ajax({
         type:"POST",url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
         data:"action=frm_read_only&field="+field_id+"&active="+switch_to,
@@ -144,7 +144,7 @@ function frm_read_only(field_id, active){
 };
 
 function frm_delete_field(field_id){ 
-    if(confirm("<?php _e('Are you sure you want to delete this field and all data associated with it?', FRM_PLUGIN_NAME); ?>")){
+    if(confirm("<?php _e('Are you sure you want to delete this field and all data associated with it?', 'formidable'); ?>")){
     jQuery.ajax({
         type:"POST",
         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",

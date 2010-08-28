@@ -60,14 +60,21 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 
 == Changelog ==
 = 1.04.0 =
-* PRO: Added post integration. Pro forms can now be used for creating and editing posts.
+* Added icon link on post/page editor for inserting forms
+* Added option to show individual options in the custom HTML using the `[input]` tag. example: `[input opt=1]` where opt is the option order. Also hide the labels with `[input label=0]`
+* PRO: Added post integration. Pro forms can now be used for creating and editing posts
+* PRO: Added a calendar option to the custom display, allowing entries to be displayed in a monthly calendar
 * PRO: Added page_id parameter to `[frm-entry-links]` shortcode to remove the requirement to place entry list on the same page as the form for editing entries
+* PRO: Updated email, url, and number fields to use HTML5
 * PRO: Updated custom displays to work with the `[frm-search]` shortcode
 * PRO: Named submit buttons according the the page break name if using multi-paged forms
 * PRO: Added boxes for before/after custom display content box for non-repeating content
 * PRO: Use entry values in the success message
+* PRO: Switch out the Rich Text Editor for a text box if users are on a mobile device
 * PRO: Fixed the confirmation options to work when editing an entry
 * PRO: Added default value for [time]
+* PRO: Fixed admin search
+* PRO: Fixed field drop-down on custom display page to work on the Visual tab
 
 = 1.03.03 =
 * Added options to allow users other than admins to access Formidable

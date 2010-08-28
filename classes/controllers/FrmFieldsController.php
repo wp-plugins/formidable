@@ -181,18 +181,22 @@ class FrmFieldsController{
             
         $action = FrmAppHelper::get_param('action');
         if(isset($field['required']) and $field['required']){
+            echo ' required="required"';
             if($field['type'] == 'file' and $action == 'edit'){
                 //don't add the required class if this is a file upload when editing
             }else
                 $class .= " required";
         }
+        
+        if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select','radio','checkbox','hidden'))) 
+            echo ' placeholder="'.$field['default_value'].'"';
             
         if(isset($field['size']) and $field['size'] > 0){ 
-            if($field['type'] != 'textarea')
+            if($field['type'] != 'textarea' and $field['type'] != 'select')
                 echo ' size="'. $field['size'] .'"';
             $class .= " auto_width";
         }
-        if(isset($field['max']) and !in_array($field['type'], array('textarea','rte')))
+        if(isset($field['max']) and !in_array($field['type'], array('textarea','rte')) and !empty($field['max']))
             echo ' maxlength="'. $field['max'] .'"';
         if(isset($field['clear_on_focus']) and $field['clear_on_focus'])
             echo ' onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"';

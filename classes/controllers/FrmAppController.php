@@ -31,29 +31,29 @@ class FrmAppController{
         global $frmpro_is_installed;
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_menu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), FRM_URL . '/images/icon_16.png');
+            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), FRM_URL . '/images/icon_16_bw.png');
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_menu_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller,'route'), FRM_URL . '/images/icon_16.png');
+            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller,'route'), FRM_URL . '/images/icon_16_bw.png');
         }
     }
     
     function frm_nav(){
         $nav = array();
         if(current_user_can('frm_view_forms'))
-            $nav[FRM_PLUGIN_NAME] = __('Forms', FRM_PLUGIN_NAME);
+            $nav[FRM_PLUGIN_NAME] = __('Forms', 'formidable');
             
         if(current_user_can('frm_edit_forms'))
-            $nav[FRM_PLUGIN_NAME . '-new'] = __('Create a Form', FRM_PLUGIN_NAME);
+            $nav[FRM_PLUGIN_NAME . '-new'] = __('Create a Form', 'formidable');
         
         if(current_user_can('frm_view_forms'))
-            $nav[FRM_PLUGIN_NAME . '-templates'] = __('Templates', FRM_PLUGIN_NAME);
+            $nav[FRM_PLUGIN_NAME . '-templates'] = __('Templates', 'formidable');
         return $nav;
     }
 
     // Adds a settings link to the plugins page
     function settings_link($links, $file){
-        $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings', FRM_PLUGIN_NAME) . '</a>';
+        $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings', 'formidable') . '</a>';
         array_unshift($links, $settings);
         
         return $links;

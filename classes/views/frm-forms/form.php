@@ -20,7 +20,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
 <div class="themeRoller clearfix">
     <div class="theme-group clearfix">
 	    <div class="theme-group-header state-default">
-		    <span class="icon icon-triangle-1-e"><?php _e('Collapse', FRM_PLUGIN_NAME) ?></span>
+		    <span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
 		    <a href="#"><?php _e('Advanced Form Options', 'formidable') ?></a>
 		</div><!-- /theme group Error -->
 		<div class="theme-group-content corner-bottom clearfix">
@@ -28,37 +28,37 @@ if (isset($values['fields']) && !empty($values['fields'])){
 			    <span class="alignright"><a title="<?php _e('Edit HTML', 'formidable') ?>" href="#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Edit HTML', 'formidable') ?></a></span>
                 <table class="form-table">
                     <tr>
-                        <td width="200px"><label><?php _e('Form ShortCodes') ?>:</label> <a href="http://formidablepro.com/user-manual/insert-a-form/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', FRM_PLUGIN_NAME) ?>" /></a></td>
+                        <td width="200px"><label><?php _e('Form ShortCodes') ?>:</label> <a href="http://formidablepro.com/user-manual/insert-a-form/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
                         <td>[formidable id=<?php echo $id; ?> title=true description=true]  or [formidable key=<?php echo $values['form_key']; ?>]</td>
                     </tr>
 
                     <tr>
-                        <td><label><?php _e('Form Key', FRM_PLUGIN_NAME) ?>:</label></td>
+                        <td><label><?php _e('Form Key', 'formidable') ?>:</label></td>
                         <td><input type="text" name="form_key" value="<?php echo $values['form_key']; ?>" /></td>
                     </tr>
 
-                    <tr><td><label><?php _e('Styling', FRM_PLUGIN_NAME) ?>:</label></td>
+                    <tr><td><label><?php _e('Styling', 'formidable') ?>:</label></td>
                         <td><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
                         <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                     </tr> 
 
-                    <tr><td><label><?php _e('Submit Button Text', FRM_PLUGIN_NAME) ?>:</label></td>
+                    <tr><td><label><?php _e('Submit Button Text', 'formidable') ?>:</label></td>
                         <td><input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" /></td>
                     </tr>
                     
-                    <tr><td valign="top"><label><?php _e('Action After Form Submission', FRM_PLUGIN_NAME) ?>:</label>
+                    <tr><td valign="top"><label><?php _e('Action After Form Submission', 'formidable') ?>:</label>
                         <?php if(!$frmpro_is_installed){ ?>
-                        <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To use the second two options, you must upgrade to Formidable Pro.', FRM_PLUGIN_NAME) ?>" />
+                        <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To use the second two options, you must upgrade to Formidable Pro.', 'formidable') ?>" />
                         <?php } ?>
                         </td>
                         <td>
-                            <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?>/> <label for="success_action_message"><?php _e('Display a Message', FRM_PLUGIN_NAME) ?></label>
-                            <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page"><?php _e('Display content from another page', FRM_PLUGIN_NAME) ?></label>
-                            <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect"><?php _e('Redirect', FRM_PLUGIN_NAME) ?></label>
+                            <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <label for="success_action_message"><?php _e('Display a Message', 'formidable') ?></label>
+                            <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page"><?php _e('Display content from another page', 'formidable') ?></label>
+                            <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect"><?php _e('Redirect', 'formidable') ?></label>
                         </td>
                     </tr>
                     
-                    <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', FRM_PLUGIN_NAME) ?>:</label></td>
+                    <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?>:</label></td>
                         <td><?php if($frmpro_is_installed){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
                             <textarea id="success_msg" name="options[success_msg]" cols="50" class="frm_elastic_text"><?php echo $values['success_msg']; ?></textarea> <br/>
                         <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
@@ -77,14 +77,14 @@ if (isset($values['fields']) && !empty($values['fields'])){
 	
 	<div class="theme-group clearfix">
 		<div class="theme-group-header state-default">
-			<span class="icon icon-triangle-1-e"><?php _e('Collapse', FRM_PLUGIN_NAME) ?></span>
+			<span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
 			<a href="#"><?php _e('Form Notification Options', 'formidable') ?></a>
 		</div><!-- /theme group Error -->
 		<div class="theme-group-content corner-bottom clearfix">
             <div class="clearfix">
 				 <table class="form-table">
                       <tr>
-                          <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?>:</label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', FRM_PLUGIN_NAME) ?>" /></td>
+                          <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?>:</label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
                           <td><input type="text" name="options[email_to]" size="55" value="<?php echo $values['email_to']; ?>" /></td>
                      </tr>
                      <?php do_action('frm_additional_form_notification_options', $values); ?> 
@@ -119,19 +119,22 @@ if (isset($values['fields']) && !empty($values['fields'])){
     <div class="alignright" style="width:150px;">
         <h4><?php _e('Key', 'formidable') ?></h4>
         <ul>
-            <li><b><?php _e('Form Name', 'formidable') ?>:</b> [form_name]</li>
-            <li><b><?php _e('Form Description', 'formidable') ?>:</b> [form_description]</li>
+            <li><b><?php _e('Form Name', 'formidable') ?>:</b> <pre>[form_name]</pre></li>
+            <li><b><?php _e('Form Description', 'formidable') ?>:</b> <pre>[form_description]</pre></li>
         </ul>
         <ul>
-            <li><b><?php _e('Field Id', 'formidable') ?>:</b> [id]</li>
-            <li><b><?php _e('Field Key', 'formidable') ?>:</b> [key]</li>
-            <li><b><?php _e('Field Name', 'formidable') ?>:</b> [field_name]</li>
-            <li><b><?php _e('Field Description', 'formidable') ?>:</b> [description]</li>
-            <li><b><?php _e('Label Position', 'formidable') ?>:</b> [label_position]</li>
-            <li><b><?php _e('Required label', 'formidable') ?>:</b> [required_label]</li>
-            <li><b><?php _e('Input Field', 'formidable') ?>:</b> [input]</li>
-            <li><b><?php _e('Add class name if field is required', 'formidable') ?>:</b> [required_class]</li>
-            <li><b><?php _e('Add class name if field has an error on form submit', 'formidable') ?>:</b> [error_class]</li>
+            <li><b><?php _e('Field Id', 'formidable') ?>:</b> <pre>[id]</pre></li>
+            <li><b><?php _e('Field Key', 'formidable') ?>:</b> <pre>[key]</pre></li>
+            <li><b><?php _e('Field Name', 'formidable') ?>:</b> <pre>[field_name]</pre></li>
+            <li><b><?php _e('Field Description', 'formidable') ?>:</b> <pre>[description]</pre></li>
+            <li><b><?php _e('Label Position', 'formidable') ?>:</b> <pre>[label_position]</pre></li>
+            <li><b><?php _e('Required label', 'formidable') ?>:</b> <pre>[required_label]</pre></li>
+            <li><b><?php _e('Input Field', 'formidable') ?>:</b> <pre>[input]</pre><br/>
+                <?php _e('Show a single radio or checkbox option by replacing "1" with the order of the option','formidable') ?>: <pre>[input opt=1]</pre><br/>
+                <?php _e('Hide the option labels','formidable') ?>: <pre>[input label=0]</pre>
+            </li>
+            <li><b><?php _e('Add class name if field is required', 'formidable') ?>:</b> <pre>[required_class]</pre></li>
+            <li><b><?php _e('Add class name if field has an error on form submit', 'formidable') ?>:</b> <pre>[error_class]</pre></li>
         </ul>
     </div> 
 <?php } ?>

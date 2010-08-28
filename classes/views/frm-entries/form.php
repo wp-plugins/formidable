@@ -33,7 +33,7 @@
     ?>
     <?php if (is_admin() && !$frm_settings->lock_keys){ ?>
         <div class="form-field">
-        <label><?php _e('Entry Key', FRM_PLUGIN_NAME) ?></label>   
+        <label><?php _e('Entry Key', 'formidable') ?></label>   
         <input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
         </div>
     <?php }else{ ?>

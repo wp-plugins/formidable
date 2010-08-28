@@ -10,7 +10,7 @@ class FrmEntriesController{
     function menu(){
         global $frmpro_is_installed;
         if(!$frmpro_is_installed){
-            add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' |'. __('Pro Entries', FRM_PLUGIN_NAME), __('Pro Entries', FRM_PLUGIN_NAME), 'administrator', FRM_PLUGIN_NAME.'-entries',array($this,'list_entries'));
+            add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' |'. __('Pro Entries', 'formidable'), __('Pro Entries', 'formidable'), 'administrator', FRM_PLUGIN_NAME.'-entries',array($this,'list_entries'));
             //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-entries', array($this,'head'));
         }
     }
@@ -24,13 +24,15 @@ class FrmEntriesController{
         if ($id) $form = $frm_form->getOne($id);
         else if ($key) $form = $frm_form->getOne($key);
         
-        $form_options = stripslashes_deep(maybe_unserialize($form->options));
         if (!$form or $form->is_template or $form->status == 'draft')
-            return __('Please select a valid form', FRM_PLUGIN_NAME);
+            return __('Please select a valid form', 'formidable');
         else if ($form->logged_in and !$user_ID){
             global $frm_settings;
             return $frm_settings->login_msg;
-        }else if($form->logged_in and $user_ID and isset($form_options['logged_in_role']) and $form_options['logged_in_role'] != ''){
+        }
+            
+        $form_options = stripslashes_deep(maybe_unserialize($form->options));
+        if($form->logged_in and $user_ID and isset($form_options['logged_in_role']) and $form_options['logged_in_role'] != ''){
             if(FrmAppHelper::user_has_permission($form_options['logged_in_role']))
                 return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);
             else{

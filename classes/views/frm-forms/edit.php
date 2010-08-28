@@ -10,8 +10,8 @@
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
     <form method="post" action="">
         <p class="submit">
-            <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" /> <?php _e('or', 'formidable') ?>
-            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
+            <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
+            <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
         
         <input type="hidden" name="action" value="update">
@@ -21,8 +21,8 @@
         <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>
 
         <p class="submit">
-            <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" /> <?php _e('or', 'formidable') ?>
-            <a href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
+            <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
+            <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
     </form>
     </div>

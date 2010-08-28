@@ -4,11 +4,11 @@ class FrmFieldsHelper{
     
     function field_selection(){
         $fields = apply_filters('frm_available_fields', array(
-            'text' => __('Text Input (One Line)', FRM_PLUGIN_NAME),
-            'textarea' => __('Paragraph Input (Multiple Lines)', FRM_PLUGIN_NAME),
-            'checkbox' => __('Multiple Selection (Check Boxes)', FRM_PLUGIN_NAME),
-            'radio' => __('Select One (Radio)', FRM_PLUGIN_NAME),
-            'select' => __('Drop-Down (Select)', FRM_PLUGIN_NAME)
+            'text' => __('Text Input (One Line)', 'formidable'),
+            'textarea' => __('Paragraph Input (Multiple Lines)', 'formidable'),
+            'checkbox' => __('Multiple Selection (Check Boxes)', 'formidable'),
+            'radio' => __('Select One (Radio)', 'formidable'),
+            'select' => __('Drop-Down (Select)', 'formidable')
         ));
         
         if ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) )
@@ -18,23 +18,23 @@ class FrmFieldsHelper{
     
     function pro_field_selection(){
         return apply_filters('frm_pro_available_fields', array(
-            'divider' => __('Section Heading', FRM_PLUGIN_NAME),
-            'break' => __('Page Break', FRM_PLUGIN_NAME),
-            'file' => __('File Upload', FRM_PLUGIN_NAME),
-            'rte' => __('Rich Text Editor', FRM_PLUGIN_NAME), 
-            'number' => __('Number', FRM_PLUGIN_NAME), 
-            'phone' => __('Phone Number', FRM_PLUGIN_NAME), 
-            'email' => __('Email Address', FRM_PLUGIN_NAME),
-            'date' => __('Date', FRM_PLUGIN_NAME), 
+            'divider' => __('Section Heading', 'formidable'),
+            'break' => __('Page Break', 'formidable'),
+            'file' => __('File Upload', 'formidable'),
+            'rte' => __('Rich Text Editor', 'formidable'), 
+            'number' => __('Number', 'formidable'), 
+            'phone' => __('Phone Number', 'formidable'), 
+            'email' => __('Email Address', 'formidable'),
+            'date' => __('Date', 'formidable'), 
             //'time' => 'Time',
-            'website' => __('Website/URL', FRM_PLUGIN_NAME),
-            'image' => __('Image URL', FRM_PLUGIN_NAME), 
-            '10radio' => __('Scale', FRM_PLUGIN_NAME),
-            //'grid' => __('Grid', FRM_PLUGIN_NAME),
-            'data' => __('Data from Entries', FRM_PLUGIN_NAME),
-            'hidden' => __('Hidden Field', FRM_PLUGIN_NAME), 
-            'user_id' => __('Hidden User Id', FRM_PLUGIN_NAME),
-            'tag' => __('Tags', FRM_PLUGIN_NAME)
+            'url' => __('Website/URL', 'formidable'),
+            'image' => __('Image URL', 'formidable'), 
+            '10radio' => __('Scale', 'formidable'),
+            //'grid' => __('Grid', 'formidable'),
+            'data' => __('Data from Entries', 'formidable'),
+            'hidden' => __('Hidden Field', 'formidable'), 
+            'user_id' => __('Hidden User Id', 'formidable'),
+            'tag' => __('Tags', 'formidable')
             //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
             //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
             //'city_selector' => 'US State/County/City selector', 
@@ -51,7 +51,7 @@ class FrmFieldsHelper{
         $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
         
         $values = array();
-        foreach (array('name' => __('Untitled', FRM_PLUGIN_NAME), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('Untitled can\'t be blank', FRM_PLUGIN_NAME), 'invalid' => __('Untitled is an invalid format', FRM_PLUGIN_NAME), 'form_id' => $form_id) as $var => $default)
+        foreach (array('name' => __('Untitled', 'formidable'), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('Untitled can\'t be blank', 'formidable'), 'invalid' => __('Untitled is an invalid format', 'formidable'), 'form_id' => $form_id) as $var => $default)
             $values[$var] = $default;
         
         $values['field_options'] = array();
@@ -159,22 +159,44 @@ DEFAULT_HTML;
         $html = str_replace('[entry_key]', $entry_key, $html);
         
         //replace [input]
-        ob_start();
-        include(FRM_VIEWS_PATH.'/frm-fields/input.php');
-        $contents = ob_get_contents();
-        ob_end_clean();
-        $html = str_replace('[input]', $contents, $html);
+        preg_match_all("/\[(input)\b(.*?)(?:(\/))?\]/s", $html, $shortcodes, PREG_PATTERN_ORDER);
+
+        foreach ($shortcodes[0] as $short_key => $tag){
+            $atts = shortcode_parse_atts( $shortcodes[2][$short_key] );
+
+            if(!empty($shortcodes[2][$short_key])){
+                $tag = str_replace('[', '',$shortcodes[0][$short_key]);
+                $tag = str_replace(']', '', $tag);
+                $tags = explode(' ', $tag);
+                if(is_array($tags))
+                    $tag = $tags[0];
+            }else
+                $tag = $shortcodes[1][$short_key];
+               
+            $replace_with = ''; 
+            
+            if($tag == 'input'){
+                if(isset($atts['opt'])) $atts['opt']--;
+                ob_start();
+                include(FRM_VIEWS_PATH.'/frm-fields/input.php');
+                $replace_with = ob_get_contents();
+                ob_end_clean();
+            }
+            
+            $html = str_replace($shortcodes[0][$short_key], $replace_with, $html);
+        }
+        
         
         return apply_filters('frm_replace_shortcodes', $html, $field);
     }
     
     function show_onfocus_js($field_id, $clear_on_focus){ ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', FRM_PLUGIN_NAME), ($clear_on_focus) ? __('not ', FRM_PLUGIN_NAME) :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
     <?php
     }
     
     function show_default_blank_js($field_id, $default_blank){ ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', FRM_PLUGIN_NAME), ($default_blank) ? __('not ', FRM_PLUGIN_NAME) :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
     <?php
     }
     

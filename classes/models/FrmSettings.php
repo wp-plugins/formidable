@@ -50,18 +50,18 @@ class FrmSettings{
             $this->accordion_js = false;
             
         if(!isset($this->success_msg))
-            $this->success_msg = __('Your responses were successfully submitted. Thank you!', FRM_PLUGIN_NAME);
+            $this->success_msg = __('Your responses were successfully submitted. Thank you!', 'formidable');
         $this->success_msg = stripslashes($this->success_msg);
         
         if(!isset($this->failed_msg))
-            $this->failed_msg = __('We\'re sorry. There was an error processing your responses.', FRM_PLUGIN_NAME);
+            $this->failed_msg = __('We\'re sorry. There was an error processing your responses.', 'formidable');
         $this->failed_msg = stripslashes($this->failed_msg);
         
         if(!isset($this->submit_value))
-            $this->submit_value = __('Submit', FRM_PLUGIN_NAME);
+            $this->submit_value = __('Submit', 'formidable');
         
         if(!isset($this->login_msg))    
-            $this->login_msg = __('You do not have permission to view this form.', FRM_PLUGIN_NAME);
+            $this->login_msg = __('You do not have permission to view this form.', 'formidable');
         $this->login_msg = stripslashes($this->login_msg);
         
         if(!isset($this->admin_permission))

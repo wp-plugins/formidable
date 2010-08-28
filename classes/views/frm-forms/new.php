@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>    
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Create Form', FRM_PLUGIN_NAME) ?></h2>
+    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Create Form', 'formidable') ?></h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
@@ -16,8 +16,8 @@
             <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>
 
             <p class="submit">
-                <input type="submit" name="Submit" value="<?php _e('Create', FRM_PLUGIN_NAME) ?>" class="button-primary" /> <?php _e('or', FRM_PLUGIN_NAME) ?> 
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', FRM_PLUGIN_NAME) ?></a>
+                <input type="submit" name="Submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
             </p>
         </form>
     </div>

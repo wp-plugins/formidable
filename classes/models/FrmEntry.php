@@ -1,9 +1,5 @@
 <?php
 class FrmEntry{
-    var $table_name;
-
-    function FrmEntry(){
-    }
 
     function create( $values ){
         global $wpdb, $frmdb, $frm_entry_meta;
@@ -167,7 +163,7 @@ class FrmEntry{
                 $_POST['item_meta'][$posted_field->id] = $value = '';            
                   
             if ($posted_field->required == '1' and $value == ''){
-                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', FRM_PLUGIN_NAME) or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('can\'t be blank', FRM_PLUGIN_NAME)) : $field_options['blank'];  
+                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', 'formidable') or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('can\'t be blank', 'formidable')) : $field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name']))
                 $_POST['name'] = $value;
                 
@@ -195,7 +191,7 @@ class FrmEntry{
             $form_options = stripslashes_deep(unserialize($form->options));
 
             if (isset($form_options['akismet']) && $form_options['akismet'])
-    	        $errors['spam'] = __('Your entry appears to be spam!', FRM_PLUGIN_NAME);
+    	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
         
       return $errors;
