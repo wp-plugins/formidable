@@ -69,13 +69,13 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 .howto{font-weight:normal;}
 #frm_form_editor_container .themeRoller span.howto{display:inline;}
 
-.with_frm_style .form-field .themeRoller input[type="text"],
-.with_frm_style .form-field .themeRoller select,
-#wpcontent .with_frm_style .form-field .themeRoller select,
-.with_frm_style .form-field .themeRoller textarea{
+#new_fields .form-field .themeRoller input[type="text"],
+#new_fields .form-field .themeRoller select,
+#wpcontent #new_fields .form-field .themeRoller select,
+#new_fields .form-field .themeRoller textarea{
 	width:auto;font-size:11px;
 }
-.form-field input[type="radio"], .form-field input[type="checkbox"]{width:auto;}
+.form-field input{width:auto;}
 
 .frm_10radio{margin-right:10px; text-align:center; float:left;}
 

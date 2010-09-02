@@ -14,7 +14,7 @@
     <?php   }  
         } ?>   
 <?php }else if ($field['type'] == 'select'){ ?>
-    <?php $auto_width = (isset($field['size']) && $field['size'] > 0) ? 'class="auto_width"' : ''; ?>
+    <?php $auto_width = (isset($field['size']) && $field['size']) ? 'class="auto_width"' : ''; ?>
     <select name="<?php echo $field_name ?>" id="item_meta<?php echo $field['id'] ?>" <?php echo $auto_width ?>>
         <?php foreach ($field['options'] as $opt_key => $opt){ 
             $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field); ?>

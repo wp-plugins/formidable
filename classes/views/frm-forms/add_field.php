@@ -13,9 +13,9 @@
     <label class="frm_ipe_field_label frm_pos_<?php echo $field['label']; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
     
 <?php if ($display['type'] == 'text'){ ?>
-    <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" size="<?php echo $field['size']; ?>"/> 
+    <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'.$field['size'] .'"' : ''; ?> /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
-    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' cols="'.$field['size'].'"' ?> rows="<?php echo $field['max']; ?>"><?php echo $field['default_value']; ?></textarea> 
+    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'.$field['size'].'"' ?> rows="<?php echo $field['max']; ?>"><?php echo $field['default_value']; ?></textarea> 
     
 <?php }else if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
         $field['default_value'] = maybe_unserialize($field['default_value']); ?>
@@ -26,7 +26,7 @@
     </div>
 
 <?php }else if ($field['type'] == 'select'){ ?>
-    <select name="<?php echo $field_name ?>" id="<?php echo $field_name ?>">
+    <select name="<?php echo $field_name ?>" id="<?php echo $field_name ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto"' : ''; ?>>
         <?php foreach ($field['options'] as $opt){ 
             $selected = ($field['default_value'] == $opt)?(' selected="selected"'):(''); ?>
             <option value="<?php echo $opt ?>"<?php echo $selected ?>><?php echo $opt ?></option>
@@ -84,13 +84,8 @@ if ($display['options']){ ?>
                         <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5"> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('rows high', 'formidable') : __('characters maximum', 'formidable') ?></span></td>
                     </tr>
                     <?php } ?>
-                    <?php if($field['type'] == 'select'){ ?>
-                    <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?>:</label></td>
-                        <td><input type="checkbox" name="field_options[size_<?php echo $field['id'] ?>]" <?php echo (isset($field['size']) and $field['size'])? 'checked="checked"':''; ?> /> <span class="howto"><?php _e('automatic width', 'formidable') ?></span></td>
-                    </tr>
-                    <?php } ?>
                     <?php if ($display['label_position']){ ?>
-                    <tr><td><label><?php _e('Label Position', 'formidable') ?>:</label></td>
+                    <tr><td width="150px"><label><?php _e('Label Position', 'formidable') ?>:</label></td>
                         <td><select name="field_options[label_<?php echo $field['id'] ?>]">
                             <option value="top"<?php echo ($field['label'] == 'top')?(' selected="true"'):(''); ?>><?php _e('Top', 'formidable') ?></option>
                             <option value="left"<?php echo ($field['label'] == 'left')?(' selected="true"'):(''); ?>><?php _e('Left', 'formidable') ?></option>
