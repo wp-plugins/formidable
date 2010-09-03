@@ -3,8 +3,8 @@ Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, widget, Post, plugin, template, contact, contact form, form, forms, captcha, spam, email, database, admin, AJAX, javascript, jquery, poll, survey, feedback
 Requires at least: 2.8
-Tested up to: 3.0
-Stable tag: 1.03.03
+Tested up to: 3.0.1
+Stable tag: 1.04.0
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 
@@ -61,8 +61,8 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 == Changelog ==
 = 1.04.0 =
 * Added icon link on post/page editor for inserting forms
-* Added option to show individual options in the custom HTML using the `[input]` tag. example: `[input opt=1]` where opt is the option order. Also hide the labels with `[input label=0]`
-* PRO: Added post integration. Pro forms can now be used for creating and editing posts
+* Added parameters to show individual radio/checkbox options in the custom HTML using the `[input]` tag. example: `[input opt=1]` where opt is the option order. Also hide the labels with `[input label=0]`. Now grid fields are much easier.
+* PRO: Added post integration! Pro forms can now be used for creating and editing posts
 * PRO: Added a calendar option to the custom display, allowing entries to be displayed in a monthly calendar
 * PRO: Added page_id parameter to `[frm-entry-links]` shortcode to remove the requirement to place entry list on the same page as the form for editing entries
 * PRO: Updated email, url, and number fields to use HTML5
