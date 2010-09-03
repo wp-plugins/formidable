@@ -3,6 +3,7 @@
 class FrmAppController{
     function FrmAppController(){
         add_action('admin_menu', array( &$this, 'menu' ), 1);
+        add_action('admin_head', array(&$this, 'menu_css'));
         add_filter('frm_nav_array', array( &$this, 'frm_nav'), 1);
         add_filter('plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'settings_link'), 10, 2 );
         add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this,'pro_action_needed'));
@@ -31,11 +32,19 @@ class FrmAppController{
         global $frmpro_is_installed;
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), FRM_URL . '/images/icon_16_bw.png');
+            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), 'div');
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller,'route'), FRM_URL . '/images/icon_16_bw.png');
+            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller,'route'), 'div');
         }
+    }
+    
+    function menu_css(){ ?>
+    <style type="text/css">
+    #adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/icon_16_bw.png) no-repeat center;}
+    #adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/icon_16.png) no-repeat center;}
+    </style>    
+    <?php    
     }
     
     function frm_nav(){
