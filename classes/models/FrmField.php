@@ -1,9 +1,5 @@
 <?php
 class FrmField{
-    var $table_name;
-
-    function FrmField(){
-    }
 
     function create( $values, $return=true ){
         global $wpdb, $frmdb;
@@ -12,8 +8,10 @@ class FrmField{
         $key = isset($values['field_key']) ? $values['field_key'] : $values['name'];
         $new_values['field_key'] = FrmAppHelper::get_unique_key($key, $frmdb->fields, 'field_key');
 
-        foreach (array('name','description','type','default_value','options') as $col)
+        foreach (array('name','description','type','default_value') as $col)
             $new_values[$col] = stripslashes($values[$col]);
+        
+        $new_values['options'] = $values['options'];
 
         $new_values['field_order'] = isset($values['field_order'])?(int)$values['field_order']:NULL;
         $new_values['required'] = isset($values['required'])?(int)$values['required']:NULL;
@@ -39,7 +37,7 @@ class FrmField{
             $values['field_options'] = unserialize($field->field_options);
             $values['form_id'] = $form_id;
             foreach (array('name','description','type','default_value','options','field_order','required') as $col)
-                $values[$col] = $field->$col;
+                $values[$col] = $field->{$col};
             $this->create($values, false);
         }
     }

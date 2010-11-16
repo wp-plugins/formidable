@@ -16,7 +16,8 @@ class FrmNotification{
         $form_options = unserialize($form->options);
         $to_email = $form_options['email_to'];
         if ($to_email == '')
-            return;
+            $to_email = get_option('admin_email');
+            
         $to_emails = explode(',', $to_email);
         
         $reply_to = '';
@@ -50,7 +51,7 @@ class FrmNotification{
             $this->send_notification_email($to_email, $subject, $mail_body, $reply_to);
     }
   
-    function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true){
+    function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true, $attachments=array()){
         $content_type   = ($plain_text) ? 'text/plain' : 'text/html';
         $reply_to_name  = ($reply_to_name == '') ? get_option('blogname') : $reply_to_name; //senders name
         $reply_to       = ($reply_to == '') ? get_option('admin_email') : $reply_to; //senders e-mail address
@@ -61,7 +62,7 @@ class FrmNotification{
         if($plain_text)
             $message    = html_entity_decode(strip_tags($message));
 
-        if (!wp_mail($recipient, $subject, $message, $header))
+        if (!wp_mail($recipient, $subject, $message, $header, $attachments))
             mail($recipient, $subject, $message, $header);
 
         do_action('frm_notification', $recipient, $subject, $message);

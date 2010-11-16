@@ -10,6 +10,9 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 	height:155px; width:310px; padding:30px;
 }
 
+.formidable_page_formidable-entry-templates .has-right-sidebar #post-body{width:75%;margin-right:0;}
+.formidable_page_formidable-entry-templates .has-right-sidebar #post-body-content{margin-right:0;}
+.formidable_page_formidable-entry-templates .inner-sidebar{width:25%;max-width:281px;}
 #editorcontainer #dyncontent{
 	margin:0; width:100%;
 	padding: 6px;
@@ -29,7 +32,7 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 #frm_form_options{width:270px;}
 #frm_form_options .nodrag a{cursor:pointer;}
 #frm_form_options .button{text-align:center;width:100px;float:left;}
-#frm_form_options .button a{font-weight:normal;text-decoration:none;}
+#frm_form_options .button a{display:block;font-weight:normal;text-decoration:none;}
 
 #poststuff h2.frm_ipe_form_name{
 	border:1px solid #dfdfdf; background-color:#fff; display:block; padding:0 5px; margin-top:0;
@@ -188,7 +191,7 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 .themeRoller .theme-group .theme-group-header span.icon {
 	float: left;
 	margin: -2px 3px 0 0;
-	background-image: url(http://static.jquery.com/ui/themeroller/images/app/tr_icons_white.png);
+	background-image: url(../images/tr_icons_white.png);
 }
 .themeRoller .state-active span.icon {
 	margin: -1px 2px 0 1px !important;
@@ -308,6 +311,69 @@ input.cornerRadius {
 	border-color: #aaa;
 	border-bottom: #666;
 }
+
+#switcherpane-container{
+	position:absolute;
+	float:left;
+	background:#fff;
+	color:#333;
+	padding:8px 3px 3px;
+	border:1px solid #dfdfdf;
+	border-top:none;
+	z-index: 999999;
+	width:144px; /* options.width-6 minus must match left and right padding*/
+	display:none;
+}
+
+ul.themeswitcher-ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+	overflow:auto;
+	height:200px;
+	/*width:150px;*/
+}
+
+ul.themeswitcher-ul li{
+	width:125px;
+	height:auto;
+	padding:2px 0;
+	margin:0;
+	clear:left;
+	float:left;
+}
+
+ul.themeswitcher-ul li:hover{
+	color:#fff;
+	background:#DFDFDF;
+	cursor:pointer;
+}
+
+ul.themeswitcher-ul a{
+	color:#333;
+	text-decoration:none;
+	float:left;
+	width:100%;
+	outline:0;
+}
+
+ul.themeswitcher-ul img{
+	float:left;
+	border:1px solid #DFDFDF;
+	margin:0 2px;
+}
+
+ul.themeswitcher-ul .themeName{
+	float:left;
+	margin:3px 0;
+}
+
+#frm_switcher .jquery-ui-themeswitcher-icon{
+	float:right;
+	width:16px;
+	height:16px;
+	background:url(../images/icon_color_arrow.gif) 50% 50% no-repeat;
+}
 /*pickers*/
 #picker {
 	position: absolute;
@@ -337,9 +403,9 @@ input.cornerRadius {
 	position: absolute;
 	top: 1.6em;
 	right: 0;
-	background: #222;
+	background: #fff;
 	z-index: 999999;
-	border: 1px solid #444;
+	border: 1px solid #DFDFDF;
 	border-top: 0;
 }
 .texturePicker ul li {
@@ -392,19 +458,19 @@ p.cornerWarning {font-size: .9em; margin: 5px 0;}
   height: 101px;
 }
 .farbtastic .wheel {
-  background: url(http://static.jquery.com/ui/themeroller/images/app/wheel.png) no-repeat;
+  background: url(../images/wheel.png) no-repeat;
   width: 195px;
   height: 195px;
 }
 .farbtastic .overlay {
-  background: url(http://static.jquery.com/ui/themeroller/images/app/mask.png) no-repeat;
+  background: url(../images/mask.png) no-repeat;
 }
 .farbtastic .marker {
   width: 17px;
   height: 17px;
   margin: -8px 0 0 -8px;
   overflow: hidden; 
-  background: url(http://static.jquery.com/ui/themeroller/images/app/marker.png) no-repeat;
+  background: url(../images/marker.png) no-repeat;
 } 
 
 

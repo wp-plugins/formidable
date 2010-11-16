@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.04.0
+Version: 1.04.01
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
@@ -24,6 +24,9 @@ Author: Stephanie Wells
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+global $frm_blogurl;
+$frm_blogurl = (get_option('home')) ? get_option('home') : get_option('siteurl');
+
 define('FRM_PLUGIN_TITLE','Formidable');
 define('FRM_PLUGIN_NAME','formidable');
 define('FRM_PATH',WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
@@ -33,7 +36,7 @@ define('FRM_HELPERS_PATH',FRM_PATH.'/classes/helpers');
 define('FRM_CONTROLLERS_PATH',FRM_PATH.'/classes/controllers');
 define('FRM_TEMPLATES_PATH',FRM_PATH.'/classes/templates');
 define('FRM_URL',WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);
-define('FRM_SCRIPT_URL', get_option('home') . '/index.php?plugin=' . FRM_PLUGIN_NAME);
+define('FRM_SCRIPT_URL', $frm_blogurl .'/index.php?plugin=' . FRM_PLUGIN_NAME);
 define('FRM_IMAGES_URL',FRM_URL.'/images');
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
@@ -41,19 +44,21 @@ require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 // Check for WPMU installation
 if (!defined ('IS_WPMU')){
     global $wpmu_version;
-    define('IS_WPMU', ($wpmu_version) ? 1 : 0);
+    $is_wpmu = ((function_exists('is_multisite') and is_multisite()) or $wpmu_version) ? 1 : 0;
+    define('IS_WPMU', $is_wpmu);
 }
 
 global $frm_version;
-$frm_version = '1.04.0';
+$frm_version = '1.04.01';
 
-global $frm_blogurl;
+
 global $frm_siteurl;
 global $frm_ajax_url;
-
-$frm_blogurl = ((get_option('home'))?get_option('home'):get_option('siteurl'));
 $frm_siteurl = get_option('siteurl');
-$frm_ajax_url = $frm_siteurl .'/wp-admin/admin-ajax.php';
+$frm_ajax_url = admin_url('admin-ajax.php');
+
+global $frm_load_css;
+$frm_load_css = false;
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 global $frm_app_helper;

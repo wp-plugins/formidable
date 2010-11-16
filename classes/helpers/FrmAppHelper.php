@@ -132,7 +132,7 @@ class FrmAppHelper{
                 if ($default)
                     $meta_value = $field->default_value;
                 else{
-                    if(class_exists('FrmProEntryMetaHelper') and isset($field_options['post_field']) and $field_options['post_field']){
+                    if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field_options['post_field']) and $field_options['post_field']){
                         $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('truncate' => false, 'type' => $field->type));
                     }else
                         $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
@@ -148,7 +148,7 @@ class FrmAppHelper{
                       'name' => stripslashes($field->name),
                       'description' => stripslashes($field->description),
                       'type' => apply_filters('frm_field_type',$field_type, $field),
-                      'options' => str_replace('"', '&quot;', stripslashes_deep(unserialize($field->options))),
+                      'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
                       'required' => $field->required,
                       'field_key' => $field->field_key,
                       'field_order' => $field->field_order,
@@ -221,7 +221,7 @@ class FrmAppHelper{
         include_once(ABSPATH."/wp-includes/class-IXR.php");
 
         $url = ($frmpro_is_installed) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
-        $client = new IXR_Client($url.'xmlrpc.php');
+        $client = new IXR_Client($url.'xmlrpc.php',  false, 80, 15);
         
         if ($client->query('frm.get_main_message'))
             $message = $client->getResponse();

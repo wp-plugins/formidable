@@ -107,6 +107,9 @@ BEFORE_HTML;
             $html = str_replace('['.$code.']', $replace_with, $html);   
         }   
         
+        //replace [form_key]
+        $html = str_replace('[form_key]', $form->form_key, $html);
+        
         return apply_filters('frm_form_replace_shortcodes', $html, $form);
     }
     

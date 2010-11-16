@@ -84,7 +84,7 @@ class FrmEntriesHelper{
         //$values['description'] = unserialize( $record->description );
         $values['item_key'] = ($_POST and isset($_POST['item_key']))?$_POST['item_key']:$record->item_key;
         $values['form_id'] = $record->form_id;
-        return apply_filters('frm_setup_edit_entry_vars', $values);
+        return apply_filters('frm_setup_edit_entry_vars', $values, $record);
     }
 
     function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){

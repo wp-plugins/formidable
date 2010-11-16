@@ -29,6 +29,7 @@ class FrmUpdate{
   var $pro_username;
   var $pro_password;
   var $pro_mothership_xmlrpc_url;
+  var $timeout;
 
   function FrmUpdate(){
     // Where all the vitals are defined for this plugin
@@ -51,6 +52,7 @@ class FrmUpdate{
     $this->pro_password_str = 'proplug-password';
     $this->pro_wpmu_str = 'proplug-wpmu';
     $this->pro_mothership_xmlrpc_url = $this->pro_mothership . '/xmlrpc.php';
+    $this->timeout = 15;
     
     // Retrieve Pro Credentials
     $this->pro_wpmu = false;
@@ -104,7 +106,7 @@ class FrmUpdate{
   function authorize_user($username, $password){
     include_once( ABSPATH . 'wp-includes/class-IXR.php' );
 
-    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url );
+    $client = new IXR_Client($this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
     if ( !$client->query( 'proplug.is_user_authorized', $username, $password ) )
       return false;
@@ -115,7 +117,7 @@ class FrmUpdate{
   function user_allowed_to_download(){
     include_once( ABSPATH . 'wp-includes/class-IXR.php' );
 
-    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url );
+    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
     if ( !$client->query( 'proplug.is_user_allowed_to_download', $this->pro_username, $this->pro_password, get_option('home') ) )
       return false;
@@ -248,7 +250,7 @@ class FrmUpdate{
   function get_download_url($version){
     include_once( ABSPATH . 'wp-includes/class-IXR.php' );
 
-    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url );
+    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
     if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version ) )
         return false;
@@ -259,7 +261,7 @@ class FrmUpdate{
   function get_current_version(){
     include_once( ABSPATH . 'wp-includes/class-IXR.php' );
 
-    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url );
+    $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
     if( !$client->query( 'proplug.get_current_version' ) )
       return false;

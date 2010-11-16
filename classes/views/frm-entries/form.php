@@ -21,9 +21,9 @@
     foreach($values['fields'] as $field){
         $field_name = "item_meta[". $field['id'] ."]";
         if (apply_filters('frm_show_normal_field_type', true, $field['type']))
-            echo FrmFieldsHelper::replace_shortcodes($field['custom_html'], $field, $error_keys);
+            echo FrmFieldsHelper::replace_shortcodes($field['custom_html'], $field, $error_keys, $form);
         else
-            do_action('frm_show_other_field_type', $field);
+            do_action('frm_show_other_field_type', $field, $form);
         
         do_action('frm_get_field_scripts', $field);
     }    

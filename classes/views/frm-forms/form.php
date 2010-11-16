@@ -25,7 +25,6 @@ if (isset($values['fields']) && !empty($values['fields'])){
 		</div><!-- /theme group Error -->
 		<div class="theme-group-content corner-bottom clearfix">
             <div class="clearfix">
-			    <span class="alignright"><a title="<?php _e('Edit HTML', 'formidable') ?>" href="#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Edit HTML', 'formidable') ?></a></span>
                 <table class="form-table">
                     <tr>
                         <td width="200px"><label><?php _e('Form ShortCodes') ?>:</label> <a href="http://formidablepro.com/user-manual/insert-a-form/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
@@ -121,6 +120,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
         <ul>
             <li><b><?php _e('Form Name', 'formidable') ?>:</b> <pre>[form_name]</pre></li>
             <li><b><?php _e('Form Description', 'formidable') ?>:</b> <pre>[form_description]</pre></li>
+            <li><b><?php _e('Form Key', 'formidable') ?>:</b> <pre>[form_key]</pre></li>
         </ul>
         <ul>
             <li><b><?php _e('Field Id', 'formidable') ?>:</b> <pre>[id]</pre></li>

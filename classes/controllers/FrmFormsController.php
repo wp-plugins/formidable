@@ -210,7 +210,7 @@ class FrmFormsController{
             $message = FrmAppHelper::frm_get_main_message();
 
         $controller_file = FRM_PLUGIN_NAME;
-        $page_params = '&action=0';
+        $page_params = '&action=0&page=formidable';
         $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
 
         if ($params['template']){
@@ -226,9 +226,9 @@ class FrmFormsController{
           $current_page = $params['paged'];
 
         if($page_params_ov)
-          $page_params = $page_params_ov;
+          $page_params .= $page_params_ov;
         else
-          $page_params = $form_vars['page_params'];
+          $page_params .= $form_vars['page_params'];
 
         $sort_str = $form_vars['sort_str'];
         $sdir_str = $form_vars['sdir_str'];

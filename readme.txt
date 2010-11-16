@@ -59,6 +59,27 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.01 =
+* Changed the ID of the select, user id, and hidden fields to "field_" plus field key
+* Moved the "Edit HTML" button out of the "Advanced Form Options" area
+* Only load css when needed
+* Free only: If no email address is inserted, the email will be sent to the admin email.
+* PRO: Only load date javascript when a date field has been loaded
+* PRO: Added option to attach file uploads to email notifications
+* PRO: Moved file uploads to uploads/formidable
+* PRO: Optimized the css file by writing it to uploads/formidable/css instead of loading a php file
+* PRO: Updated default values to work with radio, check box, and select fields.
+* PRO: Fixed front-end reports to work in IE and Chrome
+* PRO: Added option to dynamically get stats for the currently logged-in user with the `[frm-stats]` shortcode ie. `[frm-stats id=x user_id=current]`
+* PRO: Added 'round' option to frm-stats to specify the number of decimal places to show ie `[frm-stats id=x round=2]`
+* PRO: Added fields to the drop-down list for limiting submissions. Now you can "Allow Only One Entry for Each" email address or whatever other field you may have in your form.
+* PRO: Change the hidden User ID field to a drop-down for admins editing entries in the back-end
+* PRO: Removed the sanitizing from the custom field name to make it possible to use any custom field name desired
+* PRO: Fixed bug preventing fields with an ' or " from getting copied correctly when duplicating and creating/exporting templates
+* PRO: Update to check for calendar css in the uploads/formidable/css folder before using it from https://ajax.googleapis.com
+* PRO: Added options to number field to specify the range and steps used in the HTML5 field
+* Other bug fixes
+
 = 1.04.0 =
 * Added icon link on post/page editor for inserting forms
 * Added parameters to show individual radio/checkbox options in the custom HTML using the `[input]` tag. example: `[input opt=1]` where opt is the option order. Also hide the labels with `[input label=0]`. Now grid fields are much easier.

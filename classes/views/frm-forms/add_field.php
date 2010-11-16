@@ -7,7 +7,7 @@
     
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>,  <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>)" class="alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>
+        <a href="javascript:frm_mark_required( <?php echo $field['id']; ?>, <?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_pos_<?php echo $field['label']; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
@@ -27,9 +27,10 @@
 
 <?php }else if ($field['type'] == 'select'){ ?>
     <select name="<?php echo $field_name ?>" id="<?php echo $field_name ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto"' : ''; ?>>
-        <?php foreach ($field['options'] as $opt){ 
-            $selected = ($field['default_value'] == $opt)?(' selected="selected"'):(''); ?>
-            <option value="<?php echo $opt ?>"<?php echo $selected ?>><?php echo $opt ?></option>
+        <?php foreach ($field['options'] as $opt_key => $opt){ 
+            $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+            $selected = ($field['default_value'] == $field_val)?(' selected="selected"'):(''); ?>
+            <option value="<?php echo $field_val ?>"<?php echo $selected ?>><?php echo $opt ?></option>
         <?php } ?>
     </select>
     <?php if ($display['default_blank']) FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>

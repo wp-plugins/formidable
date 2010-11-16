@@ -82,8 +82,8 @@ class FrmFieldsHelper{
         foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
             $values[$var] = FrmAppHelper::get_param($var, $default);
         
-        $field_options = unserialize($record->field_options);
-        $values['options'] = unserialize($record->options);
+        $field_options = maybe_unserialize($record->field_options);
+        $values['options'] = stripslashes_deep(maybe_unserialize($record->options));
         $values['field_options'] = $field_options;
         $values['size'] = (isset($field_options['size']))?($field_options['size']):(''); 
         $values['max'] = (isset($field_options['max']))?($field_options['max']):(''); 
@@ -114,7 +114,7 @@ class FrmFieldsHelper{
         <span class="frm_required">[required_label]</span>
     </label>
     [input]
-    [if description]<p class="description">[description]</p>[/if description]
+    [if description]<div class="description">[description]</div>[/if description]
 </div>
 DEFAULT_HTML;
         }else
@@ -123,10 +123,13 @@ DEFAULT_HTML;
         return apply_filters('frm_custom_html', $default_html, $type);
     }
     
-    function replace_shortcodes($html, $field, $error_keys=array()){
+    function replace_shortcodes($html, $field, $error_keys=array(), $form=false){
         $field_name = "item_meta[". $field['id'] ."]";
         //replace [id]
         $html = str_replace('[id]', $field['id'], $html);
+        
+        //replace [key]        
+        $html = str_replace('[key]', $field['field_key'], $html);
         
         //replace [description] and [required_label]
         $required = ($field['required'] == '0')?(''):($field['required_indicator']);
@@ -159,7 +162,7 @@ DEFAULT_HTML;
         $html = str_replace('[entry_key]', $entry_key, $html);
         
         //replace [input]
-        preg_match_all("/\[(input)\b(.*?)(?:(\/))?\]/s", $html, $shortcodes, PREG_PATTERN_ORDER);
+        preg_match_all("/\[(input|deletelink)\b(.*?)(?:(\/))?\]/s", $html, $shortcodes, PREG_PATTERN_ORDER);
 
         foreach ($shortcodes[0] as $short_key => $tag){
             $atts = shortcode_parse_atts( $shortcodes[2][$short_key] );
@@ -181,22 +184,34 @@ DEFAULT_HTML;
                 include(FRM_VIEWS_PATH.'/frm-fields/input.php');
                 $replace_with = ob_get_contents();
                 ob_end_clean();
-            }
+            }else if($tag == 'deletelink' and class_exists('FrmProEntriesController'))
+                $replace_with = FrmProEntriesController::entry_delete_link($atts);
             
             $html = str_replace($shortcodes[0][$short_key], $replace_with, $html);
         }
         
+        if($form){
+            $form = (array)$form;
+            
+            //replace [form_key]
+            $html = str_replace('[form_key]', $form['form_key'], $html);
+            
+            //replace [form_name]
+            $html = str_replace('[form_name]', $form['name'], $html);
+        }
         
         return apply_filters('frm_replace_shortcodes', $html, $field);
     }
     
-    function show_onfocus_js($field_id, $clear_on_focus){ ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
+    function show_onfocus_js($field_id, $clear_on_focus){ 
+        global $frm_ajax_url; ?>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
     <?php
     }
     
-    function show_default_blank_js($field_id, $default_blank){ ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
+    function show_default_blank_js($field_id, $default_blank){ 
+        global $frm_ajax_url; ?>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
     <?php
     }
     

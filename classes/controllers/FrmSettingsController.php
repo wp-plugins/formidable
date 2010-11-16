@@ -22,6 +22,10 @@ class FrmSettingsController{
     function display_form(){
       global $frm_settings, $frm_ajax_url;
       $frm_roles = FrmAppHelper::frm_capabilities();
+      
+      $uploads = wp_upload_dir();
+      $target_path = $uploads['basedir'] . "/formidable/css";
+      
       require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 

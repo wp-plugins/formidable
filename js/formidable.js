@@ -79,7 +79,7 @@ jQuery('.frm-grid').find('input').live('keydown',function(e){
 }); */
 });
 
-function frm_select_item_checkbox(checked){if(!checked){jQuery(".select-all-item-action-checkboxes").removeAttr("checked");}	}
+function frm_select_item_checkbox(checked){if(!checked){jQuery(".select-all-item-action-checkboxes").removeAttr("checked");}}
 
 function frm_select_all_checkboxes(checked){
 if(checked){
@@ -103,12 +103,44 @@ function frm_duplicate_field(field_id, ajax_url){
     });
 };
 
+function frm_mark_required(field_id, required, images_url, ajax_url){
+    var thisid='req_field_'+field_id;
+    if(required=='0'){var switch_to='1';var atitle='Click to Mark as Not Required';}
+	else{var switch_to='0';var atitle='Click to Mark as Required';}
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"><img src="'+images_url+'/required.png" alt="required"></a>');
+    jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
+};
+
+function frm_clear_on_focus(field_id, active, images_url, ajax_url){
+    var thisid='clear_field_'+field_id;
+    if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
+    else{var switch_to='1';var new_class='';}
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class +' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/reload.png"></a>');
+    jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_clear_on_focus&field="+field_id+"&active="+switch_to});
+};
+
+function frm_read_only(field_id, active, images_url, ajax_url){
+    var thisid='read_only_'+field_id;
+    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
+    else{var switch_to='1';var new_class='';}
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_read_only('+field_id+', '+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class+' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/readonly.png"></a>');
+    jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_read_only&field="+field_id+"&active="+switch_to});
+};
+
+function frm_default_blank(field_id, active, images_url, ajax_url){
+    var thisid='default_blank_'+field_id;
+    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
+	else{var switch_to='1';var new_class='';}
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class+' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/error.png"></a>');
+    jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_default_blank&field="+field_id+"&active="+switch_to});
+};
+
 function frm_add_field_option(field_id, ajax_url, table){
-    jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_add_field_option&field_id="+field_id+"&t="+table,
-        success:function(msg){jQuery('#frm_add_field_'+field_id).before(msg);
-			if(table=='row'){ jQuery('#frm-grid-'+field_id+' tr:last').after(msg);}
-		}
-    });
+	var data = {action:'frm_add_field_option',field_id:field_id,t:table};
+	jQuery.post(ajax_url,data,function(msg){
+		jQuery('#frm_add_field_'+field_id).before(msg);
+		if(table=='row'){ jQuery('#frm-grid-'+field_id+' tr:last').after(msg);}
+	});
 };
 
 function frm_delete_field_option(field_id, opt_key, ajax_url){

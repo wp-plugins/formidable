@@ -57,7 +57,7 @@ class FrmEntry{
       $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']: null;
       //$new_values['parent_item_id'] = isset($values['parent_item_id'])?(int)$values['parent_item_id']: null;
 
-      $query_results = $wpdb->update( $frmdb->entries, $new_values, array( 'id' => $id ) );
+      $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
       
       if (isset($values['item_meta']))
           $frm_entry_meta->update_entry_metas($id, $values['item_meta']);

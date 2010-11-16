@@ -8,6 +8,6 @@
 </head>
 <body>
     <?php require_once('frm-entry.php'); ?>
-    <?php //wp_footer(); ?>
+    <?php wp_footer(); ?>
 </body>
 </html>

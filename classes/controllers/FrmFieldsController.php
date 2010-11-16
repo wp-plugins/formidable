@@ -200,6 +200,7 @@ class FrmFieldsController{
             echo ' maxlength="'. $field['max'] .'"';
         if(isset($field['clear_on_focus']) and $field['clear_on_focus'])
             echo ' onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"';
+        
         echo ' class="'.$class.'"';
     }
 }

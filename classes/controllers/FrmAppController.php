@@ -10,6 +10,7 @@ class FrmAppController{
         add_action('admin_notices', array( &$this,'pro_get_started_headline'));
         add_filter('the_content', array( &$this, 'page_route' ), 1);
         add_action('init', array(&$this, 'front_head'));
+        add_action('wp_footer', array(&$this, 'footer_js'));
         add_action('admin_init', array( &$this, 'admin_js'));
         register_activation_hook(FRM_PATH."/formidable.php", array( &$this, 'install' ));
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
@@ -24,10 +25,10 @@ class FrmAppController{
     
     function menu(){
         if(current_user_can('administrator') and !current_user_can('frm_view_forms')){
-            global $wp_roles;
+            global $current_user;
             $frm_roles = FrmAppHelper::frm_capabilities();
             foreach($frm_roles as $frm_role => $frm_role_description)
-                $wp_roles->add_cap( 'administrator', $frm_role );
+                $current_user->add_cap( $frm_role );
         }
         global $frmpro_is_installed;
         if(current_user_can('frm_view_forms')){
@@ -93,8 +94,10 @@ class FrmAppController{
             return;
          
         if(!isset($_GET['activate'])){  
+            global $frmpro_is_installed;
             $db_version = get_option('frm_db_version');
-            if((int)$db_version < 3){ //this number should match the db_version in FrmDb.php
+            $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
+            if((int)$db_version < 3 or ($pro_db_version and (int)$pro_db_version < 1)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?></div>  
             <?php
@@ -130,15 +133,36 @@ class FrmAppController{
         global $frm_settings, $frm_version;
         
         if (IS_WPMU){
-            $db_version = 1.03; // this is the version of the database we're moving to
+            $db_version = 3; // this is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             if ($db_version != $old_db_version)
                 $this->install();
         }
         
-        if(!is_admin() and !$frm_settings->custom_stylesheet){
+        /*if(!is_admin() and !$frm_settings->custom_stylesheet){
             $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
-            wp_enqueue_style('frm-forms', $css, array(), $frm_version);
+            if(is_array($css)){
+                foreach($css as $css_key => $file)
+                    wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
+            }else
+                wp_enqueue_style('frm-forms', $css, array(), $frm_version);
+        }*/
+    }
+    
+    function footer_js(){
+        global $frm_load_css, $frm_settings, $frm_version;
+        
+        if($frm_load_css and !is_admin() and !$frm_settings->custom_stylesheet){
+            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+            echo '<script type="text/javascript">';
+            if(is_array($css)){
+                foreach($css as $css_key => $file)
+                    echo 'jQuery("head").append(\'<link rel="stylesheet" id="frm-forms'.$css_key.'-css" href="'. $file. '" type="text/css" media="all" />\');';
+                    //wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
+            }else
+                echo 'jQuery("head").append(\'<link rel="stylesheet" id="frm-forms-css" href="'. $css. '" type="text/css" media="all" />\');';
+                //wp_enqueue_style('frm-forms', $css, array(), $frm_version);
+            echo '</script>'."\n";
         }
     }
   
