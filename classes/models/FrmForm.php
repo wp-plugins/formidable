@@ -118,7 +118,7 @@ class FrmForm{
             foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
                 $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
             $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field_options['custom_html']) ? $field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
-            $field_options = apply_filters('frm_update_field_options', $field_options, $field_id, $values);
+            $field_options = apply_filters('frm_update_field_options', $field_options, $field, $values);
             $default_value = maybe_serialize($values['item_meta'][$field_id]);
             $field_key = (isset($values['field_options']['field_key_'.$field_id]))? $values['field_options']['field_key_'.$field_id] : $field->field_key;
             $field_type = (isset($values['field_options']['type_'.$field_id]))? $values['field_options']['type_'.$field_id] : $field->type;

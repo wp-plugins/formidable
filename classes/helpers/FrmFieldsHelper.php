@@ -11,7 +11,8 @@ class FrmFieldsHelper{
             'select' => __('Drop-Down (Select)', 'formidable')
         ));
         
-        if ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) )
+        if ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) or 
+            (IS_WPMU and in_array('wp-recaptcha/wp-recaptcha.php', get_site_option('active_sitewide_plugins'))) )
             $fields['captcha'] = 'reCAPTCHA Field';
         return $fields;
     }
@@ -26,7 +27,7 @@ class FrmFieldsHelper{
             'phone' => __('Phone Number', 'formidable'), 
             'email' => __('Email Address', 'formidable'),
             'date' => __('Date', 'formidable'), 
-            //'time' => 'Time',
+            'time' => __('Time', 'formidable'),
             'url' => __('Website/URL', 'formidable'),
             'image' => __('Image URL', 'formidable'), 
             '10radio' => __('Scale', 'formidable'),

@@ -33,7 +33,7 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
                 if (!isset($form_options['show_form']) or $form_options['show_form'])
                     require('new.php');
             }else
-                do_action('frm_success_action', $conf_method, $form, $form_options);
+                do_action('frm_success_action', $conf_method, $form, $form_options, $created);
         }
     }
 }else{
