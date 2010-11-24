@@ -65,8 +65,10 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * Only load css when needed
 * Free only: If no email address is inserted, the email will be sent to the admin email
 * PRO: Added Time field
-* PRO: Only load date javascript when a date field has been loaded
+* PRO: Added option to use posted data in the redirect URL
+* PRO: Added option to set the range for the scale field
 * PRO: Added option to attach file uploads to email notifications
+* PRO: Only load date javascript when a date field has been loaded
 * PRO: Moved file uploads to uploads/formidable
 * PRO: Optimized the css file by writing it to uploads/formidable/css instead of loading a php file
 * PRO: Updated default values to work with radio, check box, and select fields.
@@ -78,8 +80,6 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Removed the sanitizing from the custom field name to make it possible to use any custom field name desired
 * PRO: Update to check for calendar css in the uploads/formidable/css folder before using it from https://ajax.googleapis.com
 * PRO: Added options to number field to specify the range and steps used in the HTML5 field
-* PRO: Added option to use posted data in the redirect URL
-* PRO: Added option to set the range for the scale field
 * PRO: Fixed bug preventing fields with an ' or " from getting copied correctly when duplicating and creating/exporting templates
 * Other bug fixes and optimization
 
