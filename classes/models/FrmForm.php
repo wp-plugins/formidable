@@ -1,9 +1,5 @@
 <?php
 class FrmForm{
-  var $table_name;
-
-  function FrmForm(){
-  }
 
   function create( $values ){
     global $wpdb, $frmdb, $frm_settings;
@@ -80,7 +76,7 @@ class FrmForm{
     $form_fields = array('form_key','name','description','status','prli_link_id');
     
     $new_values = array();
-    
+
     if (isset($values['options'])){
         $options = array();
         $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
@@ -99,11 +95,12 @@ class FrmForm{
         if (in_array($value_key, $form_fields))
             $new_values[$value_key] = $value;
     }
-    
-    $query_results = $wpdb->update( $frmdb->forms, $new_values, array( 'id' => $id ) );
+
+    if(!empty($new_values))
+        $query_results = $wpdb->update( $frmdb->forms, $new_values, array( 'id' => $id ) );
 
     $all_fields = $frm_field->getAll("fi.form_id=$id");
-    if ($all_fields and isset($values['options'])){
+    if ($all_fields and (isset($values['options']) or isset($values['item_meta']))){
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();
         $existing_keys = array_keys($values['item_meta']);

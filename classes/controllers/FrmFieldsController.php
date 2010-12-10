@@ -191,7 +191,7 @@ class FrmFieldsController{
         if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select','radio','checkbox','hidden'))) 
             echo ' placeholder="'.$field['default_value'].'"';
             
-        if(isset($field['size']) and $field['size'] > 0){ 
+        if(isset($field['size']) and $field['size'] > 0){
             if($field['type'] != 'textarea' and $field['type'] != 'select')
                 echo ' size="'. $field['size'] .'"';
             $class .= " auto_width";

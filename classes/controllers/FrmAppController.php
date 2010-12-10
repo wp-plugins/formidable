@@ -138,7 +138,7 @@ class FrmAppController{
             if ($db_version != $old_db_version)
                 $this->install();
         }
-        
+        wp_enqueue_script('jquery');
         /*if(!is_admin() and !$frm_settings->custom_stylesheet){
             $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
             if(is_array($css)){

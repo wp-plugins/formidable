@@ -160,8 +160,8 @@ class FrmUpdate{
     <div>
         <p><strong>Formidable Pro is Installed</strong></p>
         <p><strong>Edit/Update Your Profile:</strong><br/><span class="howto">Use your account username and password to log in to your Account and Affiliate Control Panel</span></p>
-        <p><a href="http://formidablepro.com/payments/member.php">Account</a> |
-            <a href="http://formidablepro.com/payments/aff_member.php">Affiliate Control Panel</a>
+        <p><a href="http://formidablepro.com/payment/member.php">Account</a> |
+            <a href="http://formidablepro.com/payment/aff_member.php">Affiliate Control Panel</a>
         </p>
     </div>
 
@@ -205,8 +205,8 @@ class FrmUpdate{
         </tr>
     <?php } ?>
   </table>
-  <p class="submit">
-    <input type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" />
+  <p>
+    <input class="button-primary" type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" />
   </p>
 </form>
     <?php

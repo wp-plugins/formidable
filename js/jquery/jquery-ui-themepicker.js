@@ -125,7 +125,7 @@ jQuery.fn.themeswitcher = function(settings){
 		updateCSS( css );
 		var themeName = jQuery(this).find('span').text();
 		button.find('.jquery-ui-themeswitcher-title').text( options.buttonPreText + themeName );
-		jQuery('#frm_themepicker_input').html('<input type="hidden" value="'+css+'" id="frm_themepicker_css" name="frm_themepicker_css"><input type="hidden" value="'+themeName+'" id="frm_themepicker_name" name="frm_themepicker_name">');
+		jQuery('#frm_themepicker_input').html('<input type="hidden" value="'+css+'" id="frm_theme_css" name="frm_theme_css"><input type="hidden" value="'+themeName+'" id="frm_theme_name" name="frm_theme_name">');
 		options.onSelect();
 		if(options.closeOnSelect && switcherpane.is(':visible')){ switcherpane.spHide(); }
 		return false;
@@ -181,7 +181,7 @@ jQuery.fn.themeswitcher = function(settings){
 	jQuery(this).append(button);
 	//jQuery('body').append(switcherpane);
 	//switcherpane.hide();
-	var themeName = document.getElementById("frm_themepicker_name").value;
+	var themeName = document.getElementById("frm_theme_name").value;
 	switcherpane.find('a:contains('+ themeName +')').trigger('click');
 
 	return this;

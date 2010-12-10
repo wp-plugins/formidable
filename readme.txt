@@ -75,12 +75,16 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Fixed front-end reports to work in IE and Chrome
 * PRO: Added option to dynamically get stats for the currently logged-in user with the `[frm-stats]` shortcode ie. `[frm-stats id=x user_id=current]`
 * PRO: Added 'round' option to frm-stats to specify the number of decimal places to show ie `[frm-stats id=x round=2]`
+* PRO: Added 'response_count' to frm-graph to increase the maximum number of responses for a text field ie `[frm-graph id=x response_count=10]`
+* PRO: Added 'truncate' and 'truncate_label' to frm-graph to adjust the number of characters shown for the graph title and the labels of the graph ie `[frm-graph id=x truncate=40 truncate_label=7]`
 * PRO: Added fields to the drop-down list for limiting submissions. Now you can "Allow Only One Entry for Each" email address or whatever other field you may have in your form.
 * PRO: Change the hidden User ID field to a drop-down for admins editing entries in the back-end
 * PRO: Removed the sanitizing from the custom field name to make it possible to use any custom field name desired
 * PRO: Update to check for calendar css in the uploads/formidable/css folder before using it from https://ajax.googleapis.com
 * PRO: Added options to number field to specify the range and steps used in the HTML5 field
+* PRO: More form options are exported in templates 
 * PRO: Fixed bug preventing fields with an ' or " from getting copied correctly when duplicating and creating/exporting templates
+* PRO: Post categories now work as a drop-down
 * Other bug fixes and optimization
 
 = 1.04.0 =
