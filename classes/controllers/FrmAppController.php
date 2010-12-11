@@ -10,7 +10,7 @@ class FrmAppController{
         add_action('admin_notices', array( &$this,'pro_get_started_headline'));
         add_filter('the_content', array( &$this, 'page_route' ), 1);
         add_action('init', array(&$this, 'front_head'));
-        add_action('wp_footer', array(&$this, 'footer_js'));
+        add_action('wp_footer', array(&$this, 'footer_js'), 1);
         add_action('admin_init', array( &$this, 'admin_js'));
         register_activation_hook(FRM_PATH."/formidable.php", array( &$this, 'install' ));
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
