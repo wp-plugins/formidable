@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: Only load date javascript when a date field has been loaded
 * PRO: Moved file uploads to uploads/formidable
 * PRO: Optimized the css file by writing it to uploads/formidable/css instead of loading a php file
+* PRO: Added styling for field description, and gradients and shadows on the submit button
 * PRO: Updated default values to work with radio, check box, and select fields.
 * PRO: Fixed front-end reports to work in IE and Chrome
 * PRO: Added option to dynamically get stats for the currently logged-in user with the `[frm-stats]` shortcode ie. `[frm-stats id=x user_id=current]`
@@ -85,6 +86,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * PRO: More form options are exported in templates 
 * PRO: Fixed bug preventing fields with an ' or " from getting copied correctly when duplicating and creating/exporting templates
 * PRO: Post categories now work as a drop-down
+* PRO: Limit form entries to one per [whatever field here]. For example, only allow one submission per email address.
 * Other bug fixes and optimization
 
 = 1.04.0 =
