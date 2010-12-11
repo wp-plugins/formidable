@@ -7,6 +7,7 @@ class FrmSettings{
     
     var $custom_style;
     var $custom_stylesheet;
+    var $jquery_css;
     var $accordion_js;
     
     var $success_msg;
@@ -46,6 +47,8 @@ class FrmSettings{
             $this->custom_style = true;
         if(!isset($this->custom_stylesheet))
             $this->custom_stylesheet = false;
+        if(!isset($this->jquery_css))
+            $this->jquery_css = false;
         if(!isset($this->accordion_js))
             $this->accordion_js = false;
             
@@ -91,6 +94,7 @@ class FrmSettings{
         
         $this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
         $this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;
+        $this->jquery_css = isset($params['frm_jquery_css']) ? 1 : 0;
         $this->accordion_js = isset($params['frm_accordion_js']) ? 1 : 0;
         
         $this->success_msg = isset($params['frm_success_msg']) ? $params['frm_success_msg'] : __('Your responses were successfully submitted. Thank you!', 'formidable');

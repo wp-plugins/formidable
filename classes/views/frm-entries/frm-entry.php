@@ -18,7 +18,10 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
         $fields = FrmFieldsHelper::get_form_fields($form->id, true);
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
         if($values['custom_style']) $frm_load_css = true;
-        require('new.php');
+        require('new.php'); 
+?>
+<script type="text/javascript">window.onload = function(){window.location.href = "#form_<?php echo $form->form_key ?>";}</script>
+<?php        
     }else{
         $fields = FrmFieldsHelper::get_form_fields($form->id);
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);

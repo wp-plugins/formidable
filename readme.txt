@@ -63,6 +63,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * Changed the ID of the select, user id, and hidden fields to "field_" plus field key
 * Moved the "Edit HTML" button out of the "Advanced Form Options" area
 * Only load css when needed
+* Jump to form on page after errors
 * Free only: If no email address is inserted, the email will be sent to the admin email
 * PRO: Added Time field
 * PRO: Added option to use posted data in the redirect URL

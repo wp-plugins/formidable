@@ -20,7 +20,7 @@ class FrmSettingsController{
     }
 
     function display_form(){
-      global $frm_settings, $frm_ajax_url;
+      global $frm_settings, $frm_ajax_url, $frmpro_is_installed;
       $frm_roles = FrmAppHelper::frm_capabilities();
       
       $uploads = wp_upload_dir();
@@ -30,7 +30,7 @@ class FrmSettingsController{
     }
 
     function process_form(){
-      global $frm_settings, $frm_ajax_url;
+      global $frm_settings, $frm_ajax_url, $frmpro_is_installed;
 
       //$errors = $frm_settings->validate($_POST,array());
       $errors = array();
