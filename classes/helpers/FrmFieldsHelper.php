@@ -115,7 +115,7 @@ class FrmFieldsHelper{
         <span class="frm_required">[required_label]</span>
     </label>
     [input]
-    [if description]<div class="description">[description]</div>[/if description]
+    [if description]<div class="frm_description">[description]</div>[/if description]
 </div>
 DEFAULT_HTML;
         }else
