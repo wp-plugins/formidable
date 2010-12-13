@@ -64,6 +64,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 * Moved the "Edit HTML" button out of the "Advanced Form Options" area
 * Only load css when needed
 * Jump to form on page after errors
+* Added option to use [admin_email] in the "Email Form Responses to" line to save time for those who only want to change their email address in one place.
 * Free only: If no email address is inserted, the email will be sent to the admin email
 * PRO: Added Time field
 * PRO: Added option to use posted data in the redirect URL

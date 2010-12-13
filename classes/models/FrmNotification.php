@@ -55,6 +55,10 @@ class FrmNotification{
         $content_type   = ($plain_text) ? 'text/plain' : 'text/html';
         $reply_to_name  = ($reply_to_name == '') ? get_option('blogname') : $reply_to_name; //senders name
         $reply_to       = ($reply_to == '') ? get_option('admin_email') : $reply_to; //senders e-mail address
+        
+        if($to_email == '[admin_email]')
+            $to_email = get_option('admin_email');
+            
         $recipient      = $to_email; //recipient
         $header         = "From: {$reply_to_name} <{$reply_to}>\r\n Reply-To: {$reply_to_name} <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
         $subject        = html_entity_decode(strip_tags(stripslashes($subject)));
