@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.04.01
+Version: 1.04.02
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Stephanie Wells
@@ -49,7 +49,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version;
-$frm_version = '1.04.01';
+$frm_version = '1.04.02';
 
 
 global $frm_siteurl;

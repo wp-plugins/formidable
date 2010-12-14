@@ -59,6 +59,10 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.02 = 
+* PRO: Fixed drop-down hidden field dependencies
+* PRO: Added options to the time field (12 or 24 hours, minute step)
+
 = 1.04.01 =
 * Changed the ID of the select, user id, and hidden fields to "field_" plus field key
 * Moved the "Edit HTML" button out of the "Advanced Form Options" area
