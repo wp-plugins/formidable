@@ -59,6 +59,12 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.03 = 
+* PRO: Include styling on multi-paged forms
+* PRO: Allow floating decimals in the number field
+* PRO: Don't load jQuery CSS in admin
+* PRO: Move javascript for hidden fields to the footer (wp_footer)
+
 = 1.04.02 = 
 * PRO: Fixed drop-down hidden field dependencies
 * PRO: Added options to the time field (12 or 24 hours, minute step)

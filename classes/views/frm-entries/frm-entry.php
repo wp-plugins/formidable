@@ -1,5 +1,5 @@
 <?php
-global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $user_ID, $frm_settings, $frm_load_css;
+global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $user_ID, $frm_settings;
 $form_name = $form->name;
 $form_options = stripslashes_deep(maybe_unserialize($form->options));
 
@@ -17,7 +17,6 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
     if( !empty($errors) ){
         $fields = FrmFieldsHelper::get_form_fields($form->id, true);
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
-        if($values['custom_style']) $frm_load_css = true;
         require('new.php'); 
 ?>
 <script type="text/javascript">window.onload = function(){window.location.href = "#form_<?php echo $form->form_key ?>";}</script>
@@ -27,7 +26,6 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
         if (apply_filters('frm_continue_to_create', true, $form->id)){
             $values = FrmEntriesHelper::setup_new_vars($fields, $form, true);
-            if($values['custom_style']) $frm_load_css = true;
             $created = $frm_entry->create( $_POST );
             $saved_message = apply_filters('frm_content', $saved_message, $form, $created);
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form_options);
@@ -44,7 +42,6 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
     do_action('frm_display_form_action', $params, $fields, $form, $title, $description);
     if (apply_filters('frm_continue_to_new', true, $form->id, $params['action'])){
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
-        if($values['custom_style']) $frm_load_css = true;
         require('new.php');
     }
 }
