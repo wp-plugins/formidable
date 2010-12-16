@@ -154,7 +154,7 @@ class FrmAppController{
         
         if($frm_load_css and !is_admin() and !$frm_settings->custom_stylesheet){
             $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
-            echo '<script type="text/javascript">';
+            echo "\n".'<script type="text/javascript">';
             if(is_array($css)){
                 foreach($css as $css_key => $file)
                     echo 'jQuery("head").append(\'<link rel="stylesheet" id="frm-forms'.$css_key.'-css" href="'. $file. '" type="text/css" media="all" />\');';
