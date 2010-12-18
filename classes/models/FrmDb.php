@@ -153,6 +153,15 @@ class FrmDb{
 
       return compact('where','values');
     }
+    
+    function get_var($table, $args=array(), $field='id'){
+      global $wpdb;
+
+      extract(FrmDb::get_where_clause_and_values( $args ));
+
+      $query = "SELECT {$field} FROM {$table}{$where} LIMIT 1";
+      return $wpdb->get_var($wpdb->prepare($query, $values));
+    }
 
     function get_one_record($table, $args=array(), $fields='*'){
       global $wpdb;

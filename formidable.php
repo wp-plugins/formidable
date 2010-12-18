@@ -57,8 +57,8 @@ global $frm_ajax_url;
 $frm_siteurl = get_option('siteurl');
 $frm_ajax_url = admin_url('admin-ajax.php');
 
-global $frm_load_css, $frm_forms_loaded;
-$frm_load_css = false;
+global $frm_load_css, $frm_forms_loaded, $frm_css_loaded;
+$frm_load_css = $frm_css_loaded = false;
 $frm_forms_loaded = array();
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");

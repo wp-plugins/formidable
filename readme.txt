@@ -60,10 +60,13 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 
 == Changelog ==
 = 1.04.03 = 
+* Load styling before any forms are loaded
+* Fixed in-place edit in IE (finally! Sorry guys!)
 * PRO: Include styling on multi-paged forms
 * PRO: Allow floating decimals in the number field
-* PRO: Don't load jQuery CSS in admin
-* PRO: Move javascript for hidden fields to the footer (wp_footer)
+* PRO: Don't load jQuery CSS in the admin
+* PRO: Moved javascript for hidden fields to the footer (wp_footer)
+* PRO: Added field options to the user id and hidden fields
 
 = 1.04.02 = 
 * PRO: Fixed drop-down hidden field dependencies

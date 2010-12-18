@@ -1,4 +1,14 @@
-<?php echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
+<?php 
+global $frm_forms_loaded, $frm_load_css, $frm_css_loaded;
+$frm_forms_loaded[] = $form; 
+if($values['custom_style']) $frm_load_css = true;
+
+if(!$frm_css_loaded and $frm_load_css){
+echo FrmAppController::footer_js('header');
+$frm_css_loaded = true;
+}
+
+echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
 <div id="frm_form_fields">
 <fieldset>
 <div>
@@ -40,11 +50,7 @@ if (is_admin() && !$frm_settings->lock_keys){ ?>
 </div>
 </fieldset>
 </div>
-<?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); 
-global $frm_forms_loaded, $frm_load_css;
-$frm_forms_loaded[] = $form; 
-if($values['custom_style']) $frm_load_css = true;
-?>
+<?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
 <script type="text/javascript">
 <?php do_action('frm_entries_footer_scripts',$values['fields'], $form); ?>
 function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';}

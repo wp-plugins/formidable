@@ -45,7 +45,11 @@
  */
 
 jQuery.fn.editInPlace = function(options) {
-
+	var browserName=navigator.appName;
+	if(browserName=='Microsoft Internet Explorer')
+		var iebuttons=true;
+	else 
+		var iebuttons=false;
 	/* DEFINE THE DEFAULT SETTINGS, SWITCH THEM WITH THE OPTIONS USER PROVIDES */
 	var settings = {
 		url:				"",
@@ -66,7 +70,7 @@ jQuery.fn.editInPlace = function(options) {
 		original_html:		"original_html",
 		save_button:		'<button class="inplace_save">Save</button>',
 		cancel_button:		'<button class="inplace_cancel">Cancel</button>',
-		show_buttons:		false,
+		show_buttons:		iebuttons,
 		on_blur:			"save",
 		callback:			null,
 		success:			null,

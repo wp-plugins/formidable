@@ -139,21 +139,24 @@ class FrmAppController{
                 $this->install();
         }
         wp_enqueue_script('jquery');
-        /*if(!is_admin() and !$frm_settings->custom_stylesheet){
-            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+        
+        /*
+        if(!is_admin() and !$frm_settings->custom_stylesheet){
+            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', 'header');
             if(is_array($css)){
                 foreach($css as $css_key => $file)
                     wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
             }else
                 wp_enqueue_style('frm-forms', $css, array(), $frm_version);
-        }*/
+        }
+        */
     }
     
-    function footer_js(){
+    function footer_js($location='footer'){
         global $frm_load_css, $frm_settings, $frm_version;
-        
+
         if($frm_load_css and !is_admin() and !$frm_settings->custom_stylesheet){
-            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', $location);
             echo "\n".'<script type="text/javascript">';
             if(is_array($css)){
                 foreach($css as $css_key => $file)

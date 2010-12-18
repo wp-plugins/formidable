@@ -23,7 +23,7 @@ class FrmFormsController{
     function head(){
         global $frm_settings;
         if(!$frm_settings->custom_stylesheet)
-            $css_file = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+            $css_file = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', 'header');
         $js_file  = array(FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
         require(FRM_VIEWS_PATH . '/shared/head.php');
     }
