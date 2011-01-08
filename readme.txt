@@ -62,7 +62,7 @@ A. Try clearing your browser cache. As I make plugin modifications, I frequently
 = 1.04.04 =
 * Added Portuguese translation thanks to Abner Jacobsen. He also pointed me towards an awesome plugin to help with translating: [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization]"). Please send any new translations to support at strategy11.com. 
 * Properly recognize if the WP reCaptcha plugin is installed if site-wide activated
-* PRO: Updated javascript for more speed
+* PRO: Updated javascript for more speed and allow more than two dependent data from entries fields (makes Country/State/Region/City selectors possible if you do the data population)
 * PRO: Added success message styling
 * PRO: Fix bug preventing all image sizes from getting created
 * PRO: Changed the name of the scale field from "10radio" to "scale". This may affect users with add-on plugins using this name

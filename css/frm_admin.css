@@ -177,7 +177,7 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 }
 /*header states*/
 .themeRoller .theme-group .theme-group-header.state-default {
-	background:#3C6B95 url("../../../../wp-admin/images/menu-bits-vs.gif") repeat-x scroll left top;
+	background:#3C6B95 url(../images/menu-bits-vs.gif) repeat-x scroll left top;
 	border:1px solid #1D507D;
 	color:#FFFFFF;
 	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.4);
