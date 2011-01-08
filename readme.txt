@@ -3,7 +3,7 @@ Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
 Tags: WPMU, widget, Post, plugin, template, contact, contact form, form, forms, captcha, spam, email, database, admin, AJAX, javascript, jquery, poll, survey, feedback
 Requires at least: 2.8
-Tested up to: 3.0.1
+Tested up to: 3.0.4
 Stable tag: 1.04.03
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
@@ -59,6 +59,14 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.04 =
+* Added Portuguese translation thanks to Abner Jacobsen. He also pointed me towards an awesome plugin to help with translating: [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization]"). Please send any new translations to support at strategy11.com. 
+* Properly recognize if the WP reCaptcha plugin is installed if site-wide activated
+* PRO: Updated javascript for more speed
+* PRO: Added success message styling
+* PRO: Fix bug preventing all image sizes from getting created
+* PRO: Changed the name of the scale field from "10radio" to "scale". This may affect users with add-on plugins using this name
+
 = 1.04.03 = 
 * Load styling before any forms are loaded
 * Fixed in-place edit in IE (finally! Sorry guys!)

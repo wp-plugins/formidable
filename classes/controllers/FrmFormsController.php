@@ -185,7 +185,7 @@ class FrmFormsController{
     }
     
     function insert_form_button($content){
-        $content .= '<a href="#TB_inline?width=450&height=500&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'.FRM_IMAGES_URL.'/icon_16_bw.png" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
+        $content .= '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'.FRM_IMAGES_URL.'/icon_16_bw.png" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
         return $content;
     }
     
@@ -341,7 +341,7 @@ class FrmFormsController{
             $values['status'] = 'published';
             if($default) $values['default_template'] = 1;
             
-            require_once($templates[$i]);
+            include_once($templates[$i]);
         }
     }
 

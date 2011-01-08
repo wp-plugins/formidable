@@ -66,7 +66,7 @@
                 <?php } ?>
                 <?php do_action('frm_template_action_links', $form); ?>
                 <?php if(current_user_can('frm_delete_forms')){ ?>
-                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?'), stripslashes($form->name)) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo $form->form_key; ?>"><?php _e('Delete', 'formidable') ?></a></span>
+                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), stripslashes($form->name)) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo $form->form_key; ?>"><?php _e('Delete', 'formidable') ?></a></span>
                 <?php } ?>
             </div>
         </td>
@@ -96,9 +96,10 @@
                 <?php if(current_user_can('frm_edit_forms')){ ?>
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo $form->name; ?>"><?php _e('Duplicate', 'formidable') ?></a></span>
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>&amp;template=1" title="<?php _e('Create', 'formidable') ?> <?php echo $form->name; ?> <?php _e('Template', 'formidable') ?>"><?php _e('Create Template', 'formidable') ?></a></span>
+                | <span><a href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=forms&amp;action=export&amp;id=<?php echo $form->id; ?>" title="<?php _e('Export', 'formidable') ?> <?php echo $form->name; ?> <?php _e('Template', 'formidable') ?>"><?php _e('Export Template', 'formidable') ?></a></span>
                 <?php } ?>
                 <?php if(current_user_can('frm_delete_forms')){ ?>
-                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?'), stripslashes($form->name)) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo $form->form_key; ?>"><?php _e('Delete', 'formidable') ?></a></span>
+                | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), stripslashes($form->name)) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo $form->form_key; ?>"><?php _e('Delete', 'formidable') ?></a></span>
                 <?php } ?>
             </div>
         </td>

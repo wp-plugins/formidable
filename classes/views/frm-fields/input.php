@@ -20,17 +20,17 @@
 <option value="<?php echo $field_val ?>" <?php if ($field['value'] == $field_val) echo 'selected="selected"'; ?>><?php echo $opt ?></option>
     <?php } ?>
 </select>
-<?php }else if ($field['type'] == 'captcha'){
-        if (array_key_exists('captcha', FrmFieldsHelper::field_selection()))
-            FrmAppHelper::display_recaptcha();
-      }else if ($field['type'] == 'checkbox'){
+<?php }else if ($field['type'] == 'checkbox'){
         $checked_values = $field['value'];
         foreach ($field['options'] as $opt_key => $opt){
             if(isset($atts) and isset($atts['opt']) and ($atts['opt'] != $opt_key)) continue;
             $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
             $checked = ((!is_array($checked_values) && $checked_values == $field_val ) || (is_array($checked_values) && in_array($field_val, $checked_values)))?' checked="checked"':''; ?>
-<div class="frm_checkbox" id="frm_checkbox<?php echo $field['id'] .'_'. sanitize_title_with_dashes($field_val) ?>"><input type="checkbox" name="<?php echo $field_name ?>[]" id="item_meta_val<?php echo $field['id'] .'_'. sanitize_title_with_dashes($field_val) ?>" value="<?php echo $field_val ?>" <?php echo $checked ?> /><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="item_meta_val<?php echo $field['id'] .'_'. sanitize_title_with_dashes($field_val) ?>"><?php echo $opt ?></label><?php } ?></div>
+<div class="frm_checkbox" id="frm_checkbox<?php echo $field['id'] .'_'. sanitize_title_with_dashes($field_val) ?>"><input type="checkbox" name="<?php echo $field_name ?>[]" id="item_meta_val<?php echo $field['id'] .'_'. sanitize_title_with_dashes($field_val) ?>" value="<?php echo $field_val ?>" <?php echo $checked ?> <?php do_action('frm_field_input_html', $field) ?>/><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="item_meta_val<?php echo $field['id'] .'_'. sanitize_title_with_dashes($field_val) ?>"><?php echo $opt ?></label><?php } ?></div>
         <?php
         }
+      }else if ($field['type'] == 'captcha'){
+        if (array_key_exists('captcha', FrmFieldsHelper::field_selection()))
+            FrmAppHelper::display_recaptcha();
       }else do_action('frm_form_fields',$field, $field_name);
 ?>

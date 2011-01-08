@@ -97,7 +97,7 @@ class FrmAppController{
             global $frmpro_is_installed;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < 3 or ($pro_db_version and (int)$pro_db_version < 1)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < 3 or ($pro_db_version and (int)$pro_db_version < 3)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?></div>  
             <?php

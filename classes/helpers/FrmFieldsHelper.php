@@ -12,7 +12,7 @@ class FrmFieldsHelper{
         ));
         
         if ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) or 
-            (IS_WPMU and in_array('wp-recaptcha/wp-recaptcha.php', get_site_option('active_sitewide_plugins'))) )
+            (IS_WPMU and array_key_exists('wp-recaptcha/wp-recaptcha.php', get_site_option('active_sitewide_plugins'))) )
             $fields['captcha'] = 'reCAPTCHA Field';
         return $fields;
     }
@@ -30,7 +30,7 @@ class FrmFieldsHelper{
             'time' => __('Time', 'formidable'),
             'url' => __('Website/URL', 'formidable'),
             'image' => __('Image URL', 'formidable'), 
-            '10radio' => __('Scale', 'formidable'),
+            'scale' => __('Scale', 'formidable'),
             //'grid' => __('Grid', 'formidable'),
             'data' => __('Data from Entries', 'formidable'),
             'hidden' => __('Hidden Field', 'formidable'), 
@@ -206,13 +206,13 @@ DEFAULT_HTML;
     
     function show_onfocus_js($field_id, $clear_on_focus){ 
         global $frm_ajax_url; ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
     <?php
     }
     
     function show_default_blank_js($field_id, $default_blank){ 
         global $frm_ajax_url; ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not ', 'formidable') :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
     <?php
     }
     

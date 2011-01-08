@@ -43,7 +43,7 @@ class FrmDb{
                 field_options longtext default NULL,
                 form_id int(11) default NULL,
                 created_at datetime NOT NULL,
-                PRIMARY KEY  (id),
+                PRIMARY KEY id (id),
                 KEY form_id (form_id)
               ) {$charset_collate};";
 
@@ -64,7 +64,7 @@ class FrmDb{
                 options longtext default NULL,
                 notifications longtext default NULL,
                 created_at datetime NOT NULL,
-                PRIMARY KEY  (id)
+                PRIMARY KEY id (id)
               ) {$charset_collate};";
 
       dbDelta($sql);
@@ -79,7 +79,7 @@ class FrmDb{
                 form_id int(11) default NULL,
                 post_id int(11) default NULL,
                 created_at datetime NOT NULL,
-                PRIMARY KEY  (id),
+                PRIMARY KEY id (id),
                 KEY form_id (form_id)
               ) {$charset_collate};";
 
@@ -92,7 +92,7 @@ class FrmDb{
                 field_id int(11) NOT NULL,
                 item_id int(11) NOT NULL,
                 created_at datetime NOT NULL,
-                PRIMARY KEY  (id),
+                PRIMARY KEY id (id),
                 KEY field_id (field_id),
                 KEY item_id (item_id)
               ) {$charset_collate};";
