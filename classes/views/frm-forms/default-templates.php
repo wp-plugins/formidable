@@ -16,16 +16,16 @@
 ?>
     <tr style="min-height: 60px; height: 60px;">
         <td class="post-title">
-            <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo stripslashes($form->name); ?>" target="blank"><?php echo stripslashes($form->name); ?></a><br/>
+            <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo htmlentities(stripslashes($form->name)) ?>" target="blank"><?php echo stripslashes($form->name); ?></a><br/>
             <div class="row-actions">
                 <?php if(current_user_can('frm_edit_forms')){ ?>
-                <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo $form->name; ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span> |
+                <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)); ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span> |
                 <?php } ?>
                 <?php global $frm_settings; 
                 if ($frm_settings->preview_page_id > 0)
                    $url = add_query_arg('form', $form->form_key, get_permalink($frm_settings->preview_page_id));
                 ?>
-                <span><a href="<?php echo $url ?>" title="View <?php echo stripslashes($form->name); ?>" target="blank"><?php _e('View', 'formidable') ?></a></span>
+                <span><a href="<?php echo $url ?>" title="View <?php echo htmlentities(stripslashes($form->name)) ?>" target="blank"><?php _e('View', 'formidable') ?></a></span>
             </div>
         </td>
         <td><?php echo $form->description ?></td>
