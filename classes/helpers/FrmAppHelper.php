@@ -157,7 +157,7 @@ class FrmAppHelper{
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == '')
-                        $field_array[$opt] = $field_array['name'] . ' ' . __('can\'t be blank', 'formidable');
+                        $field_array[$opt] = $field_array['name'] . ' ' . __('cannot be blank', 'formidable');
                     else if($opt == 'invalid' and $field_array[$opt] == '')
                         $field_array[$opt] = $field_array['name'] . ' ' . __('is an invalid format', 'formidable');
                 }

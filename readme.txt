@@ -1,9 +1,9 @@
 === Formidable Forms ===
 Contributors: sswells
 Donate link: http://blog.strategy11.com/donate
-Tags: WPMU, widget, Post, plugin, template, contact, contact form, form, forms, captcha, spam, email, database, admin, AJAX, javascript, jquery, poll, survey, feedback
+Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
 Requires at least: 2.8
-Tested up to: 3.0.4
+Tested up to: 3.1.0
 Stable tag: 1.04.04
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
@@ -60,8 +60,11 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.05 =
+* Show the success message even if the form isn't displayed with it 
+
 = 1.04.04 =
-* Switched to the Google version of reCAPTCHA to no longer require and extra plugin. IMPORTANT: Please check that your reCAPTCHAs are still working. If not, you will need to go to http://www.google.com/recaptcha and either migrate your old keys or get new ones.
+* Switched to the Google version of reCAPTCHA to no longer require an extra plugin. IMPORTANT: Please check that your reCAPTCHAs are still working. If not, you will need to go to http://www.google.com/recaptcha and either migrate your old keys or get new ones.
 * Updated Akismet protection to work more accurately
 * Added Portuguese translation thanks to Abner Jacobsen. He also pointed out an awesome plugin to help with translating: [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization]")
 * PRO: Added unique field validation

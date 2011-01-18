@@ -50,7 +50,7 @@ class FrmFieldsHelper{
         $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
         
         $values = array();
-        foreach (array('name' => __('Untitled', 'formidable'), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('Untitled can\'t be blank', 'formidable'), 'invalid' => __('Untitled is an invalid format', 'formidable'), 'form_id' => $form_id) as $var => $default)
+        foreach (array('name' => __('Untitled', 'formidable'), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('Untitled cannot be blank', 'formidable'), 'invalid' => __('Untitled is an invalid format', 'formidable'), 'form_id' => $form_id) as $var => $default)
             $values[$var] = $default;
         
         $values['field_options'] = array();

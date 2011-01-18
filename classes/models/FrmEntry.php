@@ -163,7 +163,7 @@ class FrmEntry{
                 $_POST['item_meta'][$posted_field->id] = $value = '';            
                   
             if ($posted_field->required == '1' and $value == ''){
-                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', 'formidable') or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('can\'t be blank', 'formidable')) : $field_options['blank'];  
+                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', 'formidable') or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('cannot be blank', 'formidable')) : $field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name']))
                 $_POST['name'] = $value;
                 
