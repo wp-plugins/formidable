@@ -147,6 +147,6 @@ if($frmpro_is_installed)
     
 // The number of items per page on a table
 global $frm_page_size;
-$frm_page_size = 10;
+$frm_page_size = 20;
 
 ?>

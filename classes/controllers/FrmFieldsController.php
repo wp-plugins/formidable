@@ -149,6 +149,11 @@ class FrmFieldsController{
 
         if ($frmpro_is_installed) return $type;
         
+        if($type == 'scale' || $type == '10radio')
+            $type = 'radio';
+        else if($type == 'rte')
+            $type = 'textarea';
+            
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $types = array_keys($frm_field_selection);
         if (!in_array($type, $types) && $type != 'captcha')

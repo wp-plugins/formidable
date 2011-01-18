@@ -110,32 +110,10 @@ BEFORE_HTML;
         //replace [form_key]
         $html = str_replace('[form_key]', $form->form_key, $html);
         
+        if(class_exists('FrmProEntriesController'))
+            $html = str_replace('[deletelink]', FrmProEntriesController::entry_delete_link(array()), $html);
+        
         return apply_filters('frm_form_replace_shortcodes', $html, $form);
-    }
-    
-    function get_default_email(){
-        $email = <<<DEFAULT_EMAIL
-            <table style="border-bottom: 1px solid rgb(238, 238, 238); width: 100%; font-size: 12px; line-height: 135%; font-family: Lucida Grande,Tahoma,Arial,sans-serif;" cellspacing="0">
-            			<tbody><tr style="background-color: rgb(245, 245, 245);">
-            		<th style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px; vertical-align: top; color: rgb(34, 34, 34); text-align: left;">
-            			Number 
-            					</th>
-            		<td style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px 7px 0pt; vertical-align: top; color: rgb(51, 51, 51); width: 60%;">
-            			<div>89</div>
-
-            		</td>
-            	</tr>
-            	<tr style="background-color: rgb(255, 255, 255);">
-            		<th style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px; vertical-align: top; color: rgb(34, 34, 34); text-align: left;">
-            			Email 
-            					</th>
-            		<td style="border-top: 1px solid rgb(238, 238, 238); padding: 7px 9px 7px 0pt; vertical-align: top; color: rgb(51, 51, 51); width: 60%;">
-            		<a href="mailto:stephywells@gmail.com" target="_blank">stephywells@gmail.com</a>
-            		</td>
-            	</tr>
-            </tbody></table>
-DEFAULT_EMAIL;
-        return $email;
     }
 
 }

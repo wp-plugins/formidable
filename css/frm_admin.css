@@ -31,8 +31,9 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 
 #frm_form_options{width:270px;}
 #frm_form_options .nodrag a{cursor:pointer;}
-#frm_form_options .button{text-align:center;width:100px;float:left;}
+#frm_form_options .button{text-align:center;width:98px;float:left;}
 #frm_form_options .button a{display:block;font-weight:normal;text-decoration:none;}
+.frm_col_one{margin-right:4px;clear:both;}
 
 #poststuff h2.frm_ipe_form_name{
 	border:1px solid #dfdfdf; background-color:#fff; display:block; padding:0 5px; margin-top:0;

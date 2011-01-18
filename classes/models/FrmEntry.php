@@ -171,30 +171,34 @@ class FrmEntry{
         }
 
         if (isset($_POST['recaptcha_challenge_field']) and $_POST['action'] == 'create'){
-            global $recaptcha_opt;
+            global $frm_settings;
 
-            if (empty($_POST['recaptcha_response_field']) || $_POST['recaptcha_response_field'] == '') {
-         		$errors['field_captcha'] = $recaptcha_opt['error_blank'];
-            }else{
-         	    $response = recaptcha_check_answer($recaptcha_opt['privkey'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field'] );
+            if(!function_exists('recaptcha_check_answer'))
+                require_once(FRM_PATH.'/classes/recaptchalib.php');
+                
+            $response = recaptcha_check_answer($frm_settings->privkey,
+                                            $_SERVER["REMOTE_ADDR"],
+                                            $_POST["recaptcha_challenge_field"],
+                                            $_POST["recaptcha_response_field"]);
 
-         	    if (!$response->is_valid)
-         		    if ($response->error == 'incorrect-captcha-sol')
-         			    $errors['field_captcha'] = $recaptcha_opt['error_incorrect'];
-
+            if (!$response->is_valid) {
+                // What happens when the CAPTCHA was entered incorrectly
+                $errors['captcha-'.$response->error] = $frm_settings->re_msg;
             }
+            
         }
         
-        if ( empty($errors) && function_exists( 'akismet_http_post' ) && (get_option('wordpress_api_key') || $wpcom_api_key) && $this->akismet($values)){
+        global $wpcom_api_key;
+        if (empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
             global $frm_form;
-            $form = $frm_form->getOne($field->form_id);
+            $form = $frm_form->getOne($values['form_id']);
             $form_options = stripslashes_deep(unserialize($form->options));
 
             if (isset($form_options['akismet']) && $form_options['akismet'])
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
         
-      return $errors;
+        return $errors;
     }
     
     //Check entries for spam -- returns true if is spam
@@ -202,7 +206,7 @@ class FrmEntry{
 	    global $akismet_api_host, $akismet_api_port, $frm_blogurl;
 
 		$content = '';
-		foreach ( $values as $val ) {
+		foreach ( $values['item_meta'] as $val ) {
 			if ( $content != '' )
 				$content .= "\n\n";
 			$content .= $val;

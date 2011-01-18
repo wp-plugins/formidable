@@ -5,6 +5,12 @@ class FrmSettings{
     var $preview_page_id_str;
     var $lock_keys;
     
+    var $pubkey;
+    var $privkey;
+    var $re_theme;
+    var $re_lang;
+    var $re_msg;
+    
     var $custom_style;
     var $custom_stylesheet;
     var $jquery_css;
@@ -42,6 +48,28 @@ class FrmSettings{
         
         if(!isset($this->lock_keys))
             $this->lock_keys = true;
+          
+        if(!isset($this->pubkey)){
+            if(IS_WPMU)
+               $recaptcha_opt = get_site_option('recaptcha'); // get the options from the database
+            else
+               $recaptcha_opt = get_option('recaptcha');
+
+            $this->pubkey = (isset($recaptcha_opt['pubkey'])) ? $recaptcha_opt['pubkey'] : ''; 
+        } 
+        
+        if(!isset($this->privkey))
+            $this->privkey = (isset($recaptcha_opt) and isset($recaptcha_opt['privkey'])) ? $recaptcha_opt['privkey'] : '';        
+
+        if(!isset($this->re_theme))
+            $this->re_theme = (isset($recaptcha_opt) and isset($recaptcha_opt['re_theme'])) ? $recaptcha_opt['re_theme'] : 'red';
+            
+        if(!isset($this->re_lang))
+            $this->re_lang = (isset($recaptcha_opt) and isset($recaptcha_opt['re_lang'])) ? $recaptcha_opt['re_lang'] : 'en';
+         
+        if(!isset($this->re_msg) or empty($this->re_msg))
+            $this->re_msg = __('The reCAPTCHA was not entered correctly', 'formidable');
+
         
         if(!isset($this->custom_style))
             $this->custom_style = true;
@@ -91,6 +119,12 @@ class FrmSettings{
         global $wp_roles;
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
+        
+        $this->pubkey = $params['frm_pubkey'];
+        $this->privkey = $params['frm_privkey'];
+        $this->re_theme = $params['frm_re_theme'];
+        $this->re_lang = $params['frm_re_lang'];
+        $this->re_msg = $params['frm_re_msg'];
         
         $this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
         $this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;

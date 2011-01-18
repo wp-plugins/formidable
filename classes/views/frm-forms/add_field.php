@@ -42,15 +42,11 @@
             <?php do_action('frm_add_multiple_opts', $field); ?>
         </div>
     </div>
-<?php }else if ($field['type'] == 'captcha'){
-        if (array_key_exists('captcha', FrmFieldsHelper::field_selection())){
-            global $recaptcha_opt, $frm_siteurl; ?>
-            <img src="<?php echo FRM_URL ?>/images/<?php echo $recaptcha_opt['re_theme'];?>-captcha.png">
-            <span class="howto"><?php printf(__('Hint: Change colors in the "Registration Options" %1$sreCAPTCHA settings', 'formidable'), '<a href="'. $frm_siteurl .'/wp-admin/options-general.php?page=wp-recaptcha/wp-recaptcha.php">') ?></a></span>
-            <input type="hidden" name="<?php echo $field_name ?>" value="1"/>
-<?php   }else
-            _e('Please download and activate the WP reCAPTCHA plugin to enable this feature.', 'formidable');
-      
+<?php }else if ($field['type'] == 'captcha'){ ?>
+        <img src="<?php echo FRM_URL ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png">
+        <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
+        <input type="hidden" name="<?php echo $field_name ?>" value="1"/>
+<?php 
     }else
         do_action('frm_display_added_fields',$field);
 

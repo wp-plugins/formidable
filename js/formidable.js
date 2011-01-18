@@ -119,14 +119,6 @@ function frm_clear_on_focus(field_id, active, images_url, ajax_url){
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_clear_on_focus&field="+field_id+"&active="+switch_to});
 };
 
-function frm_read_only(field_id, active, images_url, ajax_url){
-    var thisid='read_only_'+field_id;
-    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
-    else{var switch_to='1';var new_class='';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_read_only('+field_id+', '+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class+' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/readonly.png"></a>');
-    jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_read_only&field="+field_id+"&active="+switch_to});
-};
-
 function frm_default_blank(field_id, active, images_url, ajax_url){
     var thisid='default_blank_'+field_id;
     if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}

@@ -14,15 +14,20 @@ echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $
 <div>
 <input type="hidden" name="action" value="<?php echo $form_action ?>" />
 <input type="hidden" name="form_id" value="<?php echo $form->id ?>" />
+<input type="hidden" name="form_key" value="<?php echo $form->form_key ?>" />
 <?php if (isset($id)){ ?><input type="hidden" name="id" value="<?php echo $id ?>" /><?php } ?>
 <?php if (isset($controller) && isset($plugin)){ ?>
 <input type="hidden" name="controller" value="<?php echo $controller; ?>" />
 <input type="hidden" name="plugin" value="<?php echo $plugin; ?>" />
 <?php }
 
-if (isset($errors) && is_array($errors))
-    $error_keys = array_keys($errors);
-$error_keys = (isset($error_keys)) ? $error_keys : array();
+$error_keys = array();
+if (isset($errors) && is_array($errors)){
+    foreach($errors as $error_id => $error_msg){
+        if(!is_numeric($error_id))
+            $error_keys[] = $error_id;
+    }
+}
 
 if($values['fields']){
 foreach($values['fields'] as $field){

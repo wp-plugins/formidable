@@ -27,7 +27,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
             <div class="clearfix">
                 <table class="form-table">
                     <tr>
-                        <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?>:</label> <a href="http://formidablepro.com/user-manual/insert-a-form/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
+                        <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?>:</label> <a href="http://formidablepro.com/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
                         <td>[formidable id=<?php echo $id; ?> title=true description=true]  or [formidable key=<?php echo $values['form_key']; ?>]</td>
                     </tr>
 
@@ -121,6 +121,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
             <li><b><?php _e('Form Name', 'formidable') ?>:</b> <pre>[form_name]</pre></li>
             <li><b><?php _e('Form Description', 'formidable') ?>:</b> <pre>[form_description]</pre></li>
             <li><b><?php _e('Form Key', 'formidable') ?>:</b> <pre>[form_key]</pre></li>
+            <li><b><?php _e('Delete Entry Link', 'formidable') ?>:</b> <pre>[deletelink]</pre></li>
         </ul>
         <ul>
             <li><b><?php _e('Field Id', 'formidable') ?>:</b> <pre>[id]</pre></li>

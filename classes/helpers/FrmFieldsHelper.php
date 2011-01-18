@@ -8,12 +8,10 @@ class FrmFieldsHelper{
             'textarea' => __('Paragraph Input (Multiple Lines)', 'formidable'),
             'checkbox' => __('Multiple Selection (Check Boxes)', 'formidable'),
             'radio' => __('Select One (Radio)', 'formidable'),
-            'select' => __('Drop-Down (Select)', 'formidable')
+            'select' => __('Drop-Down (Select)', 'formidable'),
+            'captcha' => __('reCAPTCHA (SPAM Control)', 'formidable')
         ));
         
-        if ( in_array('wp-recaptcha/wp-recaptcha.php', get_option('active_plugins')) or 
-            (IS_WPMU and array_key_exists('wp-recaptcha/wp-recaptcha.php', get_site_option('active_sitewide_plugins'))) )
-            $fields['captcha'] = 'reCAPTCHA Field';
         return $fields;
     }
     
@@ -34,7 +32,7 @@ class FrmFieldsHelper{
             //'grid' => __('Grid', 'formidable'),
             'data' => __('Data from Entries', 'formidable'),
             'hidden' => __('Hidden Field', 'formidable'), 
-            'user_id' => __('Hidden User Id', 'formidable'),
+            'user_id' => __('Hidden User ID', 'formidable'),
             'tag' => __('Tags', 'formidable')
             //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
             //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
@@ -155,7 +153,7 @@ DEFAULT_HTML;
         $html = str_replace('[field_name]', $field['name'], $html);
             
         //replace [error_class] 
-        $error_class = in_array('field'.$field['id'], $error_keys) ? ' frm_blank_field':''; 
+        $error_class = (in_array('field'.$field['id'], $error_keys)) ? ' frm_blank_field':''; 
         $html = str_replace('[error_class]', $error_class, $html);
         
         //replace [entry_key]
@@ -202,6 +200,19 @@ DEFAULT_HTML;
         }
         
         return apply_filters('frm_replace_shortcodes', $html, $field);
+    }
+    
+    function display_recaptcha($field, $error=null){
+    	global $frm_settings;
+    	
+    	if(!function_exists('recaptcha_get_html'))
+            require_once(FRM_PATH.'/classes/recaptchalib.php');
+        $is_ssl = !empty($_SERVER['HTTPS']);
+        ?>
+        <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $frm_settings->re_lang ?>'};</script>
+        <div id="frm_field_<?php echo $field['id'] ?>_container"><?php echo recaptcha_get_html($frm_settings->pubkey, $error, $is_ssl) ?></div>
+<?php
+        unset($is_ssl);
     }
     
     function show_onfocus_js($field_id, $clear_on_focus){ 

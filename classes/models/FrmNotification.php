@@ -66,8 +66,10 @@ class FrmNotification{
         if($plain_text)
             $message    = html_entity_decode(strip_tags($message));
 
-        if (!wp_mail($recipient, $subject, $message, $header, $attachments))
+        if (!wp_mail($recipient, $subject, $message, $header, $attachments)){
+            $header = "From: {$reply_to_name} <{$reply_to}>";
             mail($recipient, $subject, $message, $header);
+        }
 
         do_action('frm_notification', $recipient, $subject, $message);
     }

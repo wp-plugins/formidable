@@ -23,14 +23,14 @@
     			<div class="theme-group-content corner-bottom clearfix">
                     <div class="clearfix">
     					<ul class="field_type_list">
-                        <?php foreach ($frm_field_selection as $field_key => $field_type){ ?>
-                            <li class="frmbutton button" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>', '<?php echo $frm_ajax_url ?>');"><?php echo $field_type ?></a></li>
-                         <?php } ?>
+                        <?php 
+                        $col_class = 'frm_col_one';
+                        foreach ($frm_field_selection as $field_key => $field_type){ ?>
+                            <li class="frmbutton button <?php echo $col_class ?>" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>', '<?php echo $frm_ajax_url ?>');"><?php echo $field_type ?></a></li>
+                         <?php
+                         $col_class = (empty($col_class)) ? 'frm_col_one' : '';
+                         } ?>
                          <div class="clear"></div>
-                         <?php if (!array_key_exists('captcha', $frm_field_selection) && !function_exists( 'akismet_http_post' )){
-                                global $frm_siteurl; ?>
-                                <p class="howto"><?php printf(__('Hint: Download and activate %1$sWP-reCAPTCHA%2$s to add a captcha to your form. Alternatively activate Akismet for captcha-free spam screening.', 'formidable'), '<a href="'.$frm_siteurl.'/wp-admin/plugin-install.php?tab=plugin-information&amp;plugin=wp-recaptcha&amp;TB_iframe=true&amp;width=640&amp;height=593" class="thickbox onclick" title="WP-reCAPTCHA">', '</a>'); ?></p>
-                        <?php } ?>
                          </ul>
     				</div>
     			</div><!-- /theme group content -->
@@ -44,9 +44,12 @@
     			<div class="theme-group-content corner-bottom clearfix">
                     <div class="clearfix">
     					 <ul<?php echo apply_filters('frm_drag_field_class','') ?>>
-                         <?php foreach (FrmFieldsHelper::pro_field_selection() as $field_key => $field_type){ ?>
-                             <li class="frmbutton button" id="<?php echo $field_key ?>"><?php echo apply_filters('frmpro_field_links',$field_type, $id, $field_key) ?></li>
-                        <?php } ?>
+                         <?php $col_class = 'frm_col_one';
+                         foreach (FrmFieldsHelper::pro_field_selection() as $field_key => $field_type){ ?>
+                             <li class="frmbutton button <?php echo $col_class ?>" id="<?php echo $field_key ?>"><?php echo apply_filters('frmpro_field_links',$field_type, $id, $field_key) ?></li>
+                        <?php 
+                        $col_class = (empty($col_class)) ? 'frm_col_one' : '';
+                        } ?>
                          <div class="clear"></div>
                          </ul>
     				</div>
@@ -75,10 +78,6 @@
                                 = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
                             <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> 
                                 = <?php _e('default value will pass validation', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/readonly.png" alt="read-only"></span> 
-                                = <?php _e('read-only field', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/readonly.png" alt="read-only"></span> 
-                                = <?php _e('not a read-only field', 'formidable') ?></li>
                             <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete"></span> 
                                 = <?php _e('delete field and all inputed data', 'formidable') ?></li>
                             <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move"></span> 

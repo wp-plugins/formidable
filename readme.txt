@@ -41,10 +41,11 @@ There are dozens of form-building plugins out there to create forms, but most ar
 A. Try the following steps:
 
    1. Double check to make sure your email address is present and correct under “Advanced Form Options” at the bottom of your form editor page
-   2. Check your SPAM box
-   3. Try a different email address.
-   4. Install WP Mail SMPT or another similar plugin
-   5. If none of these steps fix the problem, let me know and I’ll try to help you find the bottleneck.
+   2. Make sure you are receiving other emails from your site (ie comment notifications, forgot password...)
+   3. Check your SPAM box
+   4. Try a different email address.
+   5. Install WP Mail SMPT or another similar plugin and configure the SMTP settings
+   6. If none of these steps fix the problem, let me know and I’ll try to help you find the bottleneck.
 
 = Q. How do I make a field required? =
 
@@ -52,20 +53,25 @@ A. I have tried to keep the Formidable user interface as quick and simple as pos
 
 = Q. How do I edit the field name? =
 
-A. The field and form names and descriptions are all changed with in-place edit. Just click on the text you would like to change, and it will turn into a text field. Don’t forget to hit save!
+A. The field and form names and descriptions are all changed with in-place edit. Just click on the text you would like to change, and it will turn into a text field.
 
 = Q. Why isn’t the form builder page working after I updated? =
 
-A. Try clearing your browser cache. As I make plugin modifications, I frequently change javascript and stylesheets. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
+A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
 = 1.04.04 =
-* Added Portuguese translation thanks to Abner Jacobsen. He also pointed me towards an awesome plugin to help with translating: [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization]"). Please send any new translations to support at strategy11.com. 
-* Properly recognize if the WP reCaptcha plugin is installed if site-wide activated
+* Switched to the Google version of reCAPTCHA to no longer require and extra plugin. IMPORTANT: Please check that your reCAPTCHAs are still working. If not, you will need to go to http://www.google.com/recaptcha and either migrate your old keys or get new ones.
+* Updated Akismet protection to work more accurately
+* Added Portuguese translation thanks to Abner Jacobsen. He also pointed out an awesome plugin to help with translating: [Codestyling Localization](http://wordpress.org/extend/plugins/codestyling-localization/ "Codestyling Localization]")
+* PRO: Added unique field validation
+* PRO: Added admin-only fields
 * PRO: Updated javascript for more speed and allow more than two dependent data from entries fields (makes Country/State/Region/City selectors possible if you do the data population)
 * PRO: Added success message styling
 * PRO: Fix bug preventing all image sizes from getting created
 * PRO: Changed the name of the scale field from "10radio" to "scale". This may affect users with add-on plugins using this name
+* PRO: Added `[deletelink]` option for use in custom HTML
+* PRO: Added `not_equal` parameter for conditionally displaying content. ie `[if XX not_equal="Blah Blah"]stuff[/if XX]
 
 = 1.04.03 = 
 * Load styling before any forms are loaded

@@ -229,22 +229,6 @@ class FrmAppHelper{
       return $message;
     }
     
-    function display_recaptcha() {
-    	global $recaptcha_opt;
-
-    	$format = <<<END
-<script type='text/javascript'>var RecaptchaOptions={theme:'{$recaptcha_opt['re_theme_reg']}',lang:'{$recaptcha_opt['re_lang']}',tabindex:30};</script>
-END;
-
-    	$comment_string = <<<COMMENT_FORM
-<script type='text/javascript'>document.getElementById('recaptcha_table').style.direction='ltr';</script>
-COMMENT_FORM;
-
-    	$use_ssl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? true : false;
-            
-        echo $format . recaptcha_wp_get_html(isset($_GET['rerror'])?$_GET['rerror']:'', $use_ssl);
-    }
-    
     function truncate($str, $length, $minword = 3, $continue = '...'){
         $sub = '';
         $len = 0;
