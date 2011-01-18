@@ -1,0 +1,22 @@
+.with_frm_style .form-field label.frm_pos, .with_frm_style .form-field label.frm_pos_, .with_frm_style .form-field label.frm_pos_top, .with_frm_style .form-field label.frm_pos_left, .with_frm_style .form-field label.frm_pos_right, .with_frm_style .form-field label.frm_pos_none{font-size:12px;font-weight:bold;float:none;text-align:left;margin:0;padding:0;width:auto;display:block;}
+.with_frm_style .form-field label.frm_pos_top, .with_frm_style .form-field label.frm_pos_{display:block;float:none;width:auto;}
+.with_frm_style .frm_pos_top{display:block;}
+.with_frm_style .frm_pos_left{float:left;padding-right:10px;width:150px;}
+.with_frm_style .frm_pos_right{float:right;padding-left:10px;width:150px;}
+.with_frm_style .frm_pos_none{display:none;}
+.with_frm_style .form-field{margin-top:15px;}
+.with_frm_style .form-field.frm_blank_field label{color:#be2e17;}
+.with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .frm_form_fields_error_style, .with_frm_style input.error, .with_frm_style textarea.error, .with_frm_style select.error{border:1px solid #be2e17;}
+.with_frm_style ul#frm_errors{list-style:square inside url(../images/error.png);margin:0;padding:0;}
+.with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;margin:0;}
+.with_frm_style input[type="radio"], .with_frm_style input[type="checkbox"]{width:auto;margin-right:3px;}
+.with_frm_style fieldset{border:none; margin:0; padding:0;}
+.with_frm_style p.submit{padding-top:20px;padding-bottom:20px;}
+.with_frm_style .form-field p.description, .with_frm_style .form-field div.description{margin:0;padding:0;font-size:11px;font-weight:normal;text-align:left;font-style:normal;}
+.with_frm_style .form-field input, .with_frm_style .form-field select, .with_frm_style .form-field textarea, #content .with_frm_style .form-field input, #content .with_frm_style .form-field select, #content .with_frm_style .form-field textarea{font-size:13px;}
+.with_frm_style .form-field input, #wpcontent .with_frm_style .form-field select, .with_frm_style .form-field select, .with_frm_style .form-field textarea{border-width:1px;border-style:solid;-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;width:400px;font-size:13px;padding:2px;}
+.with_frm_style .form-field input.auto_width, .with_frm_style .form-field select.auto_width, .with_frm_style .form-field textarea.auto_width{width:auto;}
+.with_frm_style .form-field input:focus, .with_frm_style .form-field select:focus, .with_frm_style .form-field textarea:focus, .with_frm_style .frm_focus_field input[type='text']{border-color:#dddddd;}
+.with_frm_style .form-field .frm_radio label, .with_frm_style .form-field .frm_checkbox label{display:inline;}
+.with_frm_style .form-field .frm_radio input[type="radio"], .with_frm_style .form-field .frm_checkbox input[type="checkbox"]{margin-right:5px;width:auto;}
+.with_frm_style .form-field input[type="radio"],.with_frm_style .form-field input[type="checkbox"]{width:auto;}
