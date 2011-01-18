@@ -153,19 +153,26 @@ class FrmAppController{
     }
     
     function footer_js($location='footer'){
-        global $frm_load_css, $frm_settings, $frm_version;
+        global $frm_load_css, $frm_settings, $frm_version, $frm_css_loaded;
 
         if($frm_load_css and !is_admin() and !$frm_settings->custom_stylesheet){
-            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', $location);
-            echo "\n".'<script type="text/javascript">';
-            if(is_array($css)){
-                foreach($css as $css_key => $file)
-                    echo 'jQuery("head").append(\'<link rel="stylesheet" id="frm-forms'.$css_key.'-css" href="'. $file. '" type="text/css" media="all" />\');';
-                    //wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
-            }else
-                echo 'jQuery("head").append(\'<link rel="stylesheet" id="frm-forms-css" href="'. $css. '" type="text/css" media="all" />\');';
-                //wp_enqueue_style('frm-forms', $css, array(), $frm_version);
-            echo '</script>'."\n";
+            if($frm_css_loaded)
+                $css = apply_filters('get_frm_stylesheet', '', $location);
+            else
+                $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', $location);
+             
+            if(!empty($css)){   
+                echo "\n".'<script type="text/javascript">';
+                if(is_array($css)){
+                    foreach($css as $css_key => $file)
+                        echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms'. ($css_key + $frm_css_loaded) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
+                        //wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
+                }else
+                    echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms-css\' href=\''. $css. '\' type=\'text/css\' media=\'all\' /%3E"));';
+
+                    //wp_enqueue_style('frm-forms', $css, array(), $frm_version);
+                echo '</script>'."\n";
+            }
         }
     }
   
