@@ -54,7 +54,7 @@ textarea.inplace_field{width:100%;}
 	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
 }
 .with_frm_style .frm_full_rte textarea{width:100%; padding:0;}
-.frm_field_box{padding:5px;}
+.frm_field_box{padding:5px;min-height:20px;}
 
 .frm_pos_top{display:block;}
 .frm_pos_left{float:left; width:150px;}
