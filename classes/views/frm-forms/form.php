@@ -59,7 +59,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                     
                     <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?>:</label></td>
                         <td><?php if($frmpro_is_installed){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
-                            <textarea id="success_msg" name="options[success_msg]" cols="50" class="frm_elastic_text"><?php echo $values['success_msg']; ?></textarea> <br/>
+                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_elastic_text" style="width:98%"><?php echo $values['success_msg']; ?></textarea> <br/>
                         <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                         <td>
                     </tr>
@@ -84,7 +84,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
 				 <table class="form-table">
                       <tr>
                           <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?>:</label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
-                          <td><input type="text" name="options[email_to]" size="55" value="<?php echo $values['email_to']; ?>" /></td>
+                          <td><input type="text" name="options[email_to]" size="55" value="<?php echo $values['email_to']; ?>" style="width:98%" /></td>
                      </tr>
                      <?php do_action('frm_additional_form_notification_options', $values); ?> 
                   </table>

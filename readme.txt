@@ -61,7 +61,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.04.05 =
-* Show the success message even if the form isn't displayed with it 
+* Show the success message even if the form isn't displayed with it
+* PRO: Added option to resend email notification and autoresponse
+* PRO: Fixes for editing forms with unique fields
+* PRO: Fixes for editing multi-paged forms with validation errors
+* PRO: Added linked fields into the field drop-downs for inserting shortcodes
 
 = 1.04.04 =
 * Switched to the Google version of reCAPTCHA to no longer require an extra plugin. IMPORTANT: Please check that your reCAPTCHAs are still working. If not, you will need to go to http://www.google.com/recaptcha and either migrate your old keys or get new ones.
@@ -74,7 +78,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fix bug preventing all image sizes from getting created
 * PRO: Changed the name of the scale field from "10radio" to "scale". This may affect users with add-on plugins using this name
 * PRO: Added `[deletelink]` option for use in custom HTML
-* PRO: Added `not_equal` parameter for conditionally displaying content. ie `[if XX not_equal="Blah Blah"]stuff[/if XX]
+* PRO: Added `not_equal` parameter for conditionally displaying content. ie `[if XX not_equal="Blah Blah"]stuff[/if XX]`å
 
 = 1.04.03 = 
 * Load styling before any forms are loaded

@@ -16,6 +16,7 @@
 <table class="widefat post fixed" cellspacing="0">
     <thead>
     <tr>
+        <th class="manage-column check-column" scope="col"> <?php do_action('frm_column_header'); ?> </th>
         <?php if ($params['template']){ ?>
             <th class="manage-column" width="">
                   <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&sort=name<?php echo (($sort_str == 'name' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
@@ -25,7 +26,7 @@
             </th>
         <?php }else{?>
             <th class="manage-column" width="50px">
-                <?php do_action('frm_column_header'); ?> <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=id<?php echo (($sort_str == 'id' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('ID', 'formidable') ?><?php echo (($sort_str == 'id')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=id<?php echo (($sort_str == 'id' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('ID', 'formidable') ?><?php echo (($sort_str == 'id')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column" width="">
                 <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=name<?php echo (($sort_str == 'name' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
@@ -42,6 +43,7 @@
         <?php } ?>
     </tr>
     </thead>
+    <tbody>
 <?php if($record_count <= 0){ ?>
     <tr>
       <td colspan="<?php echo ($params['template'])? '2':'7'; ?>"><?php _e('No Forms Found', 'formidable') ?></td>
@@ -51,6 +53,7 @@
     foreach($forms as $form){
 ?>
     <tr style="min-height: 75px; height: 75px;" class="iedit">
+        <th class="check-column" scope="row"><?php do_action('frm_first_col', $form->id); ?></th>
         <?php if ($params['template']){ ?>
         <td class="post-title">
             <?php if(current_user_can('frm_edit_forms')){ ?>
@@ -72,7 +75,7 @@
         </td>
         <td><?php echo $form->description ?></td>
         <?php }else{ ?>
-        <td><?php do_action('frm_first_col', $form->id); ?> <?php echo $form->id ?></td>
+        <td><?php echo $form->id ?></td>
         <td class="post-title">
             <?php if(current_user_can('frm_edit_forms')){ ?>
             <a class="row-title" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>
@@ -116,13 +119,15 @@
     }
   }
 ?>
+    </tbody>
     <tfoot>
     <tr>
+        <th class="manage-column check-column" scope="col"> <?php do_action('frm_column_header'); ?> </th>
         <?php if ($params['template']){ ?>
             <th class="manage-column"><?php _e('Name', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Description', 'formidable') ?></th>
         <?php }else{ ?>
-            <th class="manage-column"><?php do_action('frm_column_header'); ?> <?php _e('ID', 'formidable') ?></th>
+            <th class="manage-column"><?php _e('ID', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Name', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Description', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Key', 'formidable') ?></th>

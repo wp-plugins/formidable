@@ -170,7 +170,7 @@ class FrmEntry{
             $errors = apply_filters('frm_validate_field_entry', $errors, $posted_field, $value);
         }
 
-        if (isset($_POST['recaptcha_challenge_field']) and $_POST['action'] == 'create'){
+        if (isset($_POST['recaptcha_challenge_field'])){
             global $frm_settings;
 
             if(!function_exists('recaptcha_check_answer'))
@@ -189,7 +189,7 @@ class FrmEntry{
         }
         
         global $wpcom_api_key;
-        if (empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
+        if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
             global $frm_form;
             $form = $frm_form->getOne($values['form_id']);
             $form_options = stripslashes_deep(unserialize($form->options));

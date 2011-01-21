@@ -40,5 +40,8 @@
         }
         if (!empty($frm_settings->pubkey))
             FrmFieldsHelper::display_recaptcha($field, $error_msg);
+      }else if ($field['type'] == 'nucaptcha'){
+          if(function_exists('nucaptcha_comment_form'))
+              nucaptcha_comment_form();
       }else do_action('frm_form_fields',$field, $field_name);
 ?>

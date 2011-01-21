@@ -10,6 +10,7 @@ class FrmFieldsHelper{
             'radio' => __('Select One (Radio)', 'formidable'),
             'select' => __('Drop-Down (Select)', 'formidable'),
             'captcha' => __('reCAPTCHA (SPAM Control)', 'formidable')
+            //'nucaptcha' => __('NuCaptcha (SPAM Control)', 'formidable')
         ));
         
         return $fields;

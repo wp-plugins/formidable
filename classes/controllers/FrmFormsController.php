@@ -30,12 +30,13 @@ class FrmFormsController{
     
     function list_form(){
         $params = $this->get_params();
-        $errors = apply_filters('frm_admin_list_form_action', $errors);
+        $errors = apply_filters('frm_admin_list_form_action', array());
         return $this->display_forms_list($params, '', false, false, $errors);
     }
     
     function template_list(){
         $_POST['template'] = 1;
+        $errors = apply_filters('frm_admin_list_form_action', array());
         return $this->display_forms_list();
     }
     

@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-$(".frm_elastic_text").elastic();	
+//$(".frm_elastic_text").elastic();	
 	
 window.onscroll = document.documentElement.onscroll = frmSetMenuOffset;
 frmSetMenuOffset();
