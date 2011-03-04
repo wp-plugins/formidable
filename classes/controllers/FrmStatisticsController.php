@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @package Formidable
+ */
+ 
 class FrmStatisticsController{
     function FrmStatisticsController(){
         add_action('admin_menu', array( &$this, 'menu' ), 30);

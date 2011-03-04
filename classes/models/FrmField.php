@@ -18,6 +18,9 @@ class FrmField{
         $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']:NULL;
         $new_values['field_options'] = serialize($values['field_options']);
         $new_values['created_at'] = current_time('mysql', 1);
+        
+        //if(isset($values['id']) and is_numeric($values['id']))
+        //    $new_values['id'] = $values['id'];
 
         $query_results = $wpdb->insert( $frmdb->fields, $new_values );
         if($return){
@@ -67,7 +70,10 @@ class FrmField{
     }
 
     function getOne( $id ){
-        global $wpdb, $frmdb;
+        global $wpdb, $frmdb, $frm_loaded_fields;
+        if(isset($frm_loaded_fields[$id])) 
+            return $frm_loaded_fields[$id];
+            
         if (is_numeric($id))
             $query = "SELECT * FROM $frmdb->fields WHERE id=$id";
         else
@@ -76,7 +82,7 @@ class FrmField{
     }
 
     function getAll($where = '', $order_by = '', $limit = '', $blog_id=false){
-        global $wpdb, $frmdb, $frm_app_helper;
+        global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_fields;
         if ($blog_id and IS_WPMU){
             global $wpmuBaseTablePrefix;
             $table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_fields";
@@ -94,6 +100,14 @@ class FrmField{
             $results = $wpdb->get_row($query);
         else
             $results = $wpdb->get_results($query);
+        
+        if($results){
+            if(is_array($results)){
+                foreach($results as $result)
+                    $frm_loaded_fields[$result->id] = $frm_loaded_fields[$result->field_key] = $result;
+            }else
+                $frm_loaded_fields[$results->id] = $frm_loaded_fields[$results->field_key] = $results;
+        }
         return $results;
     }
 

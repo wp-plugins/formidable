@@ -60,14 +60,14 @@ class FrmNotification{
             $to_email = get_option('admin_email');
             
         $recipient      = $to_email; //recipient
-        $header         = "From: {$reply_to_name} <{$reply_to}>\r\n Reply-To: {$reply_to_name} <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
+        $header         = "From: \"{$reply_to_name}\" <{$reply_to}>\r\n Reply-To: \"{$reply_to_name}\" <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
         $subject        = html_entity_decode(strip_tags(stripslashes($subject)));
-        $message        = stripslashes($message);
+        $message        = wordwrap(stripslashes($message), 70); //in case any lines are longer than 70 chars
         if($plain_text)
             $message    = html_entity_decode(strip_tags($message));
 
         if (!wp_mail($recipient, $subject, $message, $header, $attachments)){
-            $header = "From: {$reply_to_name} <{$reply_to}>";
+            $header = "From: \"{$reply_to_name}\" <{$reply_to}>";
             mail($recipient, $subject, $message, $header);
         }
 

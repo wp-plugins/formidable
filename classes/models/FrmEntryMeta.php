@@ -25,9 +25,7 @@ class FrmEntryMeta{
     global $frm_field;
     $this->delete_entry_metas($entry_id);
     foreach($values as $field_id => $meta_value){
-        $field = $frm_field->getOne( $field_id );
-        $meta_value = maybe_serialize($values[$field_id]);
-        $this->update_entry_meta($entry_id, $field_id, '', $meta_value);
+        $this->update_entry_meta($entry_id, $field_id, '', maybe_serialize($values[$field_id]));
     }
   }
   
@@ -74,9 +72,11 @@ class FrmEntryMeta{
       return $wpdb->get_col("SELECT meta_value FROM $frmdb->entry_metas WHERE item_id={$entry_id}");
   }
   
-  function get_entry_metas_for_field($field_id, $order='', $limit='', $value=false){
+  function get_entry_metas_for_field($field_id, $order='', $limit='', $value=false, $unique=false){
       global $wpdb, $frmdb;
-      $query = "SELECT em.meta_value FROM $frmdb->entry_metas em ";
+      $query = "SELECT ";
+      $query .= ($unique) ? "DISTINCT(em.meta_value)" : "em.meta_value";
+      $query .= " FROM $frmdb->entry_metas em ";
       $query .= (is_numeric($field_id)) ? "WHERE em.field_id='{$field_id}'" : "LEFT JOIN $frmdb->fields fi ON (em.field_id = fi.id) WHERE fi.field_key='{$field_id}'";
       if($value)
         $query .= " AND meta_value='$value'";
@@ -103,9 +103,11 @@ class FrmEntryMeta{
     return $results;     
   }
   
-  function getEntryIds($where = '', $order_by = '', $limit = ''){
+  function getEntryIds($where = '', $order_by = '', $limit = '', $unique=true){
     global $wpdb, $frmdb, $frm_app_helper;
-    $query = "SELECT DISTINCT it.item_id FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id". $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+    $query = "SELECT ";
+    $query .= ($unique) ? "DISTINCT(it.item_id)" : "it.item_id";
+    $query .= " FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id". $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
     if ($limit == ' LIMIT 1')
         $results = $wpdb->get_var($query);
     else    

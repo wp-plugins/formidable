@@ -1,8 +1,11 @@
 <?php
-
+/**
+ * @package Formidable
+ */
+ 
 class FrmSettingsController{
     function FrmSettingsController(){
-        add_action('admin_menu', array( &$this, 'menu' ), 25);
+        add_action('admin_menu', array( &$this, 'menu' ), 26);
         add_action('admin_menu', array( &$this, 'pro_menu' ), 19);
         //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-settings', array($this,'head'));
     }

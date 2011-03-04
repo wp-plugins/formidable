@@ -39,7 +39,7 @@
             </th>
             <th class="manage-column" width="60px"><?php _e('Entries', 'formidable') ?></th>
             <th class="manage-column" width="115px"><?php _e('Direct Link', 'formidable') ?></th>
-            <th class="manage-column" width="115px"><?php _e('ShortCode', 'formidable') ?></th>
+            <th class="manage-column" width="115px"><?php _e('ShortCodes', 'formidable') ?></th>
         <?php } ?>
     </tr>
     </thead>
@@ -112,7 +112,9 @@
         <td>
             <input type='text' style="font-size: 10px; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='<?php echo $target_url = FrmFormsHelper::get_direct_link($form->form_key, $form->prli_link_id); ?>' /><br/><a href="<?php echo $target_url; ?>" target="blank"><?php _e('View Form', 'formidable') ?></a>
         </td>
-        <td><input type='text' style="font-size: 10px; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable id=<?php echo $form->id; ?>]' /></td>
+        <td><input type='text' style="font-size:10px;width:100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable id=<?php echo $form->id; ?>]' /><br/>
+            <input type='text' style="font-size:10px;width:100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable key=<?php echo $form->form_key ?>]' />
+        </td>
         <?php } ?>
     </tr>
       <?php
@@ -133,7 +135,7 @@
             <th class="manage-column"><?php _e('Key', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Entries', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Direct Link', 'formidable') ?></th>
-            <th class="manage-column"><?php _e('ShortCode', 'formidable') ?></th>
+            <th class="manage-column"><?php _e('ShortCodes', 'formidable') ?></th>
         <?php } ?>
     </tr>
     </tfoot>

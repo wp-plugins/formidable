@@ -1,7 +1,9 @@
 <?php
-
+/**
+ * @package Formidable
+ */
+ 
 class FrmEntriesController{
-    var $views;
     
     function FrmEntriesController(){
         add_action('admin_menu', array( &$this, 'menu' ), 20);

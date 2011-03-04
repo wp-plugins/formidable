@@ -15,7 +15,7 @@ class FrmDb{
     
     function upgrade(){
       global $wpdb, $frm_form, $frm_field;
-      $db_version = 3; // this is the version of the database we're moving to
+      $db_version = 4; // this is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
       if ($db_version != $old_db_version){
@@ -44,7 +44,8 @@ class FrmDb{
                 form_id int(11) default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY id (id),
-                KEY form_id (form_id)
+                KEY form_id (form_id),
+                UNIQUE KEY field_key (field_key)
               ) {$charset_collate};";
 
       dbDelta($sql);
@@ -62,9 +63,9 @@ class FrmDb{
                 status varchar(255) default NULL,
                 prli_link_id int(11) default NULL,
                 options longtext default NULL,
-                notifications longtext default NULL,
                 created_at datetime NOT NULL,
-                PRIMARY KEY id (id)
+                PRIMARY KEY id (id),
+                UNIQUE KEY form_key (form_key)
               ) {$charset_collate};";
 
       dbDelta($sql);
@@ -78,9 +79,13 @@ class FrmDb{
                 ip text default NULL,
                 form_id int(11) default NULL,
                 post_id int(11) default NULL,
+                user_id int(11) default NULL,
                 created_at datetime NOT NULL,
                 PRIMARY KEY id (id),
-                KEY form_id (form_id)
+                KEY form_id (form_id),
+                KEY post_id (post_id),
+                KEY user_id (user_id),
+                UNIQUE KEY item_key (item_key)
               ) {$charset_collate};";
 
       dbDelta($sql);
@@ -108,6 +113,10 @@ class FrmDb{
               if(is_array($opts))
                 $wpdb->update( $this->entries, array('ip' => $opts['ip']), array( 'id' => $ent->id ) );
           }
+      }else if($db_version >= 4 and $old_db_version < 4){
+          $user_ids = FrmEntryMeta::getAll("fi.type='user_id'");
+          foreach($user_ids as $user_id)
+              $wpdb->update( $this->entries, array('user_id' => $user_id->meta_value), array('id' => $user_id->item_id) );
       }
       
       /**** ADD DEFAULT TEMPLATES ****/
@@ -154,13 +163,26 @@ class FrmDb{
       return compact('where','values');
     }
     
-    function get_var($table, $args=array(), $field='id'){
+    function get_var($table, $args=array(), $field='id', $order_by=''){
       global $wpdb;
 
       extract(FrmDb::get_where_clause_and_values( $args ));
+      if(!empty($order_by))
+          $order_by = " ORDER BY {$order_by}";
 
-      $query = "SELECT {$field} FROM {$table}{$where} LIMIT 1";
-      return $wpdb->get_var($wpdb->prepare($query, $values));
+      $query = $wpdb->prepare("SELECT {$field} FROM {$table}{$where}{$order_by} LIMIT 1", $values);
+      return $wpdb->get_var($query);
+    }
+    
+    function get_col($table, $args=array(), $field='id', $order_by=''){
+      global $wpdb;
+
+      extract(FrmDb::get_where_clause_and_values( $args ));
+      if(!empty($order_by))
+          $order_by = " ORDER BY {$order_by}";
+
+      $query = $wpdb->prepare("SELECT {$field} FROM {$table}{$where}{$order_by}", $values);
+      return $wpdb->get_col($query);
     }
 
     function get_one_record($table, $args=array(), $fields='*'){

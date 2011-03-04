@@ -92,8 +92,12 @@ class FrmAppHelper{
             $max_slug_value = pow(36,$num_chars);
             $min_slug_value = 37; // we want to have at least 2 characters in the slug
             $key = base_convert( rand($min_slug_value,$max_slug_value), 10, 36 );
-        }else
-            $key = sanitize_title_with_dashes($name);
+        }else{
+            if(function_exists('sanitize_key'))
+                $key = sanitize_key($name);
+            else
+                $key = sanitize_title_with_dashes($name);
+        }
 
         if (is_numeric($key) or in_array($key, array('id','key','created-at', 'detaillink', 'editlink', 'siteurl', 'evenodd')))
             $key = $key .'a';
@@ -125,6 +129,7 @@ class FrmAppHelper{
               $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default_val));
         $values['description'] = wpautop($values['description']);
         $values['fields'] = array();
+        
         if ($fields){
             foreach($fields as $field){
                 $field_options = stripslashes_deep(unserialize($field->field_options));
@@ -134,7 +139,9 @@ class FrmAppHelper{
                 else{
                     if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field_options['post_field']) and $field_options['post_field']){
                         $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('truncate' => false, 'type' => $field->type));
-                    }else
+                    }else if(isset($record->metas))
+                        $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
+                    else
                         $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
                 }
                 

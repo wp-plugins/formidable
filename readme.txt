@@ -47,10 +47,6 @@ A. Try the following steps:
    5. Install WP Mail SMPT or another similar plugin and configure the SMTP settings
    6. If none of these steps fix the problem, let me know and I’ll try to help you find the bottleneck.
 
-= Q. How do I make a field required? =
-
-A. I have tried to keep the Formidable user interface as quick and simple as possible. Just click on the star next to the field you would like to be required.
-
 = Q. How do I edit the field name? =
 
 A. The field and form names and descriptions are all changed with in-place edit. Just click on the text you would like to change, and it will turn into a text field.
@@ -61,11 +57,19 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.04.05 =
+* Added duplicate entry checks
+* Added a checkbox to mark fields required
+* Moved the duplicate field option into free version
 * Show the success message even if the form isn't displayed with it
 * PRO: Added option to resend email notification and autoresponse
 * PRO: Fixes for editing forms with unique fields
 * PRO: Fixes for editing multi-paged forms with validation errors
-* PRO: Added linked fields into the field drop-downs for inserting shortcodes
+* PRO: Fixes for multiple multi-paged form on the same page
+* PRO: Added linked fields into the field drop-downs for inserting shortcodes and sending emails
+* PRO: Added field calculations
+* PRO: Allow hidden fields to be edited from the WordPress admin
+* PRO: Allow sections of fields to be hidden conditionally with the Section Header fields
+* PRO: Added user_id option to the `[frm-graph]` shortcode
 
 = 1.04.04 =
 * Switched to the Google version of reCAPTCHA to no longer require an extra plugin. IMPORTANT: Please check that your reCAPTCHAs are still working. If not, you will need to go to http://www.google.com/recaptcha and either migrate your old keys or get new ones.

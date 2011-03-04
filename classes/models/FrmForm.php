@@ -22,6 +22,9 @@ class FrmForm{
     $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
     $new_values['options'] = serialize($options);
     $new_values['created_at'] = current_time('mysql', 1);
+    
+    //if(isset($values['id']) and is_numeric($values['id']))
+    //    $new_values['id'] = $values['id'];
 
     $query_results = $wpdb->insert( $frmdb->forms, $new_values );
     
@@ -119,7 +122,8 @@ class FrmForm{
             $default_value = maybe_serialize($values['item_meta'][$field_id]);
             $field_key = (isset($values['field_options']['field_key_'.$field_id]))? $values['field_options']['field_key_'.$field_id] : $field->field_key;
             $field_type = (isset($values['field_options']['type_'.$field_id]))? $values['field_options']['type_'.$field_id] : $field->type;
-            $frm_field->update($field_id, array('field_key' => $field_key, 'type' => $field_type, 'default_value' => $default_value, 'field_options' => $field_options));
+            $field_description = (isset($values['field_options']['description_'.$field_id]))? $values['field_options']['description_'.$field_id] : $field->description;
+            $frm_field->update($field_id, array('field_key' => $field_key, 'type' => $field_type, 'default_value' => $default_value, 'field_options' => $field_options, 'description' => $field_description));
         }
     }    
     

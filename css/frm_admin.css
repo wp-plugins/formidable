@@ -1,4 +1,4 @@
-
+.frm_long_input{width:98% !important;}
 .frm_tooltip, .frm_tooltip_big, .frm_tooltip_text { 
 display:none;background:transparent url(../images/black_arrow.png); 
 font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
@@ -46,14 +46,14 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 }
 
 .form-table .form-field input, .form-field #ed_toolbar input{width:auto;}
-textarea.inplace_field{width:100%;}
+textarea.inplace_field{width:98% !important;}
 .inplace_field{width:80%;}
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
 .frm_rte textarea{width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
 	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
 }
-.with_frm_style .frm_full_rte textarea{width:100%; padding:0;}
+.with_frm_style .frm_full_rte textarea{width:98%; padding:0;}
 .frm_field_box{padding:5px;min-height:20px;}
 
 .frm_pos_top{display:block;}
@@ -101,9 +101,9 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 #new_fields .edit_field_type_break .frm_ipe_field_label{font-size:116%;}
 #frm_form_options .ui-state-default{color:#000;}
 #new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected{
-	border:1px solid #BBD8E7; padding:5px; background:#EAF3FA;
+	border:1px dashed #BBD8E7; padding:5px; background:#EAF3FA;
 }
-#new_fields li.ui-state-default.selected{background:#cfddec; border:1px dotted #9ebad8;}
+#new_fields li.ui-state-default.selected{background:#cfddec; border:1px solid #9ebad8;}
 
 .success_action_box{display:none;}
 .widefat td{width:auto;}

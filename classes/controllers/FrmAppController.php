@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @package Formidable
+ */
+ 
 class FrmAppController{
     function FrmAppController(){
         add_action('admin_menu', array( &$this, 'menu' ), 1);
@@ -97,7 +100,7 @@ class FrmAppController{
             global $frmpro_is_installed;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < 3 or ($pro_db_version and (int)$pro_db_version < 3)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < 4 or ($pro_db_version and (int)$pro_db_version < 4)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?></div>  
             <?php
@@ -133,7 +136,7 @@ class FrmAppController{
         global $frm_settings, $frm_version;
         
         if (IS_WPMU){
-            $db_version = 3; // this is the version of the database we're moving to
+            $db_version = 4; // this is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             if ($db_version != $old_db_version)
                 $this->install();
@@ -164,11 +167,13 @@ class FrmAppController{
             if(!empty($css)){   
                 echo "\n".'<script type="text/javascript">';
                 if(is_array($css)){
-                    foreach($css as $css_key => $file)
+                    foreach($css as $css_key => $file){
                         echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms'. ($css_key + $frm_css_loaded) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
                         //wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
-                }else
+                    }
+                }else{
                     echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms-css\' href=\''. $css. '\' type=\'text/css\' media=\'all\' /%3E"));';
+                }
 
                     //wp_enqueue_style('frm-forms', $css, array(), $frm_version);
                 echo '</script>'."\n";
@@ -221,7 +226,7 @@ class FrmAppController{
     function standalone_route($controller, $action=''){
         global $frm_forms_controller;
 
-        if($controller=='forms' and $action != 'export' and $action != 'import')
+        if($controller=='forms' and !in_array($action, array('export','import','xml')))
             $frm_forms_controller->preview($this->get_param('form'));
         else
             do_action('frm_standalone_route', $controller, $action);

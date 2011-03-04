@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @package Formidable
+ */
+ 
 class FrmFieldsController{
     function FrmFieldsController(){
         add_action('wp_ajax_frm_insert_field', array(&$this, 'create') );
@@ -8,6 +11,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_mark_required', array(&$this, 'mark_required') );
         add_action('wp_ajax_frm_clear_on_focus', array(&$this, 'clear_on_focus') );
         add_action('wp_ajax_frm_default_blank', array(&$this, 'default_blank') );
+        add_action('wp_ajax_frm_duplicate_field', array(&$this, 'duplicate') );
         add_action('wp_ajax_frm_delete_field', array(&$this, 'destroy') );
         add_action('wp_ajax_frm_add_field_option',array(&$this, 'add_option'));
         add_action('wp_ajax_frm_field_option_ipe', array(&$this, 'edit_option') );
@@ -78,6 +82,33 @@ class FrmFieldsController{
         $field_options = unserialize($field->field_options);
         $field_options['default_blank'] = $_POST['active'];
         $frm_field->update($_POST['field'], array('field_options' => $field_options));
+        die();
+    }
+    
+    function duplicate(){
+        global $frmdb, $frm_field, $frm_app_helper, $frm_ajax_url;
+        
+        $copy_field = $frm_field->getOne($_POST['field_id']);
+        if (!$copy_field) return;
+            
+        $values = array();
+        $values['field_key'] = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
+        $values['field_options'] = unserialize($copy_field->field_options);
+        $values['form_id'] = $copy_field->form_id;
+        foreach (array('name','description','type','default_value','options','required') as $col)
+            $values[$col] = $copy_field->{$col};
+        $field_count = $frm_app_helper->getRecordCount("form_id=$copy_field->form_id", $frmdb->fields);
+        $values['field_order'] = $field_count + 1;
+        
+        $field_id = $frm_field->create($values);
+        
+        if ($field_id){
+            $field = FrmFieldsHelper::setup_edit_vars($frm_field->getOne($field_id));
+            $field_name = "item_meta[$field_id]";
+            $id = $field['form_id'];
+            require(FRM_VIEWS_PATH.'/frm-forms/add_field.php'); 
+            require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
+        }
         die();
     }
     
@@ -183,28 +214,36 @@ class FrmFieldsController{
         $class = $field['type'];
         if($field['type'] == 'date')
             $class .= " frm_date";
-            
-        $action = FrmAppHelper::get_param('action');
-        if(isset($field['required']) and $field['required']){
-            echo ' required="required"';
-            if($field['type'] == 'file' and $action == 'edit'){
-                //don't add the required class if this is a file upload when editing
-            }else
-                $class .= " required";
-        }
         
-        if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select','radio','checkbox','hidden'))) 
-            echo ' placeholder="'.$field['default_value'].'"';
-            
         if(isset($field['size']) and $field['size'] > 0){
             if($field['type'] != 'textarea' and $field['type'] != 'select')
                 echo ' size="'. $field['size'] .'"';
             $class .= " auto_width";
         }
+        
         if(isset($field['max']) and !in_array($field['type'], array('textarea','rte')) and !empty($field['max']))
             echo ' maxlength="'. $field['max'] .'"';
-        if(isset($field['clear_on_focus']) and $field['clear_on_focus'])
-            echo ' onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"';
+        
+        if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){
+            $action = FrmAppHelper::get_param('action');
+            if(isset($field['required']) and $field['required']){
+                echo ' required="required"';
+                if($field['type'] == 'file' and $action == 'edit'){
+                    //don't add the required class if this is a file upload when editing
+                }else
+                    $class .= " required";
+            }
+
+            if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select','radio','checkbox','hidden'))) 
+                echo ' placeholder="'.$field['default_value'].'"';
+
+            if(isset($field['clear_on_focus']) and $field['clear_on_focus']){
+                echo ' onfocus="frmClearDefault(\''.$field['default_value'].'\', this)" onblur="frmReplaceDefault(\''.$field['default_value'].'\', this)"';
+                
+                if($field['value'] == $field['default_value'])
+                    echo ' style="font-style:italic;"';
+            }
+        }
         
         echo ' class="'.$class.'"';
     }

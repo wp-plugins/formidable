@@ -59,7 +59,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                     
                     <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?>:</label></td>
                         <td><?php if($frmpro_is_installed){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
-                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_elastic_text" style="width:98%"><?php echo $values['success_msg']; ?></textarea> <br/>
+                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo $values['success_msg']; ?></textarea> <br/>
                         <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                         <td>
                     </tr>
@@ -84,7 +84,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
 				 <table class="form-table">
                       <tr>
                           <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?>:</label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
-                          <td><input type="text" name="options[email_to]" size="55" value="<?php echo $values['email_to']; ?>" style="width:98%" /></td>
+                          <td><input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" class="frm_long_input" /></td>
                      </tr>
                      <?php do_action('frm_additional_form_notification_options', $values); ?> 
                   </table>
@@ -97,7 +97,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
 <div id="frm_editable_html" style="display:none;">
     <div class="alignleft" style="width:500px">
         <p><label class="frm_pos_top"><?php _e('Before Fields', 'formidable') ?></label>
-        <textarea name="options[before_html]" rows="4" style="width:100%"><?php echo $values['before_html']?></textarea></p>
+        <textarea name="options[before_html]" rows="4" class="frm_long_input"><?php echo $values['before_html']?></textarea></p>
 
         <div id="add_html_fields">
             <?php 
@@ -105,7 +105,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                 foreach($values['fields'] as $field){
                     if (apply_filters('frm_show_custom_html', true, $field['type'])){ ?>
                         <p><label class="frm_pos_top"><?php echo $field['name'] ?></label>
-                        <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" style="width:100%"><?php echo $field['custom_html'] ?></textarea></p>
+                        <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" class="frm_long_input"><?php echo $field['custom_html'] ?></textarea></p>
                     <?php }
                 }
             } ?>

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package Formidable
+ */
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
@@ -24,9 +27,6 @@ Author: Strategy11
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-global $frm_blogurl;
-$frm_blogurl = (get_option('home')) ? get_option('home') : get_option('siteurl');
-
 define('FRM_PLUGIN_TITLE','Formidable');
 define('FRM_PLUGIN_NAME','formidable');
 define('FRM_PATH',WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
@@ -35,7 +35,15 @@ define('FRM_VIEWS_PATH',FRM_PATH.'/classes/views');
 define('FRM_HELPERS_PATH',FRM_PATH.'/classes/helpers');
 define('FRM_CONTROLLERS_PATH',FRM_PATH.'/classes/controllers');
 define('FRM_TEMPLATES_PATH',FRM_PATH.'/classes/templates');
-define('FRM_URL',WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);
+
+global $frm_blogurl;
+$frm_blogurl = (get_option('home')) ? get_option('home') : get_option('siteurl');
+if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_blogurl)){
+    $frm_blogurl = str_replace('http://', 'https://', $frm_blogurl);
+    define('FRM_URL',str_replace('http://', 'https://', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME));
+}else
+    define('FRM_URL',WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);  //plugins_url('/'.FRM_PLUGIN_NAME)
+    
 define('FRM_SCRIPT_URL', $frm_blogurl .'/index.php?plugin=' . FRM_PLUGIN_NAME);
 define('FRM_IMAGES_URL',FRM_URL.'/images');
 
@@ -59,9 +67,9 @@ global $frm_ajax_url;
 $frm_siteurl = get_option('siteurl');
 $frm_ajax_url = admin_url('admin-ajax.php');
 
-global $frm_load_css, $frm_forms_loaded, $frm_css_loaded;
+global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields;
 $frm_load_css = $frm_css_loaded = false;
-$frm_forms_loaded = array();
+$frm_forms_loaded = $frm_loaded_fields = array();
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 global $frm_app_helper;

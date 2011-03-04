@@ -21,7 +21,7 @@ class FrmFieldsHelper{
             'divider' => __('Section Heading', 'formidable'),
             'break' => __('Page Break', 'formidable'),
             'file' => __('File Upload', 'formidable'),
-            'rte' => __('Rich Text Editor', 'formidable'), 
+            'rte' => __('Rich Text', 'formidable'), 
             'number' => __('Number', 'formidable'), 
             'phone' => __('Phone Number', 'formidable'), 
             'email' => __('Email Address', 'formidable'),
@@ -34,6 +34,7 @@ class FrmFieldsHelper{
             'data' => __('Data from Entries', 'formidable'),
             'hidden' => __('Hidden Field', 'formidable'), 
             'user_id' => __('Hidden User ID', 'formidable'),
+            'html' => __('HTML', 'formidable'),
             'tag' => __('Tags', 'formidable')
             //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
             //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
@@ -208,12 +209,10 @@ DEFAULT_HTML;
     	
     	if(!function_exists('recaptcha_get_html'))
             require_once(FRM_PATH.'/classes/recaptchalib.php');
-        $is_ssl = !empty($_SERVER['HTTPS']);
         ?>
         <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $frm_settings->re_lang ?>'};</script>
-        <div id="frm_field_<?php echo $field['id'] ?>_container"><?php echo recaptcha_get_html($frm_settings->pubkey, $error, $is_ssl) ?></div>
+        <div id="frm_field_<?php echo $field['id'] ?>_container"><?php echo recaptcha_get_html($frm_settings->pubkey, $error, is_ssl()) ?></div>
 <?php
-        unset($is_ssl);
     }
     
     function show_onfocus_js($field_id, $clear_on_focus){ 

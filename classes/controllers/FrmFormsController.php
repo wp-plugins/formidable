@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @package Formidable
+ */
+ 
 class FrmFormsController{
     function FrmFormsController(){
         add_action('admin_menu', array( &$this, 'menu' ));
@@ -69,7 +72,6 @@ class FrmFormsController{
             $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
-            $items = $frm_entry->getAll('',' ORDER BY it.name');
             $record = $frm_form->update( $id, $_POST, true );
             $message = __('Form was Successfully Created', 'formidable');
             $params = $this->get_params();
@@ -305,7 +307,6 @@ class FrmFormsController{
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
         global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
-        $items = $frm_entry->getAll('',' ORDER BY it.name');
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
         $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
