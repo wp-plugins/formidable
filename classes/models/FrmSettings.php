@@ -12,6 +12,7 @@ class FrmSettings{
     var $re_msg;
     
     var $custom_style;
+    var $load_style;
     var $custom_stylesheet;
     var $jquery_css;
     var $accordion_js;
@@ -71,10 +72,15 @@ class FrmSettings{
             $this->re_msg = __('The reCAPTCHA was not entered correctly', 'formidable');
 
         
-        if(!isset($this->custom_style))
-            $this->custom_style = true;
-        if(!isset($this->custom_stylesheet))
-            $this->custom_stylesheet = false;
+        if(!isset($this->load_style)){
+            if(!isset($this->custom_style))
+                $this->custom_style = true;
+            if(!isset($this->custom_stylesheet))
+                $this->custom_stylesheet = false;
+                
+            $this->load_style = ($this->custom_stylesheet) ? 'none' : 'all';
+        }
+            
         if(!isset($this->jquery_css))
             $this->jquery_css = false;
         if(!isset($this->accordion_js))
@@ -126,8 +132,9 @@ class FrmSettings{
         $this->re_lang = $params['frm_re_lang'];
         $this->re_msg = $params['frm_re_msg'];
         
-        $this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
-        $this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;
+        $this->load_style = $params['frm_load_style'];
+        //$this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
+        //$this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;
         $this->jquery_css = isset($params['frm_jquery_css']) ? 1 : 0;
         $this->accordion_js = isset($params['frm_accordion_js']) ? 1 : 0;
         

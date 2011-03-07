@@ -3401,7 +3401,7 @@ msgstr ""
 
 #: pro/classes/views/displays/form.php:27
 #@ formidable
-msgid "Save to get shortcode"
+msgid "Save to get Key"
 msgstr ""
 
 #: pro/classes/views/displays/form.php:29

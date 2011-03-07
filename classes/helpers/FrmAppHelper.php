@@ -191,7 +191,7 @@ class FrmAppHelper{
         }
 
         $email = get_option('admin_email');
-        foreach (array('custom_style' => $frm_settings->custom_style, 'email_to' => $email) as $opt => $default){
+        foreach (array('custom_style' => ($frm_settings->load_style != 'none'), 'email_to' => $email) as $opt => $default){
             if (!isset($values[$opt]))
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }
@@ -204,7 +204,7 @@ class FrmAppHelper{
             $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? 1 : 0;
             
         if (!isset($values['custom_style']))
-            $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
+            $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
 
         if (!isset($values['akismet']))
             $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;

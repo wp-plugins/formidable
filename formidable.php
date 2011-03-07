@@ -58,8 +58,9 @@ if (!defined ('IS_WPMU')){
     define('IS_WPMU', $is_wpmu);
 }
 
-global $frm_version;
+global $frm_version, $frm_db_version;
 $frm_version = '1.04.05';
+$frm_db_version = 4;
 
 
 global $frm_siteurl;

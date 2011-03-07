@@ -57,7 +57,7 @@ class FrmEntriesHelper{
             }
             
             if (!isset($values['custom_style']))
-                $values['custom_style'] = $frm_settings->custom_style;
+                $values['custom_style'] = ($frm_settings->load_style != 'none');
                 
             if (!isset($values['email_to']))
                 $values['email_to'] = '';

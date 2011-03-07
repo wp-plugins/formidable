@@ -55,7 +55,7 @@ class FrmFormsHelper{
             
         $values['form_key'] = ($_POST and isset($_POST['form_key'])) ? $_POST['form_key'] : (FrmAppHelper::get_unique_key('', $frmdb->forms, 'form_key'));
         $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : $frm_settings->email_to;
-        $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : $frm_settings->custom_style;
+        $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
         $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : $frm_settings->submit_value;
         $values['success_action'] = ($_POST and isset($_POST['options']['success_action'])) ? $_POST['options']['success_action'] : 'message';
         $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : $frm_settings->success_msg;

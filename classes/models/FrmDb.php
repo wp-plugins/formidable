@@ -14,11 +14,11 @@ class FrmDb{
     }
     
     function upgrade(){
-      global $wpdb, $frm_form, $frm_field;
-      $db_version = 4; // this is the version of the database we're moving to
+      global $wpdb, $frm_form, $frm_field, $frm_db_version;
+      //$frm_db_version is the version of the database we're moving to
       $old_db_version = get_option('frm_db_version');
 
-      if ($db_version != $old_db_version){
+      if ($frm_db_version != $old_db_version){
           require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
       
       $charset_collate = '';
@@ -105,7 +105,7 @@ class FrmDb{
       dbDelta($sql);
       
       /**** MIGRATE DATA ****/
-      if ($db_version == 1.03){
+      if ($frm_db_version == 1.03){
           global $frm_entry;
           $all_entries = $frm_entry->getAll();
           foreach($all_entries as $ent){
@@ -113,7 +113,7 @@ class FrmDb{
               if(is_array($opts))
                 $wpdb->update( $this->entries, array('ip' => $opts['ip']), array( 'id' => $ent->id ) );
           }
-      }else if($db_version >= 4 and $old_db_version < 4){
+      }else if($frm_db_version >= 4 and $old_db_version < 4){
           $user_ids = FrmEntryMeta::getAll("fi.type='user_id'");
           foreach($user_ids as $user_id)
               $wpdb->update( $this->entries, array('user_id' => $user_id->meta_value), array('id' => $user_id->item_id) );

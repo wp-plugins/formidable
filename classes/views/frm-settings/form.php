@@ -21,14 +21,16 @@
             </tr>
             
             <tr class="form-field">
-                <td valign="top"><?php _e('Stylesheet', 'formidable'); ?>: </td>
+                <td valign="top"><?php _e('Stylesheets', 'formidable'); ?>: </td>
                 <td>
-                    <p><input type="checkbox" value="1" id="frm_custom_style" name="frm_custom_style" <?php checked($frm_settings->custom_style, 1) ?>>
-                    <?php _e('Use Formidable styling settings for my forms', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override this setting on individual forms.', 'formidable') ?>" />
-                    </p>
                     
-                    <p><input type="checkbox" value="1" id="frm_custom_stylesheet" name="frm_custom_stylesheet" <?php checked($frm_settings->custom_stylesheet, 1) ?>>
-                    <?php _e('Exclude the Formidable stylesheet from ALL forms', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You cannot override this setting on individual forms, so only check this box if you will not be using the stylesheet on any forms.', 'formidable') ?>" /></p>
+                    <p><?php _e('Load Formidable styling', 'formidable') ?>
+                        <select id="frm_load_style" name="frm_load_style">
+                        <option value="all" <?php selected($frm_settings->load_style, 'all') ?>><?php _e('on every page of your site', 'formidable') ?> 
+                        <option value="dynamic" <?php selected($frm_settings->load_style, 'dynamic') ?>><?php _e('only on applicable pages', 'formidable') ?> 
+                        <option value="none" <?php selected($frm_settings->load_style, 'none') ?>><?php _e('Don\'t use Formidable styling on any page', 'formidable') ?> 
+                        </select>
+                    </p>
                     
                     <?php if($frmpro_is_installed){ ?>
                     <p><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?>>
@@ -96,7 +98,7 @@
             <tr class="form-field">
                 <td></td>
                 <td>        
-                    <?php _e('Failed Message', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong. You will likely never see this error.', 'formidable') ?>" /><br/>
+                    <?php _e('Failed or Duplicate Entry Message', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong. You will likely never see this error.', 'formidable') ?>" /><br/>
                     <textarea id="frm_failed_msg" name="frm_failed_msg"><?php echo stripslashes($frm_settings->failed_msg) ?></textarea>
                 </td>
             </tr> 

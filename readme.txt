@@ -61,6 +61,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added a checkbox to mark fields required
 * Moved the duplicate field option into free version
 * Show the success message even if the form isn't displayed with it
+* Added option to not use dynamic stylesheet loading
 * PRO: Added option to resend email notification and autoresponse
 * PRO: Fixes for editing forms with unique fields
 * PRO: Fixes for editing multi-paged forms with validation errors
@@ -70,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow hidden fields to be edited from the WordPress admin
 * PRO: Allow sections of fields to be hidden conditionally with the Section Header fields
 * PRO: Added user_id option to the `[frm-graph]` shortcode
+* PRO: Updated the custom display settings interface
 
 = 1.04.04 =
 * Switched to the Google version of reCAPTCHA to no longer require an extra plugin. IMPORTANT: Please check that your reCAPTCHAs are still working. If not, you will need to go to http://www.google.com/recaptcha and either migrate your old keys or get new ones.

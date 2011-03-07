@@ -25,7 +25,7 @@ class FrmFormsController{
     
     function head(){
         global $frm_settings;
-        if(!$frm_settings->custom_stylesheet)
+        if($frm_settings->load_style != 'none')
             $css_file = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', 'header');
         $js_file  = array(FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
         require(FRM_VIEWS_PATH . '/shared/head.php');
@@ -152,7 +152,7 @@ class FrmFormsController{
         if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
         $form_options = stripslashes_deep(maybe_unserialize($form->options));
         $description = $title = true;
-        $custom_style = (isset($form_options['custom_style'])) ? $form_options['custom_style'] : $frm_settings->custom_style;
+        $custom_style = (isset($form_options['custom_style'])) ? $form_options['custom_style'] : ($frm_settings->load_style != 'none');
         
         require_once(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
     }
