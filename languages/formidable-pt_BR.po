@@ -59,7 +59,7 @@ msgstr "Sua instalação Formidable Pro não está completa ainda.<br/> %1$sUpgr
 msgid "Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this."
 msgstr "Seu banco de dados Formidable precisa ser atualizado.<br/> Por favor, desativar e reativar o plugin para corrigir isso."
 
-#: classes/controllers/FrmAppController.php:193
+#: classes/controllers/FrmAppController.php:194
 #@ formidable
 msgid "Formidable was successfully uninstalled."
 msgstr "Formidable foi desinstalado com êxito."
@@ -368,35 +368,35 @@ msgstr "Referrer"
 msgid "%1$s Form submitted on %2$s"
 msgstr "Formulário %1$s enviado em %2$s"
 
-#: classes/models/FrmSettings.php:84
-#: classes/models/FrmSettings.php:134
+#: classes/models/FrmSettings.php:90
+#: classes/models/FrmSettings.php:141
 #@ formidable
 msgid "Your responses were successfully submitted. Thank you!"
 msgstr "Suas respostas foram enviados com sucesso. Obrigado!"
 
-#: classes/models/FrmSettings.php:88
-#: classes/models/FrmSettings.php:135
+#: classes/models/FrmSettings.php:94
+#: classes/models/FrmSettings.php:142
 #@ formidable
 msgid "We're sorry. There was an error processing your responses."
 msgstr "Lamentamos. Houve um erro de processamento de suas respostas."
 
-#: classes/models/FrmSettings.php:92
-#: classes/models/FrmSettings.php:136
+#: classes/models/FrmSettings.php:98
+#: classes/models/FrmSettings.php:143
 #@ formidable
 msgid "Submit"
 msgstr "Enviar"
 
-#: classes/models/FrmSettings.php:95
+#: classes/models/FrmSettings.php:101
 #@ formidable
 msgid "You do not have permission to view this form."
 msgstr "Você não tem permissão para visualizar este formulário."
 
-#: classes/models/FrmSettings.php:99
+#: classes/models/FrmSettings.php:105
 #@ formidable
 msgid "You do not have permission to do that"
 msgstr "Você não tem permissão de fazer isso"
 
-#: classes/models/FrmSettings.php:137
+#: classes/models/FrmSettings.php:144
 #@ formidable
 msgid "You must log in"
 msgstr "Você deve logar"
@@ -1160,7 +1160,7 @@ msgid "Create New Form"
 msgstr "Criar um novo formulário"
 
 #: classes/views/frm-settings/form.php:13
-#: classes/views/frm-settings/form.php:134
+#: classes/views/frm-settings/form.php:136
 #@ formidable
 msgid "Update Options"
 msgstr "Atualizar Opções"
@@ -1170,87 +1170,57 @@ msgstr "Atualizar Opções"
 msgid "Preview Page"
 msgstr "Visualizar Página"
 
-#: classes/views/frm-settings/form.php:24
-#@ formidable
-msgid "Stylesheet"
-msgstr "Stylesheet"
-
-#: classes/views/frm-settings/form.php:27
-#@ formidable
-msgid "Use Formidable styling settings for my forms"
-msgstr "Usar configurações de estilos do Formidable para meus formulários"
-
-#: classes/views/frm-settings/form.php:27
-#@ formidable
-msgid "You can override this setting on individual forms."
-msgstr "Você pode substituir essa configuração em formulários individuais."
-
-#: classes/views/frm-settings/form.php:31
-#@ formidable
-msgid "Exclude the Formidable stylesheet from ALL forms"
-msgstr "Excluir stylesheet do Formidable de TODOS meus formulários"
-
-#: classes/views/frm-settings/form.php:31
-#@ formidable
-msgid "You cannot override this setting on individual forms, so only check this box if you will not be using the stylesheet on any forms."
-msgstr "Você não pode mudar essa configuração em formulários individuais, portanto, somente marque essa caixa se você não vai usar o estilo em todos os formulários."
-
-#: classes/views/frm-settings/form.php:35
+#: classes/views/frm-settings/form.php:37
 #@ formidable
 msgid "Include the jQuery CSS on ALL pages"
 msgstr "Incluir o jQuery CSS em TODAS as páginas"
 
-#: classes/views/frm-settings/form.php:35
+#: classes/views/frm-settings/form.php:37
 #@ formidable
 msgid "The styling for the date field calendar. Some users may be using this css on pages other than just the ones that include a date field."
 msgstr "O estilo do campo de data. Alguns usuários podem estar usando este css em páginas que não apenas os que incluem um campo de data."
 
-#: classes/views/frm-settings/form.php:41
+#: classes/views/frm-settings/form.php:43
 #@ formidable
 msgid "User Permissions"
 msgstr "Permissões de Usuário"
 
-#: classes/views/frm-settings/form.php:41
+#: classes/views/frm-settings/form.php:43
 #@ formidable
 msgid "Select users that are allowed access to Formidable. Without access to View Forms, users will be unable to see the Formidable menu."
 msgstr "Selecione os usuários que estão autorizados a acessar o Formidable. Sem acesso a exibição de formulários, os usuários serão incapazes de ver o menu do Formidable."
 
-#: classes/views/frm-settings/form.php:89
+#: classes/views/frm-settings/form.php:91
 #@ formidable
 msgid "Default Messages"
 msgstr "Mensagens Padrões"
 
-#: classes/views/frm-settings/form.php:89
+#: classes/views/frm-settings/form.php:91
 #@ formidable
 msgid "You can override the success message and submit button settings on individual forms."
 msgstr "Você pode substituir a mensagem de sucesso e botão de envio em cada formulário individualmente."
 
-#: classes/views/frm-settings/form.php:91
+#: classes/views/frm-settings/form.php:93
 #@ formidable
 msgid "Success Message"
 msgstr "Mensagem de sucesso"
 
-#: classes/views/frm-settings/form.php:91
+#: classes/views/frm-settings/form.php:93
 #@ formidable
 msgid "The default message seen after a form is submitted."
 msgstr "A mensagem padrão após um formulário ser enviado."
 
-#: classes/views/frm-settings/form.php:99
-#@ formidable
-msgid "Failed Message"
-msgstr "Mensagem de Falha"
-
-#: classes/views/frm-settings/form.php:99
+#: classes/views/frm-settings/form.php:101
 #@ formidable
 msgid "The message seen when a form is submitted and passes validation, but something goes wrong. You will likely never see this error."
 msgstr "Está mensagem é exibida quando um formulário é submetido e passa a validação, mas algo dá errado. Você provavelmente nunca verá este erro."
 
-#: classes/views/frm-settings/form.php:115
+#: classes/views/frm-settings/form.php:117
 #@ formidable
 msgid "Login Message"
 msgstr "Mensagem de Login"
 
-#: classes/views/frm-settings/form.php:115
+#: classes/views/frm-settings/form.php:117
 #@ formidable
 msgid "The message seen when a user who is not logged-in views a form only logged-in users can submit."
 msgstr "Está mensagem é vista quando um usuário que não está logado tenta visualizar um formulário que apenas usuários registrados podem ver."
@@ -1260,12 +1230,12 @@ msgstr "Está mensagem é vista quando um usuário que não está logado tenta v
 msgid "Submit Button"
 msgstr "Botão de Enviar"
 
-#: classes/views/frm-settings/form.php:132
+#: classes/views/frm-settings/form.php:134
 #@ formidable
 msgid "Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo."
 msgstr "Tem certeza que quer fazer isso? Clicando em OK vai apagar todos os formulários, dados de formulários e todos os outros dados do Formidable. Não tem como desfazer."
 
-#: classes/views/frm-settings/form.php:132
+#: classes/views/frm-settings/form.php:134
 #@ formidable
 msgid "Uninstall Formidable"
 msgstr "Desinstalar Formidable"
@@ -1579,7 +1549,7 @@ msgstr "Checa"
 msgid "Danish"
 msgstr "Dinamarquês"
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #: pro/classes/controllers/FrmProFieldsController.php:210
 #@ formidable
 msgid "Dutch"
@@ -1615,7 +1585,7 @@ msgstr "Persa / Farsi"
 msgid "Finnish"
 msgstr "Finlandesa"
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #: pro/classes/controllers/FrmProFieldsController.php:210
 #@ formidable
 msgid "French"
@@ -1626,7 +1596,7 @@ msgstr "Francês"
 msgid "French/Swiss"
 msgstr "Francês / Suíça"
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #: pro/classes/controllers/FrmProFieldsController.php:210
 #@ formidable
 msgid "German"
@@ -1702,7 +1672,7 @@ msgstr "Português / Brasileiro"
 msgid "Romanian"
 msgstr "Romeno"
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #: pro/classes/controllers/FrmProFieldsController.php:210
 #@ formidable
 msgid "Russian"
@@ -1723,7 +1693,7 @@ msgstr "Eslovaca"
 msgid "Slovenian"
 msgstr "Esloveno"
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #: pro/classes/controllers/FrmProFieldsController.php:210
 #@ formidable
 msgid "Spanish"
@@ -1744,7 +1714,7 @@ msgstr "Tâmil"
 msgid "Thai"
 msgstr "Tailandês"
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #: pro/classes/controllers/FrmProFieldsController.php:210
 #@ formidable
 msgid "Turkish"
@@ -2916,62 +2886,62 @@ msgstr ""
 msgid "Export"
 msgstr "Exportar"
 
-#: classes/views/frm-settings/form.php:51
+#: classes/views/frm-settings/form.php:53
 #@ formidable
 msgid "reCAPTCHA"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:51
+#: classes/views/frm-settings/form.php:53
 #@ formidable
 msgid "reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot."
 msgstr ""
 
-#: classes/views/frm-settings/form.php:58
+#: classes/views/frm-settings/form.php:60
 #@ formidable
 msgid "Public Key"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:62
+#: classes/views/frm-settings/form.php:64
 #@ formidable
 msgid "Private Key"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:71
+#: classes/views/frm-settings/form.php:73
 #@ formidable
 msgid "reCAPTCHA Theme"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:73
+#: classes/views/frm-settings/form.php:75
 #@ formidable
 msgid "Red"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:73
+#: classes/views/frm-settings/form.php:75
 #@ formidable
 msgid "White"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:73
+#: classes/views/frm-settings/form.php:75
 #@ formidable
 msgid "Black Glass"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:73
+#: classes/views/frm-settings/form.php:75
 #@ formidable
 msgid "Clean"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:78
+#: classes/views/frm-settings/form.php:80
 #@ formiable
 msgid "reCAPTCHA Language"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #@ formidable
 msgid "English"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:80
+#: classes/views/frm-settings/form.php:82
 #@ formidable
 msgid "Portuguese"
 msgstr ""
@@ -3251,7 +3221,7 @@ msgstr ""
 msgid "HTML"
 msgstr ""
 
-#: classes/models/FrmSettings.php:71
+#: classes/models/FrmSettings.php:72
 #@ formidable
 msgid "The reCAPTCHA was not entered correctly"
 msgstr ""
@@ -3288,17 +3258,17 @@ msgstr ""
 msgid "ShortCodes"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:107
+#: classes/views/frm-settings/form.php:109
 #@ formidable
 msgid "Incorrect Captcha Message"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:107
+#: classes/views/frm-settings/form.php:109
 #@ formidable
 msgid "The message seen when a captcha response is either incorrect or missing."
 msgstr ""
 
-#: classes/views/frm-settings/form.php:123
+#: classes/views/frm-settings/form.php:125
 #@ formidable
 msgid "Default Submit Button"
 msgstr ""
@@ -3397,11 +3367,6 @@ msgstr ""
 #: pro/classes/views/displays/form.php:25
 #@ formidable
 msgid "Insert on a page, post, or text widget"
-msgstr ""
-
-#: pro/classes/views/displays/form.php:27
-#@ formidable
-msgid "Save to get shortcode"
 msgstr ""
 
 #: pro/classes/views/displays/form.php:29
@@ -3759,5 +3724,35 @@ msgstr ""
 #: pro/classes/views/shared/import_form.php:64
 #@ formidable
 msgid "Export Selection"
+msgstr ""
+
+#: classes/views/frm-settings/form.php:24
+#@ formidable
+msgid "Stylesheets"
+msgstr ""
+
+#: classes/views/frm-settings/form.php:27
+#@ formidable
+msgid "Load Formidable styling"
+msgstr ""
+
+#: classes/views/frm-settings/form.php:29
+#@ formidable
+msgid "on every page of your site"
+msgstr ""
+
+#: classes/views/frm-settings/form.php:30
+#@ formidable
+msgid "only on applicable pages"
+msgstr ""
+
+#: classes/views/frm-settings/form.php:31
+#@ formidable
+msgid "Don't use Formidable styling on any page"
+msgstr ""
+
+#: classes/views/frm-settings/form.php:101
+#@ formidable
+msgid "Failed or Duplicate Entry Message"
 msgstr ""
 
