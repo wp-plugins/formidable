@@ -58,7 +58,7 @@ class FrmForm{
 
     $query_results = $wpdb->insert( $frmdb->forms, $new_values );
     
-   if($query_results){
+    if($query_results){
        $form_id = $wpdb->insert_id;
        $frm_field->duplicate($id, $form_id, $copy_keys, $blog_id);
            

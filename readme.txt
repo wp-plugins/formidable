@@ -56,6 +56,10 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.04.06 =
+* Additional back-end XHTML compliance
+* PRO: Fixed conditionally hidden fields bug some users were experiencing
+
 = 1.04.05 =
 * Added duplicate entry checks
 * Added a checkbox to mark fields required

@@ -7,7 +7,7 @@
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
     <form name="frm_settings_form" method="post" action="">
-        <input type="hidden" name="action" value="process-form">
+        <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
         <p class="submit" style="padding-bottom:0;">
             <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
@@ -33,7 +33,7 @@
                     </p>
                     
                     <?php if($frmpro_is_installed){ ?>
-                    <p><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?>>
+                    <p><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?> />
                     <?php _e('Include the jQuery CSS on ALL pages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The styling for the date field calendar. Some users may be using this css on pages other than just the ones that include a date field.', 'formidable') ?>" /></p>
                     <?php } ?>
                 </td>
@@ -58,11 +58,11 @@
         			
         				<!-- reCAPTCHA public key -->
         				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Public Key', 'formidable') ?>:</label>
-        				<input name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo $frm_settings->pubkey ?>">
+        				<input name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo $frm_settings->pubkey ?>" />
         				<br/>
         				<!-- reCAPTCHA private key -->
         				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Private Key', 'formidable') ?>:</label>
-        				<input name="frm_privkey" id="frm_privkey" size="42" value="<?php echo $frm_settings->privkey ?>">
+        				<input name="frm_privkey" id="frm_privkey" size="42" value="<?php echo $frm_settings->privkey ?>" />
         			
             	</td>
             </tr>
@@ -123,7 +123,7 @@
                 <td></td>
                 <td>    
                     <?php _e('Default Submit Button', 'formidable'); ?>:<br/>
-                    <input type="text" value="<?php echo $frm_settings->submit_value ?>" id="frm_submit_value" name="frm_submit_value">
+                    <input type="text" value="<?php echo $frm_settings->submit_value ?>" id="frm_submit_value" name="frm_submit_value" />
                 </td>
             </tr>
             

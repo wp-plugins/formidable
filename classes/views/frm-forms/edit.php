@@ -18,8 +18,8 @@
             <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
         
-        <input type="hidden" name="action" value="update">
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        <input type="hidden" name="action" value="update" />
+        <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <?php wp_nonce_field('update-options'); ?>
 
         <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>

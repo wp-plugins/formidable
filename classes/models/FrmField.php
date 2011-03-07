@@ -54,9 +54,7 @@ class FrmField{
         if (isset($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
 
-        $query_results = $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
-
-        return $query_results;
+        return $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
     }
 
     function destroy( $id ){

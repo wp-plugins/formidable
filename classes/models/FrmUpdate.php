@@ -179,7 +179,7 @@ class FrmUpdate{
     extract($this->get_pro_cred_form_vals());
     ?>
 <form name="cred_form" method="post" action="">
-  <input type="hidden" name="process_cred_form" value="Y">
+  <input type="hidden" name="process_cred_form" value="Y" />
   <?php wp_nonce_field('cred_form'); ?>
 
   <table class="form-table">
@@ -199,15 +199,13 @@ class FrmUpdate{
         <tr>
             <td valign="top"><?php _e('WordPress MU', 'formidable'); ?>:</td>
             <td valign="top">
-                <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?>>
+                <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?> />
                 <?php _e('Use this username and password to enable Formidable Pro site-wide', 'formidable'); ?>
             </td>
         </tr>
     <?php } ?>
   </table>
-  <p>
-    <input class="button-primary" type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" />
-  </p>
+  <p><input class="button-primary" type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" /></p>
 </form>
     <?php
   }

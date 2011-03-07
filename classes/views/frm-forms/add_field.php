@@ -77,9 +77,9 @@ if ($display['options']){ ?>
                     <table class="form-table">
                     <?php if ($display['size']){ ?>
                     <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?>:</label></td>
-                        <td><input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5"> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('columns wide', 'formidable') : __('characters wide', 'formidable') ?></span>
+                        <td><input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('columns wide', 'formidable') : __('characters wide', 'formidable') ?></span>
 
-                        <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5"> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('rows high', 'formidable') : __('characters maximum', 'formidable') ?></span></td>
+                        <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('rows high', 'formidable') : __('characters maximum', 'formidable') ?></span></td>
                     </tr>
                     <?php } ?>
                     <?php if ($display['label_position']){ ?>
@@ -108,7 +108,7 @@ if ($display['options']){ ?>
                     <?php } ?>
                     <?php if ($display['invalid']){ ?>
                     <tr><td><label><?php _e('Error message if entry is an invalid format', 'formidable') ?>:</label></td>  
-                        <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50"></td>
+                        <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" size="50" /></td>
                     </tr>
                     <?php } ?>
                     <?php do_action('frm_field_options_form', $field, $display); ?>
