@@ -124,7 +124,7 @@ class FrmDb{
 
       
       /***** SAVE DB VERSION *****/
-      update_option('frm_db_version',$db_version);
+      update_option('frm_db_version',$frm_db_version);
       }
       
       do_action('frm_after_install');

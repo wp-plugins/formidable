@@ -11,7 +11,7 @@ class FrmSettingsController{
     }
 
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', 'formidable'), __('Settings', 'formidable'), 'frm_change_settings', FRM_PLUGIN_NAME.'-settings', array($this,'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', 'formidable'), __('Settings', 'formidable'), 'frm_change_settings', FRM_PLUGIN_NAME.'-settings', array(&$this,'route'));
     }
     
     function pro_menu(){
