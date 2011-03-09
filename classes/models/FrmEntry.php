@@ -260,7 +260,7 @@ class FrmEntry{
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
         
-        return $errors;
+        return apply_filters('frm_validate_entry', $errors, $values);
     }
     
     //Check entries for spam -- returns true if is spam

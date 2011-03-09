@@ -19,7 +19,7 @@ class FrmFormsHelper{
             <?php }?>
         </select> 
         <script type="text/javascript">
-            function createFromFrmTemplate(form){window.location='<?php $_SERVER["REQUEST_URI"] ?>?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id='+form}
+            function createFromFrmTemplate(form){window.location='?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id='+form}
         </script>
     <?php    
     }
