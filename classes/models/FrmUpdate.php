@@ -168,7 +168,7 @@ class FrmUpdate{
 <?php }else{ ?>          
     <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
 
-    <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &raquo;</a>
+    <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
     <?php } ?>
 </div>
     <?php    
@@ -178,7 +178,7 @@ class FrmUpdate{
     // Yah, this is the view for the credentials form -- this class isn't a true model
     extract($this->get_pro_cred_form_vals());
     ?>
-<form name="cred_form" method="post" action="">
+<form name="cred_form" method="post" >
   <input type="hidden" name="process_cred_form" value="Y" />
   <?php wp_nonce_field('cred_form'); ?>
 

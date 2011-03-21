@@ -6,7 +6,7 @@
 
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
-    <form name="frm_settings_form" method="post" action="">
+    <form name="frm_settings_form" method="post" >
         <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
         <p class="submit" style="padding-bottom:0;">

@@ -9,7 +9,7 @@
 
 <?php if ($params['template']) require('default-templates.php'); ?>
         
-<form class="form-fields item-list-form" name="item_list_form" id="posts-filter" method="post" action="">
+<form class="form-fields item-list-form" name="item_list_form" id="posts-filter" method="post" >
   <input type="hidden" name="action" value="list-form"/>
   <input type="hidden" name="template" value="<?php echo $params['template'] ?>" />   
 <?php $footer = false; require(FRM_VIEWS_PATH.'/shared/item-table-nav.php'); ?>

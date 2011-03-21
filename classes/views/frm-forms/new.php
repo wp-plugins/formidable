@@ -8,7 +8,7 @@
     <div id="post-body">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
-        <form method="post" action="">
+        <form method="post" >
             <input type="hidden" name="action" value="create" />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <?php wp_nonce_field('update-options'); ?>

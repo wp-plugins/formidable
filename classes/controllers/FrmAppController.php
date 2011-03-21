@@ -16,6 +16,7 @@ class FrmAppController{
         add_action('wp_footer', array(&$this, 'footer_js'), 1);
         add_action('admin_init', array( &$this, 'admin_js'));
         register_activation_hook(FRM_PATH."/formidable.php", array( &$this, 'install' ));
+        add_action('wp_ajax_frm_install', array(&$this, 'install') );
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
 
         // Used to process standalone requests
@@ -93,16 +94,24 @@ class FrmAppController{
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
             return;
     
-        if (IS_WPMU and $frm_update->pro_wpmu and !is_site_admin())
+        if (IS_WPMU and !current_user_can('administrator'))
             return;
          
         if(!isset($_GET['activate'])){  
-            global $frmpro_is_installed, $frm_db_version;
+            global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < (int)$frm_db_version or ($pro_db_version and (int)$pro_db_version < 4)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < (int)$frm_db_version or ($pro_db_version and (int)$pro_db_version < 5)){ //this number should match the db_version in FrmDb.php
             ?>
-            <div class="error" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?></div>  
+            <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
+<script type="text/javascript">
+function frm_install_now(){ 
+jQuery('#frm_install_link').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
+jQuery.ajax({type:"POST",url:"<?php echo $frm_ajax_url ?>",data:"action=frm_install",
+success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
+});
+};
+</script>
             <?php
             }
         }
@@ -125,6 +134,7 @@ class FrmAppController{
         if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
+            wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery'), $frm_version);
             wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version);
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
             wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
@@ -139,7 +149,7 @@ class FrmAppController{
             //$frm_db_version is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             if ((int)$frm_db_version != (int)$old_db_version)
-                $this->install();
+                $this->install($old_db_version);
         }
         wp_enqueue_script('jquery');
         
@@ -157,7 +167,7 @@ class FrmAppController{
     }
     
     function footer_js($location='footer'){
-        global $frm_load_css, $frm_settings, $frm_version, $frm_css_loaded;
+        global $frm_load_css, $frm_settings, $frm_version, $frm_css_loaded, $frm_forms_loaded;
 
         if($frm_load_css and !is_admin() and ($frm_settings->load_style != 'none')){
             if($frm_css_loaded)
@@ -180,11 +190,14 @@ class FrmAppController{
                 echo '</script>'."\n";
             }
         }
+
+        if(!empty($frm_forms_loaded)) //load formidable js  
+            echo '<script type="text/javascript" src="'. FRM_URL .'/js/formidable.js?ver='.$frm_version.'"></script>'."\n"; 
     }
   
-    function install(){
+    function install($old_db_version=false){
         global $frmdb;
-        $frmdb->upgrade();
+        $frmdb->upgrade($old_db_version);
     }
     
     function uninstall(){

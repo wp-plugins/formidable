@@ -5,7 +5,7 @@ if(!is_numeric($current_page))
 $page_params = (isset($page_params)) ? $page_params : '';
     
 if($current_page > 1){ // Only show the prev page button if the current page is not the first page ?>
-<a class='prev page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page - 1)); echo $page_params; ?>">&laquo;</a> <?php 
+<a class='prev page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page - 1)); echo $page_params; ?>">&#171;</a> <?php 
 }
       
 // First page is always displayed
@@ -45,5 +45,5 @@ if($current_page == $page_count){ ?>
       
 // Display the next page icon if there is a next page
 if($current_page < $page_count){ ?>
-    <a class='next page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page + 1)); echo $page_params; ?>">&raquo;</a><?php 
+    <a class='next page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page + 1)); echo $page_params; ?>">&#187;</a><?php 
 } ?>

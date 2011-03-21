@@ -5,7 +5,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.04.07
+Version: 1.05.0b
 Plugin URI: http://blog.strategy11.com/formidable-wordpress-plugin
 Author URI: http://blog.strategy11.com
 Author: Strategy11
@@ -59,8 +59,8 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.04.07';
-$frm_db_version = 4;
+$frm_version = '1.05.0';
+$frm_db_version = 5;
 
 
 global $frm_siteurl;
@@ -82,12 +82,15 @@ global $frm_settings;
 $frm_settings = get_option('frm_options');
 
 // If unserializing didn't work
-if(!$frm_settings){
-  $frm_settings = new FrmSettings();
-  update_option('frm_options',$frm_settings);
-}else
-  $frm_settings->set_default_options(); // Sets defaults for unset options
+if(!is_object($frm_settings)){
+    $frm_settings = new FrmSettings();
+    update_option('frm_options',$frm_settings);
+}
 
+$frm_settings->set_default_options(); // Sets defaults for unset options
+
+
+// Instansiate Models
 require_once(FRM_MODELS_PATH.'/FrmDb.php');  
 require_once(FRM_MODELS_PATH.'/FrmField.php');
 require_once(FRM_MODELS_PATH.'/FrmForm.php');

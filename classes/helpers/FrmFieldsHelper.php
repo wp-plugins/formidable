@@ -48,7 +48,7 @@ class FrmFieldsHelper{
     function setup_new_vars($type='',$form_id=''){
         global $frmdb, $frm_app_helper;
         
-        $field_count = $frm_app_helper->getRecordCount("form_id=$form_id", $frmdb->fields);
+        $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
         $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
         
         $values = array();
@@ -60,9 +60,9 @@ class FrmFieldsHelper{
             $values['field_options'][$var] = $default;
             
         if ($type == 'radio' || ($type == 'checkbox'))
-            $values['options'] = serialize(array('Option 1', 'Option 2'));
+            $values['options'] = serialize(array(__('Option 1', 'formidable'), __('Option 2', 'formidable')));
         else if ( $type == 'select')
-            $values['options'] = serialize(array('','Option 1'));
+            $values['options'] = serialize(array('', __('Option 1', 'formidable')));
         else if ($type == 'textarea')
             $values['field_options']['max'] = '5';
         
@@ -86,17 +86,18 @@ class FrmFieldsHelper{
         $field_options = maybe_unserialize($record->field_options);
         $values['options'] = stripslashes_deep(maybe_unserialize($record->options));
         $values['field_options'] = $field_options;
-        $values['size'] = (isset($field_options['size']))?($field_options['size']):(''); 
-        $values['max'] = (isset($field_options['max']))?($field_options['max']):(''); 
-        $values['label'] = (isset($field_options['label']))?($field_options['label']):('top'); 
-        $values['blank'] = (isset($field_options['blank']))?($field_options['blank']):(''); 
-        $values['required_indicator'] = (isset($field_options['required_indicator']))?($field_options['required_indicator']):('*'); 
-        $values['invalid'] = (isset($field_options['invalid']))?($field_options['invalid']):('');
-        $values['clear_on_focus'] = (isset($field_options['clear_on_focus']))?($field_options['clear_on_focus']):(0);
-        $values['default_blank'] = (isset($field_options['default_blank']))?($field_options['default_blank']):(0);
+        $defaults = array(
+            'size' => '', 'max' => '', 'label' => 'top', 'blank' => '', 
+            'required_indicator' => '*', 'invalid' => '', 
+            'clear_on_focus' => 0, 'default_blank' => 0
+        );
+        
+        foreach($defaults as $opt => $default)
+            $values[$opt] = (isset($field_options[$opt])) ? $field_options[$opt] : $default; 
+
         $values['custom_html'] = (isset($field_options['custom_html']))? stripslashes($field_options['custom_html']): FrmFieldsHelper::get_default_html($record->type);
         
-        return apply_filters('frm_setup_edit_field_vars',$values);
+        return apply_filters('frm_setup_edit_field_vars', $values, $field_options);
     }
     
     function get_form_fields($form_id, $error=false){ 
@@ -141,6 +142,7 @@ DEFAULT_HTML;
                 $html = str_replace('[if '.$code.']','',$html); 
         	    $html = str_replace('[/if '.$code.']','',$html);
             }
+
             $html = str_replace('['.$code.']', $value, $html);
         }
         
@@ -211,8 +213,21 @@ DEFAULT_HTML;
             require_once(FRM_PATH.'/classes/recaptchalib.php');
         ?>
         <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $frm_settings->re_lang ?>'};</script>
-        <div id="frm_field_<?php echo $field['id'] ?>_container"><?php echo recaptcha_get_html($frm_settings->pubkey, $error, is_ssl()) ?></div>
+        <?php echo recaptcha_get_html($frm_settings->pubkey, $error, is_ssl()) ?>
 <?php
+    }
+    
+    function dropdown_categories($args){
+        $defaults = array('field' => false, 'name' => false);
+        extract(wp_parse_args($args, $defaults));
+        
+        if(!$field) return;
+        if(!$name) $name = "item_meta[$field[id]]";
+        
+        $selected = is_array($field['value']) ? reset($field['value']) : $field['value'];
+
+        $exclude = (is_array($field['exclude_cat'])) ? implode(',', $field['exclude_cat']) : $field['exclude_cat'];
+        return wp_dropdown_categories(array('show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name, 'id' => 'field_'. $field['field_key'], 'exclude' => $exclude, 'class' => $field['type'], 'selected' => $selected, 'hide_empty' => false, 'echo' => 0, 'orderby' => 'name'));
     }
     
     function show_onfocus_js($field_id, $clear_on_focus){ 

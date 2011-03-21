@@ -54,14 +54,19 @@ class FrmField{
         if (isset($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
 
-        return $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
+        $query_results = $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
+        if($query_results){
+            global $frm_loaded_fields;
+            unset($frm_loaded_fields[$id]);
+        }
+        return $query_results;
     }
 
     function destroy( $id ){
       global $wpdb, $frmdb;
 
-      $reset = "DELETE FROM $frmdb->entry_metas WHERE field_id=$id";
-      $destroy = "DELETE FROM $frmdb->fields WHERE id=$id";
+      $reset = "DELETE FROM $frmdb->entry_metas WHERE field_id='$id'";
+      $destroy = "DELETE FROM $frmdb->fields WHERE id='$id'";
 
       $wpdb->query($reset);
       return $wpdb->query($destroy);

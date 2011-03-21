@@ -1,5 +1,5 @@
 <?php 
-global $frm_forms_loaded, $frm_load_css, $frm_css_loaded;
+global $frm_forms_loaded, $frm_load_css, $frm_css_loaded, $frm_settings;
 $frm_forms_loaded[] = $form; 
 if($values['custom_style']) $frm_load_css = true;
 
@@ -9,7 +9,7 @@ $frm_css_loaded = true;
 }
 
 echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
-<div id="frm_form_fields">
+<div class="frm_form_fields">
 <fieldset>
 <div>
 <input type="hidden" name="action" value="<?php echo $form_action ?>" />
@@ -41,22 +41,20 @@ foreach($values['fields'] as $field){
 }    
 }
 
-global $frm_settings;
-
 if (is_admin() && !$frm_settings->lock_keys){ ?>
 <div class="form-field">
 <label><?php _e('Entry Key', 'formidable') ?></label>   
-<input type="text" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
+<input type="text" name="item_key" value="<?php echo $values['item_key'] ?>" />
 </div>
 <?php }else{ ?>
-<input type="hidden" id="item_key" name="item_key" value="<?php echo $values['item_key'] ?>" />
-<?php } ?>
-<?php do_action('frm_entry_form', $form) ?>
+<input type="hidden" name="item_key" value="<?php echo $values['item_key'] ?>" />
+<?php }
+
+do_action('frm_entry_form', $form) ?>
 </div>
 </fieldset>
 </div>
 <?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
 <script type="text/javascript">
 <?php do_action('frm_entries_footer_scripts',$values['fields'], $form); ?>
-function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';thefield.style.fontStyle='inherit'}
-function frmReplaceDefault(default_value,thefield){if(thefield.value==''){thefield.value=default_value;thefield.style.fontStyle='italic';}}</script>
+</script>

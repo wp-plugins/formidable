@@ -19,7 +19,7 @@
             <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo htmlentities(stripslashes($form->name)) ?>" target="blank"><?php echo stripslashes($form->name); ?></a><br/>
             <div class="row-actions">
                 <?php if(current_user_can('frm_edit_forms')){ ?>
-                <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&action=duplicate&id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)); ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span> |
+                <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)); ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span> |
                 <?php } ?>
                 <?php global $frm_settings; 
                 if ($frm_settings->preview_page_id > 0)

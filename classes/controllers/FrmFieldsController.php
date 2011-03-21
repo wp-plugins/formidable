@@ -97,7 +97,7 @@ class FrmFieldsController{
         $values['form_id'] = $copy_field->form_id;
         foreach (array('name','description','type','default_value','options','required') as $col)
             $values[$col] = $copy_field->{$col};
-        $field_count = $frm_app_helper->getRecordCount("form_id=$copy_field->form_id", $frmdb->fields);
+        $field_count = $frm_app_helper->getRecordCount("form_id='$copy_field->form_id'", $frmdb->fields);
         $values['field_order'] = $field_count + 1;
         
         $field_id = $frm_field->create($values);
@@ -227,7 +227,8 @@ class FrmFieldsController{
         if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){
             $action = FrmAppHelper::get_param('action');
             if(isset($field['required']) and $field['required']){
-                echo ' required="required"';
+                //echo ' required="required"';
+                    
                 if($field['type'] == 'file' and $action == 'edit'){
                     //don't add the required class if this is a file upload when editing
                 }else

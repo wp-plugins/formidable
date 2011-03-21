@@ -27,10 +27,10 @@ class FrmEntriesHelper{
                 
               $field_array = array('id' => $field->id,
                     'value' => $new_value,
-                    'default_value' => $new_value,
+                    'default_value' => str_replace('"', '&quot;', $field->default_value),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
-                    'type' => apply_filters('frm_field_type',$field->type, $field),
+                    'type' => apply_filters('frm_field_type',$field->type, $field, $new_value),
                     'options' => str_replace('"', '&quot;', stripslashes_deep(unserialize($field->options))),
                     'required' => $field->required,
                     'field_key' => $field->field_key,

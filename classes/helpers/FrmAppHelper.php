@@ -138,7 +138,7 @@ class FrmAppHelper{
                     $meta_value = $field->default_value;
                 else{
                     if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field_options['post_field']) and $field_options['post_field']){
-                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('truncate' => false, 'type' => $field->type));
+                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id));
                     }else if(isset($record->metas))
                         $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
                     else
@@ -154,7 +154,7 @@ class FrmAppHelper{
                       'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
                       'name' => stripslashes($field->name),
                       'description' => stripslashes($field->description),
-                      'type' => apply_filters('frm_field_type',$field_type, $field),
+                      'type' => apply_filters('frm_field_type',$field_type, $field, $new_value),
                       'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
                       'required' => $field->required,
                       'field_key' => $field->field_key,

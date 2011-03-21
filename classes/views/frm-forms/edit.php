@@ -8,7 +8,7 @@
     <div id="post-body">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
-    <form method="post" action="">
+    <form method="post" >
         <p>
             <span class="alignright">
                 <a title="<?php _e('Customize Form HTML', 'formidable') ?>" href="#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Customize Form HTML', 'formidable') ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Advanced Users: Customize your form HTML here', 'formidable') ?>" /></a> 

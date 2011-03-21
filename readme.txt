@@ -56,6 +56,16 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.05.0 =
+* Updated some templates with fields aligned in a row
+* Added option to display labels "hidden" instead of just none. This makes aligning fields in a row with only one label easier
+* Additional XHTML compliance for multiple forms on one page
+* PRO: Added custom post type support
+* PRO: Added hierarchy to post categories
+* PRO: Added a `[default-message]` shortcode for use in the email message. Now you can add to the default message without completely replacing it 
+* PRO: Added default styling to the formresults shortcode, as well as additional shortcode options: `[formresults id=x style=1 no_entries="No Entries Found" fields="25,26,27"]`
+* PRO: Added localizations options to calendar
+
 = 1.04.07 =
 * Minor bug fixes
 * PRO: Fixed bug preventing some hidden field values from being saved

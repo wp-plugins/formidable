@@ -102,7 +102,7 @@ class FrmForm{
     if(!empty($new_values))
         $query_results = $wpdb->update( $frmdb->forms, $new_values, array( 'id' => $id ) );
 
-    $all_fields = $frm_field->getAll("fi.form_id=$id");
+    $all_fields = $frm_field->getAll("fi.form_id='$id'");
     if ($all_fields and (isset($values['options']) or isset($values['item_meta']))){
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();
@@ -166,11 +166,9 @@ class FrmForm{
         $frm_entry->destroy($item->id);
 
     // Disconnect the fields from this form
-    $query = "DELETE FROM $frmdb->fields WHERE form_id=$id";
-    $query_results = $wpdb->query($query);
+    $query_results = $wpdb->query("DELETE FROM `$frmdb->fields` WHERE `form_id` = '$id'");
 
-    $destroy = "DELETE FROM $frmdb->forms WHERE id=$id";
-    $query_results = $wpdb->query($destroy);
+    $query_results = $wpdb->query("DELETE FROM `$frmdb->forms` WHERE `id` = '$id'");
     if ($query_results)
         do_action('frm_destroy_form', $id);
     return $query_results;
@@ -178,11 +176,9 @@ class FrmForm{
   
   function getName( $id ){
       global $wpdb, $frmdb;
-      if (is_numeric($id))
-          $query = "SELECT name FROM $frmdb->forms WHERE id=$id";
-      else
-          $query = "SELECT name FROM $frmdb->forms WHERE form_key='{$id}'";
-      
+      $query = "SELECT `name` FROM $frmdb->forms WHERE ";
+      $query .= (is_numeric($id)) ? "id" : "form_key";
+      $query .= "='{$id}'";
       return $wpdb->get_var($query);
   }
   

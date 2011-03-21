@@ -68,7 +68,7 @@ class FrmFormsController{
         if( count($errors) > 0 ){
             $frm_field_selection = FrmFieldsHelper::field_selection();
             $record = $frm_form->getOne( $id );
-            $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
+            $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
             $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
@@ -308,7 +308,7 @@ class FrmFormsController{
         global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
-        $fields = $frm_field->getAll("fi.form_id=$id", ' ORDER BY field_order');
+        $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
         $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
@@ -326,20 +326,20 @@ class FrmFormsController{
         return $values;
     }
     
-    function add_default_templates($path, $default=true){
+    function add_default_templates($path, $default=true, $template=true){
         global $frm_form, $frm_field;
         $templates = glob($path."/*.php");
         
         for($i = count($templates) - 1; $i >= 0; $i--){
-            $filename = str_replace($path."/","",$templates[$i]);
-            $filename = str_replace('.php','', $filename);
-            $template_query = "form_key='{$filename}' and is_template='1'";
+            $filename = str_replace('.php','', str_replace($path."/","",$templates[$i]));
+            $template_query = "form_key='{$filename}'";
+            if($template) $template_query .= " and is_template='1'";
             if($default) $template_query .= " and default_template='1'";
             $form = $frm_form->getAll($template_query, '', ' LIMIT 1');
             
             $values = FrmFormsHelper::setup_new_vars();
             $values['form_key'] = $filename;
-            $values['is_template'] = 1;
+            $values['is_template'] = $template;
             $values['status'] = 'published';
             if($default) $values['default_template'] = 1;
             
