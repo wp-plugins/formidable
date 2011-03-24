@@ -44,7 +44,7 @@ class FrmDb{
                 `field_options` longtext default NULL,
                 `form_id` int(11) default NULL,
                 `created_at` datetime NOT NULL,
-                PRIMARY KEY `id` (`id`),
+                PRIMARY KEY  (`id`),
                 KEY `form_id` (`form_id`),
                 UNIQUE KEY `field_key` (`field_key`)
               ) {$charset_collate};";
@@ -65,7 +65,7 @@ class FrmDb{
                 `prli_link_id` int(11) default NULL,
                 `options` longtext default NULL,
                 `created_at` datetime NOT NULL,
-                PRIMARY KEY `id` (`id`),
+                PRIMARY KEY  (`id`),
                 UNIQUE KEY `form_key` (`form_key`)
               ) {$charset_collate};";
 
@@ -82,7 +82,7 @@ class FrmDb{
                 `post_id` int(11) default NULL,
                 `user_id` int(11) default NULL,
                 `created_at` datetime NOT NULL,
-                PRIMARY KEY `id` (`id`),
+                PRIMARY KEY  (`id`),
                 KEY `form_id` (`form_id`),
                 KEY `post_id` (`post_id`),
                 KEY `user_id` (`user_id`),
@@ -98,7 +98,7 @@ class FrmDb{
                 `field_id` int(11) NOT NULL,
                 `item_id` int(11) NOT NULL,
                 `created_at` datetime NOT NULL,
-                PRIMARY KEY `id` (`id`),
+                PRIMARY KEY  (`id`),
                 KEY `field_id` (`field_id`),
                 KEY `item_id` (`item_id`)
               ) {$charset_collate};";
@@ -106,7 +106,7 @@ class FrmDb{
       dbDelta($sql);
       
       /**** MIGRATE DATA ****/
-      if ($frm_db_version == 1.03){
+      if ($frm_db_version >= 1.03 and $old_db_version < 1.03){
           global $frm_entry;
           $all_entries = $frm_entry->getAll();
           foreach($all_entries as $ent){

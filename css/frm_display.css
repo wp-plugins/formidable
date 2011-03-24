@@ -1,10 +1,10 @@
 .with_frm_style .form-field label.frm_pos, .with_frm_style .form-field label.frm_pos_, .with_frm_style .form-field label.frm_pos_top, .with_frm_style .form-field label.frm_pos_left, .with_frm_style .form-field label.frm_pos_right, .with_frm_style .form-field label.frm_pos_none{font-size:12px;font-weight:bold;float:none;text-align:left;margin:0;padding:0;width:auto;display:block;}
 .with_frm_style .form-field label.frm_pos_top, .with_frm_style .form-field label.frm_pos_{display:block;float:none;width:auto;}
-.with_frm_style .frm_pos_top{display:block;}
-.with_frm_style .frm_pos_left{float:left;padding-right:10px;width:150px;}
-.with_frm_style .frm_pos_right{float:right;padding-left:10px;width:150px;}
-.with_frm_style .frm_pos_none{display:none;}
-.with_frm_style .frm_pos_hidden{display:hidden;}
+.with_frm_style .form-field label.frm_pos_top{display:block;}
+.with_frm_style .form-field label.frm_pos_left{float:left;padding-right:10px;width:150px;}
+.with_frm_style .form-field label.frm_pos_right{float:right;padding-left:10px;width:150px;}
+.with_frm_style .form-field label.frm_pos_none{display:none;}
+.with_frm_style .form-field label.frm_pos_hidden{display:hidden;}
 .with_frm_style .form-field{margin-top:15px;}
 .with_frm_style .form-field.frm_blank_field label{color:#be2e17;}
 .with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .frm_form_fields_error_style, .with_frm_style input.error, .with_frm_style textarea.error, .with_frm_style select.error{border:1px solid #be2e17;}

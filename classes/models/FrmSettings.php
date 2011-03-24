@@ -91,7 +91,7 @@ class FrmSettings{
         $this->success_msg = stripslashes($this->success_msg);
         
         if(!isset($this->failed_msg))
-            $this->failed_msg = __('We\'re sorry. There was an error processing your responses.', 'formidable');
+            $this->failed_msg = __('We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable');
         $this->failed_msg = stripslashes($this->failed_msg);
         
         if(!isset($this->submit_value))

@@ -230,7 +230,7 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 	width: 53px;
 	margin: 10px 4px 0 0;
 }
-#global-font .field-group, 
+.global-font .field-group, 
 #global-corners .field-group, 
 .themeRoller .field-group-background, 
 .themeRoller .field-group-opacity, 
@@ -250,7 +250,7 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 	margin: 6px 0 5px;
 	display: block;
 }
-#global-font .field-group label, 
+.global-font .field-group label, 
 #global-corners .field-group label, 
 .themeRoller .field-group-opacity label{
 	float: left;
@@ -258,7 +258,7 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 	margin: 0 4px 0 0;
 	text-align: right;
 }
-#global-font .field-group label {
+.global-font .field-group label {
 	width: 45px;
 }
 

@@ -59,12 +59,16 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.05.0 =
 * Updated some templates with fields aligned in a row
 * Added option to display labels "hidden" instead of just none. This makes aligning fields in a row with only one label easier
-* Additional XHTML compliance for multiple forms on one page
+* Additional XHTML compliance for multiple forms on one 
+* Removed the HTML5 required attribute (temporarily)
+* Corrected the label position styling in the regular version
 * PRO: Added custom post type support
 * PRO: Added hierarchy to post categories
 * PRO: Added a `[default-message]` shortcode for use in the email message. Now you can add to the default message without completely replacing it 
 * PRO: Added default styling to the formresults shortcode, as well as additional shortcode options: `[formresults id=x style=1 no_entries="No Entries Found" fields="25,26,27"]`
 * PRO: Added localizations options to calendar
+* PRO: Fixed collapsible Section headings to work with updated HTML
+* PRO: Added functionality to admin search to check data from entries fields
 
 = 1.04.07 =
 * Minor bug fixes

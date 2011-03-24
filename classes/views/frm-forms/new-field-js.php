@@ -14,17 +14,17 @@ jQuery(document).ready(function($){
     );
     
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option").editInPlace({
-         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+         url:"<?php echo $frm_ajax_url ?>",
          params:"action=frm_field_option_ipe", default_text:"<?php _e('(Blank)', 'formidable') ?>"
     });
      
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_label").editInPlace({
-         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+         url:"<?php echo $frm_ajax_url ?>",
          params:"action=frm_field_name_in_place_edit", value_required:"true"
     });
      
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_desc").editInPlace({
-         url:"<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php",
+         url:"<?php $frm_ajax_url ?>",
          params:"action=frm_field_desc_in_place_edit",
          default_text:"<?php _e('(Click here to add optional description or instructions)', 'formidable') ?>",
          field_type:'textarea', textarea_rows:1
