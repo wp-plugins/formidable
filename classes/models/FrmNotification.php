@@ -30,6 +30,11 @@ class FrmNotification{
             if (is_array($val))
                 $val = implode(', ', $val);
             
+            if($value->field_type == 'textarea'){
+                //$val = str_replace(array("\r\n", "\r", "\n"), "\r\n", $val);
+                $val = "\r\n". $val;
+            }
+            
             $entry_data .= $value->field_name . ': ' . $val . "\r\n\r\n";
             if ($reply_to == '' and is_email($val))
                 $reply_to = $val;
