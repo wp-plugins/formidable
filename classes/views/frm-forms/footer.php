@@ -22,7 +22,7 @@ $(".frm_ipe_field_label").editInPlace({
      
 $(".frm_ipe_field_desc").editInPlace({
     url:"<?php echo $frm_ajax_url ?>",params:"action=frm_field_desc_in_place_edit",
-    default_text:"(Click here to add optional description or instructions)",
+    default_text:"(<?php _e('Click here to add optional description or instructions', 'formidable') ?>)",
     field_type:'textarea',textarea_rows:3
 });
 

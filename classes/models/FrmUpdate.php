@@ -119,7 +119,7 @@ class FrmUpdate{
 
     $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
-    if ( !$client->query( 'proplug.is_user_allowed_to_download', $this->pro_username, $this->pro_password, get_option('home') ) )
+    if ( !$client->query( 'proplug.is_user_allowed_to_download', $this->pro_username, $this->pro_password, get_option('siteurl') ) )
       return false;
 
     return $client->getResponse();
@@ -250,7 +250,7 @@ class FrmUpdate{
 
     $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
-    if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version ) )
+    if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version, get_option('siteurl') ) )
         return false;
 
     return base64_decode($client->getResponse());
@@ -282,7 +282,7 @@ class FrmUpdate{
       if(!$this->pro_is_installed())
         $force=true;
 
-      $plugin_updates = (function_exists('get_site_transient'))?get_site_transient("update_plugins"):get_transient("update_plugins"); 
+      $plugin_updates = (function_exists('get_site_transient')) ? get_site_transient("update_plugins") : get_transient("update_plugins"); 
       if(!$plugin_updates and function_exists('get_transient'))
         $plugin_updates = get_transient("update_plugins");
 

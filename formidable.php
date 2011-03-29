@@ -161,4 +161,11 @@ if($frmpro_is_installed)
 global $frm_page_size;
 $frm_page_size = 20;
 
+// Register Widgets
+if(class_exists('WP_Widget')){
+    require_once(FRM_PATH . "/classes/widgets/FrmShowForm.php");
+    add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
+}
+
+
 ?>

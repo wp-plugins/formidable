@@ -19,23 +19,23 @@
         <th class="manage-column check-column" scope="col"> <?php do_action('frm_column_header'); ?> </th>
         <?php if ($params['template']){ ?>
             <th class="manage-column" width="">
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&sort=name<?php echo (($sort_str == 'name' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&amp;sort=name&amp;sdir=<?php echo (($sort_str == 'name' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&sort=description<?php echo (($sort_str == 'description' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Description', 'formidable') ?><?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&amp;sort=description&amp;sdir=<?php echo (($sort_str == 'description' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Description', 'formidable') ?><?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
         <?php }else{?>
             <th class="manage-column" width="50px">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=id<?php echo (($sort_str == 'id' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('ID', 'formidable') ?><?php echo (($sort_str == 'id')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=id&amp;sdir=<?php echo (($sort_str == 'id' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('ID', 'formidable') ?><?php echo (($sort_str == 'id')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column" width="">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=name<?php echo (($sort_str == 'name' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=name&amp;sdir=<?php echo (($sort_str == 'name' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=description<?php echo (($sort_str == 'description' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Description', 'formidable') ?><?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=description&amp;sdir=<?php echo (($sort_str == 'description' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Description', 'formidable') ?><?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column" width="70px">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&sort=form_key<?php echo (($sort_str == 'form_key' and $sdir_str == 'asc')?'&sdir=desc':''); ?>"><?php _e('Key', 'formidable') ?><?php echo (($sort_str == 'form_key')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=form_key&amp;sdir=<?php echo (($sort_str == 'form_key' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Key', 'formidable') ?><?php echo (($sort_str == 'form_key')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
             </th>
             <th class="manage-column" width="60px"><?php _e('Entries', 'formidable') ?></th>
             <th class="manage-column" width="115px"><?php _e('Direct Link', 'formidable') ?></th>

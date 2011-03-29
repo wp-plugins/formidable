@@ -103,7 +103,7 @@ class FrmAppController{
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
             if((int)$db_version < (int)$frm_db_version or ($pro_db_version and (int)$pro_db_version < 5)){ //this number should match the db_version in FrmDb.php
             ?>
-            <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this.', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
+            <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
 function frm_install_now(){ 
 jQuery('#frm_install_link').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
@@ -129,9 +129,9 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         global $frm_version;
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
-        if(!(isset($_GET) and isset($_GET['page'])) or (isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])))
-            wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.1.2');
+            
         if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
+            wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.1.2');
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery'), $frm_version);
