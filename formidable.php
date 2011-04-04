@@ -36,15 +36,15 @@ define('FRM_HELPERS_PATH', FRM_PATH.'/classes/helpers');
 define('FRM_CONTROLLERS_PATH', FRM_PATH.'/classes/controllers');
 define('FRM_TEMPLATES_PATH', FRM_PATH.'/classes/templates');
 
-global $frm_blogurl;
-$frm_blogurl = (get_option('home')) ? get_option('home') : get_option('siteurl');
-if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_blogurl)){
-    $frm_blogurl = str_replace('http://', 'https://', $frm_blogurl);
+global $frm_siteurl;
+$frm_siteurl = get_option('siteurl');
+if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_siteurl)){
+    $frm_siteurl = str_replace('http://', 'https://', $frm_siteurl);
     define('FRM_URL',str_replace('http://', 'https://', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME));
 }else
     define('FRM_URL', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);  //plugins_url('/'.FRM_PLUGIN_NAME)
     
-define('FRM_SCRIPT_URL', $frm_blogurl .'/index.php?plugin=' . FRM_PLUGIN_NAME);
+define('FRM_SCRIPT_URL', $frm_siteurl .'/index.php?plugin=' . FRM_PLUGIN_NAME);
 define('FRM_IMAGES_URL', FRM_URL.'/images');
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
@@ -63,9 +63,7 @@ $frm_version = '1.05.0';
 $frm_db_version = 5;
 
 
-global $frm_siteurl;
 global $frm_ajax_url;
-$frm_siteurl = get_option('siteurl');
 $frm_ajax_url = admin_url('admin-ajax.php');
 
 global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields;
@@ -97,7 +95,7 @@ require_once(FRM_MODELS_PATH.'/FrmForm.php');
 require_once(FRM_MODELS_PATH.'/FrmEntry.php');
 require_once(FRM_MODELS_PATH.'/FrmEntryMeta.php');
 require_once(FRM_MODELS_PATH.'/FrmNotification.php');
-require_once(FRM_MODELS_PATH.'/FrmUpdate.php');
+include_once(FRM_MODELS_PATH.'/FrmUpdate.php');
 
 global $frmdb;
 global $frm_field;

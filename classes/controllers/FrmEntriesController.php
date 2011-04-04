@@ -70,11 +70,17 @@ class FrmEntriesController{
             $values['posted_form_id'] = FrmAppHelper::get_param('form');
 
         if ($form->id == $values['posted_form_id']){ //if there are two forms on the same page, make sure not to submit both
-            foreach ($default_values as $var => $default)
-            $values[$var] = FrmAppHelper::get_param($var, $default);
+            foreach ($default_values as $var => $default){
+                $values[$var] = FrmAppHelper::get_param($var, $default);
+                unset($var);
+                unset($default);
+            }
         }else{
-            foreach ($default_values as $var => $default)
+            foreach ($default_values as $var => $default){
                 $values[$var] = $default;
+                unset($var);
+                unset($default);
+            }
         }
 
         return $values;

@@ -6,7 +6,7 @@ class FrmNotification{
     
     function entry_created($entry_id){
         if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
-        global $frm_blogurl, $frm_form, $frm_entry, $frm_entry_meta;
+        global $frm_form, $frm_entry, $frm_entry_meta;
 
         $frm_blogname = get_option('blogname');
         $entry = $frm_entry->getOne($entry_id);

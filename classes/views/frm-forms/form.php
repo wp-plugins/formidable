@@ -107,6 +107,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                         <p><label class="frm_pos_top"><?php echo $field['name'] ?></label>
                         <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" class="frm_long_input"><?php echo $field['custom_html'] ?></textarea></p>
                     <?php }
+                    unset($field);
                 }
             } ?>
         </div>

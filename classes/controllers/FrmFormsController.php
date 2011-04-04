@@ -331,7 +331,7 @@ class FrmFormsController{
         $templates = glob($path."/*.php");
         
         for($i = count($templates) - 1; $i >= 0; $i--){
-            $filename = str_replace('.php', '', str_replace($path."/", "", $templates[$i]));
+            $filename = str_replace('.php', '', str_replace($path.'/', '', $templates[$i]));
             $template_query = "form_key='{$filename}'";
             if($template) $template_query .= " and is_template='1'";
             if($default) $template_query .= " and default_template='1'";

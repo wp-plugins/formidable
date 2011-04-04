@@ -33,6 +33,9 @@ class FrmAppController{
             $frm_roles = FrmAppHelper::frm_capabilities();
             foreach($frm_roles as $frm_role => $frm_role_description)
                 $current_user->add_cap( $frm_role );
+            unset($frm_roles);
+            unset($frm_role);
+            unset($frm_role_description);
         }
         global $frmpro_is_installed;
         if(current_user_can('frm_view_forms')){
@@ -158,8 +161,11 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             if(is_array($css)){
                 foreach($css as $css_key => $file)
                     wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
+                unset($css_key);
+                unset($file);
             }else
                 wp_enqueue_style('frm-forms', $css, array(), $frm_version);
+            unset($css);
                 
             global $frm_css_loaded;
             $frm_css_loaded = true;
@@ -181,10 +187,13 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
                     foreach($css as $css_key => $file){
                         echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms'. ($css_key + $frm_css_loaded) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
                         //wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
+                        unset($css_key);
+                        unset($file);
                     }
                 }else{
                     echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms-css\' href=\''. $css. '\' type=\'text/css\' media=\'all\' /%3E"));';
                 }
+                unset($css);
 
                     //wp_enqueue_style('frm-forms', $css, array(), $frm_version);
                 echo '</script>'."\n";

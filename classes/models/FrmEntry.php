@@ -262,7 +262,7 @@ class FrmEntry{
     
     //Check entries for spam -- returns true if is spam
     function akismet($values) {
-	    global $akismet_api_host, $akismet_api_port, $frm_blogurl;
+	    global $akismet_api_host, $akismet_api_port, $frm_siteurl;
 
 		$content = '';
 		foreach ( $values['item_meta'] as $val ) {
@@ -275,7 +275,7 @@ class FrmEntry{
 		    return false;
         
         $datas = array();
-		$datas['blog'] = $frm_blogurl;
+		$datas['blog'] = $frm_siteurl;
 		$datas['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 		$datas['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 		$datas['referrer'] = $_SERVER['HTTP_REFERER'];

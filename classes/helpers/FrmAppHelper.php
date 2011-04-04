@@ -149,17 +149,19 @@ class FrmAppHelper{
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
                   
-                $field_array = array('id' => $field->id,
-                      'value' => str_replace('"', '&quot;', $new_value),
-                      'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
-                      'name' => stripslashes($field->name),
-                      'description' => stripslashes($field->description),
-                      'type' => apply_filters('frm_field_type',$field_type, $field, $new_value),
-                      'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
-                      'required' => $field->required,
-                      'field_key' => $field->field_key,
-                      'field_order' => $field->field_order,
-                      'form_id' => $field->form_id);
+                $field_array = array(
+                            'id' => $field->id,
+                            'value' => str_replace('"', '&quot;', $new_value),
+                            'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
+                            'name' => stripslashes($field->name),
+                            'description' => stripslashes($field->description),
+                            'type' => apply_filters('frm_field_type',$field_type, $field, $new_value),
+                            'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
+                            'required' => $field->required,
+                            'field_key' => $field->field_key,
+                            'field_order' => $field->field_order,
+                            'form_id' => $field->form_id
+                            );
                 
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
@@ -172,7 +174,8 @@ class FrmAppHelper{
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
 
-               $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);   
+               $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);
+               unset($field);   
             }
         }
       

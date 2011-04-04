@@ -36,20 +36,21 @@ class FrmEntryMeta{
 
   function delete_entry_meta($entry_id, $field_id){
     global $wpdb, $frmdb;
-    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id={$field_id} AND item_id={$entry_id}");
+    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id='$field_id' AND item_id='$entry_id'");
   }
   
   function delete_entry_metas($entry_id){
     global $wpdb, $frmdb;
-    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE item_id={$entry_id}");
+    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE item_id='$entry_id'");
   }
   
   function get_entry_meta_by_field($entry_id, $field_id, $return_var=false){
       global $wpdb, $frmdb;
       if (is_numeric($field_id))
-          $query = "SELECT `meta_value` FROM $frmdb->entry_metas WHERE field_id='{$field_id}' and item_id='{$entry_id}'";
+          $query = "SELECT `meta_value` FROM $frmdb->entry_metas WHERE field_id='$field_id' and item_id='$entry_id'";
       else
           $query = "SELECT `meta_value` FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id WHERE fi.field_key='{$field_id}' and `item_id`='{$entry_id}'";
+          
       if($return_var)
           return stripslashes($wpdb->get_var("{$query} LIMIT 1"));
       else

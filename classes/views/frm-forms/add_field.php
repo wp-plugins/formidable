@@ -136,3 +136,4 @@ if ($display['options']){ ?>
     </div>    
 <?php } ?>         
 </li>
+<?php unset($display); ?>
