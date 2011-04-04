@@ -20,47 +20,41 @@ $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup
 $field_values['name'] = 'Name';
 $field_values['description'] = 'First';
 $field_values['required'] = 1;
-$field_values['field_options']['blank'] = 'First name cannot be blank';
 $field_values['field_options']['size'] = 22;
-$field_values['field_options']['custom_html'] = '<div id="frm_field_[id]_container" class="form-field [required_class] [error_class]" style="float:left;margin-right:10px;">'."\n".'<label class="frm_pos_[label_position]">[field_name] <span class="frm_required">[required_label]</span>'."\n</label>\n".'[input]'."\n".'[if description]<div class="frm_description">[description]</div>[/if description]'."\n</div>";
+$field_values['field_options']['custom_html'] = '<div id="frm_field_[id]_container" class="form-field [required_class] [error_class]" style="float:left;margin-right:10px;">'."\n".'<label class="frm_pos_[label_position]">[field_name] <span class="frm_required">[required_label]</span>'."\n</label>\n".'[input]'."\n".'[if description]<div class="frm_description">[description]</div>[/if description]'."\n". '[if error]<div class="frm_error">[error]</div>[/if error]'."\n</div>";
 $frm_field->create( $field_values );
 
 $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('text', $form_id));
 $field_values['name'] = $field_values['description'] = 'Last';
 $field_values['required'] = 1;
-$field_values['field_options']['blank'] = 'Last name cannot be blank';
 $field_values['field_options']['size'] = 22;
 $field_values['field_options']['label'] = 'hidden';
-$field_values['field_options']['custom_html'] = '<div id="frm_field_[id]_container" class="form-field [required_class] [error_class]" style="float:left;">'."\n".'<label class="frm_pos_[label_position]">[field_name] <span class="frm_required">[required_label]</span>'."\n</label>\n".'[input]'."\n".'[if description]<div class="frm_description">[description]</div>[/if description]'."\n</div>\n".'<div style="clear:both"></div>';
+$field_values['field_options']['custom_html'] = '<div id="frm_field_[id]_container" class="form-field [required_class] [error_class]" style="float:left;">'."\n".'<label class="frm_pos_[label_position]">[field_name] <span class="frm_required">[required_label]</span>'."\n</label>\n".'[input]'."\n".'[if description]<div class="frm_description">[description]</div>[/if description]'."\n". '[if error]<div class="frm_error">[error]</div>[/if error]'."\n</div>\n".'<div style="clear:both"></div>';
 $frm_field->create( $field_values );
 
 
 $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('email', $form_id));
 $field_values['name'] = __('Email', 'formidable');
 $field_values['required'] = 1;
-$field_values['field_options']['blank'] = __('Email cannot be blank', 'formidable');
 $field_values['field_options']['invalid'] = __('Please enter a valid email address', 'formidable');
 $frm_field->create( $field_values );
 
 
 $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('url', $form_id));
 $field_values['name'] = __('Website', 'formidable');
-$field_values['field_options']['blank'] = __('Website cannot be blank', 'formidable');
-$field_values['field_options']['invalid'] = __('Website is an invalid format', 'formidable');
+$field_values['field_options']['invalid'] = __('Please enter a valid website', 'formidable');
 $frm_field->create( $field_values );
 
 
 $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('text', $form_id));
 $field_values['name'] = __('Subject', 'formidable');
 $field_values['required'] = 1;
-$field_values['field_options']['blank'] = __('Subject cannot be blank', 'formidable');
 $frm_field->create( $field_values );
 
 
 $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('textarea', $form_id));
 $field_values['name'] = __('Message', 'formidable');
 $field_values['required'] = 1;
-$field_values['field_options']['blank'] = __('Message cannot be blank', 'formidable');
 $frm_field->create( $field_values );
 
 

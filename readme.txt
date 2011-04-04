@@ -59,6 +59,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.05.0 =
 * Moved a form widget from Pro into the free version
 * Updated some templates with fields aligned in a row
+* Moved error messages underneath input fields
 * Added option to display labels "hidden" instead of just none. This makes aligning fields in a row with only one label easier
 * Additional XHTML compliance for multiple forms on one 
 * Removed the HTML5 required attribute (temporarily)

@@ -6,20 +6,20 @@
 class FrmFormsController{
     function FrmFormsController(){
         add_action('admin_menu', array( &$this, 'menu' ));
-        add_action('admin_head-toplevel_page_'.FRM_PLUGIN_NAME, array(&$this,'head'));
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-new', array(&$this,'head'));
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-templates', array(&$this,'head'));
+        add_action('admin_head-toplevel_page_'.FRM_PLUGIN_NAME, array(&$this, 'head'));
+        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-new', array(&$this, 'head'));
+        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-templates', array(&$this, 'head'));
         add_action('wp_ajax_frm_form_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
         add_filter('frm_submit_button', array(&$this, 'submit_button_label'));
-        add_filter('media_buttons_context', array(&$this,'insert_form_button'));
+        add_filter('media_buttons_context', array(&$this, 'insert_form_button'));
         add_action('admin_footer',  array(&$this, 'insert_form_popup'));
     }
     
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this,'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', 'formidable'), __('Create a Form', 'formidable'), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this,'new_form'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this, 'route'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', 'formidable'), __('Create a Form', 'formidable'), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this, 'new_form'));
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
     }
     
@@ -55,7 +55,7 @@ class FrmFormsController{
             $id = $frm_form->create( $values );
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
-            $all_templates = $frm_form->getAll('is_template=1',' ORDER BY name');
+            $all_templates = $frm_form->getAll('is_template=1', ' ORDER BY name');
             require_once(FRM_VIEWS_PATH.'/frm-forms/new-selection.php');
         }
     }
@@ -69,7 +69,7 @@ class FrmFormsController{
             $frm_field_selection = FrmFieldsHelper::field_selection();
             $record = $frm_form->getOne( $id );
             $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
-            $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
+            $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
             require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $record = $frm_form->update( $id, $_POST, true );
@@ -148,8 +148,8 @@ class FrmFormsController{
         $plugin     = FrmAppHelper::get_param('plugin');
         $controller = FrmAppHelper::get_param('controller');
         $key = (isset($_GET['form']) ? $_GET['form'] : (isset($_POST['form']) ? $_POST['form'] : ''));
-        $form = $frm_form->getAll("form_key='$key'",'',' LIMIT 1');
-        if (!$form) $form = $frm_form->getAll('','',' LIMIT 1');
+        $form = $frm_form->getAll("form_key='$key'", '', ' LIMIT 1');
+        if (!$form) $form = $frm_form->getAll('', '', ' LIMIT 1');
         $form_options = stripslashes_deep(maybe_unserialize($form->options));
         $description = $title = true;
         $custom_style = (isset($form_options['custom_style'])) ? $form_options['custom_style'] : ($frm_settings->load_style != 'none');
@@ -218,7 +218,7 @@ class FrmFormsController{
 
         if ($params['template']){
             $default_templates = $frm_form->getAll('default_template=1');
-            $all_templates = $frm_form->getAll('is_template=1',' ORDER BY name');
+            $all_templates = $frm_form->getAll('is_template=1', ' ORDER BY name');
         }
 
         $form_vars = $this->get_form_sort_vars($params, $where_clause);
@@ -309,7 +309,7 @@ class FrmFormsController{
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
-        $values = FrmAppHelper::setup_edit_vars($record,'forms',$fields,true);
+        $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
         else if($create_link)
@@ -320,7 +320,7 @@ class FrmFormsController{
     
     function get_params(){
         $values = array();
-        foreach (array('template' => 0,'id' => '','paged' => 1,'form' => '','search' => '','sort' => '','sdir' => '') as $var => $default)
+        foreach (array('template' => 0, 'id' => '', 'paged' => 1, 'form' => '', 'search' => '', 'sort' => '', 'sdir' => '') as $var => $default)
             $values[$var] = FrmAppHelper::get_param($var, $default);
 
         return $values;
@@ -331,7 +331,7 @@ class FrmFormsController{
         $templates = glob($path."/*.php");
         
         for($i = count($templates) - 1; $i >= 0; $i--){
-            $filename = str_replace('.php','', str_replace($path."/","",$templates[$i]));
+            $filename = str_replace('.php', '', str_replace($path."/", "", $templates[$i]));
             $template_query = "form_key='{$filename}'";
             if($template) $template_query .= " and is_template='1'";
             if($default) $template_query .= " and default_template='1'";

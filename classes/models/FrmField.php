@@ -8,7 +8,7 @@ class FrmField{
         $key = isset($values['field_key']) ? $values['field_key'] : $values['name'];
         $new_values['field_key'] = FrmAppHelper::get_unique_key($key, $frmdb->fields, 'field_key');
 
-        foreach (array('name','description','type','default_value') as $col)
+        foreach (array('name', 'description', 'type', 'default_value') as $col)
             $new_values[$col] = stripslashes($values[$col]);
         
         $new_values['options'] = $values['options'];
@@ -33,13 +33,13 @@ class FrmField{
 
     function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
         global $frmdb;
-        foreach ($this->getAll("fi.form_id = $old_form_id",'','',$blog_id) as $field){
+        foreach ($this->getAll("fi.form_id = $old_form_id", '', '', $blog_id) as $field){
             $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
             $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $frmdb->fields, 'field_key');
             $values['field_options'] = unserialize($field->field_options);
             $values['form_id'] = $form_id;
-            foreach (array('name','description','type','default_value','options','field_order','required') as $col)
+            foreach (array('name', 'description', 'type', 'default_value', 'options', 'field_order', 'required') as $col)
                 $values[$col] = $field->{$col};
             $this->create($values, false);
         }
@@ -65,11 +65,8 @@ class FrmField{
     function destroy( $id ){
       global $wpdb, $frmdb;
 
-      $reset = "DELETE FROM $frmdb->entry_metas WHERE field_id='$id'";
-      $destroy = "DELETE FROM $frmdb->fields WHERE id='$id'";
-
-      $wpdb->query($reset);
-      return $wpdb->query($destroy);
+      $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id='$id'");
+      return $wpdb->query("DELETE FROM $frmdb->fields WHERE id='$id'");
     }
 
     function getOne( $id ){

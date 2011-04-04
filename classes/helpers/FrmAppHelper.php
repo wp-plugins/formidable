@@ -99,7 +99,7 @@ class FrmAppHelper{
                 $key = sanitize_title_with_dashes($name);
         }
 
-        if (is_numeric($key) or in_array($key, array('id','key','created-at', 'detaillink', 'editlink', 'siteurl', 'evenodd')))
+        if (is_numeric($key) or in_array($key, array('id', 'key', 'created-at', 'detaillink', 'editlink', 'siteurl', 'evenodd')))
             $key = $key .'a';
             
         $query = "SELECT $column FROM $table_name WHERE $column = %s AND ID != %d LIMIT 1";
@@ -164,9 +164,9 @@ class FrmAppHelper{
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == '')
-                        $field_array[$opt] = $field_array['name'] . ' ' . __('cannot be blank', 'formidable');
+                        $field_array[$opt] = __('This field cannot be blank', 'formidable');
                     else if($opt == 'invalid' and $field_array[$opt] == '')
-                        $field_array[$opt] = $field_array['name'] . ' ' . __('is an invalid format', 'formidable');
+                        $field_array[$opt] = $field_array['name'] . ' ' . __('is invalid', 'formidable');
                 }
                     
                 if ($field_array['custom_html'] == '')

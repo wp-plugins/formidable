@@ -117,11 +117,8 @@ class FrmEntry{
       //$query_results = $wpdb->update( $frmdb->entries, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
       do_action('frm_before_destroy_entry', $id);
       
-      $reset = 'DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id;
-      $destroy = 'DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id;
-      
-      $wpdb->query($reset);
-      return $wpdb->query($destroy);
+      $wpdb->query('DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id);
+      return $wpdb->query('DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id);
     }
     
     function update_form( $id, $value, $form_id ){
@@ -225,7 +222,7 @@ class FrmEntry{
                 $_POST['item_meta'][$posted_field->id] = $value = '';            
                   
             if ($posted_field->required == '1' and $value == ''){
-                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == __('Untitled cannot be blank', 'formidable') or $field_options['blank'] == '') ? ($posted_field->name . ' '. __('cannot be blank', 'formidable')) : $field_options['blank'];  
+                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == '' or $field_options['blank'] == 'Untitled cannot be blank') ? (__('This field cannot be blank', 'formidable')) : $field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name']))
                 $_POST['name'] = $value;
                 

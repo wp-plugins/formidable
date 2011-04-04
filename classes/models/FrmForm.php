@@ -76,7 +76,7 @@ class FrmForm{
     if (isset($values['form_key']))
         $values['form_key'] = FrmAppHelper::get_unique_key($values['form_key'], $frmdb->forms, 'form_key', $id);
     
-    $form_fields = array('form_key','name','description','status','prli_link_id');
+    $form_fields = array('form_key', 'name', 'description', 'status', 'prli_link_id');
     
     $new_values = array();
 
@@ -115,7 +115,7 @@ class FrmForm{
             $field = $frm_field->getOne($field_id);
             if (!$field) continue;
             $field_options = unserialize($field->field_options);
-            foreach (array('size','max','label','invalid','required_indicator','blank') as $opt)
+            foreach (array('size', 'max', 'label', 'invalid', 'required_indicator', 'blank') as $opt)
                 $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
             $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field_options['custom_html']) ? $field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
             $field_options = apply_filters('frm_update_field_options', $field_options, $field, $values);

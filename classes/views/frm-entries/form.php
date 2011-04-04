@@ -21,19 +21,11 @@ echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $
 <input type="hidden" name="plugin" value="<?php echo $plugin; ?>" />
 <?php }
 
-$error_keys = array();
-if (isset($errors) && is_array($errors)){
-    foreach($errors as $error_id => $error_msg){
-        if(!is_numeric($error_id))
-            $error_keys[] = $error_id;
-    }
-}
-
 if($values['fields']){
 foreach($values['fields'] as $field){
     $field_name = "item_meta[". $field['id'] ."]";
     if (apply_filters('frm_show_normal_field_type', true, $field['type']))
-        echo FrmFieldsHelper::replace_shortcodes($field['custom_html'], $field, $error_keys, $form);
+        echo FrmFieldsHelper::replace_shortcodes($field['custom_html'], $field, $errors, $form);
     else
         do_action('frm_show_other_field_type', $field, $form);
     

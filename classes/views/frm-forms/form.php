@@ -131,8 +131,8 @@ if (isset($values['fields']) && !empty($values['fields'])){
             <li><b><?php _e('Label Position', 'formidable') ?>:</b> <pre>[label_position]</pre></li>
             <li><b><?php _e('Required label', 'formidable') ?>:</b> <pre>[required_label]</pre></li>
             <li><b><?php _e('Input Field', 'formidable') ?>:</b> <pre>[input]</pre><br/>
-                <?php _e('Show a single radio or checkbox option by replacing "1" with the order of the option','formidable') ?>: <pre>[input opt=1]</pre><br/>
-                <?php _e('Hide the option labels','formidable') ?>: <pre>[input label=0]</pre>
+                <?php _e('Show a single radio or checkbox option by replacing "1" with the order of the option', 'formidable') ?>: <pre>[input opt=1]</pre><br/>
+                <?php _e('Hide the option labels', 'formidable') ?>: <pre>[input label=0]</pre>
             </li>
             <li><b><?php _e('Add class name if field is required', 'formidable') ?>:</b> <pre>[required_class]</pre></li>
             <li><b><?php _e('Add class name if field has an error on form submit', 'formidable') ?>:</b> <pre>[error_class]</pre></li>

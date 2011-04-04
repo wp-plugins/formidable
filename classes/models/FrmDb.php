@@ -14,7 +14,7 @@ class FrmDb{
     }
     
     function upgrade($old_db_version=false){
-      global $wpdb, $frm_form, $frm_field, $frm_db_version;
+      global $wpdb, $frm_db_version;
       //$frm_db_version is the version of the database we're moving to
       if(!$old_db_version)
           $old_db_version = get_option('frm_db_version');
@@ -161,7 +161,7 @@ class FrmDb{
           }
       }
 
-      return compact('where','values');
+      return compact('where', 'values');
     }
     
     function get_var($table, $args=array(), $field='id', $order_by=''){

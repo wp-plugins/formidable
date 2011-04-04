@@ -19,7 +19,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
         add_filter('frm_field_type',array( &$this, 'change_type'));
         add_filter('frm_display_field_options', array(&$this, 'display_field_options'));
-        add_action('frm_field_input_html', array(&$this,'input_html'));
+        add_action('frm_field_input_html', array(&$this, 'input_html'));
     }
     
     function create(){
@@ -95,7 +95,7 @@ class FrmFieldsController{
         $values['field_key'] = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
         $values['field_options'] = unserialize($copy_field->field_options);
         $values['form_id'] = $copy_field->form_id;
-        foreach (array('name','description','type','default_value','options','required') as $col)
+        foreach (array('name', 'description', 'type', 'default_value', 'options', 'required') as $col)
             $values[$col] = $copy_field->{$col};
         $field_count = $frm_app_helper->getRecordCount("form_id='$copy_field->form_id'", $frmdb->fields);
         $values['field_order'] = $field_count + 1;
@@ -221,7 +221,7 @@ class FrmFieldsController{
             $class .= " auto_width";
         }
         
-        if(isset($field['max']) and !in_array($field['type'], array('textarea','rte')) and !empty($field['max']))
+        if(isset($field['max']) and !in_array($field['type'], array('textarea', 'rte')) and !empty($field['max']))
             echo ' maxlength="'. $field['max'] .'"';
         
         if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){
@@ -235,7 +235,7 @@ class FrmFieldsController{
                     $class .= " required";
             }
 
-            if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select','radio','checkbox','hidden'))) 
+            if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
                 echo ' placeholder="'.$field['default_value'].'"';
 
             if(isset($field['clear_on_focus']) and $field['clear_on_focus']){

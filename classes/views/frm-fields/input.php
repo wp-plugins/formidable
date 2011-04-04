@@ -52,16 +52,16 @@
 }else if ($field['type'] == 'captcha'){
         global $frm_settings;
         $error_msg = null;
-        if(!empty($error_keys)){
-            foreach($error_keys as $error_key){
+        if(!empty($errors)){
+            foreach($errors as $error_key => $error){
                 if(preg_match('/^captcha-/', $error_key))
                     $error_msg = preg_replace('/^captcha-/', '', $error_key);
             }
         }
         if (!empty($frm_settings->pubkey))
             FrmFieldsHelper::display_recaptcha($field, $error_msg);
-      }else if ($field['type'] == 'nucaptcha'){
-          if(function_exists('nucaptcha_comment_form'))
-              nucaptcha_comment_form();
-      }else do_action('frm_form_fields',$field, $field_name);
+}else if ($field['type'] == 'nucaptcha'){
+    if(function_exists('nucaptcha_comment_form'))
+        nucaptcha_comment_form();
+}else do_action('frm_form_fields',$field, $field_name);
 ?>

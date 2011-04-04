@@ -9,8 +9,8 @@ class FrmAppController{
         add_action('admin_head', array(&$this, 'menu_css'));
         add_filter('frm_nav_array', array( &$this, 'frm_nav'), 1);
         add_filter('plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'settings_link'), 10, 2 );
-        add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this,'pro_action_needed'));
-        add_action('admin_notices', array( &$this,'pro_get_started_headline'));
+        add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'pro_action_needed'));
+        add_action('admin_notices', array( &$this, 'pro_get_started_headline'));
         add_filter('the_content', array( &$this, 'page_route' ), 1);
         add_action('init', array(&$this, 'front_head'));
         add_action('wp_footer', array(&$this, 'footer_js'), 1);
@@ -20,11 +20,11 @@ class FrmAppController{
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
 
         // Used to process standalone requests
-        add_action('init', array(&$this,'parse_standalone_request'));
+        add_action('init', array(&$this, 'parse_standalone_request'));
         
         //Shortcodes
-        add_shortcode('formidable', array(&$this,'get_form_shortcode'));
-        add_filter( 'widget_text', array(&$this,'widget_text_filter'), 9 );
+        add_shortcode('formidable', array(&$this, 'get_form_shortcode'));
+        add_filter( 'widget_text', array(&$this, 'widget_text_filter'), 9 );
     }
     
     function menu(){
@@ -37,10 +37,10 @@ class FrmAppController{
         global $frmpro_is_installed;
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller,'route'), 'div');
+            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller, 'route'), 'div');
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller,'route'), 'div');
+            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller, 'route'), 'div');
         }
     }
     
@@ -120,7 +120,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             $frm_update->queue_update(true);
             $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $frm_update->plugin_name, 'upgrade-plugin_' . $frm_update->plugin_name);
         ?>
-    <div class="error" style="padding:7px;"><?php printf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">','</a>'); ?></div>  
+    <div class="error" style="padding:7px;"><?php printf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">', '</a>'); ?></div>  
         <?php 
         }
     }
@@ -240,7 +240,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function standalone_route($controller, $action=''){
         global $frm_forms_controller;
 
-        if($controller=='forms' and !in_array($action, array('export','import','xml')))
+        if($controller=='forms' and !in_array($action, array('export', 'import', 'xml')))
             $frm_forms_controller->preview($this->get_param('form'));
         else
             do_action('frm_standalone_route', $controller, $action);

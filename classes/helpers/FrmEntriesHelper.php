@@ -18,7 +18,7 @@ class FrmEntriesHelper{
                   $new_value = $default;
               else
                   $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? $_POST['item_meta'][$field->id] : $default;
-                  
+            
               $new_value = stripslashes_deep(maybe_unserialize($new_value));
               if (!is_array($new_value))
                 $new_value = apply_filters('frm_get_default_value', $new_value, $field);
@@ -37,7 +37,7 @@ class FrmEntriesHelper{
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id);
 
-              foreach (array('size' => '','max' => '','label' => 'top','invalid' => '','required_indicator' => '','blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
+              foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
                   $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
                   
               if ($field_array['custom_html'] == '')
@@ -90,7 +90,7 @@ class FrmEntriesHelper{
     function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
         global $frm_entry;
 
-        $entries = $frm_entry->getAll("it.form_id=".$form_id,' ORDER BY name');
+        $entries = $frm_entry->getAll("it.form_id=".$form_id, ' ORDER BY name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>

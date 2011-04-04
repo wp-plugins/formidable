@@ -13,16 +13,16 @@ else
               
 $("input[name='options[success_action]']").change(function(){
 	$('.success_action_box').hide();
-    if ($(this).val() == 'redirect')
+    if($(this).val()=='redirect')
         $('.success_action_redirect_box.success_action_box').fadeIn('slow');
-    else if ($(this).val() == 'page')
+    else if($(this).val()=='page')
         $('.success_action_page_box.success_action_box').fadeIn('slow');
 	else
 		$('.success_action_message_box.success_action_box').fadeIn('slow');
 });
 
 jQuery('.item-list-form').submit(function(){
-if(jQuery('#bulkaction').val() == 'delete'){return confirm('Are you sure you want to delete each of the selected items below?');}
+if(jQuery('#bulkaction').val()=='delete'){return confirm('Are you sure you want to delete each of the selected items below?');}
 });
 
 jQuery('.frm_single_option').hover(

@@ -43,7 +43,7 @@
     			</div><!-- /theme group Error -->
     			<div class="theme-group-content corner-bottom clearfix">
                     <div class="clearfix">
-    					 <ul<?php echo apply_filters('frm_drag_field_class','') ?>>
+    					 <ul<?php echo apply_filters('frm_drag_field_class', '') ?>>
                          <?php $col_class = 'frm_col_one';
                          foreach (FrmFieldsHelper::pro_field_selection() as $field_key => $field_type){ ?>
                              <li class="frmbutton button <?php echo $col_class ?>" id="<?php echo $field_key ?>"><?php echo apply_filters('frmpro_field_links',$field_type, $id, $field_key) ?></li>

@@ -4,6 +4,7 @@
   * necessary to successfully provide an update mechanism for FormidablePro!
   */
 class FrmUpdate{
+  var $plugin_nicename;
   var $plugin_name;
   var $plugin_slug;
   var $plugin_url;
@@ -33,6 +34,7 @@ class FrmUpdate{
 
   function FrmUpdate(){
     // Where all the vitals are defined for this plugin
+    $this->plugin_nicename      = 'formidable';
     $this->plugin_name          = FRM_PLUGIN_NAME.'/formidable.php';
     $this->plugin_slug          = FRM_PLUGIN_NAME;
     $this->plugin_url           = 'http://blog.strategy11.com/formidable-wordpress-plugin';
@@ -119,7 +121,7 @@ class FrmUpdate{
 
     $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
-    if ( !$client->query( 'proplug.is_user_allowed_to_download', $this->pro_username, $this->pro_password, get_option('siteurl') ) )
+    if ( !$client->query( 'proplug.is_user_allowed_to_download', $this->pro_username, $this->pro_password, get_option('siteurl'), $this->plugin_nicename ) )
       return false;
 
     return $client->getResponse();
@@ -138,7 +140,7 @@ class FrmUpdate{
 
           ?>
 <div id="message" class="updated fade">
-<strong><?php printf(__('Your Username & Password was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href=\"{$inst_install_url}\">","</a>"); ?></strong>
+<strong><?php printf(__('Your Username & Password was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); ?></strong>
 </div>
           <?php
         }
@@ -242,7 +244,7 @@ class FrmUpdate{
     $password = ((isset($_POST[$this->pro_password_str]))?$_POST[$this->pro_password_str]:$this->pro_password);
     $wpmu = (isset($_POST[$this->pro_wpmu_str])) ? true : $this->pro_wpmu;
 
-    return compact('username','password','wpmu');
+    return compact('username', 'password', 'wpmu');
   }
 
   function get_download_url($version){
@@ -250,7 +252,7 @@ class FrmUpdate{
 
     $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
-    if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version, get_option('siteurl') ) )
+    if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version, get_option('siteurl'), $this->plugin_nicename ) )
         return false;
 
     return base64_decode($client->getResponse());
@@ -261,7 +263,7 @@ class FrmUpdate{
 
     $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
-    if( !$client->query( 'proplug.get_current_version' ) )
+    if( !$client->query( 'proplug.get_current_version', $this->plugin_nicename ) )
       return false;
 
     return $client->getResponse();

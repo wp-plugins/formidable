@@ -41,7 +41,7 @@ class FrmShowForm extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array('title' => false, 'form' => false, 'description' => false, 'size' => 20, 'select_width' => false) );
 ?>
 	<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'formidable') ?>:</label>
-	<input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" /></p>
+	<input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr( stripslashes($instance['title']) ); ?>" /></p>
 	
 	<p><label for="<?php echo $this->get_field_id('form'); ?>"><?php _e('Form', 'formidable') ?>:</label>
 	    <?php FrmFormsHelper::forms_dropdown( $this->get_field_name('form'), $instance['form'], false, $this->get_field_id('form') )?>

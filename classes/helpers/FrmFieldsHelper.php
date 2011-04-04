@@ -52,7 +52,7 @@ class FrmFieldsHelper{
         $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
         
         $values = array();
-        foreach (array('name' => __('Untitled', 'formidable'), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('Untitled cannot be blank', 'formidable'), 'invalid' => __('Untitled is an invalid format', 'formidable'), 'form_id' => $form_id) as $var => $default)
+        foreach (array('name' => __('Untitled', 'formidable'), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('This field cannot be blank', 'formidable'), 'invalid' => __('This field is invalid', 'formidable'), 'form_id' => $form_id) as $var => $default)
             $values[$var] = $default;
         
         $values['field_options'] = array();
@@ -117,6 +117,7 @@ class FrmFieldsHelper{
     </label>
     [input]
     [if description]<div class="frm_description">[description]</div>[/if description]
+    [if error]<div class="frm_error">[error]</div>[/if error]
 </div>
 DEFAULT_HTML;
         }else
@@ -125,7 +126,7 @@ DEFAULT_HTML;
         return apply_filters('frm_custom_html', $default_html, $type);
     }
     
-    function replace_shortcodes($html, $field, $error_keys=array(), $form=false){
+    function replace_shortcodes($html, $field, $errors=array(), $form=false){
         $field_name = "item_meta[". $field['id'] ."]";
         //replace [id]
         $html = str_replace('[id]', $field['id'], $html);
@@ -133,18 +134,21 @@ DEFAULT_HTML;
         //replace [key]        
         $html = str_replace('[key]', $field['field_key'], $html);
         
-        //replace [description] and [required_label]
+        //replace [description] and [required_label] and [error]
         $required = ($field['required'] == '0')?(''):($field['required_indicator']);
-        foreach (array('description' => $field['description'], 'required_label' => $required) as $code => $value){
-            if ($value == '')
+        $error = isset($errors['field'. $field['id']]) ? stripslashes($errors['field'. $field['id']]) : false; 
+        foreach (array('description' => $field['description'], 'required_label' => $required, 'error' => $error) as $code => $value){
+            if (!$value or $value == '')
                 $html = preg_replace('/(\[if\s+'.$code.'\])(.*?)(\[\/if\s+'.$code.'\])/mis', '', $html);
             else{
-                $html = str_replace('[if '.$code.']','',$html); 
-        	    $html = str_replace('[/if '.$code.']','',$html);
+                if($code == 'error' and $value and !preg_match('/(\[error\])/', $html) and preg_match('/(\[input\])/', $html))
+                    $html .= '<div class="frm_error">[error]</div>';
+                $html = str_replace('[if '.$code.']', '', $html); 
+        	    $html = str_replace('[/if '.$code.']', '', $html);
             }
 
             $html = str_replace('['.$code.']', $value, $html);
-        }
+        }        
         
         //replace [required_class]
         $required_class = ($field['required'] == '0')?(''):(' form-required');
@@ -157,7 +161,7 @@ DEFAULT_HTML;
         $html = str_replace('[field_name]', $field['name'], $html);
             
         //replace [error_class] 
-        $error_class = (in_array('field'.$field['id'], $error_keys)) ? ' frm_blank_field':''; 
+        $error_class = isset($errors['field'. $field['id']]) ? ' frm_blank_field':''; 
         $html = str_replace('[error_class]', $error_class, $html);
         
         //replace [entry_key]

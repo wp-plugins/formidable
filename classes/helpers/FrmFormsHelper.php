@@ -29,7 +29,7 @@ class FrmFormsHelper{
         if (!$field_id)
             $field_id = $field_name;
             
-        $forms = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')",' ORDER BY name');
+        $forms = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')", ' ORDER BY name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>
@@ -90,7 +90,7 @@ BEFORE_HTML;
     }
     
     function replace_shortcodes($html, $form, $title=false, $description=false){
-        foreach (array('form_name' => $title,'form_description' => $description, 'entry_key' => true) as $code => $show){
+        foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true) as $code => $show){
             if ($code == 'form_name')
                 $replace_with = stripslashes($form->name);
             else if ($code == 'form_description')
@@ -99,8 +99,8 @@ BEFORE_HTML;
                 $replace_with = $_GET['entry'];
                 
             if (($show == true || $show == 'true') && $replace_with != '' ){
-                $html = str_replace('[if '.$code.']','',$html); 
-        	    $html = str_replace('[/if '.$code.']','',$html);
+                $html = str_replace('[if '.$code.']', '', $html); 
+        	    $html = str_replace('[/if '.$code.']', '', $html);
             }else{
                 $html = preg_replace('/(\[if\s+'.$code.'\])(.*?)(\[\/if\s+'.$code.'\])/mis', '', $html);
             }

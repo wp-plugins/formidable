@@ -27,14 +27,14 @@ Author: Strategy11
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('FRM_PLUGIN_TITLE','Formidable');
-define('FRM_PLUGIN_NAME','formidable');
-define('FRM_PATH',WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
-define('FRM_MODELS_PATH',FRM_PATH.'/classes/models');
-define('FRM_VIEWS_PATH',FRM_PATH.'/classes/views');
-define('FRM_HELPERS_PATH',FRM_PATH.'/classes/helpers');
-define('FRM_CONTROLLERS_PATH',FRM_PATH.'/classes/controllers');
-define('FRM_TEMPLATES_PATH',FRM_PATH.'/classes/templates');
+define('FRM_PLUGIN_TITLE', 'Formidable');
+define('FRM_PLUGIN_NAME', 'formidable');
+define('FRM_PATH', WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
+define('FRM_MODELS_PATH', FRM_PATH.'/classes/models');
+define('FRM_VIEWS_PATH', FRM_PATH.'/classes/views');
+define('FRM_HELPERS_PATH', FRM_PATH.'/classes/helpers');
+define('FRM_CONTROLLERS_PATH', FRM_PATH.'/classes/controllers');
+define('FRM_TEMPLATES_PATH', FRM_PATH.'/classes/templates');
 
 global $frm_blogurl;
 $frm_blogurl = (get_option('home')) ? get_option('home') : get_option('siteurl');
@@ -42,10 +42,10 @@ if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_blogurl)){
     $frm_blogurl = str_replace('http://', 'https://', $frm_blogurl);
     define('FRM_URL',str_replace('http://', 'https://', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME));
 }else
-    define('FRM_URL',WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);  //plugins_url('/'.FRM_PLUGIN_NAME)
+    define('FRM_URL', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);  //plugins_url('/'.FRM_PLUGIN_NAME)
     
 define('FRM_SCRIPT_URL', $frm_blogurl .'/index.php?plugin=' . FRM_PLUGIN_NAME);
-define('FRM_IMAGES_URL',FRM_URL.'/images');
+define('FRM_IMAGES_URL', FRM_URL.'/images');
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
@@ -166,6 +166,5 @@ if(class_exists('WP_Widget')){
     require_once(FRM_PATH . "/classes/widgets/FrmShowForm.php");
     add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
 }
-
 
 ?>

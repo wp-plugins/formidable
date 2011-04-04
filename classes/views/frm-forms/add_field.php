@@ -119,12 +119,12 @@ if ($display['options']){ ?>
                         </span>
                         </td>
                     </tr>
-                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message if field is left blank', 'formidable') ?>:</label></td>  
+                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message if required field is left blank', 'formidable') ?>:</label></td>  
                         <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" class="frm_long_input" /></td>
                     </tr>
                     <?php } ?>
                     <?php if ($display['invalid']){ ?>
-                    <tr><td><label><?php _e('Error message if entry is an invalid format', 'formidable') ?>:</label></td>  
+                    <tr><td><label><?php _e('Error message if submission is an invalid format', 'formidable') ?>:</label></td>  
                         <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" class="frm_long_input" /></td>
                     </tr>
                     <?php } ?>

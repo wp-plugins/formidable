@@ -19,6 +19,7 @@ class FrmSettings{
     
     var $success_msg;
     var $failed_msg;
+    var $invalid_msg;
     var $submit_value;
     var $login_msg;
     var $admin_permission;
@@ -90,6 +91,10 @@ class FrmSettings{
             $this->success_msg = __('Your responses were successfully submitted. Thank you!', 'formidable');
         $this->success_msg = stripslashes($this->success_msg);
         
+        if(!isset($this->invalid_msg))
+            $this->invalid_msg = __('There was a problem with your submission. Errors are marked below.', 'formidable');
+        $this->invalid_msg = stripslashes($this->invalid_msg);
+        
         if(!isset($this->failed_msg))
             $this->failed_msg = __('We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable');
         $this->failed_msg = stripslashes($this->failed_msg);
@@ -138,10 +143,11 @@ class FrmSettings{
         $this->jquery_css = isset($params['frm_jquery_css']) ? 1 : 0;
         $this->accordion_js = isset($params['frm_accordion_js']) ? 1 : 0;
         
-        $this->success_msg = isset($params['frm_success_msg']) ? $params['frm_success_msg'] : __('Your responses were successfully submitted. Thank you!', 'formidable');
-        $this->failed_msg = isset($params['frm_failed_msg']) ? $params['frm_failed_msg'] : __('We\'re sorry. There was an error processing your responses.', 'formidable');
-        $this->submit_value = isset($params['frm_submit_value']) ? $params['frm_submit_value'] : __('Submit', 'formidable');
-        $this->login_msg = isset($params['frm_login_msg']) ? $params['frm_login_msg'] : __('You must log in', 'formidable');
+        $this->success_msg = $params['frm_success_msg'];
+        $this->invalid_msg = $params['frm_invalid_msg'];
+        $this->failed_msg = $params['frm_failed_msg'];
+        $this->submit_value = $params['frm_submit_value'];
+        $this->login_msg = $params['frm_login_msg'];
         
         //update roles
         $frm_roles = FrmAppHelper::frm_capabilities();
@@ -150,7 +156,7 @@ class FrmSettings{
             $this->$frm_role = isset($params[$frm_role]) ? $params[$frm_role] : 'administrator';
             
             foreach ($roles as $role => $details){
-                if($this->$frm_role == $role or ($this->$frm_role == 'editor' and $role == 'administrator') or ($this->$frm_role == 'author' and in_array($role, array('administrator','editor'))) or ($this->$frm_role == 'contributor' and in_array($role, array('administrator','editor','author'))) or $this->$frm_role == 'subscriber')
+                if($this->$frm_role == $role or ($this->$frm_role == 'editor' and $role == 'administrator') or ($this->$frm_role == 'author' and in_array($role, array('administrator', 'editor'))) or ($this->$frm_role == 'contributor' and in_array($role, array('administrator', 'editor', 'author'))) or $this->$frm_role == 'subscriber')
     			    $wp_roles->add_cap( $role, $frm_role );	
     			else
     			    $wp_roles->remove_cap( $role, $frm_role );

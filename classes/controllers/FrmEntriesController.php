@@ -12,8 +12,8 @@ class FrmEntriesController{
     function menu(){
         global $frmpro_is_installed;
         if(!$frmpro_is_installed){
-            add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' |'. __('Pro Entries', 'formidable'), __('Pro Entries', 'formidable'), 'administrator', FRM_PLUGIN_NAME.'-entries',array($this,'list_entries'));
-            //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-entries', array($this,'head'));
+            add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' |'. __('Pro Entries', 'formidable'), __('Pro Entries', 'formidable'), 'administrator', FRM_PLUGIN_NAME.'-entries',array(&$this, 'list_entries'));
+            //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-entries', array(&$this, 'head'));
         }
     }
     
@@ -60,7 +60,7 @@ class FrmEntriesController{
         global $frm_form;
 
         if(!$form)
-            $form = $frm_form->getAll('',' ORDER BY name',' LIMIT 1');
+            $form = $frm_form->getAll('', ' ORDER BY name', ' LIMIT 1');
             
         $action = apply_filters('frm_show_new_entry_page', FrmAppHelper::get_param('action', 'new'), $form);
         $default_values = array('id' => '', 'form_name' => '', 'paged' => 1, 'form' => $form->id, 'form_id' => $form->id, 'field_id' => '', 'search' => '', 'sort' => '', 'sdir' => '', 'action' => $action);
