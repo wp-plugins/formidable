@@ -31,16 +31,16 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form_options);
             if (!$created or !is_numeric($created) or $conf_method == 'message'){
                 $message = '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? apply_filters('the_content', $saved_message) : $frm_settings->failed_msg).'</div>';
-                if (!isset($form_options['show_form']) or $form_options['show_form'])
+                if (!isset($form_options['show_form']) or $form_options['show_form']){
                     require('new.php');
-                else{ 
+                }else{ 
                     global $frm_forms_loaded, $frm_load_css, $frm_css_loaded;
                     $frm_forms_loaded[] = $form; 
                     if($values['custom_style']) $frm_load_css = true;
 
                     if(!$frm_css_loaded and $frm_load_css){
-                    echo FrmAppController::footer_js('header');
-                    $frm_css_loaded = true;
+                        echo FrmAppController::footer_js('header');
+                        $frm_css_loaded = true;
                     }
 ?>
 <div class="frm_forms<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>" id="frm_form_<?php echo $form->id ?>_container"><?php echo $message ?></div>

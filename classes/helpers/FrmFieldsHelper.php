@@ -83,9 +83,8 @@ class FrmFieldsHelper{
         foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
             $values[$var] = FrmAppHelper::get_param($var, $default);
         
-        $field_options = maybe_unserialize($record->field_options);
         $values['options'] = stripslashes_deep(maybe_unserialize($record->options));
-        $values['field_options'] = $field_options;
+        $values['field_options'] = $record->field_options;
         $defaults = array(
             'size' => '', 'max' => '', 'label' => 'top', 'blank' => '', 
             'required_indicator' => '*', 'invalid' => '', 
@@ -93,11 +92,11 @@ class FrmFieldsHelper{
         );
         
         foreach($defaults as $opt => $default)
-            $values[$opt] = (isset($field_options[$opt])) ? $field_options[$opt] : $default; 
+            $values[$opt] = (isset($record->field_options[$opt])) ? $record->field_options[$opt] : $default; 
 
-        $values['custom_html'] = (isset($field_options['custom_html']))? stripslashes($field_options['custom_html']): FrmFieldsHelper::get_default_html($record->type);
+        $values['custom_html'] = (isset($record->field_options['custom_html'])) ? stripslashes($record->field_options['custom_html']) : FrmFieldsHelper::get_default_html($record->type);
         
-        return apply_filters('frm_setup_edit_field_vars', $values, $field_options);
+        return apply_filters('frm_setup_edit_field_vars', $values, $values['field_options']);
     }
     
     function get_form_fields($form_id, $error=false){ 
@@ -108,7 +107,7 @@ class FrmFieldsHelper{
         return $fields;
     }
     
-    function get_default_html($type){
+    function get_default_html($type='text'){
         if (apply_filters('frm_normal_field_type_html', true, $type)){
             $default_html = <<<DEFAULT_HTML
 <div id="frm_field_[id]_container" class="form-field [required_class] [error_class]">
@@ -141,8 +140,6 @@ DEFAULT_HTML;
             if (!$value or $value == '')
                 $html = preg_replace('/(\[if\s+'.$code.'\])(.*?)(\[\/if\s+'.$code.'\])/mis', '', $html);
             else{
-                if($code == 'error' and $value and !preg_match('/(\[error\])/', $html) and preg_match('/(\[input\])/', $html))
-                    $html .= '<div class="frm_error">[error]</div>';
                 $html = str_replace('[if '.$code.']', '', $html); 
         	    $html = str_replace('[/if '.$code.']', '', $html);
             }

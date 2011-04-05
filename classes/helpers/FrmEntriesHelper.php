@@ -13,7 +13,6 @@ class FrmEntriesHelper{
             foreach($fields as $field){
               $default = $field->default_value;
               
-              $field_options = unserialize($field->field_options);
               if ($reset)
                   $new_value = $default;
               else
@@ -38,7 +37,7 @@ class FrmEntriesHelper{
                     'form_id' => $field->form_id);
 
               foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
-                  $field_array[$opt] = (isset($field_options[$opt]) && $field_options[$opt] != '') ? $field_options[$opt] : $default_opt;
+                  $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
                   
               if ($field_array['custom_html'] == '')
                   $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);

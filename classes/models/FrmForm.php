@@ -114,16 +114,16 @@ class FrmForm{
         foreach ($values['item_meta'] as $field_id => $default_value){ 
             $field = $frm_field->getOne($field_id);
             if (!$field) continue;
-            $field_options = unserialize($field->field_options);
+            
             foreach (array('size', 'max', 'label', 'invalid', 'required_indicator', 'blank') as $opt)
-                $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
-            $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field_options['custom_html']) ? $field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
-            $field_options = apply_filters('frm_update_field_options', $field_options, $field, $values);
+                $field->field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
+            $field->field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field->field_options['custom_html']) ? $field->field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
+            $field->field_options = apply_filters('frm_update_field_options', $field->field_options, $field, $values);
             $default_value = maybe_serialize($values['item_meta'][$field_id]);
             $field_key = (isset($values['field_options']['field_key_'.$field_id]))? $values['field_options']['field_key_'.$field_id] : $field->field_key;
             $field_type = (isset($values['field_options']['type_'.$field_id]))? $values['field_options']['type_'.$field_id] : $field->type;
             $field_description = (isset($values['field_options']['description_'.$field_id]))? $values['field_options']['description_'.$field_id] : $field->description;
-            $frm_field->update($field_id, array('field_key' => $field_key, 'type' => $field_type, 'default_value' => $default_value, 'field_options' => $field_options, 'description' => $field_description));
+            $frm_field->update($field_id, array('field_key' => $field_key, 'type' => $field_type, 'default_value' => $default_value, 'field_options' => $field->field_options, 'description' => $field_description));
         }
     }    
     

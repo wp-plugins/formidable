@@ -70,18 +70,16 @@ class FrmFieldsController{
     function clear_on_focus(){
         global $frm_field;
         $field = $frm_field->getOne($_POST['field']);
-        $field_options = unserialize($field->field_options);
-        $field_options['clear_on_focus'] = $_POST['active'];
-        $frm_field->update($_POST['field'], array('field_options' => $field_options));
+        $field->field_options['clear_on_focus'] = $_POST['active'];
+        $frm_field->update($_POST['field'], array('field_options' => $field->field_options));
         die();
     }
     
     function default_blank(){
         global $frm_field;
         $field = $frm_field->getOne($_POST['field']);
-        $field_options = unserialize($field->field_options);
-        $field_options['default_blank'] = $_POST['active'];
-        $frm_field->update($_POST['field'], array('field_options' => $field_options));
+        $field->field_options['default_blank'] = $_POST['active'];
+        $frm_field->update($_POST['field'], array('field_options' => $field->field_options));
         die();
     }
     
@@ -93,7 +91,7 @@ class FrmFieldsController{
             
         $values = array();
         $values['field_key'] = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
-        $values['field_options'] = unserialize($copy_field->field_options);
+        $values['field_options'] = maybe_unserialize($copy_field->field_options);
         $values['form_id'] = $copy_field->form_id;
         foreach (array('name', 'description', 'type', 'default_value', 'options', 'required') as $col)
             $values[$col] = $copy_field->{$col};

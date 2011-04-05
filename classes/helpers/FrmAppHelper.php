@@ -132,13 +132,13 @@ class FrmAppHelper{
         
         if ($fields){
             foreach($fields as $field){
-                $field_options = stripslashes_deep(unserialize($field->field_options));
+                $field->field_options = stripslashes_deep($field->field_options);
                 
                 if ($default)
                     $meta_value = $field->default_value;
                 else{
-                    if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field_options['post_field']) and $field_options['post_field']){
-                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field_options['post_field'], $field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id));
+                    if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field->field_options['post_field']) and $field->field_options['post_field']){
+                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field->field_options['post_field'], $field->field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id));
                     }else if(isset($record->metas))
                         $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
                     else
@@ -164,7 +164,7 @@ class FrmAppHelper{
                             );
                 
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
-                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field_options[$opt]) ? $field_options[$opt] : $default_opt);
+                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == '')
                         $field_array[$opt] = __('This field cannot be blank', 'formidable');
                     else if($opt == 'invalid' and $field_array[$opt] == '')

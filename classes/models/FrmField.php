@@ -78,7 +78,9 @@ class FrmField{
             $query = "SELECT * FROM $frmdb->fields WHERE id=$id";
         else
             $query = "SELECT * FROM $frmdb->fields WHERE field_key='$id'";
-        return $wpdb->get_row($query);
+        $results = $wpdb->get_row($query);
+        $results->field_options = maybe_unserialize($results->field_options);
+        return $results;
     }
 
     function getAll($where = '', $order_by = '', $limit = '', $blog_id=false){
@@ -103,10 +105,14 @@ class FrmField{
         
         if($results){
             if(is_array($results)){
-                foreach($results as $result)
+                foreach($results as $r_key => $result){
+                    $results[$r_key]->field_options = maybe_unserialize($result->field_options);
                     $frm_loaded_fields[$result->id] = $frm_loaded_fields[$result->field_key] = $result;
-            }else
+                }
+            }else{
+                $results->field_options = maybe_unserialize($results->field_options);
                 $frm_loaded_fields[$results->id] = $frm_loaded_fields[$results->field_key] = $results;
+            }
         }
         return $results;
     }

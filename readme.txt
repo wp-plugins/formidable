@@ -73,6 +73,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed collapsible Section headings to work with updated HTML
 * PRO: Added functionality to admin search to check data from entries fields
 * PRO: Added start and end time options for time fields
+* PRO: Added post_id option to the `[frm-search]` shortcode. This will set the action link for the search form. Ex: `[frm-search post_id=3]`
+* PRO: Fixed `[frm-search]` shortcode for use on dynamic custom displays. If searching on a detailed entry page, the search will return to the listing page.
 
 = 1.04.07 =
 * Minor bug fixes

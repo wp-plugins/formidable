@@ -214,15 +214,14 @@ class FrmEntry{
 
         foreach($posted_fields as $posted_field){ 
             $value = '';
-            $field_options = unserialize($posted_field->field_options);
             if (isset($values['item_meta'][$posted_field->id]))
                 $value = $values['item_meta'][$posted_field->id];
                 
-            if (isset($field_options['default_blank']) and $field_options['default_blank'] and $value == $posted_field->default_value)
+            if (isset($posted_field->field_options['default_blank']) and $posted_field->field_options['default_blank'] and $value == $posted_field->default_value)
                 $_POST['item_meta'][$posted_field->id] = $value = '';            
                   
             if ($posted_field->required == '1' and $value == ''){
-                $errors['field'.$posted_field->id] = (!isset($field_options['blank']) or $field_options['blank'] == '' or $field_options['blank'] == 'Untitled cannot be blank') ? (__('This field cannot be blank', 'formidable')) : $field_options['blank'];  
+                $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? (__('This field cannot be blank', 'formidable')) : $posted_field->field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name']))
                 $_POST['name'] = $value;
                 
