@@ -8,7 +8,7 @@
 .with_frm_style label.frm_pos_hidden{display:hidden;}
 .with_frm_style .form-field{margin-top:15px;}
 .with_frm_style .frm_blank_field label, .with_frm_style .frm_error{color:#be2e17;}
-.with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .with_frm_style input.frm_error, .with_frm_style textarea.frm_error, .with_frm_style select.frm_error{border:1px solid #be2e17;}
+.with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select{border:1px solid #be2e17;}
 .with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;margin:0;}
 .with_frm_style input[type="radio"], .with_frm_style input[type="checkbox"]{width:auto;margin-right:3px;}
 .with_frm_style fieldset{border:none;margin:0;padding:0;}
