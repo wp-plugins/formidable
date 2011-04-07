@@ -59,7 +59,8 @@
 <?php } ?>
     </div>
 <?php
-}else if ($field['type'] == 'captcha'){ ?>
+}else if ($field['type'] == 'captcha'){ 
+    global $frm_settings; ?>
     <img src="<?php echo FRM_URL ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" />
     <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
     <input type="hidden" name="<?php echo $field_name ?>" value="1"/>

@@ -5,7 +5,7 @@ if (isset($message) && $message != ''){
     if(is_admin()){ ?></div><?php } 
 } 
 
-if( isset($errors) && is_array($errors) && !empty($errors) ){ 
+if( isset($errors) && is_array($errors) && !empty($errors) ){
     global $frm_settings;
 ?>
 <div class="<?php echo (is_admin()) ? 'error' : 'frm_error_style' ?>"> 

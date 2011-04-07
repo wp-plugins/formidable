@@ -225,26 +225,28 @@ class FrmEntry{
             }else if ($posted_field->type == 'text' and !isset($_POST['name']))
                 $_POST['name'] = $value;
                 
+            if ($posted_field->type == 'captcha' and isset($_POST['recaptcha_challenge_field'])){
+                global $frm_settings;
+
+                if(!function_exists('recaptcha_check_answer'))
+                    require_once(FRM_PATH.'/classes/recaptchalib.php');
+
+                $response = recaptcha_check_answer($frm_settings->privkey,
+                                                $_SERVER["REMOTE_ADDR"],
+                                                $_POST["recaptcha_challenge_field"],
+                                                $_POST["recaptcha_response_field"]);
+
+                if (!$response->is_valid) {
+                    // What happens when the CAPTCHA was entered incorrectly
+                    $errors['captcha-'.$response->error] = $errors['field'.$posted_field->id] = $frm_settings->re_msg;
+                }
+
+            }
+                
             $errors = apply_filters('frm_validate_field_entry', $errors, $posted_field, $value);
         }
 
-        if (isset($_POST['recaptcha_challenge_field'])){
-            global $frm_settings;
 
-            if(!function_exists('recaptcha_check_answer'))
-                require_once(FRM_PATH.'/classes/recaptchalib.php');
-                
-            $response = recaptcha_check_answer($frm_settings->privkey,
-                                            $_SERVER["REMOTE_ADDR"],
-                                            $_POST["recaptcha_challenge_field"],
-                                            $_POST["recaptcha_response_field"]);
-
-            if (!$response->is_valid) {
-                // What happens when the CAPTCHA was entered incorrectly
-                $errors['captcha-'.$response->error] = $frm_settings->re_msg;
-            }
-            
-        }
         
         global $wpcom_api_key;
         if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){

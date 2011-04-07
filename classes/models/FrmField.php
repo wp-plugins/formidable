@@ -79,7 +79,8 @@ class FrmField{
         else
             $query = "SELECT * FROM $frmdb->fields WHERE field_key='$id'";
         $results = $wpdb->get_row($query);
-        $results->field_options = maybe_unserialize($results->field_options);
+        if($results)
+            $results->field_options = maybe_unserialize($results->field_options);
         return $results;
     }
 
