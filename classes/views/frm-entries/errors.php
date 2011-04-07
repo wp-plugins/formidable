@@ -8,8 +8,10 @@ if (isset($message) && $message != ''){
 if( isset($errors) && is_array($errors) && !empty($errors) ){ 
     global $frm_settings;
 ?>
-<div class="frm_error_style error"> 
-    <img src="<?php echo apply_filters('frm_error_icon', FRM_IMAGES_URL . '/error.png') ?>" alt="" />
-    <?php echo stripslashes($frm_settings->invalid_msg) ?>
+<div class="<?php echo (is_admin()) ? 'error' : 'frm_error_style' ?>"> 
+<?php if(!is_admin()){ ?><img src="<?php echo apply_filters('frm_error_icon', FRM_IMAGES_URL . '/error.png') ?>" alt="" />
+<?php } 
+    echo stripslashes($frm_settings->invalid_msg);
+?>
 </div>
 <?php } ?>

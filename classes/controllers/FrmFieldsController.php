@@ -214,7 +214,7 @@ class FrmFieldsController{
             $class .= " frm_date";
         
         if(isset($field['size']) and $field['size'] > 0){
-            if($field['type'] != 'textarea' and $field['type'] != 'select')
+            if($field['type'] != 'textarea' and $field['type'] != 'select' and $field['type'] != 'data')
                 echo ' size="'. $field['size'] .'"';
             $class .= " auto_width";
         }
