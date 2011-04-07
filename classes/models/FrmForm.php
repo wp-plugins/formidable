@@ -49,7 +49,7 @@ class FrmForm{
         $new_options['copy'] = false;
         $new_values['options'] = serialize($new_options);
     }else
-        $new_values['options'] = $values->options;
+        $new_values['options'] = maybe_serialize($values->options);
         
     $new_values['logged_in'] = $values->logged_in ? $values->logged_in : 0;
     $new_values['editable'] = $values->editable ? $values->editable : 0;
