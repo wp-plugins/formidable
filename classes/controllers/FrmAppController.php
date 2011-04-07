@@ -55,8 +55,7 @@ class FrmAppController{
     <?php    
     }
     
-    function frm_nav(){
-        $nav = array();
+    function frm_nav($nav=array()){
         if(current_user_can('frm_view_forms'))
             $nav[FRM_PLUGIN_NAME] = __('Forms', 'formidable');
             

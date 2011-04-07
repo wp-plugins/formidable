@@ -91,6 +91,8 @@ if (isset($values['fields']) && !empty($values['fields'])){
 			</div>
 		</div><!-- /theme group content -->
 	</div><!-- /theme group -->
+	
+	<?php do_action('frm_add_form_option_section', $values); ?>
 </div>
 
 </div>

@@ -82,7 +82,7 @@ $frm_settings = get_option('frm_options');
 // If unserializing didn't work
 if(!is_object($frm_settings)){
     $frm_settings = new FrmSettings();
-    update_option('frm_options',$frm_settings);
+    update_option('frm_options', $frm_settings);
 }
 
 $frm_settings->set_default_options(); // Sets defaults for unset options

@@ -44,7 +44,7 @@ class FrmForm{
     $new_values['status'] = (!$template)?'draft':'';
     if ($blog_id){
         $new_values['status'] = 'published';
-        $new_options = unserialize($values->options);
+        $new_options = maybe_unserialize($values->options);
         $new_options['email_to'] = get_option('admin_email');
         $new_options['copy'] = false;
         $new_values['options'] = serialize($new_options);
@@ -206,7 +206,10 @@ class FrmForm{
           $query = "SELECT * FROM $table_name WHERE id='$id'";
       }else
           $query = "SELECT * FROM $frmdb->forms WHERE form_key='$id'";
-      return $wpdb->get_row($query);
+      
+      $results = $wpdb->get_row($query);
+      $results->options = stripslashes_deep(maybe_unserialize($results->options));
+      return $results;
   }
 
   function getAll( $where = '', $order_by = '', $limit = '' ){

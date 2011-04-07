@@ -122,7 +122,7 @@ class FrmFieldsController{
 
         $id = $_POST['field_id'];
         $field = $frm_field->getOne($id);
-        $options = unserialize($field->options);
+        $options = maybe_unserialize($field->options);
         if(!empty($options))
             $last = max(array_keys($options));
         else
@@ -130,7 +130,7 @@ class FrmFieldsController{
         $opt_key = $last + 1;
         $opt = 'Option '.(count($options)+1);
         $options[$opt_key] = $opt;
-        $frm_field->update($id, array('options' => serialize($options)));
+        $frm_field->update($id, array('options' => maybe_serialize($options)));
         $checked = '';
 
         $field_data = $frm_field->getOne($id);
@@ -149,7 +149,7 @@ class FrmFieldsController{
         $ids = explode('-',$_POST['element_id']);
         $id = str_replace('field_', '', $ids[0]);
         $field = $frm_field->getOne($id);
-        $options = unserialize($field->options);
+        $options = maybe_unserialize($field->options);
         $options[$ids[1]] = $_POST['update_value'];
         $frm_field->update($id, array('options' => maybe_serialize($options)));
         echo stripslashes($_POST['update_value']);
@@ -159,7 +159,7 @@ class FrmFieldsController{
     function delete_option(){
         global $frm_field;
         $field = $frm_field->getOne($_POST['field_id']);
-        $options = unserialize($field->options);
+        $options = maybe_unserialize($field->options);
         unset($options[$_POST['opt_key']]);
         $frm_field->update($_POST['field_id'], array('options' => serialize($options)));
         die();

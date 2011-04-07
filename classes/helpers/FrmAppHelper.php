@@ -186,9 +186,8 @@ class FrmAppHelper{
 
         if ($form){
             $values['form_name'] = (isset($record->form_id))?($form->name):('');
-            $options = stripslashes_deep(unserialize($form->options));
-            if (is_array($options)){
-                foreach ($options as $opt => $value)
+            if (is_array($form->options)){
+                foreach ($form->options as $opt => $value)
                     $values[$opt] = FrmAppHelper::get_param($opt, $value);
             }
         }

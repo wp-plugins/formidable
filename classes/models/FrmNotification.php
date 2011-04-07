@@ -13,8 +13,7 @@ class FrmNotification{
         $form = $frm_form->getOne($entry->form_id);
         $values = $frm_entry_meta->getAll("it.item_id = $entry->id", " ORDER BY fi.field_order");
         
-        $form_options = unserialize($form->options);
-        $to_email = $form_options['email_to'];
+        $to_email = $form->options['email_to'];
         if ($to_email == '')
             $to_email = get_option('admin_email');
             
@@ -40,7 +39,7 @@ class FrmNotification{
                 $reply_to = $val;
         }
           
-        $data = unserialize($entry->description);  
+        $data = maybe_unserialize($entry->description);  
         $user_data = __('User Information', 'formidable') ."\r\n";
         $user_data .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
         $user_data .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";

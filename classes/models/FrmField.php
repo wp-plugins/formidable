@@ -37,7 +37,7 @@ class FrmField{
             $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
             $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $frmdb->fields, 'field_key');
-            $values['field_options'] = unserialize($field->field_options);
+            $values['field_options'] = maybe_unserialize($field->field_options);
             $values['form_id'] = $form_id;
             foreach (array('name', 'description', 'type', 'default_value', 'options', 'field_order', 'required') as $col)
                 $values[$col] = $field->{$col};

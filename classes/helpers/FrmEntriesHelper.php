@@ -30,7 +30,7 @@ class FrmEntriesHelper{
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
                     'type' => apply_filters('frm_field_type',$field->type, $field, $new_value),
-                    'options' => str_replace('"', '&quot;', stripslashes_deep(unserialize($field->options))),
+                    'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
                     'required' => $field->required,
                     'field_key' => $field->field_key,
                     'field_order' => $field->field_order,
@@ -48,10 +48,8 @@ class FrmEntriesHelper{
                  $form = $frm_form->getOne($field->form_id);
             }
 
-            $options = stripslashes_deep(unserialize($form->options));
-
-            if (is_array($options)){
-                foreach ($options as $opt => $value)
+            if (is_array($form->options)){
+                foreach ($form->options as $opt => $value)
                     $values[$opt] = FrmAppHelper::get_param($opt, $value);
             }
             
@@ -80,7 +78,7 @@ class FrmEntriesHelper{
     }
     
     function setup_edit_vars($values, $record){
-        //$values['description'] = unserialize( $record->description );
+        //$values['description'] = maybe_unserialize( $record->description );
         $values['item_key'] = ($_POST and isset($_POST['item_key']))?$_POST['item_key']:$record->item_key;
         $values['form_id'] = $record->form_id;
         return apply_filters('frm_setup_edit_entry_vars', $values, $record);

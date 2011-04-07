@@ -33,9 +33,9 @@ class FrmEntriesController{
             return $frm_settings->login_msg;
         }
             
-        $form_options = stripslashes_deep(maybe_unserialize($form->options));
-        if($form->logged_in and $user_ID and isset($form_options['logged_in_role']) and $form_options['logged_in_role'] != ''){
-            if(FrmAppHelper::user_has_permission($form_options['logged_in_role']))
+        $form->options = stripslashes_deep(maybe_unserialize($form->options));
+        if($form->logged_in and $user_ID and isset($form->options['logged_in_role']) and $form->options['logged_in_role'] != ''){
+            if(FrmAppHelper::user_has_permission($form->options['logged_in_role']))
                 return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);
             else{
                 global $frm_settings;

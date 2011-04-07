@@ -250,9 +250,8 @@ class FrmEntry{
         if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
             global $frm_form;
             $form = $frm_form->getOne($values['form_id']);
-            $form_options = stripslashes_deep(unserialize($form->options));
 
-            if (isset($form_options['akismet']) && $form_options['akismet'])
+            if (isset($form->options['akismet']) && $form->options['akismet'])
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
         
