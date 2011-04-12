@@ -49,10 +49,10 @@ class FrmAppController{
     
     function menu_css(){ ?>
     <style type="text/css">
-    #adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/icon_16_bw.png) no-repeat center;}
-    #adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/icon_16.png) no-repeat center;}
+    #adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/form_16.png) no-repeat center;}
     </style>    
     <?php    
+    //#adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL /icon_16.png) no-repeat center;}
     }
     
     function frm_nav($nav=array()){

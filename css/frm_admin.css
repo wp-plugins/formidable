@@ -25,7 +25,8 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 	box-sizing: border-box;
 }
 .frmcenter{text-align:center;}
-#wpbody-content .frmicon.icon32{background: url(../images/icon_32.png) no-repeat top center !important;}
+#wpbody-content .frmicon.icon32{background: url(../images/form_32.png) no-repeat top center !important;}
+#wpbody-content .frm_report_icon.icon32{background: url(../images/report_icon.png) no-repeat top center !important;}
 
 .frm_form_builder a:hover{text-decoration:underline;}
 
