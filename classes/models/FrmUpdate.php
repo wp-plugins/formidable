@@ -130,8 +130,8 @@ class FrmUpdate{
   function pro_cred_form(){ 
       global $frmpro_is_installed; ?>
 <div class="wrap">
-    <div id="icon-options-general" class="icon32"><br/></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Account Information', 'formidable')?></h2>      
+    <div id="icon-ms-admin" class="icon32"><br/></div>
+    <h2><?php echo FRM_PLUGIN_TITLE ?> <?php _e('Pro Account Information', 'formidable')?></h2>      
     <?php
     if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
       if($this->process_pro_cred_form()){

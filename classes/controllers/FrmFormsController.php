@@ -19,7 +19,7 @@ class FrmFormsController{
     
     function menu(){
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this, 'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Create a Form', 'formidable'), __('Create a Form', 'formidable'), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this, 'new_form'));
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Add New Form', 'formidable'), __('Add New Form', 'formidable'), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this, 'new_form'));
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
     }
     
@@ -296,12 +296,7 @@ class FrmFormsController{
             $sdir_str = 'desc';
         }
 
-        return array('order_by' => $order_by,
-                     'sort_str' => $sort_str, 
-                     'sdir_str' => $sdir_str, 
-                     'search_str' => $search_str, 
-                     'where_clause' => $where_clause, 
-                     'page_params' => $page_params);
+        return compact('order_by', 'sort_str', 'sdir_str', 'search_str', 'where_clause', 'page_params');
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){

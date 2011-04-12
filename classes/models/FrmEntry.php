@@ -15,13 +15,13 @@ class FrmEntry{
             $new_values['description'] = serialize(array('browser' => $_SERVER['HTTP_USER_AGENT'], 
                                                 'referrer' => $_SERVER['HTTP_REFERER']));
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
-        $new_values['created_at'] = current_time('mysql', 1);
+        $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
         
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
             
         if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
-            $new_values['user_id'] = $values['frm_user_id'];
+            $new_values['user_id'] = $new_values['updated_by'] = $values['frm_user_id'];
 
         //check for duplicate entries created in the last 5 minutes
         $check_val = $new_values;
@@ -76,7 +76,7 @@ class FrmEntry{
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         $new_values['name'] = $values->name;
-        $new_values['user_id'] = $values->user_id;
+        $new_values['user_id'] = $new_values['updated_by'] = $values->user_id;
         $new_values['form_id'] = ($values->form_id)?(int)$values->form_id: null;
         $new_values['created_at'] = current_time('mysql', 1);
 
@@ -90,24 +90,28 @@ class FrmEntry{
     }
 
     function update( $id, $values ){
-      global $wpdb, $frmdb, $frm_entry_meta, $frm_field;
-       
-      $new_values = array();
+        global $wpdb, $frmdb, $frm_entry_meta, $frm_field;
 
-      if (isset($values['item_key']))
-          $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key', $id);
+        $new_values = array();
 
-      $new_values['name'] = isset($values['name'])?$values['name']:'';
-      $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']: null;
-      if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
-          $new_values['user_id'] = $values['frm_user_id'];
+        if (isset($values['item_key']))
+            $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key', $id);
 
-      $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
-      
-      if (isset($values['item_meta']))
-          $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
-      do_action('frm_after_update_entry', $id);
-      return $query_results;
+        $new_values['name'] = isset($values['name'])?$values['name']:'';
+        $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']: null;
+        $new_values['updated_at'] = current_time('mysql', 1);
+        if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
+            $new_values['user_id'] = $values['frm_user_id'];
+
+        global $user_ID;
+        $new_values['updated_by'] = $user_ID;
+
+        $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
+
+        if (isset($values['item_meta']))
+            $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
+        do_action('frm_after_update_entry', $id);
+        return $query_results;
     }
 
     function destroy( $id ){

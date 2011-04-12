@@ -57,7 +57,7 @@ class FrmEntryMeta{
           return $wpdb->get_col($query, 0);
   }
   
-  function get_entry_meta($entry_id,$field_id,$return_var=true){
+  function get_entry_meta($entry_id, $field_id, $return_var=true){
       global $wpdb, $frmdb;
       $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id=%d and item_id=%d";
       $query = $wpdb->prepare($query_str, $field_id, $entry_id);

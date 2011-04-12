@@ -60,7 +60,7 @@ if (!defined ('IS_WPMU')){
 
 global $frm_version, $frm_db_version;
 $frm_version = '1.05.0';
-$frm_db_version = 6;
+$frm_db_version = 7;
 
 
 global $frm_ajax_url;

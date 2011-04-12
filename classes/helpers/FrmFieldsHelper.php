@@ -40,7 +40,6 @@ class FrmFieldsHelper{
             //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
             //'city_selector' => 'US State/County/City selector', 
             //'full_name' => 'First and Last Name', 
-            //'terms' => 'Terms of Use',// checkbox or show terms (integrate with Terms of use plugin)
             //'quiz' => 'Question and Answer' // for captcha alternative
         ));
     }
@@ -213,7 +212,7 @@ DEFAULT_HTML;
     	if(!function_exists('recaptcha_get_html'))
             require_once(FRM_PATH.'/classes/recaptchalib.php');
         ?>
-        <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $frm_settings->re_lang ?>'};</script>
+        <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field) ?>'<?php echo apply_filters('frm_recaptcha_custom', '', $field) ?>};</script>
         <?php echo recaptcha_get_html($frm_settings->pubkey, $error, is_ssl()) ?>
 <?php
     }

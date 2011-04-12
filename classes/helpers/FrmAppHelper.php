@@ -42,17 +42,17 @@ class FrmAppHelper{
         global $frmpro_is_installed;
         $cap = array(
             'frm_view_forms' => __('View Forms and Templates', 'formidable'),
-            'frm_edit_forms' => __('Create/Edit Forms and Templates', 'formidable'),
+            'frm_edit_forms' => __('Add/Edit Forms and Templates', 'formidable'),
             'frm_delete_forms' => __('Delete Forms and Templates', 'formidable'),
             'frm_change_settings' => __('Access this Settings Page', 'formidable')
         );
         if($frmpro_is_installed){
             $cap['frm_view_entries'] = __('View Entries from Admin Area', 'formidable');
-            $cap['frm_create_entries'] = __('Create Entries from Admin Area', 'formidable');
+            $cap['frm_create_entries'] = __('Add Entries from Admin Area', 'formidable');
             $cap['frm_edit_entries'] = __('Edit Entries from Admin Area', 'formidable');
             $cap['frm_delete_entries'] = __('Delete Entries from Admin Area', 'formidable');
             $cap['frm_view_reports'] = __('View Reports', 'formidable');
-            $cap['frm_edit_displays'] = __('Create/Edit Custom Displays', 'formidable');
+            $cap['frm_edit_displays'] = __('Add/Edit Custom Displays', 'formidable');
         }
         return $cap;
     }
@@ -150,18 +150,18 @@ class FrmAppHelper{
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
                   
                 $field_array = array(
-                            'id' => $field->id,
-                            'value' => str_replace('"', '&quot;', $new_value),
-                            'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
-                            'name' => stripslashes($field->name),
-                            'description' => stripslashes($field->description),
-                            'type' => apply_filters('frm_field_type',$field_type, $field, $new_value),
-                            'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
-                            'required' => $field->required,
-                            'field_key' => $field->field_key,
-                            'field_order' => $field->field_order,
-                            'form_id' => $field->form_id
-                            );
+                    'id' => $field->id,
+                    'value' => str_replace('"', '&quot;', $new_value),
+                    'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
+                    'name' => stripslashes($field->name),
+                    'description' => stripslashes($field->description),
+                    'type' => apply_filters('frm_field_type',$field_type, $field, $new_value),
+                    'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
+                    'required' => $field->required,
+                    'field_key' => $field->field_key,
+                    'field_order' => $field->field_order,
+                    'form_id' => $field->form_id
+                );
                 
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);

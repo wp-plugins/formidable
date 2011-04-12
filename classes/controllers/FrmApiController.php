@@ -29,8 +29,7 @@ class FrmApiController{
         global $frm_entry, $frm_form, $frm_entry_meta;
 
         $defaults = array(
-        	'form_key' => '',
-        	'order' => '', 'limit' => '',
+        	'form_key' => '', 'order' => '', 'limit' => '',
         	'search' =>'', 'search_type' => '',
         	'search_field' => '', 'search_operator' => 'LIKE'
         );

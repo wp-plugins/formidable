@@ -1,6 +1,10 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php echo ($params['template'])? __('Templates', 'formidable') : __('Forms', 'formidable'); ?></h2>
+    <h2><?php echo ($params['template'])? __('Form Templates', 'formidable') : __('Forms', 'formidable'); 
+        if(!$params['template'] and current_user_can('frm_edit_forms')){ ?>
+        <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+        <?php } ?>
+    </h2>
   
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
   
@@ -13,7 +17,7 @@
   <input type="hidden" name="action" value="list-form"/>
   <input type="hidden" name="template" value="<?php echo $params['template'] ?>" />   
 <?php $footer = false; require(FRM_VIEWS_PATH.'/shared/item-table-nav.php'); ?>
-<table class="widefat post fixed" cellspacing="0">
+<table class="widefat fixed" cellspacing="0">
     <thead>
     <tr>
         <th class="manage-column check-column" scope="col"> <?php do_action('frm_column_header'); ?> </th>

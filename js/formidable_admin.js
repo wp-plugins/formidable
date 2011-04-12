@@ -92,6 +92,13 @@ jQuery(".item-action-checkbox").removeAttr("checked");jQuery(".select-all-item-a
 }
 }
 
+function frmAddNewForm(form,action){
+	if(form !='') window.location='?page=formidable&action='+action+'&id='+form;
+}
+function frmRedirectToForm(form){
+	if(form !='') window.location='?page=formidable-entries&form='+form;
+}
+
 function add_frm_field_link(form_id, field_type, ajax_url){
 jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
 success:function(msg){jQuery('#new_fields').append(msg);}

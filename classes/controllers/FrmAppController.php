@@ -56,14 +56,10 @@ class FrmAppController{
     }
     
     function frm_nav($nav=array()){
-        if(current_user_can('frm_view_forms'))
+        if(current_user_can('frm_view_forms')){
             $nav[FRM_PLUGIN_NAME] = __('Forms', 'formidable');
-            
-        if(current_user_can('frm_edit_forms'))
-            $nav[FRM_PLUGIN_NAME . '-new'] = __('Create a Form', 'formidable');
-        
-        if(current_user_can('frm_view_forms'))
             $nav[FRM_PLUGIN_NAME . '-templates'] = __('Templates', 'formidable');
+        }
         return $nav;
     }
 

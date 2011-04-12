@@ -1,6 +1,6 @@
 <div class="wrap">
-    <div class="frmicon icon32"><br/></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Pro Entries', 'formidable') ?></h2>
+    <div id="icon-edit-pages" class="icon32"><br/></div>
+    <h2><?php _e('Pro Form Entries', 'formidable') ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 

@@ -1,6 +1,6 @@
 <div class="wrap">
     <div id="icon-options-general" class="icon32"><br/></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?>: <?php _e('Settings', 'formidable'); ?></h2>
+    <h2><?php _e('Form Settings', 'formidable'); ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 
