@@ -56,6 +56,9 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.05.01 = 
+* PRO: Fix custom display settings for posts
+
 = 1.05.0 =
 * Moved a form widget from Pro into the free version
 * Updated some templates with fields aligned in a row
