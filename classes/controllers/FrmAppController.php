@@ -195,7 +195,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             }
         }
 
-        if(!empty($frm_forms_loaded)) //load formidable js  
+        if(!is_admin() and $location != 'header' and !empty($frm_forms_loaded)) //load formidable js  
             echo '<script type="text/javascript" src="'. FRM_URL .'/js/formidable.js?ver='.$frm_version.'"></script>'."\n"; 
     }
   
