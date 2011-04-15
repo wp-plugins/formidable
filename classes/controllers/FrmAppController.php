@@ -99,7 +99,7 @@ class FrmAppController{
             global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 6)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 7)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
