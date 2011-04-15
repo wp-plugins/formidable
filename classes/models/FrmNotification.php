@@ -11,6 +11,7 @@ class FrmNotification{
         $frm_blogname = get_option('blogname');
         $entry = $frm_entry->getOne($entry_id);
         $form = $frm_form->getOne($entry->form_id);
+        $form->options = maybe_unserialize($form->options);
         $values = $frm_entry_meta->getAll("it.item_id = $entry->id", " ORDER BY fi.field_order");
         
         $to_email = $form->options['email_to'];

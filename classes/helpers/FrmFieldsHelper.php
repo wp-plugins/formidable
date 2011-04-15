@@ -72,6 +72,7 @@ class FrmFieldsHelper{
         global $frm_entry_meta, $frm_form;
         
         $values = array();
+        $record->field_options = maybe_unserialize($record->field_options);
         $values['id'] = $record->id;
         $values['form_id'] = $record->form_id;
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
@@ -109,8 +110,8 @@ class FrmFieldsHelper{
     function get_default_html($type='text'){
         if (apply_filters('frm_normal_field_type_html', true, $type)){
             $default_html = <<<DEFAULT_HTML
-<div id="frm_field_[id]_container" class="form-field [required_class] [error_class]">
-    <label class="frm_pos_[label_position]">[field_name]
+<div id="frm_field_[id]_container" class="form-field [required_class][error_class]">
+    <label class="frm_primary_label">[field_name]
         <span class="frm_required">[required_label]</span>
     </label>
     [input]
@@ -151,13 +152,15 @@ DEFAULT_HTML;
         $html = str_replace('[required_class]', $required_class, $html);  
         
         //replace [label_position]
-        $html = str_replace('[label_position]', $field['label'], $html);
+        $field['label'] = ($field['label'] and $field['label'] != '') ? $field['label'] : 'top';
+        $html = str_replace('[label_position]', (($field['type'] == 'divider') ? $field['label'] : ' frm_primary_label'), $html);
         
         //replace [field_name]
         $html = str_replace('[field_name]', $field['name'], $html);
             
         //replace [error_class] 
-        $error_class = isset($errors['field'. $field['id']]) ? ' frm_blank_field':''; 
+        $error_class = isset($errors['field'. $field['id']]) ? ' frm_blank_field' : '';
+        $error_class .= ' frm_'. $field['label'] .'_container' ;
         $html = str_replace('[error_class]', $error_class, $html);
         
         //replace [entry_key]

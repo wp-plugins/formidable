@@ -57,9 +57,10 @@ textarea.inplace_field{width:98% !important;}
 .with_frm_style .frm_full_rte textarea{width:98%; padding:0;}
 .frm_field_box{padding:5px;min-height:20px;}
 
-.frm_pos_top{display:block;}
-.frm_pos_left{float:left; width:150px;}
-.frm_pos_none, .form-wrap label.frm_pos_none{display:none;}
+.frm_top_container .frm_primary_label, .frm_pos_top{display:block;}
+.frm_left_container .frm_primary_label, .frm_pos_left{float:left; width:150px;}
+.frm_none_container .frm_primary_label, .frm_pos_none{display:none;}
+.frm_hidden_container .frm_primary_label, .frm_pos_hidden{visibility:hidden;}
 .frm_spacer{float:left; width:16px; height:16px;}
 .frm_charts object{background:transparent;}
 

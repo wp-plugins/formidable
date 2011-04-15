@@ -11,20 +11,21 @@ class FrmEntriesHelper{
         $values['fields'] = array();
         if ($fields){
             foreach($fields as $field){
-              $default = $field->default_value;
+                $field->field_options = maybe_unserialize($field->field_options);
+                $default = $field->default_value;
               
-              if ($reset)
-                  $new_value = $default;
-              else
-                  $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? $_POST['item_meta'][$field->id] : $default;
+                if ($reset)
+                    $new_value = $default;
+                else
+                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? $_POST['item_meta'][$field->id] : $default;
             
-              $new_value = stripslashes_deep(maybe_unserialize($new_value));
-              if (!is_array($new_value))
-                $new_value = apply_filters('frm_get_default_value', $new_value, $field);
+                $new_value = stripslashes_deep(maybe_unserialize($new_value));
+                if (!is_array($new_value))
+                    $new_value = apply_filters('frm_get_default_value', $new_value, $field);
                 
-              $new_value = str_replace('"', '&quot;', $new_value);
+                $new_value = str_replace('"', '&quot;', $new_value);
                 
-              $field_array = array('id' => $field->id,
+                $field_array = array('id' => $field->id,
                     'value' => $new_value,
                     'default_value' => str_replace('"', '&quot;', $field->default_value),
                     'name' => stripslashes($field->name),
@@ -36,18 +37,19 @@ class FrmEntriesHelper{
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id);
 
-              foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
-                  $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
+                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
+                    $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
                   
-              if ($field_array['custom_html'] == '')
-                  $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);
+                if ($field_array['custom_html'] == '')
+                    $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);
 
-             $values['fields'][] = apply_filters('frm_setup_new_fields_vars', stripslashes_deep($field_array), $field);
+                $values['fields'][] = apply_filters('frm_setup_new_fields_vars', stripslashes_deep($field_array), $field);
              
-             if (!$form or !isset($form->id))
-                 $form = $frm_form->getOne($field->form_id);
+                if (!$form or !isset($form->id))
+                    $form = $frm_form->getOne($field->form_id);
             }
 
+            $form->options = maybe_unserialize($form->options);
             if (is_array($form->options)){
                 foreach ($form->options as $opt => $value)
                     $values[$opt] = FrmAppHelper::get_param($opt, $value);

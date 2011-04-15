@@ -217,6 +217,7 @@ class FrmEntry{
         $posted_fields = $frm_field->getAll($where, ' ORDER BY fi.field_order');
 
         foreach($posted_fields as $posted_field){ 
+            $posted_field->field_options = maybe_unserialize($posted_field->field_options);
             $value = '';
             if (isset($values['item_meta'][$posted_field->id]))
                 $value = $values['item_meta'][$posted_field->id];
@@ -256,7 +257,8 @@ class FrmEntry{
         if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
             global $frm_form;
             $form = $frm_form->getOne($values['form_id']);
-
+            $form->options = maybe_unserialize($form->options);
+            
             if (isset($form->options['akismet']) && $form->options['akismet'])
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}

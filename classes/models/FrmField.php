@@ -16,7 +16,7 @@ class FrmField{
         $new_values['field_order'] = isset($values['field_order'])?(int)$values['field_order']:NULL;
         $new_values['required'] = isset($values['required'])?(int)$values['required']:NULL;
         $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']:NULL;
-        $new_values['field_options'] = serialize($values['field_options']);
+        $new_values['field_options'] = is_array($values['field_options']) ? serialize($values['field_options']) : $values['field_options'];
         $new_values['created_at'] = current_time('mysql', 1);
         
         //if(isset($values['id']) and is_numeric($values['id']))
@@ -42,6 +42,7 @@ class FrmField{
             foreach (array('name', 'description', 'type', 'default_value', 'options', 'field_order', 'required') as $col)
                 $values[$col] = $field->{$col};
             $this->create($values, false);
+            unset($field);
         }
     }
 
@@ -51,10 +52,12 @@ class FrmField{
         if (isset($values['field_key']))
             $values['field_key'] = FrmAppHelper::get_unique_key($values['field_key'], $frmdb->fields, 'field_key', $id);
 
-        if (isset($values['field_options']))
+        if (isset($values['field_options']) and is_array($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
 
         $query_results = $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
+        unset($values);
+        
         if($query_results){
             global $frm_loaded_fields;
             unset($frm_loaded_fields[$id]);
@@ -79,6 +82,7 @@ class FrmField{
         else
             $query = "SELECT * FROM $frmdb->fields WHERE field_key='$id'";
         $results = $wpdb->get_row($query);
+        
         if($results)
             $results->field_options = maybe_unserialize($results->field_options);
         return $results;

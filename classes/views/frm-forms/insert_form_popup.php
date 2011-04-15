@@ -44,7 +44,7 @@
         
 <?php if(isset($displays) and !empty($displays)){ ?>
     <div style="border-bottom:1px solid #DFDFDF;display:block;margin:20px 0;"></div>
-    <h3><?php _e("Select custom display settings to insert", "formidable"); ?></h3>
+    <h3><?php _e('Select custom display to insert', 'formidable'); ?></h3>
     
     <p>
         <select name="frm_add_display_id" id="frm_add_display_id" class="frm-dropdown">

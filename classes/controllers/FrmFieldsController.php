@@ -70,6 +70,7 @@ class FrmFieldsController{
     function clear_on_focus(){
         global $frm_field;
         $field = $frm_field->getOne($_POST['field']);
+        $field->field_options = maybe_unserialize($field->field_options);
         $field->field_options['clear_on_focus'] = $_POST['active'];
         $frm_field->update($_POST['field'], array('field_options' => $field->field_options));
         die();
@@ -78,6 +79,7 @@ class FrmFieldsController{
     function default_blank(){
         global $frm_field;
         $field = $frm_field->getOne($_POST['field']);
+        $field->field_options = maybe_unserialize($field->field_options);
         $field->field_options['default_blank'] = $_POST['active'];
         $frm_field->update($_POST['field'], array('field_options' => $field->field_options));
         die();
@@ -161,7 +163,7 @@ class FrmFieldsController{
         $field = $frm_field->getOne($_POST['field_id']);
         $options = maybe_unserialize($field->options);
         unset($options[$_POST['opt_key']]);
-        $frm_field->update($_POST['field_id'], array('options' => serialize($options)));
+        $frm_field->update($_POST['field_id'], array('options' => maybe_serialize($options)));
         die();
     }
     

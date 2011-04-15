@@ -132,8 +132,8 @@ class FrmAppHelper{
         
         if ($fields){
             foreach($fields as $field){
-                $field->field_options = stripslashes_deep($field->field_options);
-                
+                $field->field_options = stripslashes_deep(maybe_unserialize($field->field_options));
+
                 if ($default)
                     $meta_value = $field->default_value;
                 else{
@@ -174,8 +174,8 @@ class FrmAppHelper{
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
 
-               $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);
-               unset($field);   
+                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);
+                unset($field);   
             }
         }
       
@@ -185,6 +185,7 @@ class FrmAppHelper{
             $form = $frm_form->getOne( $record->id );
 
         if ($form){
+            $form->options = maybe_unserialize($form->options);
             $values['form_name'] = (isset($record->form_id))?($form->name):('');
             if (is_array($form->options)){
                 foreach ($form->options as $opt => $value)

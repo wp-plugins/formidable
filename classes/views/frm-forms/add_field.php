@@ -1,6 +1,6 @@
 <?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false, 'clear_on_focus' => false, 'default_blank' => true)); ?>
 
-<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?>" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
+<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_<?php echo $field['label']; ?>_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
     <a href="javascript:void(0);" class="alignright frm-show-hover frm-move" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move"></a>
     <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete"></a>
     <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="alignright frm-show-hover" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>"></a>
@@ -11,7 +11,7 @@
         <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')?('0'):('1'); ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0')?'':'not '; ?>Required"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></a>
     </span>
     <?php } ?>
-    <label class="frm_ipe_field_label frm_pos_<?php echo $field['label']; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
+    <label class="frm_ipe_field_label frm_primary_label" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
     
 <?php if ($display['type'] == 'text'){ ?>
     <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'.$field['size'] .'"' : ''; ?> /> 

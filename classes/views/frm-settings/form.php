@@ -26,9 +26,9 @@
                     
                     <p><?php _e('Load Formidable styling', 'formidable') ?>
                         <select id="frm_load_style" name="frm_load_style">
-                        <option value="all" <?php selected($frm_settings->load_style, 'all') ?>><?php _e('on every page of your site', 'formidable') ?> 
-                        <option value="dynamic" <?php selected($frm_settings->load_style, 'dynamic') ?>><?php _e('only on applicable pages', 'formidable') ?> 
-                        <option value="none" <?php selected($frm_settings->load_style, 'none') ?>><?php _e('Don\'t use Formidable styling on any page', 'formidable') ?> 
+                        <option value="all" <?php selected($frm_settings->load_style, 'all') ?>><?php _e('on every page of your site', 'formidable') ?></option>
+                        <option value="dynamic" <?php selected($frm_settings->load_style, 'dynamic') ?>><?php _e('only on applicable pages', 'formidable') ?></option>
+                        <option value="none" <?php selected($frm_settings->load_style, 'none') ?>><?php _e('Don\'t use Formidable styling on any page', 'formidable') ?></option>
                         </select>
                     </p>
                     
@@ -77,7 +77,7 @@
         			<?php } ?>
         			</select><br/>
             		
-    			    <label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('reCAPTCHA Language', 'formiable') ?>:</label>
+    			    <label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('reCAPTCHA Language', 'formidable') ?>:</label>
     				<select name="frm_re_lang" id="frm_re_lang">
     				    <?php foreach(array('en' => __('English', 'formidable'), 'nl' => __('Dutch', 'formidable'), 'fr' => __('French', 'formidable'), 'de' => __('German', 'formidable'), 'pt' => __('Portuguese', 'formidable'), 'ru' => __('Russian', 'formidable'), 'es' => __('Spanish', 'formidable'), 'tr' => __('Turkish', 'formidable')) as $lang => $lang_name){ ?>
         				<option value="<?php echo $lang ?>" <?php selected($frm_settings->re_lang, $lang) ?>><?php echo $lang_name ?></option>
@@ -138,7 +138,7 @@
             
         </table>
         
-        <p class="alignright frm_uninstall"><a href="<?php echo $frm_ajax_url ?>?action=frm_uninstall" onClick="return confirm('<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>')"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
+        <p class="alignright frm_uninstall"><a href="<?php echo $frm_ajax_url ?>?action=frm_uninstall" onclick="return confirm('<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>')"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">
         <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
         </p>

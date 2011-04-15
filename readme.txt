@@ -56,6 +56,14 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.05.02 =
+* Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
+* Prevent javascript from getting loaded twice
+* Updated stylesheets for better looking left aligned field labels. In the Pro version, setting the global labels to one location and setting a single field to another will keep the field description and error messages aligned.
+* PRO: Fixed issue causing form to be hidden on front-end edit if it was set not to show with the success message
+* PRO: Show the linked image instead of the url when a file is linked in a "just show it" data from entries field
+* PRO: Added functionality for ordering by post fields in a custom display
+
 = 1.05.01 = 
 * PRO: Fix custom display settings for posts
 

@@ -9,6 +9,12 @@
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
         <form method="post" >
+            <p>
+                <input type="submit" name="Submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <?php _e('or', 'formidable') ?>
+                <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
+            </p>
+            
             <input type="hidden" name="action" value="create" />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <?php wp_nonce_field('update-options'); ?>

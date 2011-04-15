@@ -24,7 +24,7 @@ $prt=frmFindParentObj($obj);if($prt.length !=0){$prt[0].checked=b;frmCheckParent
 }
 function frmFindParentObj($obj){return $obj.parent().parent().parent().prev().children("input");}
 
-function frmClearDefault(default_value,thefield){if(thefield.value==default_value)thefield.value='';thefield.style.fontStyle='inherit'}
+function frmClearDefault(default_value,thefield){if(thefield.value==default_value){thefield.value='';thefield.style.fontStyle='inherit';}}
 function frmReplaceDefault(default_value,thefield){if(thefield.value==''){thefield.value=default_value;thefield.style.fontStyle='italic';}}
 
 function frmCheckDependent(selected,type,field_id,opts,ajax_url){

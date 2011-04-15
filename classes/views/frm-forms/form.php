@@ -7,11 +7,13 @@
 </div>
 
 <ul id="new_fields">
-<?php 
+<?php
 if (isset($values['fields']) && !empty($values['fields'])){
     foreach($values['fields'] as $field){
         $field_name = "item_meta[". $field['id'] ."]";
         require('add_field.php');
+        unset($field);
+        unset($field_name);
     }
 } ?>
 </ul>
@@ -28,7 +30,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                 <table class="form-table">
                     <tr>
                         <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?>:</label> <a href="http://formidablepro.com/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
-                        <td>[formidable id=<?php echo $id; ?> title=true description=true]  or [formidable key=<?php echo $values['form_key']; ?>]</td>
+                        <td>[formidable id=<?php echo $id; ?> title=true description=true] or [formidable key=<?php echo $values['form_key']; ?>]</td>
                     </tr>
 
                     <tr>
@@ -97,8 +99,8 @@ if (isset($values['fields']) && !empty($values['fields'])){
 
 </div>
 <div id="frm_editable_html" style="display:none;">
-    <div class="alignleft" style="width:500px">
-        <p><label class="frm_pos_top"><?php _e('Before Fields', 'formidable') ?></label>
+    <div class="alignleft frm_top_container" style="width:500px">
+        <p><label class="frm_primary_label"><?php _e('Before Fields', 'formidable') ?></label>
         <textarea name="options[before_html]" rows="4" class="frm_long_input"><?php echo $values['before_html']?></textarea></p>
 
         <div id="add_html_fields">
@@ -106,7 +108,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
             if (isset($values['fields'])){
                 foreach($values['fields'] as $field){
                     if (apply_filters('frm_show_custom_html', true, $field['type'])){ ?>
-                        <p><label class="frm_pos_top"><?php echo $field['name'] ?></label>
+                        <p><label class="frm_primary_label"><?php echo $field['name'] ?></label>
                         <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" class="frm_long_input"><?php echo $field['custom_html'] ?></textarea></p>
                     <?php }
                     unset($field);
@@ -114,7 +116,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
             } ?>
         </div>
 
-        <p><label class="frm_pos_top"><?php _e('After Fields', 'formidable') ?></label>
+        <p><label class="frm_primary_label"><?php _e('After Fields', 'formidable') ?></label>
         <textarea name="options[after_html]" rows="3" style="width:100%"><?php echo $values['after_html']?></textarea></p> 
     </div>
     

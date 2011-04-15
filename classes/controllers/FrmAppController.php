@@ -13,7 +13,7 @@ class FrmAppController{
         add_action('admin_notices', array( &$this, 'pro_get_started_headline'));
         add_filter('the_content', array( &$this, 'page_route' ), 1);
         add_action('init', array(&$this, 'front_head'));
-        add_action('wp_footer', array(&$this, 'footer_js'), 1);
+        add_action('wp_footer', array(&$this, 'footer_js'), 1, 0);
         add_action('admin_init', array( &$this, 'admin_js'));
         register_activation_hook(FRM_PATH."/formidable.php", array( &$this, 'install' ));
         add_action('wp_ajax_frm_install', array(&$this, 'install') );
@@ -99,7 +99,7 @@ class FrmAppController{
             global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < (int)$frm_db_version or ($pro_db_version and (int)$pro_db_version < 5)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 6)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
@@ -195,7 +195,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             }
         }
 
-        if(!empty($frm_forms_loaded)) //load formidable js  
+        if(!is_admin() and $location != 'header' and !empty($frm_forms_loaded)) //load formidable js  
             echo '<script type="text/javascript" src="'. FRM_URL .'/js/formidable.js?ver='.$frm_version.'"></script>'."\n"; 
     }
   

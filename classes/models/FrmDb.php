@@ -149,7 +149,7 @@ DEFAULT_HTML;
                 $field->field_options = maybe_unserialize($field->field_options);
                 if(!isset($field->field_options['custom_html']) or empty($field->field_options['custom_html']) or (stripslashes($field->field_options['custom_html']) == $default_html) or (stripslashes($field->field_options['custom_html']) == $old_default_html)){
                     $field->field_options['custom_html'] = $new_default_html;
-                    $wpdb->update($this->fields, array('field_options' => serialize($field->field_options)), array( 'id' => $field->id ));
+                    $wpdb->update($this->fields, array('field_options' => maybe_serialize($field->field_options)), array( 'id' => $field->id ));
                 }
                 unset($field);
             }
@@ -161,7 +161,7 @@ DEFAULT_HTML;
 
       
         /***** SAVE DB VERSION *****/
-        update_option('frm_db_version',$frm_db_version);
+        update_option('frm_db_version', $frm_db_version);
         }
       
         do_action('frm_after_install');

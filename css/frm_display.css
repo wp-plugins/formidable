@@ -1,11 +1,10 @@
 .with_frm_style label{font-size:12px;float:none;text-align:left;margin:0;padding:0;width:auto;}
-.with_frm_style label.frm_pos, .with_frm_style label.frm_pos_, .with_frm_style label.frm_pos_top, .with_frm_style label.frm_pos_left, .with_frm_style label.frm_pos_right, .with_frm_style label.frm_pos_none{font-weight:bold;display:block;}
-.with_frm_style label.frm_pos_top, .with_frm_style label.frm_pos_{display:block;float:none;width:auto;}
-.with_frm_style label.frm_pos_top{display:block;}
-.with_frm_style label.frm_pos_left{float:left;padding-right:10px;width:150px;}
-.with_frm_style label.frm_pos_right{float:right;padding-left:10px;width:150px;}
-.with_frm_style label.frm_pos_none{display:none;}
-.with_frm_style label.frm_pos_hidden{display:hidden;}
+.with_frm_style label.frm_primary_label{font-weight:bold;display:block;}
+.with_frm_style .frm_top_container label.frm_primary_label{display:block;float:none;width:auto;}
+.with_frm_style .frm_left_container label.frm_primary_label{float:left;padding-right:10px;width:150px;}
+.with_frm_style .frm_right_container label.frm_primary_label{float:right;padding-left:10px;width:150px;}
+.with_frm_style .frm_none_container label.frm_primary_label{display:none;}
+.with_frm_style .frm_hidden_container label.frm_primary_label{display:hidden;}
 .with_frm_style .form-field{margin-top:15px;}
 .with_frm_style .frm_blank_field label, .with_frm_style .frm_error{color:#be2e17;}
 .with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .with_frm_style .frm_blank_field #recaptcha_area{border:1px solid #be2e17;}
@@ -14,6 +13,7 @@
 .with_frm_style fieldset{border:none;margin:0;padding:0;}
 .with_frm_style p.submit{padding-top:20px;padding-bottom:20px;}
 .with_frm_style p.description, .with_frm_style div.description, .with_frm_style .frm_error{margin:0;padding:0;font-size:11px;font-weight:normal;text-align:left;font-style:normal;}
+.with_frm_style .frm_left_container .description, .with_frm_style .frm_left_container .frm_error, .with_frm_style .frm_left_container .frm_description{margin-left:160px;}
 .with_frm_style .frm_error{font-weight:bold;}
 .with_frm_style .frm_form_fields input, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{font-size:13px;margin-bottom:0;}
 .with_frm_style .frm_form_fields input, #wpcontent .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{border-width:1px;border-style:solid;width:400px;font-size:13px;padding:2px;}
