@@ -61,6 +61,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added functionality for "Fit Select Boxes into SideBar" checkbox in widget in free version
 * PRO: Added "clickable" option for use in custom displays to make email addresses and URLs into links. ex `[25 clickable=1]`
 * PRO: Added option to select the taxonomy type
+* PRO: Updated form styling to work better in IE
+* PRO: Updated emails to work with Data from entries checkbox fields
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
