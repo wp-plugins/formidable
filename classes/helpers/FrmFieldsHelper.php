@@ -230,7 +230,24 @@ DEFAULT_HTML;
         $selected = is_array($field['value']) ? reset($field['value']) : $field['value'];
 
         $exclude = (is_array($field['exclude_cat'])) ? implode(',', $field['exclude_cat']) : $field['exclude_cat'];
-        return wp_dropdown_categories(array('show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name, 'id' => 'field_'. $field['field_key'], 'exclude' => $exclude, 'class' => $field['type'], 'selected' => $selected, 'hide_empty' => false, 'echo' => 0, 'orderby' => 'name'));
+        
+        $args = array(
+            'show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name,
+            'id' => 'field_'. $field['field_key'], 'exclude' => $exclude,
+            'class' => $field['type'], 'selected' => $selected, 
+            'hide_empty' => false, 'echo' => 0, 'orderby' => 'name' 
+        );
+        
+        if(class_exists('FrmProForm')){
+            $post_type = FrmProForm::post_type($field['form_id']);
+            if($post_type != 'post' and $post_type != 'page' and function_exists('get_object_taxonomies')){
+                $args['taxonomy'] = FrmProAppHelper::get_custom_taxonomy($post_type, $field);
+                if(!$args['taxonomy'])
+                    return;
+            }
+        }
+        
+        return wp_dropdown_categories($args);
     }
     
     function show_onfocus_js($field_id, $clear_on_focus){ 

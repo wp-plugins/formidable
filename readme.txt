@@ -56,6 +56,12 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.05.03 =
+* Updated user role options to work more reliably with WP 3.1
+* Added functionality for "Fit Select Boxes into SideBar" checkbox in widget in free version
+* PRO: Added "clickable" option for use in custom displays to make email addresses and URLs into links. ex `[25 clickable=1]`
+* PRO: Added option to select the taxonomy type
+
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
 * Prevent javascript from getting loaded twice

@@ -49,7 +49,7 @@ class FrmSettings{
         $this->preview_page_id_str = 'frm-preview-page-id';
         
         if(!isset($this->lock_keys))
-            $this->lock_keys = true;
+            $this->lock_keys = false;
           
         if(!isset($this->pubkey)){
             if(IS_WPMU)

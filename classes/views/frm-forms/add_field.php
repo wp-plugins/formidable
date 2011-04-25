@@ -129,7 +129,7 @@ if ($display['options']){ ?>
                         <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" class="frm_long_input" /></td>
                     </tr>
                     <?php } ?>
-                    <?php do_action('frm_field_options_form', $field, $display); ?>
+                    <?php do_action('frm_field_options_form', $field, $display, $values); ?>
                     </table>
                 </div>
             </div>

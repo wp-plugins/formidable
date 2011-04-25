@@ -58,15 +58,17 @@ class FrmAppHelper{
     }
     
     function user_has_permission($needed_role){
-        if ($needed_role == '' or 
-            ($needed_role == 'administrator' and current_user_can('administrator')) or 
-            ($needed_role == 'subscriber' and current_user_can('level_0')) or
-            ($needed_role == 'contributer' and current_user_can('level_1')) or
-            ($needed_role == 'author' and (current_user_can('author') or current_user_can('editor') or current_user_can('administrator'))) or
-            ($needed_role == 'editor' and (current_user_can('editor') or current_user_can('administrator'))) )
+        if($needed_role == '' or current_user_can($needed_role))
             return true;
-        else
-            return false;
+            
+        $roles = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber' );
+        foreach ($roles as $role){
+        	if (current_user_can($role))
+        		return true;
+        	if ($role == $needed_role)
+        		break;
+        }
+        return false;
     }
 
     function value_is_checked_with_array($field_name, $index, $field_value){
@@ -138,7 +140,7 @@ class FrmAppHelper{
                     $meta_value = $field->default_value;
                 else{
                     if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field->field_options['post_field']) and $field->field_options['post_field']){
-                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field->field_options['post_field'], $field->field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id));
+                        $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field->field_options['post_field'], $field->field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id, 'field' => $field));
                     }else if(isset($record->metas))
                         $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
                     else

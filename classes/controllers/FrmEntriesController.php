@@ -25,19 +25,19 @@ class FrmEntriesController{
         global $frm_form, $user_ID;
         if ($id) $form = $frm_form->getOne($id);
         else if ($key) $form = $frm_form->getOne($key);
-        
-        if (!$form or $form->is_template or $form->status == 'draft')
+
+        if (!$form or $form->is_template or $form->status == 'draft'){
             return __('Please select a valid form', 'formidable');
-        else if ($form->logged_in and !$user_ID){
+        }else if ($form->logged_in and !$user_ID){
             global $frm_settings;
             return $frm_settings->login_msg;
         }
-            
+
         $form->options = stripslashes_deep(maybe_unserialize($form->options));
         if($form->logged_in and $user_ID and isset($form->options['logged_in_role']) and $form->options['logged_in_role'] != ''){
-            if(FrmAppHelper::user_has_permission($form->options['logged_in_role']))
+            if(FrmAppHelper::user_has_permission($form->options['logged_in_role'])){
                 return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);
-            else{
+            }else{
                 global $frm_settings;
                 return $frm_settings->login_msg;
             }

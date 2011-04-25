@@ -4,8 +4,6 @@
  */
  
 class FrmApiController{
-    function FrmApiController(){
-    }
     
     /********* DISPLAY DATA *************/
     function frm_filter_content($args){

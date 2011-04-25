@@ -18,7 +18,8 @@
 .with_frm_style .frm_form_fields input, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{font-size:13px;margin-bottom:0;}
 .with_frm_style .frm_form_fields input, #wpcontent .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{border-width:1px;border-style:solid;width:400px;font-size:13px;padding:2px;}
 .with_frm_style .frm_form_fields input.auto_width, .with_frm_style .frm_form_fields select.auto_width, .with_frm_style .frm_form_fields textarea.auto_width{width:auto;}
+.frm_set_select .with_frm_style select, .frm_set_select .with_frm_style select.auto_width{width:100%;}
 .with_frm_style .frm_radio label, .with_frm_style .frm_checkbox label{display:inline;}
 .with_frm_style .frm_radio input[type="radio"], .with_frm_style .frm_checkbox input[type="checkbox"]{margin-right:5px;width:auto;}
 .with_frm_style input[type="radio"], .with_frm_style input[type="checkbox"]{width:auto;}
-.with_frm_style .frm_message{font-size:14px;margin:5px 0 15px;padding:5px 10px;background-color:#FFFFE0;border:1px solid #E6DB55;color:#444444;}
+.with_frm_style .frm_message, .with_frm_style .frm_message p{font-size:14px;margin:5px 0 15px;padding:5px 10px;background-color:#FFFFE0;border:1px solid #E6DB55;color:#444444;}
