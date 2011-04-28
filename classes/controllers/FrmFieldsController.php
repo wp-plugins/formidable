@@ -26,6 +26,9 @@ class FrmFieldsController{
         global $frm_field, $frm_ajax_url;
         $field_data = $_POST['field'];
         $form_id = $_POST['form_id'];
+        $values = array();
+        if(class_exists('FrmProForm'))
+            $values['post_type'] = FrmProForm::post_type($form_id);
         
         $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars($field_data, $form_id));
         

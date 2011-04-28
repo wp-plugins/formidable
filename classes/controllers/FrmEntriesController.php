@@ -18,7 +18,7 @@ class FrmEntriesController{
     }
     
     function list_entries(){
-        require_once(FRM_VIEWS_PATH.'/frm-entries/list.php');
+        require(FRM_VIEWS_PATH.'/frm-entries/list.php');
     }
     
     function show_form($id='', $key='', $title=false, $description=false){

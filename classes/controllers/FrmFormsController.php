@@ -53,10 +53,10 @@ class FrmFormsController{
             $frm_field_selection = FrmFieldsHelper::field_selection();  
             $values = FrmFormsHelper::setup_new_vars();
             $id = $frm_form->create( $values );
-            require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
+            require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $all_templates = $frm_form->getAll('is_template=1', ' ORDER BY name');
-            require_once(FRM_VIEWS_PATH.'/frm-forms/new-selection.php');
+            require(FRM_VIEWS_PATH.'/frm-forms/new-selection.php');
         }
     }
     
@@ -70,7 +70,7 @@ class FrmFormsController{
             $record = $frm_form->getOne( $id );
             $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
             $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
-            require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
+            require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $record = $frm_form->update( $id, $_POST, true );
             $message = __('Form was Successfully Created', 'formidable');
@@ -154,7 +154,7 @@ class FrmFormsController{
         $description = $title = true;
         $custom_style = (isset($form->options['custom_style'])) ? $form->options['custom_style'] : ($frm_settings->load_style != 'none');
         
-        require_once(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
+        require(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
     }
     
     function destroy(){
@@ -199,7 +199,7 @@ class FrmFormsController{
                 global $frmpro_display;
                 $displays = $frmpro_display->getAll();
             }
-            require_once(FRM_VIEWS_PATH.'/frm-forms/insert_form_popup.php');   
+            require(FRM_VIEWS_PATH.'/frm-forms/insert_form_popup.php');   
         }
     }
 
@@ -242,7 +242,7 @@ class FrmFormsController{
         $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
         $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
         $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
-        require_once(FRM_VIEWS_PATH.'/frm-forms/list.php');
+        require(FRM_VIEWS_PATH.'/frm-forms/list.php');
     }
     
     function get_form_sort_vars($params,$where_clause = ''){
@@ -308,9 +308,9 @@ class FrmFormsController{
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
         else if($create_link)
-            require_once(FRM_VIEWS_PATH.'/frm-forms/new.php');
+            require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         else
-            require_once(FRM_VIEWS_PATH.'/frm-forms/edit.php');
+            require(FRM_VIEWS_PATH.'/frm-forms/edit.php');
     }
     
     function get_params(){

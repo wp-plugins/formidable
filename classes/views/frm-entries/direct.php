@@ -7,7 +7,7 @@
     <?php wp_head() ?>
 </head>
 <body>
-    <?php require_once('frm-entry.php'); ?>
+    <?php require('frm-entry.php'); ?>
     <?php wp_footer(); ?>
 </body>
 </html>

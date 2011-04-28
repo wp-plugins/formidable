@@ -15,7 +15,7 @@ class FrmStatisticsController{
     }
     
     function list_entries(){
-        require_once(FRM_VIEWS_PATH . '/frm-statistics/list.php');
+        require(FRM_VIEWS_PATH . '/frm-statistics/list.php');
     }
 
 }

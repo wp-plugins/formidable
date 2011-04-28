@@ -29,7 +29,7 @@ class FrmSettingsController{
       $uploads = wp_upload_dir();
       $target_path = $uploads['basedir'] . "/formidable/css";
       
-      require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
+      require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 
     function process_form(){
@@ -44,7 +44,7 @@ class FrmSettingsController{
         $message = __('Settings Saved', 'formidable');
       }
       $frm_roles = FrmAppHelper::frm_capabilities();
-      require_once(FRM_VIEWS_PATH . '/frm-settings/form.php');
+      require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
     
     function route(){

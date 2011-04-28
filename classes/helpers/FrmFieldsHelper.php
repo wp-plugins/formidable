@@ -240,7 +240,7 @@ DEFAULT_HTML;
         
         if(class_exists('FrmProForm')){
             $post_type = FrmProForm::post_type($field['form_id']);
-            if($post_type != 'post' and $post_type != 'page' and function_exists('get_object_taxonomies')){
+            if(function_exists('get_object_taxonomies')){
                 $args['taxonomy'] = FrmProAppHelper::get_custom_taxonomy($post_type, $field);
                 if(!$args['taxonomy'])
                     return;

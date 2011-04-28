@@ -1,6 +1,6 @@
 === Formidable Forms ===
 Contributors: sswells
-Donate link: http://blog.strategy11.com/donate
+Donate link: http://strategy11.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
 Requires at least: 2.8
 Tested up to: 3.1.1
@@ -63,6 +63,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added option to select the taxonomy type
 * PRO: Updated form styling to work better in IE
 * PRO: Updated emails to work with Data from entries checkbox fields
+* PRO: Updated dependent Data from entries fields to work with checkboxes
+* PRO: Adjusted [date] and [time] values to adjust for WordPress timezone settings
+* PRO: Updated the way conditionally hidden fields save in the admin to prevent lingering dependencies
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
