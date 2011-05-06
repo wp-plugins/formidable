@@ -54,5 +54,5 @@ if($frm_div){
 </div>
 <?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
 <script type="text/javascript">
-<?php do_action('frm_entries_footer_scripts',$values['fields'], $form); ?>
+<?php do_action('frm_entries_footer_scripts', $values['fields'], $form); ?>
 </script>

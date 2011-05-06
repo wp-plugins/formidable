@@ -9,11 +9,15 @@ class FrmEntry{
         $new_values['name'] = isset($values['name']) ? $values['name'] : $values['item_key'];
         $new_values['ip'] = $_SERVER['REMOTE_ADDR'];
         
-        if(isset($values['description']) and !empty($values['description']))
+        if(isset($values['description']) and !empty($values['description'])){
             $new_values['description'] = $values['description'];
-        else
+        }else{
+            $referrerinfo = FrmAppHelper::get_referer_info();
+        	
             $new_values['description'] = serialize(array('browser' => $_SERVER['HTTP_USER_AGENT'], 
-                                                'referrer' => $_SERVER['HTTP_REFERER']));
+                                                        'referrer' => $referrerinfo));
+        }
+        
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
         $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
         
@@ -83,7 +87,7 @@ class FrmEntry{
         $query_results = $wpdb->insert( $frmdb->entries, $new_values );
         if($query_results){
             $entry_id = $wpdb->insert_id;
-            $frm_entry_meta->duplicate_entry_metas($id);
+            $frm_entry_meta->duplicate_entry_metas($id, $entry_id);
             return $entry_id;
         }else
             return false;
@@ -98,7 +102,7 @@ class FrmEntry{
             $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key', $id);
 
         $new_values['name'] = isset($values['name'])?$values['name']:'';
-        $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']: null;
+        $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id'] : null;
         $new_values['updated_at'] = current_time('mysql', 1);
         if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
             $new_values['user_id'] = $values['frm_user_id'];
@@ -110,7 +114,7 @@ class FrmEntry{
 
         if (isset($values['item_meta']))
             $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
-        do_action('frm_after_update_entry', $id);
+        do_action('frm_after_update_entry', $id, $new_values['form_id']);
         return $query_results;
     }
 
@@ -205,7 +209,7 @@ class FrmEntry{
       return $results;
     }
 
-    function validate( $values ){
+    function validate( $values, $exclude=false ){
         global $wpdb, $frmdb, $frm_field, $frm_entry_meta;
 
         $errors = array();
@@ -214,6 +218,9 @@ class FrmEntry{
             $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         
         $where = apply_filters('frm_posted_field_ids', 'fi.form_id='.$values['form_id']);
+        if($exclude)
+            $where .= " and fi.type not in ('". implode("','", $exclude) ."')";
+            
         $posted_fields = $frm_field->getAll($where, ' ORDER BY fi.field_order');
 
         foreach($posted_fields as $posted_field){ 
@@ -225,10 +232,14 @@ class FrmEntry{
             if (isset($posted_field->field_options['default_blank']) and $posted_field->field_options['default_blank'] and $value == $posted_field->default_value)
                 $_POST['item_meta'][$posted_field->id] = $value = '';            
                   
+            if($posted_field->type == 'rte' and (trim($value) == '<br>'))
+                $value = '';
+            
             if ($posted_field->required == '1' and $value == ''){
                 $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? (__('This field cannot be blank', 'formidable')) : $posted_field->field_options['blank'];  
-            }else if ($posted_field->type == 'text' and !isset($_POST['name']))
+            }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;
+            }
                 
             if ($posted_field->type == 'captcha' and isset($_POST['recaptcha_challenge_field'])){
                 global $frm_settings;

@@ -205,7 +205,7 @@ DEFAULT_HTML;
             //replace [form_name]
             $html = str_replace('[form_name]', $form['name'], $html);
         }
-        
+        $html .= "\n";
         return apply_filters('frm_replace_shortcodes', $html, $field);
     }
     

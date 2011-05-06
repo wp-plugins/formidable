@@ -78,6 +78,7 @@ jQuery('.frm-grid').find('input').live('keydown',function(e){
 	}
 }); */
 });
+function frm_remove_tag(html_tag){jQuery(html_tag).remove();}
 
 function frm_show_div(div,value,show_if,class_id){
 if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div).fadeOut('slow');
@@ -95,8 +96,8 @@ jQuery(".item-action-checkbox").removeAttr("checked");jQuery(".select-all-item-a
 function frmAddNewForm(form,action){
 	if(form !='') window.location='?page=formidable&action='+action+'&id='+form;
 }
-function frmRedirectToForm(form){
-	if(form !='') window.location='?page=formidable-entries&form='+form;
+function frmRedirectToForm(form,action){
+	if(form !='') window.location='?page=formidable-entries&action='+action+'&form='+form;
 }
 
 function add_frm_field_link(form_id, field_type, ajax_url){

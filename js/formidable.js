@@ -1,4 +1,6 @@
-jQuery(document).ready(function($){
+jQuery(document).ready(function($){	
+$('.frm-show-form').submit(function(e){e.preventDefault();frmValidateForm(this);});
+
 $('.frm_toggle_container').hide();
 $('.frm_trigger').toggle(function(){ 
 	$(this).addClass("active"), $(this).children('.ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
@@ -43,45 +45,31 @@ for(i=0; i<len; i++){
         if(show_field==false){jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow');}
     }else if(type=='data-radio'){        
         var entry_id=jQuery("input[name='item_meta["+field_id+"]']:checked").val();
-        if(entry_id==''){jQuery('#frm_field_'+field_data[0]+'_container').html('');}
-        else{jQuery.ajax({type:"POST",url:ajax_url,data:"controller=fields&action=ajax_get_data&entry_id="+entry_id+"&field_id="+field_data[1],
-			success:function(html){jQuery('#frm_field_'+field_data[0]+'_container').html(html);}});
-        }
+        if(entry_id==''){
+			jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow');
+			jQuery('#frm_field_'+field_data[0]+'_container').html('');
+		}else{frmGetData(field_data,entry_id,ajax_url,0);}
     }else if(type=='data-checkbox'){
 		if(field_data[2]=='undefined' || field_data[2]=='' || field_data[2]=='data'){
 	        var replace_it=false;
-	        jQuery("input[name='item_meta["+field_id+"][]']:checked").each(function(){
-	        if(selected!=''){jQuery.ajax({type:"POST",url:ajax_url,data:"controller=fields&action=ajax_get_data&entry_id="+selected+"&field_id="+field_data[1],
-				success:function(html){jQuery('#frm_data_field_'+field_data[0]+'_container').append(html);replace_it=true;}});
-	        }
-	        });
-	        if(replace_it!=true) jQuery('#frm_data_field_'+field_data[0]+'_container').html('');
+	        if(selected!=''){replace_it=frmGetData(field_data,selected,ajax_url,1);}
+	        if(replace_it!=true){
+				jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow');
+				jQuery('#frm_data_field_'+field_data[0]+'_container').html('');
+			}
 		}else{
 			var checked_vals=new Array();
 			jQuery("input[name='item_meta["+field_id+"][]']:checked").each(function(){checked_vals.push(jQuery(this).val());});
 	        if(checked_vals.length==0){jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow');}
-			else{jQuery.ajax({type:"POST",url:ajax_url,
-				data:"controller=fields&action=ajax_data_options&hide_field="+field_id+"&entry_id="+checked_vals+"&selected_field_id="+field_data[1]+"&field_id="+field_data[0],
-				success:function(html){
-					jQuery('#frm_field_'+field_data[0]+'_container').fadeIn('slow'); 
-					jQuery('#frm_data_field_'+field_data[0]+'_container').html(html);
-				}
-				});
-	        }
+			else{frmGetDataOpts(field_data,checked_vals,ajax_url,field_id);}
         }
     }else if(type=='data-select' && typeof field_data[2]!='undefined'){
 		if(field_data[2]=='' || field_data[2]=='data'){
             if(selected==''){jQuery('#frm_data_field_'+field_data[0]+'_container').html('');}
-            else{jQuery.ajax({type:"POST",url:ajax_url,data:"controller=fields&action=ajax_get_data&entry_id="+selected+"&field_id="+field_data[1],
-				success:function(html){jQuery('#frm_data_field_'+field_data[0]+'_container').html(html);}});}
+            else{frmGetData(field_data,selected,ajax_url,0);}
         }else{
             if(selected==''){jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow');}
-            else{jQuery.ajax({type:"POST",url:ajax_url,data:"controller=fields&action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+field_data[1]+"&field_id="+field_data[0],
-				success:function(html){
-					jQuery('#frm_field_'+field_data[0]+'_container').fadeIn('slow'); 
-					jQuery('#frm_data_field_'+field_data[0]+'_container').html(html);
-				}});
-			};
+            else{frmGetDataOpts(field_data,selected,ajax_url,field_id);}
         }
     }else{
         if(selected==field_data[1]) jQuery('#frm_field_'+field_data[0]+'_container').fadeIn('slow');
@@ -89,4 +77,57 @@ for(i=0; i<len; i++){
     }
   })(i);
 }
+}
+
+function frmGetData(field_data,selected,ajax_url,append){
+	jQuery.ajax({
+		type:"POST",url:ajax_url,
+		data:"controller=fields&action=ajax_get_data&entry_id="+selected+"&field_id="+field_data[1],
+		success:function(html){
+			if(html != '') jQuery('#frm_field_'+field_data[0]+'_container').fadeIn('slow'); 
+			
+			if(append){jQuery('#frm_data_field_'+field_data[0]+'_container').append(html);}
+			else{
+				jQuery('#frm_data_field_'+field_data[0]+'_container').html(html);
+				if(html == '') jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow');
+			}
+			return true;
+		}
+	});
+}
+
+function frmGetDataOpts(field_data,selected,ajax_url,field_id){
+	jQuery.ajax({
+		type:"POST",url:ajax_url,
+		data:"controller=fields&action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+field_data[1]+"&field_id="+field_data[0],
+		success:function(html){
+			if(html != '') jQuery('#frm_field_'+field_data[0]+'_container').fadeIn('slow'); 
+			else jQuery('#frm_field_'+field_data[0]+'_container').fadeOut('slow'); 
+			jQuery('#frm_data_field_'+field_data[0]+'_container').html(html);
+		}
+	});
+}
+
+function frmGetFormErrors(object,ajax_url){
+	jQuery.ajax({
+		type:"POST",url:ajax_url,
+	    data:jQuery(object).serialize()+"&controller=entries",
+	    success:function(err){
+	    	if(err==''){
+	            if(jQuery("#frm_loading")){ 
+	                window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);
+	            }
+	            object.submit();
+	        }else{
+	            //show errors
+	            jQuery('.form-field').removeClass('frm_blank_field');
+	            jQuery('.form-field .frm_error').replaceWith('');
+	            var errObj = JSON.parse(err);
+	            for (var key in errObj){
+				    jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>').addClass('frm_blank_field');
+				}
+	        }
+	    },
+		error:function(html){object.submit();}
+	});
 }

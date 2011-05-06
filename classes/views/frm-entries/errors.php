@@ -1,8 +1,9 @@
 <?php global $frm_settings; 
 if (isset($message) && $message != ''){ 
-    if(is_admin()){ ?><div id="message" class="updated fade" style="padding:5px;"><?php } 
-    echo $message; 
-    if(is_admin()){ ?></div><?php } 
+    if(is_admin()){ ?><div id="message" class="updated fade" style="padding:5px;"><?php echo $message ?></div><?php 
+    }else{ 
+        echo $message; 
+    }
 } 
 
 if( isset($errors) && is_array($errors) && !empty($errors) ){

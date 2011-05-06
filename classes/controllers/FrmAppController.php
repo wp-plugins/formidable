@@ -15,12 +15,14 @@ class FrmAppController{
         add_action('init', array(&$this, 'front_head'));
         add_action('wp_footer', array(&$this, 'footer_js'), 1, 0);
         add_action('admin_init', array( &$this, 'admin_js'));
-        register_activation_hook(FRM_PATH."/formidable.php", array( &$this, 'install' ));
+        register_activation_hook(FRM_PATH.'/formidable.php', array( &$this, 'install' ));
         add_action('wp_ajax_frm_install', array(&$this, 'install') );
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
 
         // Used to process standalone requests
         add_action('init', array(&$this, 'parse_standalone_request'));
+        // Update the session data
+        add_action('init', array(&$this, 'referer_session'), 99);
         
         //Shortcodes
         add_shortcode('formidable', array(&$this, 'get_form_shortcode'));
@@ -99,7 +101,7 @@ class FrmAppController{
             global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 7)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 8)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
@@ -226,6 +228,29 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }
 
         return $content;
+    }
+    
+    function referer_session() {
+    	global $frm_siteurl;
+    	
+    	if ( !isset($_SESSION) )
+    		session_start();
+    	
+    	if ( !isset($_SESSION['frm_http_pages']) or !is_array($_SESSION['frm_http_pages']) )
+    		$_SESSION['frm_http_pages'] = array();
+    	
+    	if ( !isset($_SESSION['frm_http_referer']) or !is_array($_SESSION['frm_http_referer']) )
+    		$_SESSION['frm_http_referer'] = array();
+    	
+    	if (!isset($_SERVER['HTTP_REFERER']) or (isset($_SERVER['HTTP_REFERER']) and (strpos($_SERVER['HTTP_REFERER'], $frm_siteurl) === false) and ! (in_array($_SERVER['HTTP_REFERER'], $_SESSION['frm_http_referer'])) )) {
+    		if (! isset($_SERVER['HTTP_REFERER']))
+    			$_SESSION['frm_http_referer'][] = "Type-in or bookmark";
+    		else
+    			$_SESSION['frm_http_referer'][] = $_SERVER['HTTP_REFERER'];	
+    	}
+    	
+    	if (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'])
+    		$_SESSION['frm_http_pages'][] = "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'];	
     }
 
     // The tight way to process standalone requests dogg...

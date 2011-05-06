@@ -18,13 +18,20 @@ class FrmEntriesHelper{
                     $new_value = $default;
                 else
                     $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? $_POST['item_meta'][$field->id] : $default;
-            
+                
+                if($new_value == $default)
+                    $is_default = true;
+                    
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
                 if (!is_array($new_value))
                     $new_value = apply_filters('frm_get_default_value', $new_value, $field);
                 
                 $new_value = str_replace('"', '&quot;', $new_value);
-                
+                if(isset($is_default) and $is_default)
+                    $field->default_value = $new_value;
+                else
+                    $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
+                    
                 $field_array = array('id' => $field->id,
                     'value' => $new_value,
                     'default_value' => str_replace('"', '&quot;', $field->default_value),

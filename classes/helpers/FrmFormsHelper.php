@@ -25,8 +25,9 @@ class FrmFormsHelper{
         global $frm_form;
         if (!$field_id)
             $field_id = $field_name;
-            
-        $forms = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')", ' ORDER BY name');
+        
+        $where = apply_filters('frm_forms_dropdown', "is_template=0 AND (status is NULL OR status = '' OR status = 'published')", $field_name);
+        $forms = $frm_form->getAll($where, ' ORDER BY name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>

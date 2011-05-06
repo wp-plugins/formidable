@@ -44,7 +44,7 @@ class FrmNotification{
         $user_data = __('User Information', 'formidable') ."\r\n";
         $user_data .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
         $user_data .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
-        $user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
+        //$user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
 
         $mail_body = $opener . $entry_data ."\r\n". $user_data;
         $subject = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, $frm_blogname); //subject

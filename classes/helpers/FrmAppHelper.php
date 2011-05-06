@@ -87,13 +87,13 @@ class FrmAppHelper{
         return false;
     }
     
-    function get_unique_key($name='', $table_name, $column, $id = 0,$num_chars = 6){
+    function get_unique_key($name='', $table_name, $column, $id = 0, $num_chars = 6){
         global $wpdb;
 
         if ($name == ''){
-            $max_slug_value = pow(36,$num_chars);
+            $max_slug_value = pow(36, $num_chars);
             $min_slug_value = 37; // we want to have at least 2 characters in the slug
-            $key = base_convert( rand($min_slug_value,$max_slug_value), 10, 36 );
+            $key = base_convert( rand($min_slug_value, $max_slug_value), 10, 36 );
         }else{
             if(function_exists('sanitize_key'))
                 $key = sanitize_key($name);
@@ -291,6 +291,58 @@ class FrmAppHelper{
         $results = $wpdb->get_results($query);
         return $results;
     }
+    
+    function get_referer_query($query) {
+    	if (strpos($query, "google.")) {
+    		$pattern = '/^.*\/search.*[\?&]q=(.*)$/';
+    	} else if (strpos($query, "bing.com")) {
+    		$pattern = '/^.*q=(.*)$/';
+    	} else if (strpos($query, "yahoo.")) {
+    		$pattern = '/^.*[\?&]p=(.*)$/';
+    	} else if (strpos($query, "ask.")) {
+    		$pattern = '/^.*[\?&]q=(.*)$/';
+    	} else {
+    		return false;
+    	}
+    	preg_match($pattern, $query, $matches);
+    	$querystr = substr($matches[1], 0, strpos($matches[1], '&'));
+    	return urldecode($querystr);
+    }
+    
+    function get_referer_info(){
+        $referrerinfo = '';
+    	$keywords = array();
+    	$i = 1;
+    	if(isset($_SESSION) and isset($_SESSION['frm_http_referer']) and $_SESSION['frm_http_referer']){
+        	foreach ($_SESSION['frm_http_referer'] as $referer) {
+        		$referrerinfo .= str_pad("Referer $i: ",20) . $referer. "\r\n";
+        		$keywords_used = FrmAppHelper::get_referer_query($referer);
+        		if ($keywords_used)
+        			$keywords[] = $keywords_used;
+
+        		$i++;
+        	}
+	    }
+    	$referrerinfo .= "\r\n";
+
+    	$i = 1;
+    	if(isset($_SESSION) and isset($_SESSION['frm_http_pages']) and $_SESSION['frm_http_pages']){
+        	foreach ($_SESSION['frm_http_pages'] as $page) {
+        		$referrerinfo .= str_pad("Page visited $i: ",20) . $page. "\r\n";
+        		$i++;
+        	}
+	    }
+    	$referrerinfo .= "\r\n";
+
+    	$i = 1;
+    	foreach ($keywords as $keyword) {
+    		$referrerinfo .= str_pad("Keyword $i: ",20) . $keyword. "\r\n";
+    		$i++;
+    	}
+    	$referrerinfo .= "\r\n";
+    	
+    	return $referrerinfo;
+    }    
     
 }
 

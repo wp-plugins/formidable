@@ -37,12 +37,12 @@ class FrmUpdate{
     $this->plugin_nicename      = 'formidable';
     $this->plugin_name          = FRM_PLUGIN_NAME.'/formidable.php';
     $this->plugin_slug          = FRM_PLUGIN_NAME;
-    $this->plugin_url           = 'http://blog.strategy11.com/formidable-wordpress-plugin';
+    $this->plugin_url           = 'http://strategy11.com/formidable-wordpress-plugin';
     $this->pro_script           = FRM_PATH . '/pro/'. FRM_PLUGIN_NAME .'-pro.php';
     $this->pro_mothership       = 'http://formidablepro.com';
     $this->pro_cred_store       = 'frmpro-credentials';
     $this->pro_auth_store       = 'frmpro-authorized';
-    $this->pro_auth_store       = 'frmpro-wpmu-sitewide';
+    $this->pro_wpmu_store       = 'frmpro-wpmu-sitewide';
     $this->pro_last_checked_store = 'frmpro_last_checked_update';
     $this->pro_username_label    = __(FRM_PLUGIN_TITLE .' Pro Username', 'formidable');
     $this->pro_password_label    = __(FRM_PLUGIN_TITLE .' Pro Password', 'formidable');

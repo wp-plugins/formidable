@@ -29,9 +29,10 @@ class FrmEntryMeta{
     }
   }
   
-  function duplicate_entry_metas($entry_id){
-      foreach ($this->get_entry_meta_info($entry_id) as $meta)
-          $this->update_entry_meta($entry_id, $meta->field_id, '', $meta->meta_value);
+  function duplicate_entry_metas($old_id, $new_id){
+      $metas = $this->get_entry_meta_info($old_id);
+      foreach ($metas as $meta)
+          $this->update_entry_meta($new_id, $meta->field_id, '', $meta->meta_value);
   }
 
   function delete_entry_meta($entry_id, $field_id){

@@ -66,6 +66,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated dependent Data from entries fields to work with checkboxes
 * PRO: Adjusted [date] and [time] values to adjust for WordPress timezone settings
 * PRO: Updated the way conditionally hidden fields save in the admin to prevent lingering dependencies
+* PRO: Fixed link to duplicate entries
+* PRO: Updated file upload indicator to show up sooner
+* PRO: Updated referring URL and added tracking throughout the visit
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
@@ -259,6 +262,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added "where" options to custom displays so only specified entries will be shown.
 * PRO: Fixed bug preventing file upload fields from accurately requiring a file
 * PRO: Added type=collapsible to the frm-entry-links shortcode for a collapsible archive list
+* PRO: Added referrer and user action tracking that is recorded with each entry submitted
 
 = 1.02.01 =
 * Emailer now works for everyone! (hopefully)

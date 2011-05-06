@@ -214,7 +214,9 @@ class FrmForm{
           $query = "SELECT * FROM $frmdb->forms WHERE form_key='$id'";
       
       $results = $wpdb->get_row($query);
-      $results->options = stripslashes_deep(maybe_unserialize($results->options));
+      
+      if(isset($results->options))
+          $results->options = stripslashes_deep(maybe_unserialize($results->options));
       return $results;
   }
 
