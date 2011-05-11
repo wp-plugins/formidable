@@ -70,6 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated file upload indicator to show up sooner
 * PRO: Updated referring URL and added tracking throughout the visit
 * PRO: Added ajax delete to [deletelink] shortcode
+* PRO: Updated admin only fields to show for administrators on the front-end
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
