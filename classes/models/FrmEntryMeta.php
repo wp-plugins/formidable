@@ -15,7 +15,6 @@ class FrmEntryMeta{
   }
 
   function update_entry_meta($entry_id, $field_id, $meta_key='', $meta_value){
-    global $wpdb;
     //$this->delete_entry_meta($entry_id, $field_id);
     if ($meta_value)
         $this->add_entry_meta($entry_id, $field_id, $meta_key, $meta_value);

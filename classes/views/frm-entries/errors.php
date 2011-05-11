@@ -1,6 +1,7 @@
 <?php global $frm_settings; 
 if (isset($message) && $message != ''){ 
-    if(is_admin()){ ?><div id="message" class="updated fade" style="padding:5px;"><?php echo $message ?></div><?php 
+    if(is_admin()){ 
+        ?><div id="message" class="updated fade" style="padding:5px;"><?php echo $message ?></div><?php 
     }else{ 
         echo $message; 
     }
@@ -19,6 +20,17 @@ if(!is_admin()){
     }
 } 
     echo stripslashes($frm_settings->invalid_msg);
-?>
+    
+if(empty($frm_settings->invalid_msg)){
+    $show_img = false;
+    foreach( $errors as $error ){
+        if($show_img and $img and !empty($img)){ 
+            ?><img src="<?php echo $img ?>" alt="" /><?php 
+        }else{
+            $show_img = true;
+        }
+        echo stripslashes($error) . '<br/>';
+    }
+} ?>
 </div>
 <?php } ?>

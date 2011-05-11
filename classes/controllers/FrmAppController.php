@@ -82,7 +82,7 @@ class FrmAppController{
             $frm_update->queue_update(true);
             $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $plugin, 'upgrade-plugin_' . $plugin);
     ?>
-      <td colspan="3" class="plugin-update"><div class="update-message" style="-moz-border-radius:5px; border:1px solid #CC0000;; margin:5px; background-color:#FFEBE8; padding:3px 5px;"><?php printf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">', '</a>'); ?></div></td>
+      <td colspan="3" class="plugin-update"><div class="update-message" style="-moz-border-radius:5px;border:1px solid #CC0000;; margin:5px;background-color:#FFEBE8;padding:3px 5px;"><?php printf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">', '</a>'); ?></div></td>
     <?php
         }
     }
@@ -101,7 +101,7 @@ class FrmAppController{
             global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 8)){ //this number should match the db_version in FrmDb.php
+            if((int)$db_version < (int)$frm_db_version or ($frmpro_is_installed and (int)$pro_db_version < 9)){ //this number should match the db_version in FrmDb.php
             ?>
             <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="javascript:frm_install_now()"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
@@ -269,7 +269,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function standalone_route($controller, $action=''){
         global $frm_forms_controller;
 
-        if($controller=='forms' and !in_array($action, array('export', 'import', 'xml')))
+        if($controller == 'forms' and !in_array($action, array('export', 'import', 'xml')))
             $frm_forms_controller->preview($this->get_param('form'));
         else
             do_action('frm_standalone_route', $controller, $action);

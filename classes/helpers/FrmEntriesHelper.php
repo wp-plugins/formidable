@@ -3,7 +3,7 @@
 class FrmEntriesHelper{
 
     function setup_new_vars($fields, $form='', $reset=false){
-        global $frm_form, $frm_settings;
+        global $frm_form, $frm_settings, $frm_sidebar_width;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
@@ -19,20 +19,20 @@ class FrmEntriesHelper{
                 else
                     $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? $_POST['item_meta'][$field->id] : $default;
                 
-                if($new_value == $default)
-                    $is_default = true;
+                $is_default = ($new_value == $default) ? true : false;
                     
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
                 if (!is_array($new_value))
                     $new_value = apply_filters('frm_get_default_value', $new_value, $field);
                 
                 $new_value = str_replace('"', '&quot;', $new_value);
-                if(isset($is_default) and $is_default)
+                if($is_default)
                     $field->default_value = $new_value;
                 else
                     $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
                     
-                $field_array = array('id' => $field->id,
+                $field_array = array(
+                    'id' => $field->id,
                     'value' => $new_value,
                     'default_value' => str_replace('"', '&quot;', $field->default_value),
                     'name' => stripslashes($field->name),
@@ -42,11 +42,16 @@ class FrmEntriesHelper{
                     'required' => $field->required,
                     'field_key' => $field->field_key,
                     'field_order' => $field->field_order,
-                    'form_id' => $field->form_id);
+                    'form_id' => $field->form_id
+                );
 
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
                     $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
                   
+                if ($field_array['size'] == '')
+                    $field_array['size'] = $frm_sidebar_width;
+            
+                
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);
 

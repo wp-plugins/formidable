@@ -58,7 +58,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 == Changelog ==
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1
-* Added functionality for "Fit Select Boxes into SideBar" checkbox in widget in free version
+* Added functionality for "Fit Select Boxes into SideBar" checkbox and field size in widget in free version
 * PRO: Added "clickable" option for use in custom displays to make email addresses and URLs into links. ex `[25 clickable=1]`
 * PRO: Added option to select the taxonomy type
 * PRO: Updated form styling to work better in IE
@@ -69,6 +69,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed link to duplicate entries
 * PRO: Updated file upload indicator to show up sooner
 * PRO: Updated referring URL and added tracking throughout the visit
+* PRO: Added ajax delete to [deletelink] shortcode
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field

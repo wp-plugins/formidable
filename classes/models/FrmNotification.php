@@ -1,18 +1,18 @@
 <?php
 class FrmNotification{
     function FrmNotification(){
-        add_action('frm_after_create_entry', array($this, 'entry_created'));
+        add_action('frm_after_create_entry', array(&$this, 'entry_created'), 10, 2);
     }
     
-    function entry_created($entry_id){
+    function entry_created($entry_id, $form_id){
         if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
         global $frm_form, $frm_entry, $frm_entry_meta;
 
         $frm_blogname = get_option('blogname');
         $entry = $frm_entry->getOne($entry_id);
-        $form = $frm_form->getOne($entry->form_id);
+        $form = $frm_form->getOne($form_id);
         $form->options = maybe_unserialize($form->options);
-        $values = $frm_entry_meta->getAll("it.item_id = $entry->id", " ORDER BY fi.field_order");
+        $values = $frm_entry_meta->getAll("it.item_id = $entry_id", " ORDER BY fi.field_order");
         
         $to_email = $form->options['email_to'];
         if ($to_email == '')
@@ -44,7 +44,7 @@ class FrmNotification{
         $user_data = __('User Information', 'formidable') ."\r\n";
         $user_data .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
         $user_data .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
-        //$user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
+        $user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
 
         $mail_body = $opener . $entry_data ."\r\n". $user_data;
         $subject = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, $frm_blogname); //subject

@@ -114,20 +114,43 @@ function frmGetFormErrors(object,ajax_url){
 	    data:jQuery(object).serialize()+"&controller=entries",
 	    success:function(err){
 	    	if(err==''){
-	            if(jQuery("#frm_loading")){ 
-	                window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);
-	            }
+	            if(jQuery("#frm_loading")){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
 	            object.submit();
 	        }else{
 	            //show errors
 	            jQuery('.form-field').removeClass('frm_blank_field');
 	            jQuery('.form-field .frm_error').replaceWith('');
-	            var errObj = JSON.parse(err);
+	            var errObj= JSON.parse(err);
+				var jump='';
 	            for (var key in errObj){
+					if(jump==''){
+						jump='#frm_field_'+key+'_container';
+						var new_position=jQuery(jump).offset();
+						window.scrollTo(new_position.left,new_position.top);
+					}
 				    jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>').addClass('frm_blank_field');
 				}
 	        }
 	    },
 		error:function(html){object.submit();}
+	});
+}
+
+function frmGetEntryToEdit(form_id,entry_id,post_id,ajax_url){
+jQuery.ajax({
+	type:"POST",url:ajax_url,
+	data:"controller=entries&action=edit_entry_ajax&id="+form_id+"&post_id="+post_id+"entry_id="+entry_id,
+	success:function(form){jQuery('#frm_form_'+form_id+'_container').replaceWith(form);}
+});
+}
+
+function frmDeleteEntry(entry_id,ajax_url){	
+	jQuery('#frm_delete_'+entry_id).replaceWith('<span class="frm-loading-img" id="frm_delete_'+entry_id+'"></span>');
+	jQuery.ajax({
+		type:"POST",url:ajax_url,
+		data:"controller=entries&action=destroy&entry="+entry_id,
+		success:function(html){
+			jQuery('#frm_delete_'+entry_id).replaceWith(html);
+		}
 	});
 }

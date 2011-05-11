@@ -19,7 +19,8 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
         require('new.php'); 
 ?>
-<script type="text/javascript">window.onload = function(){window.location.href="#form_<?php echo $form->form_key ?>";}</script>
+<script type="text/javascript">window.onload = function(){var frm_pos=jQuery('#form_<?php echo $form->form_key ?>').offset();
+window.scrollTo(frm_pos.left,frm_pos.top);}</script>
 <?php        
     }else{
         $fields = FrmFieldsHelper::get_form_fields($form->id);

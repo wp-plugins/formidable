@@ -122,7 +122,7 @@ class FrmAppHelper{
     //Editing a Form or Entry
     function setup_edit_vars($record, $table, $fields='', $default=false){
         if(!$record) return false;
-        global $frm_entry_meta, $frm_form, $frm_settings;
+        global $frm_entry_meta, $frm_form, $frm_settings, $frm_sidebar_width;
         $values = array();
 
         $values['id'] = $record->id;
@@ -175,7 +175,10 @@ class FrmAppHelper{
                     
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
-
+                
+                if ($field_array['size'] == '')
+                    $field_array['size'] = $frm_sidebar_width;
+                
                 $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);
                 unset($field);   
             }
@@ -294,7 +297,8 @@ class FrmAppHelper{
     
     function get_referer_query($query) {
     	if (strpos($query, "google.")) {
-    		$pattern = '/^.*\/search.*[\?&]q=(.*)$/';
+    	    //$pattern = '/^.*\/search.*[\?&]q=(.*)$/';
+            $pattern = '/^.*[\?&]q=(.*)$/';
     	} else if (strpos($query, "bing.com")) {
     		$pattern = '/^.*q=(.*)$/';
     	} else if (strpos($query, "yahoo.")) {
