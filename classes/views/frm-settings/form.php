@@ -6,13 +6,24 @@
 
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
-    <form name="frm_settings_form" method="post" >
+    <form name="frm_settings_form" method="post">
         <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
-        <p class="submit" style="padding-bottom:0;">
-            <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
-        </p>
-        <table class="form-table">
+        
+        <div class="categorydiv" id="side-sortables">
+            <?php if($frmpro_is_installed){ ?>
+            <ul id="category-tabs" class="category-tabs">
+                <li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');"><?php _e('General', 'formidable') ?></a></li>
+                <li class="hide-if-no-js"><a onclick="frmSettingsTab(jQuery(this),'styling');"><?php _e('Form Styling', 'formidable') ?></a></li>
+            </ul>
+            <div class="tabs-panel" style="border-bottom:none;border-left:none;border-right:none;height:auto;"></div>
+            <?php } ?>
+            
+            <p class="submit" style="padding:0;">
+                <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
+            </p>
+            
+        <table id="general_settings" class="form-table">
             <tr class="form-field">
               <td valign="top" width="200px"><?php _e('Preview Page', 'formidable'); ?>: </td>
               <td>
@@ -85,14 +96,6 @@
                     </select>
                 </td>
             </tr>    
-                          
-            <tr class="form-field">
-                <td></td>
-                <td>        
-                    <?php _e('Incorrect Captcha Message', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a captcha response is either incorrect or missing.', 'formidable') ?>" /><br/>
-                    <input type="text" id="frm_re_msg" name="frm_re_msg" class="frm_long_input" value="<?php echo stripslashes($frm_settings->re_msg) ?>" />
-                </td>
-            </tr>  
             
             <tr class="form-field">
                 <td valign="top"><?php _e('Default Messages', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></td>
@@ -137,6 +140,8 @@
             <?php do_action('frm_settings_form', $frm_settings); ?>
             
         </table>
+        
+        </div>
         
         <p class="alignright frm_uninstall"><a href="<?php echo $frm_ajax_url ?>?action=frm_uninstall" onclick="return confirm('<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>')"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">

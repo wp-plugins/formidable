@@ -45,7 +45,7 @@ class FrmFieldsHelper{
     }
     
     function setup_new_vars($type='',$form_id=''){
-        global $frmdb, $frm_app_helper;
+        global $frmdb, $frm_app_helper, $frm_settings;
         
         $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
         $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
@@ -64,6 +64,8 @@ class FrmFieldsHelper{
             $values['options'] = serialize(array('', __('Option 1', 'formidable')));
         else if ($type == 'textarea')
             $values['field_options']['max'] = '5';
+        else if ($type == 'captcha')
+            $values['invalid'] = $frm_settings->re_msg;
         
         return $values;
     }
@@ -73,12 +75,13 @@ class FrmFieldsHelper{
         
         $values = array();
         $record->field_options = maybe_unserialize($record->field_options);
+
         $values['id'] = $record->id;
         $values['form_id'] = $record->form_id;
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
               $values[$var] = htmlspecialchars(stripslashes(FrmAppHelper::get_param($var, $default)));
 
-        $values['form_name'] = ($record->form_id)?($frm_form->getName( $record->form_id )):('');
+        $values['form_name'] = ($record->form_id) ? $frm_form->getName( $record->form_id ) : '';
         
         foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
             $values[$var] = FrmAppHelper::get_param($var, $default);
@@ -91,6 +94,11 @@ class FrmFieldsHelper{
             'clear_on_focus' => 0, 'default_blank' => 0
         );
         
+        if($values['type'] == 'captcha'){
+            global $frm_settings;
+            $defaults['invalid'] = $frm_settings->re_msg;
+        }
+            
         foreach($defaults as $opt => $default)
             $values[$opt] = (isset($record->field_options[$opt])) ? $record->field_options[$opt] : $default; 
 

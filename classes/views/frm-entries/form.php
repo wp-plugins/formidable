@@ -42,7 +42,7 @@ if (is_admin() && !$frm_settings->lock_keys){ ?>
 <input type="hidden" name="item_key" value="<?php echo $values['item_key'] ?>" />
 <?php }
 
-do_action('frm_entry_form', $form, $form_action);
+do_action('frm_entry_form', $form, $form_action, $errors);
 
 global $frm_div;
 if($frm_div){

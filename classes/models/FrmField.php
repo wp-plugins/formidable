@@ -90,19 +90,27 @@ class FrmField{
 
     function getAll($where = '', $order_by = '', $limit = '', $blog_id=false){
         global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_fields;
+        
         if ($blog_id and IS_WPMU){
             global $wpmuBaseTablePrefix;
-            $table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_fields";
-            $form_table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_forms";
+            if($wpmuBaseTablePrefix)
+                $prefix = "{$wpmuBaseTablePrefix}{$blog_id}_";
+            else
+                $prefix = $wpdb->get_blog_prefix( $blog_id );
+            
+            $table_name = "{$prefix}frm_fields"; 
+            $form_table_name = "{$prefix}frm_forms";
         }else{
             $table_name = $frmdb->fields;
             $form_table_name = $frmdb->forms;
         }
+        
         $query = 'SELECT fi.*, ' .
                  'fr.name as form_name ' . 
                  'FROM '. $table_name . ' fi ' .
                  'LEFT OUTER JOIN ' . $form_table_name . ' fr ON fi.form_id=fr.id' . 
                  $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+        
         if ($limit == ' LIMIT 1')
             $results = $wpdb->get_row($query);
         else

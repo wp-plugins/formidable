@@ -70,10 +70,22 @@ class FrmAppHelper{
         }
         return false;
     }
+    
+    function is_super_admin($user_id=false){
+        if(function_exists('is_super_admin'))
+            return is_super_admin($user_id);
+        else
+            return is_site_admin($user_id);
+    }
 
     function value_is_checked_with_array($field_name, $index, $field_value){
       if( ( $_POST['action'] == 'process_form' and isset( $_POST[ $field_name ][ $index ] ) ) or ( $_POST['action'] != 'process_form' and isset($field_value) ) )
         echo ' checked="checked"';
+    }
+    
+    function checked($values, $current){
+        if(in_array($current, (array)$values))
+            echo ' checked="checked"';
     }
     
     function get_file_contents($filename){
@@ -136,9 +148,9 @@ class FrmAppHelper{
             foreach($fields as $field){
                 $field->field_options = stripslashes_deep(maybe_unserialize($field->field_options));
 
-                if ($default)
+                if ($default){
                     $meta_value = $field->default_value;
-                else{
+                }else{
                     if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field->field_options['post_field']) and $field->field_options['post_field']){
                         $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field->field_options['post_field'], $field->field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id, 'field' => $field));
                     }else if(isset($record->metas))
@@ -157,7 +169,7 @@ class FrmAppHelper{
                     'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
-                    'type' => apply_filters('frm_field_type',$field_type, $field, $new_value),
+                    'type' => apply_filters('frm_field_type', $field_type, $field, $new_value),
                     'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
                     'required' => $field->required,
                     'field_key' => $field->field_key,
@@ -167,10 +179,14 @@ class FrmAppHelper{
                 
                 foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
-                    if($opt == 'blank' and $field_array[$opt] == '')
+                    if($opt == 'blank' and $field_array[$opt] == ''){
                         $field_array[$opt] = __('This field cannot be blank', 'formidable');
-                    else if($opt == 'invalid' and $field_array[$opt] == '')
-                        $field_array[$opt] = $field_array['name'] . ' ' . __('is invalid', 'formidable');
+                    }else if($opt == 'invalid' and $field_array[$opt] == ''){
+                        if($field_type == 'captcha')
+                            $field_array[$opt] = $frm_settings->re_msg;
+                        else
+                            $field_array[$opt] = $field_array['name'] . ' ' . __('is invalid', 'formidable');
+                    }
                 }
                     
                 if ($field_array['custom_html'] == '')
@@ -283,7 +299,10 @@ class FrmAppHelper{
     }
 
     function getPageCount($p_size, $where="", $table_name){
-        return ceil((int)$this->getRecordCount($where, $table_name) / (int)$p_size);
+        if(is_numeric($where))
+            return ceil((int)$where / (int)$p_size);
+        else
+            return ceil((int)$this->getRecordCount($where, $table_name) / (int)$p_size);
     }
 
     function getPage($current_p,$p_size, $where = "", $order_by = '', $table_name){

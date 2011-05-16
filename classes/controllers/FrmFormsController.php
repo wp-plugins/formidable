@@ -53,6 +53,7 @@ class FrmFormsController{
             $frm_field_selection = FrmFieldsHelper::field_selection();  
             $values = FrmFormsHelper::setup_new_vars();
             $id = $frm_form->create( $values );
+            $values['id'] = $id;
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $all_templates = $frm_form->getAll('is_template=1', ' ORDER BY name');
@@ -238,7 +239,7 @@ class FrmFormsController{
         $search_str = $form_vars['search_str'];
 
         $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frmdb->forms);
-        $page_count = $frm_app_helper->getPageCount($frm_page_size,$form_vars['where_clause'], $frmdb->forms);
+        $page_count = $frm_app_helper->getPageCount($frm_page_size, $record_count, $frmdb->forms);
         $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
         $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
         $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);

@@ -59,6 +59,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1
 * Added functionality for "Fit Select Boxes into SideBar" checkbox and field size in widget in free version
+* Moved reCaptcha error message to individual field options
 * PRO: Added "clickable" option for use in custom displays to make email addresses and URLs into links. ex `[25 clickable=1]`
 * PRO: Added option to select the taxonomy type
 * PRO: Updated form styling to work better in IE
@@ -71,6 +72,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated referring URL and added tracking throughout the visit
 * PRO: Added ajax delete to [deletelink] shortcode
 * PRO: Updated admin only fields to show for administrators on the front-end
+* PRO: Added more attributes to the [display-frm-entries] shortcode: limit="5", page_size="5", order_by="rand" or field ID, order="DESC" or "ASC"
+* PRO: Fixed custom display bulk delete
+* PRO: Updated WPMU copy features to work with WP 3.0+
+* PRO: Switched the email "add/or" drop-down to check boxes
+* PRO: Added box for message to be displayed if there are no entries for a custom display
+* PRO: Moved styling options into a tab on the settings page
+* PRO: Added limited "data from entries" options to the custom display "where" row. Entry keys or IDs can be used
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field

@@ -77,7 +77,7 @@ class FrmAppController{
         global $frm_update;
        
         if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
-            if (IS_WPMU and $frm_update->pro_wpmu and !is_site_admin())
+            if (IS_WPMU and $frm_update->pro_wpmu and !FrmAppHelper::is_super_admin())
                 return;
             $frm_update->queue_update(true);
             $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $plugin, 'upgrade-plugin_' . $plugin);

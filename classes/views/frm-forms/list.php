@@ -62,9 +62,9 @@
         <td class="post-title">
             <?php if(current_user_can('frm_edit_forms')){ ?>
             <a class="row-title" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo stripslashes($form->name); ?>"><?php echo stripslashes($form->name); ?></a>
-            <?php }else{ ?>
-            <?php echo stripslashes($form->name); ?>
-            <?php }?>
+            <?php }else{    
+                    echo stripslashes($form->name); 
+                  } ?>
             <br/>
             <div class="row-actions">
                 <?php if(current_user_can('frm_edit_forms')){ ?>

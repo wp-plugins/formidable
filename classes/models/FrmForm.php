@@ -35,13 +35,16 @@ class FrmForm{
     global $wpdb, $frmdb, $frm_form, $frm_field;
     
     $values = $frm_form->getOne( $id, $blog_id );
+    if(!$values)
+        return false;
         
     $new_values = array();
     $new_key = ($copy_keys) ? $values->form_key : '';
     $new_values['form_key'] = FrmAppHelper::get_unique_key($new_key, $frmdb->forms, 'form_key');
     $new_values['name'] = $values->name;
     $new_values['description'] = $values->description;
-    $new_values['status'] = (!$template)?'draft':'';
+    $new_values['status'] = (!$template) ? 'draft' : '';
+    
     if ($blog_id){
         $new_values['status'] = 'published';
         $new_options = maybe_unserialize($values->options);
@@ -203,15 +206,23 @@ class FrmForm{
   function getOne( $id, $blog_id=false ){
       global $wpdb, $frmdb;
       
-      if (is_numeric($id)){
-          if ($blog_id and IS_WPMU){
-              global $wpmuBaseTablePrefix;
-              $table_name = "{$wpmuBaseTablePrefix}{$blog_id}_frm_forms";
-          }else
-              $table_name = $frmdb->forms;
-          $query = "SELECT * FROM $table_name WHERE id='$id'";
-      }else
-          $query = "SELECT * FROM $frmdb->forms WHERE form_key='$id'";
+      if ($blog_id and IS_WPMU){
+          global $wpmuBaseTablePrefix;
+          if($wpmuBaseTablePrefix)
+              $prefix = "{$wpmuBaseTablePrefix}{$blog_id}_";
+          else
+              $prefix = $wpdb->get_blog_prefix( $blog_id );
+              
+          $table_name = "{$prefix}frm_forms";
+      }else{
+          $table_name = $frmdb->forms;
+      }
+      
+      $query = "SELECT * FROM $table_name WHERE ";  
+      if (is_numeric($id))
+          $query .= "id='$id'";
+      else
+          $query .= "form_key='$id'";
       
       $results = $wpdb->get_row($query);
       

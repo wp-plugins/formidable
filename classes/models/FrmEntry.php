@@ -146,7 +146,7 @@ class FrmEntry{
       $entry = $wpdb->get_row($query);
       
       if($meta and $entry){
-            $metas = FrmEntryMeta::getAll("item_id=$entry->id");
+            $metas = FrmEntryMeta::getAll("item_id=$entry->id and field_id != 0");
             $entry_metas = array();
             foreach($metas as $meta_val)
                 $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
@@ -178,7 +178,7 @@ class FrmEntry{
       $entries = $wpdb->get_results($query);
       if($meta){
           foreach($entries as $key => $entry){
-              $metas = FrmEntryMeta::getAll("item_id=$entry->id");
+              $metas = FrmEntryMeta::getAll("item_id=$entry->id and field_id != 0");
               $entry_metas = array();
               foreach($metas as $meta_val)
                   $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
@@ -190,18 +190,21 @@ class FrmEntry{
     }
 
     // Pagination Methods
-    function getRecordCount($where=""){
+    function getRecordCount($where=''){
       global $wpdb, $frmdb, $frm_app_helper;
       $query = "SELECT COUNT(*) FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
           $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
       return $wpdb->get_var($query);
     }
 
-    function getPageCount($p_size, $where=""){
-      return ceil((int)$this->getRecordCount($where) / (int)$p_size);
+    function getPageCount($p_size, $where=''){
+        if(is_numeric($where))
+            return ceil((int)$where / (int)$p_size);
+        else
+            return ceil((int)$this->getRecordCount($where) / (int)$p_size);
     }
 
-    function getPage($current_p,$p_size, $where = '', $order_by = ''){
+    function getPage($current_p, $p_size, $where = '', $order_by = ''){
       global $wpdb, $frmdb, $frm_app_helper;
       $end_index = $current_p * $p_size;
       $start_index = $end_index - $p_size;
@@ -248,13 +251,13 @@ class FrmEntry{
                     require_once(FRM_PATH.'/classes/recaptchalib.php');
 
                 $response = recaptcha_check_answer($frm_settings->privkey,
-                                                $_SERVER["REMOTE_ADDR"],
-                                                $_POST["recaptcha_challenge_field"],
-                                                $_POST["recaptcha_response_field"]);
+                                                $_SERVER['REMOTE_ADDR'],
+                                                $_POST['recaptcha_challenge_field'],
+                                                $_POST['recaptcha_response_field']);
 
                 if (!$response->is_valid) {
                     // What happens when the CAPTCHA was entered incorrectly
-                    $errors['captcha-'.$response->error] = $errors['field'.$posted_field->id] = $frm_settings->re_msg;
+                    $errors['captcha-'.$response->error] = $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['invalid']) or $posted_field->field_options['invalid'] == '') ? $frm_settings->re_msg : $posted_field->field_options['invalid'];
                 }
 
             }

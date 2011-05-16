@@ -22,10 +22,9 @@ class FrmEntryMeta{
   
   function update_entry_metas($entry_id, $values){
     global $frm_field;
-    $this->delete_entry_metas($entry_id);
-    foreach($values as $field_id => $meta_value){
+    $this->delete_entry_metas($entry_id, " AND field_id != '0'");
+    foreach($values as $field_id => $meta_value)
         $this->update_entry_meta($entry_id, $field_id, '', maybe_serialize($values[$field_id]));
-    }
   }
   
   function duplicate_entry_metas($old_id, $new_id){
@@ -39,9 +38,11 @@ class FrmEntryMeta{
     return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id='$field_id' AND item_id='$entry_id'");
   }
   
-  function delete_entry_metas($entry_id){
+  function delete_entry_metas($entry_id, $where=''){
     global $wpdb, $frmdb;
-    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE item_id='$entry_id'");
+    $where = "item_id='$entry_id'".$where;
+
+    return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE $where");
   }
   
   function get_entry_meta_by_field($entry_id, $field_id, $return_var=false){

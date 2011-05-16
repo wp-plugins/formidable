@@ -26,7 +26,7 @@ class FrmNotification{
         
         $entry_data = '';
         foreach ($values as $value){
-            $val = apply_filters('frm_email_value', maybe_unserialize($value->meta_value), $value);
+            $val = apply_filters('frm_email_value', maybe_unserialize($value->meta_value), $value, $entry);
             if (is_array($val))
                 $val = implode(', ', $val);
             

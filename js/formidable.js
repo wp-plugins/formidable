@@ -126,7 +126,8 @@ function frmGetFormErrors(object,ajax_url){
 					if(jump==''){
 						jump='#frm_field_'+key+'_container';
 						var new_position=jQuery(jump).offset();
-						window.scrollTo(new_position.left,new_position.top);
+						if(new_position)
+							window.scrollTo(new_position.left,new_position.top);
 					}
 				    jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>').addClass('frm_blank_field');
 				}

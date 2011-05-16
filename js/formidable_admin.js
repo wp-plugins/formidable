@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-$(".frm_elastic_text").elastic();	
+$(".frm_elastic_text").elastic();
 	
 window.onscroll = document.documentElement.onscroll = frmSetMenuOffset;
 frmSetMenuOffset();
@@ -272,4 +272,12 @@ function frm_add_row(field_id,ajax_url){
 
 function frm_post_add_row(field_id,new_row){
 	// Just a stub that can be overridden by another script
+}
+
+function frmSettingsTab(tab, id){
+	var t = tab.attr('href');
+	tab.parent().addClass('tabs').siblings('li').removeClass('tabs');
+	jQuery('#general_settings,#styling_settings').hide();
+	jQuery('#'+id+'_settings').show();
+	return false;
 }

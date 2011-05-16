@@ -49,7 +49,7 @@ class FrmUpdate{
     $this->pro_error_message_str = __('Your '.FRM_PLUGIN_TITLE.' Pro Username or Password was Invalid', 'formidable');
     
     // Don't modify these variables
-    $this->pro_check_interval = 60*60; // Checking every hour
+    $this->pro_check_interval = 60*60*12; // Checking every 12 hours
     $this->pro_username_str = 'proplug-username';
     $this->pro_password_str = 'proplug-password';
     $this->pro_wpmu_str = 'proplug-wpmu';

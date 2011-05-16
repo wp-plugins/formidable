@@ -199,6 +199,7 @@ class FrmFieldsController{
     function display_field_options($display){
         if ($display['type'] == 'captcha'){
             $display['required'] = false;
+            $display['invalid'] = true;
             $display['default_blank'] = false;
         }else if ($display['type'] == 'radio'){
             $display['default_blank'] = false;

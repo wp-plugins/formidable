@@ -135,7 +135,6 @@ class FrmSettings{
         $this->privkey = $params['frm_privkey'];
         $this->re_theme = $params['frm_re_theme'];
         $this->re_lang = $params['frm_re_lang'];
-        $this->re_msg = $params['frm_re_msg'];
         
         $this->load_style = $params['frm_load_style'];
         //$this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
