@@ -77,6 +77,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated WPMU copy features to work with WP 3.0+
 * PRO: Switched the email "add/or" drop-down to check boxes
 * PRO: Added box for message to be displayed if there are no entries for a custom display
+* PRO: Added ajax edit options with [frm-entry-edit-link id=x label=Edit cancel=Cancel class='add_classes' page_id= prefix='frm_edit_' form_id=>y]. Also works with [editlink location=front] in custom displays.
 * PRO: Moved styling options into a tab on the settings page
 * PRO: Added limited "data from entries" options to the custom display "where" row. Entry keys or IDs can be used
 * PRO: Added unique validation for fields set as post fields
