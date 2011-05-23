@@ -250,7 +250,12 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     	}
     	
     	if (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'])
-    		$_SESSION['frm_http_pages'][] = "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'];	
+    		$_SESSION['frm_http_pages'][] = "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'];
+    		
+    	if(count($_SESSION['frm_http_pages']) > 100){
+    	    $first = reset($_SESSION['frm_http_pages']);
+    		unset($first);
+    	}
     }
 
     // The tight way to process standalone requests dogg...

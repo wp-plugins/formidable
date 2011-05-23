@@ -1,16 +1,13 @@
-jQuery(document).ready(function($){	
-$('.frm-show-form').submit(function(e){e.preventDefault();frmValidateForm(this);});
-
-$('.frm_toggle_container').hide();
-$('.frm_trigger').toggle(function(){ 
-	$(this).addClass("active"), $(this).children('.ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
-	$(this).children('.ui-icon-triangle-1-s').removeClass('ui-icon-triangle-1-e');
-	},function(){
-	$(this).removeClass("active"),$(this).children('.ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e'); 
-	$(this).children('.ui-icon-triangle-1-e').removeClass('ui-icon-triangle-1-s');
-	}); 
-$('.frm_trigger').click(function(){ $(this).next(".frm_toggle_container").slideToggle("slow");});
-});
+function frmToggleSection($sec){
+$sec.next('.frm_toggle_container').slideToggle(200);
+if($sec.hasClass('active')){
+	$sec.removeClass('active'),$sec.children('.ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e'); 
+	$sec.children('.ui-icon-triangle-1-e').removeClass('ui-icon-triangle-1-s');
+}else{
+	$sec.addClass("active"), $sec.children('.ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+	$sec.children('.ui-icon-triangle-1-s').removeClass('ui-icon-triangle-1-e');
+}
+}
 
 function frmCheckParents(id){ 
 	var $chk = jQuery('#'+id);
@@ -167,7 +164,7 @@ function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel){
 function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id){
 	var cancel=jQuery('#frm_edit_'+entry_id).text();
 	jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
-	jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow');
+	jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
 	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\')">'+label+'</a>');
 }
 

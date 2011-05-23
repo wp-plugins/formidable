@@ -60,6 +60,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Updated user role options to work more reliably with WP 3.1
 * Added functionality for "Fit Select Boxes into SideBar" checkbox and field size in widget in free version
 * Moved reCaptcha error message to individual field options
+* Updated referring URL and added tracking throughout the visit
 * PRO: Added "clickable" option for use in custom displays to make email addresses and URLs into links. ex `[25 clickable=1]`
 * PRO: Added option to select the taxonomy type
 * PRO: Updated form styling to work better in IE
@@ -69,7 +70,6 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated the way conditionally hidden fields save in the admin to prevent lingering dependencies
 * PRO: Fixed link to duplicate entries
 * PRO: Updated file upload indicator to show up sooner
-* PRO: Updated referring URL and added tracking throughout the visit
 * PRO: Added ajax delete to [deletelink] shortcode
 * PRO: Updated admin only fields to show for administrators on the front-end
 * PRO: Added more attributes to the [display-frm-entries] shortcode: limit="5", page_size="5", order_by="rand" or field ID, order="DESC" or "ASC"
