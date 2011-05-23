@@ -5,7 +5,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.05.03rc2
+Version: 1.05.03rc3
 Plugin URI: http://strategy11.com/formidable-wordpress-plugin
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -40,7 +40,7 @@ global $frm_siteurl;
 $frm_siteurl = get_bloginfo('url');
 if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_siteurl)){
     $frm_siteurl = str_replace('http://', 'https://', $frm_siteurl);
-    define('FRM_URL',str_replace('http://', 'https://', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME));
+    define('FRM_URL', str_replace('http://', 'https://', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME));
 }else
     define('FRM_URL', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);  //plugins_url('/'.FRM_PLUGIN_NAME)
     
@@ -66,9 +66,9 @@ $frm_db_version = 7;
 global $frm_ajax_url;
 $frm_ajax_url = admin_url('admin-ajax.php');
 
-global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields;
+global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
-$frm_forms_loaded = $frm_loaded_fields = array();
+$frm_forms_loaded = $frm_loaded_fields = $frm_saved_entries = array();
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 global $frm_app_helper;
@@ -166,6 +166,18 @@ $frm_sidebar_width = '';
 if(class_exists('WP_Widget')){
     require_once(FRM_PATH . "/classes/widgets/FrmShowForm.php");
     add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
+}
+
+
+if(!function_exists('esc_textarea')){
+/**
+ * Escaping for textarea values.
+ * @since 3.1
+ */
+function esc_textarea( $text ) {
+	$safe_text = htmlspecialchars( $text, ENT_QUOTES );
+	return apply_filters( 'esc_textarea', $safe_text, $text );
+}
 }
 
 ?>

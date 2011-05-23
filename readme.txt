@@ -79,6 +79,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added box for message to be displayed if there are no entries for a custom display
 * PRO: Moved styling options into a tab on the settings page
 * PRO: Added limited "data from entries" options to the custom display "where" row. Entry keys or IDs can be used
+* PRO: Added unique validation for fields set as post fields
+* PRO: Removed error messages for required fields hidden via the shortcode options
+* PRO: Only return [deletelink] if user can delete the entry
+* PRO: Added order options to calendar displays
+* PRO: Updated custom display ordering to order correctly when using a 12 hour time field
+* PRO: Added taxonomy options to the "Tags" field
+* PRO: Added HTML escaping to text fields to allow HTML entities to remain as entities when editing
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field

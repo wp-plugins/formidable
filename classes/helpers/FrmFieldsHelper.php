@@ -238,6 +238,7 @@ DEFAULT_HTML;
         $selected = is_array($field['value']) ? reset($field['value']) : $field['value'];
 
         $exclude = (is_array($field['exclude_cat'])) ? implode(',', $field['exclude_cat']) : $field['exclude_cat'];
+        $exclude = apply_filters('frm_exclude_cats', $exclude, $field);
         
         $args = array(
             'show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name,

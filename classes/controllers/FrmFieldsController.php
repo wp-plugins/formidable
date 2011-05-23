@@ -17,7 +17,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_field_option_ipe', array(&$this, 'edit_option') );
         add_action('wp_ajax_frm_delete_field_option',array(&$this, 'delete_option'));
         add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
-        add_filter('frm_field_type',array( &$this, 'change_type'));
+        add_filter('frm_field_type' ,array( &$this, 'change_type'));
         add_filter('frm_display_field_options', array(&$this, 'display_field_options'));
         add_action('frm_field_input_html', array(&$this, 'input_html'));
     }

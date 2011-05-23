@@ -15,11 +15,13 @@ class FrmForm{
     $options = array();
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
     $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value; 
+    $options['success_action'] = isset($values['options']['success_action']) ? $values['options']['success_action'] : 'message';
     $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : $frm_settings->success_msg;
     $options['show_form'] = isset($values['options']['show_form']) ? 1 : 0;
     $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;
     $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
     $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
+    $options = apply_filters('frm_form_options_before_update', $options, $values);
     $new_values['options'] = serialize($options);
     $new_values['created_at'] = current_time('mysql', 1);
     
@@ -89,7 +91,8 @@ class FrmForm{
     if (isset($values['options'])){
         $options = array();
         $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 
-        $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value; 
+        $options['submit_value'] = isset($values['options']['submit_value']) ? $values['options']['submit_value'] : $frm_settings->submit_value;
+        $options['success_action'] = isset($values['options']['success_action']) ? $values['options']['success_action'] : 'message'; 
         $options['success_msg'] = isset($values['options']['success_msg']) ? $values['options']['success_msg'] : $frm_settings->success_msg;
         $options['show_form'] = isset($values['options']['show_form']) ? 1 : 0;
         $options['akismet'] = isset($values['options']['akismet']) ? 1 : 0;

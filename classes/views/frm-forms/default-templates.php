@@ -12,9 +12,11 @@
     <tr><td colspan="2"><?php _e('No Templates Found', 'formidable') ?></td></tr>
 <?php
 }else{
+    $alternate = false;
     foreach($default_templates as $form){
-?>
-    <tr style="min-height: 60px; height: 60px;">
+        $alternate = (!$alternate) ? 'alternate' : false;
+    ?>
+    <tr class="<?php echo $alternate ?>">
         <td class="post-title">
             <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('Preview', 'formidable')?> <?php echo htmlentities(stripslashes($form->name)) ?>" target="blank"><?php echo stripslashes($form->name); ?></a><br/>
             <div class="row-actions">

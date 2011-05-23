@@ -61,7 +61,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                     
                     <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?>:</label></td>
                         <td><?php if($frmpro_is_installed and isset($values['id'])){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
-                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo $values['success_msg']; ?></textarea> <br/>
+                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo esc_textarea($values['success_msg']); ?></textarea> <br/>
                         <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                         <td>
                     </tr>
@@ -109,7 +109,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
                 foreach($values['fields'] as $field){
                     if (apply_filters('frm_show_custom_html', true, $field['type'])){ ?>
                         <p><label class="frm_primary_label"><?php echo $field['name'] ?></label>
-                        <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" class="frm_long_input"><?php echo $field['custom_html'] ?></textarea></p>
+                        <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" class="frm_long_input"><?php echo esc_textarea($field['custom_html']) ?></textarea></p>
                     <?php }
                     unset($field);
                 }

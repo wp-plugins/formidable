@@ -64,6 +64,10 @@ class FrmEntry{
 
         if(isset($query_results) and $query_results){
             $entry_id = $wpdb->insert_id;
+            
+            global $frm_saved_entries;
+            $frm_saved_entries[] = (int)$entry_id;
+            
             if (isset($values['item_meta']))
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
             do_action('frm_after_create_entry', $entry_id, $new_values['form_id']);
@@ -87,6 +91,10 @@ class FrmEntry{
         $query_results = $wpdb->insert( $frmdb->entries, $new_values );
         if($query_results){
             $entry_id = $wpdb->insert_id;
+            
+            global $frm_saved_entries;
+            $frm_saved_entries[] = (int)$entry_id;
+            
             $frm_entry_meta->duplicate_entry_metas($id, $entry_id);
             return $entry_id;
         }else
@@ -94,7 +102,9 @@ class FrmEntry{
     }
 
     function update( $id, $values ){
-        global $wpdb, $frmdb, $frm_entry_meta, $frm_field;
+        global $wpdb, $frmdb, $frm_entry_meta, $frm_field, $frm_saved_entries;
+        if(in_array((int)$id, (array)$frm_saved_entries))
+            return;
 
         $new_values = array();
 
@@ -111,7 +121,8 @@ class FrmEntry{
         $new_values['updated_by'] = $user_ID;
 
         $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
-
+        $frm_saved_entries[] = (int)$id;
+        
         if (isset($values['item_meta']))
             $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
         do_action('frm_after_update_entry', $id, $new_values['form_id']);
@@ -121,8 +132,6 @@ class FrmEntry{
     function destroy( $id ){
       global $wpdb, $frmdb;
       
-      // Disconnect the child items from this parent item
-      //$query_results = $wpdb->update( $frmdb->entries, array('parent_item_id' => null), array( 'parent_item_id' => $id ) );
       do_action('frm_before_destroy_entry', $id);
       
       $wpdb->query('DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id);

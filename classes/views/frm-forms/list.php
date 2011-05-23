@@ -54,9 +54,11 @@
     </tr>
 <?php
 }else{
+    $alternate = '';
     foreach($forms as $form){
+        $alternate = (empty($alternate)) ? ' alternate' : '';
 ?>
-    <tr style="min-height: 75px; height: 75px;" class="iedit">
+    <tr class="iedit<?php echo $alternate ?>" >
         <th class="check-column" scope="row"><?php do_action('frm_first_col', $form->id); ?></th>
         <?php if ($params['template']){ ?>
         <td class="post-title">

@@ -37,7 +37,7 @@ class FrmEntriesHelper{
                     'default_value' => str_replace('"', '&quot;', $field->default_value),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
-                    'type' => apply_filters('frm_field_type',$field->type, $field, $new_value),
+                    'type' => apply_filters('frm_field_type', $field->type, $field, $new_value),
                     'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
                     'required' => $field->required,
                     'field_key' => $field->field_key,

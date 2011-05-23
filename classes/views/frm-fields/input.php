@@ -2,7 +2,7 @@
 <input type="text" id="field_<?php echo $field['field_key'] ?>" name="<?php echo $field_name ?>" value="<?php echo $field['value'] ?>" <?php do_action('frm_field_input_html', $field) ?>/>
     
 <?php }else if ($field['type'] == 'textarea'){ ?>
-<textarea name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>"<?php if($field['size']) echo ' cols="'. $field['size'].'"'; if($field['max']) echo ' rows="'. $field['max'] .'"'; ?> <?php do_action('frm_field_input_html', $field) ?>><?php echo $field['value'] ?></textarea> 
+<textarea name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>"<?php if($field['size']) echo ' cols="'. $field['size'].'"'; if($field['max']) echo ' rows="'. $field['max'] .'"'; ?> <?php do_action('frm_field_input_html', $field) ?>><?php echo esc_textarea($field['value']) ?></textarea> 
     
 <?php 
 

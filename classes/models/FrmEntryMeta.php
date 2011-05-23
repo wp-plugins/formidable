@@ -83,6 +83,7 @@ class FrmEntryMeta{
       if($value)
         $query .= " AND meta_value='$value'";
       $query .= "{$order}{$limit}";
+      
       return $wpdb->get_col($query);
   }
   

@@ -110,27 +110,31 @@ function frmGetDataOpts(field_data,selected,ajax_url,field_id){
 
 function frmGetFormErrors(object,ajax_url){
 	jQuery.ajax({
-		type:"POST",url:ajax_url,
+		type:"POST",url:ajax_url,dataType:'json',
 	    data:jQuery(object).serialize()+"&controller=entries",
-	    success:function(err){
-	    	if(err==''){
-	            if(jQuery("#frm_loading")){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
+	    success:function(errObj){
+	    	if(errObj=='' || !errObj){
+	            if(jQuery("#frm_loading").length){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
 	            object.submit();
 	        }else{
 	            //show errors
+				var cont_submit=true;
 	            jQuery('.form-field').removeClass('frm_blank_field');
 	            jQuery('.form-field .frm_error').replaceWith('');
-	            var errObj= JSON.parse(err);
 				var jump='';
 	            for (var key in errObj){
-					if(jump==''){
-						jump='#frm_field_'+key+'_container';
-						var new_position=jQuery(jump).offset();
-						if(new_position)
-							window.scrollTo(new_position.left,new_position.top);
+					if(jQuery('#frm_field_'+key+'_container').length){
+						cont_submit=false;
+						if(jump==''){
+							jump='#frm_field_'+key+'_container';
+							var new_position=jQuery(jump).offset();
+							if(new_position)
+								window.scrollTo(new_position.left,new_position.top);
+						}
+					    jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>').addClass('frm_blank_field');
 					}
-				    jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>').addClass('frm_blank_field');
 				}
+				if(cont_submit) object.submit();
 	        }
 	    },
 		error:function(html){object.submit();}
@@ -145,13 +149,39 @@ jQuery.ajax({
 });
 }
 
-function frmDeleteEntry(entry_id,ajax_url){	
+function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel){
+	var label=jQuery('#frm_edit_'+entry_id).text();
+	var orig=jQuery('#'+prefix+entry_id).html();
+	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="frm_edit_container_'+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
+	jQuery.ajax({
+		type:"POST",url:ajax_url,
+		data:"controller=entries&action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
+		success:function(html){
+			jQuery('#'+prefix+entry_id).children('.frm-loading-img').replaceWith(html);
+			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+')">'+cancel+'</a></span>');
+			
+		}
+	});
+}
+
+function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id){
+	var cancel=jQuery('#frm_edit_'+entry_id).text();
+	jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
+	jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow');
+	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\')">'+label+'</a>');
+}
+
+function frmDeleteEntry(entry_id,ajax_url,prefix){	
 	jQuery('#frm_delete_'+entry_id).replaceWith('<span class="frm-loading-img" id="frm_delete_'+entry_id+'"></span>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=entries&action=destroy&entry="+entry_id,
 		success:function(html){
-			jQuery('#frm_delete_'+entry_id).replaceWith(html);
+			if(html == 'success')
+				jQuery('#'+prefix+entry_id).fadeOut('slow');
+			else
+				jQuery('#frm_delete_'+entry_id).replaceWith(html);
+			
 		}
 	});
 }
