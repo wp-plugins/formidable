@@ -88,6 +88,12 @@ class FrmAppHelper{
             echo ' checked="checked"';
     }
     
+    function esc_textarea( $text ) {
+        $safe_text = str_replace('&quot;', '"', $text);
+    	$safe_text = htmlspecialchars( $safe_text, ENT_NOQUOTES );
+    	return apply_filters( 'esc_textarea', $safe_text, $text );
+    }
+    
     function get_file_contents($filename){
         if (is_file($filename)){
             ob_start();

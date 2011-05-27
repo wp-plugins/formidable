@@ -169,15 +169,4 @@ if(class_exists('WP_Widget')){
 }
 
 
-if(!function_exists('esc_textarea')){
-/**
- * Escaping for textarea values.
- * @since 3.1
- */
-function esc_textarea( $text ) {
-	$safe_text = htmlspecialchars( $text, ENT_NOQUOTES );
-	return apply_filters( 'esc_textarea', $safe_text, $text );
-}
-}
-
 ?>

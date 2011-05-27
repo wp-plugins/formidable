@@ -87,6 +87,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated custom display ordering to order correctly when using a 12 hour time field
 * PRO: Added taxonomy options to the "Tags" field
 * PRO: Added HTML escaping to text fields to allow HTML entities to remain as entities when editing
+* PRO: Added functionality to use taxonomy fields in where options in custom displays
+* PRO: Added option to use [get param=CUSTOM] in custom displays
 
 = 1.05.02 =
 * Fixed issue with PHP4 that was causing the field options to get cleared out and only show a "0" or "<" instead of the field
