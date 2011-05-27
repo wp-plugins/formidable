@@ -49,7 +49,7 @@
         }
     }
 
-}else if ($field['type'] == 'captcha'){
+}else if ($field['type'] == 'captcha' and !is_admin()){
         global $frm_settings;
         $error_msg = null;
         if(!empty($errors)){

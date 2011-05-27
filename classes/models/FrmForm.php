@@ -9,8 +9,9 @@ class FrmForm{
     $new_values['name'] = $values['name'];
     $new_values['description'] = $values['description'];
     $new_values['status'] = isset($values['status'])?$values['status']:'draft';
-    $new_values['is_template'] = isset($values['is_template'])?(int)$values['is_template']:0;
-    $new_values['default_template'] = isset($values['default_template'])?(int)$values['default_template']:0;
+    $new_values['is_template'] = isset($values['is_template']) ? (int)$values['is_template'] : 0;
+    $new_values['editable'] = isset($values['editable']) ? (int)$values['editable'] : 0;
+    $new_values['default_template'] = isset($values['default_template']) ? (int)$values['default_template'] : 0;
     $new_values['prli_link_id'] = isset($link_id)?(int)$link_id:0;
     $options = array();
     $options['email_to'] = isset($values['options']['email_to']) ? $values['options']['email_to'] : ''; 

@@ -64,7 +64,7 @@
                 <td><?php _e('reCAPTCHA', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_big" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" />
                 </td>
             	<td>
-        			reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="http://recaptcha.net/api/getkey?domain=localhost.localdomain&amp;app=wordpress">free reCAPTCHA key</a>.
+        			reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create">free reCAPTCHA key</a>.
         			<br/>
         			
         				<!-- reCAPTCHA public key -->

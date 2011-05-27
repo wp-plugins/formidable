@@ -19,7 +19,7 @@ class FrmEntry{
         }
         
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
-        $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
+        $new_values['created_at'] = $new_values['updated_at'] = isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1);
         
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
@@ -28,33 +28,36 @@ class FrmEntry{
             $new_values['user_id'] = $new_values['updated_by'] = $values['frm_user_id'];
 
         //check for duplicate entries created in the last 5 minutes
-        $check_val = $new_values;
-        $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*60*5))); 
-        unset($check_val['created_at']);
-        unset($check_val['id']);
-        unset($check_val['item_key']);
-        if($new_values['item_key'] == $new_values['name'])
-            unset($check_val['name']);
-        
         $create_entry = true;
-        $entry_exists = $frmdb->get_records($frmdb->entries, $check_val, 'created_at DESC', '', 'id');
-        if($entry_exists and !empty($entry_exists)){
-            foreach($entry_exists as $entry_exist){
-                if($create_entry){
-                    $create_entry = false;
-                    //add more checks here to make sure it's a duplicate
-                    if (isset($values['item_meta'])){
-                        $metas = FrmEntryMeta::get_entry_meta_info($entry_exist->id);
-                        $field_metas = array();
-                        foreach($metas as $meta)
-                            $field_metas[$meta->field_id] = $meta->meta_value;
-                            
-                        $diff = array_diff_assoc($field_metas, $values['item_meta']);
-                        foreach($diff as $field_id => $meta_value){
-                            if(!empty($meta_value) and !$create_entry)
-                                $create_entry = true;
-                        }
-                    }   
+        if(!defined('WP_IMPORTING')){
+            $check_val = $new_values;
+            $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*60*5))); 
+            unset($check_val['created_at']);
+            unset($check_val['id']);
+            unset($check_val['item_key']);
+            if($new_values['item_key'] == $new_values['name'])
+                unset($check_val['name']);
+
+
+            $entry_exists = $frmdb->get_records($frmdb->entries, $check_val, 'created_at DESC', '', 'id');
+            if($entry_exists and !empty($entry_exists)){
+                foreach($entry_exists as $entry_exist){
+                    if($create_entry){
+                        $create_entry = false;
+                        //add more checks here to make sure it's a duplicate
+                        if (isset($values['item_meta'])){
+                            $metas = FrmEntryMeta::get_entry_meta_info($entry_exist->id);
+                            $field_metas = array();
+                            foreach($metas as $meta)
+                                $field_metas[$meta->field_id] = $meta->meta_value;
+
+                            $diff = array_diff_assoc($field_metas, $values['item_meta']);
+                            foreach($diff as $field_id => $meta_value){
+                                if(!empty($meta_value) and !$create_entry)
+                                    $create_entry = true;
+                            }
+                        }   
+                    }
                 }
             }
         }
