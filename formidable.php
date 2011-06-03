@@ -59,7 +59,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.05.03b';
+$frm_version = '1.05.03';
 $frm_db_version = 7;
 
 

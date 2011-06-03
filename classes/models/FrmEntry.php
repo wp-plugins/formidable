@@ -137,19 +137,22 @@ class FrmEntry{
         return $query_results;
     }
 
-    function destroy( $id ){
+    function &destroy( $id ){
       global $wpdb, $frmdb;
+      $id = (int)$id;
       
       do_action('frm_before_destroy_entry', $id);
-      
+
       $wpdb->query('DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id);
-      return $wpdb->query('DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id);
+      $result = $wpdb->query('DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id);
+      return $result;
     }
     
-    function update_form( $id, $value, $form_id ){
+    function &update_form( $id, $value, $form_id ){
       global $wpdb, $frmdb;
       $form_id = isset($value) ? $form_id : NULL;
-      return $wpdb->update( $frmdb->entries, array('form_id' => $form_id), array( 'id' => $id ) );
+      $result = $wpdb->update( $frmdb->entries, array('form_id' => $form_id), array( 'id' => $id ) );
+      return $result;
     }
     
     function getOne( $id, $meta=false){
