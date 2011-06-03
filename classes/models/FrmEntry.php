@@ -24,8 +24,13 @@ class FrmEntry{
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
             
-        if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
+        if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id'])){
             $new_values['user_id'] = $new_values['updated_by'] = $values['frm_user_id'];
+        }else{
+            global $user_ID;
+            if($user_ID)
+                $new_values['user_id'] = $new_values['updated_by'] = $user_ID;
+        }
 
         //check for duplicate entries created in the last 5 minutes
         $create_entry = true;

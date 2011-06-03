@@ -79,7 +79,7 @@ for(i=0; i<len; i++){
 function frmGetData(field_data,selected,ajax_url,append){
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
-		data:"controller=fields&action=ajax_get_data&entry_id="+selected+"&field_id="+field_data[1],
+		data:"controller=fields&action=ajax_get_data&entry_id="+selected+"&field_id="+field_data[1]+"&current_field="+field_data[0],
 		success:function(html){
 			if(html != '') jQuery('#frm_field_'+field_data[0]+'_container').fadeIn('slow'); 
 			

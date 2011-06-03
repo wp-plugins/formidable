@@ -3,6 +3,9 @@ if(!is_numeric($current_page))
     $current_page = FrmAppHelper::get_param($page_param, '1');
 
 $page_params = (isset($page_params)) ? $page_params : '';
+$s = FrmAppHelper::get_param('frm_search', false);
+if($s)
+  $page_params .= '&frm_search='. urlencode($s);  
     
 if($current_page > 1){ // Only show the prev page button if the current page is not the first page ?>
 <a class='prev page-numbers' href="<?php echo add_query_arg(array($page_param => $current_page - 1)); echo $page_params; ?>">&#171;</a> <?php 
