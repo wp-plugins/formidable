@@ -7,7 +7,7 @@
     <p>
         <?php FrmFormsHelper::get_template_dropdown($all_templates); ?>
         <?php _e('or', 'formidable') ?>
-        <a href="<?php echo add_query_arg('action', 'new') ?>"><?php _e('Add New Form', 'formidable') ?></a>
+        <a href="<?php echo add_query_arg('action', 'new') ?>" class="button"><?php _e('Add New Form', 'formidable') ?></a>
     </p>
 
 </div>

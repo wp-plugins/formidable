@@ -13,9 +13,9 @@ class FrmFormsHelper{
     
     function get_template_dropdown($templates){ ?>
         <select id="select_form" name="select_form" onChange="frmAddNewForm(this.value,'duplicate')">
-            <option value=""><?php _e('Create Form from Template', 'formidable') ?>: </option>
+            <option value="">- <?php _e('Create Form from Template', 'formidable') ?> -</option>
             <?php foreach ($templates as $temp){ ?>
-                <option value="<?php echo $temp->id ?>"><?php echo $temp->name ?></option>
+                <option value="<?php echo $temp->id ?>"><?php echo FrmAppHelper::truncate($temp->name, 40) ?></option>
             <?php }?>
         </select> 
     <?php    
@@ -34,7 +34,7 @@ class FrmFormsHelper{
             <option value=""></option>
             <?php } ?>
             <?php foreach($forms as $form){ ?>
-                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo stripslashes($form->name); ?></option>
+                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo FrmAppHelper::truncate($form->name, 50); ?></option>
             <?php } ?>
         </select>
         <?php
