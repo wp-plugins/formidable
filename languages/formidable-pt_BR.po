@@ -1828,7 +1828,7 @@ msgstr "Não é um e-mail válido para sua resposta automática."
 msgid "You have already submitted that form"
 msgstr "Você já enviou esse formulário"
 
-#: pro/classes/views/displays/edit.php:7
+#: pro/classes/views/displays/edit.php:11
 #: pro/classes/views/displays/new.php:7
 #@ formidable
 msgid "Get Help with This Page"
@@ -2108,7 +2108,7 @@ msgstr "Tem certeza que quer apagar esta entrada?"
 msgid "Download CSV for"
 msgstr "Download CSV para"
 
-#: pro/classes/views/frmpro-entries/new-selection.php:7
+#: pro/classes/views/frmpro-entries/new-selection.php:8
 #@ formidable
 msgid "Select Form for New Entry"
 msgstr "Selecione Formulário para nova entrada"
@@ -3281,7 +3281,7 @@ msgstr ""
 msgid "You can edit this content in the field options."
 msgstr ""
 
-#: pro/classes/views/frmpro-statistics/show.php:8
+#: pro/classes/views/frmpro-statistics/show.php:13
 #@ formidable
 msgid "Go to Report"
 msgstr ""
@@ -3653,6 +3653,7 @@ msgid "Form Templates"
 msgstr ""
 
 #: classes/views/frm-forms/list.php:5
+#: pro/classes/views/displays/edit.php:5
 #: pro/classes/views/displays/list.php:5
 #: pro/classes/views/frmpro-entries/list.php:4
 #@ formidable

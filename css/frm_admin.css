@@ -43,7 +43,7 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 .frm_ipe_form_name input{
 	border:none; width:90%; 
 	font-size:1.1em; background:transparent; 
-	font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-weight: 200;
 }
 
 .form-table .form-field input, .form-field #ed_toolbar input{width:auto;}

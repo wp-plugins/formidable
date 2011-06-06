@@ -31,7 +31,7 @@ class FrmFormsHelper{
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>
-            <option value=""></option>
+            <option value=""><?php echo ($blank == 1) ? '' : '- '. $blank .' -'; ?></option>
             <?php } ?>
             <?php foreach($forms as $form){ ?>
                 <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo FrmAppHelper::truncate($form->name, 50); ?></option>
