@@ -58,9 +58,8 @@ class FrmAppHelper{
     }
     
     function user_has_permission($needed_role){
-        global $user_ID;
         
-        if(($user_ID and $needed_role == '') or current_user_can($needed_role))
+        if($needed_role == '' or current_user_can($needed_role))
             return true;
             
         $roles = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber' );
