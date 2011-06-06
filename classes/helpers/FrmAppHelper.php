@@ -18,7 +18,7 @@ class FrmAppHelper{
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
             <option value=""></option>
             <?php foreach($pages as $page){ ?>
-                <option value="<?php echo $page->ID; ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $page->ID) or (!isset($_POST[$field_name]) and $page_id == $page->ID))?' selected="selected"':''); ?>><?php echo ($truncate)? substr($page->post_title, 0, $truncate) : $page->post_title; ?> </option>
+                <option value="<?php echo $page->ID; ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $page->ID) or (!isset($_POST[$field_name]) and $page_id == $page->ID))?' selected="selected"':''); ?>><?php echo ($truncate)? FrmAppHelper::truncate($page->post_title, $truncate) : $page->post_title; ?> </option>
             <?php } ?>
         </select>
     <?php
@@ -92,7 +92,7 @@ class FrmAppHelper{
     
     function esc_textarea( $text ) {
         $safe_text = str_replace('&quot;', '"', $text);
-    	$safe_text = htmlspecialchars( $safe_text, ENT_NOQUOTES );
+        $safe_text = htmlspecialchars( $safe_text, ENT_NOQUOTES );
     	return apply_filters( 'esc_textarea', $safe_text, $text );
     }
     
@@ -269,6 +269,7 @@ class FrmAppHelper{
     }
     
     function truncate($str, $length, $minword = 3, $continue = '...'){
+        $str = stripslashes(esc_attr(strip_tags($str)));
         $sub = '';
         $len = 0;
 

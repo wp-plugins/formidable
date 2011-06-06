@@ -108,7 +108,7 @@ class FrmEntriesHelper{
             <option value=""><?php echo $blank_label; ?></option>
             <?php } ?>
             <?php foreach($entries as $entry){ ?>
-                <option value="<?php echo $entry->id; ?>" <?php selected($field_value, $entry->id); ?>><?php echo substr((!empty($entry->name)) ? stripslashes($entry->name) : $entry->item_key, 0, 50); ?></option>
+                <option value="<?php echo $entry->id; ?>" <?php selected($field_value, $entry->id); ?>><?php echo FrmAppHelper::truncate((!empty($entry->name)) ? stripslashes($entry->name) : $entry->item_key, 40); ?></option>
             <?php } ?>
         </select>
         <?php

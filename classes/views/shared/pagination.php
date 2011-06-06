@@ -24,13 +24,13 @@ if($current_page >= 5){ ?>
 }
       
 // display the current page icon and the 2 pages beneath and above it
-$low_page = (($current_page >= 5)?($current_page-2):2);
-$high_page = ((($current_page + 2) < ($page_count-1))?($current_page+2):($page_count-1));
+$low_page = ($current_page >= 5) ? ($current_page-2) : 2;
+$high_page = (($current_page + 2) < ($page_count-1)) ? ($current_page+2) : ($page_count-1);
 for($i = $low_page; $i <= $high_page; $i++){
     if($current_page==$i){  ?>
-        <span class='page-numbers current'><?php print $i; ?></span> <?php
+        <span class='page-numbers current'><?php echo $i; ?></span> <?php
     }else{ ?>
-        <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $i)); echo $page_params; ?>"><?php print $i; ?></a> <?php
+        <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $i)); echo $page_params; ?>"><?php echo $i; ?></a> <?php
     }
 }
       
@@ -41,9 +41,9 @@ if($current_page < ($page_count - 3)){ ?>
       
 // Display the last page icon
 if($current_page == $page_count){ ?>
-    <span class='page-numbers current'><?php print $page_count; ?></span><?php 
+    <span class='page-numbers current'><?php echo $page_count; ?></span><?php 
 }else{ ?>
-    <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $page_count)); echo $page_params; ?>"><?php print $page_count; ?></a><?php 
+    <a class='page-numbers' href="<?php echo add_query_arg(array($page_param => $page_count)); echo $page_params; ?>"><?php echo $page_count; ?></a><?php 
 }
       
 // Display the next page icon if there is a next page
