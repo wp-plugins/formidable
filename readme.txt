@@ -56,6 +56,20 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
 
 == Changelog ==
+= 1.05.04 =
+* PRO: Added CSV entry import
+* PRO: Added file icons when editing an entry with a non-image file type attached
+TODO: update unique time checking on validation
+TODO: pass entry id for checking on unique time field
+* PRO: Added functionality for time fields set as unique so time options will be removed after a date is selected
+* PRO: Check wp_query if no matching GET or POST variable in the get shortcode
+* PRO: Switch taxonomy lists to links in custom displays
+* PRO: Added functionality for a where option to be set to a taxonomy name ie [get param=tag]
+* PRO: Added functionality for a taxonomy to work with equals and not_equal in custom displays
+* PRO: Removed ajax error checking on the captcha field to fix the incorrect response messages
+* PRO: Fixed dependent data from entries fields to show the selected values on validation error and on edit
+* PRO: Added `[frm-entry-update-field]` shortcode to update a single field in an entry with an ajax link
+
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1
 * Added functionality for "Fit Select Boxes into SideBar" checkbox and field size in widget in free version

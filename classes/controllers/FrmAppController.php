@@ -22,7 +22,7 @@ class FrmAppController{
         // Used to process standalone requests
         add_action('init', array(&$this, 'parse_standalone_request'));
         // Update the session data
-        add_action('init', array(&$this, 'referer_session'), 99);
+        add_action('init', array(&$this, 'referer_session'), 1);
         
         //Shortcodes
         add_shortcode('formidable', array(&$this, 'get_form_shortcode'));

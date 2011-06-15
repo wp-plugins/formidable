@@ -151,9 +151,6 @@ class FrmFormsController{
         $key = (isset($_GET['form']) ? $_GET['form'] : (isset($_POST['form']) ? $_POST['form'] : ''));
         $form = $frm_form->getAll("form_key='$key'", '', ' LIMIT 1');
         if (!$form) $form = $frm_form->getAll('', '', ' LIMIT 1');
-        $form->options = stripslashes_deep(maybe_unserialize($form->options));
-        $description = $title = true;
-        $custom_style = (isset($form->options['custom_style'])) ? $form->options['custom_style'] : ($frm_settings->load_style != 'none');
         
         require(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
     }

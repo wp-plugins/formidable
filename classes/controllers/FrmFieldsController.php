@@ -243,7 +243,7 @@ class FrmFieldsController{
                 echo ' placeholder="'.$field['default_value'].'"';
 
             if(isset($field['clear_on_focus']) and $field['clear_on_focus']){
-                echo ' onfocus="frmClearDefault(\''.addslashes($field['default_value']).'\', this)" onblur="frmReplaceDefault(\''.addslashes($field['default_value']).'\', this)"';
+                echo ' onfocus="frmClearDefault('."'". addslashes($field['default_value']) ."'". ', this)" onblur="frmReplaceDefault('."'".addslashes($field['default_value'])."'". ', this)"';
                 
                 if($field['value'] == $field['default_value'])
                     echo ' style="font-style:italic;"';

@@ -142,7 +142,7 @@ DEFAULT_HTML;
         $html = str_replace('[key]', $field['field_key'], $html);
         
         //replace [description] and [required_label] and [error]
-        $required = ($field['required'] == '0')?(''):($field['required_indicator']);
+        $required = ($field['required'] == '0')? '' : $field['required_indicator'];
         $error = isset($errors['field'. $field['id']]) ? stripslashes($errors['field'. $field['id']]) : false; 
         foreach (array('description' => $field['description'], 'required_label' => $required, 'error' => $error) as $code => $value){
             if (!$value or $value == '')
@@ -214,7 +214,9 @@ DEFAULT_HTML;
             $html = str_replace('[form_name]', $form['name'], $html);
         }
         $html .= "\n";
-        return apply_filters('frm_replace_shortcodes', $html, $field);
+        
+        $html = apply_filters('frm_replace_shortcodes', $html, $field);
+        return do_shortcode($html);
     }
     
     function display_recaptcha($field, $error=null){

@@ -149,7 +149,7 @@ jQuery.ajax({
 function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel){
 	var label=jQuery('#frm_edit_'+entry_id).text();
 	var orig=jQuery('#'+prefix+entry_id).html();
-	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="frm_edit_container_'+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
+	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="'+prefix+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=entries&action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
@@ -166,6 +166,20 @@ function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id){
 	jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
 	jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
 	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\')">'+label+'</a>');
+}
+
+function frmUpdateField(entry_id,field_id,value,message,ajax_url){
+	jQuery('#frm_update_field_'+entry_id+'_'+field_id).html('<span class="frm-loading-img"></span>');
+	jQuery.ajax({
+		type:"POST",url:ajax_url,
+		data:"controller=entries&action=update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
+		success:function(html){
+			if(message == '')
+				jQuery('#frm_update_field_'+entry_id+'_'+field_id).fadeOut('slow');
+			else
+				jQuery('#frm_update_field_'+entry_id+'_'+field_id).replaceWith(message);
+		}
+	});
 }
 
 function frmDeleteEntry(entry_id,ajax_url,prefix){	

@@ -7,7 +7,7 @@
     <?php wp_head() ?>
 </head>
 <body>
-    <?php require('frm-entry.php'); ?>
+    <?php echo FrmEntriesController::show_form($form->id, '', true, true) ?>
     <?php wp_footer(); ?>
 </body>
 </html>

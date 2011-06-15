@@ -105,11 +105,11 @@ class FrmField{
             $form_table_name = $frmdb->forms;
         }
         
-        $query = 'SELECT fi.*, ' .
+        $query = $wpdb->prepare('SELECT fi.*, ' .
                  'fr.name as form_name ' . 
                  'FROM '. $table_name . ' fi ' .
                  'LEFT OUTER JOIN ' . $form_table_name . ' fr ON fi.form_id=fr.id' . 
-                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit);
         
         if ($limit == ' LIMIT 1')
             $results = $wpdb->get_row($query);
