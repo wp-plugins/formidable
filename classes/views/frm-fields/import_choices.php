@@ -52,7 +52,7 @@
 </head>
 <body class="wp-admin no-js <?php echo apply_filters( 'admin_body_class', '' ) . " $admin_body_class"; ?>" style="min-width:300px;">
 <div style="padding:10px;">
-<p><?php _e('Edit or add field options (one per line)') ?></p>
+<p><?php _e('Edit or add field options (one per line)', 'formidable') ?></p>
 <ul class="prepop">
     <?php foreach($prepop as $label => $pop){ ?>
     <li><a onclick='frmPrePop(<?php echo str_replace("'", '&#145;', json_encode($pop)) ?>); return false;'><?php echo $label ?></a></li>
