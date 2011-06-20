@@ -16,6 +16,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_add_field_option',array(&$this, 'add_option'));
         add_action('wp_ajax_frm_field_option_ipe', array(&$this, 'edit_option') );
         add_action('wp_ajax_frm_delete_field_option',array(&$this, 'delete_option'));
+        add_action('wp_ajax_frm_import_options', array(&$this, 'import_options') );
         add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
         add_filter('frm_field_type' ,array( &$this, 'change_type'));
         add_filter('frm_display_field_options', array(&$this, 'display_field_options'));
@@ -170,6 +171,93 @@ class FrmFieldsController{
         die();
     }
     
+    function import_choices($field_id){
+        if(!current_user_can('frm_edit_forms'))
+            return;
+          
+        global $frm_ajax_url;
+        
+        if(function_exists('register_admin_color_schemes'))
+            register_admin_color_schemes();
+        
+        $hook_suffix = $admin_body_class = '';
+        
+        if ( get_user_setting('mfold') == 'f' )
+        	$admin_body_class .= ' folded';
+
+        if ( is_admin_bar_showing() )
+        	$admin_body_class .= ' admin-bar';
+
+        if ( is_rtl() )
+        	$admin_body_class .= ' rtl';
+
+        $admin_body_class .= ' admin-color-' . sanitize_html_class( get_user_option( 'admin_color' ), 'fresh' );
+        $prepop = array();
+        $prepop[__('Countries', 'formidable')] = FrmAppHelper::get_countries();
+        
+        $states = FrmAppHelper::get_us_states();
+        $prepop[__('U.S. States', 'formidable')] = array_values($states);
+        $prepop[__('U.S. State Abbreviations', 'formidable')] = array_keys($states);
+        
+        $prepop[__('Age', 'formidable')] = array(
+            __('Under 18', 'formidable'), __('18-24', 'formidable'), __('25-34', 'formidable'), 
+            __('35-44', 'formidable'), __('45-54', 'formidable'), __('55-64', 'formidable'),
+            __('65 or Above', 'formidable'), __('Prefer Not to Answer', 'formidable')
+        );
+        
+        $prepop[__('Satisfaction', 'formidable')] = array(
+            __('Very Satisfied', 'formidable'), __('Satisfied', 'formidable'), __('Neutral', 'formidable'), 
+            __('Unsatisfied', 'formidable'), __('Very Unsatisfied', 'formidable'), __('N/A', 'formidable')
+        );
+
+        $prepop[__('Importance', 'formidable')] = array(
+            __('Very Important', 'formidable'), __('Important', 'formidable'), __('Neutral', 'formidable'), 
+            __('Somewhat Important', 'formidable'), __('Not at all Important', 'formidable'), __('N/A', 'formidable')
+        );
+        
+        $prepop[__('Agreement', 'formidable')] = array(
+            __('Strongly Agree', 'formidable'), __('Agree', 'formidable'), __('Neutral', 'formidable'), 
+            __('Disagree', 'formidable'), __('Strongly Disagree', 'formidable'), __('N/A', 'formidable')
+        );
+        
+        $field = FrmField::getOne($field_id);
+        $field->options = maybe_unserialize($field->options);
+        
+        include(FRM_VIEWS_PATH.'/frm-fields/import_choices.php');
+        die();
+    }
+    
+    function import_options(){
+        if(!is_admin())
+            return;
+        
+        global $frm_field, $frm_ajax_url;
+        
+        extract($_POST);
+        
+        $field = $frm_field->getOne($field_id);
+        
+        if(!in_array($field->type, array('radio', 'checkbox', 'select')))
+            return;
+            
+        $opts = explode("\n", rtrim($opts, "\n"));
+        $frm_field->update($field_id, array('options' => maybe_serialize($opts)));
+        
+        $field = FrmFieldsHelper::setup_edit_vars($field);
+        $field['options'] = $opts;
+        $field_name = $field['name'];
+        
+        if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
+            require(FRM_VIEWS_PATH.'/frm-fields/radio.php');
+        }else{
+            foreach ($field['options'] as $opt_key => $opt) 
+                require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
+        }
+        
+        require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
+        
+        die();
+    }
 
     function update_order(){
         global $frm_field;
@@ -215,6 +303,8 @@ class FrmFieldsController{
     }
     
     function input_html($field){
+        global $frm_settings;
+        
         $class = $field['type'];
         if($field['type'] == 'date')
             $class .= " frm_date";
@@ -239,7 +329,7 @@ class FrmFieldsController{
                     $class .= " required";
             }
 
-            if(isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
+            if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
                 echo ' placeholder="'.$field['default_value'].'"';
 
             if(isset($field['clear_on_focus']) and $field['clear_on_focus']){

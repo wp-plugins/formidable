@@ -53,13 +53,14 @@ A. The field and form names and descriptions are all changed with in-place edit.
 
 = Q. Why isn’t the form builder page working after I updated? =
 
-A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you’re still having issues, please let me know.
+A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you're still having issues, please let us know.
 
 == Changelog ==
 = 1.05.04 =
+* Bulk edit and add radio, select, and check box choices
+* Added option to turn off HTML5 use in front-end forms
 * PRO: Added CSV entry import
 * PRO: Added file icons when editing an entry with a non-image file type attached
-TODO: update unique time checking on validation
 TODO: pass entry id for checking on unique time field
 * PRO: Added functionality for time fields set as unique so time options will be removed after a date is selected
 * PRO: Check wp_query if no matching GET or POST variable in the get shortcode
@@ -69,6 +70,9 @@ TODO: pass entry id for checking on unique time field
 * PRO: Removed ajax error checking on the captcha field to fix the incorrect response messages
 * PRO: Fixed dependent data from entries fields to show the selected values on validation error and on edit
 * PRO: Added `[frm-entry-update-field]` shortcode to update a single field in an entry with an ajax link
+* PRO: Updated timepicker to latest version
+* PRO: Added global styling option to set newly-added select fields to an automatic width
+* PRO: Fixes calendar to allow fields mapped to a post to be used as the date field
 
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1

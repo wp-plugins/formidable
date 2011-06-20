@@ -15,7 +15,7 @@
                 if(isset($atts) and isset($atts['opt']) and ($atts['opt'] != $opt_key)) continue;
                 $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
             ?>
-<div class="frm_radio"><input type="radio" name="<?php echo $field_name ?>" id="field_<?php echo $field['id']?>-<?php echo $opt_key ?>" value="<?php echo $field_val ?>" <?php echo ($field['value'] == $field_val) ? 'checked="checked"' : ''; ?> <?php do_action('frm_field_input_html', $field) ?>/><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="field_<?php echo $field['id']?>-<?php echo $opt_key ?>"><?php echo $opt ?></label><?php } 
+<div class="frm_radio"><input type="radio" name="<?php echo $field_name ?>" id="field_<?php echo $field['id'] ?>-<?php echo $opt_key ?>" value="<?php echo $field_val ?>" <?php echo ($field['value'] == $field_val) ? 'checked="checked"' : ''; ?> <?php do_action('frm_field_input_html', $field) ?>/><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="field_<?php echo $field['id'] ?>-<?php echo $opt_key ?>"><?php echo $opt ?></label><?php } 
 ?></div>
     <?php   }  
         }
@@ -60,8 +60,5 @@
         }
         if (!empty($frm_settings->pubkey))
             FrmFieldsHelper::display_recaptcha($field, $error_msg);
-}else if ($field['type'] == 'nucaptcha'){
-    if(function_exists('nucaptcha_comment_form'))
-        nucaptcha_comment_form();
-}else do_action('frm_form_fields',$field, $field_name);
+}else do_action('frm_form_fields', $field, $field_name);
 ?>

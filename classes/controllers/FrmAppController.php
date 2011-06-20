@@ -272,10 +272,12 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
     // Routes for standalone / ajax requests
     function standalone_route($controller, $action=''){
-        global $frm_forms_controller;
+        global $frm_forms_controller, $frm_fields_controller;
 
         if($controller == 'forms' and !in_array($action, array('export', 'import', 'xml')))
             $frm_forms_controller->preview($this->get_param('form'));
+        else if($controller == 'fields' and $action == 'import_choices')
+             $frm_fields_controller->import_choices($this->get_param('field_id'));
         else
             do_action('frm_standalone_route', $controller, $action);
     }

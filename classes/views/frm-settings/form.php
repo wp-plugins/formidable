@@ -43,6 +43,9 @@
                         </select>
                     </p>
                     
+                    <p><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?>> <?php _e('Use HTML5 in forms', 'formidable') ?>
+                    </p>
+                    
                     <?php if($frmpro_is_installed){ ?>
                     <p><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?> />
                     <?php _e('Include the jQuery CSS on ALL pages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The styling for the date field calendar. Some users may be using this css on pages other than just the ones that include a date field.', 'formidable') ?>" /></p>
@@ -116,7 +119,7 @@
             <tr class="form-field">
                 <td></td>
                 <td>        
-                    <?php _e('Failed or Duplicate Entry Message', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong. You will likely never see this error.', 'formidable') ?>" /><br/>
+                    <?php _e('Failed or Duplicate Entry Message', 'formidable'); ?>: <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong.', 'formidable') ?>" /><br/>
                     <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->failed_msg)) ?>" />
                 </td>
             </tr> 

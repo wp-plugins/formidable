@@ -98,7 +98,7 @@ if (isset($values['fields']) && !empty($values['fields'])){
 </div>
 
 </div>
-<div id="frm_editable_html" style="display:none;">
+<div id="frm_editable_html" style="display:none;" title="<?php _e('Customize Form HTML', 'formidable') ?>">
     <div class="alignleft frm_top_container" style="width:500px">
         <p><label class="frm_primary_label"><?php _e('Before Fields', 'formidable') ?></label>
         <textarea name="options[before_html]" rows="4" class="frm_long_input"><?php echo $values['before_html']?></textarea></p>

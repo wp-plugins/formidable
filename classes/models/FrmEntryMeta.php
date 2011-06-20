@@ -143,7 +143,7 @@ class FrmEntryMeta{
         }else{
             if ($operator == 'LIKE')
                 $search = "%{$search}%";
-            $query = $wpdb->prepare("SELECT DISTINCT item_id FROM $frmdb->entry_metas WHERE meta_value {$operator} '{$search}' and field_id='{$field_id}'");
+            $query = $wpdb->prepare("SELECT DISTINCT item_id FROM $frmdb->entry_metas WHERE meta_value {$operator} %s and field_id = %d", $search, $field_id);
       }
       return $wpdb->get_col($query, 0);
   }

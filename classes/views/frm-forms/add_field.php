@@ -22,14 +22,23 @@
 
 }else if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
     $field['default_value'] = maybe_unserialize($field['default_value']); 
-    if(isset($field['post_field']) and $field['post_field'] == 'post_category')
+    if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         do_action('frm_after_checkbox', array('field' => $field, 'field_name' => $field_name, 'type' => $field['type']));
-    else
-        require(FRM_VIEWS_PATH.'/frm-fields/radio.php');   
+    }else{ ?>
+        <div id="frm_field_<?php echo $field['id'] ?>_opts">
+        <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php'); ?>
+        </div>
+    <?php
+    }
         
 ?>
     <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
         <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
+        
+        <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
+        <?php _e('or', 'formidable'); ?>
+        <a title="<?php _e('Bulk Edit Field Choices', 'formidable') ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+        <?php } ?>
     </div>
 <?php
 
@@ -50,10 +59,20 @@
     <div class="frm-show-click">
     <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>
         <p class="howto"><?php _e('Please add options from the WordPress "Categories" page', 'formidable') ?></p>
-    <?php }else if(!isset($field['post_field']) or $field['post_field'] != 'post_status'){
-        foreach ($field['options'] as $opt_key => $opt) require(FRM_VIEWS_PATH.'/frm-fields/single-option.php'); ?>
+    <?php }else if(!isset($field['post_field']) or $field['post_field'] != 'post_status'){ ?>
+        <div id="frm_field_<?php echo $field['id'] ?>_opts">
+        <?php foreach ($field['options'] as $opt_key => $opt) 
+            require(FRM_VIEWS_PATH.'/frm-fields/single-option.php'); 
+        ?>
+        </div>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
             <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
+            
+            <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
+            <?php _e('or', 'formidable'); ?>
+            <a title="<?php _e('Bulk Edit Field Choices', 'formidable') ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+            <?php } ?>
+            
             <?php do_action('frm_add_multiple_opts', $field); ?>
         </div>
 <?php } ?>

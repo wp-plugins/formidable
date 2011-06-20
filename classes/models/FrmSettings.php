@@ -11,6 +11,7 @@ class FrmSettings{
     var $re_lang;
     var $re_msg;
     
+    var $use_html;
     var $custom_style;
     var $load_style;
     var $custom_stylesheet;
@@ -73,6 +74,9 @@ class FrmSettings{
             $this->re_msg = __('The reCAPTCHA was not entered correctly', 'formidable');
 
         
+        if(!isset($this->use_html))
+            $this->use_html = true;
+            
         if(!isset($this->load_style)){
             if(!isset($this->custom_style))
                 $this->custom_style = true;
@@ -136,6 +140,7 @@ class FrmSettings{
         $this->re_theme = $params['frm_re_theme'];
         $this->re_lang = $params['frm_re_lang'];
         
+        $this->use_html = isset($params['frm_use_html']) ? 1 : 0;
         $this->load_style = $params['frm_load_style'];
         //$this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
         //$this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;
