@@ -6,7 +6,7 @@
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
 Version: 1.05.04b2
-Plugin URI: http://formidablepro.com/formidable-wordpress-plugin
+Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
 */
