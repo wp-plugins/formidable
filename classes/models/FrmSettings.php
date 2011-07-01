@@ -4,6 +4,7 @@ class FrmSettings{
     var $preview_page_id;
     var $preview_page_id_str;
     var $lock_keys;
+    var $track;
     
     var $pubkey;
     var $privkey;
@@ -51,6 +52,9 @@ class FrmSettings{
         
         if(!isset($this->lock_keys))
             $this->lock_keys = false;
+        
+        if(!isset($this->track))
+            $this->track = false;
           
         if(!isset($this->pubkey)){
             if(IS_WPMU)
@@ -134,6 +138,7 @@ class FrmSettings{
         global $wp_roles;
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
+        $this->track = isset($params['frm_track']) ? 1 : 0;
         
         $this->pubkey = $params['frm_pubkey'];
         $this->privkey = $params['frm_privkey'];

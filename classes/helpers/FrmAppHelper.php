@@ -447,8 +447,11 @@ class FrmAppHelper{
 
         		$i++;
         	}
+        	
+        	$referrerinfo .= "\r\n";
+	    }else{
+	        $referrerinfo = $_SERVER['HTTP_REFERER'];
 	    }
-    	$referrerinfo .= "\r\n";
 
     	$i = 1;
     	if(isset($_SESSION) and isset($_SESSION['frm_http_pages']) and $_SESSION['frm_http_pages']){
@@ -456,8 +459,9 @@ class FrmAppHelper{
         		$referrerinfo .= str_pad("Page visited $i: ",20) . $page. "\r\n";
         		$i++;
         	}
+        	
+        	$referrerinfo .= "\r\n";
 	    }
-    	$referrerinfo .= "\r\n";
 
     	$i = 1;
     	foreach ($keywords as $keyword) {

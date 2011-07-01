@@ -4,7 +4,10 @@
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
-    <?php require('add_field_links.php'); ?>
+    <?php 
+    $show_preview = true;
+    require('add_field_links.php'); 
+    ?>
     <div id="post-body">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">

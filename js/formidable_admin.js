@@ -51,7 +51,7 @@ function frmUpdateOpts(field_id, ajax_url, opts){
 	jQuery('#frm_field_'+field_id+'_opts').html('').addClass('frm-loading-img');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
-		data:"action=frm_import_options&field_id="+field_id+"&opts="+opts,
+		data:{action:'frm_import_options',field_id:field_id,opts:opts},
 		success:function(html){jQuery('#frm_field_'+field_id+'_opts').html(html).removeClass('frm-loading-img');}
 	});	
 }

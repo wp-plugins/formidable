@@ -231,8 +231,11 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     }
     
     function referer_session() {
-    	global $frm_siteurl;
+    	global $frm_siteurl, $frm_settings;
     	
+    	if(!isset($frm_settings->track) or !$frm_settings->track)
+    	    return;
+    	    
     	if ( !isset($_SESSION) )
     		session_start();
     	
@@ -249,7 +252,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     			$_SESSION['frm_http_referer'][] = $_SERVER['HTTP_REFERER'];	
     	}
     	
-    	if (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'])
+    	if ($_SESSION['frm_http_pages'] and !empty($_SESSION['frm_http_pages']) and (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']))
     		$_SESSION['frm_http_pages'][] = "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'];
     		
     	if(count($_SESSION['frm_http_pages']) > 100){

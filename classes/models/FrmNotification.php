@@ -71,6 +71,8 @@ class FrmNotification{
         if($plain_text)
             $message    = html_entity_decode(strip_tags($message));
 
+        $header         = apply_filters('frm_email_header', $header, compact('to_email', 'subject'));
+        
         if (!wp_mail($recipient, $subject, $message, $header, $attachments)){
             $header = "From: \"{$reply_to_name}\" <{$reply_to}>\r\n";
             mail($recipient, $subject, $message, $header);

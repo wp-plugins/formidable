@@ -93,21 +93,26 @@
                 <?php if(current_user_can('frm_edit_forms')){ ?>
                 <span class="edit"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)) ?>"><?php _e('Edit', 'formidable') ?></a></span>
                 <?php } ?>
-                <?php if($frmpro_is_installed){ ?>
-                    <?php if(current_user_can('frm_create_entries')){ ?>
+                <?php if($frmpro_is_installed){ 
+                    if(current_user_can('frm_create_entries')){ ?>
                     | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&amp;action=new&amp;form=<?php echo $form->id; ?>" title="<?php _e('New', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)) ?> <?php _e('Entry', 'formidable') ?>"><?php _e('New Entry', 'formidable') ?></a></span>
-                    <?php } ?>
-                    <?php if(current_user_can('frm_view_entries')){ ?>
+                    <?php } 
+                    
+                    if(current_user_can('frm_view_entries')){ ?>
                     | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-entries&amp;form=<?php echo $form->id; ?>" title="<?php echo htmlentities(stripslashes($form->name)); ?> Entries"><?php _e('Entries', 'formidable') ?></a></span>
                     <?php } ?>
                     | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-reports&amp;form=<?php echo $form->id; ?>" title="<?php echo htmlentities(stripslashes($form->name)); ?> Reports"><?php _e('Reports', 'formidable') ?></a></span>
-                <?php } ?>
-                <?php if(current_user_can('frm_edit_forms')){ ?>
+                <?php } 
+                
+                if(current_user_can('frm_edit_forms')){ ?>
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)) ?>"><?php _e('Duplicate', 'formidable') ?></a></span>
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>&amp;template=1" title="<?php _e('Create', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Create Template', 'formidable') ?></a></span>
+                    <?php if($frmpro_is_installed){ ?>
                 | <span><a href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=forms&amp;action=export&amp;id=<?php echo $form->id; ?>" title="<?php _e('Export', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Export Template', 'formidable') ?></a></span>
-                <?php } ?>
-                <?php if(current_user_can('frm_delete_forms')){ ?>
+                <?php }
+                } 
+                
+                if(current_user_can('frm_delete_forms')){ ?>
                 | <span class="trash"><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), htmlentities(stripslashes($form->name))) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo htmlentities(stripslashes($form->name)) ?>"><?php _e('Delete', 'formidable') ?></a></span>
                 <?php } ?>
             </div>

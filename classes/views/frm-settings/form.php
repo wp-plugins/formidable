@@ -13,8 +13,8 @@
         <div class="categorydiv" id="side-sortables">
             <?php if($frmpro_is_installed){ ?>
             <ul id="category-tabs" class="category-tabs">
-                <li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');"><?php _e('General', 'formidable') ?></a></li>
-                <li class="hide-if-no-js"><a onclick="frmSettingsTab(jQuery(this),'styling');"><?php _e('Form Styling', 'formidable') ?></a></li>
+                <li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
+                <li class="hide-if-no-js"><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
             </ul>
             <div class="tabs-panel" style="border-bottom:none;border-left:none;border-right:none;height:auto;"></div>
             <?php } ?>
@@ -32,6 +32,14 @@
             </tr>
             
             <tr class="form-field">
+              <td valign="top" width="200px"><?php _e('Tracking', 'formidable'); ?>: </td>
+              <td>
+                  <p><input type="checkbox" id="frm_track" name="frm_track" value="1" <?php checked($frm_settings->track, 1) ?>> <?php _e('Track referrer information and pages visited', 'formidable') ?> 
+                  </p>
+              </td>
+            </tr>
+            
+            <tr class="form-field">
                 <td valign="top"><?php _e('Stylesheets', 'formidable'); ?>: </td>
                 <td>
                     
@@ -43,7 +51,7 @@
                         </select>
                     </p>
                     
-                    <p><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?>> <?php _e('Use HTML5 in forms', 'formidable') ?>
+                    <p><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?>> <?php _e('Use HTML5 in forms', 'formidable') ?> 
                     </p>
                     
                     <?php if($frmpro_is_installed){ ?>

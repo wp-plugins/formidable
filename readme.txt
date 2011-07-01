@@ -1,6 +1,6 @@
 === Formidable Forms ===
 Contributors: sswells
-Donate link: http://strategy11.com/donate
+Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
 Requires at least: 2.8
 Tested up to: 3.2
@@ -59,9 +59,10 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.05.04 =
 * Bulk edit and add radio, select, and check box choices
 * Added option to turn off HTML5 use in front-end forms
+* Added option to turn off user tracking
+* Free only: Removed export template link since the functionality behind it is only in Pro version
 * PRO: Added CSV entry import
 * PRO: Added file icons when editing an entry with a non-image file type attached
-TODO: pass entry id for checking on unique time field
 * PRO: Added functionality for time fields set as unique so time options will be removed after a date is selected
 * PRO: Check wp_query if no matching GET or POST variable in the get shortcode
 * PRO: Switch taxonomy lists to links in custom displays
@@ -72,7 +73,13 @@ TODO: pass entry id for checking on unique time field
 * PRO: Added `[frm-entry-update-field]` shortcode to update a single field in an entry with an ajax link
 * PRO: Updated timepicker to latest version
 * PRO: Added global styling option to set newly-added select fields to an automatic width
-* PRO: Fixes calendar to allow fields mapped to a post to be used as the date field
+* PRO: Fixed calendar to allow fields mapped to a post to be used as the date field
+* PRO: Fixed conditionally hidden field options to work with post category and post status fields
+* PRO: Fixed custom displays to work automatically with pages instead of just post and custom post types
+* PRO: Added functionality to frm-stats shortcode to work with posts and adds where options in key/id=value pairs. ex: [frm-stats id=x 25=hello] where 25 is the field ID and "Hello" is the value the other field in the form should have in order to display
+* PRO: Updated datepicker to latest version
+* PRO: Fixed bug preventing images for saving correctly if the form is set to create a post and the upload field is not set as a post field
+* PRO: Added an "Insert Position" option to the custom display. This will prevent the custom display from being loaded multiple times per page, but will allow users to set when it shows up for themes like Thesis
 
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1

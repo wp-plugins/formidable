@@ -37,7 +37,7 @@ class FrmUpdate{
     $this->plugin_nicename      = 'formidable';
     $this->plugin_name          = FRM_PLUGIN_NAME.'/formidable.php';
     $this->plugin_slug          = FRM_PLUGIN_NAME;
-    $this->plugin_url           = 'http://strategy11.com/formidable-wordpress-plugin';
+    $this->plugin_url           = 'http://formidablepro.com/formidable-wordpress-plugin';
     $this->pro_script           = FRM_PATH . '/pro/'. FRM_PLUGIN_NAME .'-pro.php';
     $this->pro_mothership       = 'http://formidablepro.com';
     $this->pro_cred_store       = 'frmpro-credentials';

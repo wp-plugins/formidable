@@ -67,6 +67,7 @@ class FrmFormsController{
         $id = FrmAppHelper::get_param('id');
         
         if( count($errors) > 0 ){
+            $hide_preview = true;
             $frm_field_selection = FrmFieldsHelper::field_selection();
             $record = $frm_form->getOne( $id );
             $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');

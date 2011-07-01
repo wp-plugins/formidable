@@ -120,7 +120,7 @@ function frmGetFormErrors(object,ajax_url){
 	            jQuery('.form-field .frm_error').replaceWith('');
 				var jump='';
 	            for (var key in errObj){
-					if(jQuery('#frm_field_'+key+'_container').length){
+					if(jQuery('#frm_field_'+key+'_container').length && jQuery('#frm_field_'+key+'_container').is(":visible")){
 						cont_submit=false;
 						if(jump==''){
 							jump='#frm_field_'+key+'_container';

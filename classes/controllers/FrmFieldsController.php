@@ -228,7 +228,7 @@ class FrmFieldsController{
     }
     
     function import_options(){
-        if(!is_admin())
+        if(!is_admin() or !current_user_can('frm_edit_forms'))
             return;
         
         global $frm_field, $frm_ajax_url;
@@ -239,7 +239,8 @@ class FrmFieldsController{
         
         if(!in_array($field->type, array('radio', 'checkbox', 'select')))
             return;
-            
+        
+        $opts = stripslashes($opts);    
         $opts = explode("\n", rtrim($opts, "\n"));
         $frm_field->update($field_id, array('options' => maybe_serialize($opts)));
         

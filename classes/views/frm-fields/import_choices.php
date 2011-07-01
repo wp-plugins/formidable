@@ -23,6 +23,7 @@
     
     ?>
 <style type="text/css">
+#wpadminbar{display:none;}
 .prepop{
     float:left;
     width:240px;
