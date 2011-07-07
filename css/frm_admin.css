@@ -46,6 +46,13 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 	font-size:1.1em; background:transparent; 
 	font-weight: 200;
 }
+.frm_field_opts_list{
+	height:105px;
+	border:1px solid #ddd;
+	background:#fff;
+	overflow:auto;
+	width:80%;
+}
 
 .form-table .form-field input, .form-field #ed_toolbar input{width:auto;}
 textarea.inplace_field{width:98% !important;}
@@ -62,10 +69,10 @@ textarea.inplace_field{width:98% !important;}
 .frm_left_container .frm_primary_label, .frm_pos_left{float:left; width:150px;}
 .frm_none_container .frm_primary_label, .frm_pos_none{display:none;}
 .frm_hidden_container .frm_primary_label, .frm_pos_hidden{visibility:hidden;}
-.frm_spacer{float:left; width:16px; height:16px;}
 .frm_charts object{background:transparent;}
 
 .frm-show-hover, .frm_single_show_hover, .frm-show-click{display:none;}
+.frm_single_visible_hover{visibility:hidden;}
 li.ui-state-default.selected .frm-show-click, li.ui-state-default.selected .frm-show-hover{display:inline;}
 #new_fields span.ui-icon{width:16px;}
 

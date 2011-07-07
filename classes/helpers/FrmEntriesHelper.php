@@ -99,9 +99,9 @@ class FrmEntriesHelper{
     }
 
     function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
-        global $frm_entry;
+        global $wpdb, $frmdb;
 
-        $entries = $frm_entry->getAll("it.form_id=".$form_id, ' ORDER BY name');
+        $entries = $frmdb->get_records($frmdb->entries, array('form_id' => $form_id), 'name', 999, 'id,item_key,name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
             <?php if ($blank){ ?>
@@ -109,7 +109,9 @@ class FrmEntriesHelper{
             <?php } ?>
             <?php foreach($entries as $entry){ ?>
                 <option value="<?php echo $entry->id; ?>" <?php selected($field_value, $entry->id); ?>><?php echo FrmAppHelper::truncate((!empty($entry->name)) ? stripslashes($entry->name) : $entry->item_key, 40); ?></option>
-            <?php } ?>
+            <?php 
+                unset($entry);
+            } ?>
         </select>
         <?php
     }

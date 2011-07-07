@@ -77,21 +77,47 @@ class FrmAppHelper{
         else
             return is_site_admin($user_id);
     }
-
-    function value_is_checked_with_array($field_name, $index, $field_value){
-      if( ( $_POST['action'] == 'process_form' and isset( $_POST[ $field_name ][ $index ] ) ) or ( $_POST['action'] != 'process_form' and isset($field_value) ) )
-        echo ' checked="checked"';
-    }
     
     function checked($values, $current){
-        if(in_array($current, (array)$values))
+        if(FrmAppHelper::check_selected($values, $current))
             echo ' checked="checked"';
+    }
+    
+    function check_selected($values, $current){
+        if(is_array($values))
+            $values = array_map('htmlentities', $values);
+        else
+             $values = htmlentities($values);
+        
+        $values = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $values);
+        $current = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $current);
+    
+        if((is_array($values) && in_array($current, $values)) or (!is_array($values) and $values == $current))
+            return true;
+        else
+            return false;
     }
     
     function esc_textarea( $text ) {
         $safe_text = str_replace('&quot;', '"', $text);
         $safe_text = htmlspecialchars( $safe_text, ENT_NOQUOTES );
     	return apply_filters( 'esc_textarea', $safe_text, $text );
+    }
+    
+    function script_version($handle, $list='scripts'){
+        global $wp_scripts;
+    	if(!$wp_scripts)
+    	    return false;
+        
+        $ver = 0;
+        
+        if ( isset($wp_scripts->registered[$handle]) )
+            $query = $wp_scripts->registered[$handle];
+            
+    	if ( is_object( $query ) )
+    	    $ver = $query->ver;
+
+    	return $ver;
     }
     
     function get_file_contents($filename){
@@ -159,10 +185,11 @@ class FrmAppHelper{
                 }else{
                     if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field->field_options['post_field']) and $field->field_options['post_field']){
                         $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field->field_options['post_field'], $field->field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id, 'field' => $field));
-                    }else if(isset($record->metas))
+                    }else if(isset($record->metas)){
                         $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
-                    else
+                    }else{
                         $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
+                    }
                 }
                 
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;

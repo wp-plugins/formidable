@@ -1,5 +1,6 @@
 <script type="text/javascript">
 jQuery(document).ready(function($){
+    <?php if(!isset($partial_js) or !$partial_js){ ?>
     jQuery('#frm_field_id_<?php echo $field['id']; ?>.ui-state-default').click(function(){
     	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show(); 
         $('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
@@ -7,10 +8,11 @@ jQuery(document).ready(function($){
     });
     
     $('#frm_form_editor_container #frm_field_id_<?php echo $field['id']; ?> .theme-group-header').addClass('corner-all').spinDown();
+    <?php } ?>
 
     $('#frm_field_id_<?php echo $field['id']; ?> .frm_single_option').hover(
-      function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_spacer").hide();},
-      function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_spacer").show();}
+      function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_single_visible_hover").css('visibility','visible');},
+      function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_single_visible_hover").css('visibility','hidden');}
     );
     
     jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option").editInPlace({

@@ -26,8 +26,8 @@ if(jQuery('#bulkaction').val()=='delete'){return confirm('Are you sure you want 
 });
 
 jQuery('.frm_single_option').hover(
-function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_spacer").hide();},
-function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_spacer").show();}
+function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_single_visible_hover").css('visibility','visible');},
+function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_single_visible_hover").css('visibility','hidden');}
 );
 
 jQuery('li.ui-state-default').click(function(evt){

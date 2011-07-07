@@ -215,8 +215,7 @@ DEFAULT_HTML;
         }
         $html .= "\n";
         
-        $html = apply_filters('frm_replace_shortcodes', $html, $field);
-        return do_shortcode($html);
+        return apply_filters('frm_replace_shortcodes', $html, $field);
     }
     
     function display_recaptcha($field, $error=null){

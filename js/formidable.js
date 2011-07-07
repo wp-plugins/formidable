@@ -1,3 +1,8 @@
+jQuery(document).ready(function($){
+var trigger = $('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');
+if(trigger) frmToggleSection(trigger);
+});
+
 function frmToggleSection($sec){
 $sec.next('.frm_toggle_container').slideToggle(200);
 if($sec.hasClass('active')){

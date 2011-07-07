@@ -25,7 +25,7 @@
     if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         do_action('frm_after_checkbox', array('field' => $field, 'field_name' => $field_name, 'type' => $field['type']));
     }else{ ?>
-        <div id="frm_field_<?php echo $field['id'] ?>_opts">
+        <div id="frm_field_<?php echo $field['id'] ?>_opts"<?php echo (count($field['options']) > 10) ? ' class="frm_field_opts_list"' : ''; ?>>
         <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php'); ?>
         </div>
     <?php
@@ -60,7 +60,7 @@
     <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>
         <p class="howto"><?php _e('Please add options from the WordPress "Categories" page', 'formidable') ?></p>
     <?php }else if(!isset($field['post_field']) or $field['post_field'] != 'post_status'){ ?>
-        <div id="frm_field_<?php echo $field['id'] ?>_opts">
+        <div id="frm_field_<?php echo $field['id'] ?>_opts"<?php echo (count($field['options']) > 10) ? ' class="frm_field_opts_list"' : ''; ?>>
         <?php foreach ($field['options'] as $opt_key => $opt) 
             require(FRM_VIEWS_PATH.'/frm-fields/single-option.php'); 
         ?>

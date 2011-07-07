@@ -255,6 +255,7 @@ class FrmFieldsController{
                 require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
         }
         
+        $partial_js = true;
         require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
         
         die();
