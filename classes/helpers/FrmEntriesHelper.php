@@ -34,7 +34,7 @@ class FrmEntriesHelper{
                 $field_array = array(
                     'id' => $field->id,
                     'value' => $new_value,
-                    'default_value' => str_replace('"', '&quot;', $field->default_value),
+                    'default_value' => str_replace('"', '&quot;', maybe_unserialize($field->default_value)),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
                     'type' => apply_filters('frm_field_type', $field->type, $field, $new_value),

@@ -82,8 +82,12 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added an "Insert Position" option to the custom display. This will prevent the custom display from being loaded multiple times per page, but will allow users to set when it shows up for themes like Thesis
 * PRO: Fixed number field to work with decimals and when ordering descending
 * PRO: Added a limit to the number of entries that show in the entry drop-down in places like the custom display page to prevent memory errors
-* PRO: Fixed field options to work better with symbols like &reg; in graphs and when editing entries
-* PRO: Automatically open collapsable heading if there is an error message inside it
+* PRO: Fixed field options to work better with symbols like &reg; in graphs
+* PRO: Automatically open collapsible heading if there is an error message inside it
+* PRO: Added type=deviation to the frm-stats shortcode. Example: [frm-stats id=x type=deviation]
+* PRO: Updated calculations to work with radio, scale, and drop-down fields
+* PRO: Fixed default values for check boxes
+* PRO: Added CSV export format option
 
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1

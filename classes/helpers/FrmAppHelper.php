@@ -85,13 +85,21 @@ class FrmAppHelper{
     
     function check_selected($values, $current){
         if(is_array($values))
+            $values = array_map('trim', $values);
+        else
+            $values = trim($values);
+        $current = trim($current);
+            
+        /*if(is_array($values))
             $values = array_map('htmlentities', $values);
         else
              $values = htmlentities($values);
         
         $values = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $values);
         $current = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $current);
-    
+        */
+        
+        
         if((is_array($values) && in_array($current, $values)) or (!is_array($values) and $values == $current))
             return true;
         else
@@ -199,7 +207,7 @@ class FrmAppHelper{
                 $field_array = array(
                     'id' => $field->id,
                     'value' => str_replace('"', '&quot;', $new_value),
-                    'default_value' => str_replace('"', '&quot;', stripslashes($field->default_value)),
+                    'default_value' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->default_value))),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
                     'type' => apply_filters('frm_field_type', $field_type, $field, $new_value),
