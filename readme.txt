@@ -88,6 +88,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated calculations to work with radio, scale, and drop-down fields
 * PRO: Fixed default values for check boxes
 * PRO: Added CSV export format option
+* PRO: Fixed scale field reports to show all options
 
 = 1.05.03 =
 * Updated user role options to work more reliably with WP 3.1
