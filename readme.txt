@@ -56,6 +56,12 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you're still having issues, please let us know.
 
 == Changelog ==
+= 1.05.05 =
+* Added Dutch translation (Eric Horstman)
+* Fixed "Customize Form HTML" link issues some users were having
+* PRO: Load jQuery UI javascript for datepicker
+* PRO: Fixed custom display "where" options to work with multiple where rows
+
 = 1.05.04 =
 * Bulk edit and add radio, select, and check box choices
 * Added option to turn off HTML5 use in front-end forms

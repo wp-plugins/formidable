@@ -262,9 +262,12 @@ class FrmFieldsController{
     }
 
     function update_order(){
-        global $frm_field;
-        foreach ($_POST['frm_field_id'] as $position => $item)
-            $frm_field->update($item, array('field_order' => $position));
+        if(isset($_POST) and isset($_POST['frm_field_id'])){
+            global $frm_field;
+            
+            foreach ($_POST['frm_field_id'] as $position => $item)
+                $frm_field->update($item, array('field_order' => $position));
+        }
         die();
     }
     

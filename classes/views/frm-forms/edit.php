@@ -14,7 +14,7 @@
     <form method="post" >
         <p>
             <span class="alignright">
-                <a title="<?php _e('Customize Form HTML', 'formidable') ?>" href="#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Customize Form HTML', 'formidable') ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Advanced Users: Customize your form HTML here', 'formidable') ?>" /></a> 
+                <a title="<?php _e('Customize Form HTML', 'formidable') ?>" href="<?php echo admin_url('admin.php') ?>#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Customize Form HTML', 'formidable') ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Advanced Users: Customize your form HTML here', 'formidable') ?>" /></a> 
             </span>
             <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
             <?php _e('or', 'formidable') ?>
@@ -28,7 +28,7 @@
         <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>
 
         <p>
-            <span class="alignright"><a title="<?php _e('Customize Form HTML', 'formidable') ?>" href="#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Customize Form HTML', 'formidable') ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Advanced Users: Customize your form HTML here', 'formidable') ?>" /></a></span>
+            <span class="alignright"><a title="<?php _e('Customize Form HTML', 'formidable') ?>" href="<?php echo admin_url('admin.php') ?>#TB_inline?height=500&amp;width=700&amp;inlineId=frm_editable_html" class="thickbox button"><?php _e('Customize Form HTML', 'formidable') ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Advanced Users: Customize your form HTML here', 'formidable') ?>" /></a></span>
             <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
             <?php _e('or', 'formidable') ?>
             <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
