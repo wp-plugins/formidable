@@ -33,7 +33,7 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 #frm_form_options{width:270px;}
 #frm_form_options .nodrag a{cursor:pointer;}
 #frm_form_options .button{text-align:center;width:98px;float:left;}
-#frm_form_options .button a{display:block;font-weight:normal;text-decoration:none;}
+#frm_form_options .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
 .frm_col_one{margin-right:4px;clear:both;}
 
 #ed_fullscreen{display:none !important;}
@@ -89,6 +89,12 @@ opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; fi
 #wpcontent #new_fields .form-field .themeRoller select,
 #new_fields .form-field .themeRoller textarea{
 	width:auto;font-size:11px;
+}
+.tagchecklist span.no_taglist {
+    display: inline;
+    float: none;
+    line-height: 15px;
+    margin-right: 0;
 }
 .form-field input{width:auto;}
 
@@ -507,3 +513,18 @@ Clearfix
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+
+
+/* PRINT */
+@media print {
+#adminmenuwrap, #adminmenuback, #wphead, #button_bar, #submitdiv, 
+#screen-metas, #screen-meta-links, #footer, .inner-sidebar{display:none !important;}	
+.postbox{
+	background:#fff !important;
+	position:static;
+}
+#wpbody-content{
+	float:none;
+}
+#wpcontent, #post-body-content, .has-right-sidebar #post-body{margin:0 !important;;}
+}

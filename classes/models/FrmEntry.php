@@ -156,7 +156,11 @@ class FrmEntry{
     }
     
     function getOne( $id, $meta=false){
-      global $wpdb, $frmdb;
+      global $wpdb, $frmdb, $frm_loaded_entries;
+      
+      if(isset($frm_loaded_entries[$id]))
+        return $frm_loaded_entries[$id];
+        
       $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
                 LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id";
       if(is_numeric($id))
@@ -172,12 +176,19 @@ class FrmEntry{
                 $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
 
             $entry->metas = $entry_metas;
+            
+            $frm_loaded_entries[$entry->id] = $entry;
       }
+      
       return $entry;
     }
     
     function exists( $id ){
-        global $wpdb, $frmdb;
+        global $wpdb, $frmdb, $frm_loaded_entries;
+        
+        if(isset($frm_loaded_entries[$id]))
+            return true;
+            
         $query = "SELECT id FROM $frmdb->entries";
         if(is_numeric($id))
             $query .= ' WHERE id=' . $id;
@@ -191,7 +202,7 @@ class FrmEntry{
     }
 
     function getAll($where = '', $order_by = '', $limit = '', $meta=false){
-      global $wpdb, $frmdb, $frm_app_helper;
+      global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_entries;
       $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
                 FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" . 
                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
@@ -204,6 +215,9 @@ class FrmEntry{
                   $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
 
               $entries[$key]->metas = $entry_metas;
+              
+              if(!isset($frm_loaded_entries[$entry->id]))
+                  $frm_loaded_entries[$entry->id] = $entries[$key];
           }
       }
       return $entries;
@@ -211,10 +225,14 @@ class FrmEntry{
 
     // Pagination Methods
     function getRecordCount($where=''){
-      global $wpdb, $frmdb, $frm_app_helper;
-      $query = "SELECT COUNT(*) FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
-          $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
-      return $wpdb->get_var($query);
+        global $wpdb, $frmdb, $frm_app_helper;
+        if(is_numeric($where)){
+            $query = "SELECT COUNT(*) FROM $frmdb->entries WHERE form_id=". $where;
+        }else{
+            $query = "SELECT COUNT(*) FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
+                $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
+        }
+        return $wpdb->get_var($query);
     }
 
     function getPageCount($p_size, $where=''){

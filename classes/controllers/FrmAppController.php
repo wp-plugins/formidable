@@ -11,7 +11,7 @@ class FrmAppController{
         add_filter('plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'settings_link'), 10, 2 );
         add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'pro_action_needed'));
         add_action('admin_notices', array( &$this, 'pro_get_started_headline'));
-        add_filter('the_content', array( &$this, 'page_route' ), 1);
+        add_filter('the_content', array( &$this, 'page_route' ), 10);
         add_action('init', array(&$this, 'front_head'));
         add_action('wp_footer', array(&$this, 'footer_js'), 1, 0);
         add_action('admin_init', array( &$this, 'admin_js'));
@@ -30,6 +30,8 @@ class FrmAppController{
     }
     
     function menu(){
+        global $frmpro_is_installed;
+        
         if(current_user_can('administrator') and !current_user_can('frm_view_forms')){
             global $current_user;
             $frm_roles = FrmAppHelper::frm_capabilities();
@@ -39,7 +41,7 @@ class FrmAppController{
             unset($frm_role);
             unset($frm_role_description);
         }
-        global $frmpro_is_installed;
+        
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
             add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller, 'route'), 'div');
@@ -210,7 +212,8 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         if(current_user_can('administrator')){
             global $frmdb;
             $frmdb->uninstall();
-            wp_die(__('Formidable was successfully uninstalled.', 'formidable'));
+            return true;
+            //wp_die(__('Formidable was successfully uninstalled.', 'formidable'));
         }else{
             global $frm_settings;
             wp_die($frm_settings->admin_permission);
@@ -223,8 +226,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
         if( $post && $post->ID == $frm_settings->preview_page_id && isset($_GET['form'])){
             global $frm_forms_controller;
-            $frm_forms_controller->page_preview();
-            return;
+            $content = $frm_forms_controller->page_preview();
         }
 
         return $content;
@@ -240,7 +242,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     		session_start();
     	
     	if ( !isset($_SESSION['frm_http_pages']) or !is_array($_SESSION['frm_http_pages']) )
-    		$_SESSION['frm_http_pages'] = array();
+    		$_SESSION['frm_http_pages'] = array("http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']);
     	
     	if ( !isset($_SESSION['frm_http_referer']) or !is_array($_SESSION['frm_http_referer']) )
     		$_SESSION['frm_http_referer'] = array();

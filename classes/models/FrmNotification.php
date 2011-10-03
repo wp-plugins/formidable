@@ -67,6 +67,7 @@ class FrmNotification{
         $recipient      = $to_email; //recipient
         $header         = "From: \"{$reply_to_name}\" <{$reply_to}>\r\n Reply-To: \"{$reply_to_name}\" <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
         $subject        = html_entity_decode(strip_tags(stripslashes($subject)));
+        $message        = do_shortcode($message);
         $message        = wordwrap(stripslashes($message), 70, "\r\n"); //in case any lines are longer than 70 chars
         if($plain_text)
             $message    = html_entity_decode(strip_tags($message));

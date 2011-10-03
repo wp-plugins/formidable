@@ -47,9 +47,9 @@ class FrmFormsController{
         global $frm_form, $frmpro_is_installed, $frm_ajax_url;
         
         $action = FrmAppHelper::get_param('action');
-        if ($action == 'create')
+        if ($action == 'create'){
             return $this->create();
-        else if ($action == 'new'){
+        }else if ($action == 'new'){
             $frm_field_selection = FrmFieldsHelper::field_selection();  
             $values = FrmFormsHelper::setup_new_vars();
             $id = $frm_form->create( $values );
@@ -129,11 +129,11 @@ class FrmFormsController{
     
     function page_preview(){
         global $frm_form;
-        $description = $title = true;
         $params = $this->get_params();
         if (!$params['form']) return;
         $form = $frm_form->getOne($params['form']);
-        require(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php');
+        if(!$form) return;
+        return FrmEntriesController::show_form($form->id, '', true, true);
     }
 
     function preview(){
@@ -222,15 +222,8 @@ class FrmFormsController{
 
         $form_vars = $this->get_form_sort_vars($params, $where_clause);
 
-        if($current_page_ov)
-          $current_page = $current_page_ov;
-        else
-          $current_page = $params['paged'];
-
-        if($page_params_ov)
-          $page_params .= $page_params_ov;
-        else
-          $page_params .= $form_vars['page_params'];
+        $current_page = ($current_page_ov) ? $current_page_ov : $params['paged'];
+        $page_params .= ($page_params_ov) ? $page_params_ov : $form_vars['page_params'];
 
         $sort_str = $form_vars['sort_str'];
         $sdir_str = $form_vars['sdir_str'];

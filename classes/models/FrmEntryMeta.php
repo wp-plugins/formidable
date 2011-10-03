@@ -45,8 +45,12 @@ class FrmEntryMeta{
     return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE $where");
   }
   
-  function get_entry_meta_by_field($entry_id, $field_id, $return_var=false){
-      global $wpdb, $frmdb;
+  function get_entry_meta_by_field($entry_id, $field_id, $return_var=true){
+      global $wpdb, $frmdb, $frm_loaded_entries;
+      
+      if(isset($frm_loaded_entries[$entry_id]) and isset($frm_loaded_entries[$entry_id]->{$field_id}))
+            return stripslashes($frm_loaded_entries[$entry_id]->{$field_id});
+            
       if (is_numeric($field_id))
           $query = "SELECT `meta_value` FROM $frmdb->entry_metas WHERE field_id='$field_id' and item_id='$entry_id'";
       else

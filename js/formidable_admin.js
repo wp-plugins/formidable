@@ -58,6 +58,10 @@ function frmUpdateOpts(field_id, ajax_url, opts){
 
 function frm_remove_tag(html_tag){jQuery(html_tag).remove();}
 
+function frmToggleLogic(id){
+$ele = jQuery('#'+id);
+$ele.fadeOut('slow'); $ele.next('.frm_logic_rows').fadeIn('slow');
+}
 function frm_show_div(div,value,show_if,class_id){
 if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div).fadeOut('slow');
 }
@@ -96,7 +100,7 @@ function frm_mark_required(field_id, required, images_url, ajax_url){
 	jQuery('.frm_required_details'+field_id).fadeIn('slow');}
 	else{var switch_to='0';var atitle='Click to Mark as Required';var checked='';
 	jQuery('.frm_required_details'+field_id).fadeOut('slow');}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"><img src="'+images_url+'/required.png" alt="required"></a>');
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"><img src="'+images_url+'/required.png" alt="required" /></a>');
 	jQuery('#frm_'+thisid).replaceWith('<input type="checkbox" id="frm_'+thisid+'" name="field_options[required_'+field_id+']" value="1" '+checked+' onclick="frm_mark_required('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" />');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
 };
@@ -105,7 +109,7 @@ function frm_clear_on_focus(field_id, active, images_url, ajax_url){
     var thisid='clear_field_'+field_id;
     if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
     else{var switch_to='1';var new_class='';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class +' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/reload.png"></a>');
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class +' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/reload.png" alt="reload" /></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_clear_on_focus&field="+field_id+"&active="+switch_to});
 };
 
@@ -113,7 +117,7 @@ function frm_default_blank(field_id, active, images_url, ajax_url){
     var thisid='default_blank_'+field_id;
     if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
 	else{var switch_to='1';var new_class='';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class+' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/error.png"></a>');
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" class="'+new_class+' frm-show-hover" id="'+thisid+'"><img src="'+images_url+'/error.png" alt="error" /></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_default_blank&field="+field_id+"&active="+switch_to});
 };
 

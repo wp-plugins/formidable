@@ -81,6 +81,7 @@ class FrmDb{
                 `form_id` int(11) default NULL,
                 `post_id` int(11) default NULL,
                 `user_id` int(11) default NULL,
+                `parent_item_id` int(11) default NULL,
                 `updated_by` int(11) default NULL,
                 `created_at` datetime NOT NULL,
                 `updated_at` datetime NOT NULL,
@@ -88,6 +89,7 @@ class FrmDb{
                 KEY `form_id` (`form_id`),
                 KEY `post_id` (`post_id`),
                 KEY `user_id` (`user_id`),
+                KEY `parent_item_id` (`parent_item_id`),
                 UNIQUE KEY `item_key` (`item_key`)
               ) {$charset_collate};";
 
@@ -125,7 +127,7 @@ class FrmDb{
         }
       
         if($frm_db_version >= 6 and $old_db_version < 6){
-            $fields = $wpdb->get_results("SELECT id, field_options FROM $this->fields WHERE type not in ('hidden', 'user_id', 'break', 'divider', 'html', 'captcha')");
+            $fields = $wpdb->get_results("SELECT id, field_options FROM $this->fields WHERE type not in ('hidden', 'user_id', 'break', 'divider', 'html', 'captcha', 'form')");
             $default_html = <<<DEFAULT_HTML
 <div id="frm_field_[id]_container" class="form-field [required_class] [error_class]">
     <label class="frm_pos_[label_position]">[field_name]

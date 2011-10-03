@@ -32,6 +32,7 @@ class FrmFieldsHelper{
             'scale' => __('Scale', 'formidable'),
             //'grid' => __('Grid', 'formidable'),
             'data' => __('Data from Entries', 'formidable'),
+            //'form' => __('SubForm', 'formidable'),
             'hidden' => __('Hidden Field', 'formidable'), 
             'user_id' => __('Hidden User ID', 'formidable'),
             'html' => __('HTML', 'formidable'),
@@ -215,7 +216,7 @@ DEFAULT_HTML;
         }
         $html .= "\n";
         
-        return apply_filters('frm_replace_shortcodes', $html, $field);
+        return apply_filters('frm_replace_shortcodes', $html, $field, array('errors' => $errors, 'form' => $form));
     }
     
     function display_recaptcha($field, $error=null){
@@ -262,13 +263,13 @@ DEFAULT_HTML;
     
     function show_onfocus_js($field_id, $clear_on_focus){ 
         global $frm_ajax_url; ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></a>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></a>
     <?php
     }
     
     function show_default_blank_js($field_id, $default_blank){ 
         global $frm_ajax_url; ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></a>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></a>
     <?php
     }
     

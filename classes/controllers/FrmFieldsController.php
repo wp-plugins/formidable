@@ -185,7 +185,7 @@ class FrmFieldsController{
         if ( get_user_setting('mfold') == 'f' )
         	$admin_body_class .= ' folded';
 
-        if ( is_admin_bar_showing() )
+        if ( function_exists('is_admin_bar_showing') and is_admin_bar_showing() )
         	$admin_body_class .= ' admin-bar';
 
         if ( is_rtl() )
@@ -290,18 +290,23 @@ class FrmFieldsController{
     }
     
     function display_field_options($display){
-        if ($display['type'] == 'captcha'){
-            $display['required'] = false;
-            $display['invalid'] = true;
-            $display['default_blank'] = false;
-        }else if ($display['type'] == 'radio'){
-            $display['default_blank'] = false;
-        }else if ($display['type'] == 'text'){
-            $display['size'] = true;
-            $display['clear_on_focus'] = true;
-        }else if ($display['type'] == 'textarea'){
-            $display['size'] = true;
-            $display['clear_on_focus'] = true;
+        switch($display['type']){
+            case 'captcha':
+                $display['required'] = false;
+                $display['invalid'] = true;
+                $display['default_blank'] = false;
+            break;
+            case 'radio':
+                $display['default_blank'] = false;
+            break;
+            case 'text':
+            case 'textarea':
+                $display['size'] = true;
+                $display['clear_on_focus'] = true;
+            break;
+            case 'select':
+                $display['size'] = true;
+            break;
         }
         
         return $display;
@@ -334,8 +339,8 @@ class FrmFieldsController{
                     $class .= " required";
             }
 
-            if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
-                echo ' placeholder="'.$field['default_value'].'"';
+            //if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
+            //    echo ' placeholder="'.$field['default_value'].'"';
 
             if(isset($field['clear_on_focus']) and $field['clear_on_focus']){
                 echo ' onfocus="frmClearDefault('."'". addslashes($field['default_value']) ."'". ', this)" onblur="frmReplaceDefault('."'".addslashes($field['default_value'])."'". ', this)"';

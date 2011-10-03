@@ -154,10 +154,22 @@
         
         </div>
         
-        <p class="alignright frm_uninstall"><a href="<?php echo $frm_ajax_url ?>?action=frm_uninstall" onclick="return confirm('<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>')"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
+        <p class="alignright frm_uninstall"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">
         <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
         </p>
 
     </form>
 </div>
+
+
+<script type="text/javascript">
+function frm_uninstall_now(){ 
+if(confirm("<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>")){
+    jQuery('.frm_uninstall a').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="Loading..." />');
+    jQuery.ajax({type:"POST",url:"<?php echo $frm_ajax_url ?>",data:"action=frm_uninstall",
+    success:function(msg){jQuery(".frm_uninstall").fadeOut("slow");}
+    });
+}
+};
+</script>

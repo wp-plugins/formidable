@@ -62,9 +62,9 @@ $frm_db_version = 7;
 global $frm_ajax_url;
 $frm_ajax_url = admin_url('admin-ajax.php');
 
-global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields, $frm_saved_entries;
+global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields, $frm_loaded_entries, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
-$frm_forms_loaded = $frm_loaded_fields = $frm_saved_entries = array();
+$frm_forms_loaded = $frm_loaded_fields = $frm_loaded_entries = $frm_saved_entries = array();
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 global $frm_app_helper;
@@ -163,6 +163,5 @@ if(class_exists('WP_Widget')){
     require_once(FRM_PATH . "/classes/widgets/FrmShowForm.php");
     add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
 }
-
 
 ?>

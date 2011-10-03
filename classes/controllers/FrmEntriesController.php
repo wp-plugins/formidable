@@ -22,11 +22,14 @@ class FrmEntriesController{
     }
     
     function show_form($id='', $key='', $title=false, $description=false){
-        global $frm_form, $user_ID;
+        global $frm_form, $user_ID, $frm_settings, $post;
         if ($id) $form = $frm_form->getOne($id);
         else if ($key) $form = $frm_form->getOne($key);
 
-        if (!$form or $form->is_template or $form->status == 'draft'){
+        if(!$form or 
+            (($form->is_template or $form->status == 'draft') and !isset($_GET) and !isset($_GET['form']) and 
+                (!isset($_GET['preview']) or $post and $post->ID != $frm_settings->preview_page_id))
+            ){
             return __('Please select a valid form', 'formidable');
         }else if ($form->logged_in and !$user_ID){
             global $frm_settings;

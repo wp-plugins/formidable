@@ -1,7 +1,6 @@
 <?php
 
 class FrmAppHelper{
-    function FrmAppHelper(){}
     
     function get_param($param, $default=''){
         return (isset($_POST[$param])?$_POST[$param]:(isset($_GET[$param])?$_GET[$param]:$default));
@@ -98,8 +97,7 @@ class FrmAppHelper{
         $values = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $values);
         $current = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $current);
         */
-        
-        
+
         if((is_array($values) && in_array($current, $values)) or (!is_array($values) and $values == $current))
             return true;
         else
@@ -196,14 +194,14 @@ class FrmAppHelper{
                     }else if(isset($record->metas)){
                         $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
                     }else{
-                        $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id, true);
+                        $meta_value = $frm_entry_meta->get_entry_meta_by_field($record->id, $field->id);
                     }
                 }
                 
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
                 $new_value = stripslashes_deep(maybe_unserialize($new_value));
-                  
+                
                 $field_array = array(
                     'id' => $field->id,
                     'value' => str_replace('"', '&quot;', $new_value),
@@ -397,6 +395,9 @@ class FrmAppHelper{
     }
     
     function truncate($str, $length, $minword = 3, $continue = '...'){
+        if((int)$length == 0)
+            return '';
+            
         $str = stripslashes(esc_attr(strip_tags($str)));
         $sub = '';
         $len = 0;

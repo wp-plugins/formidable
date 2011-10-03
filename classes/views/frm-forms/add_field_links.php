@@ -35,8 +35,8 @@
                          <?php
                          $col_class = (empty($col_class)) ? 'frm_col_one' : '';
                          } ?>
-                         <div class="clear"></div>
                          </ul>
+                         <div class="clear"></div>
     				</div>
     			</div><!-- /theme group content -->
     		</div><!-- /theme group -->
@@ -55,8 +55,8 @@
                         <?php 
                         $col_class = (empty($col_class)) ? 'frm_col_one' : '';
                         } ?>
-                         <div class="clear"></div>
                          </ul>
+                         <div class="clear"></div>
     				</div>
     			</div><!-- /theme group content -->
     		</div><!-- /theme group -->
@@ -71,23 +71,23 @@
 
     				<div class="clearfix">
                         <ul class="frm_key_icons">
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></span> 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" /></span> 
                                 = <?php _e('required field', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required"></span> 
+                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" /></span> 
                                 = <?php _e('not required', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></span> 
                                 = <?php _e('clear default text on click', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png"></span> 
+                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></span> 
                                 = <?php _e('do not clear default text on click', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></span> 
                                 = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/error.png"></span> 
+                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></span> 
                                 = <?php _e('default value will pass validation', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete"></span> 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></span> 
                                 = <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move"></span> 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move" /></span> 
                                 = <?php _e('duplicate field', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move"></span> = 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></span> = 
                                 <?php _e('move field', 'formidable') ?></li>
                         </ul>
     				</div>

@@ -20,8 +20,7 @@ if($params['action'] == 'create' && $params['posted_form_id'] == $form->id){
         require('new.php'); 
 ?>
 <script type="text/javascript">window.onload = function(){var frm_pos=jQuery('#form_<?php echo $form->form_key ?>').offset();
-window.scrollTo(frm_pos.left,frm_pos.top);}</script>
-<?php        
+window.scrollTo(frm_pos.left,frm_pos.top);}</script><?php        
     }else{
         $fields = FrmFieldsHelper::get_form_fields($form->id);
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
@@ -31,7 +30,7 @@ window.scrollTo(frm_pos.left,frm_pos.top);}</script>
             $saved_message = apply_filters('frm_content', $saved_message, $form, $created);
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form->options);
             if (!$created or !is_numeric($created) or $conf_method == 'message'){
-                $message = '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? apply_filters('wpautop', apply_filters('do_shortcode', $saved_message)) : $frm_settings->failed_msg).'</div>';
+                $message = '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? wpautop(do_shortcode($saved_message)) : $frm_settings->failed_msg).'</div>';
                 if (!isset($form->options['show_form']) or $form->options['show_form']){
                     require('new.php');
                 }else{ 

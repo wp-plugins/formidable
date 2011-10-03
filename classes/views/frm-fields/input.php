@@ -39,6 +39,7 @@
     if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         do_action('frm_after_checkbox', array('field' => $field, 'field_name' => $field_name, 'type' => $field['type']));
     }else{
+        if($field['options']){
         foreach ($field['options'] as $opt_key => $opt){
             if(isset($atts) and isset($atts['opt']) and ($atts['opt'] != $opt_key)) continue;
             $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
@@ -47,6 +48,7 @@
 <div class="frm_checkbox" id="frm_checkbox_<?php echo $field['id']?>-<?php echo $opt_key ?>"><input type="checkbox" name="<?php echo $field_name ?>[]" id="field_<?php echo $field['id']?>-<?php echo $opt_key ?>" value="<?php echo $field_val ?>" <?php echo $checked ?> <?php do_action('frm_field_input_html', $field) ?>/><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="field_<?php echo $field['id']?>-<?php echo $opt_key ?>"><?php echo $opt ?></label><?php }
  ?></div>
 <?php
+        }
         }
     }
 
