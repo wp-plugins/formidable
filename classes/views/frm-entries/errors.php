@@ -19,7 +19,6 @@ if(!is_admin()){
 <?php 
     }
 } 
-    echo stripslashes($frm_settings->invalid_msg);
     
 if(empty($frm_settings->invalid_msg)){
     $show_img = false;
@@ -30,6 +29,22 @@ if(empty($frm_settings->invalid_msg)){
             $show_img = true;
         }
         echo stripslashes($error) . '<br/>';
+    }
+}else{
+    echo stripslashes($frm_settings->invalid_msg);
+    
+    $show_img = true;
+    foreach( $errors as $err_key => $error ){
+        if($err_key == 'cptch_number' or (strpos($err_key, 'field') === 0) or (strpos($err_key, 'captcha') === 0) )
+            continue;
+          
+        echo '<br/>'; 
+        if($show_img and $img and !empty($img)){ 
+            ?><img src="<?php echo $img ?>" alt="" /><?php 
+        }else{
+            $show_img = true;
+        }
+        echo stripslashes($error);
     }
 } ?>
 </div>

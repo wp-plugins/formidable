@@ -254,6 +254,10 @@ class FrmEntry{
         global $wpdb, $frmdb, $frm_field, $frm_entry_meta;
 
         $errors = array();
+        if(!isset($values['form_id']) or !isset($values['item_meta'])){
+            $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');
+            return $errors;
+        }
 
         if( !isset($values['item_key']) or $values['item_key'] == '' )
             $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');

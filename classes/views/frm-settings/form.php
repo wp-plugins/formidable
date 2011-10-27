@@ -14,7 +14,7 @@
             <?php if($frmpro_is_installed){ ?>
             <ul id="category-tabs" class="category-tabs">
                 <li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
-                <li class="hide-if-no-js"><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
+                <li><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
             </ul>
             <div class="tabs-panel" style="border-bottom:none;border-left:none;border-right:none;height:auto;"></div>
             <?php } ?>

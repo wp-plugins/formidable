@@ -3,7 +3,7 @@
 class FrmAppHelper{
     
     function get_param($param, $default=''){
-        return (isset($_POST[$param])?$_POST[$param]:(isset($_GET[$param])?$_GET[$param]:$default));
+        return (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
     }
     
     function get_pages(){
@@ -395,10 +395,14 @@ class FrmAppHelper{
     }
     
     function truncate($str, $length, $minword = 3, $continue = '...'){
-        if((int)$length == 0)
-            return '';
-            
+        $length = (int)$length;
         $str = stripslashes(esc_attr(strip_tags($str)));
+        
+        if($length == 0)
+            return '';
+        else if($length <= 10)
+            return substr($str, 0, $length);
+            
         $sub = '';
         $len = 0;
 

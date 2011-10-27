@@ -53,9 +53,36 @@ A. The field and form names and descriptions are all changed with in-place edit.
 
 = Q. Why isn’t the form builder page working after I updated? =
 
-A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren’t using the modified files. After clearing your cache and you're still having issues, please let us know.
+A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren't using the modified files. After clearing your cache and you're still having issues, please let us know.
 
 == Changelog ==
+= 1.06 =
+* Fixed XSS security vulnerability
+* Moved the "automatic width" check box for drop-down select fields to free version
+* Fixed form preview page for form templates
+* Added German translation  ([Andre Lisbert](http://web-assembler.com "Andre Lisbert"))
+* Added ajax to uninstall button
+* Correctly filter external shortcodes in the form success message
+* Show error messages at the top if they are not for fields in the form (ie Akismet errors)
+* Free only: Fixed hidden label CSS
+* PRO: Extended the conditional field logic
+* PRO: Added graphs for fields over time
+* PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
+* PRO: Allow multiple fields for the same taxonomy
+* PRO: Added a frm_notification_attachment hook
+* PRO: Improved field calculations to extract a price from the end of an option
+* PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
+$[25 decimal=2 dec_point='.' thousands_sep=',']
+* PRO: Allow fields set as custom fields to be used for sorting custom displays
+* PRO: Updated import to create the posts at the time of import
+* PRO: Unattach images from a post if they are replaced
+* PRO: Fixed bug preventing a field dependent on another data from entries field from updating
+* PRO: Fixed bug affecting pages with multiple editable forms on the same page that caused the first form to always be submitted
+* PRO: Updated the truncate option to not require full words if truncating 10 or less characters
+
+
+
+
 = 1.05.05 =
 * Added Dutch translation (Eric Horstman)
 * Fixed "Customize Form HTML" link issues some users were having

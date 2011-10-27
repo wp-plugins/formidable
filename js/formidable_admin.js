@@ -25,18 +25,22 @@ jQuery('.item-list-form').submit(function(){
 if(jQuery('#bulkaction').val()=='delete'){return confirm('Are you sure you want to delete each of the selected items below?');}
 });
 
-jQuery('.frm_single_option').hover(
-function(){jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_single_visible_hover").css('visibility','visible');},
-function(){jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_single_visible_hover").css('visibility','hidden');}
-);
+jQuery('.frm_single_option').live("mouseenter mouseleave", function(evt){
+if(evt.type=='mouseenter'){
+jQuery(this).children(".frm_single_show_hover").show(); jQuery(this).children(".frm_single_visible_hover").css('visibility','visible');
+}else{
+jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".frm_single_visible_hover").css('visibility','hidden');
+}
+});
 
-jQuery('li.ui-state-default').click(function(evt){
+jQuery('li.ui-state-default').live('click', function(evt){
 	var target = evt.target;
 	$('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
 	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show();
 	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
 	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
 });
+
 $("img.frm_help[title]").tooltip({tip:'#frm_tooltip',lazy:true});
 $("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',lazy:true});
 $("img.frm_help_big[title]").tooltip({tip:'#frm_tooltip_big',lazy:true});
