@@ -6,6 +6,7 @@
 class FrmFormsController{
     function FrmFormsController(){
         add_action('admin_menu', array( &$this, 'menu' ));
+        add_action('admin_menu', array( &$this, 'lower_menu' ), 90);
         add_action('admin_head-toplevel_page_'.FRM_PLUGIN_NAME, array(&$this, 'head'));
         add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-new', array(&$this, 'head'));
         add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-templates', array(&$this, 'head'));
@@ -14,13 +15,17 @@ class FrmFormsController{
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
         add_filter('frm_submit_button', array(&$this, 'submit_button_label'));
         add_filter('media_buttons_context', array(&$this, 'insert_form_button'));
+        //add_action('media_buttons', array(&$this, 'show_form_button'), 20);
         add_action('admin_footer',  array(&$this, 'insert_form_popup'));
     }
     
     function menu(){
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this, 'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Add New Form', 'formidable'), __('Add New Form', 'formidable'), 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this, 'new_form'));
         add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
+    }
+    
+    function lower_menu(){
+        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Add New Form', 'formidable'), '<span style="display:none;">'. __('Add New Form', 'formidable') .'</span>', 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this, 'new_form'));
     }
     
     function head(){
@@ -76,15 +81,33 @@ class FrmFormsController{
         }else{
             $record = $frm_form->update( $id, $_POST, true );
             $message = __('Form was Successfully Created', 'formidable');
-            $params = $this->get_params();
-            return $this->display_forms_list($params, $message);
+            return $this->settings($id, $message);
         }
-         
     }
     
     function edit(){
         $id = FrmAppHelper::get_param('id');
         return $this->get_edit_vars($id);
+    }
+    
+    function settings($id=false, $message=''){
+        if(!$id or !is_numeric($id))
+            $id = FrmAppHelper::get_param('id');
+        return $this->get_settings_vars($id, '', $message);
+    }
+    
+    function update_settings(){
+        global $frm_form;
+        
+        $id = FrmAppHelper::get_param('id');
+        $errors = $frm_form->validate($_POST);
+        if( count($errors) > 0 ){
+            return $this->get_settings_vars($id, $errors);
+        }else{
+            $record = $frm_form->update( $_POST['id'], $_POST );
+            $message = __('Settings Successfully Updated', 'formidable');
+            return $this->get_settings_vars($id, '', $message);
+        }
     }
     
     function edit_name(){
@@ -189,6 +212,12 @@ class FrmFormsController{
     function insert_form_button($content){
         $content .= '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'.FRM_IMAGES_URL.'/form_16.png" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
         return $content;
+    }
+    
+    function show_form_button($id){
+        if($id != 'content')
+            return;
+        echo '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'. esc_url(FRM_IMAGES_URL.'/form_16.png'). '" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
     }
     
     function insert_form_popup(){
@@ -305,6 +334,18 @@ class FrmFormsController{
             require(FRM_VIEWS_PATH.'/frm-forms/edit.php');
     }
     
+    function get_settings_vars($id, $errors = '', $message=''){
+        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
+        $record = $frm_form->getOne( $id );
+        $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
+        $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
+        $sections = apply_filters('frm_add_form_settings_section', array(), $values);
+        if (isset($values['default_template']) && $values['default_template'])
+            wp_die(__('That template cannot be edited', 'formidable'));
+        else
+            require(FRM_VIEWS_PATH.'/frm-forms/settings.php');
+    }
+    
     function get_params(){
         $values = array();
         foreach (array('template' => 0, 'id' => '', 'paged' => 1, 'form' => '', 'search' => '', 'sort' => '', 'sdir' => '') as $var => $default)
@@ -349,7 +390,11 @@ class FrmFormsController{
         else if($action == 'destroy')
             return $this->destroy();
         else if($action == 'list-form')
-            return $this->list_form();        
+            return $this->list_form(); 
+        else if($action == 'settings')
+            return $this->settings();
+        else if($action == 'update_settings')
+            return $this->update_settings();
         else
             return $this->display_forms_list();
     }

@@ -4,12 +4,12 @@ class FrmFieldsHelper{
     
     function field_selection(){
         $fields = apply_filters('frm_available_fields', array(
-            'text' => __('Text Input (One Line)', 'formidable'),
-            'textarea' => __('Paragraph Input (Multiple Lines)', 'formidable'),
-            'checkbox' => __('Multiple Selection (Check Boxes)', 'formidable'),
-            'radio' => __('Select One (Radio)', 'formidable'),
-            'select' => __('Drop-Down (Select)', 'formidable'),
-            'captcha' => __('reCAPTCHA (SPAM Control)', 'formidable')
+            'text' => __('Single Line Text', 'formidable'),
+            'textarea' => __('Paragraph Text', 'formidable'),
+            'checkbox' => __('Checkboxes', 'formidable'),
+            'radio' => __('Radio Buttons', 'formidable'),
+            'select' => __('Dropdown', 'formidable'),
+            'captcha' => __('reCAPTCHA', 'formidable')
             //'nucaptcha' => __('NuCaptcha (SPAM Control)', 'formidable')
         ));
         
@@ -25,9 +25,9 @@ class FrmFieldsHelper{
             'number' => __('Number', 'formidable'), 
             'phone' => __('Phone Number', 'formidable'), 
             'email' => __('Email Address', 'formidable'),
+            'url' => __('Website/URL', 'formidable'),
             'date' => __('Date', 'formidable'), 
             'time' => __('Time', 'formidable'),
-            'url' => __('Website/URL', 'formidable'),
             'image' => __('Image URL', 'formidable'), 
             'scale' => __('Scale', 'formidable'),
             //'grid' => __('Grid', 'formidable'),
@@ -263,13 +263,13 @@ DEFAULT_HTML;
     
     function show_onfocus_js($field_id, $clear_on_focus){ 
         global $frm_ajax_url; ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></a>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></a>
     <?php
     }
     
     function show_default_blank_js($field_id, $default_blank){ 
         global $frm_ajax_url; ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm-show-hover" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></a>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm_default_val_icons" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></a>
     <?php
     }
     

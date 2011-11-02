@@ -34,21 +34,28 @@ jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".
 });
 
 jQuery('li.ui-state-default').live('click', function(evt){
-	var target = evt.target;
-	$('.frm-show-hover').hide(); $(this).children(".frm-show-hover").show();
-	$('.frm-show-click').hide(); $(this).children(".frm-show-click").show();
+	var target=evt.target;
+	$('.frm-show-hover').css('visibility','hidden'); $(this).children('.frm-show-hover').css('visibility','visible');
+	$('.frm-show-click').hide(); $(this).children('.frm-show-click').show();
+	var i=$(this).children('input[name^="item_meta"]')[0];
+	if($(i).val()) $(this).find('.frm_default_val_icons').show().css('visibility', 'visible');
+	else $(this).find('.frm_default_val_icons').hide().css('visibility', 'hidden');
 	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
 	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
 });
 
-$("img.frm_help[title]").tooltip({tip:'#frm_tooltip',lazy:true});
-$("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',lazy:true});
-$("img.frm_help_big[title]").tooltip({tip:'#frm_tooltip_big',lazy:true});
+$("img.frm_help[title]").tooltip({tip:'#frm_tooltip',offset:[-24,-165]});
+$("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',offset:[-24,-165]});
+$("img.frm_help_big[title]").tooltip({tip:'#frm_tooltip_big',offset:[-17,-165]});
 
 jQuery('.field_type_list > li').draggable({connectToSortable:'#new_fields',cursor:'move',helper:'clone',revert:'invalid',delay:10});
 jQuery("ul.field_type_list, .field_type_list li").disableSelection();
 
-
+$('.frm_form_builder input[name^="item_meta"], .frm_form_builder textarea[name^="item_meta"]').keyup(function(){
+var n=$(this).attr('name');
+n=n.substring(10,n.length-1);
+frmShowDefaults(n);	
+});
 });
 
 function frmUpdateOpts(field_id, ajax_url, opts){
@@ -86,6 +93,24 @@ function frmRedirectToForm(form,action){
 	if(form !='') window.location='?page=formidable-entries&action='+action+'&form='+form;
 }
 
+function frm_add_logic_row(id,ajax_url,form_id){
+jQuery.ajax({
+    type:"POST",url:ajax_url,
+    data:"action=frm_add_logic_row&form_id="+form_id+"&field_id="+id+"&meta_name="+jQuery('#frm_logic_row_'+id+' > div').size(),
+    success:function(html){jQuery('#frm_logic_row_'+id).append(html);}
+});
+}
+
+function frmGetFieldValues(field_id,current_field_id,row,ajax_url){ 
+    if(field_id){
+    jQuery.ajax({
+        type:"POST",url:ajax_url,
+        data:"action=frm_get_field_values&current_field="+current_field_id+"&field_id="+field_id,
+        success:function(msg){jQuery("#frm_show_selected_values_"+current_field_id+'_'+row).html(msg);} 
+    });
+    }
+}
+
 function add_frm_field_link(form_id, field_type, ajax_url){
 jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
 success:function(msg){jQuery('#new_fields').append(msg);}
@@ -108,6 +133,15 @@ function frm_mark_required(field_id, required, images_url, ajax_url){
 	jQuery('#frm_'+thisid).replaceWith('<input type="checkbox" id="frm_'+thisid+'" name="field_options[required_'+field_id+']" value="1" '+checked+' onclick="frm_mark_required('+field_id+','+switch_to+',\''+images_url+'\',\''+ajax_url+'\')" />');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
 };
+
+function frmShowDefaults(n){
+	if(jQuery('input[name="item_meta['+n+']"]').length > 0)
+		var fval=jQuery('input[name="item_meta['+n+']"]').val();
+	else
+		var fval=jQuery('textarea[name="item_meta['+n+']"]').val();
+	if(fval){jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeIn('slow');}
+	else{jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeOut('slow');}
+}
 
 function frm_clear_on_focus(field_id, active, images_url, ajax_url){
     var thisid='clear_field_'+field_id;
@@ -142,8 +176,8 @@ function frm_delete_field_option(field_id, opt_key, ajax_url){
 
 function frm_field_hover(show, field_id){
 	var html_id = '#frm_field_id_'+field_id;
-	if(show){jQuery(html_id).children(".frm-show-hover").show();}
-	else{if(!jQuery(html_id).is('.selected')){jQuery(html_id).children(".frm-show-hover").hide();}}
+	if(show){jQuery(html_id).children('.frm-show-hover').css('visibility','visible');}
+	else{if(!jQuery(html_id).is('.selected')){jQuery(html_id).children(".frm-show-hover").css('visibility','hidden');}}
 }
 
 function frmSetMenuOffset() { 
@@ -188,7 +222,7 @@ function frmInsertFieldCode(element_id, variable){
 function frmSettingsTab(tab, id){
 	var t = tab.attr('href');
 	tab.parent().addClass('tabs').siblings('li').removeClass('tabs');
-	jQuery('#general_settings,#styling_settings').hide();
-	jQuery('#'+id+'_settings').show();
+	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel').hide();
+	jQuery('.'+id+'_settings').show();
 	return false;
 }

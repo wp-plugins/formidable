@@ -1,9 +1,9 @@
 <?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false, 'clear_on_focus' => false, 'default_blank' => true)); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
-    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
-    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
-    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="alignright frm-show-hover" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
+    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
+    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
+    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="alignright frm-show-hover frm-hover-icon" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     
     <?php if ($display['required']){ ?>
@@ -12,7 +12,8 @@
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_primary_label" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
-    
+
+<div class="frm_form_fields">    
 <?php if ($display['type'] == 'text'){ ?>
     <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'.$field['size'] .'"' : ''; ?> /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
@@ -25,7 +26,7 @@
     if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         do_action('frm_after_checkbox', array('field' => $field, 'field_name' => $field_name, 'type' => $field['type']));
     }else{ ?>
-        <div id="frm_field_<?php echo $field['id'] ?>_opts"<?php echo (count($field['options']) > 10) ? ' class="frm_field_opts_list"' : ''; ?>>
+        <div id="frm_field_<?php echo $field['id'] ?>_opts" class="clear<?php echo (count($field['options']) > 10) ? ' frm_field_opts_list' : ''; ?>">
         <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php'); ?>
         </div>
     <?php
@@ -84,18 +85,27 @@
     <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
     <input type="hidden" name="<?php echo $field_name ?>" value="1"/>
 <?php 
-}else
+}else{
     do_action('frm_display_added_fields',$field);
+} 
 
-if ($display['clear_on_focus']){
+if ($display['clear_on_focus']){ ?>
+    <span id="frm_clear_on_focus_<?php echo $field['id'] ?>" class="frm-show-click">
+<?php
     FrmFieldsHelper::show_onfocus_js($field['id'], $field['clear_on_focus']);
 
     if ($display['default_blank'])
         FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']);
     
+?>
+    </span>
+<?php        
+    
     do_action('frm_extra_field_display_options', $field);
-}
-
+} 
+?>
+</div>
+<?php
 if ($display['description']){ ?> 
     <div class="frm_ipe_field_desc description frm-show-click" id="field_<?php echo $field['id']; ?>"><?php echo $field['description']; ?></div> 
 <?php
@@ -112,7 +122,7 @@ if ($display['options']){ ?>
                 <div class="clearfix">
                     <table class="form-table">
                     <?php if ($display['size']){ ?>
-                    <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?>:</label></td>
+                    <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?></label></td>
                         <td>
                         <?php if($field['type'] == 'select'){ ?>
                             <?php if(!isset($values['custom_style']) or $values['custom_style']){ ?>
@@ -127,7 +137,7 @@ if ($display['options']){ ?>
                     </tr>
                     <?php } ?>
                     <?php if ($display['label_position']){ ?>
-                    <tr><td width="150px"><label><?php _e('Label Position', 'formidable') ?>:</label></td>
+                    <tr><td width="150px"><label><?php _e('Label Position', 'formidable') ?></label></td>
                         <td><select name="field_options[label_<?php echo $field['id'] ?>]">
                             <option value="top"<?php selected($field['label'], 'top'); ?>><?php _e('Top', 'formidable') ?></option>
                             <option value="left"<?php selected($field['label'], 'left'); ?>><?php _e('Left', 'formidable') ?></option>
@@ -140,19 +150,19 @@ if ($display['options']){ ?>
                     <?php } ?>
                     <?php if ($display['required']){ ?>
                     <tr>
-                        <td><label><?php _e('Required Field', 'formidable') ?>:</label></td>
+                        <td><label><?php _e('Required Field', 'formidable') ?></label></td>
                         <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" /> <span><?php _e('Required', 'formidable') ?></span>
-                        <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?>:</span>
+                        <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
                             <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo htmlentities($field['required_indicator']); ?>" />
                         </span>
                         </td>
                     </tr>
-                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?>:</label></td>  
+                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?></label></td>  
                         <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" class="frm_long_input" /></td>
                     </tr>
                     <?php } ?>
                     <?php if ($display['invalid']){ ?>
-                    <tr><td><label><?php _e('Error message for invalid submission', 'formidable') ?>:</label></td>  
+                    <tr><td><label><?php _e('Error message for invalid submission', 'formidable') ?></label></td>  
                         <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" class="frm_long_input" /></td>
                     </tr>
                     <?php } ?>

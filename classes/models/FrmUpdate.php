@@ -129,9 +129,7 @@ class FrmUpdate{
 
   function pro_cred_form(){ 
       global $frmpro_is_installed; ?>
-<div class="wrap">
-    <div id="icon-ms-admin" class="icon32"><br/></div>
-    <h2><?php echo FRM_PLUGIN_TITLE ?> <?php _e('Pro Account Information', 'formidable')?></h2>      
+  
     <?php
     if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
       if($this->process_pro_cred_form()){
@@ -153,26 +151,29 @@ class FrmUpdate{
 </div>
         <?php
       }
-    }
-
-    $this->display_pro_cred_form(); 
+    } ?>
     
-    if($frmpro_is_installed){ ?>
-    
-    <div>
+    <div style="float:right;width:40%">
+        
+    <?php if($frmpro_is_installed){ ?>
         <p><strong>Formidable Pro is Installed</strong></p>
         <p><strong>Edit/Update Your Profile:</strong><br/><span class="howto">Use your account username and password to log in to your Account and Affiliate Control Panel</span></p>
         <p><a href="http://formidablepro.com/payment/member.php">Account</a> |
             <a href="http://formidablepro.com/payment/aff_member.php">Affiliate Control Panel</a>
         </p>
+    <?php }else{ ?>          
+        <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
+
+        <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
+    <?php } ?>
+    
     </div>
 
-<?php }else{ ?>          
-    <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
+    <div style="float:left;width:55%">
+        <?php $this->display_pro_cred_form(); ?>
+    </div>
+<div class="clear"></div>
 
-    <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
-    <?php } ?>
-</div>
     <?php    
   }
 
@@ -186,28 +187,32 @@ class FrmUpdate{
 
   <table class="form-table">
     <tr class="form-field">
-      <td valign="top" width="15%"><?php echo $this->pro_username_label; ?>:</td>
-      <td width="85%">
+      <td valign="top" width="150px"><?php echo $this->pro_username_label; ?></td>
+      <td>
         <input type="text" name="<?php echo $this->pro_username_str; ?>" value="<?php echo $username; ?>"/>
       </td>
     </tr>
     <tr class="form-field">
-      <td valign="top"><?php echo $this->pro_password_label; ?>:</td>
-      <td width="85%">
+      <td valign="top"><?php echo $this->pro_password_label; ?></td>
+      <td>
         <input type="password" name="<?php echo $this->pro_password_str; ?>" value="<?php echo $password; ?>"/>
       </td>
     </tr>
     <?php if (IS_WPMU){ ?>
         <tr>
-            <td valign="top"><?php _e('WordPress MU', 'formidable'); ?>:</td>
+            <td valign="top"><?php _e('WordPress MU', 'formidable'); ?></td>
             <td valign="top">
                 <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?> />
                 <?php _e('Use this username and password to enable Formidable Pro site-wide', 'formidable'); ?>
             </td>
         </tr>
     <?php } ?>
+    <tr>
+        <td colspan="2">
+            <input class="button-secondary" type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" />
+        </td>
+    </tr>
   </table>
-  <p><input class="button-primary" type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" /></p>
 </form>
     <?php
   }

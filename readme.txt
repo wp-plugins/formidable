@@ -57,6 +57,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.06 =
+* User Interface improvements
 * Fixed XSS security vulnerability
 * Moved the "automatic width" check box for drop-down select fields to free version
 * Fixed form preview page for form templates
@@ -68,6 +69,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Extended the conditional field logic
 * PRO: Added graphs for fields over time
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
+* PRO: Added server-side validation for dates inserted into date fields
 * PRO: Allow multiple fields for the same taxonomy
 * PRO: Added a frm_notification_attachment hook
 * PRO: Improved field calculations to extract a price from the end of an option
@@ -79,8 +81,18 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug preventing a field dependent on another data from entries field from updating
 * PRO: Fixed bug affecting pages with multiple editable forms on the same page that caused the first form to always be submitted
 * PRO: Updated the truncate option to not require full words if truncating 10 or less characters
+* PRO: Fixed bug preventing front-end entry deletion when the form was editable and limited to one per user
 
+TODO:
+- Conditional Display
+    ** Add is equal to/not equal to/greater than/less than options (greater/less only on numeric fields)
+    - add any/all drop-down in settings
+    - add hide/show drop-down in settings
 
+BUGS:
+** Data from entries "just show it" fields don't show value in admin listing or view entry pages
+- listing a category field in a custom display shows all categories. Don't show the ones that are excluded from selection in that field
+** Validation issues when error on ajax edit http://formidablepro.com/?p=8322#frm_topic_20487
 
 
 = 1.05.05 =

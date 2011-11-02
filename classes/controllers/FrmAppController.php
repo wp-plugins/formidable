@@ -66,6 +66,13 @@ class FrmAppController{
         }
         return $nav;
     }
+    
+    function get_form_nav($id, $show_nav=false){
+        $show_nav = FrmAppHelper::get_param('show_nav', $show_nav);
+        
+        if($show_nav)
+            include(FRM_VIEWS_PATH.'/shared/form-nav.php');
+    }
 
     // Adds a settings link to the plugins page
     function settings_link($links, $file){
@@ -133,7 +140,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         wp_enqueue_script('jquery-ui-core');
             
         if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
-            wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.1.2');
+            wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.2.6');
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery'), $frm_version);

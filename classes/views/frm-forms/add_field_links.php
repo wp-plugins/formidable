@@ -21,11 +21,11 @@
 
     	<fieldset class="clearfix">
     	    <div class="theme-group clearfix">
-    			<div class="theme-group-header state-default">
-    				<span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
+    			<div class="theme-group-header state-default state-active ui-state-active corner-top">
+    				<span class="icon icon-triangle-1-e icon-triangle-1-s"><?php _e('Collapse', 'formidable') ?></span>
     				<a href="#"><?php _e('Basic Fields', 'formidable') ?></a>
     			</div><!-- /theme group Error -->
-    			<div class="theme-group-content corner-bottom clearfix">
+    			<div class="theme-group-content corner-bottom clearfix" style="display: block;">
                     <div class="clearfix">
     					<ul class="field_type_list">
                         <?php 
@@ -38,15 +38,8 @@
                          </ul>
                          <div class="clear"></div>
     				</div>
-    			</div><!-- /theme group content -->
-    		</div><!-- /theme group -->
-    		
-    		<div class="theme-group clearfix">
-    			<div class="theme-group-header state-default">
-    				<span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
-    				<a href="#"><?php _e('Pro Fields', 'formidable') ?></a>
-    			</div><!-- /theme group Error -->
-    			<div class="theme-group-content corner-bottom clearfix">
+
+    	            <h4 class="title"><?php _e('Pro Fields', 'formidable') ?></h4>
                     <div class="clearfix">
     					 <ul<?php echo apply_filters('frm_drag_field_class', '') ?>>
                          <?php $col_class = 'frm_col_one';
@@ -61,7 +54,7 @@
     			</div><!-- /theme group content -->
     		</div><!-- /theme group -->
     		
-    		
+    		<?php do_action('frm_extra_form_instructions'); ?>
     		<div class="theme-group clearfix">
     			<div class="theme-group-header state-default">
     				<span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
@@ -71,9 +64,9 @@
 
     				<div class="clearfix">
                         <ul class="frm_key_icons">
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" /></span> 
+                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" style="width:10px" /></span> 
                                 = <?php _e('required field', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" /></span> 
+                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" style="width:10px" /></span> 
                                 = <?php _e('not required', 'formidable') ?></li>
                             <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></span> 
                                 = <?php _e('clear default text on click', 'formidable') ?></li>
@@ -93,7 +86,7 @@
     				</div>
     			</div><!-- /theme group content -->
     		</div><!-- /theme group -->		
-            <?php do_action('frm_extra_form_instructions'); ?>
+            
     	</fieldset>
 
         </div>

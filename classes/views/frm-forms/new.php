@@ -3,6 +3,11 @@
     <h2><?php _e('Add New Form', 'formidable') ?></h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
+    <?php if (!$values['is_template']){ ?>
+        <div class="alignleft">
+            <?php FrmAppController::get_form_nav($id, true); ?>
+        </div>
+    <?php } ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
     <?php require('add_field_links.php'); ?>
     <div id="post-body">
