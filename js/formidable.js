@@ -50,32 +50,46 @@ for(var i=0;i<rules.length;i++){
 			c.HideField=rule.Setting.FieldName;
 			c.MatchType=rule.MatchType;
 			c.Show=rule.Show;
-			c.Type=rule.Setting.FieldTypes[field_id];
             this_opts.push(c);
         }
     }
 }
 
-if(typeof(selected)=='undefined'){
-	selected=jQuery("input[type=hidden][name='item_meta["+field_id+"]']").val();
-	if(typeof(selected)=='undefined') selected='';
-}
-
-var show_fields=new Array();	
+var show_fields=new Array();
+var hide_later=new Array();	
 var len=this_opts.length;
 for(i=0; i<len; i++){
   (function(i){
 	var f=this_opts[i];
-	
+		
 	if(typeof show_fields[f.HideField]=='undefined')
 		show_fields[f.HideField]=new Array();
 		
-	if(f.MatchType=='any' && frmInArray(true, show_fields[f.HideField])) 
+	if(f.MatchType=='any' && frmInArray(true, show_fields[f.HideField])){
+		if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
+		else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		return;
+	}else if(f.MatchType=='all' && frmInArray(false, show_fields[f.HideField])){
+		if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
+		else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
+		return;
+	}
+
+	if(f.FieldName!=field_id){
+		if(f.Type=='radio' || f.Type=='data-radio')
+			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked").val();
+		else if(f.Type=='select' || f.Type=='data-select')
+			selected=jQuery("select[name='item_meta["+f.FieldName+"]']").val();
+	}
+	
+	if(typeof(selected)=='undefined'){
+		selected=jQuery("input[type=hidden][name='item_meta["+f.FieldName+"]']").val();
+		if(typeof(selected)=='undefined') selected='';
+	}
 		
     if(f.Type=='checkbox'){
         show_fields[f.HideField][i]=false;
-        jQuery("input[name='item_meta["+field_id+"][]']:checked").each(function(){
+        jQuery("input[name='item_meta["+f.FieldName+"][]']:checked").each(function(){
 			var match=frmOperators(f.Condition,f.Value,jQuery(this).val());
 			if(show_fields[f.HideField][i]==false && match)
 				show_fields[f.HideField][i]=true;
@@ -102,7 +116,7 @@ for(i=0; i<len; i++){
 			}
 		}else{
 			var checked_vals=new Array();
-			jQuery("input[name='item_meta["+field_id+"][]']:checked").each(function(){checked_vals.push(jQuery(this).val());});
+			jQuery("input[name='item_meta["+f.FieldName+"][]']:checked").each(function(){checked_vals.push(jQuery(this).val());});
 	        if(checked_vals.length==0){show_fields[f.HideField][i]=false;}
 			else{show_fields[f.HideField][i]={'funcName':'frmGetDataOpts','f':f,'sel':checked_vals};}
         }
@@ -115,20 +129,33 @@ for(i=0; i<len; i++){
             else{show_fields[f.HideField][i]={'funcName':'frmGetDataOpts','f':f,'sel':selected};}
         }
     }else{
-		show_fields[f.HideField][i]=frmOperators(f.Condition, f.Value, selected);
+		show_fields[f.HideField][i]=frmOperators(f.Condition,f.Value,selected);
     }
 
 	if(f.MatchType=='any'){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
-				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,field_id);}
-				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
+				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
+				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow'); return;}
 			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		}else{
-			if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
-			else{
-				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,field_id);}
-				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
+			if(i==(len-1)){
+				jQuery.each(hide_later, function(hkey,hvalue){ 
+					if(typeof hvalue!='undefined' && typeof hvalue.result!='undefined'){
+						if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
+						else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+						if(typeof hvalue.result!=false) frmShowField(hvalue.result,ajax_url,hkey);
+						delete hide_later[hkey];
+					}
+				});
+				if(f.Show=='show') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
+				else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
+			}else{
+				if(show_fields[f.HideField][i]!=true){
+					frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);
+					hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};
+				}else if(i==(len-1)){jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
+				}else{hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};}
 			}
 		}
 	}else if(f.MatchType=='all' && i==(len-1)){
@@ -137,9 +164,10 @@ for(i=0; i<len; i++){
 			if(show==false) continue;
 			show=show_fields[f.HideField][m];
 		}
+		
 		if(show==true){
 			if(f.Show=='show'){
-				//if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,field_id);}
+				//if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
 				//else{
 				jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
 				//}
@@ -157,10 +185,10 @@ for(i=0; i<len; i++){
 function frmOperators(op,a,b){
 	if(typeof(b)=='undefined') b='';
 	var operators = {
-	    '==': function(c,d) { return c == d },
-		'!=': function(c,d) { return c != d },
-	    '<': function(c,d) { return c < d },
-		'>': function(c,d) { return c > d }
+	    '==': function(c,d){ return c == d },
+		'!=': function(c,d){ return c != d },
+	    '<': function(c,d){ return c < d },
+		'>': function(c,d){ return c > d }
 	};
 	return operators[op](a,b);
 }
@@ -169,21 +197,11 @@ function frmInArray(needle, haystack){
 	if(typeof(haystack)=='undefined')
 		return false;
     var len=haystack.length;
-    for(var i=0; i<len; i++){
-        if(haystack[i] == needle) return true;
-    }
+    for(var i=0; i<len; i++){ if(haystack[i] == needle) return true;}
     return false;
 }
 
 function frmShowField(funcInfo,ajax_url,field_id){
-/*	var len=funcInfo.length;
-	for(i=0; i<len; i++){
-		(function(i){
-			if(funcInfo[i].funcName=='frmGetDataOpts'){frmGetDataOpts(funcInfo[i].f,funcInfo[i].sel,ajax_url,field_id);}
-			else if(funcInfo[i].funcName=='frmGetData'){frmGetData(funcInfo[i].f,funcInfo[i].sel,ajax_url,0);}
-		})(i);
-	}
-*/
 if(funcInfo.funcName=='frmGetDataOpts'){frmGetDataOpts(funcInfo.f,funcInfo.sel,ajax_url,field_id);}
 else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,ajax_url,0);}
 }
