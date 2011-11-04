@@ -49,7 +49,7 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 	font-weight: 200;
 }
 .frm_field_opts_list{
-	height:105px;
+	height:105px; margin-top:10px;
 	border:1px solid #ddd;
 	background:#fff;
 	overflow:auto;
@@ -124,7 +124,7 @@ span.howto{display:inline;}
 #new_fields .edit_field_type_divider .frm_ipe_field_label,
 #new_fields .edit_field_type_break .frm_ipe_field_label{font-size:116%;}
 #frm_form_options .ui-state-default{color:#000;}
-#new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected{
+#new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected, .frm_update_msg{
 	padding:5px;
 	background-color: #f5fafd; /* Fallback */
 	background-image: -ms-linear-gradient(top, #f7fcfe, #eff8ff); /* IE10 */
@@ -145,7 +145,7 @@ span.howto{display:inline;}
 	background-image: -webkit-linear-gradient(top, #eff8ff, #e8eff4); /* new Webkit */
 	background-image: linear-gradient(top, #eff8ff, #e8eff4); /* proposed W3C Markup */
 }
-
+.frm_update_msg{border-style:solid;margin:5px 0 15px;}
 .success_action_box{display:none;}
 .widefat td{width:auto;}
 

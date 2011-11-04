@@ -55,7 +55,11 @@
         <?php } ?>
     </select>
 <?php } 
-    if ($display['default_blank']) FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
+    if ($display['default_blank']){ ?>
+        <span id="frm_clear_on_focus_<?php echo $field['id'] ?>" class="frm-show-click">
+        <?php FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
+        </span>
+    <?php } ?>
     <br/>
     <div class="frm-show-click">
     <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>

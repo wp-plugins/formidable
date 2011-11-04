@@ -23,7 +23,7 @@
     	    <div class="theme-group clearfix">
     			<div class="theme-group-header state-default state-active ui-state-active corner-top">
     				<span class="icon icon-triangle-1-e icon-triangle-1-s"><?php _e('Collapse', 'formidable') ?></span>
-    				<a href="#"><?php _e('Basic Fields', 'formidable') ?></a>
+    				<a href="#"><?php _e('Fields', 'formidable') ?></a>
     			</div><!-- /theme group Error -->
     			<div class="theme-group-content corner-bottom clearfix" style="display: block;">
                     <div class="clearfix">
@@ -31,7 +31,7 @@
                         <?php 
                         $col_class = 'frm_col_one';
                         foreach ($frm_field_selection as $field_key => $field_type){ ?>
-                            <li class="frmbutton button <?php echo $col_class ?>" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>', '<?php echo $frm_ajax_url ?>');"><?php echo $field_type ?></a></li>
+                            <li class="frmbutton button <?php echo $col_class ?> frm_t<?php echo $field_key ?>" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>', '<?php echo $frm_ajax_url ?>');"><?php echo $field_type ?></a></li>
                          <?php
                          $col_class = (empty($col_class)) ? 'frm_col_one' : '';
                          } ?>
@@ -44,7 +44,7 @@
     					 <ul<?php echo apply_filters('frm_drag_field_class', '') ?>>
                          <?php $col_class = 'frm_col_one';
                          foreach (FrmFieldsHelper::pro_field_selection() as $field_key => $field_type){ ?>
-                             <li class="frmbutton button <?php echo $col_class ?>" id="<?php echo $field_key ?>"><?php echo apply_filters('frmpro_field_links',$field_type, $id, $field_key) ?></li>
+                             <li class="frmbutton button <?php echo $col_class ?> frm_t<?php echo $field_key ?>" id="<?php echo $field_key ?>"><?php echo apply_filters('frmpro_field_links',$field_type, $id, $field_key) ?></li>
                         <?php 
                         $col_class = (empty($col_class)) ? 'frm_col_one' : '';
                         } ?>

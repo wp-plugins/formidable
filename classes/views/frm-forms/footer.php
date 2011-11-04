@@ -34,7 +34,7 @@ $("#new_fields").sortable({
     revert:true,
     receive:function(event,ui){
         var new_id=(ui.item).attr('id');
-        jQuery('#new_fields .frmbutton#'+new_id).replaceWith('<img class="frmbutton frmbutton_loadingnow" id="'+new_id+'" src="<?php echo FRM_IMAGES_URL; ?>/ajax_loader.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
+        jQuery('#new_fields .frmbutton.frm_t'+new_id).replaceWith('<img class="frmbutton frmbutton_loadingnow" id="'+new_id+'" src="<?php echo FRM_IMAGES_URL; ?>/ajax_loader.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
         jQuery.ajax({
             type:"POST",url:"<?php echo $frm_ajax_url ?>",data:"action=frm_insert_field&form_id=<?php echo $id; ?>&field="+new_id,
             success:function(msg){ $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);

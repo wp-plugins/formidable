@@ -125,6 +125,7 @@ global $frm_entries_controller;
 global $frm_fields_controller;
 global $frm_forms_controller;
 global $frm_settings_controller;
+global $frm_statistics_controller;
 
 $frm_api_controller         = new FrmApiController();
 $frm_app_controller         = new FrmAppController();
@@ -132,6 +133,7 @@ $frm_entries_controller     = new FrmEntriesController();
 $frm_fields_controller      = new FrmFieldsController();
 $frm_forms_controller       = new FrmFormsController();
 $frm_settings_controller    = new FrmSettingsController();
+$frm_statistics_controller  = new FrmStatisticsController();
 
 // Instansiate Helpers
 require_once(FRM_HELPERS_PATH. "/FrmEntriesHelper.php");

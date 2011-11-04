@@ -6,13 +6,12 @@
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
     <div class="categorydiv" id="side-sortables">
-        <?php if($frmpro_is_installed){ ?>
         <ul id="category-tabs" class="category-tabs">
             <li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
         </ul>
         <div class="tabs-panel" style="border-bottom:none;border-left:none;border-right:none;height:auto;"></div>
-        <?php } ?>
+
     <div class="general_settings metabox-holder">
         <div class="postbox">
             <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php echo FRM_PLUGIN_TITLE ?> <?php _e('Pro Account Information', 'formidable')?></h3>
@@ -161,6 +160,17 @@
                 </td>
             </tr>
             
+            <?php if(!$frmpro_is_installed){ ?>
+            </table>
+            <table class="styling_settings form-table" style="display:none;">
+                <tr><td>
+                <div class="frm_update_msg">
+                This plugin version does not give you access to the visual form styler.<br/>
+                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro.
+                </div>
+                <img src="http://fp.strategy11.com/wp-content/themes/formidablepro/images/form_style_thumb.png" alt="Style Forms"/>
+                </td></tr>
+            <?php } ?>
             <?php do_action('frm_settings_form', $frm_settings); ?>
             
         </table>

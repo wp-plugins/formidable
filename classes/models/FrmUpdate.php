@@ -128,20 +128,19 @@ class FrmUpdate{
   }
 
   function pro_cred_form(){ 
-      global $frmpro_is_installed; ?>
-  
-    <?php
+      global $frmpro_is_installed; 
     if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
-      if($this->process_pro_cred_form()){
+      if($this->process_pro_cred_form()){ ?>
+<div id="message" class="updated fade"><strong>
+<?php
         if(!$this->pro_is_installed()){
           $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $this->plugin_name, 'upgrade-plugin_' . $this->plugin_name);
-
-          ?>
-<div id="message" class="updated fade">
-<strong><?php printf(__('Your Username & Password was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); ?></strong>
-</div>
-          <?php
-        }
+          printf(__('Your Username & Password were accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); 
+        }else{ 
+            _e('Your Pro installation is now active. Enjoy!', 'formidable');
+        } ?>
+</strong></div>
+<?php
       }else{
         ?>
 <div class="error">

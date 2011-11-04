@@ -36,8 +36,8 @@ jQuery(this).children(".frm_single_show_hover").hide(); jQuery(this).children(".
 jQuery('li.ui-state-default').live('click', function(evt){
 	var target=evt.target;
 	$('.frm-show-hover').css('visibility','hidden'); $(this).children('.frm-show-hover').css('visibility','visible');
-	$('.frm-show-click').hide(); $(this).children('.frm-show-click').show();
-	var i=$(this).children('input[name^="item_meta"]')[0];
+	$('.frm-show-click').hide(); $(this).find('.frm-show-click').show();
+	var i=$(this).find('input[name^="item_meta"], select[name^="item_meta"], textarea[name^="item_meta"]')[0];
 	if($(i).val()) $(this).find('.frm_default_val_icons').show().css('visibility', 'visible');
 	else $(this).find('.frm_default_val_icons').hide().css('visibility', 'hidden');
 	$('li.ui-state-default.selected').removeClass('selected'); $(this).addClass('selected');
@@ -49,12 +49,18 @@ $("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',offset:[-24,-165]
 $("img.frm_help_big[title]").tooltip({tip:'#frm_tooltip_big',offset:[-17,-165]});
 
 jQuery('.field_type_list > li').draggable({connectToSortable:'#new_fields',cursor:'move',helper:'clone',revert:'invalid',delay:10});
-jQuery("ul.field_type_list, .field_type_list li").disableSelection();
+jQuery('ul.field_type_list, .field_type_list li').disableSelection();
 
 $('.frm_form_builder input[name^="item_meta"], .frm_form_builder textarea[name^="item_meta"]').keyup(function(){
 var n=$(this).attr('name');
 n=n.substring(10,n.length-1);
-frmShowDefaults(n);	
+alert(jQuery(this).val());
+frmShowDefaults(n,jQuery(this).val());	
+});
+$('.frm_form_builder select[name^="item_meta"]').change(function(){
+var n=$(this).attr('name');
+n=n.substring(10,n.length-1);
+frmShowDefaults(n,jQuery(this).val());	
 });
 });
 
@@ -134,11 +140,7 @@ function frm_mark_required(field_id, required, images_url, ajax_url){
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
 };
 
-function frmShowDefaults(n){
-	if(jQuery('input[name="item_meta['+n+']"]').length > 0)
-		var fval=jQuery('input[name="item_meta['+n+']"]').val();
-	else
-		var fval=jQuery('textarea[name="item_meta['+n+']"]').val();
+function frmShowDefaults(n,fval){
 	if(fval){jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeIn('slow');}
 	else{jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeOut('slow');}
 }
@@ -219,10 +221,19 @@ function frmInsertFieldCode(element_id, variable){
 	}
 }
 
+function frmGetFieldSelection(form_id,field_id,ajax_url){ 
+    if(form_id){
+    jQuery.ajax({type:"POST",url:ajax_url,
+        data:"action=frm_get_field_selection&field_id="+field_id+"&form_id="+form_id,
+        success:function(msg){ jQuery("#frm_show_selected_fields_"+field_id).html(msg);} 
+    });
+    }
+};
+
 function frmSettingsTab(tab, id){
 	var t = tab.attr('href');
 	tab.parent().addClass('tabs').siblings('li').removeClass('tabs');
-	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel').hide();
+	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel,.mailchimp_settings').hide();
 	jQuery('.'+id+'_settings').show();
 	return false;
 }

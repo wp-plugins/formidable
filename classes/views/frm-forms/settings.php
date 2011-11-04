@@ -98,6 +98,14 @@
                       <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
                       <td><input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" class="frm_long_input" /></td>
                  </tr>
+                 <?php if(!$frmpro_is_installed){ ?>
+                 <tr><td colspan="2">
+                     <div class="frm_update_msg">
+                     This plugin version does not give you access to customize your email notifications and send auto responders.<br/>
+                     <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro.
+                     </div>
+                </td></tr>
+                 <?php } ?>
                  <?php do_action('frm_additional_form_notification_options', $values); ?> 
              </table>
         </div>

@@ -70,7 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added graphs for fields over time
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
 * PRO: Added server-side validation for dates inserted into date fields
-* PRO: Allow multiple fields for the same taxonomy
+* PRO: Allow multiple fields for the same taxonomy/category
 * PRO: Added a frm_notification_attachment hook
 * PRO: Improved field calculations to extract a price from the end of an option
 * PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
@@ -82,17 +82,14 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug affecting pages with multiple editable forms on the same page that caused the first form to always be submitted
 * PRO: Updated the truncate option to not require full words if truncating 10 or less characters
 * PRO: Fixed bug preventing front-end entry deletion when the form was editable and limited to one per user
-
-TODO:
-- Conditional Display
-    ** Add is equal to/not equal to/greater than/less than options (greater/less only on numeric fields)
-    - add any/all drop-down in settings
-    - add hide/show drop-down in settings
+* PRO: Fixed bug preventing Data from entries "just show it" fields from showing a value in admin listing and view entry pages
+* PRO: Fixed bug preventing checkbox selections from showing in custom email notifications if a checkbox contained a quotation mark
 
 BUGS:
-** Data from entries "just show it" fields don't show value in admin listing or view entry pages
-- listing a category field in a custom display shows all categories. Don't show the ones that are excluded from selection in that field
 ** Validation issues when error on ajax edit http://formidablepro.com/?p=8322#frm_topic_20487
+
+TODO:
+- style subnav
 
 
 = 1.05.05 =
