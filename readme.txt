@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
 * PRO: Added server-side validation for dates inserted into date fields
 * PRO: Allow multiple fields for the same taxonomy/category
+* PRO: Added [post_author_email] dynamic default value
 * PRO: Added a frm_notification_attachment hook
 * PRO: Improved field calculations to extract a price from the end of an option
 * PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
@@ -86,7 +87,8 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug preventing checkbox selections from showing in custom email notifications if a checkbox contained a quotation mark
 
 BUGS:
-** Validation issues when error on ajax edit http://formidablepro.com/?p=8322#frm_topic_20487
+- Validation issues when error on ajax edit http://formidablepro.com/?p=8322#frm_topic_20487
+- tooltip and calendar drop-down locations
 
 TODO:
 - style subnav

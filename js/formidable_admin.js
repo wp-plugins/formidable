@@ -54,7 +54,6 @@ jQuery('ul.field_type_list, .field_type_list li').disableSelection();
 $('.frm_form_builder input[name^="item_meta"], .frm_form_builder textarea[name^="item_meta"]').keyup(function(){
 var n=$(this).attr('name');
 n=n.substring(10,n.length-1);
-alert(jQuery(this).val());
 frmShowDefaults(n,jQuery(this).val());	
 });
 $('.frm_form_builder select[name^="item_meta"]').change(function(){
