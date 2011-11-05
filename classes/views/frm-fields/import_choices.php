@@ -14,12 +14,8 @@
     wp_enqueue_script('utils');
     
     do_action('admin_enqueue_scripts', $hook_suffix);
-    do_action("admin_print_styles-$hook_suffix");
     do_action('admin_print_styles');
-    do_action("admin_print_scripts-$hook_suffix");
     do_action('admin_print_scripts');
-    do_action("admin_head-$hook_suffix");
-    do_action('admin_head');
     
     ?>
 <style type="text/css">

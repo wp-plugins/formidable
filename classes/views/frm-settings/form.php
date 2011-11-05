@@ -5,14 +5,19 @@
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
-    <div class="categorydiv" id="side-sortables">
+    <div id="poststuff" class="metabox-holder">
+    <div id="post-body">
+        <div class="meta-box-sortables">
+        <div class="categorydiv postbox">
+        <h3 class="hndle"><span><?php _e('Settings', 'formidable') ?></span></h3>
+        <div class="inside">
         <ul id="category-tabs" class="category-tabs">
-            <li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
+        	<li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
         </ul>
-        <div class="tabs-panel" style="border-bottom:none;border-left:none;border-right:none;height:auto;"></div>
+        
 
-    <div class="general_settings metabox-holder">
+    <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
         <div class="postbox">
             <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php echo FRM_PLUGIN_TITLE ?> <?php _e('Pro Account Information', 'formidable')?></h3>
             <div class="inside">
@@ -31,11 +36,13 @@
         <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
             
-        <p class="submit" style="padding:0;">
-            <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
-        </p>
-            
-        <table class="general_settings form-table">
+        <div class="general_settings tabs-panel" style="border-top:none;">
+        <table class="form-table">
+            <tr><td colspan="2">
+                <p class="submit" style="padding:0;">
+                <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
+                </p>
+            </td></tr>
             <tr class="form-field">
               <td valign="top" width="200px"><?php _e('Preview Page', 'formidable'); ?> </td>
               <td>
@@ -84,7 +91,7 @@
             </tr>
             
             <tr class="form-field" valign="top">
-                <td><?php _e('reCAPTCHA', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_big" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" />
+                <td><?php _e('reCAPTCHA', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" />
                 </td>
             	<td>
         			reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create">free reCAPTCHA key</a>.
@@ -121,7 +128,7 @@
             </tr>    
             
             <tr class="form-field">
-                <td valign="top"><?php _e('Default Messages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></td>
+                <td valign="top"><?php _e('Default Messages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></td>
                 <td>        
                     <?php _e('Incorrect Field', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a field response is either incorrect or missing.', 'formidable') ?>" /><br/>
                     <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->invalid_msg)) ?>" />
@@ -131,7 +138,7 @@
             <tr class="form-field">
                 <td></td>
                 <td>
-                    <?php _e('Success Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" /><br/>
+                    <?php _e('Success Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" /><br/>
                     <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->success_msg)) ?>" />
                 </td>
             </tr>
@@ -147,7 +154,7 @@
             <tr class="form-field">
                 <td></td>
                 <td>        
-                    <?php _e('Login Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', 'formidable') ?>" /><br/>
+                    <?php _e('Login Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', 'formidable') ?>" /><br/>
                     <input type="text" id="frm_login_msg" name="frm_login_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->login_msg)) ?>" />
                 </td>
             </tr>
@@ -162,7 +169,9 @@
             
             <?php if(!$frmpro_is_installed){ ?>
             </table>
-            <table class="styling_settings form-table" style="display:none;">
+            </div>
+            <div class="styling_settings tabs-panel" style="display:none;">>
+            <table class="form-table">
                 <tr><td>
                 <div class="frm_update_msg">
                 This plugin version does not give you access to the visual form styler.<br/>
@@ -174,6 +183,7 @@
             <?php do_action('frm_settings_form', $frm_settings); ?>
             
         </table>
+        </div>
         
         <p class="alignright frm_uninstall"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">
@@ -182,6 +192,11 @@
 
     </form>
     </div>
+    </div>
+    </div>
+</div>
+
+</div>
 </div>
 
 

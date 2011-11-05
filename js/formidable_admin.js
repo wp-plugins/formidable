@@ -1,4 +1,10 @@
 jQuery(document).ready(function($){
+if(typeof(__FRMURL)!='undefined')
+	var ajax_url=__FRMURL;
+if(typeof(__FRMDEFDESC)!='undefined')
+	var def_desc=__FRMDEFDESC;
+var form_id=$('input[name="id"]').val();
+		
 $(".frm_elastic_text").elastic();
 
 window.onscroll = document.documentElement.onscroll = frmSetMenuOffset;
@@ -20,6 +26,24 @@ $("input[name='options[success_action]']").change(function(){
 	else
 		$('.success_action_message_box.success_action_box').fadeIn('slow');
 });
+
+if($(".frm_ipe_form_name").length>0){
+$(".frm_ipe_form_name").editInPlace({
+url:ajax_url,params:"action=frm_form_name_in_place_edit&form_id="+form_id,value_required:"true",bg_out:'#fff'
+});
+
+$(".frm_ipe_form_desc").editInPlace({
+	url:ajax_url,params:"action=frm_form_desc_in_place_edit&form_id="+form_id,
+	field_type:"textarea",textarea_rows:3,textarea_cols:60,default_text:def_desc
+});
+     
+$(".frm_ipe_field_desc").editInPlace({
+url:ajax_url,params:"action=frm_field_desc_in_place_edit",default_text:def_desc,field_type:'textarea',textarea_rows:3
+});
+
+$(".frm_ipe_field_option, .frm_ipe_field_option_select").editInPlace({url:ajax_url,params:"action=frm_field_option_ipe",default_text:'(Blank)'});
+$(".frm_ipe_field_label").editInPlace({url:ajax_url,params:"action=frm_field_name_in_place_edit",value_required:"true"});
+}
 
 jQuery('.item-list-form').submit(function(){
 if(jQuery('#bulkaction').val()=='delete'){return confirm('Are you sure you want to delete each of the selected items below?');}
@@ -44,9 +68,10 @@ jQuery('li.ui-state-default').live('click', function(evt){
 	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option')){ $('.inplace_field').blur();}
 });
 
-$("img.frm_help[title]").tooltip({tip:'#frm_tooltip',offset:[-24,-165]});
-$("img.frm_help_text[title]").tooltip({tip:'#frm_tooltip_text',offset:[-24,-165]});
-$("img.frm_help_big[title]").tooltip({tip:'#frm_tooltip_big',offset:[-17,-165]});
+$("img.frm_help[title]").hover(
+	function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn();},
+	function(){$('#frm_tooltip').fadeOut();$(this).attr('title',frm_title);}
+);
 
 jQuery('.field_type_list > li').draggable({connectToSortable:'#new_fields',cursor:'move',helper:'clone',revert:'invalid',delay:10});
 jQuery('ul.field_type_list, .field_type_list li').disableSelection();
@@ -173,6 +198,18 @@ function frm_delete_field_option(field_id, opt_key, ajax_url){
         data:"action=frm_delete_field_option&field_id="+field_id+"&opt_key="+opt_key,
         success:function(msg){ jQuery('#frm_delete_field_'+field_id+'-'+opt_key+'_container').fadeOut("slow");}
     });
+};
+
+function frm_delete_field(field_id){ 
+    if(confirm("Are you sure you want to delete this field and all data associated with it?")){
+	if(typeof(__FRMURL)!='undefined')
+		var ajax_url=__FRMURL;
+    jQuery.ajax({
+        type:"POST",url:ajax_url,
+        data:"action=frm_delete_field&field_id="+field_id,
+        success:function(msg){jQuery("#frm_field_id_"+field_id).fadeOut("slow");}
+    });
+    }
 };
 
 function frm_field_hover(show, field_id){

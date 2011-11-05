@@ -16,5 +16,3 @@ do_action('frm_nav_items'); ?>
 
 <div style="clear:both;"></div>
 <div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>
-<div id="frm_tooltip_text" class="frm_tooltip_text">&nbsp;</div>
-<div id="frm_tooltip_big" class="frm_tooltip_big">&nbsp;</div>

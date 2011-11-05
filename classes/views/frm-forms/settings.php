@@ -47,7 +47,7 @@
         <div style="display:block;" class="advanced_settings tabs-panel">
         	<table class="form-table">
                 <tr>
-                    <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?></label> <a href="http://formidablepro.com/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
+                    <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?></label> <a href="http://formidablepro.com/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
                     <td>[formidable id=<?php echo $id; ?> title=true description=true] or [formidable key=<?php echo $values['form_key']; ?>]</td>
                 </tr>
 
@@ -67,7 +67,7 @@
                 
                 <tr><td valign="top"><label><?php _e('Action After Form Submission', 'formidable') ?></label>
                     <?php if(!$frmpro_is_installed){ ?>
-                    <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To use the second two options, you must upgrade to Formidable Pro.', 'formidable') ?>" />
+                    <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To use the second two options, you must upgrade to Formidable Pro.', 'formidable') ?>" />
                     <?php } ?>
                     </td>
                     <td>
@@ -95,7 +95,7 @@
         <div class="notification_settings tabs-panel" style="display:none;">
         	<table class="form-table">
                   <tr>
-                      <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help_text" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
+                      <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
                       <td><input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" class="frm_long_input" /></td>
                  </tr>
                  <?php if(!$frmpro_is_installed){ ?>

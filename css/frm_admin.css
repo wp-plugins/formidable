@@ -1,14 +1,19 @@
 .frm_long_input{width:95% !important;}
-.frm_tooltip, .frm_tooltip_big, .frm_tooltip_text { 
-display:none;background:transparent url(../images/black_arrow.png); 
-font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
+.frm_tooltip{ 
+	background:#f5f5f5 url(../images/tooltip.png) no-repeat 20px 10px;
+	padding:10px 40px;z-index:100;display:none;
+	border:1px solid #ccc;
+	-moz-box-shadow:1px 1px 2px rgba(0,0,0,0.4);
+	-webkit-box-shadow:5px 5px 25px rgba(0,0,0 0.5);
+	box-shadow:5px 5px 25px rgba(0,0,0,0.5);
+	position:fixed;
+	width:100%;
+	bottom:0;left:0;
+	-webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
 }
-.frm_help, .frm_help_big, .frm_help_text{width:13px;}
-.frm_tooltip{font-size:10px;}
-.frm_tooltip_big { 
-    background:transparent url(../images/black_arrow_big.png); 
-	height:155px; width:310px; padding:30px;
-}
+.frm_help{width:13px;opacity:.5;filter:alpha(opacity=50);vertical-align:middle;padding-bottom:3px;}
 
 /*.formidable_page_formidable-entry-templates .has-right-sidebar #post-body{width:75%;margin-right:0;}
 .formidable_page_formidable-entry-templates .has-right-sidebar #post-body-content{margin-right:0;}
@@ -58,7 +63,7 @@ font-size:12px;height:90px;width:180px;padding:15px;color:#fff;z-index:100;
 
 .form-table .form-field input, .form-field #ed_toolbar input{width:auto;}
 textarea.inplace_field{width:98% !important;}
-.inplace_field{width:80%;}
+.inplace_field{width:70% !important;}
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
 .frm_rte textarea{width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
@@ -78,12 +83,12 @@ textarea.inplace_field{width:98% !important;}
 li.ui-state-default.selected .frm-show-click{display:inline;}
 li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 #new_fields span.ui-icon{width:16px;}
-#form_settings_page .tabs-panel{height:auto !important; min-height:220px;}
-#form_settings_page .tabs-panel.panel_secondary{min-height:20px;}
+.tabs-panel{height:auto !important; min-height:220px;}
+.tabs-panel.panel_secondary{min-height:20px;}
 
 .frm-hover-icon{padding-left:5px;}
 .frm-move.frm-hover-icon{padding-left:3px;}
-.frm_key_icons img, .frm_required0, .frm_required1{width:16px;}
+.frm_key_icons img, .frm_required0, .frm_required1{width:14px;}
 .frm_inactive_icon, .frm_inactive_icon img, .frm_required0{
 opacity:.4; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=40)"; filter: alpha(opacity=40);
 }

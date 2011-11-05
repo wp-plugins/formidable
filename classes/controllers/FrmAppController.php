@@ -140,7 +140,6 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         wp_enqueue_script('jquery-ui-core');
             
         if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
-            wp_enqueue_script('jquery-tools', FRM_URL.'/js/jquery/jquery.tools.min.js', array('jquery'), '1.2.6');
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery'), $frm_version);
