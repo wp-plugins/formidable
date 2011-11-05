@@ -73,6 +73,19 @@ $("img.frm_help[title]").hover(
 	function(){$('#frm_tooltip').fadeOut();$(this).attr('title',frm_title);}
 );
 
+$("select[name='frm_theme_selector'] option").each(function(){
+$(this).hover(function(){$('#frm_show_cal').html('<img src="'+ $(this).attr('id') +'" alt="" height="27px" width="30px"/>');},'');
+});
+
+$("select[name='frm_theme_selector']").change(function(){
+var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/'+$(this).val()+'/jquery-ui.css';
+frmUpdateCSS(css);
+var themeName=$(this).text();
+$('input[name="frm_theme_css"]').val(css);
+$('input[name="frm_theme_name"]').val(themeName);
+return false;
+});
+
 jQuery('.field_type_list > li').draggable({connectToSortable:'#new_fields',cursor:'move',helper:'clone',revert:'invalid',delay:10});
 jQuery('ul.field_type_list, .field_type_list li').disableSelection();
 
@@ -272,4 +285,14 @@ function frmSettingsTab(tab, id){
 	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel,.mailchimp_settings').hide();
 	jQuery('.'+id+'_settings').show();
 	return false;
+}
+
+//function to append a new theme stylesheet with the new style changes
+function frmUpdateCSS(locStr){
+	var cssLink = jQuery('<link href="'+locStr+'" type="text/css" rel="Stylesheet" class="ui-theme" />');
+	jQuery("head").append(cssLink);
+	
+	if( jQuery("link.ui-theme").size() > 3){
+		jQuery("link.ui-theme:first").remove();
+	}	
 }

@@ -416,12 +416,6 @@ ul.themeswitcher-ul .themeName{
 	margin:3px 0;
 }
 
-#frm_switcher .jquery-ui-themeswitcher-icon{
-	float:right;
-	width:16px;
-	height:16px;
-	background:url(../images/icon_color_arrow.gif) 50% 50% no-repeat;
-}
 /*pickers*/
 #picker {
 	position: absolute;
