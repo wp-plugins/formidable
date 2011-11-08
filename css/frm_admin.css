@@ -1,3 +1,48 @@
+ul.frm_form_nav {
+	background:#ececec;
+	border:solid 1px #c6c6c6;
+	-moz-border-radius: 5px;
+	border-radius: 5px;	
+	width:500px;
+}
+ul.frm_form_nav li{
+	float:right;
+	width:122px;
+	margin:0;
+}
+.frm_form_nav li.current_page {
+	background-position: right 0;
+	color:#fff;
+}
+.frm_form_nav a {
+	background: url("../images/form_nav_bg5.png") no-repeat scroll right -28px;
+	font-size:17px;
+	text-decoration:none;
+	display:block;
+	width:128px;
+	height:21px;
+	padding-top:6px;
+	text-align:center;
+}
+.frm_form_nav li a.current_page {
+	background-position: right 0;
+	color:#fff;
+}
+ul.frm_form_nav li.first a{
+	border-radius: 5px 0 0 5px;
+}
+ul.frm_form_nav li.last {
+	width:128px;
+}
+ul.frm_form_nav li.last a{
+	background-color: #ececec;
+	background-image: none;
+	border-radius: 0 5px 5px 0;
+}
+ul.frm_form_nav li.last a.current_page{
+	background:#767676;
+}
+
 .frm_long_input{width:95% !important;}
 .frm_tooltip{ 
 	background:#f5f5f5 url(../images/tooltip.png) no-repeat 20px 10px;
@@ -254,7 +299,9 @@ span.howto{display:inline;}
 	margin: -2px 3px 0 0;
 }
 
-
+a, #adminmenu a, #the-comment-list p.comment-author strong a, #media-upload a.del-link, #media-items a.delete, .plugins a.delete, .ui-tabs-nav a {
+    cursor: pointer;
+}
 
 /*THEME GROUP CONTENT*/
 .themeRoller .theme-group-content {
