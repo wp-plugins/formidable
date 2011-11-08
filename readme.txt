@@ -19,7 +19,7 @@ There are dozens of form-building plugins out there to create forms, but most ar
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Customize most HTML when editing the form (code for editing HTML when creating the form is soon to follow... and documentation too)
 * Create forms from existing templates or add your own. A contact form template is included.
-* Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://blog.strategy11.com/prettylink "Pretty Link") integration
+* Direct links available for previews and emailing surveys with and without integration with your current theme. Make these links pretty with [Pretty Link](http://wordpress.org/extend/plugins/pretty-link/ "Pretty Link") integration
 * Select an email address to send form responses under "Form Notification Options"
 * Input default values into form fields with the option to clear when clicked
 * PHP ninjas can display data in templates using functions in FrmApiController. However, there is currently no documentation for these functions.
@@ -61,7 +61,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Fixed XSS security vulnerability
 * Moved the "automatic width" check box for drop-down select fields to free version
 * Fixed form preview page for form templates
-* Added German translation  ([Andre Lisbert](http://web-assembler.com "Andre Lisbert"))
+* Added German translation  (Andre Lisbert)
 * Added ajax to uninstall button
 * Correctly filter external shortcodes in the form success message
 * Show error messages at the top if they are not for fields in the form (ie Akismet errors)
@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
 * PRO: Added server-side validation for dates inserted into date fields
 * PRO: Allow multiple fields for the same taxonomy/category
+* PRO: Allow a taxonomy/category to be selected for data from entries fields. This makes cascading category fields possible.
 * PRO: Added [post_author_email] dynamic default value
 * PRO: Added a frm_notification_attachment hook
 * PRO: Improved field calculations to extract a price from the end of an option

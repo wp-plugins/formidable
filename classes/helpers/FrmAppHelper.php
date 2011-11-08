@@ -396,7 +396,7 @@ class FrmAppHelper{
     
     function truncate($str, $length, $minword = 3, $continue = '...'){
         $length = (int)$length;
-        $str = stripslashes(esc_attr(strip_tags($str)));
+        $str = stripslashes(strip_tags($str));
         
         if($length == 0)
             return '';

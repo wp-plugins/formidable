@@ -36,7 +36,10 @@ if(typeof(__FRMRULES)!='undefined')
 	var rules=__FRMRULES;
 if(typeof(__FRMURL)!='undefined')
 	var ajax_url=__FRMURL;
-	
+
+if(typeof(rules)=='undefined')
+	return;
+			
 rules=rules[field_id];
 if(typeof(rules)=='undefined')
 	return;
@@ -226,14 +229,28 @@ function frmGetData(f,selected,ajax_url,append){
 }
 
 function frmGetDataOpts(f,selected,ajax_url,field_id){
+	var prev=new Array();
+	if(f.DataType=='checkbox'){
+		jQuery("input[name='item_meta["+f.HideField+"][]']:checked").each(function(){prev.push(jQuery(this).val());});
+	}else if(f.DataType=='select'){prev.push(jQuery("select[name='item_meta["+f.HideField+"]']").val());
+	}else{prev.push(jQuery("input[name='item_meta["+f.HideField+"]']").val());}
+	
+	if(prev.length==0) prev='';
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=fields&action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
 		success:function(html){
 			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow'); 
 			else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
-			frmCheckDependent('',f.HideField);
+			frmCheckDependent(prev,f.HideField);
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
+			if(html!='' && prev!=''){
+				jQuery.each(prev, function(ckey,cval){
+					if(f.DataType=='checkbox'){jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');}
+					else if(f.DataType=='select'){jQuery("select[name='item_meta["+f.HideField+"]']").val(cval);}
+					else{jQuery("input[name='item_meta["+f.HideField+"]']").val(cval);}
+				});
+			}
 		}
 	});
 }
