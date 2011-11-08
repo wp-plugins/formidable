@@ -14,6 +14,9 @@
         <ul id="category-tabs" class="category-tabs">
         	<li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
+            <?php foreach($sections as $sec_name => $section){ ?>
+                <li><a onclick="frmSettingsTab(jQuery(this),'<?php echo $sec_name ?>');"><?php echo ucfirst($sec_name) ?></a></li>
+            <?php } ?>
         </ul>
         
 
@@ -170,7 +173,7 @@
             <?php if(!$frmpro_is_installed){ ?>
             </table>
             </div>
-            <div class="styling_settings tabs-panel" style="display:none;">>
+            <div class="styling_settings tabs-panel" style="display:none;">
             <table class="form-table">
                 <tr><td>
                 <div class="frm_update_msg">
@@ -180,10 +183,19 @@
                 <img src="http://fp.strategy11.com/wp-content/themes/formidablepro/images/form_style_thumb.png" alt="Style Forms"/>
                 </td></tr>
             <?php } ?>
+            
             <?php do_action('frm_settings_form', $frm_settings); ?>
             
         </table>
         </div>
+           
+        <?php foreach($sections as $sec_name => $section){
+                if(isset($section['class'])){
+                    call_user_func(array($section['class'], $section['function'])); 
+                }else{
+                    call_user_func((isset($section['function']) ? $section['function'] : $section)); 
+                }
+        } ?>
         
         <p class="alignright frm_uninstall"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">

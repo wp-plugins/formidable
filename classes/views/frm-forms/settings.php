@@ -95,7 +95,7 @@
         <div class="notification_settings tabs-panel" style="display:none;">
         	<table class="form-table">
                   <tr>
-                      <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma', 'formidable') ?>" /></td>
+                      <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page.', 'formidable') ?>" /></td>
                       <td><input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" class="frm_long_input" /></td>
                  </tr>
                  <?php if(!$frmpro_is_installed){ ?>
