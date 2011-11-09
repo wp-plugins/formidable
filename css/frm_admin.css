@@ -3,7 +3,7 @@ ul.frm_form_nav {
 	border:solid 1px #c6c6c6;
 	-moz-border-radius: 5px;
 	border-radius: 5px;	
-	width:500px;
+	width:494px;
 }
 ul.frm_form_nav li{
 	float:right;
@@ -15,7 +15,7 @@ ul.frm_form_nav li{
 	color:#fff;
 }
 .frm_form_nav a {
-	background: url("../images/form_nav_bg5.png") no-repeat scroll right -28px;
+	background: url("../images/form_nav_bg6.png") no-repeat scroll right -28px;
 	font-size:17px;
 	text-decoration:none;
 	display:block;
