@@ -3,6 +3,6 @@
 	 <li class="last"> <a<?php if($current_page == FRM_PLUGIN_NAME .'-reports') echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-reports&amp;action=show&amp;form=<?php echo $id ?>&amp;show_nav=1"><?php _e('Reports', 'formidable') ?></a></li>
 	<li> <a<?php if($current_page == FRM_PLUGIN_NAME .'-entries') echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-entries&amp;action=list&amp;form=<?php echo $id ?>&amp;show_nav=1"><?php _e('Entries', 'formidable') ?></a></li>
     <li><a<?php if($current_page == FRM_PLUGIN_NAME and isset($_GET['action']) and $_GET['action'] == 'settings') echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=settings&amp;id=<?php echo $id ?>"><?php _e('Settings', 'formidable') ?></a> </li>
-<li class="first"><a<?php if($current_page == FRM_PLUGIN_NAME and isset($_GET['action']) and $_GET['action'] == 'edit') echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Build', 'formidable') ?></a> </li>
+<li class="first"><a<?php if($current_page == FRM_PLUGIN_NAME and isset($_GET['action']) and ($_GET['action'] == 'edit' or $_GET['action'] == 'new')) echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Build', 'formidable') ?></a> </li>
   <div style="clear:both;"></div>
 </ul>
