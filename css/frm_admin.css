@@ -136,6 +136,7 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 
 .frm_action_icon{width:14px; height:14px; background:url(../images/icons.png) no-repeat;display:block;float:left;margin-left:4px;}
 span.frm_action_icon{margin:0 4px 0 0;}
+.frm_error_icon,.frm_reload_icon{margin-top:5px;}
 .frm_inactive_icon.frm_action_icon.frm_error_icon{background-position:0 -14px;}
 .frm_action_icon.frm_reload_icon{background-position:-15px 0;}
 .frm_inactive_icon.frm_action_icon.frm_reload_icon{background-position:-15px -14px;}

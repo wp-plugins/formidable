@@ -60,6 +60,7 @@
         <?php FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
         </span>
     <?php } ?>
+    <div class="clear"></div>
     <br/>
     <div class="frm-show-click">
     <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>

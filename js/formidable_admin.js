@@ -91,12 +91,12 @@ return false;
 jQuery('.field_type_list > li').draggable({connectToSortable:'#new_fields',cursor:'move',helper:'clone',revert:'invalid',delay:10});
 jQuery('ul.field_type_list, .field_type_list li').disableSelection();
 
-$('.frm_form_builder input[name^="item_meta"], .frm_form_builder textarea[name^="item_meta"]').keyup(function(){
+$('.frm_form_builder input[name^="item_meta"], .frm_form_builder textarea[name^="item_meta"]').live('keyup', function(){
 var n=$(this).attr('name');
 n=n.substring(10,n.length-1);
 frmShowDefaults(n,jQuery(this).val());	
 });
-$('.frm_form_builder select[name^="item_meta"]').change(function(){
+$('.frm_form_builder select[name^="item_meta"]').live('change', function(){
 var n=$(this).attr('name');
 n=n.substring(10,n.length-1);
 frmShowDefaults(n,jQuery(this).val());	
