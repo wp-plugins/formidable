@@ -8,7 +8,7 @@
     
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" class="alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="Required" /></a>
+        <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>,'<?php echo $frm_ajax_url?>')" class="frm_action_icon frm_required_icon alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_primary_label" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
@@ -108,6 +108,7 @@ if ($display['clear_on_focus']){ ?>
     do_action('frm_extra_field_display_options', $field);
 } 
 ?>
+<div class="clear"></div>
 </div>
 <?php
 if ($display['description']){ ?> 
@@ -155,7 +156,7 @@ if ($display['options']){ ?>
                     <?php if ($display['required']){ ?>
                     <tr>
                         <td><label><?php _e('Required Field', 'formidable') ?></label></td>
-                        <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>,'<?php echo FRM_IMAGES_URL ?>','<?php echo $frm_ajax_url?>')" /> <span><?php _e('Required', 'formidable') ?></span>
+                        <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>,'<?php echo $frm_ajax_url?>')" /> <span><?php _e('Required', 'formidable') ?></span>
                         <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
                             <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo htmlentities($field['required_indicator']); ?>" />
                         </span>

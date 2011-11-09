@@ -64,17 +64,17 @@
 
     				<div class="clearfix">
                         <ul class="frm_key_icons">
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" style="width:10px" /></span> 
+                            <li><span class="frm_action_icon frm_required_icon"></span> 
                                 = <?php _e('required field', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/required.png" alt="required" style="width:10px" /></span> 
+                            <li><span class="frm_inactive_icon frm_action_icon frm_required_icon"></span> 
                                 = <?php _e('not required', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></span> 
+                            <li><span class="frm_action_icon frm_reload_icon"></span> 
                                 = <?php _e('clear default text on click', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/reload.png" alt="reload" /></span> 
+                            <li><span class="frm_inactive_icon frm_action_icon frm_reload_icon"></span> 
                                 = <?php _e('do not clear default text on click', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></span> 
+                            <li><span class="frm_action_icon frm_error_icon"></span> 
                                 = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon"><img src="<?php echo FRM_IMAGES_URL?>/error.png" alt="error" /></span> 
+                            <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
                                 = <?php _e('default value will pass validation', 'formidable') ?></li>
                             <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></span> 
                                 = <?php _e('delete field and all inputed data', 'formidable') ?></li>

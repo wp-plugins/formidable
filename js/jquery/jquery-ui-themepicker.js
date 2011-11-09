@@ -173,13 +173,13 @@ jQuery(document).ready(function($){
 
 			// scrape options
 			$(this).find('option').each(function(){
-				ul.append('<li class="'+ $(this).attr('value') +'" data-texturewidth="16" data-textureheight="16" style="background: #555555 url('+$(this).attr('value')+') 50% 50% no-repeat"><a href="#" title="'+ $(this).text() +'">'+ $(this).text() +'</a></li>');
-				if($(this).get(0).index == sIndex){texturePicker.attr('title',$(this).text()).css('background', '#555555 url('+$(this).attr('value')+') 50% 50% no-repeat');}
+				ul.append('<li class="'+ $(this).attr('value') +'" data-texturewidth="16" data-textureheight="16" style="background: #FFF url('+$(this).attr('value')+') 50% 50% no-repeat"><a href="#" title="'+ $(this).text() +'">'+ $(this).text() +'</a></li>');
+				if($(this).get(0).index == sIndex){texturePicker.attr('title',$(this).text()).css('background', '#FFF url('+$(this).attr('value')+') 50% 50% no-repeat');}
 			});
 
 			ul.find('li').click(function() {
 				texturePicker.prev().get(0).selectedIndex = texturePicker.prev().find('option[value='+ $(this).attr('class') +']').get(0).index;
-				texturePicker.attr('title',$(this).text()).css('background', '#555555 url('+$(this).attr('class')+')  50% 50% no-repeat');
+				texturePicker.attr('title',$(this).text()).css('background', '#FFF url('+$(this).attr('class')+')  50% 50% no-repeat');
 				//ul.fadeOut(100);
 				formChange();
 				return false;

@@ -13,7 +13,7 @@ if( isset($errors) && is_array($errors) && !empty($errors) ){
 <div class="<?php echo (is_admin()) ? 'error' : 'frm_error_style' ?>"> 
 <?php 
 if(!is_admin()){ 
-    $img = apply_filters('frm_error_icon', FRM_IMAGES_URL . '/error.png');
+    $img = apply_filters('frm_error_icon', '');
     if($img and !empty($img)){
     ?><img src="<?php echo $img ?>" alt="" />
 <?php 

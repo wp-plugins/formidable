@@ -40,6 +40,11 @@ class FrmFormsHelper{
         <?php
     }
     
+    function get_sortable_classes($col, $sort_col, $sort_dir){
+        echo ($sort_col == $col) ? 'sorted' : 'sortable'; 
+        echo ($sort_col == $col and $sort_dir == 'desc') ? ' asc' : ' desc';
+    }
+    
     function setup_new_vars(){
         global $frmdb, $frm_settings;
         $values = array();

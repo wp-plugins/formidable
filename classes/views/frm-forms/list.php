@@ -22,24 +22,42 @@
     <tr>
         <th class="manage-column check-column" scope="col"> <?php do_action('frm_column_header'); ?> </th>
         <?php if ($params['template']){ ?>
-            <th class="manage-column" width="">
-                  <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&amp;sort=name&amp;sdir=<?php echo (($sort_str == 'name' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+            <th class="manage-column <?php FrmFormsHelper::get_sortable_classes('name', $sort_str, $sdir_str); ?>" width="">
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&amp;sort=name&amp;sdir=<?php echo (($sort_str == 'name' and $sdir_str == 'desc')?'asc':'desc'); ?>">
+                    <span><?php _e('Name', 'formidable') ?></span>
+                    <span class="sorting-indicator"></span>
+                </a>
             </th>
-            <th class="manage-column">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&amp;sort=description&amp;sdir=<?php echo (($sort_str == 'description' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Description', 'formidable') ?><?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+            <th class="manage-column <?php FrmFormsHelper::get_sortable_classes('description', $sort_str, $sdir_str); ?>">
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>-templates&amp;sort=description&amp;sdir=<?php echo (($sort_str == 'description' and $sdir_str == 'desc')?'asc':'desc'); ?>">
+                    <span><?php _e('Description', 'formidable') ?></span>
+                    <span class="sorting-indicator"></span>
+                </a>
             </th>
         <?php }else{?>
-            <th class="manage-column" width="50px">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=id&amp;sdir=<?php echo (($sort_str == 'id' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('ID', 'formidable') ?><?php echo (($sort_str == 'id')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+            <th class="manage-column <?php FrmFormsHelper::get_sortable_classes('id', $sort_str, $sdir_str); ?>" width="50px">
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=id&amp;sdir=<?php echo (($sort_str == 'id' and $sdir_str == 'desc')?'asc':'desc'); ?>">
+                    <span><?php _e('ID', 'formidable') ?></span>
+                    <span class="sorting-indicator"></span>
+                </a>
             </th>
-            <th class="manage-column" width="">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=name&amp;sdir=<?php echo (($sort_str == 'name' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Name', 'formidable') ?><?php echo (($sort_str == 'name')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+            <th class="manage-column <?php FrmFormsHelper::get_sortable_classes('name', $sort_str, $sdir_str); ?>" width="350px">
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=name&amp;sdir=<?php echo (($sort_str == 'name' and $sdir_str == 'desc')?'asc':'desc'); ?>">
+                    <span><?php _e('Name', 'formidable') ?></span>
+                    <span class="sorting-indicator"></span>
+                </a>
             </th>
-            <th class="manage-column">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=description&amp;sdir=<?php echo (($sort_str == 'description' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Description', 'formidable') ?><?php echo (($sort_str == 'description')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+            <th class="manage-column <?php FrmFormsHelper::get_sortable_classes('description', $sort_str, $sdir_str); ?>">
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=description&amp;sdir=<?php echo (($sort_str == 'description' and $sdir_str == 'desc')?'asc':'desc'); ?>">
+                    <span><?php _e('Description', 'formidable') ?></span>
+                    <span class="sorting-indicator"></span>
+                </a>
             </th>
-            <th class="manage-column" width="70px">
-                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=form_key&amp;sdir=<?php echo (($sort_str == 'form_key' and $sdir_str == 'desc')?'asc':'desc'); ?>"><?php _e('Key', 'formidable') ?><?php echo (($sort_str == 'form_key')?' &nbsp; <img src="'.FRM_URL.'/images/'.(($sdir_str == 'desc')?'arrow_down.png':'arrow_up.png').'"/>':'') ?></a>
+            <th class="manage-column <?php FrmFormsHelper::get_sortable_classes('form_key', $sort_str, $sdir_str); ?>" width="70px">
+                <a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;sort=form_key&amp;sdir=<?php echo (($sort_str == 'form_key' and $sdir_str == 'desc')?'asc':'desc'); ?>">
+                    <span><?php _e('Key', 'formidable') ?></span>
+                    <span class="sorting-indicator"></span>
+                </a>
             </th>
             <th class="manage-column" width="60px"><?php _e('Entries', 'formidable') ?></th>
             <th class="manage-column" width="115px"><?php _e('Direct Link', 'formidable') ?></th>
@@ -108,6 +126,7 @@
                 <?php } 
                 
                 if(current_user_can('frm_edit_forms')){ ?>
+                | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=settings&amp;id=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags(stripslashes($form->name))) ?> <?php _e('Settings', 'formidable') ?>"><?php _e('Settings', 'formidable') ?></a></span>
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?>"><?php _e('Duplicate', 'formidable') ?></a></span>
                 | <span><a href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=duplicate&amp;id=<?php echo $form->id; ?>&amp;template=1" title="<?php _e('Create', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Create Template', 'formidable') ?></a></span>
                     <?php if($frmpro_is_installed){ ?>

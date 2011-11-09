@@ -53,7 +53,7 @@
               </td>
             </tr>
             
-            <tr class="form-field">
+            <tr>
               <td valign="top" width="200px"><?php _e('Tracking', 'formidable'); ?> </td>
               <td>
                   <p><input type="checkbox" id="frm_track" name="frm_track" value="1" <?php checked($frm_settings->track, 1) ?>> <?php _e('Track referrer information and pages visited', 'formidable') ?> 
@@ -73,11 +73,11 @@
                         </select>
                     </p>
                     
-                    <p><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?>> <?php _e('Use HTML5 in forms', 'formidable') ?> 
+                    <p><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?> style="border:none;"> <?php _e('Use HTML5 in forms', 'formidable') ?> 
                     </p>
                     
                     <?php if($frmpro_is_installed){ ?>
-                    <p><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?> />
+                    <p><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?> style="border:none;" />
                     <?php _e('Include the jQuery CSS on ALL pages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The styling for the date field calendar. Some users may be using this css on pages other than just the ones that include a date field.', 'formidable') ?>" /></p>
                     <?php } ?>
                 </td>
