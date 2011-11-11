@@ -114,8 +114,10 @@ textarea.inplace_field{width:98% !important;}
 .inplace_field{width:70% !important;}
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
-.frm_rte textarea{width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
+#new_fields .frm_rte textarea{
+	width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
 	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
+	float:none !important;
 }
 .with_frm_style .frm_full_rte textarea{width:98%; padding:0;}
 .frm_field_box{padding:5px;min-height:20px;}

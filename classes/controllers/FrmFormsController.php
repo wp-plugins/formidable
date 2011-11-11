@@ -326,6 +326,11 @@ class FrmFormsController{
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
+        
+        $edit_message = __('Form was Successfully Updated', 'formidable');
+        if ($values['is_template'] and $message == $edit_message)
+            $message = __('Template was Successfully Updated', 'formidable');
+        
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
         else if($create_link)

@@ -27,6 +27,7 @@
     overflow:auto;
     border-right: 2px solid #DEDEDE;
     padding-right:10px;
+    margin:0;
 }
 .prepop li{
     margin: 0 0 3px;
@@ -55,7 +56,7 @@
     <li><a onclick='frmPrePop(<?php echo str_replace("'", '&#145;', json_encode($pop)) ?>); return false;'><?php echo $label ?></a></li>
     <?php } ?>
 </ul>
-<textarea name="frm_bulk_options" id="frm_bulk_options" rows="12" style="width:335px;float:right;">
+<textarea name="frm_bulk_options" id="frm_bulk_options" rows="13" style="width:335px;float:right;">
 <?php foreach($field->options as $fopt){
 echo $fopt ."\n";    
 } ?>

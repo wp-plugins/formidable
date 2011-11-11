@@ -68,9 +68,19 @@
     <tbody>
 <?php if($record_count <= 0){ ?>
     <tr>
-      <td colspan="<?php echo ($params['template'])? '2':'7'; ?>"><?php _e('No Forms Found', 'formidable') ?>. 
-          <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new"><?php _e('Add New', 'formidable'); ?></a>
-      </td>
+        <td colspan="<?php echo ($params['template'])? '3':'7'; ?>">
+            <?php if ($params['template']){ ?>
+                <?php _e('No Templates Found', 'formidable') ?>. 
+                <br/><br/><?php _e('To add a new template','formidable') ?>:
+                <ol><li style="list-style:decimal;">Create a <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new">new form</a>.</li>
+                    <li style="list-style:decimal;">After your form is created, go to Formidable -> <a href="?page=<?php echo FRM_PLUGIN_NAME ?>">Forms</a>.</li>
+                    <li style="list-style:decimal;">Place your mouse over the name of the form you just created, and click the "Create Template" link.</li>
+                </ol>
+            <?php }else{ ?>
+                <?php _e('No Forms Found', 'formidable') ?>. 
+                <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new"><?php _e('Add New', 'formidable'); ?></a>
+            <?php } ?>
+        </td>
     </tr>
 <?php
 }else{

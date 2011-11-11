@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('Edit Form', 'formidable') ?></h2>
+    <h2><?php echo __('Edit', 'formidable') .' '. (($values['is_template']) ? __('Template') : __('Form')); ?></h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <?php if (!$values['is_template']){ ?>

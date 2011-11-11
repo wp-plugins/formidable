@@ -82,9 +82,8 @@ $(this).hover(function(){$('#frm_show_cal').html('<img src="'+ $(this).attr('id'
 $("select[name='frm_theme_selector']").change(function(){
 var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/'+$(this).val()+'/jquery-ui.css';
 frmUpdateCSS(css);
-var themeName=$(this).text();
-$('input[name="frm_theme_css"]').val(css);
-$('input[name="frm_theme_name"]').val(themeName);
+var themeName=$("select[name='frm_theme_selector'] option[value='"+$(this).val()+"']").text();
+$('input[name="frm_theme_css"]').val($(this).val()); $('input[name="frm_theme_name"]').val(themeName);
 return false;
 });
 

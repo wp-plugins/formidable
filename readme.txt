@@ -86,13 +86,11 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug preventing front-end entry deletion when the form was editable and limited to one per user
 * PRO: Fixed bug preventing Data from entries "just show it" fields from showing a value in admin listing and view entry pages
 * PRO: Fixed bug preventing checkbox selections from showing in custom email notifications if a checkbox contained a quotation mark
+* PRO: Check a default value when using dynamic default values in the check box options
 
 BUGS:
 - Validation issues when error on ajax edit http://formidablepro.com/?p=8322#frm_topic_20487
-- tooltip and calendar drop-down locations
 
-TODO:
-- style subnav
 
 
 = 1.05.05 =
