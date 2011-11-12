@@ -178,7 +178,7 @@
                 <tr><td>
                 <div class="frm_update_msg">
                 This plugin version does not give you access to the visual form styler.<br/>
-                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro.
+                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-settings">here</a>.
                 </div>
                 <img src="http://fp.strategy11.com/wp-content/themes/formidablepro/images/form_style_thumb.png" alt="Style Forms"/>
                 </td></tr>

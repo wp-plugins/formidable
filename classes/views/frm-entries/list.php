@@ -9,7 +9,7 @@
     
     <div class="frm_update_msg">
     This plugin version does not give you access to view, search, export, and bulk delete your saved entries.<br/>
-    <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro.
+    <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-settings">here</a>.
     </div>
     <img src="http://static.strategy11.com.s3.amazonaws.com/entries-list.png" alt="Entries List" style="max-width:100%"/>
 
