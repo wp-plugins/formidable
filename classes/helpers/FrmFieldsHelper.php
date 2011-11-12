@@ -18,14 +18,14 @@ class FrmFieldsHelper{
     
     function pro_field_selection(){
         return apply_filters('frm_pro_available_fields', array(
+            'email' => __('Email Address', 'formidable'),
+            'url' => __('Website/URL', 'formidable'),
             'divider' => __('Section Heading', 'formidable'),
             'break' => __('Page Break', 'formidable'),
             'file' => __('File Upload', 'formidable'),
             'rte' => __('Rich Text', 'formidable'), 
             'number' => __('Number', 'formidable'), 
             'phone' => __('Phone Number', 'formidable'), 
-            'email' => __('Email Address', 'formidable'),
-            'url' => __('Website/URL', 'formidable'),
             'date' => __('Date', 'formidable'), 
             'time' => __('Time', 'formidable'),
             'image' => __('Image URL', 'formidable'), 
@@ -135,6 +135,8 @@ DEFAULT_HTML;
     }
     
     function replace_shortcodes($html, $field, $errors=array(), $form=false){
+        $html = apply_filters('frm_before_replace_shortcodes', $html, $field, $errors, $form);
+        
         $field_name = "item_meta[". $field['id'] ."]";
         //replace [id]
         $html = str_replace('[id]', $field['id'], $html);
@@ -143,7 +145,7 @@ DEFAULT_HTML;
         $html = str_replace('[key]', $field['field_key'], $html);
         
         //replace [description] and [required_label] and [error]
-        $required = ($field['required'] == '0')? '' : $field['required_indicator'];
+        $required = ($field['required'] == '0') ? '' : $field['required_indicator'];
         $error = isset($errors['field'. $field['id']]) ? stripslashes($errors['field'. $field['id']]) : false; 
         foreach (array('description' => $field['description'], 'required_label' => $required, 'error' => $error) as $code => $value){
             if (!$value or $value == '')

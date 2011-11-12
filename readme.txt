@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added graphs for fields over time
 * PRO: Moved post creation settings from individual fields to the forms settings page
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
+* PRO: Added option to format individual radio and checkbox fields in one or multiple rows
 * PRO: Added server-side validation for dates inserted into date fields
 * PRO: Allow multiple fields for the same taxonomy/category
 * PRO: Allow a taxonomy/category to be selected for data from entries fields. This makes cascading category fields possible.

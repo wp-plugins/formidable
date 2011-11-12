@@ -52,7 +52,8 @@ url:ajax_url,params:"action=frm_field_desc_in_place_edit",default_text:def_desc,
 $(".frm_ipe_field_option, .frm_ipe_field_option_select").editInPlace({url:ajax_url,params:"action=frm_field_option_ipe",default_text:'(Blank)'});
 $(".frm_ipe_field_label").editInPlace({url:ajax_url,params:"action=frm_field_name_in_place_edit",value_required:"true"});
 
-$('input[name^="item_meta"], select[name^="item_meta"], textarea[name^="item_meta"]').css('float','left');
+$('select[name^="item_meta"], textarea[name^="item_meta"]').css('float','left');
+$('input[name^="item_meta"]').not(':radio, :checkbox').css('float','left');
 }
 
 jQuery('.item-list-form').submit(function(){

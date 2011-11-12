@@ -40,7 +40,7 @@
                          <div class="clear"></div>
     				</div>
 
-    	            <h4 class="title"><?php _e('Pro Fields', 'formidable') ?></h4>
+    	            <h4 class="title" style="margin-bottom:0;"><?php _e('Pro Fields', 'formidable') ?></h4>
                     <div class="clearfix">
     					 <ul<?php echo apply_filters('frm_drag_field_class', '') ?>>
                          <?php $col_class = 'frm_col_one';
