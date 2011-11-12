@@ -14,7 +14,7 @@
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
         <form method="post" >
-            <p>
+            <p style="margin-top:0;">
                 <input type="submit" name="Submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME; ?>&amp;action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
