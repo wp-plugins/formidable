@@ -1,6 +1,8 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('Edit Form', 'formidable') ?></h2>
+    <h2><?php _e('Edit Form', 'formidable') ?>
+        <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+    </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div class="alignright">
@@ -25,8 +27,16 @@
     <?php FrmAppController::get_form_nav($id, true); ?>
     </div>
     
+
+<form method="post">     
+    <p style="clear:left;">        
+        <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
+        <?php _e('or', 'formidable') ?>
+        <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
+    </p>
+    
     <div class="clear"></div> 
-    <form method="post"> 
+
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <input type="hidden" name="action" value="update_settings" />
     <div id="poststuff" class="metabox-holder">
@@ -39,6 +49,7 @@
         	<li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>
         	<li><a onclick="frmSettingsTab(jQuery(this),'notification');"><?php _e('Emails', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'html');"><?php _e('Customize HTML', 'formidable') ?></a></li>
+            <li><a onclick="frmSettingsTab(jQuery(this),'post');"><?php _e('Create Posts', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>
                 <li><a onclick="frmSettingsTab(jQuery(this),'<?php echo $sec_name ?>');"><?php echo ucfirst($sec_name) ?></a></li>
             <?php } ?>
@@ -93,17 +104,58 @@
         </div>
 
         <div class="notification_settings tabs-panel" style="display:none;">
-        	<table class="form-table">
+        	<table class="form-table">                 
+                 
+                 <tr valign="top">
+                     <td width="200px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
+                     <td><span class="howto"><?php _e('Name', 'formidable') ?></span> 
+                         <select name="options[reply_to_name]">
+                         <option value=""><?php echo FrmAppHelper::truncate(get_option('blogname'), 80); ?></option>
+                         <?php 
+                         if(!empty($values['fields'])){
+                         $field_select = array('text', 'email', 'user_id', 'hidden');
+                         foreach($values['fields'] as $val_key => $fo){
+                             if(in_array($fo['type'], $field_select)){ ?>
+                                 <option value="<?php echo $fo['id'] ?>" <?php selected($values['reply_to_name'], $fo['id']); ?>><?php echo FrmAppHelper::truncate($fo['name'], 40) ?></option>
+                     <?php }else if($fo['type'] == 'data' and $fo['data_type'] != 'show'){
+                             if(isset($values['fields'][$val_key]['linked'])){
+                                 foreach($values['fields'][$val_key]['linked'] as $linked_field){ 
+                                 if(!in_array($linked_field->type, $field_select)) continue; ?>
+                                 <option value="<?php echo $fo['id'] ?>|<?php echo $linked_field->id ?>" <?php selected($values['reply_to_name'], $fo['id'] .'|'. $linked_field->id); ?>><?php echo $fo['name'] .': '. FrmAppHelper::truncate($linked_field->name, 40) ?></option>
+                             <?php } 
+                             }
+                             }
+                         }
+                         } ?>
+                     </select>
+
+                     <span class="howto" style="margin-left:10px;"><?php _e('Email', 'formidable') ?></span> &lt;<select name="options[reply_to]">
+                         <option value=""><?php echo get_option('admin_email') ?></option>
+                         <?php 
+                         if(!empty($values['fields'])){
+                         foreach($values['fields'] as $val_key => $fo){
+                             if(in_array($fo['type'], $field_select)){ ?>
+                                 <option value="<?php echo $fo['id'] ?>" <?php selected($values['reply_to'], $fo['id']); ?>><?php echo FrmAppHelper::truncate($fo['name'], 40) ?></option>
+                         <?php }else if($fo['type'] == 'data' and $fo['data_type'] != 'show'){
+                                 if(isset($values['fields'][$val_key]['linked'])){ ?>
+                                 <?php foreach($values['fields'][$val_key]['linked'] as $linked_field){ 
+                                     if(!in_array($linked_field->type, $field_select)) continue; ?>
+                                     <option value="<?php echo $fo['id'] ?>|<?php echo $linked_field->id ?>" <?php selected($values['reply_to'], $fo['id'] .'|'. $linked_field->id); ?>><?php echo $fo['name'] .': '. FrmAppHelper::truncate($linked_field->name, 40) ?></option>
+                                 <?php } 
+                                 }
+                             }
+                         }
+                         } ?>
+                     </select>&gt;</td>
+                 </tr>
+                 
                   <tr>
-                      <td width="200px"><label><?php _e('Email Form Responses to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page.', 'formidable') ?>" /></td>
+                      <td><label><?php _e('Email Recipients', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page.', 'formidable') ?>" /></td>
                       <td><input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" class="frm_long_input" /></td>
                  </tr>
                  <?php if(!$frmpro_is_installed){ ?>
                  <tr><td colspan="2">
-                     <div class="frm_update_msg">
-                     This plugin version does not give you access to customize your email notifications and send auto responders.<br/>
-                     <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-settings">here</a>.
-                     </div>
+                     <?php FrmAppController::update_message('customize your email notifications and send auto responders'); ?>
                 </td></tr>
                  <?php } ?>
                  <?php do_action('frm_additional_form_notification_options', $values); ?> 
@@ -158,6 +210,13 @@
                 <textarea name="options[after_html]" rows="3" class="frm_long_input"><?php echo $values['after_html']?></textarea></p> 
             </div>
         </div>
+        <div id="post_settings" class="post_settings tabs-panel" style="display:none;">
+            <?php if($frmpro_is_installed)
+                FrmProFormsController::post_options($values);
+            else
+                 FrmAppController::update_message('create and edit posts, pages, and custom post types through your forms');
+            ?>
+        </div>
         
         <?php foreach($sections as $sec_name => $section){
             if(isset($section['class'])){
@@ -168,6 +227,7 @@
         } ?>
     
         <?php do_action('frm_add_form_option_section', $values); ?>
+        <div class="clear"></div>
         </div>
         </div>
         </div>

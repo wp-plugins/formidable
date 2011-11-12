@@ -80,6 +80,7 @@ jQuery.fn.spinDown = function() {
 	return this.click(function() {
 		var $this = jQuery(this);
 		$this.next().slideToggle(100);
+		$this.parent().siblings().children('.state-active').click(); //close open tabs
 		$this.prev().toggleClass('not-active');
 		$this.find('.icon').toggleClass('icon-triangle-1-s').end().toggleClass('state-active');
 		//jQuery('li.ui-state-default .ui-state-active').removeClass('ui-state-active');

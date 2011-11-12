@@ -133,7 +133,7 @@ textarea.inplace_field{width:98% !important;}
 li.ui-state-default.selected .frm-show-click{display:inline;}
 li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 #new_fields span.ui-icon{width:16px;}
-.tabs-panel{height:auto !important; min-height:220px;}
+.tabs-panel{height:auto !important; min-height:260px;}
 .tabs-panel.panel_secondary{min-height:20px;}
 
 .frm_action_icon{width:14px; height:14px; background:url(../images/icons.png) no-repeat;display:block;float:left;margin-left:4px;}

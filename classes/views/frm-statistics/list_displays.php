@@ -4,11 +4,8 @@
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
+    <?php FrmAppController::update_message('display collected data in lists, calendars, and other formats'); ?>
 
-    <div class="frm_update_msg">
-        This plugin version does not give you access to display collected data in lists, calendars, and other formats.<br/>
-        <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-settings">here</a>.
-    </div>
     <img src="http://fp.strategy11.com/images/custom-display-settings.png" alt="Display" style="max-width:100%"/>
 
 </div>

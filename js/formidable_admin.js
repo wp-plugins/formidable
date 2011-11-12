@@ -27,6 +27,14 @@ $("input[name='options[success_action]']").change(function(){
 		$('.success_action_message_box.success_action_box').fadeIn('slow');
 });
 
+if($('.hide_editable').length>0){
+$('.hide_editable').hide();
+if( $('#editable').attr("checked")) $('.hide_editable').show();
+$('#editable').change(function(){if( $(this).attr('checked')) $('.hide_editable').show(); else $('.hide_editable').hide();});
+$('.hide_ar').hide();
+if( $('#auto_responder').attr('checked')) $('.hide_ar').show();
+}
+
 if($(".frm_ipe_form_name").length>0){
 $(".frm_ipe_form_name").editInPlace({
 url:ajax_url,params:"action=frm_form_name_in_place_edit&form_id="+form_id,value_required:"true",bg_out:'#fff'
@@ -248,8 +256,13 @@ function frmSetMenuOffset() {
 	var fields = jQuery('#frm_form_options .themeRoller');
 	if (!fields) return;
 	var currentOffset = document.documentElement.scrollTop || document.body.scrollTop; // body for Safari
-	var desiredOffset = 315 - currentOffset;
-	if (desiredOffset < 10) desiredOffset = 10;
+	var offset=283;
+	if(jQuery('#frm_position_ele').length>0){ 
+		var eleOffset=jQuery('#frm_position_ele').offset();
+		var offset=eleOffset.top;
+	}
+	var desiredOffset = offset + 2 - currentOffset;
+	if (desiredOffset < 28) desiredOffset = 28;
 	//if (desiredOffset != parseInt(header.style.top)) 
 		fields.attr('style', 'top:'+desiredOffset + 'px;');
 }
@@ -321,4 +334,10 @@ function frmUpdateCSS(locStr){
 	if( jQuery("link.ui-theme").size() > 3){
 		jQuery("link.ui-theme:first").remove();
 	}	
+}
+
+function frmGetMetaValue(id, meta_name){
+    if(jQuery('#'+id+meta_name).length>0) var new_meta=frmGetMetaValue(id,meta_name+1);
+    else var new_meta=meta_name;
+    return new_meta;
 }

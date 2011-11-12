@@ -316,6 +316,10 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function widget_text_filter_callback( $matches ) {
         return do_shortcode( $matches[0] );
     }
+    
+    function update_message($features){
+        include(FRM_VIEWS_PATH .'/shared/update_message.php');
+    }
 
 }
 ?>

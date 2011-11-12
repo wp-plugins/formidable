@@ -80,8 +80,9 @@ class FrmFormsController{
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $record = $frm_form->update( $id, $_POST, true );
-            $message = __('Form was Successfully Created', 'formidable');
-            return $this->settings($id, $message);
+            die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&action=settings&id='. $id) .'"</script>');
+            //$message = __('Form was Successfully Created', 'formidable');
+            //return $this->settings($record, $message);
         }
     }
     

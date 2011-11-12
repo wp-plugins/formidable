@@ -14,8 +14,8 @@
     </p>
     <?php } 
     } ?>
+    <div id="frm_position_ele"></div>
     
-    <p class="howto"><?php _e('Click on or drag a field into your form', 'formidable') ?></p>
     <div class="themeRoller clearfix">
     	<div id="rollerTabs">
 
@@ -27,6 +27,7 @@
     			</div><!-- /theme group Error -->
     			<div class="theme-group-content corner-bottom clearfix" style="display: block;">
                     <div class="clearfix">
+                        <p class="howto" style="margin:0;"><?php _e('Click on or drag a field into your form', 'formidable') ?></p>
     					<ul class="field_type_list">
                         <?php 
                         $col_class = 'frm_col_one';

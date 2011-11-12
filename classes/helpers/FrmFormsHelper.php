@@ -57,13 +57,12 @@ class FrmFormsHelper{
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
             
         $values['form_key'] = ($_POST and isset($_POST['form_key'])) ? $_POST['form_key'] : (FrmAppHelper::get_unique_key('', $frmdb->forms, 'form_key'));
-        $values['email_to'] = ($_POST and isset($_POST['options']['email_to'])) ? $_POST['options']['email_to'] : $frm_settings->email_to;
+        
+        $defaults = FrmFormsHelper::get_default_opts();
+        foreach ($defaults as $var => $default)
+            $values[$var] = ($_POST and isset($_POST['options'][$var])) ? $_POST['options'][$var] : $default;
+            
         $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
-        $values['submit_value'] = ($_POST and isset($_POST['options']['submit_value'])) ? $_POST['options']['submit_value'] : $frm_settings->submit_value;
-        $values['success_action'] = ($_POST and isset($_POST['options']['success_action'])) ? $_POST['options']['success_action'] : 'message';
-        $values['success_msg'] = ($_POST and isset($_POST['options']['success_msg'])) ? $_POST['options']['success_msg'] : $frm_settings->success_msg;
-        $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? 1 : 0;
-        $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
         $values['after_html'] = FrmFormsHelper::get_default_html('after');
         
@@ -78,6 +77,16 @@ class FrmFormsHelper{
         $values['is_template'] = FrmAppHelper::get_param('is_template', $record->is_template);
 
         return apply_filters('frm_setup_edit_form_vars', $values);
+    }
+    
+    function get_default_opts(){
+        global $frm_settings;
+        
+        return array(
+            'email_to' => $frm_settings->email_to, 'reply_to' => '', 'reply_to_name' => '',
+            'submit_value' => $frm_settings->submit_value, 'success_action' => 'message',
+            'success_msg' => $frm_settings->success_msg, 'show_form' => 0, 'akismet' => 0
+        );
     }
     
     function get_default_html($loc){

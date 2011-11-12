@@ -60,6 +60,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * User Interface improvements
 * Fixed XSS security vulnerability
 * Moved the "automatic width" check box for drop-down select fields to free version
+* Moved email "From/Reply to" options to free version
 * Fixed form preview page for form templates
 * Added German translation  (Andre Lisbert)
 * Added ajax to uninstall button
@@ -68,6 +69,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Free only: Fixed hidden label CSS
 * PRO: Extended the conditional field logic
 * PRO: Added graphs for fields over time
+* PRO: Moved post creation settings from individual fields to the forms settings page
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
 * PRO: Added server-side validation for dates inserted into date fields
 * PRO: Allow multiple fields for the same taxonomy/category

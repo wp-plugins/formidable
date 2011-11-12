@@ -20,7 +20,7 @@ class FrmNotification{
             
         $to_emails = explode(',', $to_email);
         
-        $reply_to = '';
+        $reply_to = $reply_to_name = '';
             
         $opener = sprintf(__('%1$s form has been submitted on %2$s.', 'formidable'), $form->name, $frm_blogname) ."\r\n\r\n";
         
@@ -36,8 +36,15 @@ class FrmNotification{
             }
             
             $entry_data .= $value->field_name . ': ' . $val . "\r\n\r\n";
+            
+            if(isset($form->options['reply_to']) and (int)$form->options['reply_to'] == $value->field_id and is_email($val))
+                $reply_to = $val;
+            
             if ($reply_to == '' and is_email($val))
                 $reply_to = $val;
+                
+            if(isset($form->options['reply_to_name']) and (int)$form->options['reply_to_name'] == $value->field_id)
+                $reply_to_name = $val;
         }
           
         $data = maybe_unserialize($entry->description);  
@@ -51,9 +58,9 @@ class FrmNotification{
 
         if(is_array($to_emails)){
             foreach($to_emails as $to_email)
-                $this->send_notification_email(trim($to_email), $subject, $mail_body, $reply_to);
+                $this->send_notification_email(trim($to_email), $subject, $mail_body, $reply_to, $reply_to_name);
         }else
-            $this->send_notification_email($to_email, $subject, $mail_body, $reply_to);
+            $this->send_notification_email($to_email, $subject, $mail_body, $reply_to, $reply_to_name);
     }
   
     function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true, $attachments=array()){
