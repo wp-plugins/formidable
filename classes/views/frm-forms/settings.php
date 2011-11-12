@@ -29,7 +29,7 @@
     
 
 <form method="post">     
-    <p style="clear:left;">        
+    <p style="clear:left; padding-top:12px;">        
         <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
         <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
