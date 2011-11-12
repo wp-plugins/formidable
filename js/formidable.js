@@ -141,18 +141,10 @@ for(i=0; i<len; i++){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
 				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
-				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow'); return;}
+				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
 			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		}else{
 			if(i==(len-1)){
-				jQuery.each(hide_later, function(hkey,hvalue){ 
-					if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
-						if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
-						else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
-						if(typeof(hvalue.result)!=false) frmShowField(hvalue.result,ajax_url,hkey);
-						delete hide_later[hkey];
-					}
-				});
 				if(f.Show=='show') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
 				else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
 			}else{
@@ -162,6 +154,16 @@ for(i=0; i<len; i++){
 				}else if(i==(len-1)){jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
 				}else{hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};}
 			}
+		}
+		if(i==(len-1)){
+			jQuery.each(hide_later, function(hkey,hvalue){ 
+				if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
+					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
+					else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+					if(typeof(hvalue.result)!=false) frmShowField(hvalue.result,ajax_url,hkey);
+					delete hide_later[hkey];
+				}
+			});
 		}
 	}else if(f.MatchType=='all' && i==(len-1)){
 		var show=true;

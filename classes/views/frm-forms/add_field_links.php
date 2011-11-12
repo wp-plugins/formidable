@@ -1,7 +1,7 @@
 <div id="frm_form_options" class="inner-sidebar">
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
-    <p class="howto"><?php _e('Insert into a post, page or text widget', 'formidable') ?>:
+    <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>:
     <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /></p>
     <?php } ?>
     
