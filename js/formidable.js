@@ -148,18 +148,17 @@ for(i=0; i<len; i++){
 				if(f.Show=='show') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
 				else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
 			}else{
-				if(show_fields[f.HideField][i]!=true){
-					frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);
-					hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};
-				}else if(i==(len-1)){jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
-				}else{hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};}
+				hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};
+				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
 			}
 		}
 		if(i==(len-1)){
 			jQuery.each(hide_later, function(hkey,hvalue){ 
 				if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
-					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
-					else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+					if(!frmInArray(true, show_fields[hkey])){
+						if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
+						else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+					}
 					if(typeof(hvalue.result)!=false) frmShowField(hvalue.result,ajax_url,hkey);
 					delete hide_later[hkey];
 				}
