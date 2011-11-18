@@ -7,9 +7,9 @@ class FrmFormsController{
     function FrmFormsController(){
         add_action('admin_menu', array( &$this, 'menu' ));
         add_action('admin_menu', array( &$this, 'lower_menu' ), 90);
-        add_action('admin_head-toplevel_page_'.FRM_PLUGIN_NAME, array(&$this, 'head'));
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-new', array(&$this, 'head'));
-        add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-templates', array(&$this, 'head'));
+        add_action('admin_head-toplevel_page_formidable', array(&$this, 'head'));
+        add_action('admin_head-formidable_page_formidable-new', array(&$this, 'head'));
+        add_action('admin_head-formidable_page_formidable-templates', array(&$this, 'head'));
         add_action('wp_ajax_frm_form_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
@@ -30,8 +30,7 @@ class FrmFormsController{
     
     function head(){
         global $frm_settings;
-        if($frm_settings->load_style != 'none')
-            $css_file = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', 'header');
+
         $js_file  = array(FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
         require(FRM_VIEWS_PATH . '/shared/head.php');
     }

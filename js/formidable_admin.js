@@ -120,12 +120,19 @@ $('.frm_exclude_cat_list').each(function(){
 }
 });
 
-function frmUpdateOpts(field_id, ajax_url, opts){
+function frmUpdateOpts(field_id,ajax_url,opts){
 	jQuery('#frm_field_'+field_id+'_opts').html('').addClass('frm-loading-img');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:{action:'frm_import_options',field_id:field_id,opts:opts},
-		success:function(html){jQuery('#frm_field_'+field_id+'_opts').html(html).removeClass('frm-loading-img');}
+		success:function(html){jQuery('#frm_field_'+field_id+'_opts').html(html).removeClass('frm-loading-img');
+		if(jQuery('select[name="item_meta['+field_id+']"]').length>0){
+			var o=opts.replace(/\s\s*$/,'').split("\n");
+			var sel='';
+		    for (var i=0;i<o.length;i++){sel +='<option value="'+o[i]+'">'+o[i]+'</option>';}
+		    jQuery('select[name="item_meta['+field_id+']"]').html(sel);
+		}
+		}
 	});	
 }
 

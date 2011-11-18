@@ -63,15 +63,10 @@ echo $fopt ."\n";
 </textarea>
 
 <p class="submit clear">
-<input type="button" onclick="window.top.frmUpdateOpts(<?php echo $field->id ?>, '<?php echo $frm_ajax_url ?>', jQuery('#frm_bulk_options').val()); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
+<input type="button" onclick="window.top.frmUpdateOpts(<?php echo $field->id ?>,'<?php echo $frm_ajax_url ?>', jQuery('#frm_bulk_options').val()); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
 <input type="button" onclick="window.top.tb_remove();" class="button" value="<?php _e('Cancel', 'formidable') ?>" />
 </p>
 </div>
-
-<?php
-do_action('admin_footer', '');
-do_action('admin_print_footer_scripts');
-?>
 
 <script type="text/javascript">
 function frmPrePop(opts){

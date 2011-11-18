@@ -198,7 +198,7 @@
                     if (isset($values['fields'])){
                         foreach($values['fields'] as $field){
                             if (apply_filters('frm_show_custom_html', true, $field['type'])){ ?>
-                                <p><label class="frm_primary_label"><?php echo $field['name'] ?></label>
+                                <p><label class="frm_primary_label"><?php echo $field['name'] ?></label><br/>
                                 <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($field['custom_html']) ?></textarea></p>
                             <?php }
                             unset($field);

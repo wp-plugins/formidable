@@ -2,7 +2,7 @@
 if (isset($css_file)){ 
     if (is_array($css_file)){
         foreach ($css_file as $file)
-            echo '<link rel="Stylesheet" href="'. $file .'" type="text/css" />';
+            echo '<link rel="stylesheet" href="'. $file .'" type="text/css" />';
     }else{?>
 <link rel="stylesheet" href="<?php echo $css_file; ?>" type="text/css" />
 <?php } 

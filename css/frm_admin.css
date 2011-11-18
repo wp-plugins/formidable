@@ -44,6 +44,34 @@ ul.frm_form_nav li.last a.current_page{
 	background:#767676;
 }
 
+.with_frm_style label.frm_primary_label{font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:12px;color:#444444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;}
+.with_frm_style .form-field{margin-bottom:20px;}
+.with_frm_style div.description, .with_frm_style .frm_error{margin:0;padding:0;font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:11px;color:#666666;font-weight:normal;text-align:left;font-style:normal;}
+.with_frm_style .form-field label.frm_primary_label{display:block;float:none;width:auto;}
+
+.with_frm_style .frm_10radio{margin-right:10px;text-align:center;float:left;}
+.with_frm_style .frm_form_fields input[type=text], .with_frm_style .frm_form_fields input[type=password], .with_frm_style .frm_form_fields input[type=email], .with_frm_style .frm_form_fields input[type=number], .with_frm_style .frm_form_fields input[type=url], .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{
+	font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:13px;margin-bottom:0;width:400px;
+	-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;
+	color:#222222;background-color:#eeeeee;border:1px solid #DFDFDF;
+}
+.with_frm_style .frm_form_fields select{width:auto;}
+.with_frm_style .frm_form_fields input[type="radio"], .with_frm_style .frm_form_fields input[type="checkbox"]{width:auto;border:none;background:transparent;padding:0;}
+.with_frm_style .frm_catlevel_2, .with_frm_style .frm_catlevel_3, .with_frm_style .frm_catlevel_4, .with_frm_style .frm_catlevel_5{margin-left:18px;}
+.with_frm_style .frm_form_fields input.auto_width, .with_frm_style .frm_form_fields select.auto_width, .with_frm_style .frm_form_fields textarea.auto_width{width:auto;}
+.with_frm_style input[disabled], .with_frm_style select[disabled], .with_frm_style textarea[disabled], .with_frm_style input[readonly], .with_frm_style select[readonly], .with_frm_style textarea[readonly]{opacity:.5;filter:alpha(opacity=50);}
+.frm_set_select .with_frm_style select, .frm_set_select .with_frm_style select.auto_width{width:100%;}
+.with_frm_style .frm_form_fields input:focus, .with_frm_style .frm_form_fields select:focus, 
+.with_frm_style .frm_form_fields textarea:focus, .with_frm_style .frm_focus_field input[type=text], 
+.with_frm_style .frm_focus_field input[type=password], .with_frm_style .frm_focus_field input[type=email], 
+.with_frm_style .frm_focus_field input[type=number], .with_frm_style .frm_focus_field input[type=url]{background-color:#ffffff;border-color:#dddddd;}
+
+.with_frm_style .frm_radio, .with_frm_style .frm_checkbox{display:block;}
+.with_frm_style .frm_radio label, .with_frm_style .frm_checkbox label{font-family:Verdana,Arial,sans-serif;font-size:12px;color:#302c3f;font-weight:normal;display:inline;}
+.with_frm_style .frm_radio input[type="radio"], .with_frm_style .frm_checkbox input[type="checkbox"]{margin-right:5px;width:auto;}
+.with_frm_style input[type="radio"],.with_frm_style input[type="checkbox"]{width:auto;}
+
+
 .frm_long_input{width:95% !important;}
 .frm_tooltip{ 
 	background:#777777 url(../images/tooltip_white.png) no-repeat 20px 11px;
@@ -122,10 +150,6 @@ textarea.inplace_field{width:98% !important;}
 .with_frm_style .frm_full_rte textarea{width:98%; padding:0;}
 .frm_field_box{padding:5px;min-height:20px;}
 
-.frm_top_container .frm_primary_label, .frm_pos_top{display:block;}
-.frm_left_container .frm_primary_label, .frm_pos_left{float:left; width:150px;}
-.frm_none_container .frm_primary_label, .frm_pos_none{display:none;}
-.frm_hidden_container .frm_primary_label, .frm_pos_hidden{visibility:hidden;}
 .frm_charts object{background:transparent;}
 
 .frm_single_show_hover, .frm-show-click{display:none;}
@@ -168,6 +192,7 @@ span.howto{display:inline;}
 .form-field input, .form-field textarea{width:auto;}
 
 .frm_10radio{margin-right:10px; text-align:center; float:left;}
+
 
 #frm_form_editor_container .ui-widget-content{display:none; padding:15px;}
 #frm_form_editor_container .ui-widget-content label{float:left; width:170px; text-align:right; padding-right:5px; clear:both;}

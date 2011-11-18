@@ -290,9 +290,11 @@ class FrmUpdate{
 
       $plugin_updates = (function_exists('get_site_transient')) ? get_site_transient("update_plugins") : get_transient("update_plugins"); 
       if(!$plugin_updates and function_exists('get_transient'))
-        $plugin_updates = get_transient("update_plugins");
+        $plugin_updates = get_transient('update_plugins');
 
       $curr_version = $this->get_current_version();
+      if(!isset($plugin_updates->checked))
+        $plugin_updates->checked = array();
       $installed_version = $plugin_updates->checked[$this->plugin_name];
 
       if( $force or ( $curr_version != $installed_version ) ){
