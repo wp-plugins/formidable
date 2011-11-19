@@ -66,6 +66,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added ajax to uninstall button
 * Correctly filter external shortcodes in the form success message
 * Show error messages at the top if they are not for fields in the form (ie Akismet errors)
+* Updated bulk edit options to change the dropdown in the form builder at the time the options are submitted
+* Fixed default values set to clear on click to work with values that include hard returns
 * Free only: Fixed hidden label CSS
 * PRO: Extended the conditional field logic
 * PRO: Added graphs for fields over time
@@ -77,10 +79,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow a taxonomy/category to be selected for data from entries fields. This makes cascading category fields possible.
 * PRO: Added [post_author_email] dynamic default value
 * PRO: Added a frm_notification_attachment hook
+* PRO: Added clickable option to the formresults shortcode. ex [ formresults id=x clickable=1]
 * PRO: Improved field calculations to extract a price from the end of an option
 * PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
 $[25 decimal=2 dec_point='.' thousands_sep=',']
-* PRO: Allow fields set as custom fields to be used for sorting custom displays
+* PRO: Added a message to show before the user is redirected, along with a filter to change it (frm_redirect_msg).
+* PRO: Conditionally remove HTML5 validation of form if default values are present
+* PRO: Allow fields set as custom post fields to be used for sorting custom displays
 * PRO: Updated import to create the posts at the time of import
 * PRO: Unattach images from a post if they are replaced
 * PRO: Fixed bug preventing a field dependent on another data from entries field from updating
@@ -89,8 +94,11 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug preventing front-end entry deletion when the form was editable and limited to one per user
 * PRO: Fixed bug preventing Data from entries "just show it" fields from showing a value in admin listing and view entry pages
 * PRO: Fixed bug preventing checkbox selections from showing in custom email notifications if a checkbox contained a quotation mark
+* PRO: Prevent the uploading files message from showing if no files were selected
 * PRO: Check a default value when using dynamic default values in the check box options
 * PRO: Fixed bug preventing a newly created post from getting assigned to the user selected in the user ID dropdown if the selected user was not the user submitting the entry or was created with the registration add-on in the same form
+* PRO: Fixed bug causing the options to be empty if the data from entries options are limited to the current user and the form they are pulled from are creating posts
+
 
 = 1.05.05 =
 * Added Dutch translation (Eric Horstman)

@@ -331,7 +331,8 @@ class FrmFieldsController{
         if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){
             $action = FrmAppHelper::get_param('action');
             if(isset($field['required']) and $field['required']){
-                //echo ' required="required"';
+                //if($field['type'] != 'checkbox')
+                //    echo ' required="required"';
                     
                 if($field['type'] == 'file' and $action == 'edit'){
                     //don't add the required class if this is a file upload when editing
@@ -339,11 +340,12 @@ class FrmFieldsController{
                     $class .= " required";
             }
 
-            //if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
+            //if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and isset($field['clear_on_focus']) and $field['clear_on_focus'] and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
             //    echo ' placeholder="'.$field['default_value'].'"';
 
-            if(isset($field['clear_on_focus']) and $field['clear_on_focus']){
-                echo ' onfocus="frmClearDefault('."'". addslashes($field['default_value']) ."'". ', this)" onblur="frmReplaceDefault('."'".addslashes($field['default_value'])."'". ', this)"';
+            if(isset($field['clear_on_focus']) and $field['clear_on_focus'] and !empty($field['default_value'])){
+                $val = str_replace(array("\r\n", "\n"), '\r', addslashes($field['default_value']));
+                echo ' onfocus="frmClearDefault('."'". $val ."'". ',this)" onblur="frmReplaceDefault('."'". $val ."'". ',this)"';
                 
                 if($field['value'] == $field['default_value'])
                     echo ' style="font-style:italic;"';

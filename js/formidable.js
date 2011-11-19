@@ -28,8 +28,14 @@ $prt=frmFindParentObj($obj);if($prt.length !=0){$prt[0].checked=b;frmCheckParent
 }
 function frmFindParentObj($obj){return $obj.parent().parent().parent().prev().children("input");}
 
-function frmClearDefault(default_value,thefield){if(thefield.value==default_value){thefield.value='';thefield.style.fontStyle='inherit';}}
-function frmReplaceDefault(default_value,thefield){if(thefield.value==''){thefield.value=default_value;thefield.style.fontStyle='italic';}}
+function frmClearDefault(default_value,thefield){
+var default_value=default_value.replace(/(\n|\r\n)/g, '\r');var this_val=thefield.value.replace(/(\n|\r\n)/g, '\r');
+if(this_val==default_value){thefield.value='';thefield.style.fontStyle='inherit';}
+}
+function frmReplaceDefault(default_value,thefield){
+var default_value=default_value.replace(/(\n|\r\n)/g, '\r');
+if(thefield.value==''){thefield.value=default_value;thefield.style.fontStyle='italic';}
+}
 
 function frmCheckDependent(selected,field_id){
 if(typeof(__FRMRULES)!='undefined')
@@ -99,10 +105,10 @@ for(i=0; i<len; i++){
 		});
     }else if(f.Type=='data-radio'){
 		if(typeof(f.DataType)=='undefined' || f.DataType=='' || f.DataType=='data'){
-	        if(selected==''){
+	        if(selected==''){	
 				show_fields[f.HideField][i]=false;
 				jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
-				jQuery('#frm_field_'+f.HideField+'_container').html('');
+				jQuery('#frm_data_field_'+f.HideField+'_container').html('');
 			}else{show_fields[f.HideField][i]={'funcName':'frmGetData','f':f,'sel':selected};}
 		}else{
 			if(selected==''){show_fields[f.HideField][i]=false;}
@@ -144,13 +150,8 @@ for(i=0; i<len; i++){
 				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
 			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		}else{
-			if(i==(len-1)){
-				if(f.Show=='show') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
-				else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
-			}else{
-				hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};
-				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
-			}
+			hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};
+			if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
 		}
 		if(i==(len-1)){
 			jQuery.each(hide_later, function(hkey,hvalue){ 
@@ -221,7 +222,8 @@ function frmGetData(f,selected,ajax_url,append){
 			if(append){jQuery('#frm_data_field_'+f.HideField+'_container').append(html);}
 			else{
 				jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
-				if(html=='') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
+				var val=jQuery('#frm_data_field_'+f.HideField+'_container').children('input').val();
+				if(html=='' || val=='') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
 				frmCheckDependent('',f.HideField);
 			}
 			return true;
@@ -257,12 +259,17 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 }
 
 function frmGetFormErrors(object,ajax_url){
+	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,dataType:'json',
 	    data:jQuery(object).serialize()+"&controller=entries",
 	    success:function(errObj){
+			jQuery(object).find('input[type="submit"]').removeAttr('disabled');
 	    	if(errObj=='' || !errObj){
-	            if(jQuery("#frm_loading").length){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
+	            if(jQuery("#frm_loading").length){
+					var file_val=jQuery(object).find('input[type=file]').val();
+					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
+				}
 	            object.submit();
 	        }else{
 	            //show errors
