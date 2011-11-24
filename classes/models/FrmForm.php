@@ -216,7 +216,7 @@ class FrmForm{
   }
 
   function getOne( $id, $blog_id=false ){
-      global $wpdb, $frmdb;
+      global $wpdb, $frmdb, $frm_forms_called;
       
       if ($blog_id and IS_WPMU){
           global $wpmuBaseTablePrefix;
@@ -228,6 +228,8 @@ class FrmForm{
           $table_name = "{$prefix}frm_forms";
       }else{
           $table_name = $frmdb->forms;
+          if($frm_forms_called and isset($frm_forms_called[$id]))
+            return $frm_forms_called[$id];
       }
       
       $query = "SELECT * FROM $table_name WHERE ";  
@@ -238,18 +240,28 @@ class FrmForm{
       
       $results = $wpdb->get_row($query);
       
-      if(isset($results->options))
+      if(isset($results->options)){
           $results->options = stripslashes_deep(maybe_unserialize($results->options));
+          $frm_forms_called[$results->id] = $results;
+      }
       return $results;
   }
 
   function getAll( $where = '', $order_by = '', $limit = '' ){
-      global $wpdb, $frmdb, $frm_app_helper;
+      global $wpdb, $frmdb, $frm_app_helper, $frm_forms_called;
       $query = 'SELECT * FROM ' . $frmdb->forms . $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
-      if ($limit == ' LIMIT 1')
+      if ($limit == ' LIMIT 1'){
         $results = $wpdb->get_row($query);
-      else
+        if($results)
+            $frm_forms_called[$results->id] = $results;
+      }else{
         $results = $wpdb->get_results($query);
+        if($results){
+            foreach($results as $result)
+                $frm_forms_called[$result->id] = $result;
+        }
+      }
+      
       return $results;
   }
 

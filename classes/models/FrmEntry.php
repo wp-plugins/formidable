@@ -208,16 +208,26 @@ class FrmEntry{
                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
       $entries = $wpdb->get_results($query);
       if($meta){
-          foreach($entries as $key => $entry){
-              $metas = FrmEntryMeta::getAll("item_id=$entry->id and field_id != 0");
-              $entry_metas = array();
-              foreach($metas as $meta_val)
-                  $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
+          $entry_ids = array();
+          foreach($entries as $key => $entry)
+              $entry_ids[] = $entry->id;
+          
+          $metas = FrmEntryMeta::getAll("item_id in (". implode(',', $entry_ids).") and field_id != 0");
+          
+          if($metas){
+              foreach($entries as $key => $entry){
 
-              $entries[$key]->metas = $entry_metas;
-              
-              if(!isset($frm_loaded_entries[$entry->id]))
-                  $frm_loaded_entries[$entry->id] = $entries[$key];
+                  $entry_metas = array();
+                  foreach($metas as $meta_val){
+                      if($meta_val->item_id == $entry->id)
+                          $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
+                  }
+
+                  $entries[$key]->metas = $entry_metas;
+
+                  if(!isset($frm_loaded_entries[$entry->id]))
+                      $frm_loaded_entries[$entry->id] = $entries[$key];
+              }
           }
       }
       return $entries;

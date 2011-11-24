@@ -194,8 +194,8 @@ function frmOperators(op,a,b){
 	var operators = {
 	    '==': function(c,d){ return c == d },
 		'!=': function(c,d){ return c != d },
-	    '<': function(c,d){ return c < d },
-		'>': function(c,d){ return c > d }
+	    '<': function(c,d){ return c > d },
+		'>': function(c,d){ return c < d }
 	};
 	return operators[op](a,b);
 }

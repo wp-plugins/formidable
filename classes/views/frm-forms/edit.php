@@ -1,7 +1,7 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
     <h2><?php echo __('Edit', 'formidable') .' '. (($values['is_template']) ? __('Template') : __('Form')); ?>
-        <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
@@ -22,7 +22,7 @@
         <p style="margin-top:0;">
             <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
             <?php _e('or', 'formidable') ?>
-            <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
+            <a class="button-secondary cancel" href="?page=formidable<?php echo ($values['is_template']) ? '-templates' : ''; ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
         
         <input type="hidden" name="action" value="update" />
@@ -34,7 +34,7 @@
         <p>            
             <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
             <?php _e('or', 'formidable') ?>
-            <a class="button-secondary cancel" href="?page=<?php echo FRM_PLUGIN_NAME ?>"><?php _e('Cancel', 'formidable') ?></a>
+            <a class="button-secondary cancel" href="?page=formidable<?php echo ($values['is_template']) ? '-templates' : ''; ?>"><?php _e('Cancel', 'formidable') ?></a>
         </p>
     </form>
     </div>

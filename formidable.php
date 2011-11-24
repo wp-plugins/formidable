@@ -5,7 +5,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.00b3
+Version: 1.06.00b4
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -62,9 +62,9 @@ $frm_db_version = 7;
 global $frm_ajax_url;
 $frm_ajax_url = admin_url('admin-ajax.php');
 
-global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_loaded_fields, $frm_loaded_entries, $frm_saved_entries;
+global $frm_load_css, $frm_forms_loaded, $frm_forms_called, $frm_css_loaded, $frm_loaded_fields, $frm_loaded_entries, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
-$frm_forms_loaded = $frm_loaded_fields = $frm_loaded_entries = $frm_saved_entries = array();
+$frm_forms_loaded = $frm_forms_called = $frm_loaded_fields = $frm_loaded_entries = $frm_saved_entries = array();
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 global $frm_app_helper;

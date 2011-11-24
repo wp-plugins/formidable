@@ -71,6 +71,8 @@ ul.frm_form_nav li.last a.current_page{
 .with_frm_style .frm_radio input[type="radio"], .with_frm_style .frm_checkbox input[type="checkbox"]{margin-right:5px;width:auto;}
 .with_frm_style input[type="radio"],.with_frm_style input[type="checkbox"]{width:auto;}
 
+.frm_form_fields div.star{height:auto;left:auto;top:auto;letter-spacing:auto;position:static;}
+.frm_form_fields div.star a, .frm_form_fields div.star a:hover, .frm_form_fields div.star a:visited{position:static;right:auto;}
 
 .frm_long_input{width:95% !important;}
 .frm_tooltip{ 

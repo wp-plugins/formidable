@@ -43,7 +43,7 @@
     <div id="post-body">
         <div class="meta-box-sortables">
         <div class="categorydiv postbox">
-        <h3 class="hndle"><span><?php _e('Settings', 'formidable') ?></span></h3>
+        <h3 class="hndle"><span><?php echo FrmAppHelper::truncate(stripslashes($values['name']), 40) .' '. __('Settings', 'formidable') ?></span></h3>
         <div class="inside">
         <ul id="category-tabs" class="category-tabs">
         	<li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>

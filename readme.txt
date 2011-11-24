@@ -3,7 +3,7 @@ Contributors: sswells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
 Requires at least: 2.8
-Tested up to: 3.2
+Tested up to: 3.3
 Stable tag: 1.05.05
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
@@ -73,6 +73,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added graphs for fields over time
 * PRO: Moved post creation settings from individual fields to the forms settings page
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
+* PRO: Added star rating option to scale fields
+* PRO: Added star type to [frm-stats] shortcode to display the average in star format. Example [frm-stats id=5 type=star]
 * PRO: Added option to format individual radio and checkbox fields in one or multiple rows
 * PRO: Added server-side validation for dates inserted into date fields
 * PRO: Allow multiple fields for the same taxonomy/category
@@ -83,7 +85,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Improved field calculations to extract a price from the end of an option
 * PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
 $[25 decimal=2 dec_point='.' thousands_sep=',']
-* PRO: Added a message to show before the user is redirected, along with a filter to change it (frm_redirect_msg).
+* PRO: Added a message before the user is redirected, along with a filter to change it (frm_redirect_msg).
 * PRO: Conditionally remove HTML5 validation of form if default values are present
 * PRO: Allow fields set as custom post fields to be used for sorting custom displays
 * PRO: Updated import to create the posts at the time of import
@@ -98,6 +100,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Check a default value when using dynamic default values in the check box options
 * PRO: Fixed bug preventing a newly created post from getting assigned to the user selected in the user ID dropdown if the selected user was not the user submitting the entry or was created with the registration add-on in the same form
 * PRO: Fixed bug causing the options to be empty if the data from entries options are limited to the current user and the form they are pulled from are creating posts
+* PRO: When a blog is deleted in WP multi-site, delete database table rows related to copying forms from that blog
 
 
 = 1.05.05 =
