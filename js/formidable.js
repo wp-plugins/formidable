@@ -1,6 +1,5 @@
 jQuery(document).ready(function($){
-var trigger = $('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');
-if(trigger) frmToggleSection(trigger);
+var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
 });
 
 function frmToggleSection($sec){
@@ -15,17 +14,14 @@ if($sec.hasClass('active')){
 }
 
 function frmCheckParents(id){ 
-	var $chk = jQuery('#'+id);
-	var ischecked = $chk.is(":checked");
-	if(!ischecked) return;
-	$chk.parent().parent().siblings().children("label").children("input").each(function(){
-		var b= this.checked;ischecked=ischecked || b;
-	});
-	frmCheckParentNodes(ischecked, $chk);
+var $chk=jQuery('#'+id);var ischecked=$chk.is(":checked");
+if(!ischecked) return;
+$chk.parent().parent().siblings().children("label").children("input").each(function(){
+	var b= this.checked;ischecked=ischecked || b;
+});
+frmCheckParentNodes(ischecked, $chk);
 }
-function frmCheckParentNodes(b,$obj){
-$prt=frmFindParentObj($obj);if($prt.length !=0){$prt[0].checked=b;frmCheckParentNodes(b,$prt);}
-}
+function frmCheckParentNodes(b,$obj){$prt=frmFindParentObj($obj);if($prt.length !=0){$prt[0].checked=b;frmCheckParentNodes(b,$prt);}}
 function frmFindParentObj($obj){return $obj.parent().parent().parent().prev().children("input");}
 
 function frmClearDefault(default_value,thefield){
@@ -38,17 +34,12 @@ if(thefield.value==''){thefield.value=default_value;thefield.style.fontStyle='it
 }
 
 function frmCheckDependent(selected,field_id){
-if(typeof(__FRMRULES)!='undefined')
-	var rules=__FRMRULES;
-if(typeof(__FRMURL)!='undefined')
-	var ajax_url=__FRMURL;
-
-if(typeof(rules)=='undefined')
-	return;
+if(typeof(__FRMRULES)!='undefined') var rules=__FRMRULES;
+if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
+if(typeof(rules)=='undefined') return;
 			
 rules=rules[field_id];
-if(typeof(rules)=='undefined')
-	return;
+if(typeof(rules)=='undefined') return;
 	
 var this_opts=new Array();
 for(var i=0;i<rules.length;i++){
@@ -71,8 +62,7 @@ for(i=0; i<len; i++){
   (function(i){
 	var f=this_opts[i];
 		
-	if(typeof(show_fields[f.HideField])=='undefined')
-		show_fields[f.HideField]=new Array();
+	if(typeof(show_fields[f.HideField])=='undefined') show_fields[f.HideField]=new Array();
 		
 	if(f.MatchType=='any' && frmInArray(true, show_fields[f.HideField])){
 		if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}

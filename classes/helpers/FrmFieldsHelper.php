@@ -112,7 +112,7 @@ class FrmFieldsHelper{
         global $frm_field;
         $fields = apply_filters('frm_get_paged_fields', false, $form_id, $error);
         if (!$fields)
-            $fields = $frm_field->getAll("fi.form_id='$form_id'", ' ORDER BY field_order');
+            $fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
         return $fields;
     }
     

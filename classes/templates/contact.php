@@ -7,7 +7,7 @@ $values['options']['custom_style'] = 1;
 if ($form){
     $form_id = $form->id;
     $frm_form->update($form_id, $values );
-    $form_fields = $frm_field->getAll("fi.form_id='$form_id'");
+    $form_fields = $frm_field->getAll(array('fi.form_id' => $form_id));
     if (!empty($form_fields)){
         foreach ($form_fields as $field)
             $frm_field->destroy($field->id);

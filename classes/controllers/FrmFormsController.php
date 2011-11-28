@@ -60,7 +60,7 @@ class FrmFormsController{
             $values['id'] = $id;
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
-            $all_templates = $frm_form->getAll('is_template=1', ' ORDER BY name');
+            $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
             require(FRM_VIEWS_PATH.'/frm-forms/new-selection.php');
         }
     }
@@ -68,13 +68,13 @@ class FrmFormsController{
     function create(){
         global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $errors = $frm_form->validate($_POST);
-        $id = FrmAppHelper::get_param('id');
+        $id = (int)FrmAppHelper::get_param('id');
         
         if( count($errors) > 0 ){
             $hide_preview = true;
             $frm_field_selection = FrmFieldsHelper::field_selection();
             $record = $frm_form->getOne( $id );
-            $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
+            $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
             $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
@@ -173,8 +173,8 @@ class FrmFormsController{
         $plugin     = FrmAppHelper::get_param('plugin');
         $controller = FrmAppHelper::get_param('controller');
         $key = (isset($_GET['form']) ? $_GET['form'] : (isset($_POST['form']) ? $_POST['form'] : ''));
-        $form = $frm_form->getAll("form_key='$key'", '', ' LIMIT 1');
-        if (!$form) $form = $frm_form->getAll('', '', ' LIMIT 1');
+        $form = $frm_form->getAll(array('form_key' => $key), '', 1);
+        if (!$form) $form = $frm_form->getAll(array(), '', 1);
         
         require(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
     }
@@ -245,8 +245,8 @@ class FrmFormsController{
         $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
 
         if ($params['template']){
-            $default_templates = $frm_form->getAll('default_template=1');
-            $all_templates = $frm_form->getAll('is_template=1', ' ORDER BY name');
+            $default_templates = $frm_form->getAll(array('default_template' => 1));
+            $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
         }
 
         $form_vars = $this->get_form_sort_vars($params, $where_clause);
@@ -324,7 +324,7 @@ class FrmFormsController{
         global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
-        $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
+        $fields = $frm_field->getAll(array('fi.form_id' => $record->id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
         
         $edit_message = __('Form was Successfully Updated', 'formidable');
@@ -342,7 +342,7 @@ class FrmFormsController{
     function get_settings_vars($id, $errors = '', $message=''){
         global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
-        $fields = $frm_field->getAll("fi.form_id='$id'", ' ORDER BY field_order');
+        $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
         $sections = apply_filters('frm_add_form_settings_section', array(), $values);
         if (isset($values['default_template']) && $values['default_template'])
@@ -365,10 +365,10 @@ class FrmFormsController{
         
         for($i = count($templates) - 1; $i >= 0; $i--){
             $filename = str_replace('.php', '', str_replace($path.'/', '', $templates[$i]));
-            $template_query = "form_key='{$filename}'";
-            if($template) $template_query .= " and is_template='1'";
-            if($default) $template_query .= " and default_template='1'";
-            $form = $frm_form->getAll($template_query, '', ' LIMIT 1');
+            $template_query = array('form_key' => $filename);
+            if($template) $template_query['is_template'] = 1;
+            if($default) $template_query['default_template'] = 1;
+            $form = $frm_form->getAll($template_query, '', 1);
             
             $values = FrmFormsHelper::setup_new_vars();
             $values['form_key'] = $filename;

@@ -76,12 +76,13 @@ class FrmField{
         global $wpdb, $frmdb, $frm_loaded_fields;
         if(isset($frm_loaded_fields[$id])) 
             return $frm_loaded_fields[$id];
-            
+          
         if (is_numeric($id))
-            $query = "SELECT * FROM $frmdb->fields WHERE id=$id";
+            $where = array('id' => $id);
         else
-            $query = "SELECT * FROM $frmdb->fields WHERE field_key='$id'";
-        $results = $wpdb->get_row($query);
+            $where = array('field_key' => $id);
+
+        $results = $frmdb->get_one_record($frmdb->fields, $where);
         
         if($results){
             $results->field_options = maybe_unserialize($results->field_options);
@@ -91,7 +92,7 @@ class FrmField{
         return $results;
     }
 
-    function getAll($where = '', $order_by = '', $limit = '', $blog_id=false){
+    function getAll($where =array(), $order_by = '', $limit = '', $blog_id=false){
         global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_fields;
         
         if ($blog_id and IS_WPMU){
@@ -108,13 +109,28 @@ class FrmField{
             $form_table_name = $frmdb->forms;
         }
         
+        
+        if(!empty($order_by) and !preg_match("/ORDER BY/", $order_by))
+            $order_by = " ORDER BY {$order_by}";
+
+        if(is_numeric($limit))
+            $limit = " LIMIT {$limit}";
+        
         $query = 'SELECT fi.*, ' .
                  'fr.name as form_name ' . 
                  'FROM '. $table_name . ' fi ' .
-                 'LEFT OUTER JOIN ' . $form_table_name . ' fr ON fi.form_id=fr.id' . 
-                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+                 'LEFT OUTER JOIN ' . $form_table_name . ' fr ON fi.form_id=fr.id';
+                  
+        if(is_array($where)){       
+            extract($frmdb->get_where_clause_and_values( $where ));
+
+            $query .= "{$where}{$order_by}{$limit}";
+            $query = $wpdb->prepare($query, $values);
+        }else{
+            $query .= $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+        }
         
-        if ($limit == ' LIMIT 1')
+        if ($limit == ' LIMIT 1' or $limit == 1)
             $results = $wpdb->get_row($query);
         else
             $results = $wpdb->get_results($query);
@@ -138,7 +154,7 @@ class FrmField{
         $query = "SELECT fi.id  FROM $frmdb->fields fi " .
                  "LEFT OUTER JOIN $frmdb->forms fr ON fi.form_id=fr.id" . 
                  $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
-        if ($limit == ' LIMIT 1')
+        if ($limit == ' LIMIT 1' or $limit == 1)
             $results = $wpdb->get_row($query);
         else
             $results = $wpdb->get_results($query);

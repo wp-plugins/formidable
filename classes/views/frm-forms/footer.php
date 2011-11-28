@@ -4,11 +4,14 @@ __FRMDEFDESC="<?php _e('(Click here to add form description or instructions)', '
 jQuery(document).ready(function($){
 
 $("#new_fields").sortable({
+    placeholder:'sortable-placeholder',
     axis:'y',
     cursor:'move',
     cancel:'.themeRoller,.frm_field_opts_list,input,textarea',
     accepts:'field_type_list',
     revert:true,
+    forcePlaceholderSize:true,
+    opacity:0.65,
     receive:function(event,ui){
         var new_id=(ui.item).attr('id');
         jQuery('#new_fields .frmbutton.frm_t'+new_id).replaceWith('<img class="frmbutton frmbutton_loadingnow" id="'+new_id+'" src="<?php echo FRM_IMAGES_URL; ?>/ajax_loader.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');

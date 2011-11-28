@@ -112,7 +112,7 @@ class FrmForm{
     else
         $query_results = true;
 
-    $all_fields = $frm_field->getAll("fi.form_id='$id'");
+    $all_fields = $frm_field->getAll(array('fi.form_id' => $id));
     if ($all_fields and (isset($values['options']) or isset($values['item_meta']))){
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();
@@ -183,7 +183,8 @@ class FrmForm{
         return false;
         
     // Disconnect the items from this form
-    foreach ($frm_entry->getAll('it.form_id='.$id) as $item)
+    $entries = $frm_entry->getAll(array('it.form_id' => $id));
+    foreach ($entries as $item)
         $frm_entry->destroy($item->id);
 
     // Disconnect the fields from this form
@@ -232,13 +233,12 @@ class FrmForm{
             return $frm_forms_called[$id];
       }
       
-      $query = "SELECT * FROM $table_name WHERE ";  
       if (is_numeric($id))
-          $query .= "id='$id'";
+          $where = array('id' => $id);
       else
-          $query .= "form_key='$id'";
-      
-      $results = $wpdb->get_row($query);
+          $where = array('form_key' => $id);
+          
+      $results = $frmdb->get_one_record($table_name, $where);
       
       if(isset($results->options)){
           $results->options = stripslashes_deep(maybe_unserialize($results->options));
@@ -247,23 +247,32 @@ class FrmForm{
       return $results;
   }
 
-  function getAll( $where = '', $order_by = '', $limit = '' ){
-      global $wpdb, $frmdb, $frm_app_helper, $frm_forms_called;
-      $query = 'SELECT * FROM ' . $frmdb->forms . $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
-      if ($limit == ' LIMIT 1'){
-        $results = $wpdb->get_row($query);
-        if($results)
-            $frm_forms_called[$results->id] = $results;
-      }else{
-        $results = $wpdb->get_results($query);
-        if($results){
-            foreach($results as $result)
-                $frm_forms_called[$result->id] = $result;
+    function getAll( $where = array(), $order_by = '', $limit = '' ){
+        global $wpdb, $frmdb, $frm_app_helper, $frm_forms_called;
+        $query = 'SELECT * FROM ' . $frmdb->forms . $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+            
+        if ($limit == ' LIMIT 1' or $limit == 1){
+            if(is_array($where))
+                $results = $frmdb->get_one_record($frmdb->forms, $where, '*', $order_by);
+            else
+                $results = $wpdb->get_row($query);
+                
+            if($results)
+                $frm_forms_called[$results->id] = $results;
+        }else{
+            if(is_array($where))
+                $results = $frmdb->get_records($frmdb->forms, $where, $order_by, $limit);
+            else
+                $results = $wpdb->get_results($query);
+            
+            if($results){
+                foreach($results as $result)
+                    $frm_forms_called[$result->id] = $result;
+            }
         }
-      }
       
-      return $results;
-  }
+        return $results;
+    }
 
   function validate( $values ){
       $errors = array();

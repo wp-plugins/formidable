@@ -216,12 +216,15 @@ DEFAULT_HTML;
         return $wpdb->get_col($query);
     }
 
-    function get_one_record($table, $args=array(), $fields='*'){
+    function get_one_record($table, $args=array(), $fields='*', $order_by=''){
         global $wpdb;
 
         extract(FrmDb::get_where_clause_and_values( $args ));
+        
+        if(!empty($order_by))
+            $order_by = " ORDER BY {$order_by}";
 
-        $query = "SELECT {$fields} FROM {$table}{$where} LIMIT 1";
+        $query = "SELECT {$fields} FROM {$table}{$where} {$order_by} LIMIT 1";
         $query = $wpdb->prepare($query, $values);
         return $wpdb->get_row($query);
     }

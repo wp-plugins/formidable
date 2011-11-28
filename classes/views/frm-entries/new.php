@@ -4,7 +4,7 @@
 <?php $form_action = 'create'; ?>
 <?php require(FRM_VIEWS_PATH.'/frm-entries/form.php'); ?>
 
-<?php if (!$form->is_template){ ?>
+<?php if (!$form->is_template and $form->status == 'published'){ ?>
 <p class="submit">
 <?php $submit = apply_filters('frm_submit_button', $submit, $form); ?>
 <input type="submit" name="<?php echo $submit ?>" value="<?php echo $submit ?>" <?php do_action('frm_submit_button_action', $form, $form_action); ?>/>

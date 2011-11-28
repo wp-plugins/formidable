@@ -23,7 +23,7 @@ class FrmEntriesController{
     
     function show_form($id='', $key='', $title=false, $description=false){
         global $frm_form, $user_ID, $frm_settings, $post;
-        if ($id) $form = $frm_form->getOne($id);
+        if ($id) $form = $frm_form->getOne((int)$id);
         else if ($key) $form = $frm_form->getOne($key);
 
         if(!$form or 
@@ -63,11 +63,11 @@ class FrmEntriesController{
         global $frm_form;
 
         if(!$form)
-            $form = $frm_form->getAll('', ' ORDER BY name', ' LIMIT 1');
+            $form = $frm_form->getAll(array(), 'name', 1);
             
         $action = apply_filters('frm_show_new_entry_page', FrmAppHelper::get_param('action', 'new'), $form);
         $default_values = array('id' => '', 'form_name' => '', 'paged' => 1, 'form' => $form->id, 'form_id' => $form->id, 'field_id' => '', 'search' => '', 'sort' => '', 'sdir' => '', 'action' => $action);
-        
+            
         $values['posted_form_id'] = FrmAppHelper::get_param('form_id');
         if (!is_numeric($values['posted_form_id']))
             $values['posted_form_id'] = FrmAppHelper::get_param('form');
@@ -85,6 +85,9 @@ class FrmEntriesController{
                 unset($default);
             }
         }
+        
+        if(in_array($values['action'], array('create', 'update')) and (!isset($_POST) or !isset($_POST['action'])))
+            $values['action'] = 'new';
 
         return $values;
     }

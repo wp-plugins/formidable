@@ -156,65 +156,75 @@ class FrmEntry{
     }
     
     function getOne( $id, $meta=false){
-      global $wpdb, $frmdb, $frm_loaded_entries;
+        global $wpdb, $frmdb, $frm_loaded_entries;
       
-      if(isset($frm_loaded_entries[$id]))
-        return $frm_loaded_entries[$id];
+        if(isset($frm_loaded_entries[$id]))
+            return $frm_loaded_entries[$id];
+
+        $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
+                  LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id WHERE ";
+        if(is_numeric($id))
+            $query .= $wpdb->prepare('it.id=%d', $id);
+        else
+            $query .= $wpdb->prepare('it.item_key=%s', $id);
         
-      $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
-                LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id";
-      if(is_numeric($id))
-        $query .= ' WHERE it.id=' . $id;
-      else
-        $query .= " WHERE it.item_key='" . $id ."'";
-      $entry = $wpdb->get_row($query);
-      
-      if($meta and $entry){
-            $metas = FrmEntryMeta::getAll("item_id=$entry->id and field_id != 0");
+        $entry = $wpdb->get_row($query);
+
+        if($meta and $entry){
+            global $frm_entry_meta;
+            $metas = $frm_entry_meta->getAll("item_id=$entry->id and field_id != 0");
             $entry_metas = array();
             foreach($metas as $meta_val)
                 $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
 
             $entry->metas = $entry_metas;
-            
+
             $frm_loaded_entries[$entry->id] = $entry;
-      }
-      
-      return $entry;
+        }
+
+        return $entry;
     }
     
-    function exists( $id ){
+    function &exists( $id ){
         global $wpdb, $frmdb, $frm_loaded_entries;
         
-        if(isset($frm_loaded_entries[$id]))
-            return true;
+        if(isset($frm_loaded_entries[$id])){
+            $exists = true;
+            return $exists;
+        }
             
-        $query = "SELECT id FROM $frmdb->entries";
-        if(is_numeric($id))
-            $query .= ' WHERE id=' . $id;
+        if (is_numeric($id))
+            $where = array('id' => $id);
         else
-            $query .= " WHERE item_key='" . $id ."'";
-        $id = $wpdb->get_var($query);
-        if ($id && $id > 0)
-            return true;
-        else
-            return false;
+            $where = array('item_key' => $id);
+
+        $id = $frmdb->get_var($frmdb->entries, $where);
+          
+        $exists = ($id && $id > 0) ? true : false;
+        return $exists;
     }
 
     function getAll($where = '', $order_by = '', $limit = '', $meta=false){
-      global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_entries;
-      $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
-                FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" . 
+        global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_entries;
+        
+        if(is_numeric($limit))
+            $limit = " LIMIT {$limit}";
+            
+        $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
+                FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
-      $entries = $wpdb->get_results($query);
-      if($meta){
+                
+        $entries = $wpdb->get_results($query);
+        
+        if($meta){
           $entry_ids = array();
           foreach($entries as $key => $entry)
               $entry_ids[] = $entry->id;
           
-          $metas = FrmEntryMeta::getAll("item_id in (". implode(',', $entry_ids).") and field_id != 0");
+          if($entry_ids)
+              $metas = FrmEntryMeta::getAll("item_id in (". implode(',', $entry_ids).") and field_id != 0");
           
-          if($metas){
+          if(isset($metas) and $metas){
               foreach($entries as $key => $entry){
 
                   $entry_metas = array();
@@ -272,11 +282,11 @@ class FrmEntry{
         if( !isset($values['item_key']) or $values['item_key'] == '' )
             $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         
-        $where = apply_filters('frm_posted_field_ids', 'fi.form_id='.$values['form_id']);
+        $where = apply_filters('frm_posted_field_ids', 'fi.form_id='. (int)$values['form_id']);
         if($exclude)
             $where .= " and fi.type not in ('". implode("','", $exclude) ."')";
             
-        $posted_fields = $frm_field->getAll($where, ' ORDER BY fi.field_order');
+        $posted_fields = $frm_field->getAll($where, 'fi.field_order');
 
         foreach($posted_fields as $posted_field){ 
             $posted_field->field_options = maybe_unserialize($posted_field->field_options);

@@ -58,7 +58,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 == Changelog ==
 = 1.06 =
 * User Interface improvements
-* Fixed XSS security vulnerability
+* Increased security and optimization
 * Moved the "automatic width" check box for drop-down select fields to free version
 * Moved email "From/Reply to" options to free version
 * Fixed form preview page for form templates
@@ -101,7 +101,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug preventing a newly created post from getting assigned to the user selected in the user ID dropdown if the selected user was not the user submitting the entry or was created with the registration add-on in the same form
 * PRO: Fixed bug causing the options to be empty if the data from entries options are limited to the current user and the form they are pulled from are creating posts
 * PRO: When a blog is deleted in WP multi-site, delete database table rows related to copying forms from that blog
-
+* PRO: Don't strip out desired backslashes 
 
 = 1.05.05 =
 * Added Dutch translation (Eric Horstman)

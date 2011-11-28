@@ -200,7 +200,9 @@ class FrmAppHelper{
                 
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
-                $new_value = stripslashes_deep(maybe_unserialize($new_value));
+                $new_value = maybe_unserialize($new_value);
+                if(is_array($new_value))
+                    $new_value = stripslashes_deep($new_value);
                 
                 $field_array = array(
                     'id' => $field->id,
@@ -419,7 +421,15 @@ class FrmAppHelper{
     }
     
     function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
-      return (( $where == '' )?'':$starts_with . $where);
+        if(is_array($where)){
+            global $frmdb, $wpdb;
+            extract($frmdb->get_where_clause_and_values( $where ));
+            $where = $wpdb->prepare($where, $values);
+        }else{
+            $where = (( $where == '' ) ? '' : $starts_with . $where);
+        }
+        
+        return $where;
     }
     
     // Pagination Methods
