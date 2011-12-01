@@ -8,8 +8,8 @@ class FrmAppController{
         add_action('admin_menu', array( &$this, 'menu' ), 1);
         add_action('admin_head', array(&$this, 'menu_css'));
         add_filter('frm_nav_array', array( &$this, 'frm_nav'), 1);
-        add_filter('plugin_action_links_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'settings_link'), 10, 2 );
-        add_action('after_plugin_row_'.FRM_PLUGIN_NAME.'/'.FRM_PLUGIN_NAME.'.php', array( &$this, 'pro_action_needed'));
+        add_filter('plugin_action_links_formidable/formidable.php', array( &$this, 'settings_link'), 10, 2 );
+        add_action('after_plugin_row_formidable/formidable.php', array( &$this, 'pro_action_needed'));
         add_action('admin_notices', array( &$this, 'pro_get_started_headline'));
         add_filter('the_content', array( &$this, 'page_route' ), 10);
         add_action('init', array(&$this, 'front_head'));
@@ -44,10 +44,10 @@ class FrmAppController{
         
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_forms', FRM_PLUGIN_NAME, array($frm_forms_controller, 'route'), 'div');
+            add_object_page('Formidable', 'Formidable', 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div');
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_object_page(FRM_PLUGIN_TITLE, FRM_PLUGIN_TITLE, 'frm_view_entries', FRM_PLUGIN_NAME, array($frmpro_entries_controller, 'route'), 'div');
+            add_object_page('Formidable', 'Formidable', 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div');
         }
     }
     
@@ -61,8 +61,8 @@ class FrmAppController{
     
     function frm_nav($nav=array()){
         if(current_user_can('frm_view_forms')){
-            $nav[FRM_PLUGIN_NAME] = __('Forms', 'formidable');
-            $nav[FRM_PLUGIN_NAME . '-templates'] = __('Templates', 'formidable');
+            $nav['formidable'] = __('Forms', 'formidable');
+            $nav['formidable-templates'] = __('Templates', 'formidable');
         }
         return $nav;
     }
@@ -76,7 +76,7 @@ class FrmAppController{
 
     // Adds a settings link to the plugins page
     function settings_link($links, $file){
-        $settings = '<a href="'.admin_url('admin.php?page='.FRM_PLUGIN_NAME).'">' . __('Settings', 'formidable') . '</a>';
+        $settings = '<a href="'.admin_url('admin.php?page=formidable').'">' . __('Settings', 'formidable') . '</a>';
         array_unshift($links, $settings);
         
         return $links;
@@ -142,6 +142,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         if(isset($_GET) and isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])){
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
+            wp_enqueue_script('admin-widgets');
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery'), $frm_version);
             wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version);
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
@@ -275,7 +276,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         $action     = $this->get_param('action');
         $controller = $this->get_param('controller');
 
-        if( !empty($plugin) and $plugin == FRM_PLUGIN_NAME and !empty($controller) ){
+        if( !empty($plugin) and $plugin == 'formidable' and !empty($controller) ){
           $this->standalone_route($controller, $action);
           exit;
         }

@@ -35,11 +35,14 @@ class FrmEntryMeta{
 
   function delete_entry_meta($entry_id, $field_id){
     global $wpdb, $frmdb;
+    $entry_id = (int)$entry_id;
+    $field_id = (int)$field_id;
     return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id='$field_id' AND item_id='$entry_id'");
   }
   
   function delete_entry_metas($entry_id, $where=''){
     global $wpdb, $frmdb;
+    $entry_id = (int)$entry_id;
     $where = "item_id='$entry_id'".$where;
 
     return $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE $where");

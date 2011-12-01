@@ -6,7 +6,7 @@ class FrmEntriesHelper{
         global $frm_form, $frm_settings, $frm_sidebar_width;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
-            $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
+            $values[$var] = stripslashes(FrmAppHelper::get_post_param($var, $default));
             
         $values['fields'] = array();
         if ($fields){
@@ -64,7 +64,7 @@ class FrmEntriesHelper{
             $form->options = maybe_unserialize($form->options);
             if (is_array($form->options)){
                 foreach ($form->options as $opt => $value)
-                    $values[$opt] = FrmAppHelper::get_param($opt, $value);
+                    $values[$opt] = FrmAppHelper::get_post_param($opt, $value);
             }
             
             if (!isset($values['custom_style']))

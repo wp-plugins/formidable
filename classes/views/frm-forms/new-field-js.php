@@ -1,8 +1,5 @@
 <script type="text/javascript">
 jQuery(document).ready(function($){
-<?php if(!isset($partial_js) or !$partial_js){ ?>
-$('#frm_form_editor_container #frm_field_id_<?php echo $field['id']; ?> .theme-group-header').addClass('corner-all').spinDown();
-<?php } ?>
 $('input[name^="item_meta"], select[name^="item_meta"], textarea[name^="item_meta"]').css('float','left');
 jQuery("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option").editInPlace({
     url:"<?php echo $frm_ajax_url ?>",params:"action=frm_field_option_ipe", default_text:"<?php _e('(Blank)', 'formidable') ?>"

@@ -3,7 +3,7 @@
 class FrmFormsHelper{
     function get_direct_link($key, $prli_link_id=false){
         global $frm_siteurl;
-        $target_url = $frm_siteurl . '/index.php?plugin='. FRM_PLUGIN_NAME. '&amp;controller=forms&amp;action=preview&amp;form='.$key;
+        $target_url = $frm_siteurl . '/index.php?plugin=formidable&amp;controller=forms&amp;action=preview&amp;form='.$key;
         if ($prli_link_id && class_exists('PrliLink')){
             $prli = prli_get_pretty_link_url($prli_link_id);
             if ($prli) $target_url = $prli;

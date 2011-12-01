@@ -12,13 +12,13 @@ echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $
 <div class="frm_form_fields">
 <fieldset>
 <div>
-<input type="hidden" name="action" value="<?php echo $form_action ?>" />
-<input type="hidden" name="form_id" value="<?php echo $form->id ?>" />
-<input type="hidden" name="form_key" value="<?php echo $form->form_key ?>" />
-<?php if (isset($id)){ ?><input type="hidden" name="id" value="<?php echo $id ?>" /><?php } ?>
+<input type="hidden" name="action" value="<?php echo esc_attr($form_action) ?>" />
+<input type="hidden" name="form_id" value="<?php echo esc_attr($form->id) ?>" />
+<input type="hidden" name="form_key" value="<?php echo esc_attr($form->form_key) ?>" />
+<?php if (isset($id)){ ?><input type="hidden" name="id" value="<?php echo esc_attr($id) ?>" /><?php } ?>
 <?php if (isset($controller) && isset($plugin)){ ?>
-<input type="hidden" name="controller" value="<?php echo $controller; ?>" />
-<input type="hidden" name="plugin" value="<?php echo $plugin; ?>" />
+<input type="hidden" name="controller" value="<?php echo esc_attr($controller); ?>" />
+<input type="hidden" name="plugin" value="<?php echo esc_attr($plugin); ?>" />
 <?php }
 
 if($values['fields']){
@@ -36,10 +36,10 @@ foreach($values['fields'] as $field){
 if (is_admin() && !$frm_settings->lock_keys){ ?>
 <div class="form-field">
 <label><?php _e('Entry Key', 'formidable') ?></label>   
-<input type="text" name="item_key" value="<?php echo $values['item_key'] ?>" />
+<input type="text" name="item_key" value="<?php echo esc_attr($values['item_key']) ?>" />
 </div>
 <?php }else{ ?>
-<input type="hidden" name="item_key" value="<?php echo $values['item_key'] ?>" />
+<input type="hidden" name="item_key" value="<?php echo esc_attr($values['item_key']) ?>" />
 <?php }
 
 do_action('frm_entry_form', $form, $form_action, $errors);

@@ -35,6 +35,7 @@ class FrmFieldsHelper{
             //'form' => __('SubForm', 'formidable'),
             'hidden' => __('Hidden Field', 'formidable'), 
             'user_id' => __('Hidden User ID', 'formidable'),
+            'password'  => __('Password', 'formidable'),
             'html' => __('HTML', 'formidable'),
             'tag' => __('Tags', 'formidable')
             //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/

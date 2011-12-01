@@ -58,7 +58,7 @@ jQuery.fn.editInPlace = function(options) {
 		select_options:		"",
 		textarea_cols:		"25",
 		textarea_rows:		"10",
-		bg_over:			"#ffffde",
+		bg_over:			"#ffffe0",
 		bg_out:				"transparent",
 		saving_text:		"Saving...",
 		saving_image:		"",

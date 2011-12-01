@@ -1,7 +1,7 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
     <h2><?php _e('Edit Form', 'formidable') ?>
-        <a href="?page=<?php echo FRM_PLUGIN_NAME ?>-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
@@ -10,13 +10,14 @@
             <?php if(!isset($hide_preview) or !$hide_preview){ 
                 if (!$values['is_template']){ ?>
             <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
-            <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /></p>
+            <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?>]" /></p>
             <?php } ?>
 
             <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview Form', 'formidable') ?></a>
             <?php global $frm_settings; 
                 if ($frm_settings->preview_page_id > 0){ ?>
-                or <a href="<?php echo add_query_arg('form', $values['form_key'], get_permalink($frm_settings->preview_page_id)) ?>" target="_blank"><?php _e('Preview in Current Theme', 'formidable') ?></a>
+                <?php _e('or', 'formidable') ?> 
+                <a href="<?php echo add_query_arg('form', $values['form_key'], get_permalink($frm_settings->preview_page_id)) ?>" target="_blank"><?php _e('Preview in Current Theme', 'formidable') ?></a>
             <?php } ?>
             </p>
             <?php
@@ -30,9 +31,9 @@
 
 <form method="post">     
     <p style="clear:left;">        
-        <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
+        <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
-        <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
+        <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
     </p>
     
     <div class="clear"></div> 
@@ -58,13 +59,15 @@
         <div style="display:block;" class="advanced_settings tabs-panel">
         	<table class="form-table">
                 <tr>
-                    <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?></label> <a href="http://formidablepro.com/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
-                    <td>[formidable id=<?php echo $id; ?> title=true description=true] or [formidable key=<?php echo $values['form_key']; ?>]</td>
+                    <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?></label> <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
+                    <td><input type="text" style="width:250px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?> title=true description=true]" /> <?php _e('or', 'formidable') ?>
+                        <input type="text" style="width:200px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable key=<?php echo $values['form_key']; ?>]" />
+                    </td>
                 </tr>
 
                 <tr>
                     <td><label><?php _e('Form Key', 'formidable') ?></label></td>
-                    <td><input type="text" name="form_key" value="<?php echo $values['form_key']; ?>" /></td>
+                    <td><input type="text" name="form_key" value="<?php echo esc_attr($values['form_key']); ?>" /></td>
                 </tr>
 
                 <tr><td><label><?php _e('Styling', 'formidable') ?></label></td>
@@ -73,25 +76,32 @@
                 </tr> 
 
                 <tr><td><label><?php _e('Submit Button Text', 'formidable') ?></label></td>
-                    <td><input type="text" name="options[submit_value]" value="<?php echo $values['submit_value']; ?>" /></td>
+                    <td><input type="text" name="options[submit_value]" value="<?php echo esc_attr($values['submit_value']); ?>" /></td>
                 </tr>
                 
                 <tr><td valign="top"><label><?php _e('Action After Form Submission', 'formidable') ?></label>
                     <?php if(!$frmpro_is_installed){ ?>
-                    <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To use the second two options, you must upgrade to Formidable Pro.', 'formidable') ?>" />
+                    <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" />
                     <?php } ?>
                     </td>
                     <td>
                         <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <label for="success_action_message"><?php _e('Display a Message', 'formidable') ?></label>
-                        <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page"><?php _e('Display content from another page', 'formidable') ?></label>
-                        <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect"><?php _e('Redirect', 'formidable') ?></label>
+                        <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page" <?php echo $pro_feature ?>><?php _e('Display content from another page', 'formidable') ?></label>
+                        <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect" <?php echo $pro_feature ?>><?php _e('Redirect to a URL', 'formidable') ?></label>
                     </td>
                 </tr>
                 
-                <tr class="success_action_message_box success_action_box"><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?></label></td>
+                <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top"><label><?php _e('Redirect to URL', 'formidable') ?></label></td>
+                    <td><?php if(isset($values['id'])) FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_url'); ?><br/>
+                        <input type="text" name="options[success_url]" id="success_url" value="<?php echo esc_attr($values['success_url']); ?>" size="55"></td>
+                </tr>
+                
+                <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'page') ? 'style="display:none;"' : ''; ?>><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?></label></td>
                     <td><?php if($frmpro_is_installed and isset($values['id'])){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
                         <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
+                    <div class="frm_show_form_opt">
                     <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?>> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
+                    </div>
                     <td>
                 </tr>
 
@@ -107,7 +117,7 @@
         	<table class="form-table">                 
                  
                  <tr valign="top">
-                     <td width="200px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
+                     <td width="200px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
                      <td><span class="howto"><?php _e('Name', 'formidable') ?></span> 
                          <select name="options[reply_to_name]">
                          <option value=""><?php echo FrmAppHelper::truncate(get_option('blogname'), 80); ?></option>
@@ -150,8 +160,8 @@
                  </tr>
                  
                   <tr>
-                      <td><label><?php _e('Email Recipients', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page.', 'formidable') ?>" /></td>
-                      <td><input type="text" name="options[email_to]" value="<?php echo $values['email_to']; ?>" class="frm_long_input" /></td>
+                      <td><label><?php _e('Email Recipients', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page. &lt;br/&gt;PRO only: Leave blank if you do not want email notifications for this form.', 'formidable') ?>" /></td>
+                      <td><input type="text" name="options[email_to]" value="<?php echo esc_attr($values['email_to']); ?>" class="frm_long_input" /></td>
                  </tr>
                  <?php if(!$frmpro_is_installed){ ?>
                  <tr><td colspan="2">
@@ -236,9 +246,9 @@
 </div>
 
     <p>        
-        <input type="submit" name="Submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
+        <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
-        <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
+        <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
     </p>
     </form>
 </div>

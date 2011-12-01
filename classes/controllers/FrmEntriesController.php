@@ -12,8 +12,8 @@ class FrmEntriesController{
     function menu(){
         global $frmpro_is_installed;
         if(!$frmpro_is_installed){
-            add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' |'. __('Entries', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Entries', 'formidable') .'</span>', 'administrator', FRM_PLUGIN_NAME.'-entries',array(&$this, 'list_entries'));
-            //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-entries', array(&$this, 'head'));
+            add_submenu_page('formidable', 'Formidable |'. __('Entries', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Entries', 'formidable') .'</span>', 'administrator', 'formidable-entries',array(&$this, 'list_entries'));
+            //add_action('admin_head-formidable_page_formidable-entries', array(&$this, 'head'));
         }
     }
     

@@ -35,18 +35,18 @@ class FrmUpdate{
   function FrmUpdate(){
     // Where all the vitals are defined for this plugin
     $this->plugin_nicename      = 'formidable';
-    $this->plugin_name          = FRM_PLUGIN_NAME.'/formidable.php';
-    $this->plugin_slug          = FRM_PLUGIN_NAME;
+    $this->plugin_name          = 'formidable/formidable.php';
+    $this->plugin_slug          = 'formidable';
     $this->plugin_url           = 'http://formidablepro.com/formidable-wordpress-plugin';
-    $this->pro_script           = FRM_PATH . '/pro/'. FRM_PLUGIN_NAME .'-pro.php';
+    $this->pro_script           = FRM_PATH . '/pro/formidable-pro.php';
     $this->pro_mothership       = 'http://formidablepro.com';
     $this->pro_cred_store       = 'frmpro-credentials';
     $this->pro_auth_store       = 'frmpro-authorized';
     $this->pro_wpmu_store       = 'frmpro-wpmu-sitewide';
     $this->pro_last_checked_store = 'frmpro_last_checked_update';
-    $this->pro_username_label    = __(FRM_PLUGIN_TITLE .' Pro Username', 'formidable');
-    $this->pro_password_label    = __(FRM_PLUGIN_TITLE .' Pro Password', 'formidable');
-    $this->pro_error_message_str = __('Your '.FRM_PLUGIN_TITLE.' Pro Username or Password was Invalid', 'formidable');
+    $this->pro_username_label    = __('Formidable Pro Username', 'formidable');
+    $this->pro_password_label    = __('Formidable Pro Password', 'formidable');
+    $this->pro_error_message_str = __('Your Formidable Pro Username or Password was Invalid', 'formidable');
     
     // Don't modify these variables
     $this->pro_check_interval = 60*60*12; // Checking every 12 hours
@@ -188,13 +188,13 @@ class FrmUpdate{
     <tr class="form-field">
       <td valign="top" width="150px"><?php echo $this->pro_username_label; ?></td>
       <td>
-        <input type="text" name="<?php echo $this->pro_username_str; ?>" value="<?php echo $username; ?>"/>
+        <input type="text" name="<?php echo $this->pro_username_str; ?>" value="<?php echo esc_attr($username); ?>"/>
       </td>
     </tr>
     <tr class="form-field">
       <td valign="top"><?php echo $this->pro_password_label; ?></td>
       <td>
-        <input type="password" name="<?php echo $this->pro_password_str; ?>" value="<?php echo $password; ?>"/>
+        <input type="password" name="<?php echo $this->pro_password_str; ?>" value="<?php echo esc_attr($password); ?>"/>
       </td>
     </tr>
     <?php if (IS_WPMU){ ?>
@@ -208,7 +208,7 @@ class FrmUpdate{
     <?php } ?>
     <tr>
         <td colspan="2">
-            <input class="button-secondary" type="submit" name="Submit" value="<?php _e('Save', 'formidable'); ?>" />
+            <input class="button-secondary" type="submit" value="<?php _e('Save', 'formidable'); ?>" />
         </td>
     </tr>
   </table>

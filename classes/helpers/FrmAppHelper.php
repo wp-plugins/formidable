@@ -6,6 +6,10 @@ class FrmAppHelper{
         return (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
     }
     
+    function get_post_param($param, $default=''){
+        return isset($_POST[$param]) ? $_POST[$param] : $default;
+    }
+    
     function get_pages(){
       return get_posts( array('post_type' => 'page', 'post_status' => 'publish', 'numberposts' => 999, 'orderby' => 'title', 'order' => 'ASC'));
     }

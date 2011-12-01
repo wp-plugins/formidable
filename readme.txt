@@ -70,7 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Fixed default values set to clear on click to work with values that include hard returns
 * Free only: Fixed hidden label CSS
 * PRO: Extended the conditional field logic
-* PRO: Added graphs for fields over time
+* PRO: Added graphs for fields over time, and other customizing options: x_axis, x_start, x_end, min, max, grid_color, and show_key
 * PRO: Moved post creation settings from individual fields to the forms settings page
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
 * PRO: Added star rating option to scale fields
@@ -81,12 +81,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow a taxonomy/category to be selected for data from entries fields. This makes cascading category fields possible.
 * PRO: Added [post_author_email] dynamic default value
 * PRO: Added a frm_notification_attachment hook
-* PRO: Added clickable option to the formresults shortcode. ex [ formresults id=x clickable=1]
+* PRO: Added clickable option to the formresults shortcode. ex [formresults id=x clickable=1]
 * PRO: Improved field calculations to extract a price from the end of an option
 * PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
 $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Added a message before the user is redirected, along with a filter to change it (frm_redirect_msg).
+* PRO: Added a button to delete ALL entries in a form at the bottom of the entries page
+* PRO: Added a password field type
 * PRO: Conditionally remove HTML5 validation of form if default values are present
+* PRO: Added like parameter for inline conditions in custom displays. Example: [if 25 like="hello"]That field said hello[/if 25]
 * PRO: Allow fields set as custom post fields to be used for sorting custom displays
 * PRO: Updated import to create the posts at the time of import
 * PRO: Unattach images from a post if they are replaced

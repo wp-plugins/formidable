@@ -16,17 +16,13 @@
     } ?>
     <div id="frm_position_ele"></div>
     
-    <div class="themeRoller clearfix">
-    	<div id="rollerTabs">
-
-    	<fieldset class="clearfix">
-    	    <div class="theme-group clearfix">
-    			<div class="theme-group-header state-default state-active ui-state-active corner-top">
-    				<span class="icon icon-triangle-1-e icon-triangle-1-s"><?php _e('Collapse', 'formidable') ?></span>
-    				<a href="#"><?php _e('Fields', 'formidable') ?></a>
-    			</div><!-- /theme group Error -->
-    			<div class="theme-group-content corner-bottom clearfix" style="display: block;">
-                    <div class="clearfix">
+    <div class="frm_field_list">
+    	    <div class="widget">
+    			<div class="widget-top">
+    				<div class="widget-title-action"><a class="widget-action"></a></div>
+    				<div class="widget-title"><h4><?php _e('Fields', 'formidable') ?></h4></div>
+    			</div>
+    			<div class="widget-inside" style="display: block;">
                         <p class="howto" style="margin:0;"><?php _e('Click on or drag a field into your form', 'formidable') ?></p>
     					<ul class="field_type_list">
                         <?php 
@@ -38,7 +34,6 @@
                          } ?>
                          </ul>
                          <div class="clear"></div>
-    				</div>
 
     	            <h4 class="title" style="margin-bottom:0;"><?php _e('Pro Fields', 'formidable') ?></h4>
                     <div class="clearfix">
@@ -52,48 +47,40 @@
                          </ul>
                          <div class="clear"></div>
     				</div>
-    			</div><!-- /theme group content -->
-    		</div><!-- /theme group -->
+    			</div>
+    		</div>
     		
     		<?php do_action('frm_extra_form_instructions'); ?>
-    		<div class="theme-group clearfix">
-    			<div class="theme-group-header state-default">
-    				<span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
-    				<a href="#"><?php _e('Key', 'formidable') ?></a>
-    			</div><!-- /theme group Content -->
-    			<div class="theme-group-content corner-bottom clearfix">
-
-    				<div class="clearfix">
-                        <ul class="frm_key_icons">
-                            <li><span class="frm_action_icon frm_required_icon"></span> 
-                                = <?php _e('required field', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon frm_action_icon frm_required_icon"></span> 
-                                = <?php _e('not required', 'formidable') ?></li>
-                            <li><span class="frm_action_icon frm_reload_icon"></span> 
-                                = <?php _e('clear default text on click', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon frm_action_icon frm_reload_icon"></span> 
-                                = <?php _e('do not clear default text on click', 'formidable') ?></li>
-                            <li><span class="frm_action_icon frm_error_icon"></span> 
-                                = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
-                            <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
-                                = <?php _e('default value will pass validation', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></span> 
-                                = <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move" /></span> 
-                                = <?php _e('duplicate field', 'formidable') ?></li>
-                            <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></span> = 
-                                <?php _e('move field', 'formidable') ?></li>
-                        </ul>
-    				</div>
-    			</div><!-- /theme group content -->
-    		</div><!-- /theme group -->		
-            
-    	</fieldset>
+    		<div class="widget">
+    			<div class="widget-top">
+    				<div class="widget-title-action"><a class="widget-action"></a></div>
+    				<div class="widget-title"><h4><?php _e('Key', 'formidable') ?></h4></div>
+    			</div>
+    			<div class="widget-inside">
+                    <ul class="frm_key_icons">
+                        <li><span class="frm_action_icon frm_required_icon"></span> 
+                            = <?php _e('required field', 'formidable') ?></li>
+                        <li><span class="frm_inactive_icon frm_action_icon frm_required_icon"></span> 
+                            = <?php _e('not required', 'formidable') ?></li>
+                        <li><span class="frm_action_icon frm_reload_icon"></span> 
+                            = <?php _e('clear default text on click', 'formidable') ?></li>
+                        <li><span class="frm_inactive_icon frm_action_icon frm_reload_icon"></span> 
+                            = <?php _e('do not clear default text on click', 'formidable') ?></li>
+                        <li><span class="frm_action_icon frm_error_icon"></span> 
+                            = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
+                        <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
+                            = <?php _e('default value will pass validation', 'formidable') ?></li>
+                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></span> 
+                            = <?php _e('delete field and all inputed data', 'formidable') ?></li>
+                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move" /></span> 
+                            = <?php _e('duplicate field', 'formidable') ?></li>
+                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></span> = 
+                            <?php _e('move field', 'formidable') ?></li>
+                    </ul>
+    			</div>
+    		</div>
 
         </div>
-        <p class="howto"><?php _e('Enter or select default values into fields on this form.', 'formidable') ?></p>
-    </div><!-- /themeroller -->
-
-     
+        <p class="howto"><?php _e('Enter or select default values into fields on this form.', 'formidable') ?></p>     
      
 </div>

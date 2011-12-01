@@ -7,16 +7,16 @@ class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', array( &$this, 'menu' ), 26);
         add_filter('frm_nav_array', array( &$this, 'frm_nav'), 30);
-        //add_action('admin_head-'.FRM_PLUGIN_NAME.'_page_'.FRM_PLUGIN_NAME.'-settings', array(&$this, 'head'));
+        //add_action('admin_head-formidable_page_formidable-settings', array(&$this, 'head'));
     }
 
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Settings', 'formidable'), __('Settings', 'formidable'), 'frm_change_settings', FRM_PLUGIN_NAME.'-settings', array(&$this, 'route'));
+        add_submenu_page('formidable', 'Formidable | '. __('Settings', 'formidable'), __('Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', array(&$this, 'route'));
     }
     
     function frm_nav($nav=array()){
         if(current_user_can('frm_change_settings'))
-            $nav[FRM_PLUGIN_NAME.'-settings'] = __('Settings', 'formidable');
+            $nav['formidable-settings'] = __('Settings', 'formidable');
         
         return $nav;
     }

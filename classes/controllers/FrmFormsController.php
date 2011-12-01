@@ -20,12 +20,12 @@ class FrmFormsController{
     }
     
     function menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME, array(&$this, 'route'));
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', FRM_PLUGIN_NAME.'-templates', array(&$this, 'template_list'));
+        add_submenu_page('formidable', 'Formidable | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', 'formidable', array(&$this, 'route'));
+        add_submenu_page('formidable', 'Formidable | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', 'formidable-templates', array(&$this, 'template_list'));
     }
     
     function lower_menu(){
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Add New Form', 'formidable'), '<span style="display:none;">'. __('Add New Form', 'formidable') .'</span>', 'frm_edit_forms', FRM_PLUGIN_NAME.'-new', array(&$this, 'new_form'));
+        add_submenu_page('formidable', 'Formidable | '. __('Add New Form', 'formidable'), '<span style="display:none;">'. __('Add New Form', 'formidable') .'</span>', 'frm_edit_forms', 'formidable-new', array(&$this, 'new_form'));
     }
     
     function head(){
@@ -240,7 +240,6 @@ class FrmFormsController{
         if($message=='')
             $message = FrmAppHelper::frm_get_main_message();
 
-        $controller_file = FRM_PLUGIN_NAME;
         $page_params = '&action=0&page=formidable';
         $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
 
@@ -345,6 +344,7 @@ class FrmFormsController{
         $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
         $sections = apply_filters('frm_add_form_settings_section', array(), $values);
+        $pro_feature = ($frmpro_is_installed) ? '' : ' class="pro_feature"';
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
         else

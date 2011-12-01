@@ -7,7 +7,7 @@
 <?php if (!$form->is_template and $form->status == 'published'){ ?>
 <p class="submit">
 <?php $submit = apply_filters('frm_submit_button', $submit, $form); ?>
-<input type="submit" name="<?php echo $submit ?>" value="<?php echo $submit ?>" <?php do_action('frm_submit_button_action', $form, $form_action); ?>/>
+<input type="submit" name="<?php echo $submit ?>" value="<?php echo esc_attr($submit) ?>" <?php do_action('frm_submit_button_action', $form, $form_action); ?>/>
 </p>
 <?php } ?>
 </form>

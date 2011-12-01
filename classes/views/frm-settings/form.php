@@ -22,7 +22,7 @@
 
     <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
         <div class="postbox">
-            <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php echo FRM_PLUGIN_TITLE ?> <?php _e('Pro Account Information', 'formidable')?></h3>
+            <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro Account Information', 'formidable')?></h3>
             <div class="inside">
     <?php 
     if (IS_WPMU and !FrmAppHelper::is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){
@@ -43,7 +43,7 @@
         <table class="form-table">
             <tr><td colspan="2">
                 <p class="submit" style="padding:0;">
-                <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
+                <input class="button-primary" type="submit" value="<?php _e('Update Options', 'formidable') ?>" />
                 </p>
             </td></tr>
             <tr class="form-field">
@@ -102,11 +102,11 @@
         			
         				<!-- reCAPTCHA public key -->
         				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Public Key', 'formidable') ?></label>
-        				<input name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo $frm_settings->pubkey ?>" />
+        				<input name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" />
         				<br/>
         				<!-- reCAPTCHA private key -->
         				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Private Key', 'formidable') ?></label>
-        				<input name="frm_privkey" id="frm_privkey" size="42" value="<?php echo $frm_settings->privkey ?>" />
+        				<input name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" />
         			
             	</td>
             </tr>
@@ -117,14 +117,14 @@
         		    <label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
         			<select name="frm_re_theme" id="frm_re_theme">
         			<?php foreach(array('red' => __('Red', 'formidable'), 'white' => __('White', 'formidable'), 'blackglass' => __('Black Glass', 'formidable'), 'clean' => __('Clean', 'formidable')) as $theme_value => $theme_name){ ?>
-        			<option value="<?php echo $theme_value ?>" <?php selected($frm_settings->re_theme, $theme_value) ?>><?php echo $theme_name ?></option>
+        			<option value="<?php echo esc_attr($theme_value) ?>" <?php selected($frm_settings->re_theme, $theme_value) ?>><?php echo $theme_name ?></option>
         			<?php } ?>
         			</select><br/>
             		
     			    <label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
     				<select name="frm_re_lang" id="frm_re_lang">
     				    <?php foreach(array('en' => __('English', 'formidable'), 'nl' => __('Dutch', 'formidable'), 'fr' => __('French', 'formidable'), 'de' => __('German', 'formidable'), 'pt' => __('Portuguese', 'formidable'), 'ru' => __('Russian', 'formidable'), 'es' => __('Spanish', 'formidable'), 'tr' => __('Turkish', 'formidable')) as $lang => $lang_name){ ?>
-        				<option value="<?php echo $lang ?>" <?php selected($frm_settings->re_lang, $lang) ?>><?php echo $lang_name ?></option>
+        				<option value="<?php echo esc_attr($lang) ?>" <?php selected($frm_settings->re_lang, $lang) ?>><?php echo $lang_name ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -178,7 +178,7 @@
                 <tr><td>
                 <div class="frm_update_msg">
                 This plugin version does not give you access to the visual form styler.<br/>
-                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php?page='.FRM_PLUGIN_NAME) ?>-settings">here</a>.
+                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php') ?>?page=formidable-settings">here</a>.
                 </div>
                 <img src="http://fp.strategy11.com/wp-content/themes/formidablepro/images/form_style_thumb.png" alt="Style Forms"/>
                 </td></tr>
@@ -197,9 +197,9 @@
                 }
         } ?>
         
-        <p class="alignright frm_uninstall"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
+        <p class="alignright frm_uninstall" style="padding-top:1.25em;"><a href="javascript:frm_uninstall_now()" class="button-secondary"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">
-        <input class="button-primary" type="submit" name="Submit" value="<?php _e('Update Options', 'formidable') ?>" />
+        <input class="button-primary" type="submit" value="<?php _e('Update Options', 'formidable') ?>" />
         </p>
 
     </form>

@@ -4,6 +4,7 @@ ul.frm_form_nav {
 	-moz-border-radius: 5px;
 	border-radius: 5px;	
 	width:494px;
+	margin:1em 0;
 	*float:right;
 }
 ul.frm_form_nav li{
@@ -179,12 +180,13 @@ span.frm_action_icon{margin:0 4px 0 0;}
 span.howto{display:inline;}
 #frm_form_editor_container .themeRoller span.howto{display:inline;}
 
-#new_fields .form-field .themeRoller input[type="text"],
-#new_fields .form-field .themeRoller select,
-#wpcontent #new_fields .form-field .themeRoller select,
-#new_fields .form-field .themeRoller textarea{
+#new_fields .form-field .widget input[type="text"],
+#new_fields .form-field .widget select,
+#wpcontent #new_fields .form-field .widget select,
+#new_fields .form-field .widget textarea{
 	width:auto;font-size:11px;
 }
+
 .tagchecklist span.no_taglist {
     display: inline;
     float: none;
@@ -202,7 +204,13 @@ span.howto{display:inline;}
 #frm_form_editor_container .ui-state-default{color:#333;}
 #frm_form_editor_container .ui-state-default a.frm_orange, #frm_form_options a.frm_orange{color:#D54E21;}
 
-#new_fields li.ui-state-default.selected .themeRoller{display:block;}
+#new_fields .widget, .frm_settings_page .widget{background:#fff;}
+#new_fields .widget-title h4{font-weight:normal;}
+#new_fields .widget, #frm_form_options .widget, .frm_settings_page .widget{margin-bottom:0;}
+.frm_settings_page .widget-inside{padding-top:0;padding-bottom:10px;}
+#new_fields .widget, .widget-inside{display: none;}
+#new_fields li.ui-state-default.selected .widget{display:block;}
+#new_fields .form-field .widget{ display:none;}
 #new_fields{min-height:200px;}
 #frm_form_options .ui-state-default, #new_fields li.ui-state-default{
 	border:none;font-weight:normal;background-color:transparent; background-image:none;padding:6px; margin:20px 0;
@@ -234,7 +242,6 @@ span.howto{display:inline;}
 	background-image: linear-gradient(top, #eff8ff, #e8eff4); /* proposed W3C Markup */
 }
 .frm_update_msg{border-style:solid;margin:5px 0 15px;}
-.success_action_box{display:none;}
 .widefat td{width:auto;}
 
 .frm_shortcode_select optgroup option{margin-left:1em;}
@@ -249,187 +256,61 @@ span.howto{display:inline;}
 
 .frm-grid td, .frm-grid th{padding:5px; border:1px solid black;}
 
-.frm_uninstall{padding:1.5em;}
-.frm_uninstall a{border:1px solid red; background:#D54E21; padding:.5em; text-decoration:none;color:#fff;font-weight:bold;}
+.pro_feature{text-decoration:line-through;}
+.frm_uninstall{padding-right:0.75em;}
+.frm_uninstall a{border-color:red; font-weight:bold; background:#D54E21; color:#fff; text-shadow:none;}
 .frm_uninstall a:hover{background:#264761;color:#fff;}
 /*hide elements if js is avail*/
-.js .theme-group-content, .js #submitBtn, .js select.texture, .js #themeGallery, .js #help{display: none;}
+.js select.texture, .js #help{display: none;}
 
-.themeRoller{
-	font-family: Verdana, Arial, sans-serif;
-	font-size:100%;
-	color: #fff;
-	position: relative;
-}
-#frm_form_options .themeRoller{
+#frm_form_options .frm_field_list{
 	margin-right:10px;
 	position:fixed;
 	z-index:5;
 	width:270px;
 }
 
-#new_fields .form-field .themeRoller{ display:none;}
-
-.form-table td .themeRoller{
-	line-height:12px;
-}
-
-.themeRoller a:focus, div.content * {
-	outline: 0 !important;
-}
-
-/*corner radius in TR app elements*/
-.themeRoller, .themeRoller .corner-all, .themeRoller input, .themeRoller select, #themeGallery a.download, #themeGallery a.edit, .texturePicker, .farbtastic, #getBookmarklet  {-moz-border-radius: 4px !important; -webkit-border-radius: 4px !important;  border-radius: 4px !important; }
-.themeRoller .corner-bottom {-moz-border-radius-bottomleft: 4px !important; -webkit-border-bottom-left-radius: 4px !important;  border-bottom-left-radius: 4px !important; -moz-border-radius-bottomright: 4px !important; -webkit-border-bottom-right-radius: 4px !important;  border-bottom-right-radius: 4px !important; }
-.themeRoller .corner-top {-moz-border-radius-topleft: 4px !important; -webkit-border-top-left-radius: 4px !important;  border-top-left-radius: 4px !important; -moz-border-radius-topright: 4px !important; -webkit-border-top-right-radius: 4px !important;  border-top-right-radius: 4px !important; }
-
-.themeRoller fieldset {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	clear: both;
-	display: block;
-}
-.themeRoller .icon{ width: 16px; height: 16px; display: block; text-indent: -999999px; overflow: hidden; }
-
-
-/*TR Tabs structure*/
-#rollerTabs {padding: 2px; margin: 0; font-size: 1em !important; background: none; border: none; font-weight: normal; font-family: Verdana, Arial, sans-serif; }
-
-
-/*THEME GROUP SPINDOWNS*/
-.themeRoller .theme-group {
-	margin: 1px 0;
-}
-#frm_form_options .themeRoller .theme-group, #frm_form_editor_container .themeRoller .theme-group{width:auto;}
-.themeRoller .theme-group-header {
-	cursor: pointer;
-	padding: .4em 0;
-}
-/*header states*/
-.themeRoller .theme-group .theme-group-header.state-default {
-	background:#3C6B95 url(../images/menu-bits-vs.gif) repeat-x scroll left top;
-	border:1px solid #7494af;
-	color:#FFFFFF;
-	text-shadow:0 -1px 0 rgba(0, 0, 0, 0.4);
-}
-.themeRoller .theme-group .theme-group-header.state-default a { color: #fff; text-decoration: none; }
-.themeRoller .theme-group .theme-group-header.state-active { border: 1px solid #7494af/*borderColorActive*/; border-bottom: 0 !important; color: #ffffff; outline: none; font-weight:normal;}
-.themeRoller .theme-group .theme-group-header.state-active a { color: #ffffff/*fcActive*/; outline: none; text-decoration: none; }
-.themeRoller .theme-group .theme-group-content { border: 1px solid #DFDFDF; background:#fff; color:#333;}
-.themeRoller .theme-group .theme-group-header.state-hover { border-color:#1d579f;}
-.themeRoller .theme-group .theme-group-header.state-hover a{text-decoration: none;}
-.themeRoller .theme-group .theme-group-header span.icon {
-	float: left;
-	margin: -2px 3px 0 0;
-	background-image: url(../images/tr_icons_white.png);
-}
-.themeRoller .state-active span.icon {
-	margin: -1px 2px 0 1px !important;
-}
-.themeRoller .theme-group .theme-group-header span.icon-triangle-1-e { background-position: -32px -16px; }
-.themeRoller .theme-group .theme-group-header span.icon-triangle-1-s { background-position: -64px -16px; }
-.themeRoller .theme-group .theme-group-header div.state-preview {
-	float: right;
-	padding: 1px 2px 2px;
-	font-size: 9px !important;
-	font-weight: normal !important;
-	margin: -2px 3px 0 0;
-}
-
-a, #adminmenu a, #the-comment-list p.comment-author strong a, #media-upload a.del-link, #media-items a.delete, .plugins a.delete, .ui-tabs-nav a {
-    cursor: pointer;
-}
-
-/*THEME GROUP CONTENT*/
-.themeRoller .theme-group-content {
-	padding: 10px 5px 10px 13px;
-	border-top: 0 !important;
-}
-.themeRoller .theme-group-collapsed .theme-group-content {
-	display: none;
-}
-.themeRoller .theme-group h3 {
-	font-size: .8em;
-	font-weight: bold;
-	text-transform: uppercase;
-}
+a{cursor: pointer;}
 
 /*form field groups*/
-.themeRoller .field-group {
+.widget .field-group {
 	float: left;
-	width: 53px;
+	width: 65px;
 	margin: 10px 4px 0 0;
-}
-.global-font .field-group, 
-#global-corners .field-group, 
-.themeRoller .field-group-background, 
-.themeRoller .field-group-opacity, 
-#Shadow .field-group {
+} 
+.field-group-background{
 	margin: 4px 0 0;
 	clear: both;
 	float: none;
 	width: auto;
 }
-.themeRoller .field-group-border, .themeRoller .field-group-opacity, .themeRoller .field-group-corners {
-	clear: left;
-}
+.field-group-border, .field-group-corners {clear: left;}
 
 /*form labels*/
-.themeRoller .field-group label {
+.widget .field-group label {
 	font-size: 1em;
 	margin: 6px 0 5px;
 	display: block;
 }
-.global-font .field-group label, 
-#global-corners .field-group label, 
-.themeRoller .field-group-opacity label{
+.global-font .field-group{
+	margin: 4px 0 0;
+	clear: both;
+	float: none;
+	width: auto;
+}
+.global-font .field-group label{
 	float: left;
-	width: 60px;
 	margin: 0 4px 0 0;
 	text-align: right;
-}
-.global-font .field-group label {
 	width: 45px;
 }
-
-.themeRoller .field-group-opacity label {
-	width: auto;
-	text-align: left;
-}
-#Shadow .field-group-background label {
-	 float: none;
-	 width: auto;
-	 text-align: left;
-	 padding-bottom: 5px;
-}
-
 
 /*form inputs/selects */
-.themeRoller input, .themeRoller select, .themeRoller textarea {
-	font-size: 10px;
-	padding: 2px;
-}
-.themeRoller select {
-	padding: 1px;
-}
-input.opacity, input.offset {
-	width: 20px;
-	float: left;
-}
-
-.themeRoller input.hex {
-	width: 45px;
+.widget input.hex, .field-group input[type="text"]{
+	width: 95%;
 	outline: 0;
 }
-.form-field .frm_full_width {
-	width: 165px;
-}
-
-input.cornerRadius {
-	width: 20px;
-}
-
+.global-font .field-group input[type="text"]{width:auto;}
 
 /*Custom form elements */
 .themeRoller div.hasPicker {
@@ -443,62 +324,6 @@ input.cornerRadius {
 	background: #666;
 	border-color: #aaa;
 	border-bottom: #666;
-}
-
-#switcherpane-container{
-	position:absolute;
-	float:left;
-	background:#fff;
-	color:#333;
-	padding:8px 3px 3px;
-	border:1px solid #dfdfdf;
-	border-top:none;
-	z-index: 999999;
-	width:144px; /* options.width-6 minus must match left and right padding*/
-	display:none;
-}
-
-ul.themeswitcher-ul{
-	list-style:none;
-	margin:0;
-	padding:0;
-	overflow:auto;
-	height:200px;
-	/*width:150px;*/
-}
-
-ul.themeswitcher-ul li{
-	width:125px;
-	height:auto;
-	padding:2px 0;
-	margin:0;
-	clear:left;
-	float:left;
-}
-
-ul.themeswitcher-ul li:hover{
-	color:#fff;
-	background:#DFDFDF;
-	cursor:pointer;
-}
-
-ul.themeswitcher-ul a{
-	color:#333;
-	text-decoration:none;
-	float:left;
-	width:100%;
-	outline:0;
-}
-
-ul.themeswitcher-ul img{
-	float:left;
-	border:1px solid #DFDFDF;
-	margin:0 2px;
-}
-
-ul.themeswitcher-ul .themeName{
-	float:left;
-	margin:3px 0;
 }
 
 /*pickers*/
@@ -529,7 +354,7 @@ ul.themeswitcher-ul .themeName{
 	list-style: none;
 	position: absolute;
 	top: 1.6em;
-	right: 0;
+	left: 0;
 	background: #fff;
 	z-index: 999999;
 	border: 1px solid #DFDFDF;

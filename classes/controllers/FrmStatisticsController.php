@@ -10,9 +10,9 @@ class FrmStatisticsController{
         if($frmpro_is_installed)
             return;
             
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Custom Displays', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Custom Displays', 'formidable') .'</span>', 'administrator', FRM_PLUGIN_NAME .'-entry-templates', array(&$this, 'list_displays'));
+        add_submenu_page('formidable', 'Formidable | '. __('Custom Displays', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Custom Displays', 'formidable') .'</span>', 'administrator', 'formidable-entry-templates', array(&$this, 'list_displays'));
         
-        add_submenu_page(FRM_PLUGIN_NAME, FRM_PLUGIN_TITLE .' | '. __('Reports', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Reports', 'formidable') .'</span>', 'administrator', FRM_PLUGIN_NAME .'-reports', array(&$this, 'list_reports'));
+        add_submenu_page('formidable', 'Formidable | '. __('Reports', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Reports', 'formidable') .'</span>', 'administrator', 'formidable-reports', array(&$this, 'list_reports'));
     }
     
     function list_reports(){

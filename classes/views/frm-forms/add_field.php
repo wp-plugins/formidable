@@ -15,7 +15,7 @@
 
 <div class="frm_form_fields">    
 <?php if ($display['type'] == 'text'){ ?>
-    <input type="text" name="<?php echo $field_name ?>" value="<?php echo $field['default_value']; ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'.$field['size'] .'"' : ''; ?> /> 
+    <input type="text" name="<?php echo $field_name ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'.$field['size'] .'"' : ''; ?> /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
     <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'.$field['size'].'"' ?> rows="<?php echo $field['max']; ?>"><?php echo FrmAppHelper::esc_textarea($field['default_value']); ?></textarea> 
   
@@ -38,7 +38,7 @@
         
         <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
         <?php _e('or', 'formidable'); ?>
-        <a title="<?php _e('Bulk Edit Field Choices', 'formidable') ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
         <?php } ?>
     </div>
 <?php
@@ -76,7 +76,7 @@
             
             <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
             <?php _e('or', 'formidable'); ?>
-            <a title="<?php _e('Bulk Edit Field Choices', 'formidable') ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
             <?php } ?>
             
             <?php do_action('frm_add_multiple_opts', $field); ?>
@@ -118,16 +118,14 @@ if ($display['description']){ ?>
 }
 
 if ($display['options']){ ?>
-    <div class="clearfix themeRoller">
-        <div class="theme-group clearfix">
-    	    <div class="theme-group-header state-default">
-    		    <span class="icon icon-triangle-1-e"><?php _e('Collapse', 'formidable') ?></span>
-    		    <a href="#"><?php _e('Field Options', 'formidable') ?> (ID <?php echo $field['id'] ?>)</a>
-    		</div><!-- /theme group Error -->
-    		<div class="theme-group-content corner-bottom clearfix">
-                <div class="clearfix">
-                    <table class="form-table">
-                    <?php if ($display['size']){ ?>
+    <div class="widget">
+        <div class="widget-top">
+    	    <div class="widget-title-action"><a class="widget-action"></a></div>
+    		<div class="widget-title"><h4><?php _e('Field Options', 'formidable') ?> (ID <?php echo $field['id'] ?>)</h4></div>
+        </div>
+    	<div class="widget-inside">
+            <table class="form-table">
+                <?php if ($display['size']){ ?>
                     <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?></label></td>
                         <td>
                         <?php if($field['type'] == 'select'){ ?>
@@ -135,14 +133,14 @@ if ($display['options']){ ?>
                                 <input type="checkbox" name="field_options[size_<?php echo $field['id'] ?>]" value="1" <?php echo (isset($field['size']) and $field['size'])? 'checked="checked"':''; ?> /> <span class="howto"><?php _e('automatic width', 'formidable') ?></span>
                             <?php }
                             }else{ ?>
-                                <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo $field['size']; ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('columns wide', 'formidable') : __('characters wide', 'formidable') ?></span>
+                                <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['size']); ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('columns wide', 'formidable') : __('characters wide', 'formidable') ?></span>
 
-                                <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo $field['max']; ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('rows high', 'formidable') : __('characters maximum', 'formidable') ?></span>
+                                <input type="text" name="field_options[max_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['max']); ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('rows high', 'formidable') : __('characters maximum', 'formidable') ?></span>
                         <?php } ?>
                         </td>
                     </tr>
-                    <?php } ?>
-                    <?php if ($display['label_position']){ ?>
+                <?php } ?>
+                <?php if ($display['label_position']){ ?>
                     <tr><td width="150px"><label><?php _e('Label Position', 'formidable') ?></label></td>
                         <td><select name="field_options[label_<?php echo $field['id'] ?>]">
                             <option value="top"<?php selected($field['label'], 'top'); ?>><?php _e('Top', 'formidable') ?></option>
@@ -153,8 +151,8 @@ if ($display['options']){ ?>
                         </select>
                         </td>  
                     </tr>
-                    <?php } ?>
-                    <?php if ($display['required']){ ?>
+                <?php } ?>
+                <?php if ($display['required']){ ?>
                     <tr>
                         <td><label><?php _e('Required Field', 'formidable') ?></label></td>
                         <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>,'<?php echo $frm_ajax_url?>')" /> <span><?php _e('Required', 'formidable') ?></span>
@@ -164,20 +162,18 @@ if ($display['options']){ ?>
                         </td>
                     </tr>
                     <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?></label></td>  
-                        <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo $field['blank']; ?>" class="frm_long_input" /></td>
+                        <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['blank']); ?>" class="frm_long_input" /></td>
                     </tr>
-                    <?php } ?>
-                    <?php if ($display['invalid']){ ?>
+                <?php } ?>
+                <?php if ($display['invalid']){ ?>
                     <tr><td><label><?php _e('Error message for invalid submission', 'formidable') ?></label></td>  
-                        <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo $field['invalid']; ?>" class="frm_long_input" /></td>
+                        <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['invalid']); ?>" class="frm_long_input" /></td>
                     </tr>
-                    <?php } ?>
-                    <?php do_action('frm_field_options_form', $field, $display, $values); ?>
-                    </table>
-                </div>
-            </div>
+                <?php } ?>
+                <?php do_action('frm_field_options_form', $field, $display, $values); ?>
+            </table>
         </div>
-    </div>    
+    </div>
 <?php } ?>         
 </li>
 <?php unset($display); ?>

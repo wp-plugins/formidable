@@ -25,7 +25,7 @@ Author: Strategy11
 
 define('FRM_PLUGIN_TITLE', 'Formidable');
 define('FRM_PLUGIN_NAME', 'formidable');
-define('FRM_PATH', WP_PLUGIN_DIR.'/'.FRM_PLUGIN_NAME);
+define('FRM_PATH', WP_PLUGIN_DIR.'/formidable');
 define('FRM_MODELS_PATH', FRM_PATH.'/classes/models');
 define('FRM_VIEWS_PATH', FRM_PATH.'/classes/views');
 define('FRM_HELPERS_PATH', FRM_PATH.'/classes/helpers');
@@ -36,16 +36,16 @@ global $frm_siteurl;
 $frm_siteurl = get_bloginfo('url');
 if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_siteurl)){
     $frm_siteurl = str_replace('http://', 'https://', $frm_siteurl);
-    define('FRM_URL', str_replace('http://', 'https://', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME));
+    define('FRM_URL', str_replace('http://', 'https://', WP_PLUGIN_URL.'/formidable'));
 }else
-    define('FRM_URL', WP_PLUGIN_URL.'/'.FRM_PLUGIN_NAME);  //plugins_url('/'.FRM_PLUGIN_NAME)
+    define('FRM_URL', WP_PLUGIN_URL.'/formidable');  //plugins_url('/formidable')
     
-define('FRM_SCRIPT_URL', $frm_siteurl .'/index.php?plugin=' . FRM_PLUGIN_NAME);
+define('FRM_SCRIPT_URL', $frm_siteurl .'/index.php?plugin=formidable');
 define('FRM_IMAGES_URL', FRM_URL.'/images');
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
-load_plugin_textdomain('formidable', false, FRM_PLUGIN_NAME.'/languages/' );
+load_plugin_textdomain('formidable', false, 'formidable/languages/' );
 
 // Check for WPMU installation
 if (!defined ('IS_WPMU')){

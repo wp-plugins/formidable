@@ -45,10 +45,6 @@ var hash = {
 		jQuery('form input, form select, form .texturePicker').each(function(i){
 			if(jQuery(this).is('.focus')){focusedEl = i;}
 		});
-
-		// reload tab
-		jQuery('#rollerTabs').tabs('url', 0, '/themeroller/_rollyourown.php?'+ locStr);
-		jQuery('#rollerTabs').tabs('load', 0);
 		
 		// if the hash is passed
 		if(newHash){ hash.updateHash(locStr, true); }
@@ -179,8 +175,9 @@ jQuery(document).ready(function($){
 			});
 
 			ul.find('li').click(function() {
-				texturePicker.prev().get(0).selectedIndex = texturePicker.prev().find('option[value='+ $(this).attr('class') +']').get(0).index;
+				texturePicker.prev().get(0).selectedIndex = texturePicker.prev().find('option[value="'+ $(this).attr('class') +'"]').get(0).index;
 				texturePicker.attr('title',$(this).text()).css('background', '#FFF url('+$(this).attr('class')+')  50% 50% no-repeat');
+				$('.frm_error_style img').attr('src',$(this).attr('class'));
 				//ul.fadeOut(100);
 				formChange();
 				return false;
