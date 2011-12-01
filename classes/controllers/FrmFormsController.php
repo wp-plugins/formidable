@@ -66,7 +66,7 @@ class FrmFormsController{
     }
     
     function create(){
-        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
+        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $errors = $frm_form->validate($_POST);
         $id = (int)FrmAppHelper::get_param('id');
         
@@ -320,7 +320,7 @@ class FrmFormsController{
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
-        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
+        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll(array('fi.form_id' => $record->id), 'field_order');
@@ -339,7 +339,7 @@ class FrmFormsController{
     }
     
     function get_settings_vars($id, $errors = '', $message=''){
-        global $frm_app_helper, $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
+        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
         $record = $frm_form->getOne( $id );
         $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
