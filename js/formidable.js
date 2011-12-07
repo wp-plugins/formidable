@@ -64,15 +64,11 @@ for(i=0; i<len; i++){
 		
 	if(typeof(show_fields[f.HideField])=='undefined') show_fields[f.HideField]=new Array();
 		
-	if(f.MatchType=='any' && frmInArray(true, show_fields[f.HideField])){
+	/*if(f.MatchType=='any' && frmInArray(true, show_fields[f.HideField])){
 		if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
 		else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		return;
-	}else if(f.MatchType=='all' && frmInArray(false, show_fields[f.HideField])){
-		if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
-		else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
-		return;
-	}
+	}*/
 
 	if(f.FieldName!=field_id){
 		if(f.Type=='radio' || f.Type=='data-radio')
@@ -80,7 +76,7 @@ for(i=0; i<len; i++){
 		else if(f.Type=='select' || f.Type=='data-select')
 			selected=jQuery("select[name='item_meta["+f.FieldName+"]']").val();
 	}
-	
+
 	if(typeof(selected)=='undefined'){
 		selected=jQuery("input[type=hidden][name='item_meta["+f.FieldName+"]']").val();
 		if(typeof(selected)=='undefined') selected='';
@@ -140,41 +136,28 @@ for(i=0; i<len; i++){
 				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
 			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		}else{
-			hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show};
+			hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'any'};
 			if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
 		}
-		if(i==(len-1)){
-			jQuery.each(hide_later, function(hkey,hvalue){ 
-				if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
-					if(!frmInArray(true, show_fields[hkey])){
-						if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
-						else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
-					}
-					if(typeof(hvalue.result)!=false) frmShowField(hvalue.result,ajax_url,hkey);
-					delete hide_later[hkey];
-				}
-			});
-		}
-	}else if(f.MatchType=='all' && i==(len-1)){
-		var show=true;
-		for(var m=0; m<len; m++){
-			if(show==false) continue;
-			show=show_fields[f.HideField][m];
-		}
-		
-		if(show==true){
-			if(f.Show=='show'){
-				//if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
-				//else{
-				jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
-				//}
-			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
-		}else{
-			if(f.Show=='show'){jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
-			else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
-		}
+	}else if(f.MatchType=='all'){
+		hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'all'};
 	}
-
+	
+	if(i==(len-1)){
+		jQuery.each(hide_later, function(hkey,hvalue){ 
+			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){				
+				if((hvalue.match=='any' && !frmInArray(true, show_fields[hkey])) || (hvalue.match=='all' && frmInArray(false, show_fields[hkey]))){
+					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
+					else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+				}else{
+					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+					else jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
+				}
+				if(typeof(hvalue.result)!=false) frmShowField(hvalue.result,ajax_url,hkey);
+				delete hide_later[hkey];
+			}
+		});
+	}
   })(i);
 }
 }
@@ -276,7 +259,9 @@ function frmGetFormErrors(object,ajax_url){
 							if(new_position)
 								window.scrollTo(new_position.left,new_position.top);
 						}
-					    jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>').addClass('frm_blank_field');
+						jQuery('#frm_field_'+key+'_container').addClass('frm_blank_field');
+						if(typeof(frmThemeOverride_frmPlaceError) == 'function'){frmThemeOverride_frmPlaceError(key,errObj);}
+						else{jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>');}
 					}
 				}
 				if(cont_submit) object.submit();

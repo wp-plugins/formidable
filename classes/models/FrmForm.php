@@ -78,7 +78,7 @@ class FrmForm{
   function update( $id, $values, $create_link = false ){
     global $wpdb, $frmdb, $frm_field, $frm_settings;
 
-    if ($create_link)
+    if ($create_link or isset($values['options']) or isset($values['item_meta']) or isset($values['field_options']))
         $values['status'] = 'published';
         
     if (isset($values['form_key']))
@@ -113,7 +113,7 @@ class FrmForm{
         $query_results = true;
 
     $all_fields = $frm_field->getAll(array('fi.form_id' => $id));
-    if ($all_fields and (isset($values['options']) or isset($values['item_meta']))){
+    if ($all_fields and (isset($values['options']) or isset($values['item_meta']) or isset($values['field_options']))){
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();
         $existing_keys = array_keys($values['item_meta']);

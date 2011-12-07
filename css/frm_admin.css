@@ -5,6 +5,7 @@ ul.frm_form_nav {
 	border-radius: 5px;	
 	width:494px;
 	margin:1em 0;
+	height:27px;
 	*float:right;
 }
 ul.frm_form_nav li{

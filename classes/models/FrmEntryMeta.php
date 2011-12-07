@@ -23,8 +23,11 @@ class FrmEntryMeta{
   function update_entry_metas($entry_id, $values){
     global $frm_field;
     $this->delete_entry_metas($entry_id, " AND field_id != '0'");
-    foreach($values as $field_id => $meta_value)
-        $this->update_entry_meta($entry_id, $field_id, '', maybe_serialize($values[$field_id]));
+    foreach($values as $field_id => $meta_value){
+        if(is_array($values[$field_id]))
+            $values[$field_id] = (empty($values[$field_id])) ? false : maybe_serialize($values[$field_id]);
+        $this->update_entry_meta($entry_id, $field_id, '', $values[$field_id]);
+    }
   }
   
   function duplicate_entry_metas($old_id, $new_id){
