@@ -4,10 +4,11 @@ ul.frm_form_nav {
 	-moz-border-radius: 5px;
 	border-radius: 5px;	
 	width:494px;
-	margin:1em 0;
+	margin:10px 0 13px;
 	height:27px;
 	*float:right;
 }
+.metabox-holder ul.frm_form_nav{margin-top:0;}
 ul.frm_form_nav li{
 	float:right;
 	width:122px;

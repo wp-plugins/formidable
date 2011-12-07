@@ -1,11 +1,8 @@
 <?php
-/**
- * @package Formidable
- */
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.00b4
+Version: 1.06.00rc1
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
