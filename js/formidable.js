@@ -136,16 +136,15 @@ for(i=0; i<len; i++){
 				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
 			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
 		}else{
-			hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'any'};
-			if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
+			hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'any','fname':f.FieldName};
 		}
 	}else if(f.MatchType=='all'){
-		hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'all'};
+		hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'all','fname':f.FieldName};
 	}
 	
 	if(i==(len-1)){
 		jQuery.each(hide_later, function(hkey,hvalue){ 
-			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){				
+			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
 				if((hvalue.match=='any' && !frmInArray(true, show_fields[hkey])) || (hvalue.match=='all' && frmInArray(false, show_fields[hkey]))){
 					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
 					else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
@@ -153,7 +152,7 @@ for(i=0; i<len; i++){
 					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
 					else jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
 				}
-				if(typeof(hvalue.result)!=false) frmShowField(hvalue.result,ajax_url,hkey);
+				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,ajax_url,hvalue.fname);
 				delete hide_later[hkey];
 			}
 		});

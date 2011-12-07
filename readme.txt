@@ -95,6 +95,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Unattach images from a post if they are replaced
 * PRO: Allow importing into checkbox fields
 * PRO: Added option to use previously uploaded CSV for import so new upload isn't required when reimporting
+* PRO: Added option to change the text on the submit button in the frm-search shortcode. Example [frm-search label="Search"]
 * PRO: Fixed bug preventing a field dependent on another data from entries field from updating
 * PRO: Fixed bug affecting pages with multiple editable forms on the same page that caused the first form to always be submitted
 * PRO: Updated the truncate option to not require full words if truncating 10 or less characters
