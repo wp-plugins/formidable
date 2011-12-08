@@ -1,7 +1,7 @@
 <script>
     function frm_insert_form(){
         var form_id=jQuery("#frm_add_form_id").val();
-        if(form_id==""){alert("<?php _e("Please select a form", "formidable") ?>");return;}
+        if(form_id==""){alert("<?php _e('Please select a form', 'formidable') ?>");return;}
         var title_qs=jQuery("#frm_display_title").is(":checked") ? " title=true" : "";
         var description_qs=jQuery("#frm_display_description").is(":checked") ? " description=true" : "";
         var win = window.dialogArguments || opener || parent || top;
@@ -10,7 +10,7 @@
     
     function frm_insert_display(){
         var display_id = jQuery("#frm_add_display_id").val();
-        if(display_id==""){alert("<?php _e("Please select a custom display", "formidable") ?>");return;}
+        if(display_id==""){alert("<?php _e('Please select a custom display', 'formidable') ?>");return;}
         var filter_qs=jQuery("#frm_filter_content").is(":checked") ? " filter=1" : "";
         var win = window.dialogArguments || opener || parent || top;
         win.send_to_editor("[display-frm-data id="+display_id+filter_qs+"]");

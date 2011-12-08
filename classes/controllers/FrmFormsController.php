@@ -222,7 +222,7 @@ class FrmFormsController{
     
     function insert_form_popup(){
         $page = basename($_SERVER['PHP_SELF']);
-        if(in_array($page, array('post.php', 'page.php', 'page-new.php', 'post-new.php'))){
+        if(in_array($page, array('post.php', 'page.php', 'page-new.php', 'post-new.php')) or (isset($_GET) and isset($_GET['page']) and $_GET['page'] == 'formidable-entry-templates')){
             if(class_exists('FrmProDisplay')){
                 global $frmpro_display;
                 $displays = $frmpro_display->getAll();

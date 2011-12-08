@@ -286,7 +286,10 @@ function frmDisplayFormSelected(form_id, ajax_url){
 };
 
 function frmInsertFieldCode(element_id, variable){
-	if(!element_id || element_id == 'content'){
+	if(!element_id) var rich=true;
+	else var rich=jQuery('#wp-'+element_id+'-wrap.wp-editor-wrap').length > 0;
+	if(rich){
+		wpActiveEditor = element_id;
 		send_to_editor(variable);
 		return;
 	}
