@@ -210,7 +210,7 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 	}else if(f.DataType=='select'){prev.push(jQuery("select[name='item_meta["+f.HideField+"]']").val());
 	}else{prev.push(jQuery("input[name='item_meta["+f.HideField+"]']").val());}
 	
-	if(prev.length==0) prev='';
+	if(prev.length==0) var prev='';
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=fields&action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,

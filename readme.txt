@@ -12,6 +12,8 @@ Quickly and easily build forms with a simple drag-and-drop interface and in-plac
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
 
+[View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
+
 = Features =
 * Saves all responses to the database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
 * Integrates with WP reCAPTCHA and Akismet for Spam control
@@ -36,22 +38,22 @@ There are dozens of form-building plugins out there to create forms, but most ar
 
 
 == Frequently Asked Questions ==
-= Q. Why aren’t I getting any emails? =
+= Q. Why aren't I getting any emails? =
 
 A. Try the following steps:
 
-   1. Double check to make sure your email address is present and correct under “Advanced Form Options” at the bottom of your form editor page
+   1. Double check to make sure your email address is present and correct under "Advanced Form Options" at the bottom of your form editor page
    2. Make sure you are receiving other emails from your site (ie comment notifications, forgot password...)
    3. Check your SPAM box
    4. Try a different email address.
    5. Install WP Mail SMPT or another similar plugin and configure the SMTP settings
-   6. If none of these steps fix the problem, let me know and I’ll try to help you find the bottleneck.
+   6. If none of these steps fix the problem, let us know and we'll try to help you find the bottleneck.
 
 = Q. How do I edit the field name? =
 
 A. The field and form names and descriptions are all changed with in-place edit. Just click on the text you would like to change, and it will turn into a text field.
 
-= Q. Why isn’t the form builder page working after I updated? =
+= Q. Why isn't the form builder page working after I updated? =
 
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren't using the modified files. After clearing your cache and you're still having issues, please let us know.
 
@@ -70,8 +72,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Fixed default values set to clear on click to work with values that include hard returns
 * Free only: Fixed hidden label CSS
 * PRO: Extended the conditional field logic
-* PRO: Added graphs for fields over time, and other customizing options: x_axis, x_start, x_end, min, max, grid_color, and show_key
+* PRO: Added graphs for fields over time, and other customizing options: x_axis, x_start, x_end, min, max, grid_color, show_key, and include_zero
 * PRO: Moved post creation settings from individual fields to the forms settings page
+* PRO: Added option in WP 3.3 to use Tiny MCE as the rich text editor
 * PRO: Added "format" option to date fields. Example [25 format='Y-m-d']
 * PRO: Added star rating option to scale fields
 * PRO: Added star type to [frm-stats] shortcode to display the average in star format. Example [frm-stats id=5 type=star]
@@ -81,7 +84,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow a taxonomy/category to be selected for data from entries fields. This makes cascading category fields possible.
 * PRO: Added [post_author_email] dynamic default value
 * PRO: Added a frm_notification_attachment hook
-* PRO: Added clickable option to the formresults shortcode. ex [formresults id=x clickable=1]
+* PRO: Added clickable and user_id options to the formresults shortcode. ex [formresults id=x clickable=1 user_id=current]
 * PRO: Improved field calculations to extract a price from the end of an option
 * PRO: Added the option to specify how many decimal places to show, and what characters to use for the decimal and thousands separator. For example, to format USD:
 $[25 decimal=2 dec_point='.' thousands_sep=',']
@@ -93,6 +96,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Allow fields set as custom post fields to be used for sorting custom displays
 * PRO: Updated import to create the posts at the time of import
 * PRO: Unattach images from a post if they are replaced
+* PRO: Leave the date format in yyyy-dd-mm format in the CSV export
 * PRO: Allow importing into checkbox fields
 * PRO: Added option to use previously uploaded CSV for import so new upload isn't required when reimporting
 * PRO: Added option to change the text on the submit button in the frm-search shortcode. Example [frm-search label="Search"]
@@ -100,14 +104,16 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Fixed bug affecting pages with multiple editable forms on the same page that caused the first form to always be submitted
 * PRO: Updated the truncate option to not require full words if truncating 10 or less characters
 * PRO: Fixed bug preventing front-end entry deletion when the form was editable and limited to one per user
-* PRO: Fixed bug preventing Data from entries "just show it" fields from showing a value in admin listing and view entry pages
 * PRO: Fixed bug preventing checkbox selections from showing in custom email notifications if a checkbox contained a quotation mark
 * PRO: Prevent the uploading files message from showing if no files were selected
 * PRO: Check a default value when using dynamic default values in the check box options
 * PRO: Fixed bug preventing a newly created post from getting assigned to the user selected in the user ID dropdown if the selected user was not the user submitting the entry or was created with the registration add-on in the same form
+* PRO: Fixed bug preventing Data from entries "just show it" fields from showing a value in admin listing and view entry pages
 * PRO: Fixed bug causing the options to be empty if the data from entries options are limited to the current user and the form they are pulled from are creating posts
+* PRO: Fixed empty results in the [formresults] table for forms that create posts
 * PRO: When a blog is deleted in WP multi-site, delete database table rows related to copying forms from that blog
 * PRO: Don't strip out desired backslashes 
+* PRO: Updated to latest version of datepicker javascript
 
 = 1.05.05 =
 * Added Dutch translation (Eric Horstman)
