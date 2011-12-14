@@ -92,7 +92,7 @@
                 </tr>
                 
                 <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top"><label><?php _e('Redirect to URL', 'formidable') ?></label></td>
-                    <td><?php if(isset($values['id'])) FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_url'); ?><br/>
+                    <td><?php if(isset($values['id']) and $frmpro_is_installed) FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_url'); ?><br/>
                         <input type="text" name="options[success_url]" id="success_url" value="<?php echo esc_attr($values['success_url']); ?>" size="55"></td>
                 </tr>
                 
