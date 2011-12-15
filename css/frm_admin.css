@@ -1,3 +1,7 @@
+.widget .widget-top, .postbox h3, .stuffbox h3 {
+cursor: pointer;
+}
+
 ul.frm_form_nav {
 	background:#ececec;
 	border:solid 1px #c6c6c6;
