@@ -70,9 +70,9 @@ class FrmUpdate{
       $this->pro_password = ((isset($password) and !empty($password))?$password:'');
 
       // Plugin Update Actions -- gotta make sure the right url is used with pro ... don't want any downgrades of course
-      add_action('update_option_update_plugins', array($this, 'check_for_update_now')); // for WordPress 2.7
-      add_action('update_option__transient_update_plugins', array($this, 'check_for_update_now')); // for WordPress 2.8
-      add_action("admin_init", array($this, 'periodically_check_for_update'));
+      add_action('update_option__transient_update_plugins', array(&$this, 'check_for_update_now')); // for WordPress 2.8
+      add_action('admin_init', array(&$this, 'periodically_check_for_update'));
+      add_filter('pre_set_transient_update_plugins', array(&$this, 'force_pro_version') );
     }
   }
 
@@ -288,7 +288,7 @@ class FrmUpdate{
       if(!$this->pro_is_installed())
         $force=true;
 
-      $plugin_updates = (function_exists('get_site_transient')) ? get_site_transient("update_plugins") : get_transient("update_plugins"); 
+      $plugin_updates = (function_exists('get_site_transient')) ? get_site_transient('update_plugins') : get_transient('update_plugins'); 
       if(!$plugin_updates and function_exists('get_transient'))
         $plugin_updates = get_transient('update_plugins');
 
@@ -340,5 +340,34 @@ class FrmUpdate{
       update_option($this->pro_last_checked_store, time());
     }
   }
+  
+    //Check if free version will be downloaded. If so, switch it to the Pro version
+    function force_pro_version($plugin_updates){ 
+        if(is_object($plugin_updates) and isset($plugin_updates->response) and 
+          isset($plugin_updates->response[$this->plugin_name]) and $this->pro_is_authorized() and 
+          ($plugin_updates->response[$this->plugin_name] == 'latest' 
+          or $plugin_updates->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/')){ 
+          $curr_version = $this->get_current_version();
+          $installed_version = $plugin_updates->checked[$this->plugin_name];
+
+          if( ($curr_version != $installed_version) or !$this->pro_is_installed()){
+              $download_url = $this->get_download_url($curr_version);
+
+              if(!empty($download_url) and $download_url and $this->user_allowed_to_download()){
+                    
+                  if(isset($plugin_updates->response[$this->plugin_name]))
+                      unset($plugin_updates->response[$this->plugin_name]);
+
+                  $plugin_updates->response[$this->plugin_name]              = new stdClass();
+                  $plugin_updates->response[$this->plugin_name]->id          = '0';
+                  $plugin_updates->response[$this->plugin_name]->slug        = $this->plugin_slug;
+                  $plugin_updates->response[$this->plugin_name]->new_version = $curr_version;
+                  $plugin_updates->response[$this->plugin_name]->url         = $this->plugin_url;
+                  $plugin_updates->response[$this->plugin_name]->package     = $download_url;
+              }
+          }
+      }
+      return $plugin_updates;
+    }
 }
 ?>
