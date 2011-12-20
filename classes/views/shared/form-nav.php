@@ -5,3 +5,4 @@
     <li><a<?php if(($current_page == 'formidable' or $current_page == 'formidable-new') and isset($_GET['action']) and $_GET['action'] == 'settings') echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;action=settings&amp;id=<?php echo $id ?>"><?php _e('Settings', 'formidable') ?></a> </li>
 <li class="first"><a<?php if(($current_page == 'formidable' or $current_page == 'formidable-new') and isset($_GET['action']) and (in_array($_GET['action'], array('edit', 'new', 'duplicate')))) echo ' class="current_page"'; ?> href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Build', 'formidable') ?></a> </li>
 </ul>
+<div class="clear"></div>

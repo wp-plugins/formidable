@@ -23,6 +23,9 @@
             <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
             <?php _e('or', 'formidable') ?>
             <a class="button-secondary cancel" href="?page=formidable<?php echo ($values['is_template']) ? '-templates' : ''; ?>"><?php _e('Cancel', 'formidable') ?></a>
+            <span style="margin-left:8px;">
+            <?php FrmFormsHelper::forms_dropdown('frm_switcher', '', __('Switch Form', 'formidable'), false, "frmAddNewForm(this.value,'edit')"); ?>
+            </span>
         </p>
         
         <input type="hidden" name="action" value="update" />

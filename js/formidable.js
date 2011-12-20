@@ -71,6 +71,7 @@ for(i=0; i<len; i++){
 	}*/
 
 	if(f.FieldName!=field_id){
+		var prevSel=selected;
 		if(f.Type=='radio' || f.Type=='data-radio')
 			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked").val();
 		else if(f.Type=='select' || f.Type=='data-select')
@@ -81,7 +82,7 @@ for(i=0; i<len; i++){
 		selected=jQuery("input[type=hidden][name='item_meta["+f.FieldName+"]']").val();
 		if(typeof(selected)=='undefined') selected='';
 	}
-		
+	
     if(f.Type=='checkbox'){
         show_fields[f.HideField][i]=false;
         jQuery("input[name='item_meta["+f.FieldName+"][]']:checked").each(function(){
@@ -129,6 +130,8 @@ for(i=0; i<len; i++){
 		show_fields[f.HideField][i]=frmOperators(f.Condition,f.Value,selected);
     }
 
+	if(f.FieldName!=field_id) selected=prevSel;
+	
 	if(f.MatchType=='any'){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
@@ -146,11 +149,11 @@ for(i=0; i<len; i++){
 		jQuery.each(hide_later, function(hkey,hvalue){ 
 			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
 				if((hvalue.match=='any' && !frmInArray(true, show_fields[hkey])) || (hvalue.match=='all' && frmInArray(false, show_fields[hkey]))){
-					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
-					else jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
+					if(hvalue.show=='show'){jQuery('#frm_field_'+hkey+'_container:hidden').hide(); jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');}
+					else{ jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');}
 				}else{
-					if(hvalue.show=='show') jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');
-					else jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');
+					if(hvalue.show=='show'){ jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');}
+					else{jQuery('#frm_field_'+hkey+'_container:hidden').hide(); jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');}
 				}
 				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,ajax_url,hvalue.fname);
 				delete hide_later[hkey];

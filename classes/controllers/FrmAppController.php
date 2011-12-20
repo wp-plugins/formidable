@@ -30,7 +30,7 @@ class FrmAppController{
     }
     
     function menu(){
-        global $frmpro_is_installed;
+        global $frmpro_is_installed, $frm_settings;
         
         if(current_user_can('administrator') and !current_user_can('frm_view_forms')){
             global $current_user;
@@ -44,10 +44,10 @@ class FrmAppController{
         
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_object_page('Formidable', 'Formidable', 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div');
+            add_object_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div');
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_object_page('Formidable', 'Formidable', 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div');
+            add_object_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div');
         }
     }
     
@@ -144,7 +144,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('admin-widgets');
             wp_enqueue_style('widgets');
-            wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery'), $frm_version);
+            wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery', 'jquery-ui-draggable'), $frm_version);
             wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version);
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
             wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));

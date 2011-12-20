@@ -55,7 +55,7 @@ class FrmEntryMeta{
       global $wpdb, $frmdb, $frm_loaded_entries;
       
       if(isset($frm_loaded_entries[$entry_id]) and isset($frm_loaded_entries[$entry_id]->{$field_id}))
-            return stripslashes($frm_loaded_entries[$entry_id]->{$field_id});
+            return stripslashes_deep($frm_loaded_entries[$entry_id]->{$field_id});
             
       if (is_numeric($field_id))
           $query = "SELECT `meta_value` FROM $frmdb->entry_metas WHERE field_id='$field_id' and item_id='$entry_id'";

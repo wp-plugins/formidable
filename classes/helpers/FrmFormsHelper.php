@@ -34,7 +34,7 @@ class FrmFormsHelper{
             <option value=""><?php echo ($blank == 1) ? '' : '- '. $blank .' -'; ?></option>
             <?php } ?>
             <?php foreach($forms as $form){ ?>
-                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo FrmAppHelper::truncate($form->name, 40); ?></option>
+                <option value="<?php echo $form->id; ?>" <?php selected($field_value, $form->id); ?>><?php echo FrmAppHelper::truncate($form->name, 33); ?></option>
             <?php } ?>
         </select>
         <?php

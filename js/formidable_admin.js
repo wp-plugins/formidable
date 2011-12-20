@@ -87,7 +87,7 @@ $(this).hover(function(){$('#frm_show_cal').html('<img src="'+ $(this).attr('id'
 });
 
 $("select[name='frm_theme_selector']").change(function(){
-var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/'+$(this).val()+'/jquery-ui.css';
+var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.3/themes/'+$(this).val()+'/jquery-ui.css';
 frmUpdateCSS(css);
 var themeName=$("select[name='frm_theme_selector'] option[value='"+$(this).val()+"']").text();
 $('input[name="frm_theme_css"]').val($(this).val()); $('input[name="frm_theme_name"]').val(themeName);
@@ -207,17 +207,17 @@ function frmShowDefaults(n,fval){
 
 function frm_clear_on_focus(field_id, active,ajax_url){
     var thisid='clear_field_'+field_id;
-    if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
-    else{var switch_to='1';var new_class='';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+',\''+ajax_url+'\')" class="'+new_class +' frm_action_icon frm_reload_icon" id="'+thisid+'"></a>');
+    if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';var t='Set this field to clear on click';}
+    else{var switch_to='1';var new_class='';var t='Set this field to not clear on click';}
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+',\''+ajax_url+'\')" class="'+new_class +' frm_action_icon frm_reload_icon" id="'+thisid+'" title="'+t+'"></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_clear_on_focus&field="+field_id+"&active="+switch_to});
 };
 
 function frm_default_blank(field_id,active,ajax_url){
     var thisid='default_blank_'+field_id;
-    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon';}
-	else{var switch_to='1';var new_class='';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+',\''+ajax_url+'\')" class="'+new_class+' frm_action_icon frm_error_icon" id="'+thisid+'"></a>');
+    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon'; var t='This default value should be considered blank';}
+	else{var switch_to='1';var new_class=''; var t='This default value should not be considered blank';}
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+',\''+ajax_url+'\')" class="'+new_class+' frm_action_icon frm_error_icon" id="'+thisid+'" title="'+t+'"></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_default_blank&field="+field_id+"&active="+switch_to});
 };
 

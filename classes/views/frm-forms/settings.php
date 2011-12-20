@@ -13,7 +13,7 @@
             <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?>]" /></p>
             <?php } ?>
 
-            <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview Form', 'formidable') ?></a>
+            <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview', 'formidable') ?></a>
             <?php global $frm_settings; 
                 if ($frm_settings->preview_page_id > 0){ ?>
                 <?php _e('or', 'formidable') ?> 
@@ -34,6 +34,9 @@
         <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
         <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
+        <span style="margin-left:8px;">
+        <?php FrmFormsHelper::forms_dropdown('frm_switcher', '', __('Switch Form', 'formidable'), false, "frmAddNewForm(this.value,'settings')"); ?>
+        </span>
     </p>
     
     <div class="clear"></div> 

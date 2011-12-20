@@ -1,6 +1,7 @@
 <?php
 class FrmSettings{
     // Page Setup Variables
+    var $menu;
     var $preview_page_id;
     var $preview_page_id_str;
     var $lock_keys;
@@ -45,6 +46,9 @@ class FrmSettings{
     }
 
     function set_default_options(){
+        if(!isset($this->menu))
+          $this->menu = 'Formidable';
+          
         if(!isset($this->preview_page_id))
           $this->preview_page_id = 0;
           
@@ -136,6 +140,7 @@ class FrmSettings{
 
     function update($params){
         global $wp_roles;
+        $this->menu = $params['frm_menu'];
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
         $this->track = isset($params['frm_track']) ? 1 : 0;

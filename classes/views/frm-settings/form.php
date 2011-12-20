@@ -47,7 +47,13 @@
                 </p>
             </td></tr>
             <tr class="form-field">
-              <td valign="top" width="200px"><?php _e('Preview Page', 'formidable'); ?> </td>
+                <td valign="top" width="200px"><?php _e('Admin menu label', 'formidable'); ?> </td>
+                <td>
+                    <input name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
+                </td>
+            </tr>
+            <tr class="form-field">
+              <td valign="top"><?php _e('Preview Page', 'formidable'); ?> </td>
               <td>
                 <?php FrmAppHelper::wp_pages_dropdown( $frm_settings->preview_page_id_str, $frm_settings->preview_page_id ) ?>
               </td>

@@ -18,6 +18,17 @@ class FrmEntriesController{
     }
     
     function list_entries(){
+        global $frm_form, $frm_entry;
+        $form_select = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')", ' ORDER BY name');
+        $form_id = FrmAppHelper::get_param('form', false);
+        if($form_id)
+            $form = $frm_form->getOne($form_id);
+        else
+            $form = (isset($form_select[0])) ? $form_select[0] : 0;
+        
+        if($form)
+            $entry_count = $frm_entry->getRecordCount($form->id);
+            
         require(FRM_VIEWS_PATH.'/frm-entries/list.php');
     }
     

@@ -35,7 +35,7 @@ There are dozens of form-building plugins out there to create forms, but most ar
 
 == Screenshots ==
 1. Form creation page
-
+2. Form Widget
 
 == Frequently Asked Questions ==
 = Q. Why aren't I getting any emails? =
@@ -58,6 +58,17 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren't using the modified files. After clearing your cache and you're still having issues, please let us know.
 
 == Changelog ==
+= 1.06.01 =
+* Added option to customize the admin menu name
+* Added instructions to publish forms if no entries exist
+* Free only: Fixed form settings page to allow tabs to work
+* Free only: Updated styling to align multiple checkboxes/radio buttons when the label is aligned left
+* PRO: Fixed issue with the default value getting lost from a hidden field when updating from the form settings page
+* PRO: Fixed conditionally hidden fields that are already considered hidden if inside a collapsible section
+* PRO: Fixed graphs using x_axis=created_at and user_id=x
+* PRO: Fixed multiple paged forms with more than two pages
+* PRO: Validate HTML for checkbox taxonomies
+
 = 1.06 =
 * User Interface improvements
 * Increased security and optimization
