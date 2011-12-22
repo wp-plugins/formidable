@@ -82,6 +82,4 @@
     		</div>
 
         </div>
-        <p class="howto"><?php _e('Enter or select default values into fields on this form.', 'formidable') ?></p>     
-     
 </div>

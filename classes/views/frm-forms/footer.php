@@ -7,7 +7,7 @@ $("#new_fields").sortable({
     placeholder:'sortable-placeholder',
     axis:'y',
     cursor:'move',
-    cancel:'.widget,.frm_field_opts_list,input,textarea',
+    cancel:'.widget,.frm_field_opts_list,input,textarea,select',
     accepts:'field_type_list',
     revert:true,
     forcePlaceholderSize:true,

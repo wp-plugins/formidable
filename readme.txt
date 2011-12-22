@@ -58,6 +58,12 @@ A. The field and form names and descriptions are all changed with in-place edit.
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren't using the modified files. After clearing your cache and you're still having issues, please let us know.
 
 == Changelog ==
+= 1.06.02 =
+* Fixed selection of dropdowns on the form builder page in Chrome
+* PRO: Added option to restrict the file types uploaded in file upload fields
+* PRO: Added [user_id] dynamic default value
+* PRO: Fixed post options that would not deselect
+
 = 1.06.01 =
 * Added option to customize the admin menu name
 * Added instructions to publish forms if no entries exist
