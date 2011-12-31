@@ -42,8 +42,6 @@ define('FRM_IMAGES_URL', FRM_URL.'/images');
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
-load_plugin_textdomain('formidable', false, 'formidable/languages/' );
-
 // Check for WPMU installation
 if (!defined ('IS_WPMU')){
     global $wpmu_version;
@@ -59,9 +57,9 @@ $frm_db_version = 7;
 global $frm_ajax_url;
 $frm_ajax_url = admin_url('admin-ajax.php');
 
-global $frm_load_css, $frm_forms_loaded, $frm_forms_called, $frm_css_loaded, $frm_loaded_fields, $frm_loaded_entries, $frm_saved_entries;
+global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
-$frm_forms_loaded = $frm_forms_called = $frm_loaded_fields = $frm_loaded_entries = $frm_saved_entries = array();
+$frm_forms_loaded = $frm_saved_entries = array();
 
 require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
 global $frm_app_helper;
@@ -74,7 +72,10 @@ $frm_settings = get_option('frm_options');
 
 // If unserializing didn't work
 if(!is_object($frm_settings)){
-    $frm_settings = new FrmSettings();
+    if($frm_settings) //workaround for W3 total cache conflict
+        $frm_settings = unserialize(serialize($frm_settings));
+    else
+        $frm_settings = new FrmSettings();
     update_option('frm_options', $frm_settings);
 }
 

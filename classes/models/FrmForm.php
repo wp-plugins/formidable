@@ -107,10 +107,13 @@ class FrmForm{
             $new_values[$value_key] = $value;
     }
 
-    if(!empty($new_values))
+    if(!empty($new_values)){
         $query_results = $wpdb->update( $frmdb->forms, $new_values, array( 'id' => $id ) );
-    else
+        if($query_results)
+            wp_cache_delete( $id, 'frm_form');
+    }else{
         $query_results = true;
+    }
 
     $all_fields = $frm_field->getAll(array('fi.form_id' => $id));
     if ($all_fields and (isset($values['options']) or isset($values['item_meta']) or isset($values['field_options']))){
@@ -132,6 +135,12 @@ class FrmForm{
                     $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field_options['custom_html']) ? $field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
                     $field_options = apply_filters('frm_update_form_field_options', $field_options, $field, $values);
                     $frm_field->update($field_id, array('field_options' => $field_options));
+                }else if($field->type == 'hidden'){
+                    $prev_opts = $field_options;
+                    $field_options = apply_filters('frm_update_form_field_options', $field_options, $field, $values);
+                    if($prev_opts != $field_options)
+                        $frm_field->update($field_id, array('field_options' => $field_options));
+                    unset($prev_opts);
                 }
             }else{
                 //updating the form
@@ -219,7 +228,7 @@ class FrmForm{
   }
 
   function getOne( $id, $blog_id=false ){
-      global $wpdb, $frmdb, $frm_forms_called;
+      global $wpdb, $frmdb;
       
       if ($blog_id and IS_WPMU){
           global $wpmuBaseTablePrefix;
@@ -231,8 +240,9 @@ class FrmForm{
           $table_name = "{$prefix}frm_forms";
       }else{
           $table_name = $frmdb->forms;
-          if($frm_forms_called and isset($frm_forms_called[$id]))
-            return $frm_forms_called[$id];
+          $cache = wp_cache_get($id, 'frm_form');
+          if($cache)
+            return $cache;
       }
       
       if (is_numeric($id))
@@ -244,13 +254,13 @@ class FrmForm{
       
       if(isset($results->options)){
           $results->options = stripslashes_deep(maybe_unserialize($results->options));
-          $frm_forms_called[$results->id] = $results;
+          wp_cache_set($results->id, $results, 'frm_form');
       }
       return $results;
   }
 
     function getAll( $where = array(), $order_by = '', $limit = '' ){
-        global $wpdb, $frmdb, $frm_app_helper, $frm_forms_called;
+        global $wpdb, $frmdb, $frm_app_helper;
         $query = 'SELECT * FROM ' . $frmdb->forms . $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
             
         if ($limit == ' LIMIT 1' or $limit == 1){
@@ -260,7 +270,7 @@ class FrmForm{
                 $results = $wpdb->get_row($query);
                 
             if($results)
-                $frm_forms_called[$results->id] = $results;
+                wp_cache_set($results->id, $results, 'frm_form');
         }else{
             if(is_array($where))
                 $results = $frmdb->get_records($frmdb->forms, $where, $order_by, $limit);
@@ -269,7 +279,7 @@ class FrmForm{
             
             if($results){
                 foreach($results as $result)
-                    $frm_forms_called[$result->id] = $result;
+                    wp_cache_set($result->id, $result, 'frm_form');
             }
         }
       

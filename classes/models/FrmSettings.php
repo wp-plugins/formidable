@@ -2,6 +2,7 @@
 class FrmSettings{
     // Page Setup Variables
     var $menu;
+    var $mu_menu;
     var $preview_page_id;
     var $preview_page_id_str;
     var $lock_keys;
@@ -26,7 +27,6 @@ class FrmSettings{
     var $submit_value;
     var $login_msg;
     var $admin_permission;
-    
     var $email_to;
     
     var $frm_view_forms;
@@ -47,7 +47,18 @@ class FrmSettings{
 
     function set_default_options(){
         if(!isset($this->menu))
-          $this->menu = 'Formidable';
+            $this->menu = 'Formidable';
+        
+        if(!isset($this->mu_menu))
+            $this->mu_menu = 0;
+        
+        if(IS_WPMU and is_admin()){
+            $mu_menu = get_site_option('frm_admin_menu_name');
+            if($mu_menu and !empty($mu_menu)){
+                $this->menu = $mu_menu;
+                $this->mu_menu = 1;
+            }
+        }
           
         if(!isset($this->preview_page_id))
           $this->preview_page_id = 0;
@@ -122,7 +133,8 @@ class FrmSettings{
             $this->admin_permission = __("You do not have permission to do that", 'formidable');
         $this->admin_permission = stripslashes($this->admin_permission);
         
-        $this->email_to = get_option('admin_email');
+        if(!isset($this->email_to))
+            $this->email_to = get_option('admin_email');
         
         $frm_roles = FrmAppHelper::frm_capabilities();
         foreach($frm_roles as $frm_role => $frm_role_description){
@@ -141,6 +153,12 @@ class FrmSettings{
     function update($params){
         global $wp_roles;
         $this->menu = $params['frm_menu'];
+        $this->mu_menu = isset($params['frm_mu_menu']) ? 1 : 0;
+        if($this->mu_menu)
+            update_site_option('frm_admin_menu_name', $this->menu);
+        else if(FrmAppHelper::is_super_admin())
+            update_site_option('frm_admin_menu_name', false);
+        
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
         $this->track = isset($params['frm_track']) ? 1 : 0;
@@ -182,6 +200,7 @@ class FrmSettings{
 
     function store(){
         // Save the posted value in the database
+
         update_option( 'frm_options', $this);
 
         do_action( 'frm_store_settings' );

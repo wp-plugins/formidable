@@ -60,9 +60,21 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 == Changelog ==
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
+* Added WPML integration. Requires the add-on available from WPML. Pro version includes a quick translation page.
+* Added option to use the custom menu name site wide in multi-site installs
 * PRO: Added option to restrict the file types uploaded in file upload fields
+* PRO: Added export to XML and export to CSV to bulk action dropdowns
 * PRO: Added [user_id] dynamic default value
+* PRO: Allow dynamic dates in the frm-graph shortcode. Ex [frm-graph id=x x_axis="created_at" x_start="-1 month"]
+* PRO: Added the option to select an end date in calendar custom displays for displaying multiple day events
+* PRO: Disabled used dates in date picker for dates marked as unique
+* PRO: Added option to search by entry creation date on admin entries listing page
+* PRO: Added the class parameter to the edit-in-place cancel link
 * PRO: Fixed post options that would not deselect
+* PRO: Fixed issue causing the wrong conditional logic row to sometimes be removed
+* PRO: Fixed bug preventing hidden fields from saving as a post field
+* PRO: Fixed required tags fields to not return errors when not blank
+* PRO: Fixed bug preventing some javascripts and stylesheets from getting loaded on admin pages if the menu title was changed
 
 = 1.06.01 =
 * Added option to customize the admin menu name

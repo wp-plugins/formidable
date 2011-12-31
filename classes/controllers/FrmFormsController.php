@@ -8,8 +8,6 @@ class FrmFormsController{
         add_action('admin_menu', array( &$this, 'menu' ));
         add_action('admin_menu', array( &$this, 'lower_menu' ), 90);
         add_action('admin_head-toplevel_page_formidable', array(&$this, 'head'));
-        add_action('admin_head-formidable_page_formidable-new', array(&$this, 'head'));
-        add_action('admin_head-formidable_page_formidable-templates', array(&$this, 'head'));
         add_action('wp_ajax_frm_form_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
@@ -20,8 +18,12 @@ class FrmFormsController{
     }
     
     function menu(){
-        add_submenu_page('formidable', 'Formidable | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', 'formidable', array(&$this, 'route'));
-        add_submenu_page('formidable', 'Formidable | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', 'formidable-templates', array(&$this, 'template_list'));
+        global $frm_settings;
+        add_submenu_page('formidable', $frm_settings->menu .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', 'formidable', array(&$this, 'route'));
+        add_submenu_page('formidable', $frm_settings->menu .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', 'formidable-templates', array(&$this, 'template_list'));
+        
+        add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-new', array(&$this, 'head'));
+        add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-templates', array(&$this, 'head'));
     }
     
     function lower_menu(){
@@ -108,6 +110,14 @@ class FrmFormsController{
             $message = __('Settings Successfully Updated', 'formidable');
             return $this->get_settings_vars($id, '', $message);
         }
+    }
+    
+    function translate($action){
+        global $frmpro_is_installed, $frm_form;
+        $id = FrmAppHelper::get_param('id', false);
+        $form = $frm_form->getOne($id);
+        $values = (array)$form;
+        include(FRM_VIEWS_PATH . '/frm-forms/translate.php');
     }
     
     function edit_name(){
@@ -400,6 +410,8 @@ class FrmFormsController{
             return $this->settings();
         else if($action == 'update_settings')
             return $this->update_settings();
+        else if($action == 'translate' or $action == 'update_translate')
+            return $this->translate($action);
         else
             return $this->display_forms_list();
     }

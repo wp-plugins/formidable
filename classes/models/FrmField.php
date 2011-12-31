@@ -58,10 +58,9 @@ class FrmField{
         $query_results = $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
         unset($values);
         
-        if($query_results){
-            global $frm_loaded_fields;
-            unset($frm_loaded_fields[$id]);
-        }
+        if($query_results)
+            wp_cache_delete( $id, 'frm_field' );
+        
         return $query_results;
     }
 
@@ -73,9 +72,10 @@ class FrmField{
     }
 
     function getOne( $id ){
-        global $wpdb, $frmdb, $frm_loaded_fields;
-        if(isset($frm_loaded_fields[$id])) 
-            return $frm_loaded_fields[$id];
+        global $wpdb, $frmdb;
+        $cached = wp_cache_get( $id, 'frm_field' );
+        if($cached) 
+            return $cached;
           
         if (is_numeric($id))
             $where = array('id' => $id);
@@ -86,14 +86,14 @@ class FrmField{
         
         if($results){
             $results->field_options = maybe_unserialize($results->field_options);
-            $frm_loaded_fields[$results->id] = $results;
+            wp_cache_set( $results->id, $results, 'frm_field' );
         }
         
         return $results;
     }
 
-    function getAll($where =array(), $order_by = '', $limit = '', $blog_id=false){
-        global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_fields;
+    function getAll($where=array(), $order_by = '', $limit = '', $blog_id=false){
+        global $wpdb, $frmdb, $frm_app_helper;
         
         if ($blog_id and IS_WPMU){
             global $wpmuBaseTablePrefix;
@@ -139,11 +139,13 @@ class FrmField{
             if(is_array($results)){
                 foreach($results as $r_key => $result){
                     $results[$r_key]->field_options = maybe_unserialize($result->field_options);
-                    $frm_loaded_fields[$result->id] = $frm_loaded_fields[$result->field_key] = $result;
+                    wp_cache_set($result->id, $result, 'frm_field');
+                    wp_cache_set($result->field_key, $result, 'frm_field');
                 }
             }else{
                 $results->field_options = maybe_unserialize($results->field_options);
-                $frm_loaded_fields[$results->id] = $frm_loaded_fields[$results->field_key] = $results;
+                wp_cache_set($results->id, $results, 'frm_field');
+                wp_cache_set($results->field_key, $results, 'frm_field');
             }
         }
         return $results;

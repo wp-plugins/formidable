@@ -281,7 +281,7 @@ jQuery.ajax({
 });
 }
 
-function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel){
+function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel,hclass){
 	var label=jQuery('#frm_edit_'+entry_id).text();
 	var orig=jQuery('#'+prefix+entry_id).html();
 	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="'+prefix+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
@@ -290,16 +290,16 @@ function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel){
 		data:"controller=entries&action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
 		success:function(html){
 			jQuery('#'+prefix+entry_id).children('.frm-loading-img').replaceWith(html);
-			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+')">'+cancel+'</a></span>');
+			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+','+hclass+')" class="'+hclass+'">'+cancel+'</a></span>');
 		}
 	});
 }
 
-function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id){
+function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id,hclass){
 	var cancel=jQuery('#frm_edit_'+entry_id).text();
 	jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
 	jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
-	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\')">'+label+'</a>');
+	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\',\''+hclass+'\')">'+label+'</a>');
 }
 
 function frmUpdateField(entry_id,field_id,value,message,ajax_url){

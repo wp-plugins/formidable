@@ -37,6 +37,9 @@
         <span style="margin-left:8px;">
         <?php FrmFormsHelper::forms_dropdown('frm_switcher', '', __('Switch Form', 'formidable'), false, "frmAddNewForm(this.value,'settings')"); ?>
         </span>
+        <?php if($frmpro_is_installed and function_exists('icl_t')){ ?>
+        <a href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;action=translate&amp;id=<?php echo $id ?>" class="button-secondary"><?php _e('Translate Form', 'formidable') ?></a>
+        <?php } ?>
     </p>
     
     <div class="clear"></div> 

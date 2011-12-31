@@ -35,7 +35,7 @@
         </div>
     </div>
     
-    <form name="frm_settings_form" method="post">
+    <form name="frm_settings_form" method="post" class="frm_settings_form">
         <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
             
@@ -49,7 +49,10 @@
             <tr class="form-field">
                 <td valign="top" width="200px"><?php _e('Admin menu label', 'formidable'); ?> </td>
                 <td>
-                    <input name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
+                    <input type="text" name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
+                    <?php if (IS_WPMU and FrmAppHelper::is_super_admin()){ ?>
+                    <input type="checkbox" name="frm_mu_menu" id="frm_mu_menu" value="1" <?php checked($frm_settings->mu_menu, 1) ?> /> <?php _e('Use this menu name site-wide', 'formidable'); ?>
+                    <?php } ?>
                 </td>
             </tr>
             <tr class="form-field">
@@ -108,11 +111,11 @@
         			
         				<!-- reCAPTCHA public key -->
         				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Public Key', 'formidable') ?></label>
-        				<input name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" />
+        				<input type="text" name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" />
         				<br/>
         				<!-- reCAPTCHA private key -->
         				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Private Key', 'formidable') ?></label>
-        				<input name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" />
+        				<input type="text" name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" />
         			
             	</td>
             </tr>

@@ -155,6 +155,8 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function front_head(){
         global $frm_settings, $frm_version, $frm_db_version;
         
+        load_plugin_textdomain('formidable', false, FRM_PATH .'/languages/' );
+        
         if (IS_WPMU){
             global $frmpro_is_installed;
             //$frm_db_version is the version of the database we're moving to
@@ -245,7 +247,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function referer_session() {
     	global $frm_siteurl, $frm_settings;
     	
-    	if(!isset($frm_settings->track) or !$frm_settings->track)
+    	if(!isset($frm_settings->track) or !$frm_settings->track or defined('WP_IMPORTING'))
     	    return;
     	    
     	if ( !isset($_SESSION) )
@@ -259,7 +261,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     	
     	if (!isset($_SERVER['HTTP_REFERER']) or (isset($_SERVER['HTTP_REFERER']) and (strpos($_SERVER['HTTP_REFERER'], $frm_siteurl) === false) and ! (in_array($_SERVER['HTTP_REFERER'], $_SESSION['frm_http_referer'])) )) {
     		if (! isset($_SERVER['HTTP_REFERER']))
-    			$_SESSION['frm_http_referer'][] = "Type-in or bookmark";
+    			$_SESSION['frm_http_referer'][] = __('Type-in or bookmark', 'formidable');
     		else
     			$_SESSION['frm_http_referer'][] = $_SERVER['HTTP_REFERER'];	
     	}
@@ -267,9 +269,14 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     	if ($_SESSION['frm_http_pages'] and !empty($_SESSION['frm_http_pages']) and (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']))
     		$_SESSION['frm_http_pages'][] = "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'];
     		
+    	//keep the page history below 100
     	if(count($_SESSION['frm_http_pages']) > 100){
-    	    $first = reset($_SESSION['frm_http_pages']);
-    		unset($first);
+    	    foreach($_SESSION['frm_http_pages'] as $pkey => $ppage){
+    	        if(count($_SESSION['frm_http_pages']) <= 100)
+    	            break;
+    	            
+    		    unset($_SESSION['frm_http_pages'][$pkey]);
+    		}
     	}
     }
 
@@ -299,10 +306,11 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
     // Utility function to grab the parameter whether it's a get or post
     function get_param($param, $default=''){
-        return (isset($_POST[$param])?$_POST[$param]:(isset($_GET[$param])?$_GET[$param]:$default));
+        return (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param])?$_GET[$param]:$default));
     }
 
 
+    //formidable shortcode
     function get_form_shortcode($atts){
         global $frm_entries_controller;
         extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array()), $atts));
@@ -310,7 +318,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         return $frm_entries_controller->show_form($id, $key, $title, $description); 
     }
 
-
+    //filter form shortcode in text widgets
     function widget_text_filter( $content ){
     	$regex = '/\[\s*formidable\s+.*\]/';
     	return preg_replace_callback( $regex, array($this, 'widget_text_filter_callback'), $content );

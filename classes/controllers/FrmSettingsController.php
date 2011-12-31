@@ -7,7 +7,6 @@ class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', array( &$this, 'menu' ), 26);
         add_filter('frm_nav_array', array( &$this, 'frm_nav'), 30);
-        //add_action('admin_head-formidable_page_formidable-settings', array(&$this, 'head'));
     }
 
     function menu(){

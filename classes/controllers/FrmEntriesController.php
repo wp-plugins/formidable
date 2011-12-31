@@ -13,7 +13,6 @@ class FrmEntriesController{
         global $frmpro_is_installed;
         if(!$frmpro_is_installed){
             add_submenu_page('formidable', 'Formidable |'. __('Entries', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Entries', 'formidable') .'</span>', 'administrator', 'formidable-entries',array(&$this, 'list_entries'));
-            //add_action('admin_head-formidable_page_formidable-entries', array(&$this, 'head'));
         }
     }
     
@@ -36,7 +35,9 @@ class FrmEntriesController{
         global $frm_form, $user_ID, $frm_settings, $post;
         if ($id) $form = $frm_form->getOne((int)$id);
         else if ($key) $form = $frm_form->getOne($key);
-
+        
+        $form = apply_filters('frm_pre_display_form', $form);
+        
         if(!$form or 
             (($form->is_template or $form->status == 'draft') and !isset($_GET) and !isset($_GET['form']) and 
                 (!isset($_GET['preview']) or $post and $post->ID != $frm_settings->preview_page_id))

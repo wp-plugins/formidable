@@ -129,6 +129,8 @@ class FrmEntry{
         $new_values['updated_by'] = $user_ID;
 
         $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
+        if($query_results)
+            wp_cache_delete( $id, 'frm_entry');
         $frm_saved_entries[] = (int)$id;
         
         if (isset($values['item_meta']))
@@ -152,14 +154,17 @@ class FrmEntry{
       global $wpdb, $frmdb;
       $form_id = isset($value) ? $form_id : NULL;
       $result = $wpdb->update( $frmdb->entries, array('form_id' => $form_id), array( 'id' => $id ) );
+      if($result)
+          wp_cache_delete( $id, 'frm_entry');
       return $result;
     }
     
     function getOne( $id, $meta=false){
-        global $wpdb, $frmdb, $frm_loaded_entries;
+        global $wpdb, $frmdb;
       
-        if(isset($frm_loaded_entries[$id]))
-            return $frm_loaded_entries[$id];
+        $entry = wp_cache_get( $id, 'frm_entry' );
+        if($entry)
+            return $entry;
 
         $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
                   LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id WHERE ";
@@ -167,7 +172,7 @@ class FrmEntry{
             $query .= $wpdb->prepare('it.id=%d', $id);
         else
             $query .= $wpdb->prepare('it.item_key=%s', $id);
-        
+
         $entry = $wpdb->get_row($query);
 
         if($meta and $entry){
@@ -179,16 +184,16 @@ class FrmEntry{
 
             $entry->metas = $entry_metas;
 
-            $frm_loaded_entries[$entry->id] = $entry;
+            wp_cache_set( $entry->id, $entry, 'frm_entry');
         }
 
         return $entry;
     }
     
     function &exists( $id ){
-        global $wpdb, $frmdb, $frm_loaded_entries;
+        global $wpdb, $frmdb;
         
-        if(isset($frm_loaded_entries[$id])){
+        if(wp_cache_get( $id, 'frm_entry' )){
             $exists = true;
             return $exists;
         }
@@ -204,43 +209,72 @@ class FrmEntry{
         return $exists;
     }
 
-    function getAll($where = '', $order_by = '', $limit = '', $meta=false){
-        global $wpdb, $frmdb, $frm_app_helper, $frm_loaded_entries;
+    function getAll($where = '', $order_by = '', $limit = '', $meta=false, $inc_form=true){
+        global $wpdb, $frmdb, $frm_app_helper;
         
         if(is_numeric($limit))
             $limit = " LIMIT {$limit}";
             
-        $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
+        if($inc_form){
+            $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
                 FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
-                
-        $entries = $wpdb->get_results($query);
+        }else{
+            $query = "SELECT it.id, it.item_key, it.name, it.ip, it.form_id, it.post_id, it.user_id, it.updated_by,
+                it.created_at, it.updated_at FROM $frmdb->entries it" .
+                $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+        }
+        $entries = $wpdb->get_results($query, OBJECT_K);
+        unset($query);
         
-        if($meta){
-          $entry_ids = array();
-          foreach($entries as $key => $entry)
-              $entry_ids[] = $entry->id;
-          
-          if($entry_ids)
-              $metas = FrmEntryMeta::getAll("item_id in (". implode(',', $entry_ids).") and field_id != 0");
-          
-          if(isset($metas) and $metas){
-              foreach($entries as $key => $entry){
+        if($meta and $entries){
+            
+            if(!is_array($where) and preg_match('/^it\.form_id=\d+$/', $where)){
+                $meta_where = 'fi.form_id='. substr($where, 11);
+            }else if(is_array($where) and count($where) == 1 and isset($where['it.form_id'])){
+                $meta_where = 'fi.form_id='. $where['it.form_id'];
+            }else{
+                $meta_where = "item_id in (". implode(',', array_keys($entries)) .")";
+            }
+            $query = $wpdb->prepare("SELECT item_id, meta_value, field_id, 
+                fi.field_key as field_key FROM $frmdb->entry_metas it 
+                LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id 
+                WHERE $meta_where and field_id != %d", 0);
+            
+            $metas = $wpdb->get_results($query);
+            unset($query);
+            
+            if($metas){
+                foreach($metas as $m_key => $meta_val){
+                    if(!isset($entries[$meta_val->item_id]->metas))
+                        $entries[$meta_val->item_id]->metas = array();
+                        
+                    $entries[$meta_val->item_id]->metas[$meta_val->field_id] = $entries[$meta_val->item_id]->metas[$meta_val->field_key] = $meta_val->meta_value;
+                }
+                
+                foreach($entries as $entry){
+                    wp_cache_set( $entry->id, $entry, 'frm_entry');
+                    unset($entry);
+                }
+                
+                /*
+                foreach($entries as $key => $entry){
 
-                  $entry_metas = array();
-                  foreach($metas as $meta_val){
-                      if($meta_val->item_id == $entry->id)
-                          $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
-                  }
+                    $entry_metas = array();
+                    foreach($metas as $meta_val){
+                        if($meta_val->item_id == $entry->id)
+                            $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
+                    }
 
-                  $entries[$key]->metas = $entry_metas;
-
-                  if(!isset($frm_loaded_entries[$entry->id]))
-                      $frm_loaded_entries[$entry->id] = $entries[$key];
-              }
-          }
-      }
-      return $entries;
+                    $entries[$key]->metas = $entry_metas;
+                    
+                    unset($entry);
+                    unset($key);
+                }
+                */
+            }
+        }
+        return $entries;
     }
 
     // Pagination Methods
@@ -323,7 +357,7 @@ class FrmEntry{
                 }
 
             }
-                
+            
             $errors = apply_filters('frm_validate_field_entry', $errors, $posted_field, $value);
         }
 

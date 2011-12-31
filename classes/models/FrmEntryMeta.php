@@ -52,10 +52,11 @@ class FrmEntryMeta{
   }
   
   function get_entry_meta_by_field($entry_id, $field_id, $return_var=true){
-      global $wpdb, $frmdb, $frm_loaded_entries;
+      global $wpdb, $frmdb;
       
-      if(isset($frm_loaded_entries[$entry_id]) and isset($frm_loaded_entries[$entry_id]->{$field_id}))
-            return stripslashes_deep($frm_loaded_entries[$entry_id]->{$field_id});
+      $cached = wp_cache_get( $entry_id, 'frm_entry' );
+      if($cached and isset($cached->{$field_id}))
+            return stripslashes_deep($cached->{$field_id});
             
       if (is_numeric($field_id))
           $query = "SELECT `meta_value` FROM $frmdb->entry_metas WHERE field_id='$field_id' and item_id='$entry_id'";
@@ -64,8 +65,10 @@ class FrmEntryMeta{
           
       if($return_var){
           $result = stripslashes_deep(maybe_unserialize($wpdb->get_var("{$query} LIMIT 1")));
-          if(isset($frm_loaded_entries[$entry_id]))
-              $frm_loaded_entries[$entry_id]->{$field_id} = $result;
+          if($cached){
+              $cached->{$field_id} = $result;
+              wp_cache_set($entry_id, $cached, 'frm_entry');
+          }
       }else{
           $result = $wpdb->get_col($query, 0);
       }
