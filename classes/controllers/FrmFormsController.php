@@ -131,7 +131,10 @@ class FrmFormsController{
     function edit_description(){
         global $frm_form;
         $form = $frm_form->update($_POST['form_id'], array('description' => $_POST['update_value']));
-        echo wpautop(stripslashes($_POST['update_value']));
+        $description = stripslashes($_POST['update_value']);
+        if(apply_filters('frm_use_wpautop', true))
+            $description = wpautop($description);
+        echo $description;
         die();
     }
     

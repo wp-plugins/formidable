@@ -183,7 +183,8 @@ class FrmAppHelper{
 
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
               $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default_val));
-        $values['description'] = wpautop($values['description']);
+        if(apply_filters('frm_use_wpautop', true))
+            $values['description'] = wpautop($values['description']);
         $values['fields'] = array();
         
         if ($fields){

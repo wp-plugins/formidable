@@ -62,6 +62,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Fixed selection of dropdowns on the form builder page in Chrome
 * Added WPML integration. Requires the add-on available from WPML. Pro version includes a quick translation page.
 * Added option to use the custom menu name site wide in multi-site installs
+* Added 'frm_use_wpautop' filter for disabling all built-in occurrences of auto paragraphs (form description, HTML fields, and displaying paragraph fields)
 * PRO: Added option to restrict the file types uploaded in file upload fields
 * PRO: Added export to XML and export to CSV to bulk action dropdowns
 * PRO: Added [user_id] dynamic default value

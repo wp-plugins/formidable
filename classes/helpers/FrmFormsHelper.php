@@ -51,7 +51,8 @@ class FrmFormsHelper{
         foreach (array('name' => __('Untitled Form', 'formidable'), 'description' => '') as $var => $default)
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
         
-        $values['description'] = wpautop($values['description']);
+        if(apply_filters('frm_use_wpautop', true))
+            $values['description'] = wpautop($values['description']);
         
         foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default)
             $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default));
@@ -103,12 +104,16 @@ BEFORE_HTML;
     
     function replace_shortcodes($html, $form, $title=false, $description=false){
         foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true) as $code => $show){
-            if ($code == 'form_name')
+            if ($code == 'form_name'){
                 $replace_with = stripslashes($form->name);
-            else if ($code == 'form_description')
-                $replace_with = wpautop(stripslashes($form->description));
-            else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry']))
+            }else if ($code == 'form_description'){
+                if(apply_filters('frm_use_wpautop', true))
+                    $replace_with = wpautop(stripslashes($form->description));
+                else
+                    $replace_with = stripslashes($form->description);
+            }else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry'])){
                 $replace_with = $_GET['entry'];
+            }
                 
             if (($show == true || $show == 'true') && $replace_with != '' ){
                 $html = str_replace('[if '.$code.']', '', $html); 
