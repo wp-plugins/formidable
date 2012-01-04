@@ -29,7 +29,7 @@
                         <?php 
                         $col_class = 'frm_col_one';
                         foreach ($frm_field_selection as $field_key => $field_type){ ?>
-                            <li class="frmbutton button <?php echo $col_class ?> frm_t<?php echo $field_key ?>" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>', '<?php echo $frm_ajax_url ?>');"><?php echo $field_type ?></a></li>
+                            <li class="frmbutton button <?php echo $col_class ?> frm_t<?php echo $field_key ?>" id="<?php echo $field_key ?>"><a href="javascript:add_frm_field_link(<?php echo $id ?>, '<?php echo $field_key ?>');"><?php echo $field_type ?></a></li>
                          <?php
                          $col_class = (empty($col_class)) ? 'frm_col_one' : '';
                          } ?>

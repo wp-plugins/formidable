@@ -15,7 +15,6 @@ class FrmAppHelper{
     }
   
     function wp_pages_dropdown($field_name, $page_id, $truncate=false){
-        $field_value = FrmAppHelper::get_param($field_name);
         $pages = FrmAppHelper::get_pages();
     ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">

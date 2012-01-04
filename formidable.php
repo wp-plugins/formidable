@@ -137,13 +137,10 @@ $frm_statistics_controller  = new FrmStatisticsController();
 require_once(FRM_HELPERS_PATH. "/FrmEntriesHelper.php");
 require_once(FRM_HELPERS_PATH. "/FrmFieldsHelper.php");
 require_once(FRM_HELPERS_PATH. "/FrmFormsHelper.php");
-require_once(FRM_HELPERS_PATH. "/FrmSettingsHelper.php");
 
 global $frm_fields_helper;
-global $frm_settings_helper;
 
 $frm_fields_helper = new FrmFieldsHelper();
-$frm_settings_helper = new FrmSettingsHelper();
 
 global $frmpro_is_installed;
 $frmpro_is_installed = $frm_update->pro_is_installed_and_authorized();

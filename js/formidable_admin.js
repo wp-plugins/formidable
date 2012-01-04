@@ -177,26 +177,29 @@ function frmGetFieldValues(field_id,current_field_id,row,ajax_url){
     }
 }
 
-function add_frm_field_link(form_id, field_type, ajax_url){
+function add_frm_field_link(form_id, field_type){
+if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
 jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
 success:function(msg){jQuery('#new_fields').append(msg);}
 });
 };
 
-function frm_duplicate_field(field_id,ajax_url){  
+function frm_duplicate_field(field_id){
+if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;  
 jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_duplicate_field&field_id="+field_id,
 success:function(msg){jQuery('#new_fields').append(msg);}
 });
 };
 
-function frm_mark_required(field_id,required,ajax_url){
+function frm_mark_required(field_id,required){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
     var thisid='req_field_'+field_id;
     if(required=='0'){var switch_to='1';var atitle='Click to Mark as Not Required';var checked='checked="checked"';
 	jQuery('.frm_required_details'+field_id).fadeIn('slow');}
 	else{var switch_to='0';var atitle='Click to Mark as Required';var checked='';
 	jQuery('.frm_required_details'+field_id).fadeOut('slow');}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+',\''+ajax_url+'\')" class="frm_action_icon frm_required_icon alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"></a>');
-	jQuery('#frm_'+thisid).replaceWith('<input type="checkbox" id="frm_'+thisid+'" name="field_options[required_'+field_id+']" value="1" '+checked+' onclick="frm_mark_required('+field_id+','+switch_to+',\''+ajax_url+'\')" />');
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+')" class="frm_action_icon frm_required_icon alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"></a>');
+	jQuery('#frm_'+thisid).replaceWith('<input type="checkbox" id="frm_'+thisid+'" name="field_options[required_'+field_id+']" value="1" '+checked+' onclick="frm_mark_required('+field_id+','+switch_to+')" />');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
 };
 
@@ -205,23 +208,26 @@ function frmShowDefaults(n,fval){
 	else{jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeOut('slow');}
 }
 
-function frm_clear_on_focus(field_id, active,ajax_url){
+function frm_clear_on_focus(field_id, active){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
     var thisid='clear_field_'+field_id;
     if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';var t='Set this field to clear on click';}
     else{var switch_to='1';var new_class='';var t='Set this field to not clear on click';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+',\''+ajax_url+'\')" class="'+new_class +' frm_action_icon frm_reload_icon" id="'+thisid+'" title="'+t+'"></a>');
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+')" class="'+new_class +' frm_action_icon frm_reload_icon" id="'+thisid+'" title="'+t+'"></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_clear_on_focus&field="+field_id+"&active="+switch_to});
 };
 
-function frm_default_blank(field_id,active,ajax_url){
+function frm_default_blank(field_id,active){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
     var thisid='default_blank_'+field_id;
     if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon'; var t='This default value should be considered blank';}
 	else{var switch_to='1';var new_class=''; var t='This default value should not be considered blank';}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+',\''+ajax_url+'\')" class="'+new_class+' frm_action_icon frm_error_icon" id="'+thisid+'" title="'+t+'"></a>');
+    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+')" class="'+new_class+' frm_action_icon frm_error_icon" id="'+thisid+'" title="'+t+'"></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_default_blank&field="+field_id+"&active="+switch_to});
 };
 
-function frm_add_field_option(field_id, ajax_url, table){
+function frm_add_field_option(field_id,table){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
 	var data = {action:'frm_add_field_option',field_id:field_id,t:table};
 	jQuery.post(ajax_url,data,function(msg){
 		jQuery('#frm_add_field_'+field_id).before(msg);
@@ -229,7 +235,8 @@ function frm_add_field_option(field_id, ajax_url, table){
 	});
 };
 
-function frm_delete_field_option(field_id, opt_key, ajax_url){
+function frm_delete_field_option(field_id, opt_key){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
     jQuery.ajax({type:"POST",url:ajax_url,
         data:"action=frm_delete_field_option&field_id="+field_id+"&opt_key="+opt_key,
         success:function(msg){ jQuery('#frm_delete_field_'+field_id+'-'+opt_key+'_container').fadeOut("slow");}

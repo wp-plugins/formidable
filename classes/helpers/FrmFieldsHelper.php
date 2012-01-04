@@ -264,15 +264,13 @@ DEFAULT_HTML;
         return wp_dropdown_categories($args);
     }
     
-    function show_onfocus_js($field_id, $clear_on_focus){ 
-        global $frm_ajax_url; ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>,'<?php echo $frm_ajax_url?>')" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"></a>
+    function show_onfocus_js($field_id, $clear_on_focus){ ?>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('Set this field to %1$sclear on click', 'formidable'), ($clear_on_focus) ? __('not', 'formidable').' ' :'' ); ?>"></a>
     <?php
     }
     
-    function show_default_blank_js($field_id, $default_blank){ 
-        global $frm_ajax_url; ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>,'<?php echo $frm_ajax_url?>')" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_error_icon" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"></a>
+    function show_default_blank_js($field_id, $default_blank){ ?>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_error_icon" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('This default value should %1$sbe considered blank', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"></a>
     <?php
     }
     

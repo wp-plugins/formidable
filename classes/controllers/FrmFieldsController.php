@@ -13,9 +13,9 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_default_blank', array(&$this, 'default_blank') );
         add_action('wp_ajax_frm_duplicate_field', array(&$this, 'duplicate') );
         add_action('wp_ajax_frm_delete_field', array(&$this, 'destroy') );
-        add_action('wp_ajax_frm_add_field_option',array(&$this, 'add_option'));
+        add_action('wp_ajax_frm_add_field_option', array(&$this, 'add_option'));
         add_action('wp_ajax_frm_field_option_ipe', array(&$this, 'edit_option') );
-        add_action('wp_ajax_frm_delete_field_option',array(&$this, 'delete_option'));
+        add_action('wp_ajax_frm_delete_field_option', array(&$this, 'delete_option'));
         add_action('wp_ajax_frm_import_options', array(&$this, 'import_options') );
         add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
         add_filter('frm_field_type' ,array( &$this, 'change_type'));

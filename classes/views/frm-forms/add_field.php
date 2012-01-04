@@ -3,12 +3,12 @@
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
     <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
     <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="Delete Field"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
-    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="alignright frm-show-hover frm-hover-icon" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
+    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>,'<?php echo $frm_ajax_url?>')" class="frm_action_icon frm_required_icon alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
+        <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>)" class="frm_action_icon frm_required_icon alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_primary_label" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
@@ -34,7 +34,7 @@
         
 ?>
     <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
-        <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
+        <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>)" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
         
         <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
         <?php _e('or', 'formidable'); ?>
@@ -72,7 +72,7 @@
         ?>
         </div>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
-            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>,'<?php echo $frm_ajax_url ?>')" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
+            <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>)" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
             
             <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
             <?php _e('or', 'formidable'); ?>
@@ -155,7 +155,7 @@ if ($display['options']){ ?>
                 <?php if ($display['required']){ ?>
                     <tr>
                         <td><label><?php _e('Required Field', 'formidable') ?></label></td>
-                        <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>,'<?php echo $frm_ajax_url?>')" /> <span><?php _e('Required', 'formidable') ?></span>
+                        <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>)" /> <span><?php _e('Required', 'formidable') ?></span>
                         <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
                             <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo htmlentities($field['required_indicator']); ?>" />
                         </span>

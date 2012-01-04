@@ -67,15 +67,19 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added export to XML and export to CSV to bulk action dropdowns
 * PRO: Added [user_id] dynamic default value
 * PRO: Allow dynamic dates in the frm-graph shortcode. Ex [frm-graph id=x x_axis="created_at" x_start="-1 month"]
+* PRO: Dynamically hide some x-axis labels if there are too many for the width of the graph
 * PRO: Added the option to select an end date in calendar custom displays for displaying multiple day events
+* PRO: Added 'frm_show_entry_dates' filter for customizing which dates an entry should show on
 * PRO: Disabled used dates in date picker for dates marked as unique
 * PRO: Added option to search by entry creation date on admin entries listing page
+* PRO: Added windows-1251 option for CSV export format
 * PRO: Added the class parameter to the edit-in-place cancel link
 * PRO: Fixed post options that would not deselect
 * PRO: Fixed issue causing the wrong conditional logic row to sometimes be removed
 * PRO: Fixed bug preventing hidden fields from saving as a post field
 * PRO: Fixed required tags fields to not return errors when not blank
 * PRO: Fixed bug preventing some javascripts and stylesheets from getting loaded on admin pages if the menu title was changed
+* PRO: Fixed graphs to show x_axis dates in the correct order if 2011 and 2012 dates are in the same graph
 
 = 1.06.01 =
 * Added option to customize the admin menu name
