@@ -63,6 +63,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added WPML integration. Requires the add-on available from WPML. Pro version includes a quick translation page.
 * Added option to use the custom menu name site wide in multi-site installs
 * Added 'frm_use_wpautop' filter for disabling all built-in occurrences of auto paragraphs (form description, HTML fields, and displaying paragraph fields)
+* Only show the form icon button on the edit post page for users with permission to view forms
+* Changed .form-required class to .frm_required_field
 * PRO: Added option to restrict the file types uploaded in file upload fields
 * PRO: Added export to XML and export to CSV to bulk action dropdowns
 * PRO: Added [user_id] dynamic default value
@@ -74,12 +76,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added option to search by entry creation date on admin entries listing page
 * PRO: Added windows-1251 option for CSV export format
 * PRO: Added the class parameter to the edit-in-place cancel link
+* PRO: Improved CSV import to work better with large files
 * PRO: Fixed post options that would not deselect
 * PRO: Fixed issue causing the wrong conditional logic row to sometimes be removed
 * PRO: Fixed bug preventing hidden fields from saving as a post field
 * PRO: Fixed required tags fields to not return errors when not blank
 * PRO: Fixed bug preventing some javascripts and stylesheets from getting loaded on admin pages if the menu title was changed
 * PRO: Fixed graphs to show x_axis dates in the correct order if 2011 and 2012 dates are in the same graph
+* PRO: Corrected WP multisite table name for the table to copy forms and custom displays
+* PRO: Fixed issue with graphs showing in front of dropdown menus in Chrome
 
 = 1.06.01 =
 * Added option to customize the admin menu name

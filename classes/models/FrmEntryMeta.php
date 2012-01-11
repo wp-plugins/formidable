@@ -16,7 +16,7 @@ class FrmEntryMeta{
 
   function update_entry_meta($entry_id, $field_id, $meta_key='', $meta_value){
     //$this->delete_entry_meta($entry_id, $field_id);
-    if ($meta_value)
+    if (!empty($meta_value) or $meta_value == '0')
         $this->add_entry_meta($entry_id, $field_id, $meta_key, $meta_value);
   }
   

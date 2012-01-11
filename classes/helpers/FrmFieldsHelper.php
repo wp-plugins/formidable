@@ -160,7 +160,7 @@ DEFAULT_HTML;
         }        
         
         //replace [required_class]
-        $required_class = ($field['required'] == '0')?(''):(' form-required');
+        $required_class = ($field['required'] == '0') ? '' : ' frm_required_field';
         $html = str_replace('[required_class]', $required_class, $html);  
         
         //replace [label_position]

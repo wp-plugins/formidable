@@ -228,10 +228,9 @@ class FrmEntry{
         unset($query);
         
         if($meta and $entries){
-            
-            if(!is_array($where) and preg_match('/^it\.form_id=\d+$/', $where)){
+            if($limit == '' and !is_array($where) and preg_match('/^it\.form_id=\d+$/', $where)){
                 $meta_where = 'fi.form_id='. substr($where, 11);
-            }else if(is_array($where) and count($where) == 1 and isset($where['it.form_id'])){
+            }else if($limit == '' and is_array($where) and count($where) == 1 and isset($where['it.form_id'])){
                 $meta_where = 'fi.form_id='. $where['it.form_id'];
             }else{
                 $meta_where = "item_id in (". implode(',', array_keys($entries)) .")";
@@ -246,6 +245,9 @@ class FrmEntry{
             
             if($metas){
                 foreach($metas as $m_key => $meta_val){
+                    if(!isset($entries[$meta_val->item_id]))
+                        continue;
+                        
                     if(!isset($entries[$meta_val->item_id]->metas))
                         $entries[$meta_val->item_id]->metas = array();
                         
