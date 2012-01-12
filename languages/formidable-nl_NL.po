@@ -57,7 +57,7 @@ msgid "Please select a valid form"
 msgstr "Selecteer een geldig formulier"
 
 #: classes/controllers/FrmFormsController.php:149
-#: classes/controllers/FrmFormsController.php:342
+#: classes/controllers/FrmFormsController.php:343
 #@ formidable
 msgid "Form was Successfully Updated"
 msgstr "Het formulier is met succes ge-update"
@@ -82,14 +82,14 @@ msgstr "Er is een probleem opgetreden tijdens het aanmaken van een nieuwe sjablo
 msgid "Form was Successfully Deleted"
 msgstr "Het formulier is met succces verwijderd"
 
-#: classes/controllers/FrmFormsController.php:226
-#: classes/controllers/FrmFormsController.php:233
+#: classes/controllers/FrmFormsController.php:227
+#: classes/controllers/FrmFormsController.php:234
 #@ formidable
 msgid "Add Formidable Form"
 msgstr "Formidable formulier toevoegen"
 
-#: classes/controllers/FrmFormsController.php:347
-#: classes/controllers/FrmFormsController.php:362
+#: classes/controllers/FrmFormsController.php:348
+#: classes/controllers/FrmFormsController.php:363
 #@ formidable
 msgid "That template cannot be edited"
 msgstr "Dit sjabloon kan niet veranderd worden"
@@ -671,7 +671,7 @@ msgstr "of"
 #: classes/views/frm-forms/settings.php:257
 #: classes/views/frm-forms/translate.php:35
 #: classes/views/frm-forms/translate.php:59
-#: pro/classes/controllers/FrmProEntriesController.php:1202
+#: pro/classes/controllers/FrmProEntriesController.php:1204
 #: pro/classes/views/displays/form.php:45
 #: pro/classes/views/displays/form.php:314
 #: pro/classes/views/frmpro-entries/edit.php:59
@@ -898,7 +898,7 @@ msgstr "Geen formulieren gevonden"
 #: classes/views/frm-forms/list.php:104
 #: classes/views/frm-forms/list.php:117
 #: classes/views/frm-forms/list.php:125
-#: pro/classes/controllers/FrmProEntriesController.php:1202
+#: pro/classes/controllers/FrmProEntriesController.php:1204
 #: pro/classes/helpers/FrmProAppHelper.php:114
 #: pro/classes/helpers/FrmProFieldsHelper.php:1290
 #: pro/classes/views/displays/list.php:71
@@ -1195,7 +1195,7 @@ msgstr "Zaterdag"
 msgid "That is not a valid custom display ID"
 msgstr "Dat is geen geldig Aangepaste-weergave ID"
 
-#: pro/classes/controllers/FrmProEntriesController.php:987
+#: pro/classes/controllers/FrmProEntriesController.php:989
 #: pro/classes/helpers/FrmProDisplaysHelper.php:43
 #: pro/classes/views/frmpro-entries/list.php:37
 #@ formidable
@@ -1597,7 +1597,7 @@ msgstr "Toepassen"
 msgid "All Fields"
 msgstr "Alle velden"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1031
+#: pro/classes/controllers/FrmProEntriesController.php:1033
 #: pro/classes/helpers/FrmProAppHelper.php:217
 #@ formidable
 msgid "Search"
@@ -2017,7 +2017,7 @@ msgstr "als"
 msgid "Edit Entry"
 msgstr "Bewerk de inzending"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1287
+#: pro/classes/controllers/FrmProEntriesController.php:1289
 #: pro/classes/views/frmpro-entries/list.php:88
 #: pro/classes/views/frmpro-entries/show.php:26
 #@ formidable
@@ -2892,7 +2892,7 @@ msgstr "ShortCodes"
 msgid "Default Submit Button"
 msgstr "Standaard Verzendknop"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1474
+#: pro/classes/controllers/FrmProEntriesController.php:1476
 #@ formidable
 msgid "No one! You do not have permission"
 msgstr "Pasop! je hebt niet de juiste rechten hiervoor"
@@ -3629,7 +3629,7 @@ msgstr "Plaats dit in uw bericht, pagina of tekst-widget"
 msgid "No displays were specified"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:1366
+#: pro/classes/controllers/FrmProEntriesController.php:1368
 #@ formidable
 msgid "There was a error deleting that entry"
 msgstr "Er is een fout opgetreden bij het verwijderen van deze inzending"
@@ -5393,7 +5393,7 @@ msgstr "Verander het formaat van de datum gebruikt in het datumveld"
 msgid "If your CSV special characters are not working correctly, try a different formatting option."
 msgstr ""
 
-#: classes/controllers/FrmFormsController.php:344
+#: classes/controllers/FrmFormsController.php:345
 #@ formidable
 msgid "Template was Successfully Updated"
 msgstr "Sjabloon succesvol geupdate"
@@ -5572,10 +5572,6 @@ msgid "You must upgrade to Formidable Pro to get access to the second two option
 msgstr "Je moet upgraden naar Formidable Pro om toegang te krijgen tot de volgende twee opties"
 
 #: classes/views/frm-forms/settings.php:96
-#@ formidable
-msgid "Redirect to a URL"
-msgstr "Redirect naar een URL"
-
 #: classes/views/frm-forms/settings.php:100
 #@ formidable
 msgid "Redirect to URL"
@@ -5671,6 +5667,7 @@ msgstr ""
 #: classes/views/frm-forms/edit.php:27
 #: classes/views/frm-forms/settings.php:38
 #: classes/views/frm-forms/translate.php:37
+#: pro/classes/helpers/FrmProEntriesHelper.php:80
 #: pro/classes/views/frmpro-statistics/show.php:36
 #@ formidable
 msgid "Switch Form"
@@ -5702,7 +5699,7 @@ msgstr "Naam in admin menu"
 msgid "Use this menu name site-wide"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:1373
+#: pro/classes/controllers/FrmProEntriesController.php:1375
 #@ formidable
 msgid "Your entry was successfully deleted"
 msgstr "Je inzending is met succces verwijderd"
@@ -5711,11 +5708,6 @@ msgstr "Je inzending is met succces verwijderd"
 #@ formidable
 msgid "You do not have WPML installed"
 msgstr ""
-
-#: pro/classes/helpers/FrmProEntriesHelper.php:80
-#@ formidable
-msgid "Switch form"
-msgstr "Ander formulier"
 
 #: pro/classes/views/displays/form.php:125
 #@ formidable
@@ -5765,9 +5757,15 @@ msgstr "Dagelijkse inzendingen"
 msgid "Site Name"
 msgstr "Site naam"
 
+#: pro/classes/controllers/FrmProEntriesController.php:633
+#, php-format
+#@ formidable
+msgid "%1$sClick here%2$s if you are not automatically redirected."
+msgstr ""
+
 #: pro/classes/views/frmpro-entries/import.php:11
 #, php-format
 #@ formidable
-msgid "The next 100 of the remaining %1$s entries are importing."
+msgid "The next 250 of the remaining %1$s entries are importing."
 msgstr ""
 
