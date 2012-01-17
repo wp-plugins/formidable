@@ -36,13 +36,14 @@ There are dozens of form-building plugins out there to create forms, but most ar
 == Screenshots ==
 1. Form creation page
 2. Form Widget
+3. Entry Management page
 
 == Frequently Asked Questions ==
 = Q. Why aren't I getting any emails? =
 
 A. Try the following steps:
 
-   1. Double check to make sure your email address is present and correct under "Advanced Form Options" at the bottom of your form editor page
+   1. Double check to make sure your email address is present and correct in the "Emails" tab on the form "Settings" page
    2. Make sure you are receiving other emails from your site (ie comment notifications, forgot password...)
    3. Check your SPAM box
    4. Try a different email address.
@@ -57,6 +58,8 @@ A. The field and form names and descriptions are all changed with in-place edit.
 
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren't using the modified files. After clearing your cache and you're still having issues, please let us know.
 
+[See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
+
 == Changelog ==
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
@@ -65,11 +68,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added 'frm_use_wpautop' filter for disabling all built-in occurrences of auto paragraphs (form description, HTML fields, and displaying paragraph fields)
 * Only show the form icon button on the edit post page for users with permission to view forms
 * Changed .form-required class to .frm_required_field
+* Start with label in edit mode after adding a new field
+* Added required indicator to styling
+* Don't allow whitespace to pass required field validation
 * PRO: Added option to restrict the file types uploaded in file upload fields
 * PRO: Added export to XML and export to CSV to bulk action dropdowns
 * PRO: Added [user_id] dynamic default value
 * PRO: Allow dynamic dates in the frm-graph shortcode. Ex [frm-graph id=x x_axis="created_at" x_start="-1 month"]
-* PRO: Dynamically hide some x-axis labels if there are too many for the width of the graph
+* PRO: Added bar_flat to the graphs. Ex [frm-graph id=x type="bar_flat"]
+* PRO: Dynamically hide some x-axis labels if there are too many for the width of the graph. Note: Does not work with percentage widths
 * PRO: Added the option to select an end date in calendar custom displays for displaying multiple day events
 * PRO: Added 'frm_show_entry_dates' filter for customizing which dates an entry should show on
 * PRO: Disabled used dates in date picker for dates marked as unique
@@ -77,6 +84,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added windows-1251 option for CSV export format
 * PRO: Added the class parameter to the edit-in-place cancel link
 * PRO: Improved CSV import to work better with large files
+* PRO: Make a guess at which fields should match up on CSV import
+* PRO: Added option to resend the email notifications when entry is updated. (This will be expanded when conditional email routing is added.)
+* PRO: Don't send autoresponder message when importing
+* PRO: Allow an entry id in the frm-stats shortcode. Ex [frm-stats id=25 entry_id=100]. Display a star vote as stars for a single entry in a custom display with [frm-stats id=25 type=star entry_id=[id]]
+* PRO: Allow multiple star ratings for the same field on the same page
 * PRO: Fixed post options that would not deselect
 * PRO: Fixed issue causing the wrong conditional logic row to sometimes be removed
 * PRO: Fixed bug preventing hidden fields from saving as a post field
@@ -85,6 +97,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed graphs to show x_axis dates in the correct order if 2011 and 2012 dates are in the same graph
 * PRO: Corrected WP multisite table name for the table to copy forms and custom displays
 * PRO: Fixed issue with graphs showing in front of dropdown menus in Chrome
+* PRO: Fixed bug in custom displays causing the wrong entries to be returned when a post category field is set to NOT show a certain category
+* PRO: Fixed bug with multiple paged forms that was sometimes causing the next page to show even if errors were present on previous page
+* PRO: Allow entries to be correctly editing from the backend by a user other than the one who created it, when data from entries field options are set to be limited to only the user currently filling out the form
 
 = 1.06.01 =
 * Added option to customize the admin menu name

@@ -180,7 +180,7 @@ function frmGetFieldValues(field_id,current_field_id,row,ajax_url){
 function add_frm_field_link(form_id, field_type){
 if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
 jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
-success:function(msg){jQuery('#new_fields').append(msg);}
+success:function(msg){jQuery('#new_fields').append(msg); jQuery('#new_fields li:last .frm_ipe_field_label').click();}
 });
 };
 

@@ -153,27 +153,27 @@ class FrmSettings{
     function update($params){
         global $wp_roles;
         $this->menu = $params['frm_menu'];
-        $this->mu_menu = isset($params['frm_mu_menu']) ? 1 : 0;
+        $this->mu_menu = isset($params['frm_mu_menu']) ? $params['frm_mu_menu'] : 0;
         if($this->mu_menu)
             update_site_option('frm_admin_menu_name', $this->menu);
         else if(FrmAppHelper::is_super_admin())
             update_site_option('frm_admin_menu_name', false);
         
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
-        $this->lock_keys = isset($params['frm_lock_keys']) ? 1 : 0;
-        $this->track = isset($params['frm_track']) ? 1 : 0;
+        $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
+        $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
         
         $this->pubkey = $params['frm_pubkey'];
         $this->privkey = $params['frm_privkey'];
         $this->re_theme = $params['frm_re_theme'];
         $this->re_lang = $params['frm_re_lang'];
         
-        $this->use_html = isset($params['frm_use_html']) ? 1 : 0;
+        $this->use_html = isset($params['frm_use_html']) ? $params['frm_use_html'] : 0;
         $this->load_style = $params['frm_load_style'];
-        //$this->custom_style = isset($params['frm_custom_style']) ? 1 : 0;
-        //$this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? 1 : 0;
-        $this->jquery_css = isset($params['frm_jquery_css']) ? 1 : 0;
-        $this->accordion_js = isset($params['frm_accordion_js']) ? 1 : 0;
+        //$this->custom_style = isset($params['frm_custom_style']) ? $params['frm_custom_style'] : 0;
+        //$this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? $params['frm_custom_stylesheet'] : 0;
+        $this->jquery_css = isset($params['frm_jquery_css']) ? $params['frm_jquery_css'] : 0;
+        $this->accordion_js = isset($params['frm_accordion_js']) ? $params['frm_accordion_js'] : 0;
         
         $this->success_msg = $params['frm_success_msg'];
         $this->invalid_msg = $params['frm_invalid_msg'];

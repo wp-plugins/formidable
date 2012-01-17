@@ -77,7 +77,7 @@
                 </tr>
 
                 <tr><td><label><?php _e('Styling', 'formidable') ?></label></td>
-                    <td><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? (' checked="checked"') : (''); ?> />
+                    <td><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
                     <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                 </tr> 
 

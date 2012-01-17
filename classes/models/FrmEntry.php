@@ -336,7 +336,7 @@ class FrmEntry{
             if($posted_field->type == 'rte' and (trim($value) == '<br>'))
                 $value = '';
             
-            if ($posted_field->required == '1' and $value == ''){
+            if ($posted_field->required == '1' and !is_array($value) and trim($value) == ''){
                 $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? (__('This field cannot be blank', 'formidable')) : $posted_field->field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;

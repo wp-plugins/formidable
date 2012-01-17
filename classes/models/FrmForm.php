@@ -95,7 +95,7 @@ class FrmForm{
         foreach ($defaults as $var => $default)
             $options[$var] = isset($values['options'][$var]) ? $values['options'][$var] : $default;
             
-        $options['custom_style'] = isset($values['options']['custom_style']) ? 1 : 0;
+        $options['custom_style'] = isset($values['options']['custom_style']) ? $values['options']['custom_style'] : 0;
         $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
         $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
         $options = apply_filters('frm_form_options_before_update', $options, $values);

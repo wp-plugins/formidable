@@ -40,6 +40,8 @@ if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_siteurl)){
 define('FRM_SCRIPT_URL', $frm_siteurl .'/index.php?plugin=formidable');
 define('FRM_IMAGES_URL', FRM_URL.'/images');
 
+load_plugin_textdomain('formidable', false, FRM_PATH .'/languages/' );
+
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
 // Check for WPMU installation

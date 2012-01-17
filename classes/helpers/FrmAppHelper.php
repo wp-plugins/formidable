@@ -270,13 +270,13 @@ class FrmAppHelper{
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
         }
         if (!isset($values['show_form']))
-            $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? 1 : 0;
+            $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? $_POST['options']['show_form'] : 0;
             
         if (!isset($values['custom_style']))
             $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
 
         if (!isset($values['akismet']))
-            $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? 1 : 0;
+            $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? $_POST['options']['akismet'] : 0;
 
         if (!isset($values['before_html']))
             $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));

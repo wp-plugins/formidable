@@ -290,7 +290,7 @@ function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel,hclass){
 		data:"controller=entries&action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
 		success:function(html){
 			jQuery('#'+prefix+entry_id).children('.frm-loading-img').replaceWith(html);
-			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+','+hclass+')" class="'+hclass+'">'+cancel+'</a></span>');
+			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
 		}
 	});
 }

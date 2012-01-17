@@ -173,14 +173,18 @@ class FrmFormsController{
     }
 
     function preview(){
-        global $frm_form, $frm_settings;
+        global $frm_form, $frm_settings, $frmpro_is_installed;
         if ( !defined( 'ABSPATH' ) && !defined( 'XMLRPC_REQUEST' )) {
+            global $wp;
             $root = dirname(dirname(dirname(dirname(__FILE__))));
             include_once( $root.'/wp-config.php' );
             $wp->init();
             $wp->register_globals();
         }
-
+        
+        if($frmpro_is_installed)
+            FrmProEntriesController::register_scripts();
+            
         header("Content-Type: text/html; charset=utf-8");
 
         $plugin     = FrmAppHelper::get_param('plugin');

@@ -149,12 +149,17 @@
         </td>
         <td><?php echo stripslashes($form->description) ?></td>
         <td><?php echo $form->form_key ?></td>
-        <td><?php echo apply_filters('frm_view_entries_link', $frm_entry->getRecordCount($form->id) . ' '. __('Entries', 'formidable'), $form->id); ?></td>
+        <td><?php
+        $text = $frm_entry->getRecordCount($form->id);
+        $text = sprintf(_n( '%1$s Entry', '%1$s Entries', $text, 'formidable' ), $text);
+        echo (current_user_can('frm_view_entries')) ? '<a href="'. esc_url(admin_url('admin.php') .'?page=formidable-entries&form='. $form->id ) .'">'. $text .'</a>' : $text;
+        unset($text);
+         ?></td>
         <td>
-            <input type='text' style="font-size: 10px; width: 100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='<?php echo $target_url = FrmFormsHelper::get_direct_link($form->form_key, $form->prli_link_id); ?>' /><br/><a href="<?php echo $target_url; ?>" target="blank"><?php _e('View Form', 'formidable') ?></a>
+            <input type="text" style="font-size:10px;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="<?php echo $target_url = FrmFormsHelper::get_direct_link($form->form_key, $form->prli_link_id); ?>" /><br/><a href="<?php echo $target_url; ?>" target="blank"><?php _e('View Form', 'formidable') ?></a>
         </td>
-        <td><input type='text' style="font-size:10px;width:100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable id=<?php echo $form->id; ?>]' /><br/>
-            <input type='text' style="font-size:10px;width:100%;" readonly="true" onclick='this.select();' onfocus='this.select();' value='[formidable key=<?php echo $form->form_key ?>]' />
+        <td><input type="text" style="font-size:10px;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $form->id; ?>]" /><br/>
+            <input type="text" style="font-size:10px;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable key=<?php echo $form->form_key ?>]" />
         </td>
         <?php } ?>
     </tr>

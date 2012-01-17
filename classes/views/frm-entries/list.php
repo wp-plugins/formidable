@@ -9,7 +9,7 @@
     <?php FrmAppController::update_message('view, search, export, and bulk delete your saved entries'); ?>
 
     <?php if(!$form or $entry_count){ ?>
-    <img src="http://static.strategy11.com.s3.amazonaws.com/entries-list.png" alt="Entries List" style="max-width:100%"/>
+    <img src="<?php echo FRM_URL ?>/screenshot-3.png" alt="Entries List" style="max-width:100%"/>
     <?php }else{ ?>
     <table class="wp-list-table widefat post fixed" cellspacing="0">
         <thead>

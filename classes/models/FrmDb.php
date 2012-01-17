@@ -263,6 +263,24 @@ DEFAULT_HTML;
         delete_option($frm_update->pro_auth_store);
         delete_option($frm_update->pro_cred_store);
         
+        
+        //delete roles
+        $frm_roles = FrmAppHelper::frm_capabilities();
+        $roles = get_editable_roles();
+        foreach($frm_roles as $frm_role => $frm_role_description){
+            foreach ($roles as $role => $details){
+                $wp_roles->remove_cap( $role, $frm_role );
+                unset($role);
+                unset($details);
+    		}
+    		unset($role);
+    		unset($details);
+    		unset($frm_role);
+    		unset($frm_role_description);
+		}
+		unset($roles);
+		unset($frm_roles);
+        
         do_action('frm_after_uninstall');
     }
 }

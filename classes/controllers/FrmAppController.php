@@ -155,8 +155,6 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function front_head(){
         global $frm_settings, $frm_version, $frm_db_version;
         
-        load_plugin_textdomain('formidable', false, FRM_PATH .'/languages/' );
-        
         if (IS_WPMU){
             global $frmpro_is_installed;
             //$frm_db_version is the version of the database we're moving to
