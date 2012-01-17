@@ -100,6 +100,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed bug in custom displays causing the wrong entries to be returned when a post category field is set to NOT show a certain category
 * PRO: Fixed bug with multiple paged forms that was sometimes causing the next page to show even if errors were present on previous page
 * PRO: Allow entries to be correctly editing from the backend by a user other than the one who created it, when data from entries field options are set to be limited to only the user currently filling out the form
+* PRO: Updated conditional logic for those who set up the logic before v1.6 and haven't clicked the update button in their forms
 
 = 1.06.01 =
 * Added option to customize the admin menu name
