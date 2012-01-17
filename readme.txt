@@ -101,6 +101,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed bug with multiple paged forms that was sometimes causing the next page to show even if errors were present on previous page
 * PRO: Allow entries to be correctly editing from the backend by a user other than the one who created it, when data from entries field options are set to be limited to only the user currently filling out the form
 * PRO: Updated conditional logic for those who set up the logic before v1.6 and haven't clicked the update button in their forms
+* PRO: Corrected file upload naming for the various sizes of an upload with the same name as an existing upload
 
 = 1.06.01 =
 * Added option to customize the admin menu name

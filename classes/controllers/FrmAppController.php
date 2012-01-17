@@ -258,10 +258,13 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     		$_SESSION['frm_http_referer'] = array();
     	
     	if (!isset($_SERVER['HTTP_REFERER']) or (isset($_SERVER['HTTP_REFERER']) and (strpos($_SERVER['HTTP_REFERER'], $frm_siteurl) === false) and ! (in_array($_SERVER['HTTP_REFERER'], $_SESSION['frm_http_referer'])) )) {
-    		if (! isset($_SERVER['HTTP_REFERER']))
-    			$_SESSION['frm_http_referer'][] = __('Type-in or bookmark', 'formidable');
-    		else
+    		if (! isset($_SERVER['HTTP_REFERER'])){
+    		    $direct = __('Type-in or bookmark', 'formidable');
+    		    if(!in_array($direct, $_SESSION['frm_http_referer']))
+    			    $_SESSION['frm_http_referer'][] = $direct;
+    		}else{
     			$_SESSION['frm_http_referer'][] = $_SERVER['HTTP_REFERER'];	
+    		}
     	}
     	
     	if ($_SESSION['frm_http_pages'] and !empty($_SESSION['frm_http_pages']) and (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']))
