@@ -251,7 +251,7 @@ msgstr "Het formulier %1$s is verzonden via %2$s."
 #: classes/models/FrmNotification.php:51
 #: pro/classes/models/FrmProNotification.php:183
 #: pro/classes/views/displays/tags.php:21
-#: pro/classes/views/frmpro-entries/show.php:103
+#: pro/classes/views/frmpro-entries/show.php:107
 #@ formidable
 msgid "User Information"
 msgstr "Gebruikers informatie"
@@ -260,7 +260,7 @@ msgstr "Gebruikers informatie"
 #: pro/classes/models/FrmProNotification.php:184
 #: pro/classes/models/FrmProNotification.php:188
 #: pro/classes/views/frmpro-entries/import.php:107
-#: pro/classes/views/frmpro-entries/show.php:108
+#: pro/classes/views/frmpro-entries/show.php:112
 #: pro/classes/views/frmpro-forms/add_form_options.php:57
 #@ formidable
 msgid "IP Address"
@@ -269,7 +269,7 @@ msgstr "IP Adres"
 #: classes/models/FrmNotification.php:53
 #: pro/classes/models/FrmProNotification.php:185
 #: pro/classes/models/FrmProNotification.php:190
-#: pro/classes/views/frmpro-entries/show.php:112
+#: pro/classes/views/frmpro-entries/show.php:116
 #@ formidable
 msgid "User-Agent (Browser/OS)"
 msgstr ""
@@ -277,7 +277,7 @@ msgstr ""
 #: classes/models/FrmNotification.php:54
 #: pro/classes/models/FrmProNotification.php:186
 #: pro/classes/models/FrmProNotification.php:192
-#: pro/classes/views/frmpro-entries/show.php:116
+#: pro/classes/views/frmpro-entries/show.php:120
 #@ formidable
 msgid "Referrer"
 msgstr ""
@@ -296,7 +296,7 @@ msgid "Your responses were successfully submitted. Thank you!"
 msgstr "Uw bericht is verstuurd, bedankt!"
 
 #: classes/models/FrmSettings.php:126
-#: pro/classes/views/frmpro-entries/show.php:168
+#: pro/classes/views/frmpro-entries/show.php:172
 #@ formidable
 msgid "Submit"
 msgstr "Verzenden"
@@ -612,7 +612,7 @@ msgid "Copy"
 msgstr "Kopiëren"
 
 #: classes/views/frm-forms/default-templates.php:30
-#: pro/classes/views/frmpro-entries/edit.php:22
+#: pro/classes/views/frmpro-entries/edit.php:25
 #: pro/classes/views/frmpro-entries/list.php:76
 #@ formidable
 msgid "View"
@@ -655,7 +655,7 @@ msgstr "Update"
 #: classes/views/frm-forms/translate.php:34
 #: classes/views/frm-forms/translate.php:58
 #: pro/classes/views/displays/form.php:313
-#: pro/classes/views/frmpro-entries/edit.php:58
+#: pro/classes/views/frmpro-entries/edit.php:61
 #: pro/classes/views/frmpro-entries/import.php:52
 #: pro/classes/views/frmpro-entries/new.php:42
 #@ formidable
@@ -674,7 +674,7 @@ msgstr "of"
 #: pro/classes/controllers/FrmProEntriesController.php:1229
 #: pro/classes/views/displays/form.php:45
 #: pro/classes/views/displays/form.php:314
-#: pro/classes/views/frmpro-entries/edit.php:59
+#: pro/classes/views/frmpro-entries/edit.php:62
 #: pro/classes/views/frmpro-entries/new.php:21
 #: pro/classes/views/frmpro-entries/new.php:43
 #@ formidable
@@ -919,7 +919,7 @@ msgstr "Weet je zeker dat je je %1$s formulier wilt verwijderen?"
 #: pro/classes/helpers/FrmProAppHelper.php:170
 #: pro/classes/views/displays/form.php:43
 #: pro/classes/views/displays/list.php:73
-#: pro/classes/views/frmpro-entries/edit.php:35
+#: pro/classes/views/frmpro-entries/edit.php:38
 #: pro/classes/views/frmpro-entries/list.php:88
 #: pro/classes/views/frmpro-entries/show.php:26
 #@ formidable
@@ -956,7 +956,7 @@ msgstr "Overzichten"
 #: classes/views/frm-forms/add_field.php:6
 #: classes/views/frm-forms/list.php:139
 #: pro/classes/views/displays/list.php:72
-#: pro/classes/views/frmpro-entries/edit.php:23
+#: pro/classes/views/frmpro-entries/edit.php:26
 #: pro/classes/views/frmpro-entries/list.php:83
 #: pro/classes/views/frmpro-entries/show.php:19
 #@ formidable
@@ -3529,18 +3529,18 @@ msgid "Entry Actions"
 msgstr ""
 
 #: pro/classes/views/frmpro-entries/import.php:103
-#: pro/classes/views/frmpro-entries/show.php:82
+#: pro/classes/views/frmpro-entries/show.php:86
 #@ formidable
 msgid "Created at"
 msgstr "Gemaakt op"
 
-#: pro/classes/views/frmpro-entries/show.php:85
-#: pro/classes/views/frmpro-entries/show.php:93
+#: pro/classes/views/frmpro-entries/show.php:89
+#: pro/classes/views/frmpro-entries/show.php:97
 #@ formidable
 msgid "by"
 msgstr "door"
 
-#: pro/classes/views/frmpro-entries/show.php:91
+#: pro/classes/views/frmpro-entries/show.php:95
 #@ formidable
 msgid "Last Updated"
 msgstr "laatste keer geupdate op"
@@ -3672,22 +3672,22 @@ msgstr "Kopieer deze instellingen van Aangepaste weergaven naar andere blogs/web
 msgid "Automatically turn URLs and emails into links."
 msgstr "Zet URL's en emails automatisch om naar links"
 
-#: pro/classes/views/frmpro-entries/show.php:126
+#: pro/classes/views/frmpro-entries/show.php:130
 #@ formidable
 msgid "Comments/Notes"
 msgstr "Reacties/opmerkingen"
 
-#: pro/classes/views/frmpro-entries/show.php:142
+#: pro/classes/views/frmpro-entries/show.php:146
 #@ formidable
 msgid "Add Note/Comment"
 msgstr "Opmerking/reactie toevoegen"
 
-#: pro/classes/views/frmpro-entries/show.php:153
+#: pro/classes/views/frmpro-entries/show.php:157
 #@ formidable
 msgid "Comment/Note"
 msgstr "Reactie/Opmerking"
 
-#: pro/classes/views/frmpro-entries/show.php:160
+#: pro/classes/views/frmpro-entries/show.php:164
 #@ formidable
 msgid "Send Emails to"
 msgstr "verzend emails naar"
@@ -3802,7 +3802,7 @@ msgstr ""
 msgid "Publish"
 msgstr "Publiceren"
 
-#: pro/classes/views/frmpro-entries/edit.php:35
+#: pro/classes/views/frmpro-entries/edit.php:38
 #@ formidable
 msgid "Are you sure you want to delete this entry?"
 msgstr "Weet je zeker dat je deze inzending wilt verwijderen?"
@@ -5801,5 +5801,11 @@ msgstr ""
 #: pro/classes/views/settings/formroller.php:86
 #@ formidable
 msgid "Required Indicator"
+msgstr ""
+
+#: pro/classes/views/frmpro-entries/edit.php:23
+#: pro/classes/views/frmpro-entries/show.php:80
+#@ formidable
+msgid "View Post"
 msgstr ""
 
