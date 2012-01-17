@@ -3,8 +3,8 @@ Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
 Requires at least: 2.8
-Tested up to: 3.3
-Stable tag: 1.06.01
+Tested up to: 3.3.1
+Stable tag: 1.06.02
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 
