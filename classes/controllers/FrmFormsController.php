@@ -515,8 +515,22 @@ class FrmFormsController{
             return $this->update_settings();
         else if($action == 'translate' or $action == 'update_translate')
             return $this->translate($action);
-        else
-            return $this->display_forms_list();
+        else{
+            $action = FrmAppHelper::get_param('action');
+            if($action == -1)
+                $action = FrmAppHelper::get_param('action2');
+                
+            if(strpos($action, 'bulk_') === 0){
+                if(isset($_GET) and isset($_GET['action']))
+                    $_SERVER['REQUEST_URI'] = str_replace('&action='.$_GET['action'], '', $_SERVER['REQUEST_URI']);
+                if(isset($_GET) and isset($_GET['action2']))
+                    $_SERVER['REQUEST_URI'] = str_replace('&action='.$_GET['action2'], '', $_SERVER['REQUEST_URI']);
+                    
+                return $this->list_form();
+            }else{
+                return $this->display_forms_list();
+            }
+        }
     }
 
 }

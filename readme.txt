@@ -67,6 +67,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * The forms, entries, and custom display page columns that are shown and entries per page are now customizable for those running at least v3.1 of WordPress
 * Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
 * PRO: Added option to use a separate value for the radio, checkbox, and select choices
+* PRO: Added option to use dynamic default values for radio, checkbox, dropdown, and user ID fields
 * PRO: Added option to use Google charts and automatically fall back to them on mobile devices [frm-graph id=x type=bar google=1]
 * PRO: Added data from entry field support to graphs
 * PRO: Added option to use Google tables for easy pagination and sorting [formresults id=x google=1]
@@ -79,6 +80,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated custom display where options to fetch entries more accurately when "not like" and "not equal to" are used
 * PRO: Fixed image upload naming for uploads with numeric names like 1.png
 * PRO: Fixed issue with multiple editable forms on the same page when one is set to only allow one entry per user
+* PRO: Added a check for automatically inserted custom displays to make sure we are in the loop to avoid the need for increasing the insert position setting
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
