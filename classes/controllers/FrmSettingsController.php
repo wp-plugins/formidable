@@ -49,7 +49,8 @@ class FrmSettingsController{
     }
     
     function route(){
-        $action = FrmAppHelper::get_param('action');
+        $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+        $action = FrmAppHelper::get_param($action);
         if($action == 'process-form')
             return $this->process_form();
         else

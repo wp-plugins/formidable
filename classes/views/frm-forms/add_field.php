@@ -27,6 +27,7 @@
         do_action('frm_after_checkbox', array('field' => $field, 'field_name' => $field_name, 'type' => $field['type']));
     }else{ ?>
         <div id="frm_field_<?php echo $field['id'] ?>_opts" class="clear<?php echo (count($field['options']) > 10) ? ' frm_field_opts_list' : ''; ?>">
+        <?php do_action('frm_add_multiple_opts_labels', $field); ?>
         <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php'); ?>
         </div>
     <?php
@@ -38,7 +39,7 @@
         
         <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
         <?php _e('or', 'formidable'); ?>
-        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(FRM_SCRIPT_URL .'&controller=fields&frm_action=import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
         <?php } ?>
     </div>
 <?php
@@ -50,6 +51,7 @@
     <select name="<?php echo $field_name ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto"' : ''; ?>>
         <?php foreach ($field['options'] as $opt_key => $opt){ 
             $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+            $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
             $selected = ($field['default_value'] == $field_val)?(' selected="selected"'):(''); ?>
             <option value="<?php echo $field_val ?>"<?php echo $selected ?>><?php echo $opt ?></option>
         <?php } ?>
@@ -67,8 +69,12 @@
         <p class="howto"><?php _e('Please add options from the WordPress "Categories" page', 'formidable') ?></p>
     <?php }else if(!isset($field['post_field']) or $field['post_field'] != 'post_status'){ ?>
         <div id="frm_field_<?php echo $field['id'] ?>_opts"<?php echo (count($field['options']) > 10) ? ' class="frm_field_opts_list"' : ''; ?>>
-        <?php foreach ($field['options'] as $opt_key => $opt) 
-            require(FRM_VIEWS_PATH.'/frm-fields/single-option.php'); 
+        <?php do_action('frm_add_multiple_opts_labels', $field); ?>
+        <?php foreach ($field['options'] as $opt_key => $opt){ 
+                $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+                $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
+                require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
+            }
         ?>
         </div>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
@@ -76,10 +82,8 @@
             
             <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
             <?php _e('or', 'formidable'); ?>
-            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=fields&amp;action=import_choices&amp;field_id=<?php echo $field['id'] ?>&amp;TB_iframe=1" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(FRM_SCRIPT_URL . '&controller=fields&frm_action=import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
             <?php } ?>
-            
-            <?php do_action('frm_add_multiple_opts', $field); ?>
         </div>
 <?php } ?>
     </div>
@@ -125,6 +129,24 @@ if ($display['options']){ ?>
         </div>
     	<div class="widget-inside">
             <table class="form-table">
+                <?php if ($display['required']){ ?>
+                    <tr>
+                        <td><label><?php _e('Required Field', 'formidable') ?></label></td>
+                        <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>)" /> <span><?php _e('Required', 'formidable') ?></span>
+                        <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
+                            <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo htmlentities($field['required_indicator']); ?>" />
+                        </span>
+                        </td>
+                    </tr>
+                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?></label></td>  
+                        <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['blank']); ?>" class="frm_long_input" /></td>
+                    </tr>
+                <?php } ?>
+                <?php if ($display['invalid']){ ?>
+                    <tr><td><label><?php _e('Error message for invalid submission', 'formidable') ?></label></td>  
+                        <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['invalid']); ?>" class="frm_long_input" /></td>
+                    </tr>
+                <?php } ?>
                 <?php if ($display['size']){ ?>
                     <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?></label></td>
                         <td>
@@ -150,24 +172,6 @@ if ($display['options']){ ?>
                             <option value="hidden"<?php selected($field['label'], 'hidden'); ?>><?php _e('Hidden', 'formidable') ?></option>
                         </select>
                         </td>  
-                    </tr>
-                <?php } ?>
-                <?php if ($display['required']){ ?>
-                    <tr>
-                        <td><label><?php _e('Required Field', 'formidable') ?></label></td>
-                        <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>)" /> <span><?php _e('Required', 'formidable') ?></span>
-                        <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
-                            <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo htmlentities($field['required_indicator']); ?>" />
-                        </span>
-                        </td>
-                    </tr>
-                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?></label></td>  
-                        <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['blank']); ?>" class="frm_long_input" /></td>
-                    </tr>
-                <?php } ?>
-                <?php if ($display['invalid']){ ?>
-                    <tr><td><label><?php _e('Error message for invalid submission', 'formidable') ?></label></td>  
-                        <td><input type="text" name="field_options[invalid_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['invalid']); ?>" class="frm_long_input" /></td>
                     </tr>
                 <?php } ?>
                 <?php do_action('frm_field_options_form', $field, $display, $values); ?>

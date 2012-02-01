@@ -58,7 +58,16 @@
 </ul>
 <textarea name="frm_bulk_options" id="frm_bulk_options" rows="13" style="width:335px;float:right;">
 <?php foreach($field->options as $fopt){
-echo $fopt ."\n";    
+if(is_array($fopt)){
+    $label = (isset($fopt['label'])) ? $fopt['label'] : reset($fopt);
+    $value = (isset($fopt['value'])) ? $fopt['value'] : $label;
+    if($label != $value and isset($field->field_options['separate_value']) and $field->field_options['separate_value'])
+        echo "$value|$label\n";
+    else
+        echo $label ."\n";        
+}else{
+    echo $fopt ."\n";
+}   
 } ?>
 </textarea>
 

@@ -284,7 +284,8 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     // The tight way to process standalone requests dogg...
     function parse_standalone_request(){
         $plugin     = $this->get_param('plugin');
-        $action     = $this->get_param('action');
+        $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+        $action = $this->get_param($action);  
         $controller = $this->get_param('controller');
 
         if( !empty($plugin) and $plugin == 'formidable' and !empty($controller) ){

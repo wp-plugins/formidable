@@ -14,6 +14,7 @@
             foreach($field['options'] as $opt_key => $opt){
                 if(isset($atts) and isset($atts['opt']) and ($atts['opt'] != $opt_key)) continue;
                 $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+                $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
             ?>
 <div class="frm_radio"><input type="radio" name="<?php echo $field_name ?>" id="field_<?php echo $field['id'] ?>-<?php echo $opt_key ?>" value="<?php echo esc_attr($field_val) ?>" <?php echo (FrmAppHelper::check_selected($field['value'], $field_val)) ? 'checked="checked"' : ''; ?> <?php do_action('frm_field_input_html', $field) ?>/><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="field_<?php echo $field['id'] ?>-<?php echo $opt_key ?>"><?php echo $opt ?></label><?php } 
 ?></div>
@@ -27,7 +28,8 @@
     }else{ ?>
 <select name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" <?php do_action('frm_field_input_html', $field) ?>>
     <?php foreach ($field['options'] as $opt_key => $opt){ 
-        $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field); ?>
+        $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+        $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field); ?>
 <option value="<?php echo esc_attr($field_val) ?>" <?php if (FrmAppHelper::check_selected($field['value'], $field_val)) echo 'selected="selected"'; ?>><?php echo $opt ?></option>
     <?php } ?>
 </select>
@@ -43,6 +45,7 @@
         foreach ($field['options'] as $opt_key => $opt){
             if(isset($atts) and isset($atts['opt']) and ($atts['opt'] != $opt_key)) continue;
             $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+            $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
             $checked = (FrmAppHelper::check_selected($checked_values, $field_val)) ? ' checked="checked"' : '';
             ?>
 <div class="frm_checkbox" id="frm_checkbox_<?php echo $field['id']?>-<?php echo $opt_key ?>"><input type="checkbox" name="<?php echo $field_name ?>[]" id="field_<?php echo $field['id']?>-<?php echo $opt_key ?>" value="<?php echo $field_val ?>" <?php echo $checked ?> <?php do_action('frm_field_input_html', $field) ?>/><?php if(!isset($atts) or !isset($atts['label']) or $atts['label']){ ?><label for="field_<?php echo $field['id']?>-<?php echo $opt_key ?>"><?php echo $opt ?></label><?php }

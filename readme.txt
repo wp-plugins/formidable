@@ -61,6 +61,25 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.03 =
+* Added option to not store entries in the database from a specific form
+* Added option to skip Akismet spam check for logged in users
+* The forms, entries, and custom display page columns that are shown and entries per page are now customizable for those running at least v3.1 of WordPress
+* Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
+* PRO: Added option to use a separate value for the radio, checkbox, and select choices
+* PRO: Added option to use Google charts and automatically fall back to them on mobile devices [frm-graph id=x type=bar google=1]
+* PRO: Added data from entry field support to graphs
+* PRO: Added option to use Google tables for easy pagination and sorting [formresults id=x google=1]
+* PRO: Added edit link option to formresults shortcode. [formresults id=x edit_link="Edit" page_id=5]
+* PRO: Added date support to built-in calculations for date1-date2 types of calculations
+* PRO: Added checking for disabled used dates for fields set as post fields in date picker for dates marked as unique
+* PRO: Added not_like option to conditional custom display statements. Ex [if 25 not_like="hello"]...[/if 25]
+* PRO: Added option to display the field label in custom displays. Ex [25 show="field_label"]
+* PRO: Updated the frm-entry-links shortcode to use show_delete with type=list
+* PRO: Updated custom display where options to fetch entries more accurately when "not like" and "not equal to" are used
+* PRO: Fixed image upload naming for uploads with numeric names like 1.png
+* PRO: Fixed issue with multiple editable forms on the same page when one is set to only allow one entry per user
+
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
 * Added WPML integration. Requires the add-on available from WPML. Pro version includes a quick translation page.

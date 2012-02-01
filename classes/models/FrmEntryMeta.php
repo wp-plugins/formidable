@@ -78,6 +78,11 @@ class FrmEntryMeta{
   
   function get_entry_meta($entry_id, $field_id, $return_var=true){
       global $wpdb, $frmdb;
+      
+      $entry = wp_cache_get( $entry_id, 'frm_entry');
+      if($return_var and $entry and isset($entry->metas) and isset($entry->metas[$field_id]))
+        return $entry->metas[$field_id];
+        
       $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id=%d and item_id=%d";
       $query = $wpdb->prepare($query_str, $field_id, $entry_id);
 

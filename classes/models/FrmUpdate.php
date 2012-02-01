@@ -157,9 +157,10 @@ class FrmUpdate{
 
         <?php if($frmpro_is_installed){ ?>
             <p><strong>Formidable Pro is Installed</strong></p>
-            <p><strong>Edit/Update Your Profile:</strong><br/><span class="howto">Use your account username and password to log in to your Account and Affiliate Control Panel</span></p>
-            <p><a href="http://formidablepro.com/payment/member.php">Account</a> |
-                <a href="http://formidablepro.com/payment/aff_member.php">Affiliate Control Panel</a>
+            <p><strong><?php _e('Edit/Update Your Profile', 'formidable') ?>:</strong><br/>
+                <span class="howto"><?php _e('Use your account username and password to log in to your Account and Affiliate Control Panel', 'formidable') ?></span></p>
+            <p><a href="http://formidablepro.com/payment/member.php"><?php _e('Account', 'formidable') ?></a> |
+                <a href="http://formidablepro.com/payment/aff_member.php"><?php _e('Affiliate Control Panel', 'formidable') ?></a>
             </p>
         <?php }else{ ?>          
             <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
@@ -234,8 +235,8 @@ class FrmUpdate{
             }
 
             extract($creds);
-            $this->pro_username = ((isset($username) and !empty($username))?$username:'');
-            $this->pro_password = ((isset($password) and !empty($password))?$password:'');
+            $this->pro_username = (isset($username) and !empty($username)) ? $username : '';
+            $this->pro_password = (isset($password) and !empty($password)) ? $password : '';
 
             if(!$this->pro_is_installed())
                 $this->queue_update(true);

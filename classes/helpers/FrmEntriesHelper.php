@@ -34,18 +34,27 @@ class FrmEntriesHelper{
                 $field_array = array(
                     'id' => $field->id,
                     'value' => $new_value,
-                    'default_value' => str_replace('"', '&quot;', maybe_unserialize($field->default_value)),
+                    'default_value' => maybe_unserialize($field->default_value),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
                     'type' => apply_filters('frm_field_type', $field->type, $field, $new_value),
-                    'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
+                    'options' => stripslashes_deep(maybe_unserialize($field->options)),
                     'required' => $field->required,
                     'field_key' => $field->field_key,
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id
                 );
+                
+                /*if(in_array($field_array['type'], array('checkbox', 'radio', 'select')) and !empty($field_array['options'])){
+                    foreach((array)$field_array['options'] as $opt_key => $opt){
+                        if(!is_array($opt))
+                            $field_array['options'][$opt_key] = array('label' => $opt);
+                        unset($opt);
+                        unset($opt_key);
+                    }
+                } */
 
-                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt)
+                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0, 'separate_value' => 0) as $opt => $default_opt)
                     $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
                   
                 if ($field_array['size'] == '')
@@ -80,7 +89,7 @@ class FrmEntriesHelper{
                 $values['success_msg'] = $frm_settings->success_msg;
 
             if (!isset($values['akismet']))
-                $values['akismet'] = 0;
+                $values['akismet'] = '';
 
             if (!isset($values['before_html']))
                 $values['before_html'] = FrmFormsHelper::get_default_html('before');

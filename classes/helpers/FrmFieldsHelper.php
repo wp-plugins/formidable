@@ -57,7 +57,7 @@ class FrmFieldsHelper{
             $values[$var] = $default;
         
         $values['field_options'] = array();
-        foreach (array('size' => '', 'max' => '', 'label' => 'top', 'required_indicator' => '*', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($type), 'default_blank' => 0) as $var => $default)
+        foreach (array('size' => '', 'max' => '', 'label' => 'top', 'required_indicator' => '*', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($type), 'default_blank' => 0, 'separate_value' => 0) as $var => $default)
             $values['field_options'][$var] = $default;
             
         if ($type == 'radio' || ($type == 'checkbox'))
@@ -92,7 +92,7 @@ class FrmFieldsHelper{
         $values['field_options'] = $record->field_options;
         $defaults = array(
             'size' => '', 'max' => '', 'label' => 'top', 'blank' => '', 
-            'required_indicator' => '*', 'invalid' => '', 
+            'required_indicator' => '*', 'invalid' => '', 'separate_value' => 0,
             'clear_on_focus' => 0, 'default_blank' => 0
         );
         
@@ -136,6 +136,7 @@ DEFAULT_HTML;
     }
     
     function replace_shortcodes($html, $field, $errors=array(), $form=false){
+        $html = stripslashes($html);
         $html = apply_filters('frm_before_replace_shortcodes', $html, $field, $errors, $form);
         
         $field_name = "item_meta[". $field['id'] ."]";

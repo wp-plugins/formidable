@@ -371,7 +371,7 @@ class FrmEntry{
             $form = $frm_form->getOne($values['form_id']);
             $form->options = maybe_unserialize($form->options);
             
-            if (isset($form->options['akismet']) && $form->options['akismet'])
+            if (isset($form->options['akismet']) && !empty($form->options['akismet']) && ($form->options['akismet'] != 'logged' or !is_user_logged_in()))
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
         

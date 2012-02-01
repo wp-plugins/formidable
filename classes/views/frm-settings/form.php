@@ -36,7 +36,7 @@
     </div>
     
     <form name="frm_settings_form" method="post" class="frm_settings_form">
-        <input type="hidden" name="action" value="process-form" />
+        <input type="hidden" name="frm_action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
             
         <div class="general_settings tabs-panel" style="border-top:none;">
@@ -96,7 +96,8 @@
                 <td valign="top"><?php _e('User Permissions', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Select users that are allowed access to Formidable. Without access to View Forms, users will be unable to see the Formidable menu.', 'formidable') ?>" /></td>
                 <td>
                     <?php foreach($frm_roles as $frm_role => $frm_role_description){ ?>
-                        <label style="width:200px;float:left;text-align:right;padding-right:10px;"><?php echo $frm_role_description ?>:</label> <?php FrmAppHelper::wp_roles_dropdown( $frm_role, $frm_settings->$frm_role ) ?><br/>
+                        <label style="width:200px;float:left;text-align:right;padding-right:10px;"><?php echo $frm_role_description ?>:</label> <?php FrmAppHelper::wp_roles_dropdown( $frm_role, $frm_settings->$frm_role ) ?>
+                        <div class="clear"></div>
                     <?php } ?>
                     
                 </td>    

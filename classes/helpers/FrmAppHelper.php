@@ -86,6 +86,9 @@ class FrmAppHelper{
     }
     
     function check_selected($values, $current){
+        //if(is_array($current))
+        //    $current = (isset($current['value'])) ? $current['value'] : $current['label'];
+        
         if(is_array($values))
             $values = array_map('trim', $values);
         else
@@ -210,19 +213,28 @@ class FrmAppHelper{
                 
                 $field_array = array(
                     'id' => $field->id,
-                    'value' => str_replace('"', '&quot;', $new_value),
-                    'default_value' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->default_value))),
+                    'value' => $new_value,
+                    'default_value' => stripslashes_deep(maybe_unserialize($field->default_value)),
                     'name' => stripslashes($field->name),
                     'description' => stripslashes($field->description),
                     'type' => apply_filters('frm_field_type', $field_type, $field, $new_value),
-                    'options' => str_replace('"', '&quot;', stripslashes_deep(maybe_unserialize($field->options))),
+                    'options' => stripslashes_deep(maybe_unserialize($field->options)),
                     'required' => $field->required,
                     'field_key' => $field->field_key,
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id
                 );
                 
-                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0) as $opt => $default_opt){
+                if(in_array($field_array['type'], array('checkbox', 'radio', 'select')) and !empty($field_array['options'])){
+                    foreach((array)$field_array['options'] as $opt_key => $opt){
+                        //if(!is_array($opt))
+                        //    $field_array['options'][$opt_key] = array('label' => $opt);
+                        unset($opt);
+                        unset($opt_key);
+                    }
+                }
+                
+                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0, 'separate_value' => 0) as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == ''){
                         $field_array[$opt] = __('This field cannot be blank', 'formidable');
@@ -258,25 +270,28 @@ class FrmAppHelper{
                     $values[$opt] = FrmAppHelper::get_param($opt, $value);
             }
         }
+        
+        $form_defaults = FrmFormsHelper::get_default_opts();
 
-        $email = get_option('admin_email');
-        foreach (array('custom_style' => ($frm_settings->load_style != 'none'), 'email_to' => $email) as $opt => $default){
-            if (!isset($values[$opt]))
-                $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+        //options to allow blank answers
+        foreach(array('email_to', 'reply_to', 'reply_to_name') as $opt){
+            if (!isset($values[$opt])){
+                $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $form_defaults[$opt];
+                unset($form_defaults[$opt]);
+                unset($opt);
+            }
         }
         
-        foreach (array('submit_value' => $frm_settings->submit_value, 'success_action' => 'message', 'success_msg' => $frm_settings->success_msg, 'show_form' => 1) as $opt => $default){
+        //don't allow blank answers
+        foreach ($form_defaults as $opt => $default){
             if (!isset($values[$opt]) or $values[$opt] == '')
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+            unset($opt);
+            unset($defaut);
         }
-        if (!isset($values['show_form']))
-            $values['show_form'] = ($_POST and isset($_POST['options']['show_form'])) ? $_POST['options']['show_form'] : 0;
             
         if (!isset($values['custom_style']))
             $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
-
-        if (!isset($values['akismet']))
-            $values['akismet'] = ($_POST and isset($_POST['options']['akismet'])) ? $_POST['options']['akismet'] : 0;
 
         if (!isset($values['before_html']))
             $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));

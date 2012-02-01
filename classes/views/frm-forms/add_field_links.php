@@ -55,9 +55,11 @@
     		<div class="widget">
     			<div class="widget-top">
     				<div class="widget-title-action"><a class="widget-action"></a></div>
-    				<div class="widget-title"><h4><?php _e('Key', 'formidable') ?></h4></div>
+    				<div class="widget-title"><h4><?php _e('Key and Form Actions', 'formidable') ?></h4></div>
     			</div>
-    			<div class="widget-inside">
+    			<div class="widget-inside submitbox">
+    			    <div id="misc-publishing-actions">
+    			        
                     <ul class="frm_key_icons">
                         <li><span class="frm_action_icon frm_required_icon"></span> 
                             = <?php _e('required field', 'formidable') ?></li>
@@ -71,13 +73,29 @@
                             = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
                         <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
                             = <?php _e('default value will pass validation', 'formidable') ?></li>
-                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></span> 
+                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php echo esc_attr(__('Delete', 'formidable')) ?>" /></span> 
                             = <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="Move" /></span> 
+                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php echo esc_attr(__('Move', 'formidable')) ?>" /></span> 
                             = <?php _e('duplicate field', 'formidable') ?></li>
-                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></span> = 
-                            <?php _e('move field', 'formidable') ?></li>
+                        <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="<?php echo esc_attr(__('Move', 'formidable')) ?>" /></span> 
+                            = <?php _e('move field', 'formidable') ?></li>
                     </ul>
+                    
+                        <div class="misc-pub-section " style="border-top:none;">
+                        
+                        </div>
+                    </div>
+                    <div id="major-publishing-actions">
+                        <div id="delete-action">
+    			        <a href="<?php echo wp_nonce_url( '?page=formidable&frm_action=destroy&id='. $id ) ?>" onclick="return confirm('<?php _e('Are you sure you want to delete that?', 'formidable') ?>')" class="submitdelete deletion"><?php _e( 'Delete', 'formidable' ) ?></a>
+    			        </div>
+    			        &nbsp;
+    			        <!--
+    			        <?php if($frmpro_is_installed){ ?>
+                        <a href="<?php echo wp_nonce_url( FRM_SCRIPT_URL .'&controller=forms&frm_action=export&id='. $id ) ?>" title="<?php _e('Export Template', 'formidable') ?>" class="alignright"><?php _e('Export Template', 'formidable') ?></a>
+                        <?php } ?>
+                        -->
+    			    </div>
     			</div>
     		</div>
 

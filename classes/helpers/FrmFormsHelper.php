@@ -3,7 +3,7 @@
 class FrmFormsHelper{
     function get_direct_link($key, $prli_link_id=false){
         global $frm_siteurl;
-        $target_url = $frm_siteurl . '/index.php?plugin=formidable&amp;controller=forms&amp;action=preview&amp;form='.$key;
+        $target_url = esc_url($frm_siteurl . '/index.php?plugin=formidable&controller=forms&frm_action=preview&form='.$key);
         if ($prli_link_id && class_exists('PrliLink')){
             $prli = prli_get_pretty_link_url($prli_link_id);
             if ($prli) $target_url = $prli;
@@ -86,7 +86,8 @@ class FrmFormsHelper{
         return array(
             'email_to' => $frm_settings->email_to, 'reply_to' => '', 'reply_to_name' => '',
             'submit_value' => $frm_settings->submit_value, 'success_action' => 'message',
-            'success_msg' => $frm_settings->success_msg, 'show_form' => 0, 'akismet' => 0
+            'success_msg' => $frm_settings->success_msg, 'show_form' => 0, 'akismet' => '',
+            'no_save' => 0
         );
     }
     

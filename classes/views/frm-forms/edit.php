@@ -28,7 +28,7 @@
             </span>
         </p>
         
-        <input type="hidden" name="action" value="update" />
+        <input type="hidden" name="frm_action" value="update" />
         <input type="hidden" name="id" value="<?php echo $id; ?>" />
         <?php wp_nonce_field('update-options'); ?>
 

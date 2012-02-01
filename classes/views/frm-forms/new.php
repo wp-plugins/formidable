@@ -17,10 +17,10 @@
             <p style="margin-top:0;">
                 <input type="submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
-                <a class="button-secondary cancel" href="?page=formidable&amp;action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
+                <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
             </p>
             
-            <input type="hidden" name="action" value="create" />
+            <input type="hidden" name="frm_action" value="create" />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
             <?php wp_nonce_field('update-options'); ?>
 
@@ -29,7 +29,7 @@
             <p>
                 <input type="submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
-                <a class="button-secondary cancel" href="?page=formidable&amp;action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
+                <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
             </p>
         </form>
     </div>

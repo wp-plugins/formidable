@@ -14,7 +14,7 @@
         <form method="get">
             <div id="post-body">
             <p><?php _e('Select a template to generate your form.', 'formidable'); ?></p>
-            <input type="hidden" name="action" value="duplicate" />
+            <input type="hidden" name="frm_action" value="duplicate" />
             <input type="hidden" name="page" value="formidable" />
             <select name="id">
                 <?php foreach ($all_templates as $temp){ ?>
@@ -38,7 +38,7 @@
         <form method="get">
             <div id="post-body">
             <p style="padding-bottom:26px;"><?php _e('Start with a blank form and build anything.', 'formidable'); ?></p>
-            <input type="hidden" name="action" value="new" />
+            <input type="hidden" name="frm_action" value="new" />
             <input type="hidden" name="page" value="formidable" />
             </div>
             <div id="nav-menu-footer">

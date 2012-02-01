@@ -128,8 +128,8 @@ ul.frm_form_nav li.last a.current_page{
 	border:1px solid #dfdfdf; background-color:#fff; display:block; padding:0 5px; margin-top:0;
 	-moz-border-radius:4px; -webkit-border-radius:4px; 
 }
-.frm_ipe_form_name input{
-	border:none; width:90%; 
+.frm_ipe_form_name input.inplace_field{
+	border:none; width:90% !important; 
 	font-size:1.1em; background:transparent; 
 	font-weight: 200;
 }
@@ -226,6 +226,16 @@ span.howto{display:inline;}
 #new_fields li.ui-state-default.edit_field_type_break{border-top:1px dashed #ccc; padding-top:5px;}
 #new_fields .edit_field_type_divider .frm_ipe_field_label,
 #new_fields .edit_field_type_break .frm_ipe_field_label{font-size:116%;}
+
+.selected .frm_ipe_field_option.frm_with_key,
+.selected .frm_ipe_field_option_key{width:45%; display:inline-block !important;}
+.selected .frm_ipe_field_option.frm_with_key{margin-right:10px;}
+.selected .frm_ipe_field_option.frm_with_key .inplace_field,
+.selected .frm_ipe_field_option_key .inplace_field{width:100% !important;}
+.frm_option_val_label{float:left; width:45%; margin-left:30px; margin-right:10px;}
+.frm_option_key_label, .frm_option_val_label{font-weight:bold;font-size:11px;}
+.edit_field_type_select .frm_option_val_label{margin-left:12px;}
+
 #frm_form_options .ui-state-default{color:#000;}
 #new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected, .frm_update_msg{
 	padding:5px;
@@ -250,6 +260,9 @@ span.howto{display:inline;}
 }
 .frm_update_msg{border-style:solid;margin:5px 0 15px;}
 .widefat td{width:auto;}
+.widefat .column-id{width:3.2em;}
+.widefat .column-show_count{width:5em;}
+.widefat .column-shortcode{width:9em;}
 
 .frm_shortcode_select optgroup option{margin-left:1em;}
 .frm_shortcode_select optgroup{padding-top:5px;}
@@ -267,6 +280,8 @@ span.howto{display:inline;}
 .frm_uninstall{padding-right:0.75em;}
 .frm_uninstall a{border-color:red; font-weight:bold; background:#D54E21; color:#fff; text-shadow:none;}
 .frm_uninstall a:hover{background:#264761;color:#fff;}
+
+.frm_print_graph{display:none;}
 /*hide elements if js is avail*/
 .js select.texture, .js #help{display: none;}
 
@@ -458,9 +473,12 @@ Clearfix
 /* PRINT */
 @media print {
 #adminmenuwrap, #adminmenuback, #wphead, #button_bar, #submitdiv, .button-secondary,
-#screen-metas, #screen-meta-links, #footer, .inner-sidebar, .frm_form_nav, .icon32{display:none !important;}	
+#screen-metas, #screen-meta-links, #footer, .inner-sidebar, .frm_form_nav, .icon32, 
+.frm_flash_graph, .frm_no_print, object{visibility:hidden;display:none !important;}	
 .postbox{background:#fff !important;border:none;position:static;}
 .postbox h3{background:#fff !important;}
 #wpbody-content{float:none;}
 #wpcontent, #post-body-content, .has-right-sidebar #post-body{margin:0 !important;}
+.frm_print_graph{display:block !important;max-width:600px;}
+.frm_charts .alignleft{float:none;}
 }

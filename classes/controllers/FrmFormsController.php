@@ -15,6 +15,8 @@ class FrmFormsController{
         add_filter('media_buttons_context', array(&$this, 'insert_form_button'));
         //add_action('media_buttons', array(&$this, 'show_form_button'), 20);
         add_action('admin_footer',  array(&$this, 'insert_form_popup'));
+        
+        add_filter('set-screen-option', array(&$this, 'save_per_page'), 10, 3);
     }
     
     function menu(){
@@ -24,6 +26,13 @@ class FrmFormsController{
         
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-new', array(&$this, 'head'));
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-templates', array(&$this, 'head'));
+        
+        add_filter('manage_toplevel_page_formidable_columns', array( &$this, 'get_columns' ), 0 );
+	    add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_columns', array( &$this, 'get_columns' ), 0 );
+	    add_filter('manage_toplevel_page_formidable_sortable_columns', array(&$this, 'get_sortable_columns'));
+	    add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_sortable_columns', array(&$this, 'get_sortable_columns'));
+	    add_filter('get_user_option_managetoplevel_page_formidablecolumnshidden', array(&$this, 'hidden_columns'));
+	    add_filter('get_user_option_manage'. sanitize_title($frm_settings->menu) .'_page_formidable-templatescolumnshidden', array(&$this, 'hidden_columns'));
     }
     
     function lower_menu(){
@@ -52,7 +61,8 @@ class FrmFormsController{
     function new_form(){
         global $frm_form, $frmpro_is_installed, $frm_ajax_url;
         
-        $action = FrmAppHelper::get_param('action');
+        $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+        $action = FrmAppHelper::get_param($action);
         if ($action == 'create'){
             return $this->create();
         }else if ($action == 'new'){
@@ -81,7 +91,7 @@ class FrmFormsController{
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
             $record = $frm_form->update( $id, $_POST, true );
-            die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&action=settings&id='. $id) .'"</script>');
+            die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&frm_action=settings&id='. $id) .'"</script>');
             //$message = __('Form was Successfully Created', 'formidable');
             //return $this->settings($record, $message);
         }
@@ -257,29 +267,54 @@ class FrmFormsController{
             
         if($message=='')
             $message = FrmAppHelper::frm_get_main_message();
-
-        $page_params = '&action=0&page=formidable';
-        $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
-
+            
+        $page_params = '&action=0&&frm_action=0&page=formidable';
+        
         if ($params['template']){
             $default_templates = $frm_form->getAll(array('default_template' => 1));
             $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
         }
+        
+        if(class_exists('WP_List_Table')){
+            require_once( FRM_PATH .'/classes/helpers/FrmListHelper.php' );
+            
+            $args = array('table_name' => $frmdb->forms, 'params' => $params);
+            $args['page_name'] = $params['template'] ? '-template' : '';
+            $wp_list_table = new FrmListHelper($args);
+            unset($args);
 
-        $form_vars = $this->get_form_sort_vars($params, $where_clause);
+            $pagenum = $wp_list_table->get_pagenum();
 
-        $current_page = ($current_page_ov) ? $current_page_ov : $params['paged'];
-        $page_params .= ($page_params_ov) ? $page_params_ov : $form_vars['page_params'];
+            $wp_list_table->prepare_items();
 
-        $sort_str = $form_vars['sort_str'];
-        $sdir_str = $form_vars['sdir_str'];
-        $search_str = $form_vars['search_str'];
+            $total_pages = $wp_list_table->get_pagination_arg( 'total_pages' );
+            if ( $pagenum > $total_pages && $total_pages > 0 ) {
+            	wp_redirect( add_query_arg( 'paged', $total_pages ) );
+            	exit;
+            }
+            
+            if ( ! empty( $_REQUEST['s'] ) )
+                $page_params .= '&s='. urlencode($_REQUEST['s']);
+        }else{
+  
+            $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
 
-        $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frmdb->forms);
-        $page_count = $frm_app_helper->getPageCount($frm_page_size, $record_count, $frmdb->forms);
-        $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
-        $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
-        $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
+            $form_vars = $this->get_form_sort_vars($params, $where_clause);
+
+            $current_page = ($current_page_ov) ? $current_page_ov : $params['paged'];
+            $page_params .= ($page_params_ov) ? $page_params_ov : $form_vars['page_params'];
+
+            $sort_str = $form_vars['sort_str'];
+            $sdir_str = $form_vars['sdir_str'];
+            $search_str = $form_vars['search_str'];
+
+            $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frmdb->forms);
+            $page_count = $frm_app_helper->getPageCount($frm_page_size, $record_count, $frmdb->forms);
+            $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
+            $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
+            $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
+        }
+        
         require(FRM_VIEWS_PATH.'/frm-forms/list.php');
     }
     
@@ -335,6 +370,64 @@ class FrmFormsController{
         }
 
         return compact('order_by', 'sort_str', 'sdir_str', 'search_str', 'where_clause', 'page_params');
+    }
+    
+    function get_columns($columns){
+	    $columns['cb'] = '<input type="checkbox" />';
+        $columns['id'] = 'ID';
+        $columns['name'] = __('Name', 'formidable');
+        $columns['description'] = __('Description', 'formidable');
+        $columns['form_key'] = __('Key', 'formidable');
+        
+        if($_GET['page'] == 'formidable-templates'){
+            add_screen_option( 'per_page', array('label' => __('Templates', 'formidable'), 'default' => 10, 'option' => 'formidable_page_formidable_templates_per_page') );
+        }else{
+            $columns['entries'] = __('Entries', 'formidable');
+            $columns['link'] = __('Direct Link', 'formidable');
+            $columns['shortcode'] = __('Shortcodes', 'formidable');
+            add_screen_option( 'per_page', array('label' => __('Forms', 'formidable'), 'default' => 20, 'option' => 'formidable_page_formidable_per_page') );
+        }
+        
+        $columns['created_at'] = __('Date', 'formidable');
+        
+        return $columns;
+	}
+	
+	function get_sortable_columns() {
+		return array(
+		    'id'        => 'id',
+			'name'      => 'name',
+			'description'   => 'description',
+			'form_key'   => 'form_key',
+			'created_at' => 'created_at'
+		);
+	}
+	
+	function hidden_columns($result){
+        $return = false;
+        foreach((array)$result as $r){
+            if(!empty($r)){
+                $return = true;
+                break;
+            }
+        }
+        
+        if($return)
+            return $result;
+
+        $result[] = 'created_at';
+        if($_GET['page'] == 'formidable-templates'){
+            $result[] = 'id';
+            $result[] = 'form_key';
+        } 
+               
+        return $result;
+    }
+	
+	function save_per_page($save, $option, $value){
+        if($option == 'formidable_page_formidable_per_page' or $option == 'formidable_page_formidable_templates_per_page')
+            $save = (int)$value;
+        return $save;
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
@@ -399,16 +492,18 @@ class FrmFormsController{
     }
 
     function route(){
-        $action = FrmAppHelper::get_param('action');
+        $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+        $action = FrmAppHelper::get_param($action);
+        
         if($action == 'new')
             return $this->new_form();
-        else if($action=='create')
+        else if($action == 'create')
             return $this->create();
-        else if($action=='edit')
+        else if($action == 'edit')
             return $this->edit();
-        else if($action=='update')
+        else if($action == 'update')
             return $this->update();
-        else if($action=='duplicate')
+        else if($action == 'duplicate')
             return $this->duplicate();
         else if($action == 'destroy')
             return $this->destroy();

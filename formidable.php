@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.02
+Version: 1.06.03
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -40,7 +40,7 @@ if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_siteurl)){
 define('FRM_SCRIPT_URL', $frm_siteurl .'/index.php?plugin=formidable');
 define('FRM_IMAGES_URL', FRM_URL.'/images');
 
-load_plugin_textdomain('formidable', false, FRM_PATH .'/languages/' );
+load_plugin_textdomain('formidable', false, 'formidable/languages/' );
 
 require_once(FRM_MODELS_PATH.'/FrmSettings.php');
 
@@ -52,7 +52,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.06.02';
+$frm_version = '1.06.03';
 $frm_db_version = 7;
 
 

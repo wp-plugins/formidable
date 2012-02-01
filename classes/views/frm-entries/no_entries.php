@@ -1,4 +1,7 @@
-<?php $colspan = (isset($form_cols)) ? count($form_cols)+1 : ''; ?>
+<?php 
+if(!isset($colspan))
+$colspan = (isset($form_cols)) ? count($form_cols)+1 : ''; 
+?>
     <h3>You don't have any entries in this form.<br/> How to publish:</h3>
     </td></tr>
     <tr class="alternate"><td colspan="<?php echo $colspan ?>">

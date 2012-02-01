@@ -191,7 +191,7 @@ else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,ajax
 function frmGetData(f,selected,ajax_url,append){
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
-		data:"controller=fields&action=ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
+		data:"controller=fields&frm_action=ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
 		success:function(html){
 			if(html!='') jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow'); 
 			if(append){jQuery('#frm_data_field_'+f.HideField+'_container').append(html);}
@@ -216,7 +216,7 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 	if(prev.length==0) var prev='';
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
-		data:"controller=fields&action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
+		data:"controller=fields&frm_action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
 		success:function(html){
 			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow'); 
 			else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
@@ -276,7 +276,7 @@ function frmGetFormErrors(object,ajax_url){
 function frmGetEntryToEdit(form_id,entry_id,post_id,ajax_url){
 jQuery.ajax({
 	type:"POST",url:ajax_url,
-	data:"controller=entries&action=edit_entry_ajax&id="+form_id+"&post_id="+post_id+"entry_id="+entry_id,
+	data:"controller=entries&frm_action=edit_entry_ajax&id="+form_id+"&post_id="+post_id+"entry_id="+entry_id,
 	success:function(form){jQuery('#frm_form_'+form_id+'_container').replaceWith(form);}
 });
 }
@@ -287,7 +287,7 @@ function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel,hclass){
 	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="'+prefix+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,dataType:"html",
-		data:"controller=entries&action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
+		data:"controller=entries&frm_action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
 		success:function(html){
 			jQuery('#'+prefix+entry_id).children('.frm-loading-img').replaceWith(html);
 			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
@@ -306,7 +306,7 @@ function frmUpdateField(entry_id,field_id,value,message,ajax_url){
 	jQuery('#frm_update_field_'+entry_id+'_'+field_id).html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
-		data:"controller=entries&action=update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
+		data:"controller=entries&frm_action=update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
 		success:function(html){
 			if(message == '')
 				jQuery('#frm_update_field_'+entry_id+'_'+field_id).fadeOut('slow');
@@ -320,7 +320,7 @@ function frmDeleteEntry(entry_id,ajax_url,prefix){
 	jQuery('#frm_delete_'+entry_id).replaceWith('<span class="frm-loading-img" id="frm_delete_'+entry_id+'"></span>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
-		data:"controller=entries&action=destroy&entry="+entry_id,
+		data:"controller=entries&frm_action=destroy&entry="+entry_id,
 		success:function(html){
 			if(html == 'success')
 				jQuery('#'+prefix+entry_id).fadeOut('slow');

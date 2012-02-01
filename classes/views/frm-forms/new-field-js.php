@@ -2,7 +2,7 @@
 jQuery(document).ready(function($){
 $('select[name^="item_meta"], textarea[name^="item_meta"]').css('float','left');
 $('input[name^="item_meta"]').not(':radio, :checkbox').css('float','left');
-$("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option").editInPlace({
+$("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option, #frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_option_key").editInPlace({
 url:"<?php echo $frm_ajax_url ?>",params:"action=frm_field_option_ipe", default_text:"<?php _e('(Blank)', 'formidable') ?>"
 });
 $("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_label").editInPlace({
