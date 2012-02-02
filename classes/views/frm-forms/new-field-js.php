@@ -12,5 +12,9 @@ $("#frm_field_id_<?php echo $field['id']; ?> .frm_ipe_field_desc").editInPlace({
 url:"<?php echo $frm_ajax_url ?>",params:"action=frm_field_desc_in_place_edit",field_type:'textarea',textarea_rows:3,
 default_text:"(<?php _e('Click here to add optional description or instructions', 'formidable') ?>)"
 });
+$("#frm_field_id_<?php echo $field['id']; ?> img.frm_help[title]").hover(
+function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn();},
+function(){$('#frm_tooltip').fadeOut();$(this).attr('title',frm_title);}
+);
 });
 </script>
