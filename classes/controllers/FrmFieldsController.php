@@ -277,7 +277,7 @@ class FrmFieldsController{
                 if(strpos($opt, '|') !== false){
                     $vals = explode('|', $opt);
                     if($vals[0] != $vals[1])
-                        $opts[$opt_key] = array('value' => $vals[0], 'label' => $vals[1]);
+                        $opts[$opt_key] = array('label' => $vals[0], 'value' => $vals[1]);
                     unset($vals);
                 }
                 unset($opt_key);

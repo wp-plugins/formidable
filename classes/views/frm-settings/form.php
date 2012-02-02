@@ -19,21 +19,18 @@
             <?php } ?>
         </ul>
         
-
-    <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
-        <div class="postbox">
-            <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro Account Information', 'formidable')?></h3>
-            <div class="inside">
-    <?php 
-    if (IS_WPMU and !FrmAppHelper::is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){
-        //don't show cred form
-    }else{
-        $frm_update->pro_cred_form();
-    }
-    ?>
-            </div>
+<?php if (IS_WPMU and !FrmAppHelper::is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
+<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;">
+<?php }else{ ?>
+<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
+    <div class="postbox">
+        <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro Account Information', 'formidable')?></h3>
+        <div class="inside">
+            <?php $frm_update->pro_cred_form(); ?>
         </div>
     </div>
+<?php } ?>
+</div>
     
     <form name="frm_settings_form" method="post" class="frm_settings_form">
         <input type="hidden" name="frm_action" value="process-form" />

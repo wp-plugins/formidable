@@ -62,7 +62,7 @@ if(is_array($fopt)){
     $label = (isset($fopt['label'])) ? $fopt['label'] : reset($fopt);
     $value = (isset($fopt['value'])) ? $fopt['value'] : $label;
     if($label != $value and isset($field->field_options['separate_value']) and $field->field_options['separate_value'])
-        echo "$value|$label\n";
+        echo "$label|$value\n";
     else
         echo $label ."\n";        
 }else{

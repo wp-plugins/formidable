@@ -33,12 +33,12 @@
     <p style="clear:left;">        
         <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
-        <a class="button-secondary cancel" href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;frm_action=edit&amp;id=<?php echo $id ?>"><?php _e('Cancel', 'formidable') ?></a>
+        <a class="button-secondary cancel" href="<?php echo esc_url(admin_url('admin.php?page=formidable') . '&frm_action=edit&id='. $id) ?>"><?php _e('Cancel', 'formidable') ?></a>
         <span style="margin-left:8px;">
         <?php FrmFormsHelper::forms_dropdown('frm_switcher', '', __('Switch Form', 'formidable'), false, "frmAddNewForm(this.value,'settings')"); ?>
         </span>
         <?php if($frmpro_is_installed and function_exists('icl_t')){ ?>
-        <a href="<?php echo admin_url('admin.php?page=formidable') ?>&amp;frm_action=translate&amp;id=<?php echo $id ?>" class="button-secondary"><?php _e('Translate Form', 'formidable') ?></a>
+        <a href="<?php echo esc_url(admin_url('admin.php?page=formidable') .'&frm_action=translate&id='. $id) ?>" class="button-secondary"><?php _e('Translate Form', 'formidable') ?></a>
         <?php } ?>
     </p>
     

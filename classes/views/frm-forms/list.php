@@ -14,7 +14,7 @@ if(class_exists('WP_List_Table')){
 <form id="posts-filter" method="get">
     <input type="hidden" name="page" value="<?php echo $_GET['page'] ?>" />
     <input type="hidden" name="frm_action" value="list" />
-<?php $wp_list_table->search_box( __( 'Search' ), 'entry' ); 
+<?php $wp_list_table->search_box( __( 'Search', 'formidable' ), 'entry' ); 
 
 require(FRM_VIEWS_PATH.'/shared/nav.php');
 

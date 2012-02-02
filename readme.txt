@@ -81,6 +81,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed image upload naming for uploads with numeric names like 1.png
 * PRO: Fixed issue with multiple editable forms on the same page when one is set to only allow one entry per user
 * PRO: Added a check for automatically inserted custom displays to make sure we are in the loop to avoid the need for increasing the insert position setting
+* PRO: Show the post type label in the post type dropdown instead of the singular label to avoid blank options for custom post types without a singular name defined
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
