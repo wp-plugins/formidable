@@ -398,6 +398,9 @@ class FrmFieldsController{
             }
         }
         
+        if(isset($field['input_class']) and !empty($field['input_class']))
+            $class .= ' '. $field['input_class'];
+        
         $class = apply_filters('frm_field_classes', $class, $field);
         echo ' class="'.$class.'"';
     }

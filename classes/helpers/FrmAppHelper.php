@@ -225,16 +225,19 @@ class FrmAppHelper{
                     'form_id' => $field->form_id
                 );
                 
-                if(in_array($field_array['type'], array('checkbox', 'radio', 'select')) and !empty($field_array['options'])){
+                /*if(in_array($field_array['type'], array('checkbox', 'radio', 'select')) and !empty($field_array['options'])){
                     foreach((array)$field_array['options'] as $opt_key => $opt){
-                        //if(!is_array($opt))
-                        //    $field_array['options'][$opt_key] = array('label' => $opt);
+                        if(!is_array($opt))
+                            $field_array['options'][$opt_key] = array('label' => $opt);
                         unset($opt);
                         unset($opt_key);
                     }
-                }
+                }*/
                 
-                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '*', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0, 'separate_value' => 0) as $opt => $default_opt){
+                $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field);
+                $opt_defaults = $opt_defaults['field_options'];
+                
+                foreach ($opt_defaults as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == ''){
                         $field_array[$opt] = __('This field cannot be blank', 'formidable');
@@ -245,6 +248,8 @@ class FrmAppHelper{
                             $field_array[$opt] = $field_array['name'] . ' ' . __('is invalid', 'formidable');
                     }
                 }
+                
+                unset($opt_defaults);
                     
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);

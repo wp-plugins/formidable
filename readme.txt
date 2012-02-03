@@ -65,6 +65,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added option to not store entries in the database from a specific form
 * Added option to skip Akismet spam check for logged in users
 * The forms, entries, and custom display page columns that are shown and entries per page are now customizable for those running at least v3.1 of WordPress
+* Added a css class option to the field options with CSS ready classes for multi-column forms: frm_left_half, frm_right_half, frm_left_third, frm_third, frm_right_third, frm_left_fourth, frm_fourth, frm_right_fourth, frm_left_inline, frm_inline, frm_right_inline
+* Added the option to add a class to an input. In the customizable HTML, change [input] to [input class="your_class_here"]
 * Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
 * PRO: Added option to use a separate value for the radio, checkbox, and select choices
 * PRO: Added option to use dynamic default values for radio, checkbox, dropdown, and user ID fields
@@ -82,6 +84,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed issue with multiple editable forms on the same page when one is set to only allow one entry per user
 * PRO: Added a check for automatically inserted custom displays to make sure we are in the loop to avoid the need for increasing the insert position setting
 * PRO: Show the post type label in the post type dropdown instead of the singular label to avoid blank options for custom post types without a singular name defined
+* PRO: Switched out the case-sensitive sorting in data from entries fields
+* PRO: If a custom display has detail link parameters defined, ONLY allow those parameters
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome

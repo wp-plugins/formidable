@@ -165,6 +165,7 @@ if ($display['options']){ ?>
                 <?php if ($display['label_position']){ ?>
                     <tr><td width="150px"><label><?php _e('Label Position', 'formidable') ?></label></td>
                         <td><select name="field_options[label_<?php echo $field['id'] ?>]">
+                            <option value=""<?php selected($field['label'], ''); ?>><?php _e('Default', 'formidable') ?></option>
                             <option value="top"<?php selected($field['label'], 'top'); ?>><?php _e('Top', 'formidable') ?></option>
                             <option value="left"<?php selected($field['label'], 'left'); ?>><?php _e('Left', 'formidable') ?></option>
                             <option value="right"<?php selected($field['label'], 'right'); ?>><?php _e('Right', 'formidable') ?></option>
@@ -174,6 +175,12 @@ if ($display['options']){ ?>
                         </td>  
                     </tr>
                 <?php } ?>
+                <tr><td><label><?php _e('CSS layout classes', 'formidable') ?></label> 
+                    <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" /></td>
+                    <td><input type="text" name="field_options[classes_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['classes']) ?>" class="frm_long_input" />
+                    </td>  
+                </tr>
+                
                 <?php do_action('frm_field_options_form', $field, $display, $values); ?>
             </table>
         </div>

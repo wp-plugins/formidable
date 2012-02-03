@@ -54,9 +54,17 @@ class FrmEntriesHelper{
                     }
                 } */
 
-                foreach (array('size' => '', 'max' => '', 'label' => 'top', 'invalid' => '', 'required_indicator' => '', 'blank' => '', 'clear_on_focus' => 0, 'custom_html' => '', 'default_blank' => 0, 'separate_value' => 0) as $opt => $default_opt)
+                $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field);
+                $opt_defaults = $opt_defaults['field_options'];
+                
+                foreach ($opt_defaults as $opt => $default_opt){
                     $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
+                    unset($opt);
+                    unset($default_opt);
+                }
                   
+                unset($opt_defaults);
+                
                 if ($field_array['size'] == '')
                     $field_array['size'] = $frm_sidebar_width;
             

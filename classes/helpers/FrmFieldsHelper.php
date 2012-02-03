@@ -47,18 +47,27 @@ class FrmFieldsHelper{
     }
     
     function setup_new_vars($type='',$form_id=''){
-        global $frmdb, $frm_app_helper, $frm_settings;
+        global $frm_settings;
         
-        $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
-        $key = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
+        $defaults = FrmFieldsHelper::get_default_field_opts($type, $form_id);
+        $defaults['field_options']['custom_html'] = FrmFieldsHelper::get_default_html($type);
         
         $values = array();
-        foreach (array('name' => __('Untitled', 'formidable'), 'description' => '', 'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 'field_order' => $field_count+1, 'required' => false, 'blank' => __('This field cannot be blank', 'formidable'), 'invalid' => __('This field is invalid', 'formidable'), 'form_id' => $form_id) as $var => $default)
-            $values[$var] = $default;
         
-        $values['field_options'] = array();
-        foreach (array('size' => '', 'max' => '', 'label' => 'top', 'required_indicator' => '*', 'clear_on_focus' => 0, 'custom_html' => FrmFieldsHelper::get_default_html($type), 'default_blank' => 0, 'separate_value' => 0) as $var => $default)
-            $values['field_options'][$var] = $default;
+        foreach ($defaults as $var => $default){
+            if($var == 'field_options'){
+                $values['field_options'] = array();
+                foreach ($default as $opt_var => $opt_default){
+                    $values['field_options'][$opt_var] = $opt_default;
+                    unset($opt_var);
+                    unset($opt_default);
+                }
+            }else{
+                $values[$var] = $default;
+            }
+            unset($var);
+            unset($default);
+        }
             
         if ($type == 'radio' || ($type == 'checkbox'))
             $values['options'] = serialize(array(__('Option 1', 'formidable'), __('Option 2', 'formidable')));
@@ -89,12 +98,11 @@ class FrmFieldsHelper{
             $values[$var] = FrmAppHelper::get_param($var, $default);
         
         $values['options'] = stripslashes_deep(maybe_unserialize($record->options));
+        
         $values['field_options'] = $record->field_options;
-        $defaults = array(
-            'size' => '', 'max' => '', 'label' => 'top', 'blank' => '', 
-            'required_indicator' => '*', 'invalid' => '', 'separate_value' => 0,
-            'clear_on_focus' => 0, 'default_blank' => 0
-        );
+        
+        $defaults = FrmFieldsHelper::get_default_field_opts($values['type'], $record);
+        $defaults = $defaults['field_options'];
         
         if($values['type'] == 'captcha'){
             global $frm_settings;
@@ -109,6 +117,31 @@ class FrmFieldsHelper{
         return apply_filters('frm_setup_edit_field_vars', $values, $values['field_options']);
     }
     
+    function get_default_field_opts($type, $field){
+        global $frmdb, $frm_app_helper, $frm_settings;
+        
+        $form_id = (is_numeric($field)) ? $field : $field->form_id;
+        
+        $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
+        $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key') : $field->field_key;
+        
+        $field_options = array(
+            'size' => '', 'max' => '', 'label' => '', 'blank' => '', 
+            'required_indicator' => '*', 'invalid' => '', 'separate_value' => 0,
+            'clear_on_focus' => 0, 'default_blank' => 0, 'classes' => '',
+            'custom_html' => ''
+        );
+        
+        return array(
+            'name' => __('Untitled', 'formidable'), 'description' => '', 
+            'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 
+            'field_order' => $field_count+1, 'required' => false, 
+            'blank' => __('This field cannot be blank', 'formidable'), 
+            'invalid' => __('This field is invalid', 'formidable'), 'form_id' => $form_id,
+            'field_options' => $field_options
+        );
+    }
+    
     function get_form_fields($form_id, $error=false){ 
         global $frm_field;
         $fields = apply_filters('frm_get_paged_fields', false, $form_id, $error);
@@ -120,7 +153,7 @@ class FrmFieldsHelper{
     function get_default_html($type='text'){
         if (apply_filters('frm_normal_field_type_html', true, $type)){
             $default_html = <<<DEFAULT_HTML
-<div id="frm_field_[id]_container" class="form-field [required_class][error_class]">
+<div id="frm_field_[id]_container" class="frm_form_field form-field [required_class][error_class]">
     <label class="frm_primary_label">[field_name]
         <span class="frm_required">[required_label]</span>
     </label>
@@ -162,9 +195,17 @@ DEFAULT_HTML;
         
         //replace [required_class]
         $required_class = ($field['required'] == '0') ? '' : ' frm_required_field';
+        //insert custom CSS classes
+        if(!empty($field['classes'])){
+            if(!strpos($html, 'frm_form_field '))
+                $required_class .= ' frm_form_field';
+            $required_class .= ' '. $field['classes'];
+        }
+            
         $html = str_replace('[required_class]', $required_class, $html);  
         
         //replace [label_position]
+        $field['label'] = apply_filters('frm_html_label_position', $field['label'], $field);
         $field['label'] = ($field['label'] and $field['label'] != '') ? $field['label'] : 'top';
         $html = str_replace('[label_position]', (($field['type'] == 'divider') ? $field['label'] : ' frm_primary_label'), $html);
         
@@ -199,6 +240,7 @@ DEFAULT_HTML;
             
             if($tag == 'input'){
                 if(isset($atts['opt'])) $atts['opt']--;
+                $field['input_class'] = isset($atts['class']) ? $atts['class'] : '';
                 ob_start();
                 include(FRM_VIEWS_PATH.'/frm-fields/input.php');
                 $replace_with = ob_get_contents();
