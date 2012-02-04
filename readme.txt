@@ -65,8 +65,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added option to not store entries in the database from a specific form
 * Added option to skip Akismet spam check for logged in users
 * The forms, entries, and custom display page columns that are shown and entries per page are now customizable for those running at least v3.1 of WordPress
-* Added a css class option to the field options with CSS ready classes for multi-column forms: frm_left_half, frm_right_half, frm_left_third, frm_third, frm_right_third, frm_left_fourth, frm_fourth, frm_right_fourth, frm_left_inline, frm_inline, frm_right_inline
+* Added a css class option to the field options with predefined CSS classes for multi-column forms: frm_left_half, frm_right_half, frm_left_third, frm_third, frm_right_third, frm_left_fourth, frm_fourth, frm_right_fourth, frm_left_inline, frm_inline, frm_right_inline, frm_full, frm_grid_first, frm_grid, frm_grid_odd
 * Added the option to add a class to an input. In the customizable HTML, change [input] to [input class="your_class_here"]
+* Added "inline" option to label position options to have a label to the left without the width restriction
 * Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
 * PRO: Added option to use a separate value for the radio, checkbox, and select choices
 * PRO: Added option to use dynamic default values for radio, checkbox, dropdown, and user ID fields
@@ -78,6 +79,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added checking for disabled used dates for fields set as post fields in date picker for dates marked as unique
 * PRO: Added not_like option to conditional custom display statements. Ex [if 25 not_like="hello"]...[/if 25]
 * PRO: Added option to display the field label in custom displays. Ex [25 show="field_label"]
+* PRO: Added options to custom display shortcode: [display-frm-data id=5 get="whatever" get_value="value"]. This allows the use of [get param="whatever"] in the custom display. 
 * PRO: Updated the frm-entry-links shortcode to use show_delete with type=list
 * PRO: Updated custom display where options to fetch entries more accurately when "not like" and "not equal to" are used
 * PRO: Fixed image upload naming for uploads with numeric names like 1.png
@@ -86,6 +88,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Show the post type label in the post type dropdown instead of the singular label to avoid blank options for custom post types without a singular name defined
 * PRO: Switched out the case-sensitive sorting in data from entries fields
 * PRO: If a custom display has detail link parameters defined, ONLY allow those parameters
+* PRO: Added an input mask option available via the $frm_input_masks global and 'frm_input_masks' hook
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome

@@ -169,8 +169,9 @@ if ($display['options']){ ?>
                             <option value="top"<?php selected($field['label'], 'top'); ?>><?php _e('Top', 'formidable') ?></option>
                             <option value="left"<?php selected($field['label'], 'left'); ?>><?php _e('Left', 'formidable') ?></option>
                             <option value="right"<?php selected($field['label'], 'right'); ?>><?php _e('Right', 'formidable') ?></option>
+                            <option value="inline"<?php selected($field['label'], 'inline'); ?>><?php _e('Inline (left without a set width)', 'formidable') ?></option>
                             <option value="none"<?php selected($field['label'], 'none'); ?>><?php _e('None', 'formidable') ?></option>
-                            <option value="hidden"<?php selected($field['label'], 'hidden'); ?>><?php _e('Hidden', 'formidable') ?></option>
+                            <option value="hidden"<?php selected($field['label'], 'hidden'); ?>><?php _e('Hidden (but leave the space)', 'formidable') ?></option>
                         </select>
                         </td>  
                     </tr>
