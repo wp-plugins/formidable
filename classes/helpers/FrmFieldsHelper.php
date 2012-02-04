@@ -194,14 +194,7 @@ DEFAULT_HTML;
         }        
         
         //replace [required_class]
-        $required_class = ($field['required'] == '0') ? '' : ' frm_required_field';
-        //insert custom CSS classes
-        if(!empty($field['classes'])){
-            if(!strpos($html, 'frm_form_field '))
-                $required_class .= ' frm_form_field';
-            $required_class .= ' '. $field['classes'];
-        }
-            
+        $required_class = ($field['required'] == '0') ? '' : ' frm_required_field';            
         $html = str_replace('[required_class]', $required_class, $html);  
         
         //replace [label_position]
@@ -215,6 +208,12 @@ DEFAULT_HTML;
         //replace [error_class] 
         $error_class = isset($errors['field'. $field['id']]) ? ' frm_blank_field' : '';
         $error_class .= ' frm_'. $field['label'] .'_container' ;
+        //insert custom CSS classes
+        if(!empty($field['classes'])){
+            if(!strpos($html, 'frm_form_field '))
+                $error_class .= ' frm_form_field';
+            $error_class .= ' '. $field['classes'];
+        }
         $html = str_replace('[error_class]', $error_class, $html);
         
         //replace [entry_key]
