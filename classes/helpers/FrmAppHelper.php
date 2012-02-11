@@ -10,16 +10,16 @@ class FrmAppHelper{
         
         $value = (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
         
-        if(isset($params) and is_array($value)){
+        if(isset($params) and is_array($value) and !empty($value)){
             foreach($params as $k => $p){
                 if(!$k or !is_array($value))
                     continue;
                     
                 $p = trim($p, ']');
-                $value = $value[$p];
+                $value = (isset($value[$p])) ? $value[$p] : $value;
             }
         }
-        
+
         return $value;
     }
     

@@ -57,6 +57,8 @@ ul.frm_form_nav li.last a.current_page{
 .wp-admin .with_frm_style .frm_blank_field input, .wp-admin .with_frm_style .frm_blank_field textarea, .wp-admin .with_frm_style .frm_blank_field select, .wp-admin .with_frm_style .frm_blank_field #recaptcha_area{border-color:#ff0000;}
 .wp-admin .frm_required{color:#ff0000;font-weight:bold;}
 .wp-admin .form-field label.frm_primary_label{display:block;float:none;width:auto;}
+.wp-admin .with_frm_style .wp-editor-container textarea, .wp-admin .postbox .wp-editor-container textarea{border:none;}
+.wp-admin .with_frm_style .mceIframeContainer, .wp-admin .postbox .mceIframeContainer{background-color:#fff;}
 
 .wp-admin .frm_10radio{margin-right:10px;text-align:center;float:left;}
 .wp-admin .frm_form_fields input, .wp-admin .frm_form_fields select, .wp-admin .frm_form_fields textarea{

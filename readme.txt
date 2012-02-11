@@ -93,7 +93,12 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: If a custom display has detail link parameters defined, ONLY allow those parameters
 * PRO: Added an input mask option available via the $frm_input_masks global and 'frm_input_masks' hook
 * PRO: Added type=maximum and type=minimum to the frm-stats shortcode
-* PRO: Minor calendar styling changes
+* PRO: Month and year dropdowns added to custom display calendar, along with a few styling changes
+* PRO: Get the custom display calendar month and day names from WordPress
+* PRO: Allow dynamic default values in HTML field type
+* PRO: Get post status options from WordPress function instead of a copy
+* PRO: Check the default [auto_id] value after submit to make sure it's still unique
+* PRO: If the "round" parameter is used in the frm-stats shortcode, floating zeros will be kept
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
