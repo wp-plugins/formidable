@@ -153,9 +153,8 @@ class FrmEntriesController{
         if(!$form)
             $form = $frm_form->getAll(array(), 'name', 1);
            
-        $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
-         
-        $action = apply_filters('frm_show_new_entry_page', FrmAppHelper::get_param($action, 'new'), $form);
+        $action_var = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+        $action = apply_filters('frm_show_new_entry_page', FrmAppHelper::get_param($action_var, 'new'), $form);
         
         $default_values = array(
             'id' => '', 'form_name' => '', 'paged' => 1, 'form' => $form->id, 'form_id' => $form->id, 
@@ -168,7 +167,10 @@ class FrmEntriesController{
 
         if ($form->id == $values['posted_form_id']){ //if there are two forms on the same page, make sure not to submit both
             foreach ($default_values as $var => $default){
-                $values[$var] = FrmAppHelper::get_param($var, $default);
+                if($var == 'action')
+                    $values[$var] = FrmAppHelper::get_param($action_var, $default);
+                else
+                    $values[$var] = FrmAppHelper::get_param($var, $default);
                 unset($var);
                 unset($default);
             }
@@ -179,10 +181,10 @@ class FrmEntriesController{
                 unset($default);
             }
         }
-        
+
         if(in_array($values['action'], array('create', 'update')) and (!isset($_POST) or (!isset($_POST['action']) and !isset($_POST['frm_action']))))
             $values['action'] = 'new';
-            
+
         return $values;
     }
     

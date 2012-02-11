@@ -131,7 +131,7 @@ BEFORE_HTML;
         if(class_exists('FrmProEntriesController'))
             $html = str_replace('[deletelink]', FrmProEntriesController::entry_delete_link(array()), $html);
         
-        return apply_filters('frm_form_replace_shortcodes', $html, $form);
+        return apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form);
     }
 
 }

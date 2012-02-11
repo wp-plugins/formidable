@@ -3,7 +3,24 @@
 class FrmAppHelper{
     
     function get_param($param, $default=''){
-        return (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
+        if(strpos($param, '[')){
+            $params = explode('[', $param);
+            $param = $params[0];    
+        }
+        
+        $value = (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
+        
+        if(isset($params) and is_array($value)){
+            foreach($params as $k => $p){
+                if(!$k or !is_array($value))
+                    continue;
+                    
+                $p = trim($p, ']');
+                $value = $value[$p];
+            }
+        }
+        
+        return $value;
     }
     
     function get_post_param($param, $default=''){
@@ -146,15 +163,19 @@ class FrmAppHelper{
     function get_unique_key($name='', $table_name, $column, $id = 0, $num_chars = 6){
         global $wpdb;
 
-        if ($name == ''){
-            $max_slug_value = pow(36, $num_chars);
-            $min_slug_value = 37; // we want to have at least 2 characters in the slug
-            $key = base_convert( rand($min_slug_value, $max_slug_value), 10, 36 );
-        }else{
+        $key = '';
+        
+        if (!empty($name)){
             if(function_exists('sanitize_key'))
                 $key = sanitize_key($name);
             else
                 $key = sanitize_title_with_dashes($name);
+        }
+        
+        if(empty($key)){
+            $max_slug_value = pow(36, $num_chars);
+            $min_slug_value = 37; // we want to have at least 2 characters in the slug
+            $key = base_convert( rand($min_slug_value, $max_slug_value), 10, 36 );
         }
 
         if (is_numeric($key) or in_array($key, array('id', 'key', 'created-at', 'detaillink', 'editlink', 'siteurl', 'evenodd')))

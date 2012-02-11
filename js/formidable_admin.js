@@ -158,6 +158,7 @@ else{$kids.children("input[name='"+n+"[]']").removeAttr("checked");}
 
 function frmAddNewForm(form,action){if(form !='') window.location='?page=formidable&frm_action='+action+'&id='+form;}
 function frmRedirectToForm(form,action){if(form !='') window.location='?page=formidable-entries&frm_action='+action+'&form='+form;}
+function frmRedirectToDisplay(form,action){if(form !='') window.location='?page=formidable-entry-templates&frm_action='+action+'&form='+form;}
 
 function frm_add_logic_row(id,ajax_url,form_id){
 jQuery.ajax({

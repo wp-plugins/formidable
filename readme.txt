@@ -69,6 +69,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added the option to add a class to an input. In the customizable HTML, change [input] to [input class="your_class_here"]
 * Added "inline" option to label position options to have a label to the left without the width restriction
 * Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
+* Updated templates with new styling classes
+* Added Polish translation
 * PRO: Added option to use a separate value for the radio, checkbox, and select choices
 * PRO: Added option to use dynamic default values for radio, checkbox, dropdown, and user ID fields
 * PRO: Added option to use Google charts and automatically fall back to them on mobile devices [frm-graph id=x type=bar google=1]
@@ -77,7 +79,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added edit link option to formresults shortcode. [formresults id=x edit_link="Edit" page_id=5]
 * PRO: Added date support to built-in calculations for date1-date2 types of calculations
 * PRO: Added checking for disabled used dates for fields set as post fields in date picker for dates marked as unique
-* PRO: Added not_like option to conditional custom display statements. Ex [if 25 not_like="hello"]...[/if 25]
+* PRO: Added not_like, less_than, and greater_than options to conditional custom display statements. Ex [if 25 not_like="hello"]...[/if 25]
+* PRO: Allow [if created-at less_than='-1 month'] type of statements in the custom display for date fields, created-at, and updated-at
 * PRO: Added option to display the field label in custom displays. Ex [25 show="field_label"]
 * PRO: Added options to custom display shortcode: [display-frm-data id=5 get="whatever" get_value="value"]. This allows the use of [get param="whatever"] in the custom display. 
 * PRO: Updated the frm-entry-links shortcode to use show_delete with type=list
@@ -89,6 +92,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switched out the case-sensitive sorting in data from entries fields
 * PRO: If a custom display has detail link parameters defined, ONLY allow those parameters
 * PRO: Added an input mask option available via the $frm_input_masks global and 'frm_input_masks' hook
+* PRO: Added type=maximum and type=minimum to the frm-stats shortcode
+* PRO: Minor calendar styling changes
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome

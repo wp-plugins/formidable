@@ -21,6 +21,7 @@ class FrmStatisticsController{
     }
     
     function list_displays(){
+        $form = FrmAppHelper::get_param('form', false);
         require(FRM_VIEWS_PATH . '/frm-statistics/list_displays.php');
     }
 

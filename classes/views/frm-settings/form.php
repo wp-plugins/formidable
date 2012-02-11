@@ -34,6 +34,7 @@
     
     <form name="frm_settings_form" method="post" class="frm_settings_form">
         <input type="hidden" name="frm_action" value="process-form" />
+        <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('update-options'); ?>
             
         <div class="general_settings tabs-panel" style="border-top:none;">

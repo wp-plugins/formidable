@@ -213,7 +213,7 @@ class FrmListHelper extends WP_List_Table {
 					$val = "<abbr title='". date($format .' g:i:s A', strtotime($item->{$column_name})) ."'>". $date ."</abbr>";
 					break;
 				case 'shortcode':
-				    $val = "<input type='text' style='font-size:10px;width:100%;' readonly='true' onclick='this.select();' onfocus='this.select();' value='[formidable id={$item->id}]}' /><br/>";
+				    $val = "<input type='text' style='font-size:10px;width:100%;' readonly='true' onclick='this.select();' onfocus='this.select();' value='[formidable id={$item->id}]' /><br/>";
 				    $val .= "<input type='text' style='font-size:10px;width:100%;' readonly='true' onclick='this.select();' onfocus='this.select();' value='[formidable key={$item->form_key}]' />";
 				    
 			        break;

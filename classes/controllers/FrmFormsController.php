@@ -384,7 +384,7 @@ class FrmFormsController{
         }else{
             $columns['entries'] = __('Entries', 'formidable');
             $columns['link'] = __('Direct Link', 'formidable');
-            $columns['shortcode'] = __('Shortcodes', 'formidable');
+            $columns['shortcode'] = __('ShortCodes', 'formidable');
             add_screen_option( 'per_page', array('label' => __('Forms', 'formidable'), 'default' => 20, 'option' => 'formidable_page_formidable_per_page') );
         }
         
