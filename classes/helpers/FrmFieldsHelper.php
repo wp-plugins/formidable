@@ -46,12 +46,12 @@ class FrmFieldsHelper{
         ));
     }
     
-    function setup_new_vars($type='',$form_id=''){
+    function setup_new_vars($type='', $form_id=''){
         global $frm_settings;
         
         $defaults = FrmFieldsHelper::get_default_field_opts($type, $form_id);
         $defaults['field_options']['custom_html'] = FrmFieldsHelper::get_default_html($type);
-        
+
         $values = array();
         
         foreach ($defaults as $var => $default){
@@ -101,8 +101,7 @@ class FrmFieldsHelper{
         
         $values['field_options'] = $record->field_options;
         
-        $defaults = FrmFieldsHelper::get_default_field_opts($values['type'], $record);
-        $defaults = $defaults['field_options'];
+        $defaults = FrmFieldsHelper::get_default_field_opts($values['type'], $record, true);
         
         if($values['type'] == 'captcha'){
             global $frm_settings;
@@ -117,20 +116,23 @@ class FrmFieldsHelper{
         return apply_filters('frm_setup_edit_field_vars', $values, $values['field_options']);
     }
     
-    function get_default_field_opts($type, $field){
-        global $frmdb, $frm_app_helper, $frm_settings;
-        
-        $form_id = (is_numeric($field)) ? $field : $field->form_id;
-        
-        $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
-        $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key') : $field->field_key;
-        
+    function get_default_field_opts($type, $field, $limit=false){
         $field_options = array(
             'size' => '', 'max' => '', 'label' => '', 'blank' => '', 
             'required_indicator' => '*', 'invalid' => '', 'separate_value' => 0,
             'clear_on_focus' => 0, 'default_blank' => 0, 'classes' => '',
             'custom_html' => ''
         );
+        
+        if($limit)
+            return $field_options;
+        
+        global $frmdb, $frm_app_helper, $frm_settings;
+        
+        $form_id = (is_numeric($field)) ? $field : $field->form_id;
+        
+        $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key') : $field->field_key;
+        $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
         
         return array(
             'name' => __('Untitled', 'formidable'), 'description' => '', 

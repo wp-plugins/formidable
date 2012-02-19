@@ -150,7 +150,7 @@ if ($display['options']){ ?>
                 <?php if ($display['size']){ ?>
                     <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?></label></td>
                         <td>
-                        <?php if($field['type'] == 'select'){ ?>
+                        <?php if($field['type'] == 'select' or $field['type'] == 'time'){ ?>
                             <?php if(!isset($values['custom_style']) or $values['custom_style']){ ?>
                                 <input type="checkbox" name="field_options[size_<?php echo $field['id'] ?>]" value="1" <?php echo (isset($field['size']) and $field['size'])? 'checked="checked"':''; ?> /> <span class="howto"><?php _e('automatic width', 'formidable') ?></span>
                             <?php }

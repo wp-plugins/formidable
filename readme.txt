@@ -65,7 +65,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added option to not store entries in the database from a specific form
 * Added option to skip Akismet spam check for logged in users
 * The forms, entries, and custom display page columns that are shown and entries per page are now customizable for those running at least v3.1 of WordPress
-* Added a css class option to the field options with predefined CSS classes for multi-column forms: frm_left_half, frm_right_half, frm_left_third, frm_third, frm_right_third, frm_left_fourth, frm_fourth, frm_right_fourth, frm_left_inline, frm_inline, frm_right_inline, frm_full, frm_grid_first, frm_grid, frm_grid_odd
+* Added a css class option to the field options with predefined CSS classes for multi-column forms: frm_first_half, frm_last_half, frm_first_third, frm_third, frm_last_third, frm_first_fourth, frm_fourth, frm_last_fourth, frm_first_inline, frm_inline, frm_last_inline, frm_full, frm_grid_first, frm_grid, frm_grid_odd
 * Added the option to add a class to an input. In the customizable HTML, change [input] to [input class="your_class_here"]
 * Added "inline" option to label position options to have a label to the left without the width restriction
 * Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
@@ -99,6 +99,14 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Get post status options from WordPress function instead of a copy
 * PRO: Check the default [auto_id] value after submit to make sure it's still unique
 * PRO: If the "round" parameter is used in the frm-stats shortcode, floating zeros will be kept
+* PRO: If greater than or less than options are used with a number field in a custom display, treat them as numbers instead of regular text
+* PRO: Allow user logins for the user_id parameter in the frm-graph, frm-stats, and display-frm-data shortcodes
+* PRO: Fixed the date format d-mm-yyyy to work correctly in the calendar
+* PRO: Added timeout to redirect
+* PRO: Allow decimal values in graphs
+* PRO: Updated the time field to use a true select box instead of a text field
+* PRO: Removed included swfobject and json2 javascripts to use the included WordPress versions
+* PRO: Added 'frm_graph_value' filters to change the value used in the graphs
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome

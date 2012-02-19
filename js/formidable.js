@@ -258,7 +258,8 @@ function frmGetFormErrors(object,ajax_url){
 						if(jump==''){
 							jump='#frm_field_'+key+'_container';
 							var new_position=jQuery(jump).offset();
-							if(new_position)
+							var cOff = document.documentElement.scrollTop || document.body.scrollTop;
+							if(new_position && cOff > new_position.top)
 								window.scrollTo(new_position.left,new_position.top);
 						}
 						jQuery('#frm_field_'+key+'_container').addClass('frm_blank_field');

@@ -35,20 +35,26 @@
 .frm_form_field.frm_left_half{margin-right:4%;}
 .frm_form_field.frm_left_half.frm_left_container .frm_primary_label, .frm_form_field.frm_right_half.frm_left_container .frm_primary_label, .frm_form_field.frm_left_half.frm_right_container .frm_primary_label, .frm_form_field.frm_right_half.frm_right_container .frm_primary_label{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;max-width:25%;margin-right:0;margin-left:0;}
 
-.frm_form_field.frm_left_half.frm_left_container .frm_primary_label, .frm_form_field.frm_right_half.frm_left_container .frm_primary_label{padding-right:10px;}
-.frm_form_field.frm_left_half.frm_right_container .frm_primary_label, .frm_form_field.frm_right_half.frm_right_container .frm_primary_label{padding-left:10px;}
+
+
+.frm_form_field.frm_left_half.frm_left_container .frm_primary_label, .frm_form_field.frm_right_half.frm_left_container .frm_primary_label, .frm_form_field.frm_first_half.frm_left_container .frm_primary_label, .frm_form_field.frm_last_half.frm_left_container .frm_primary_label{padding-right:10px;}
+.frm_form_field.frm_left_half.frm_right_container .frm_primary_label, .frm_form_field.frm_right_half.frm_right_container .frm_primary_label, .frm_form_field.frm_first_half.frm_right_container .frm_primary_label, .frm_form_field.frm_last_half.frm_right_container .frm_primary_label{padding-left:10px;}
 .frm_form_field.frm_left_half.frm_left_container input, .frm_form_field.frm_right_half.frm_left_container input,
 .frm_form_field.frm_left_half.frm_left_container select, .frm_form_field.frm_right_half.frm_left_container select,
 .frm_form_field.frm_left_half.frm_left_container textarea, .frm_form_field.frm_right_half.frm_left_container textarea,
 .frm_form_field.frm_left_half.frm_right_container input, .frm_form_field.frm_right_half.frm_right_container input,
 .frm_form_field.frm_left_half.frm_right_container select, .frm_form_field.frm_right_half.frm_right_container select,
-.frm_form_field.frm_left_half.frm_right_container textarea, .frm_form_field.frm_right_half.frm_right_container textarea{max-width:75%;}
-.frm_form_field.frm_left_third, .frm_form_field.frm_third, .frm_form_field.frm_right_third{width:30%;}
-.frm_form_field.frm_left_third, .frm_form_field.frm_third{margin-right:3%;}
-.frm_form_field.frm_left_fourth, .frm_form_field.frm_fourth,
-.frm_form_field.frm_right_fourth{width:22%;}
-.frm_form_field.frm_left_fourth, .frm_form_field.frm_fourth{margin-right:4%;}
-.frm_form_field.frm_left_inline, .frm_form_field.frm_inline, .frm_form_field.frm_right_inline{width:auto;}
-.frm_form_field.frm_left_inline, .frm_form_field.frm_inline{margin-right:4%;}
+.frm_form_field.frm_left_half.frm_right_container textarea, .frm_form_field.frm_right_half.frm_right_container textarea, .frm_form_field.frm_first_half.frm_left_container input, .frm_form_field.frm_last_half.frm_left_container input,
+.frm_form_field.frm_first_half.frm_left_container select, .frm_form_field.frm_last_half.frm_left_container select,
+.frm_form_field.frm_first_half.frm_left_container textarea, .frm_form_field.frm_last_half.frm_left_container textarea,
+.frm_form_field.frm_first_half.frm_right_container input, .frm_form_field.frm_last_half.frm_right_container input,
+.frm_form_field.frm_first_half.frm_right_container select, .frm_form_field.frm_last_half.frm_right_container select,
+.frm_form_field.frm_first_half.frm_right_container textarea, .frm_form_field.frm_last_half.frm_right_container textarea{max-width:75%;}
+.frm_form_field.frm_left_third, .frm_form_field.frm_third, .frm_form_field.frm_right_third, .frm_form_field.frm_first_third, .frm_form_field.frm_last_third{width:30%;}
+.frm_form_field.frm_left_third, .frm_form_field.frm_first_third, .frm_form_field.frm_third{margin-right:5%;}
+
+.frm_form_field.frm_left_fourth, .frm_form_field.frm_fourth, .frm_form_field.frm_first_fourth{margin-right:4%;}
+.frm_form_field.frm_left_inline, .frm_form_field.frm_first_inline, .frm_form_field.frm_inline, .frm_form_field.frm_right_inline, .frm_form_field.frm_last_inline{width:auto;}
+.frm_form_field.frm_left_inline, .frm_form_field.frm_first_inline, .frm_form_field.frm_inline{margin-right:4%;}
 .frm_full, .frm_full input, .frm_full select, .frm_full textarea{width:100% !important;}
 .frm_full .wp-editor-wrap input{width:auto !important;}

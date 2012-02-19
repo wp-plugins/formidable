@@ -255,8 +255,7 @@ class FrmAppHelper{
                     }
                 }*/
                 
-                $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field);
-                $opt_defaults = $opt_defaults['field_options'];
+                $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field, true);
                 
                 foreach ($opt_defaults as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);

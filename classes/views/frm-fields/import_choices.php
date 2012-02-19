@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
-
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
     <title><?php bloginfo('name'); ?></title>
@@ -22,7 +21,7 @@
 #wpadminbar{display:none;}
 .prepop{
     float:left;
-    width:240px;
+    width:235px;
     list-style:none;
     overflow:auto;
     border-right: 2px solid #DEDEDE;
@@ -56,7 +55,7 @@
     <li><a onclick='frmPrePop(<?php echo str_replace("'", '&#145;', json_encode($pop)) ?>); return false;'><?php echo $label ?></a></li>
     <?php } ?>
 </ul>
-<textarea name="frm_bulk_options" id="frm_bulk_options" rows="13" style="width:335px;float:right;">
+<textarea name="frm_bulk_options" id="frm_bulk_options" style="height:240px;width:335px;float:right;">
 <?php foreach($field->options as $fopt){
 if(is_array($fopt)){
     $label = (isset($fopt['label'])) ? $fopt['label'] : reset($fopt);

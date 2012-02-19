@@ -360,11 +360,9 @@ class FrmFieldsController{
         global $frm_settings;
         
         $class = $field['type'];
-        if($field['type'] == 'date')
-            $class .= " frm_date";
         
         if(isset($field['size']) and $field['size'] > 0){
-            if($field['type'] != 'textarea' and $field['type'] != 'select' and $field['type'] != 'data')
+            if(!in_array($field['type'], array('textarea', 'select', 'data', 'time')))
                 echo ' size="'. $field['size'] .'"';
             $class .= " auto_width";
         }
