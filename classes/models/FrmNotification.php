@@ -8,7 +8,7 @@ class FrmNotification{
         if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
         global $frm_form, $frm_entry, $frm_entry_meta;
 
-        $frm_blogname = get_option('blogname');
+        $frm_blogname = wp_specialchars_decode( get_option('blogname'), ENT_QUOTES );
         $entry = $frm_entry->getOne($entry_id);
         $form = $frm_form->getOne($form_id);
         $form->options = maybe_unserialize($form->options);
@@ -65,7 +65,7 @@ class FrmNotification{
   
     function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true, $attachments=array()){
         $content_type   = ($plain_text) ? 'text/plain' : 'text/html';
-        $reply_to_name  = ($reply_to_name == '') ? get_option('blogname') : $reply_to_name; //senders name
+        $reply_to_name  = ($reply_to_name == '') ? wp_specialchars_decode( get_option('blogname'), ENT_QUOTES ) : $reply_to_name; //senders name
         $reply_to       = ($reply_to == '') ? get_option('admin_email') : $reply_to; //senders e-mail address
         
         if($to_email == '[admin_email]')
@@ -73,11 +73,12 @@ class FrmNotification{
             
         $recipient      = $to_email; //recipient
         $header         = "From: \"{$reply_to_name}\" <{$reply_to}>\r\n Reply-To: \"{$reply_to_name}\" <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
-        $subject        = html_entity_decode(strip_tags(stripslashes($subject)));
+        $subject        = wp_specialchars_decode(strip_tags(stripslashes($subject)), ENT_QUOTES );
+        
         $message        = do_shortcode($message);
         $message        = wordwrap(stripslashes($message), 70, "\r\n"); //in case any lines are longer than 70 chars
         if($plain_text)
-            $message    = html_entity_decode(strip_tags($message));
+            $message    = wp_specialchars_decode(strip_tags($message), ENT_QUOTES );
 
         $header         = apply_filters('frm_email_header', $header, compact('to_email', 'subject'));
         

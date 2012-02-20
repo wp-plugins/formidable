@@ -70,6 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added "inline" option to label position options to have a label to the left without the width restriction
 * Switched the "action" parameter to "frm_action" to prevent conflicts. If no "frm_action" value is present, "action" will still be used
 * Updated templates with new styling classes
+* Show quotation marks instead of entities in the site name in email notifications
 * Added Polish translation
 * PRO: Added option to use a separate value for the radio, checkbox, and select choices
 * PRO: Added option to use dynamic default values for radio, checkbox, dropdown, and user ID fields
@@ -107,6 +108,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated the time field to use a true select box instead of a text field
 * PRO: Removed included swfobject and json2 javascripts to use the included WordPress versions
 * PRO: Added 'frm_graph_value' filters to change the value used in the graphs
+* PRO: Populate strings to be translated without requiring a visit to the WPML plugin
+* PRO: If the where options in a custom display include a GET or POST value that is an array, translate the search to check each value instead of searching for a comma-separated value in one record.
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
