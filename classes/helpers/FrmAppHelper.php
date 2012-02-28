@@ -429,10 +429,14 @@ class FrmAppHelper{
     
     function frm_get_main_message( $message = ''){
         global $frmpro_is_installed;
+        
+        if($frmpro_is_installed)
+            return $message;
+            
         include_once(ABSPATH."/wp-includes/class-IXR.php");
 
         $url = ($frmpro_is_installed) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
-        $client = new IXR_Client($url.'xmlrpc.php',  false, 80, 15);
+        $client = new IXR_Client($url.'xmlrpc.php', false, 80, 5);
         
         if ($client->query('frm.get_main_message'))
             $message = $client->getResponse();

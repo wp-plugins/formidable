@@ -2,7 +2,7 @@
 Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
-Requires at least: 2.8
+Requires at least: 2.9
 Tested up to: 3.3.1
 Stable tag: 1.06.02
 
@@ -102,14 +102,20 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: If the "round" parameter is used in the frm-stats shortcode, floating zeros will be kept
 * PRO: If greater than or less than options are used with a number field in a custom display, treat them as numbers instead of regular text
 * PRO: Allow user logins for the user_id parameter in the frm-graph, frm-stats, and display-frm-data shortcodes
-* PRO: Fixed the date format d-mm-yyyy to work correctly in the calendar
-* PRO: Added timeout to redirect
-* PRO: Allow decimal values in graphs
+* PRO: Fixed the date format d-mm-yyyy to work correctly in the date field
+* PRO: Added timeout to redirect so users will see the redirect message for a few seconds before being redirected
+* PRO: Allow decimal values in graphs instead of forcing integers
 * PRO: Updated the time field to use a true select box instead of a text field
 * PRO: Removed included swfobject and json2 javascripts to use the included WordPress versions
 * PRO: Added 'frm_graph_value' filters to change the value used in the graphs
 * PRO: Populate strings to be translated without requiring a visit to the WPML plugin
 * PRO: If the where options in a custom display include a GET or POST value that is an array, translate the search to check each value instead of searching for a comma-separated value in one record.
+* PRO: Added entry key and entry ID to the where options in custom displays
+* PRO: Added HTML classes on the search form, so if themes include styling for the WP search form, it will be applied to the [frm-search] as well
+* PRO: Allow multiple data from entries fields to be searched using the frm-search shortcode instead of only one
+* PRO: Fixed update checking to not cause a slow down if the formidablepro.com server is down
+* PRO: Updated the user_id parameter for the display-frm-data shortcode to be used even if there's no user ID field selected in the where options for that custom display
+* PRO: Added DOING_AJAX flags for WPML compatibility
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome

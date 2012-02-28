@@ -31,7 +31,7 @@ define('FRM_TEMPLATES_PATH', FRM_PATH.'/classes/templates');
 
 global $frm_siteurl;
 $frm_siteurl = get_bloginfo('url');
-if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $frm_siteurl)){
+if(is_ssl() and (!preg_match('/^https:\/\/.*\..*$/', $frm_siteurl) or !preg_match('/^https:\/\/.*\..*$/', WP_PLUGIN_URL))){
     $frm_siteurl = str_replace('http://', 'https://', $frm_siteurl);
     define('FRM_URL', str_replace('http://', 'https://', WP_PLUGIN_URL.'/formidable'));
 }else

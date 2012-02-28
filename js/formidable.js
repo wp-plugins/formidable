@@ -237,7 +237,7 @@ function frmGetFormErrors(object,ajax_url){
 	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,dataType:'json',
-	    data:jQuery(object).serialize()+"&controller=entries",
+	    data:jQuery(object).serialize()+"&controller=entries&_ajax_nonce=1",
 	    success:function(errObj){
 			jQuery(object).find('input[type="submit"]').removeAttr('disabled');
 	    	if(errObj=='' || !errObj){

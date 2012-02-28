@@ -134,7 +134,7 @@ if ($display['options']){ ?>
                         <td><label><?php _e('Required Field', 'formidable') ?></label></td>
                         <td><input type="checkbox" id="frm_req_field_<?php echo $field['id'] ?>" name="field_options[required_<?php echo $field['id'] ?>]" value="1" <?php echo ($field['required']) ? 'checked="checked"': ''; ?> onclick="frm_mark_required(<?php echo $field['id'] ?>,<?php echo $field_required ?>)" /> <span><?php _e('Required', 'formidable') ?></span>
                         <span class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>&mdash; <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
-                            <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo htmlentities($field['required_indicator']); ?>" />
+                            <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['required_indicator']); ?>" />
                         </span>
                         </td>
                     </tr>

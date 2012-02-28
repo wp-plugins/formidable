@@ -14,7 +14,7 @@ class FrmAppController{
         add_filter('the_content', array( &$this, 'page_route' ), 10);
         add_action('init', array(&$this, 'front_head'));
         add_action('wp_footer', array(&$this, 'footer_js'), 1, 0);
-        add_action('admin_init', array( &$this, 'admin_js'));
+        add_action('admin_init', array( &$this, 'admin_js'), 11);
         register_activation_hook(FRM_PATH.'/formidable.php', array( &$this, 'install' ));
         add_action('wp_ajax_frm_install', array(&$this, 'install') );
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
@@ -145,7 +145,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             wp_enqueue_script('admin-widgets');
             wp_enqueue_style('widgets');
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery', 'jquery-ui-draggable'), $frm_version);
-            wp_enqueue_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version);
+            wp_enqueue_script('formidable');
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
             wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
             add_thickbox();
@@ -163,6 +163,8 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 12))
                 $this->install($old_db_version);
         }
+
+        wp_register_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version, true);
         wp_enqueue_script('jquery');
         
         if(!is_admin() and $frm_settings->load_style == 'all'){
@@ -209,8 +211,10 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             }
         }
 
-        if(!is_admin() and $location != 'header' and !empty($frm_forms_loaded)) //load formidable js  
-            echo '<script type="text/javascript" src="'. FRM_URL .'/js/formidable.js?ver='.$frm_version.'"></script>'."\n"; 
+        if(!is_admin() and $location != 'header' and !empty($frm_forms_loaded)){ //load formidable js  
+            global $wp_scripts;
+            $wp_scripts->do_items( array('formidable') );
+        }
     }
   
     function install($old_db_version=false){
