@@ -119,6 +119,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated the user_id parameter for the display-frm-data shortcode to be used even if there's no user ID field selected in the where options for that custom display
 * PRO: Added DOING_AJAX flags for WPML compatibility
 * PRO: Added time_ago=1 option for displaying dates. Ex: [created-at time_ago=1] or [25 time_ago=1]
+* PRO: Updated file upload process to change the file path before uploading instead of moving the files afterwards
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
