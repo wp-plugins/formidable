@@ -15,8 +15,8 @@ There are dozens of form-building plugins out there to create forms, but most ar
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
 
 = Features =
-* Saves all responses to the database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
-* Integrates with reCAPTCHA and Akismet for Spam control (and a math captcha plugin in Pro)
+* Save all responses to the database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
+* Integrate with reCAPTCHA and Akismet for Spam control (and a math captcha plugin in Pro)
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Most of the form HTML is customizable on the form settings pages
