@@ -134,7 +134,7 @@ class FrmSettings{
         $this->admin_permission = stripslashes($this->admin_permission);
         
         if(!isset($this->email_to))
-            $this->email_to = get_option('admin_email');
+            $this->email_to = '[admin_email]';
         
         $frm_roles = FrmAppHelper::frm_capabilities();
         foreach($frm_roles as $frm_role => $frm_role_description){
@@ -201,7 +201,10 @@ class FrmSettings{
     function store(){
         // Save the posted value in the database
 
-        update_option( 'frm_options', $this);
+        update_option('frm_options', $this);
+        
+        delete_transient('frm_options');
+        set_transient('frm_options', $this);
 
         do_action( 'frm_store_settings' );
     }

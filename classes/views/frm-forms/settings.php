@@ -154,7 +154,8 @@
                          } ?>
                      </select>
 
-                     <span class="howto" style="margin-left:10px;"><?php _e('Email', 'formidable') ?></span> &lt;<select name="options[reply_to]">
+                     <span class="howto" style="margin-left:10px;"><?php _e('Email', 'formidable') ?></span> 
+                     &lt;<select name="options[reply_to]">
                          <option value=""><?php echo get_option('admin_email') ?></option>
                          <?php 
                          if(!empty($values['fields'])){

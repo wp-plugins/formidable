@@ -66,7 +66,7 @@ class FrmNotification{
     function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true, $attachments=array()){
         $content_type   = ($plain_text) ? 'text/plain' : 'text/html';
         $reply_to_name  = ($reply_to_name == '') ? wp_specialchars_decode( get_option('blogname'), ENT_QUOTES ) : $reply_to_name; //senders name
-        $reply_to       = ($reply_to == '') ? get_option('admin_email') : $reply_to; //senders e-mail address
+        $reply_to       = ($reply_to == '' or $reply_to == '[admin_email]') ? get_option('admin_email') : $reply_to; //senders e-mail address
         
         if($to_email == '[admin_email]')
             $to_email = get_option('admin_email');

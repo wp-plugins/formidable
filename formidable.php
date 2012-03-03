@@ -69,19 +69,25 @@ $frm_app_helper = new FrmAppHelper();
 /***** SETUP SETTINGS OBJECT *****/
 global $frm_settings;
 
-$frm_settings = get_option('frm_options');
-
-// If unserializing didn't work
+$frm_settings = get_transient('frm_options');
 if(!is_object($frm_settings)){
-    if($frm_settings) //workaround for W3 total cache conflict
+    if($frm_settings){ //workaround for W3 total cache conflict
         $frm_settings = unserialize(serialize($frm_settings));
-    else
-        $frm_settings = new FrmSettings();
-    update_option('frm_options', $frm_settings);
+    }else{
+        $frm_settings = get_option('frm_options');
+
+        // If unserializing didn't work
+        if(!is_object($frm_settings)){
+            if($frm_settings) //workaround for W3 total cache conflict
+                $frm_settings = unserialize(serialize($frm_settings));
+            else
+                $frm_settings = new FrmSettings();
+            update_option('frm_options', $frm_settings);
+            set_transient('frm_options', $frm_settings);
+        }
+    }
 }
-
 $frm_settings->set_default_options(); // Sets defaults for unset options
-
 
 // Instansiate Models
 require_once(FRM_MODELS_PATH.'/FrmDb.php');  

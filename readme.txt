@@ -72,6 +72,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Updated templates with new styling classes
 * Show quotation marks instead of entities in the site name in email notifications
 * Added Polish translation
+* PRO: Removed a vulnerable Open Flash Charts file. If you do not update, be sure to REMOVE THIS FILE! (pro/js/ofc-library/ofc_upload_image.php)
 * PRO: Added option to use a separate value for the radio, checkbox, and select choices
 * PRO: Added option to use dynamic default values for radio, checkbox, dropdown, and user ID fields
 * PRO: Added option to use Google charts and automatically fall back to them on mobile devices [frm-graph id=x type=bar google=1]
@@ -83,6 +84,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added not_like, less_than, and greater_than options to conditional custom display statements. Ex [if 25 not_like="hello"]...[/if 25]
 * PRO: Allow [if created-at less_than='-1 month'] type of statements in the custom display for date fields, created-at, and updated-at
 * PRO: Added option to display the field label in custom displays. Ex [25 show="field_label"]
+* PRO: Added option to turn off auto paragraphs for paragraph fields. Ex [25 wpautop=0]
 * PRO: Added options to custom display shortcode: [display-frm-data id=5 get="whatever" get_value="value"]. This allows the use of [get param="whatever"] in the custom display. 
 * PRO: Updated the frm-entry-links shortcode to use show_delete with type=list
 * PRO: Updated custom display where options to fetch entries more accurately when "not like" and "not equal to" are used
@@ -116,6 +118,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed update checking to not cause a slow down if the formidablepro.com server is down
 * PRO: Updated the user_id parameter for the display-frm-data shortcode to be used even if there's no user ID field selected in the where options for that custom display
 * PRO: Added DOING_AJAX flags for WPML compatibility
+* PRO: Added time_ago=1 option for displaying dates. Ex: [created-at time_ago=1] or [25 time_ago=1]
 
 = 1.06.02 =
 * Fixed selection of dropdowns on the form builder page in Chrome
