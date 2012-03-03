@@ -16,15 +16,16 @@ There are dozens of form-building plugins out there to create forms, but most ar
 
 = Features =
 * Saves all responses to the database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
-* Integrates with reCAPTCHA and Akismet for Spam control
-* Shortcode [formidable id=x] for use in pages, posts, or text widgets for WordPress version 2.8 and above.
+* Integrates with reCAPTCHA and Akismet for Spam control (and a math captcha plugin in Pro)
+* Shortcode [formidable id=x] for use in pages, posts, or text widgets
 * Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
-* Customize most HTML when editing the form
+* Most of the form HTML is customizable on the form settings pages
 * Create forms from existing templates or add your own. A contact form template is included.
-* Direct links available for previews and emailing surveys with and without integration with your current theme. 
-* Select an email address to send form responses on the form settings page under the "Emails" tab.
-* Input default values into form fields with the option to clear when clicked
+* Direct links available for previews and emailing surveys with and without integration with your current theme.
+* Select an email address to send form responses on the form settings page under the "Emails" tab. This defaults to send to the admin email in your WordPress settings.
+* Use default values in form fields with the option to clear when clicked
 * PHP ninjas can display data in templates using PHP functions found in the files in formidable/classes/models. However, there is currently no documentation for these functions.
+* Pro users can view, add, edit, and delete entries from the back- or front-end
 
 == Installation ==
 1. Upload `formidable` folder to the `/wp-content/plugins/` directory
