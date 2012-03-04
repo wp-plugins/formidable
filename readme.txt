@@ -30,9 +30,8 @@ There are dozens of form-building plugins out there to create forms, but most ar
 == Installation ==
 1. Upload `formidable` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu
-3. Go to the Formidable 'Settings' menu to select a front-end preview page.
-4. Create a new custom form or use the existing Contact Form template.
-5. Use shortcode [formidable id=x] in pages, posts, or text widgets. (Requires WordPress version 2.8 or higher)
+3. Go to the Formidable menu and create a new custom form or use the existing Contact Form template.
+4. Use shortcode [formidable id=x] in pages, posts, or text widgets.
 
 == Screenshots ==
 1. Form creation page
