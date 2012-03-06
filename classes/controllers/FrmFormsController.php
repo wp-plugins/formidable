@@ -27,12 +27,14 @@ class FrmFormsController{
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-new', array(&$this, 'head'));
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-templates', array(&$this, 'head'));
         
+        if(class_exists('WP_List_Table')){
         add_filter('manage_toplevel_page_formidable_columns', array( &$this, 'get_columns' ), 0 );
 	    add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_columns', array( &$this, 'get_columns' ), 0 );
 	    add_filter('manage_toplevel_page_formidable_sortable_columns', array(&$this, 'get_sortable_columns'));
 	    add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_sortable_columns', array(&$this, 'get_sortable_columns'));
 	    add_filter('get_user_option_managetoplevel_page_formidablecolumnshidden', array(&$this, 'hidden_columns'));
 	    add_filter('get_user_option_manage'. sanitize_title($frm_settings->menu) .'_page_formidable-templatescolumnshidden', array(&$this, 'hidden_columns'));
+        }
     }
     
     function lower_menu(){
