@@ -83,7 +83,7 @@ $("img.frm_help[title]").hover(
 );
 
 $("select[name='frm_theme_selector'] option").each(function(){
-$(this).hover(function(){$('#frm_show_cal').html('<img src="'+ $(this).attr('id') +'" alt="" height="27px" width="30px"/>');},'');
+$(this).hover(function(){$('#frm_show_cal').removeClass().addClass($(this).attr('id'));},'');
 });
 
 $("select[name='frm_theme_selector']").change(function(){

@@ -127,7 +127,14 @@ for(i=0; i<len; i++){
             else{show_fields[f.HideField][i]={'funcName':'frmGetDataOpts','f':f,'sel':selected};}
         }
     }else{
-		show_fields[f.HideField][i]=frmOperators(f.Condition,f.Value,selected);
+		if(typeof(f.Value)=='undefined' && f.Type.indexOf('data') === 0){
+			if(selected=='') f.Value='1';
+			else f.Value=selected;
+			show_fields[f.HideField][i]=frmOperators(f.Condition,f.Value,selected);
+			f.Value=undefined;
+		}else{
+			show_fields[f.HideField][i]=frmOperators(f.Condition,f.Value,selected);
+		}
     }
 
 	if(f.FieldName!=field_id) selected=prevSel;
@@ -253,18 +260,18 @@ function frmGetFormErrors(object,ajax_url){
 	            jQuery('.form-field .frm_error').replaceWith('');
 				var jump='';
 	            for (var key in errObj){
-					if(jQuery('#frm_field_'+key+'_container').length && jQuery('#frm_field_'+key+'_container').is(":visible")){
+					if(jQuery(object).find('#frm_field_'+key+'_container').length && jQuery('#frm_field_'+key+'_container').is(":visible")){
 						cont_submit=false;
 						if(jump==''){
 							jump='#frm_field_'+key+'_container';
-							var new_position=jQuery(jump).offset();
+							var new_position=jQuery(object).find(jump).offset();
 							var cOff = document.documentElement.scrollTop || document.body.scrollTop;
 							if(new_position && cOff > new_position.top)
 								window.scrollTo(new_position.left,new_position.top);
 						}
-						jQuery('#frm_field_'+key+'_container').addClass('frm_blank_field');
+						jQuery(object).find('#frm_field_'+key+'_container').addClass('frm_blank_field');
 						if(typeof(frmThemeOverride_frmPlaceError) == 'function'){frmThemeOverride_frmPlaceError(key,errObj);}
-						else{jQuery('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>');}
+						else{jQuery(object).find('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>');}
 					}
 				}
 				if(cont_submit) object.submit();

@@ -68,6 +68,8 @@ class FrmField{
       global $wpdb, $frmdb;
 
       do_action('frm_before_destroy_field', $id);
+      do_action('frm_before_destroy_field_'. $id);
+      
       $wpdb->query("DELETE FROM $frmdb->entry_metas WHERE field_id='$id'");
       return $wpdb->query("DELETE FROM $frmdb->fields WHERE id='$id'");
     }

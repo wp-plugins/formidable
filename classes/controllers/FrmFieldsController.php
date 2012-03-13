@@ -356,19 +356,20 @@ class FrmFieldsController{
         return $display;
     }
     
-    function input_html($field){
+    function input_html($field, $echo=true){
         global $frm_settings;
         
         $class = $field['type'];
+        $add_html = '';
         
         if(isset($field['size']) and $field['size'] > 0){
             if(!in_array($field['type'], array('textarea', 'select', 'data', 'time')))
-                echo ' size="'. $field['size'] .'"';
+                $add_html .= ' size="'. $field['size'] .'"';
             $class .= " auto_width";
         }
         
         if(isset($field['max']) and !in_array($field['type'], array('textarea', 'rte')) and !empty($field['max']))
-            echo ' maxlength="'. $field['max'] .'"';
+            $add_html .= ' maxlength="'. $field['max'] .'"';
         
         if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){
             $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
@@ -376,7 +377,7 @@ class FrmFieldsController{
             
             if(isset($field['required']) and $field['required']){
                 //if($field['type'] != 'checkbox')
-                //    echo ' required="required"';
+                //    $add_html .= ' required="required"';
                     
                 if($field['type'] == 'file' and $action == 'edit'){
                     //don't add the required class if this is a file upload when editing
@@ -385,14 +386,14 @@ class FrmFieldsController{
             }
 
             //if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and isset($field['clear_on_focus']) and $field['clear_on_focus'] and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
-            //    echo ' placeholder="'.$field['default_value'].'"';
+            //    $add_html .= ' placeholder="'.$field['default_value'].'"';
 
             if(isset($field['clear_on_focus']) and $field['clear_on_focus'] and !empty($field['default_value'])){
                 $val = str_replace(array("\r\n", "\n"), '\r', addslashes(str_replace('&#039;', "'", esc_attr($field['default_value']))));
-                echo ' onfocus="frmClearDefault('."'". $val ."'". ',this)" onblur="frmReplaceDefault('."'". $val ."'". ',this)"';
+                $add_html .= ' onfocus="frmClearDefault('."'". $val ."'". ',this)" onblur="frmReplaceDefault('."'". $val ."'". ',this)"';
                 
                 if($field['value'] == $field['default_value'])
-                    echo ' style="font-style:italic;"';
+                    $add_html .= ' style="font-style:italic;"';
             }
         }
         
@@ -400,7 +401,12 @@ class FrmFieldsController{
             $class .= ' '. $field['input_class'];
         
         $class = apply_filters('frm_field_classes', $class, $field);
-        echo ' class="'.$class.'"';
+        $add_html .= ' class="'.$class.'"';
+        
+        if($echo)
+            echo $add_html;
+        
+        return $add_html;
     }
     
     function check_value($opt, $opt_key, $field){

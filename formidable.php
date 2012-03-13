@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.03
+Version: 1.06.04
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -52,7 +52,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.06.03';
+$frm_version = '1.06.04';
 $frm_db_version = 8;
 
 global $frm_ajax_url;
@@ -141,9 +141,9 @@ $frm_settings_controller    = new FrmSettingsController();
 $frm_statistics_controller  = new FrmStatisticsController();
 
 // Instansiate Helpers
-require_once(FRM_HELPERS_PATH. "/FrmEntriesHelper.php");
-require_once(FRM_HELPERS_PATH. "/FrmFieldsHelper.php");
-require_once(FRM_HELPERS_PATH. "/FrmFormsHelper.php");
+require_once(FRM_HELPERS_PATH. '/FrmEntriesHelper.php');
+require_once(FRM_HELPERS_PATH. '/FrmFieldsHelper.php');
+require_once(FRM_HELPERS_PATH. '/FrmFormsHelper.php');
 
 global $frm_fields_helper;
 
@@ -153,7 +153,7 @@ global $frmpro_is_installed;
 $frmpro_is_installed = $frm_update->pro_is_installed_and_authorized();
 
 if($frmpro_is_installed)
-  require_once(FRM_PATH.'/pro/formidable-pro.php');
+  require_once(FRM_PATH .'/pro/formidable-pro.php');
     
 // The number of items per page on a table
 global $frm_page_size;
@@ -164,7 +164,7 @@ $frm_sidebar_width = '';
 
 // Register Widgets
 if(class_exists('WP_Widget')){
-    require_once(FRM_PATH . "/classes/widgets/FrmShowForm.php");
+    require_once(FRM_PATH . '/classes/widgets/FrmShowForm.php');
     add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
 }
 

@@ -18,6 +18,7 @@ class FrmAppController{
         register_activation_hook(FRM_PATH.'/formidable.php', array( &$this, 'install' ));
         add_action('wp_ajax_frm_install', array(&$this, 'install') );
         add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
+        add_action('wp_ajax_frm_deauthorize', array(&$this, 'deauthorize') );
 
         // Used to process standalone requests
         add_action('init', array(&$this, 'parse_standalone_request'));
@@ -232,6 +233,11 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             global $frm_settings;
             wp_die($frm_settings->admin_permission);
         }
+    }
+    
+    function deauthorize(){
+        delete_option('frmpro-credentials');
+        delete_option('frmpro-authorized');
     }
     
     // Routes for wordpress pages -- we're just replacing content here folks.

@@ -1,5 +1,5 @@
 <?php
-global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $user_ID, $frm_settings;
+global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $user_ID, $frm_settings, $frm_created_entry, $frm_form_params;
 $form_name = $form->name;
 $form->options = stripslashes_deep(maybe_unserialize($form->options));
 
@@ -7,12 +7,13 @@ $submit = isset($form->options['submit_value']) ? $form->options['submit_value']
 $saved_message = isset($form->options['success_msg']) ? $form->options['success_msg'] : $frm_settings->success_msg;
 
 $params = FrmEntriesController::get_params($form);
+
 $message = $errors = '';
 
 FrmEntriesHelper::enqueue_scripts($params);
 
 if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and isset($_POST)){
-    $errors = $frm_entry->validate($_POST);
+    $errors = $frm_created_entry[$form->id]['errors'];
 
     if( !empty($errors) ){
         $fields = FrmFieldsHelper::get_form_fields($form->id, true);
@@ -25,7 +26,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
         if (apply_filters('frm_continue_to_create', true, $form->id)){
             $values = FrmEntriesHelper::setup_new_vars($fields, $form, true);
-            $created = $frm_entry->create( $_POST );
+            $created = $frm_created_entry[$form->id]['entry_id'];
             $saved_message = apply_filters('frm_content', $saved_message, $form, $created);
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form->options);
             if (!$created or !is_numeric($created) or $conf_method == 'message'){
@@ -47,6 +48,8 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
                 }
             }else
                 do_action('frm_success_action', $conf_method, $form, $form->options, $created);
+                
+            do_action('frm_after_entry_processed', array( 'entry_id' => $created, 'form' => $form));
         }
     }
 }else{

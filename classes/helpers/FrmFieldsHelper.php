@@ -278,21 +278,25 @@ DEFAULT_HTML;
     }
     
     function dropdown_categories($args){
+        global $frmpro_is_installed;
+        
         $defaults = array('field' => false, 'name' => false);
         extract(wp_parse_args($args, $defaults));
         
         if(!$field) return;
         if(!$name) $name = "item_meta[$field[id]]";
+        $id = 'field_'. $field['field_key'];
+        $class = $field['type'];
         
         $selected = is_array($field['value']) ? reset($field['value']) : $field['value'];
 
         $exclude = (is_array($field['exclude_cat'])) ? implode(',', $field['exclude_cat']) : $field['exclude_cat'];
         $exclude = apply_filters('frm_exclude_cats', $exclude, $field);
         
+        
         $args = array(
             'show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name,
-            'id' => 'field_'. $field['field_key'], 'exclude' => $exclude,
-            'class' => $field['type'], 'selected' => $selected, 
+            'id' => $id, 'exclude' => $exclude, 'class' => $class, 'selected' => $selected, 
             'hide_empty' => false, 'echo' => 0, 'orderby' => 'name' 
         );
         
@@ -305,7 +309,15 @@ DEFAULT_HTML;
             }
         }
         
-        return wp_dropdown_categories($args);
+        $dropdown = wp_dropdown_categories($args);
+
+        $add_html = FrmFieldsController::input_html($field, false);
+        
+        if($frmpro_is_installed)
+            $add_html .= FrmProFieldsController::input_html($field, false);
+        
+        $dropdown = str_replace("<select name='$name' id='$id' class='$class'", "<select name='$name' id='$id' ". $add_html, $dropdown);
+        return $dropdown;
     }
     
     function show_onfocus_js($field_id, $clear_on_focus){ ?>

@@ -7,8 +7,10 @@ class FrmEntriesController{
     
     function FrmEntriesController(){
         add_action('admin_menu', array( &$this, 'menu' ), 20);
+        add_action('wp', array(&$this, 'process_entry'));
+        add_action('frm_wp', array(&$this, 'process_entry'));
         add_filter('frm_redirect_msg', array( &$this, 'delete_entry_before_redirect'), 50, 3);
-        add_action('frm_after_create_entry', array(&$this, 'delete_entry_after_save'), 100, 2);
+        add_action('frm_after_entry_processed', array(&$this, 'delete_entry_after_save'), 100);
         add_filter('frm_email_value', array(&$this, 'filter_email_value'), 10, 3);
     }
     
@@ -74,6 +76,39 @@ class FrmEntriesController{
         return false;
     }
     
+    function process_entry(){
+        if(is_admin() or !isset($_POST) or !isset($_POST['form_id']) or !is_numeric($_POST['form_id']) or !isset($_POST['item_key']))
+            return;
+
+        global $frm_entry, $frm_form, $frm_created_entry, $frm_form_params;
+        
+        $form = $frm_form->getOne($_POST['form_id']);
+        if(!$form)
+            return;
+        
+        if(!$frm_form_params)
+            $frm_form_params = array();
+        $params = FrmEntriesController::get_params($form);
+        $frm_form_params[$form->id] = $params;
+        
+        $errors = $frm_entry->validate($_POST);
+        if( empty($errors) ){
+            $_POST['frm_skip_cookie'] = 1;
+            if($params['action'] == 'create'){
+                do_action('frm_pre_validate_form_creation', $params, $form);
+                if (apply_filters('frm_continue_to_create', true, $_POST['form_id'])){
+                    if(!$frm_created_entry)
+                        $frm_created_entry = array();
+
+                    $frm_created_entry[$_POST['form_id']] = array('entry_id' => $frm_entry->create( $_POST ), 'errors' => $errors);
+                }
+            }
+            
+            do_action('frm_process_entry', $params, $errors, $form);
+            unset($_POST['frm_skip_cookie']);
+        }
+    }
+    
     //Delete entry if it shouldn't be saved before redirect
     function delete_entry_before_redirect($redirect_msg, $atts){
         $this->_delete_entry($atts['entry_id'], $atts['form']);
@@ -81,11 +116,8 @@ class FrmEntriesController{
     }
     
     //Delete entry if not redirected
-    function delete_entry_after_save($entry_id, $form_id){
-        global $frm_form;
-        $form = $frm_form->getOne($form_id);
-            
-        $this->_delete_entry($entry_id, $form);
+    function delete_entry_after_save($atts){
+        $this->_delete_entry($atts['entry_id'], $atts['form']);
     }
     
     private function _delete_entry($entry_id, $form){
@@ -148,10 +180,13 @@ class FrmEntriesController{
     }
     
     function get_params($form=null){
-        global $frm_form;
+        global $frm_form, $frm_form_params;
 
         if(!$form)
             $form = $frm_form->getAll(array(), 'name', 1);
+            
+        if($frm_form_params and isset($frm_form_params[$form->id]))
+            return $frm_form_params[$form->id];
            
         $action_var = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = apply_filters('frm_show_new_entry_page', FrmAppHelper::get_param($action_var, 'new'), $form);

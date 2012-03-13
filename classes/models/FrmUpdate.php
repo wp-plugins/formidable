@@ -129,7 +129,7 @@ class FrmUpdate{
     }
 
     function pro_cred_form(){ 
-        global $frmpro_is_installed; 
+        global $frmpro_is_installed, $frm_ajax_url; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
             if($this->process_pro_cred_form()){ ?>
 <div id="message" class="updated fade"><strong>
@@ -141,72 +141,86 @@ class FrmUpdate{
                 _e('Your Pro installation is now active. Enjoy!', 'formidable');
             } ?>
 </strong></div>
-<?php
-          }else{
-            ?>
-    <div class="error">
-      <ul>
+<?php       }else{ ?>
+<div class="error">
+    <ul>
         <li><strong><?php _e('ERROR', 'formidable'); ?></strong>: <?php echo $this->pro_error_message_str; ?></li>
-      </ul>
-    </div>
-            <?php
-          }
-        } ?>
+    </ul>
+</div>
+<?php
+            }
+        } 
+?>
+<div style="float:left;width:55%">
+    <?php $this->display_pro_cred_form(); ?>
+</div>
 
-        <div style="float:right;width:40%">
+<?php   if($frmpro_is_installed){ ?>
+<div class="frm_pro_installed">
+<p><strong>Formidable Pro is Installed</strong> 
+    <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Enter new credentials', 'formidable') ?></a>
+    <a href="javascript:frm_deauthorize()" onclick="return confirm('<?php echo esc_attr(__('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable')) ?>')" id="frm_deauthorize_link" class="button-secondary alignright"><?php _e('Deauthorize this site', 'formidable') ?></a>
+</p>
+</div>
+<p><strong><?php _e('Edit/Update Your Profile', 'formidable') ?>:</strong><br/>
+    <span class="howto"><?php _e('Use your account username and password to log in to your Account and Affiliate Control Panel', 'formidable') ?></span></p>
+<p><a href="http://formidablepro.com/payment/member.php"><?php _e('Account', 'formidable') ?></a> |
+    <a href="http://formidablepro.com/payment/aff_member.php"><?php _e('Affiliate Control Panel', 'formidable') ?></a>
+</p>
 
-        <?php if($frmpro_is_installed){ ?>
-            <p><strong>Formidable Pro is Installed</strong></p>
-            <p><strong><?php _e('Edit/Update Your Profile', 'formidable') ?>:</strong><br/>
-                <span class="howto"><?php _e('Use your account username and password to log in to your Account and Affiliate Control Panel', 'formidable') ?></span></p>
-            <p><a href="http://formidablepro.com/payment/member.php"><?php _e('Account', 'formidable') ?></a> |
-                <a href="http://formidablepro.com/payment/aff_member.php"><?php _e('Affiliate Control Panel', 'formidable') ?></a>
-            </p>
-        <?php }else{ ?>          
-            <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
+<script type="text/javascript">
+function frm_show_auth_form(){
+jQuery('#pro_cred_form,.frm_pro_installed').toggle();
+}
+function frm_deauthorize(){
+jQuery('#frm_deauthorize_link').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" id="frm_deauthorize_link" />');
+jQuery.ajax({type:"POST",url:"<?php echo $frm_ajax_url ?>",data:"action=frm_deauthorize",
+success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_auth_form();}
+});
+};
+</script>
+<?php   }else{ ?>   
 
-            <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
-        <?php } ?>
+<div style="float:right;width:40%">       
+    <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
 
-        </div>
+    <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
+</div>
+<?php   } ?>
 
-        <div style="float:left;width:55%">
-            <?php $this->display_pro_cred_form(); ?>
-        </div>
-    <div class="clear"></div>
+<div class="clear"></div>
 
-        <?php    
+<?php    
     }
 
     function display_pro_cred_form(){
+        global $frmpro_is_installed;
+        
         // Yah, this is the view for the credentials form -- this class isn't a true model
         extract($this->get_pro_cred_form_vals());
         ?>
+<div id="pro_cred_form" <?php echo ($frmpro_is_installed) ? 'style="display:none;"' : ''; ?>>
     <form name="cred_form" method="post" >
     <input type="hidden" name="process_cred_form" value="Y" />
     <?php wp_nonce_field('cred_form'); ?>
 
-      <table class="form-table">
+    <table class="form-table">
         <tr class="form-field">
-          <td valign="top" width="150px"><?php echo $this->pro_username_label; ?></td>
-          <td>
-            <input type="text" name="<?php echo $this->pro_username_str; ?>" value="<?php echo esc_attr($username); ?>"/>
-          </td>
+            <td valign="top" width="150px"><?php echo $this->pro_username_label; ?></td>
+            <td><input type="text" name="<?php echo $this->pro_username_str; ?>" value=""/></td>
         </tr>
         <tr class="form-field">
-          <td valign="top"><?php echo $this->pro_password_label; ?></td>
-          <td>
-            <input type="password" name="<?php echo $this->pro_password_str; ?>" value="<?php echo esc_attr($password); ?>"/>
-          </td>
+            <td valign="top"><?php echo $this->pro_password_label; ?></td>
+            <td><input type="password" name="<?php echo $this->pro_password_str; ?>" value=""/></td>
         </tr>
         <?php if (IS_WPMU){ ?>
-            <tr>
-                <td valign="top"><?php _e('WordPress MU', 'formidable'); ?></td>
-                <td valign="top">
-                    <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?> />
-                    <?php _e('Use this username and password to enable Formidable Pro site-wide', 'formidable'); ?>
-                </td>
-            </tr>
+        <tr>
+            <td valign="top"><?php _e('WordPress MU', 'formidable'); ?></td>
+            <td valign="top">
+                <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?> />
+                <?php _e('Use this username and password to enable Formidable Pro site-wide', 'formidable'); ?>
+            </td>
+        </tr>
         <?php } ?>
         <tr>
             <td colspan="2">
@@ -215,7 +229,8 @@ class FrmUpdate{
         </tr>
       </table>
     </form>
-        <?php
+</div>
+<?php
     }
 
     function process_pro_cred_form(){

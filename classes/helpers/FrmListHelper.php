@@ -127,7 +127,7 @@ class FrmListHelper extends WP_List_Table {
         }else{
     		$actions['settings'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=settings&id={$item->id}" ) . "'>". __('Settings', 'formidable') ."</a>";
     		
-    		$actions['entries'] = "<a href='" . wp_nonce_url( "?page=formidable-entries&form={$item->id}" ) . "' title='$title ". __('Entries', 'formidable') ."'>". __('Entries', 'formidable') ."</a>";
+    		//$actions['entries'] = "<a href='" . wp_nonce_url( "?page=formidable-entries&form={$item->id}" ) . "' title='$title ". __('Entries', 'formidable') ."'>". __('Entries', 'formidable') ."</a>";
     		
     		$actions['reports'] = "<a href='" . wp_nonce_url( "?page=formidable-reports&form={$item->id}" ) . "' title='$title ". __('Reports', 'formidable') ."'>". __('Reports', 'formidable') ."</a>";
     		

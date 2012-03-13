@@ -183,6 +183,7 @@ class FrmForm{
         }
     }    
     do_action('frm_update_form', $id, $values);
+    do_action('frm_update_form_'. $id, $values);
      
     return $query_results;
   }
@@ -203,8 +204,10 @@ class FrmForm{
     $query_results = $wpdb->query("DELETE FROM `$frmdb->fields` WHERE `form_id` = '$id'");
 
     $query_results = $wpdb->query("DELETE FROM `$frmdb->forms` WHERE `id` = '$id'");
-    if ($query_results)
+    if ($query_results){
         do_action('frm_destroy_form', $id);
+        do_action('frm_destroy_form_'. $id);
+    }
     return $query_results;
   }
   

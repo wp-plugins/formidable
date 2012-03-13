@@ -297,17 +297,9 @@ class FrmAppHelper{
         }
         
         $form_defaults = FrmFormsHelper::get_default_opts();
-
-        //options to allow blank answers
-        foreach(array('email_to', 'reply_to', 'reply_to_name') as $opt){
-            if (!isset($values[$opt])){
-                $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $form_defaults[$opt];
-                unset($form_defaults[$opt]);
-                unset($opt);
-            }
-        }
+        $form_defaults['email_to'] = ''; //allow blank email address
         
-        //don't allow blank answers
+        //set to posted value or default
         foreach ($form_defaults as $opt => $default){
             if (!isset($values[$opt]) or $values[$opt] == '')
                 $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;

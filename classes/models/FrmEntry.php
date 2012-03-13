@@ -78,7 +78,9 @@ class FrmEntry{
             
             if (isset($values['item_meta']))
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
+                
             do_action('frm_after_create_entry', $entry_id, $new_values['form_id']);
+            do_action('frm_after_create_entry_'. $new_values['form_id'], $entry_id);
             return $entry_id;
         }else
            return false;
@@ -136,6 +138,7 @@ class FrmEntry{
         if (isset($values['item_meta']))
             $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
         do_action('frm_after_update_entry', $id, $new_values['form_id']);
+        do_action('frm_after_update_entry_'. $new_values['form_id'], $id);
         return $query_results;
     }
 
