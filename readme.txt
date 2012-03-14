@@ -61,6 +61,21 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.04 =
+* Removed BuddyPress filters from the email notifications to avoid forcing them to send from noreply@domain.com
+* Allow blank required indicator and to email in forms
+* Moved form processing to avoid multiple submissions when some plugins are activated and remove the page before redirection
+* Fix to allow access to form, entry, and display pages for WordPress versions < 3.1
+* PRO: Added custom display content box into "create posts" settings tab
+* PRO: Added link to de-authorize a site to use your Pro credentials
+* PRO: Added meta box on posts with link to automatically create a form entry linked to the post
+* PRO: Hide pro credentials settings form when pro is active
+* PRO: Fixed redirect URL to correctly replace shortcodes for forms set to not save any entries
+* PRO: Fixed regular dropdown field taxonomies to trigger conditional logic and use the auto width option
+* PRO: Allow searching by user login when selecting a user ID field to search by on the admin entries page
+* PRO: Updated the auto_id default value to continue functioning correctly even if there are non-numeric values in entries
+* PRO: Added an index.php file into the uploads/formidable folder to prevent file browsing for those without an htaccess file
+
 = 1.06.03 =
 * Added option to not store entries in the database from a specific form
 * Added option to skip Akismet spam check for logged in users

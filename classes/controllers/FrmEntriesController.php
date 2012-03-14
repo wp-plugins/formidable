@@ -91,17 +91,20 @@ class FrmEntriesController{
         $params = FrmEntriesController::get_params($form);
         $frm_form_params[$form->id] = $params;
         
+        if(!$frm_created_entry)
+            $frm_created_entry = array();
+          
+        if(isset($frm_created_entry[$_POST['form_id']]))
+            return;
+            
         $errors = $frm_entry->validate($_POST);
+        $frm_created_entry[$_POST['form_id']] = array('errors' => $errors);
+        
         if( empty($errors) ){
             $_POST['frm_skip_cookie'] = 1;
             if($params['action'] == 'create'){
-                do_action('frm_pre_validate_form_creation', $params, $form);
-                if (apply_filters('frm_continue_to_create', true, $_POST['form_id'])){
-                    if(!$frm_created_entry)
-                        $frm_created_entry = array();
-
-                    $frm_created_entry[$_POST['form_id']] = array('entry_id' => $frm_entry->create( $_POST ), 'errors' => $errors);
-                }
+                if (apply_filters('frm_continue_to_create', true, $_POST['form_id']))
+                    $frm_created_entry[$_POST['form_id']]['entry_id'] = $frm_entry->create( $_POST );
             }
             
             do_action('frm_process_entry', $params, $errors, $form);

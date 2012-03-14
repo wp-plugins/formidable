@@ -399,7 +399,7 @@ class FrmEntry{
 		$datas['blog'] = $frm_siteurl;
 		$datas['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 		$datas['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-		$datas['referrer'] = $_SERVER['HTTP_REFERER'];
+		$datas['referrer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : false;
 		$datas['comment_type'] = 'formidable';
 		if ( $permalink = get_permalink() )
 			$datas['permalink'] = $permalink;

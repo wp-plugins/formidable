@@ -202,7 +202,7 @@ DEFAULT_HTML;
         //replace [label_position]
         $field['label'] = apply_filters('frm_html_label_position', $field['label'], $field);
         $field['label'] = ($field['label'] and $field['label'] != '') ? $field['label'] : 'top';
-        $html = str_replace('[label_position]', (($field['type'] == 'divider') ? $field['label'] : ' frm_primary_label'), $html);
+        $html = str_replace('[label_position]', (($field['type'] == 'divider' or $field['type'] == 'break') ? $field['label'] : ' frm_primary_label'), $html);
         
         //replace [field_name]
         $html = str_replace('[field_name]', $field['name'], $html);

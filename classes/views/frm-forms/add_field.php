@@ -1,4 +1,9 @@
-<?php $display = apply_filters('frm_display_field_options', array('type' => $field['type'], 'field_data' => $field, 'required' => true, 'description' => true, 'options' => true, 'label_position' => true, 'invalid' => false, 'size' => false, 'clear_on_focus' => false, 'default_blank' => true)); ?>
+<?php $display = apply_filters('frm_display_field_options', array(
+    'type' => $field['type'], 'field_data' => $field, 'required' => true, 
+    'description' => true, 'options' => true, 'label_position' => true, 
+    'invalid' => false, 'size' => false, 'clear_on_focus' => false, 
+    'default_blank' => true, 'css' => true
+)); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
     <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
@@ -176,12 +181,13 @@ if ($display['options']){ ?>
                         </td>  
                     </tr>
                 <?php } ?>
+                <?php if ($display['css']){ ?>
                 <tr><td><label><?php _e('CSS layout classes', 'formidable') ?></label> 
                     <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" /></td>
                     <td><input type="text" name="field_options[classes_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['classes']) ?>" class="frm_long_input" />
                     </td>  
                 </tr>
-                
+                <?php } ?>
                 <?php do_action('frm_field_options_form', $field, $display, $values); ?>
             </table>
         </div>
