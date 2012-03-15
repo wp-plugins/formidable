@@ -67,6 +67,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Moved form processing to avoid multiple submissions when some plugins are activated and remove the page before redirection
 * Fix to allow access to form, entry, and display pages for WordPress versions < 3.1
 * PRO: Added custom display content box into "create posts" settings tab
+* PRO: Added options to auto-create fields for post status and post categories/taxonomies
 * PRO: Added link to de-authorize a site to use your Pro credentials
 * PRO: Added meta box on posts with link to automatically create a form entry linked to the post
 * PRO: Hide pro credentials settings form when pro is active

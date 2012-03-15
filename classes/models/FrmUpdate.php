@@ -138,6 +138,7 @@ class FrmUpdate{
                 $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $this->plugin_name, 'upgrade-plugin_' . $this->plugin_name);
                 printf(__('Your Username & Password were accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); 
             }else{ 
+                $frmpro_is_installed = $this->pro_is_installed_and_authorized();
                 _e('Your Pro installation is now active. Enjoy!', 'formidable');
             } ?>
 </strong></div>
@@ -155,7 +156,7 @@ class FrmUpdate{
     <?php $this->display_pro_cred_form(); ?>
 </div>
 
-<?php   if($frmpro_is_installed){ ?>
+<?php if($frmpro_is_installed){ ?>
 <div class="frm_pro_installed">
 <p><strong>Formidable Pro is Installed</strong> 
     <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Enter new credentials', 'formidable') ?></a>
@@ -164,8 +165,8 @@ class FrmUpdate{
 </div>
 <p><strong><?php _e('Edit/Update Your Profile', 'formidable') ?>:</strong><br/>
     <span class="howto"><?php _e('Use your account username and password to log in to your Account and Affiliate Control Panel', 'formidable') ?></span></p>
-<p><a href="http://formidablepro.com/payment/member.php"><?php _e('Account', 'formidable') ?></a> |
-    <a href="http://formidablepro.com/payment/aff_member.php"><?php _e('Affiliate Control Panel', 'formidable') ?></a>
+<p><a href="http://formidablepro.com/payment/member.php" target="_blank"><?php _e('Account', 'formidable') ?></a> |
+    <a href="http://formidablepro.com/payment/aff_member.php" target="_blank"><?php _e('Affiliate Control Panel', 'formidable') ?></a>
 </p>
 
 <script type="text/javascript">
@@ -200,7 +201,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         extract($this->get_pro_cred_form_vals());
         ?>
 <div id="pro_cred_form" <?php echo ($frmpro_is_installed) ? 'style="display:none;"' : ''; ?>>
-    <form name="cred_form" method="post" >
+    <form name="cred_form" method="post" autocomplete="off">
     <input type="hidden" name="process_cred_form" value="Y" />
     <?php wp_nonce_field('cred_form'); ?>
 
@@ -225,6 +226,11 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         <tr>
             <td colspan="2">
                 <input class="button-secondary" type="submit" value="<?php _e('Save', 'formidable'); ?>" />
+                <?php if($frmpro_is_installed){ 
+                    _e('or', 'formidable'); 
+                ?>
+                <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Cancel', 'formidable'); ?></a>
+                <?php } ?>
             </td>
         </tr>
       </table>
