@@ -158,10 +158,11 @@ class FrmUpdate{
 
 <?php if($frmpro_is_installed){ ?>
 <div class="frm_pro_installed">
-<p><strong>Formidable Pro is Installed</strong> 
-    <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Enter new credentials', 'formidable') ?></a>
+<p><strong class="alignleft" style="margin-right:10px;">Formidable Pro is Installed</strong>
+    <a href="javascript:frm_show_auth_form()" class="button-secondary alignleft"><?php _e('Enter new credentials', 'formidable') ?></a>
     <a href="javascript:frm_deauthorize()" onclick="return confirm('<?php echo esc_attr(__('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable')) ?>')" id="frm_deauthorize_link" class="button-secondary alignright"><?php _e('Deauthorize this site', 'formidable') ?></a>
 </p>
+<div class="clear"></div>
 </div>
 <p><strong><?php _e('Edit/Update Your Profile', 'formidable') ?>:</strong><br/>
     <span class="howto"><?php _e('Use your account username and password to log in to your Account and Affiliate Control Panel', 'formidable') ?></span></p>

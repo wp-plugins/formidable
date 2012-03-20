@@ -32,10 +32,10 @@ if(empty($frm_settings->invalid_msg)){
     }
 }else{
     echo stripslashes($frm_settings->invalid_msg);
-    
+
     $show_img = true;
     foreach( $errors as $err_key => $error ){
-        if($err_key == 'cptch_number' or $err_key == 'form' or (strpos($err_key, 'field') === 0) or (strpos($err_key, 'captcha') === 0) )
+        if(!is_numeric($err_key) and ($err_key == 'cptch_number' or $err_key == 'form' or strpos($err_key, 'field') === 0 or strpos($err_key, 'captcha') === 0 ))
             continue;
           
         echo '<br/>'; 

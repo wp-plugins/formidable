@@ -39,17 +39,9 @@
 
 .frm_form_field.frm_left_half.frm_left_container .frm_primary_label, .frm_form_field.frm_right_half.frm_left_container .frm_primary_label, .frm_form_field.frm_first_half.frm_left_container .frm_primary_label, .frm_form_field.frm_last_half.frm_left_container .frm_primary_label{padding-right:10px;}
 .frm_form_field.frm_left_half.frm_right_container .frm_primary_label, .frm_form_field.frm_right_half.frm_right_container .frm_primary_label, .frm_form_field.frm_first_half.frm_right_container .frm_primary_label, .frm_form_field.frm_last_half.frm_right_container .frm_primary_label{padding-left:10px;}
-.frm_form_field.frm_left_half.frm_left_container input, .frm_form_field.frm_right_half.frm_left_container input,
-.frm_form_field.frm_left_half.frm_left_container select, .frm_form_field.frm_right_half.frm_left_container select,
-.frm_form_field.frm_left_half.frm_left_container textarea, .frm_form_field.frm_right_half.frm_left_container textarea,
-.frm_form_field.frm_left_half.frm_right_container input, .frm_form_field.frm_right_half.frm_right_container input,
-.frm_form_field.frm_left_half.frm_right_container select, .frm_form_field.frm_right_half.frm_right_container select,
-.frm_form_field.frm_left_half.frm_right_container textarea, .frm_form_field.frm_right_half.frm_right_container textarea, .frm_form_field.frm_first_half.frm_left_container input, .frm_form_field.frm_last_half.frm_left_container input,
-.frm_form_field.frm_first_half.frm_left_container select, .frm_form_field.frm_last_half.frm_left_container select,
-.frm_form_field.frm_first_half.frm_left_container textarea, .frm_form_field.frm_last_half.frm_left_container textarea,
-.frm_form_field.frm_first_half.frm_right_container input, .frm_form_field.frm_last_half.frm_right_container input,
-.frm_form_field.frm_first_half.frm_right_container select, .frm_form_field.frm_last_half.frm_right_container select,
-.frm_form_field.frm_first_half.frm_right_container textarea, .frm_form_field.frm_last_half.frm_right_container textarea{max-width:75%;}
+
+.frm_form_field.frm_left_container input, .frm_form_field.frm_left_container select, .frm_form_field.frm_left_container textarea,
+.frm_form_field.frm_right_container input, .frm_form_field.frm_right_container select, .frm_form_field.frm_right_container textarea{max-width:75%;}
 .frm_form_field.frm_left_third, .frm_form_field.frm_third, .frm_form_field.frm_right_third, .frm_form_field.frm_first_third, .frm_form_field.frm_last_third{width:30%;}
 .frm_form_field.frm_left_third, .frm_form_field.frm_first_third, .frm_form_field.frm_third{margin-right:5%;}
 

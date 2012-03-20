@@ -341,7 +341,7 @@ function frmShowPostOpts(post_field,field_id){
 function frmSettingsTab(tab, id){
 	var t = tab.attr('href');
 	tab.parent().addClass('tabs').siblings('li').removeClass('tabs');
-	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel,.mailchimp_settings,.frm_settings_form .tabs-panel').hide();
+	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel,.mailchimp_settings,.aweber_settings,.frm_settings_form .tabs-panel').hide();
 	jQuery('.'+id+'_settings').show();
 	return false;
 }
