@@ -62,10 +62,12 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.06.04 =
+* Moved form processing to avoid multiple submissions when some plugins are activated and remove the page before redirection
 * Removed BuddyPress filters from the email notifications to avoid forcing them to send from noreply@domain.com
 * Allow blank required indicator and to email in forms
-* Moved form processing to avoid multiple submissions when some plugins are activated and remove the page before redirection
 * Fix to allow access to form, entry, and display pages for WordPress versions < 3.1
+* Fixed default checkbox or radio field values for fields with separate option values
+* Corrected Arkansas abbreviation in templates and bulk edit options
 * PRO: Added custom display content box into "create posts" settings tab
 * PRO: Added options to auto-create fields for post status and post categories/taxonomies
 * PRO: Added link to de-authorize a site to use your Pro credentials
@@ -76,6 +78,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow searching by user login when selecting a user ID field to search by on the admin entries page
 * PRO: Updated the auto_id default value to continue functioning correctly even if there are non-numeric values in entries
 * PRO: Added an index.php file into the uploads/formidable folder to prevent file browsing for those without an htaccess file
+* PRO: Allow field IDs as dynamic default values ie [25]. This will ONLY work when the value has just been posted.
+* PRO: Added the display object into the args array to pass to the frm_where_filter hook
+* PRO: Allow for negative numbers in calculations
+* PRO: Allow for unlimited GET parameter setting in the custom display shortcode. [display-frm-data id=2 whatever=value whatever2=value2]
+* PRO: Switched phone field to HTML5 "tel" input type
+* PRO: Added a frm_cookie_expiration hook to change the cookie expiration time
+* PRO: Added cookie expiration option
 
 = 1.06.03 =
 * Added option to not store entries in the database from a specific form
@@ -303,7 +312,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * PRO: Updated file upload indicator to show up sooner
 * PRO: Added ajax delete to [deletelink] shortcode
 * PRO: Updated admin only fields to show for administrators on the front-end
-* PRO: Added more attributes to the [display-frm-entries] shortcode: limit="5", page_size="5", order_by="rand" or field ID, order="DESC" or "ASC"
+* PRO: Added more attributes to the [display-frm-data] shortcode: limit="5", page_size="5", order_by="rand" or field ID, order="DESC" or "ASC"
 * PRO: Fixed custom display bulk delete
 * PRO: Updated WPMU copy features to work with WP 3.0+
 * PRO: Switched the email "add/or" drop-down to check boxes

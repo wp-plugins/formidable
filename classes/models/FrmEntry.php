@@ -147,7 +147,8 @@ class FrmEntry{
       $id = (int)$id;
       
       do_action('frm_before_destroy_entry', $id);
-
+      
+      wp_cache_delete( $id, 'frm_entry');
       $wpdb->query('DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id);
       $result = $wpdb->query('DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id);
       return $result;
@@ -415,7 +416,7 @@ class FrmEntry{
 			$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
 
 		$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
-		return ( $response[1] == 'true' ) ? true : false;
+		return ( is_array($response) and $response[1] == 'true' ) ? true : false;
     }
     
 }

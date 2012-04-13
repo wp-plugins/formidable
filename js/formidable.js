@@ -70,7 +70,7 @@ for(i=0; i<len; i++){
 		return;
 	}*/
 
-	if(f.FieldName!=field_id){
+	if(f.FieldName!=field_id || typeof(selected)=='undefined'){
 		var prevSel=selected;
 		if(f.Type=='radio' || f.Type=='data-radio')
 			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked").val();

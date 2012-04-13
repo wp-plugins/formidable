@@ -243,7 +243,7 @@ msgstr "Criar um formulário a partir do modelo"
 msgid "Untitled Form"
 msgstr "Formulário sem título"
 
-#: classes/models/FrmEntry.php:378
+#: classes/models/FrmEntry.php:379
 #@ formidable
 msgid "Your entry appears to be spam!"
 msgstr "Sua entrada parece ser spam!"
@@ -418,8 +418,8 @@ msgid "Captcha"
 msgstr "Captcha"
 
 #: classes/views/frm-entries/form.php:38
-#: pro/classes/controllers/FrmProEntriesController.php:906
-#: pro/classes/helpers/FrmProFieldsHelper.php:1158
+#: pro/classes/controllers/FrmProEntriesController.php:908
+#: pro/classes/helpers/FrmProFieldsHelper.php:1181
 #: pro/classes/views/displays/where_row.php:8
 #: pro/classes/views/frmpro-entries/import.php:108
 #: pro/classes/views/frmpro-entries/show.php:102
@@ -523,8 +523,8 @@ msgstr "Campos Pro"
 #: classes/views/frm-forms/list.php:198
 #: classes/views/frm-forms/settings.php:193
 #: pro/classes/controllers/FrmProDisplaysController.php:424
-#: pro/classes/helpers/FrmProFieldsHelper.php:1174
-#: pro/classes/helpers/FrmProFieldsHelper.php:1188
+#: pro/classes/helpers/FrmProFieldsHelper.php:1197
+#: pro/classes/helpers/FrmProFieldsHelper.php:1211
 #: pro/classes/views/displays/form.php:145
 #: pro/classes/views/displays/form.php:156
 #: pro/classes/views/displays/list.php:57
@@ -685,7 +685,7 @@ msgstr "ou"
 #: classes/views/frm-forms/settings.php:267
 #: classes/views/frm-forms/translate.php:35
 #: classes/views/frm-forms/translate.php:59
-#: pro/classes/controllers/FrmProEntriesController.php:1620
+#: pro/classes/controllers/FrmProEntriesController.php:1622
 #: pro/classes/views/displays/form.php:48
 #: pro/classes/views/displays/form.php:317
 #: pro/classes/views/frmpro-entries/edit.php:62
@@ -703,7 +703,7 @@ msgstr "(Clique aqui para adicionar uma descrição do formulário ou instruçõ
 #: classes/controllers/FrmAppController.php:119
 #: classes/models/FrmUpdate.php:178
 #: classes/views/frm-forms/footer.php:12
-#: pro/classes/controllers/FrmProEntriesController.php:798
+#: pro/classes/controllers/FrmProEntriesController.php:800
 #: pro/classes/helpers/FrmProEntriesHelper.php:72
 #: pro/classes/views/frmpro-entries/import.php:16
 #: pro/classes/views/settings/formroller.php:560
@@ -862,8 +862,8 @@ msgstr "Exibir descrição do formulário"
 
 #: classes/views/frm-forms/list.php:57
 #: classes/views/frm-forms/list.php:195
-#: pro/classes/helpers/FrmProFieldsHelper.php:1173
-#: pro/classes/helpers/FrmProFieldsHelper.php:1187
+#: pro/classes/helpers/FrmProFieldsHelper.php:1196
+#: pro/classes/helpers/FrmProFieldsHelper.php:1210
 #: pro/classes/views/displays/form.php:144
 #: pro/classes/views/displays/form.php:155
 #: pro/classes/views/displays/list.php:39
@@ -882,7 +882,7 @@ msgstr "ID"
 #: classes/views/frm-forms/list.php:199
 #: classes/views/shared/form-nav.php:5
 #: pro/classes/controllers/FrmProEntriesController.php:62
-#: pro/classes/controllers/FrmProEntriesController.php:920
+#: pro/classes/controllers/FrmProEntriesController.php:922
 #: pro/classes/views/frmpro-entries/list.php:3
 #: pro/classes/views/frmpro-fields/dynamic-options.php:20
 #: pro/classes/views/shared/import_form.php:48
@@ -916,10 +916,10 @@ msgstr "Nenhum formulário encontrado"
 #: classes/views/frm-forms/list.php:121
 #: classes/views/frm-forms/list.php:134
 #: classes/views/frm-forms/list.php:142
-#: pro/classes/controllers/FrmProEntriesController.php:1406
-#: pro/classes/controllers/FrmProEntriesController.php:1620
+#: pro/classes/controllers/FrmProEntriesController.php:1408
+#: pro/classes/controllers/FrmProEntriesController.php:1622
 #: pro/classes/helpers/FrmProAppHelper.php:193
-#: pro/classes/helpers/FrmProFieldsHelper.php:1366
+#: pro/classes/helpers/FrmProFieldsHelper.php:1389
 #: pro/classes/helpers/FrmProListHelper.php:196
 #: pro/classes/views/displays/list.php:86
 #: pro/classes/views/frmpro-entries/list.php:92
@@ -941,7 +941,7 @@ msgstr "Tem certeza que quer apagar seu formulário%1$s ?"
 #: classes/views/frm-forms/add_field_links.php:90
 #: classes/views/frm-forms/list.php:125
 #: classes/views/frm-forms/list.php:163
-#: pro/classes/controllers/FrmProEntriesController.php:1469
+#: pro/classes/controllers/FrmProEntriesController.php:1471
 #: pro/classes/helpers/FrmProAppHelper.php:239
 #: pro/classes/helpers/FrmProListHelper.php:165
 #: pro/classes/helpers/FrmProListHelper.php:210
@@ -1131,12 +1131,12 @@ msgstr "Tag Formidable"
 msgid "There was a problem creating new Entry Display settings."
 msgstr "Houve um problema criando nova configuração de exibição de entrada."
 
-#: pro/classes/controllers/FrmProDisplaysController.php:630
+#: pro/classes/controllers/FrmProDisplaysController.php:645
 #@ formidable
 msgid "That is not a valid custom display ID"
 msgstr "Isso não é um ID válido de uma exibição personalizada"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1364
+#: pro/classes/controllers/FrmProEntriesController.php:1366
 #: pro/classes/helpers/FrmProDisplaysHelper.php:43
 #: pro/classes/helpers/FrmProListHelper.php:102
 #: pro/classes/views/frmpro-entries/list.php:50
@@ -1488,7 +1488,7 @@ msgid "User Meta"
 msgstr "Usuário Meta"
 
 #: pro/classes/controllers/FrmProFormsController.php:166
-#: pro/classes/helpers/FrmProFieldsHelper.php:1159
+#: pro/classes/helpers/FrmProFieldsHelper.php:1182
 #: pro/classes/views/frmpro-entries/import.php:102
 #@ formidable
 msgid "Post ID"
@@ -1543,7 +1543,7 @@ msgid "All Fields"
 msgstr "Todos os Campos"
 
 #: classes/views/frm-forms/list.php:17
-#: pro/classes/controllers/FrmProEntriesController.php:1443
+#: pro/classes/controllers/FrmProEntriesController.php:1445
 #: pro/classes/helpers/FrmProAppHelper.php:277
 #: pro/classes/views/displays/list.php:16
 #: pro/classes/views/frmpro-entries/list.php:17
@@ -1557,69 +1557,69 @@ msgstr "Pesquisa"
 msgid "Reset"
 msgstr "Reset"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:818
+#: pro/classes/helpers/FrmProFieldsHelper.php:841
 #@ formidable
 msgid "Edit Uploaded File"
 msgstr "Editar Arquivo Carregado"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1155
+#: pro/classes/helpers/FrmProFieldsHelper.php:1178
 #@ formidable
 msgid "Select a value to insert into the box below"
 msgstr "Selecione um valor para inserir na caixa abaixo"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1157
+#: pro/classes/helpers/FrmProFieldsHelper.php:1180
 #: pro/classes/views/displays/where_row.php:7
 #: pro/classes/views/frmpro-entries/show.php:101
 #@ formidable
 msgid "Entry ID"
 msgstr "ID Entrada"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1164
+#: pro/classes/helpers/FrmProFieldsHelper.php:1187
 #@ formidable
 msgid "Form Fields"
 msgstr "Campos do formulário"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1176
+#: pro/classes/helpers/FrmProFieldsHelper.php:1199
 #@ formidable
 msgid "Thumbnail"
 msgstr "Miniatura"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1177
+#: pro/classes/helpers/FrmProFieldsHelper.php:1200
 #@ formidable
 msgid "Medium"
 msgstr "Médio"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1178
+#: pro/classes/helpers/FrmProFieldsHelper.php:1201
 #@ formidable
 msgid "Large"
 msgstr "Grande"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1179
+#: pro/classes/helpers/FrmProFieldsHelper.php:1202
 #@ formidable
 msgid "Full Size"
 msgstr "Tamanho Máximo"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1199
+#: pro/classes/helpers/FrmProFieldsHelper.php:1222
 #@ formidable
 msgid "Helpers"
 msgstr "Helpers"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1200
+#: pro/classes/helpers/FrmProFieldsHelper.php:1223
 #@ formidable
 msgid "Admin link to edit the entry"
 msgstr "Admin link para editar a entrada"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1202
+#: pro/classes/helpers/FrmProFieldsHelper.php:1225
 #@ formidable
 msgid "Link to view single page if showing dynamic entries"
 msgstr "Link para a exibição de página única, se mostrando entradas dinâmicas"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1206
+#: pro/classes/helpers/FrmProFieldsHelper.php:1229
 #@ formidable
 msgid "Add a rotating 'even' or 'odd' class"
 msgstr "Adicionar uma classe de rotação 'impar' ou 'par'"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1210
+#: pro/classes/helpers/FrmProFieldsHelper.php:1233
 #@ formidable
 msgid "Site URL"
 msgstr "URL do site"
@@ -1697,9 +1697,9 @@ msgstr "Calendário"
 msgid "Date Field"
 msgstr "Campo de Data"
 
-#: pro/classes/controllers/FrmProEntriesController.php:913
+#: pro/classes/controllers/FrmProEntriesController.php:915
 #: pro/classes/helpers/FrmProAppHelper.php:270
-#: pro/classes/helpers/FrmProFieldsHelper.php:1161
+#: pro/classes/helpers/FrmProFieldsHelper.php:1184
 #: pro/classes/helpers/FrmProListHelper.php:149
 #: pro/classes/views/displays/form.php:123
 #: pro/classes/views/displays/form.php:131
@@ -1846,7 +1846,6 @@ msgstr "O número de entradas para mostrar por página. Deixe em branco para nã
 #: pro/classes/controllers/FrmProDisplaysController.php:418
 #: pro/classes/views/displays/list.php:61
 #: pro/classes/views/displays/list.php:110
-#: pro/classes/widgets/FrmPollResults.php:40
 #@ formidable
 msgid "Form"
 msgstr "Formulário"
@@ -1952,7 +1951,7 @@ msgstr "como"
 msgid "Edit Entry"
 msgstr "Editar entrada"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1704
+#: pro/classes/controllers/FrmProEntriesController.php:1706
 #: pro/classes/views/frmpro-entries/list.php:101
 #: pro/classes/views/frmpro-entries/show.php:26
 #@ formidable
@@ -2163,7 +2162,7 @@ msgstr "Usuário logado"
 msgid "Saved Cookie"
 msgstr "Cookie Salvo"
 
-#: pro/classes/views/frmpro-forms/add_form_options.php:75
+#: pro/classes/views/frmpro-forms/add_form_options.php:81
 #@ formidable
 msgid "Copy this form to other blogs when Formidable Pro is activated"
 msgstr "Copie este formulário para outros blogs, quando Formidable Pro está ativado"
@@ -2361,7 +2360,6 @@ msgstr "Lista de Entradas Formidable"
 
 #: classes/widgets/FrmShowForm.php:43
 #: pro/classes/widgets/FrmListEntries.php:137
-#: pro/classes/widgets/FrmPollResults.php:34
 #@ formidable
 msgid "Title"
 msgstr "Título"
@@ -2427,7 +2425,6 @@ msgid "Formidable Form"
 msgstr "Formulário Formidable"
 
 #: classes/widgets/FrmShowForm.php:51
-#: pro/classes/widgets/FrmPollResults.php:38
 #@ formidable
 msgid "Show Description"
 msgstr "Exibir Descrição"
@@ -2767,16 +2764,6 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: pro/classes/widgets/FrmPollResults.php:6
-#@ formidable
-msgid "Display a Formidable Form with the poll results after submission"
-msgstr ""
-
-#: pro/classes/widgets/FrmPollResults.php:7
-#@ formidable
-msgid "Formidable Poll & Results"
-msgstr ""
-
 #: classes/helpers/FrmFieldsHelper.php:26
 #@ formidable
 msgid "Rich Text"
@@ -2831,7 +2818,7 @@ msgstr ""
 msgid "Default Submit Button"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:1913
+#: pro/classes/controllers/FrmProEntriesController.php:1921
 #@ formidable
 msgid "No one! You do not have permission"
 msgstr ""
@@ -3298,7 +3285,7 @@ msgstr ""
 msgid "Click here to add optional description or instructions"
 msgstr ""
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:492
+#: pro/classes/helpers/FrmProFieldsHelper.php:515
 #@ formidable
 msgid "No Categories"
 msgstr ""
@@ -3333,16 +3320,16 @@ msgstr ""
 msgid "If your text fields are too big for your sidebar insert a size here."
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:263
+#: classes/helpers/FrmAppHelper.php:265
 #: classes/helpers/FrmFieldsHelper.php:141
-#: classes/models/FrmEntry.php:343
+#: classes/models/FrmEntry.php:344
 #: pro/classes/models/FrmProEntryMeta.php:108
 #: pro/classes/views/settings/form.php:121
 #@ formidable
 msgid "This field cannot be blank"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:268
+#: classes/helpers/FrmAppHelper.php:270
 #: pro/classes/models/FrmProEntryMeta.php:168
 #: pro/classes/models/FrmProEntryMeta.php:183
 #: pro/classes/models/FrmProEntryMeta.php:194
@@ -3573,7 +3560,7 @@ msgstr ""
 msgid "Add New Entry to this form"
 msgstr ""
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1208
+#: pro/classes/helpers/FrmProFieldsHelper.php:1231
 #@ formidable
 msgid "Default Email Message"
 msgstr ""
@@ -3881,1057 +3868,1057 @@ msgstr ""
 msgid "Strongly Disagree"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:347
+#: classes/helpers/FrmAppHelper.php:349
 #@ formidable
 msgid "Afghanistan"
 msgstr "Afeganistão"
 
-#: classes/helpers/FrmAppHelper.php:347
+#: classes/helpers/FrmAppHelper.php:349
 #@ formidable
 msgid "Albania"
 msgstr "Albânia"
 
-#: classes/helpers/FrmAppHelper.php:347
+#: classes/helpers/FrmAppHelper.php:349
 #@ formidable
 msgid "Algeria"
 msgstr "Argélia"
 
-#: classes/helpers/FrmAppHelper.php:348
+#: classes/helpers/FrmAppHelper.php:350
 #@ formidable
 msgid "American Samoa"
 msgstr "Samoa Americana"
 
-#: classes/helpers/FrmAppHelper.php:348
+#: classes/helpers/FrmAppHelper.php:350
 #@ formidable
 msgid "Andorra"
 msgstr "Andorra"
 
-#: classes/helpers/FrmAppHelper.php:348
+#: classes/helpers/FrmAppHelper.php:350
 #@ formidable
 msgid "Angola"
 msgstr "Angola"
 
-#: classes/helpers/FrmAppHelper.php:349
+#: classes/helpers/FrmAppHelper.php:351
 #@ formidable
 msgid "Anguilla"
 msgstr "Anguilla"
 
-#: classes/helpers/FrmAppHelper.php:349
+#: classes/helpers/FrmAppHelper.php:351
 #@ formidable
 msgid "Antarctica"
 msgstr "Antártica"
 
-#: classes/helpers/FrmAppHelper.php:349
+#: classes/helpers/FrmAppHelper.php:351
 #@ formidable
 msgid "Antigua and Barbuda"
 msgstr "Antígua e Barbuda"
 
-#: classes/helpers/FrmAppHelper.php:350
+#: classes/helpers/FrmAppHelper.php:352
 #@ formidable
 msgid "Argentina"
 msgstr "Argentina"
 
-#: classes/helpers/FrmAppHelper.php:350
+#: classes/helpers/FrmAppHelper.php:352
 #@ formidable
 msgid "Armenia"
 msgstr "Armênia"
 
-#: classes/helpers/FrmAppHelper.php:350
+#: classes/helpers/FrmAppHelper.php:352
 #@ formidable
 msgid "Aruba"
 msgstr "Aruba"
 
-#: classes/helpers/FrmAppHelper.php:351
+#: classes/helpers/FrmAppHelper.php:353
 #@ formidable
 msgid "Australia"
 msgstr "Austrália"
 
-#: classes/helpers/FrmAppHelper.php:351
+#: classes/helpers/FrmAppHelper.php:353
 #@ formidable
 msgid "Austria"
 msgstr "Áustria"
 
-#: classes/helpers/FrmAppHelper.php:351
+#: classes/helpers/FrmAppHelper.php:353
 #@ formidable
 msgid "Azerbaijan"
 msgstr "Azerbaijão"
 
-#: classes/helpers/FrmAppHelper.php:352
+#: classes/helpers/FrmAppHelper.php:354
 #@ formidable
 msgid "Bahamas"
 msgstr "Bahamas"
 
-#: classes/helpers/FrmAppHelper.php:352
+#: classes/helpers/FrmAppHelper.php:354
 #@ formidable
 msgid "Bahrain"
 msgstr "Bahrain"
 
-#: classes/helpers/FrmAppHelper.php:352
+#: classes/helpers/FrmAppHelper.php:354
 #@ formidable
 msgid "Bangladesh"
 msgstr "Bangladesh"
 
-#: classes/helpers/FrmAppHelper.php:353
+#: classes/helpers/FrmAppHelper.php:355
 #@ formidable
 msgid "Barbados"
 msgstr "Barbados"
 
-#: classes/helpers/FrmAppHelper.php:353
+#: classes/helpers/FrmAppHelper.php:355
 #@ formidable
 msgid "Belarus"
 msgstr "Belarus"
 
-#: classes/helpers/FrmAppHelper.php:353
+#: classes/helpers/FrmAppHelper.php:355
 #@ formidable
 msgid "Belgium"
 msgstr "Bélgica"
 
-#: classes/helpers/FrmAppHelper.php:354
+#: classes/helpers/FrmAppHelper.php:356
 #@ formidable
 msgid "Belize"
 msgstr "Belize"
 
-#: classes/helpers/FrmAppHelper.php:354
+#: classes/helpers/FrmAppHelper.php:356
 #@ formidable
 msgid "Benin"
 msgstr "Benin"
 
-#: classes/helpers/FrmAppHelper.php:354
+#: classes/helpers/FrmAppHelper.php:356
 #@ formidable
 msgid "Bermuda"
 msgstr "Bermudas"
 
-#: classes/helpers/FrmAppHelper.php:355
+#: classes/helpers/FrmAppHelper.php:357
 #@ formidable
 msgid "Bhutan"
 msgstr "Butão"
 
-#: classes/helpers/FrmAppHelper.php:355
+#: classes/helpers/FrmAppHelper.php:357
 #@ formidable
 msgid "Bolivia"
 msgstr "Bolívia"
 
-#: classes/helpers/FrmAppHelper.php:355
+#: classes/helpers/FrmAppHelper.php:357
 #@ formidable
 msgid "Bosnia and Herzegovina"
 msgstr "Bósnia e Herzegovina"
 
-#: classes/helpers/FrmAppHelper.php:356
+#: classes/helpers/FrmAppHelper.php:358
 #@ formidable
 msgid "Botswana"
 msgstr "Botswana"
 
-#: classes/helpers/FrmAppHelper.php:356
+#: classes/helpers/FrmAppHelper.php:358
 #@ formidable
 msgid "Brazil"
 msgstr "Brasil"
 
-#: classes/helpers/FrmAppHelper.php:356
+#: classes/helpers/FrmAppHelper.php:358
 #@ formidable
 msgid "Brunei"
 msgstr "Brunei"
 
-#: classes/helpers/FrmAppHelper.php:357
+#: classes/helpers/FrmAppHelper.php:359
 #@ formidable
 msgid "Bulgaria"
 msgstr "Bulgária"
 
-#: classes/helpers/FrmAppHelper.php:357
+#: classes/helpers/FrmAppHelper.php:359
 #@ formidable
 msgid "Burkina Faso"
 msgstr "Burkina Faso"
 
-#: classes/helpers/FrmAppHelper.php:357
+#: classes/helpers/FrmAppHelper.php:359
 #@ formidable
 msgid "Burundi"
 msgstr "Burundi"
 
-#: classes/helpers/FrmAppHelper.php:358
+#: classes/helpers/FrmAppHelper.php:360
 #@ formidable
 msgid "Cambodia"
 msgstr "Camboja"
 
-#: classes/helpers/FrmAppHelper.php:358
+#: classes/helpers/FrmAppHelper.php:360
 #@ formidable
 msgid "Cameroon"
 msgstr "Camarões"
 
-#: classes/helpers/FrmAppHelper.php:358
+#: classes/helpers/FrmAppHelper.php:360
 #@ formidable
 msgid "Canada"
 msgstr "Canadá"
 
-#: classes/helpers/FrmAppHelper.php:359
+#: classes/helpers/FrmAppHelper.php:361
 #@ formidable
 msgid "Cape Verde"
 msgstr "Cabo Verde"
 
-#: classes/helpers/FrmAppHelper.php:359
+#: classes/helpers/FrmAppHelper.php:361
 #@ formidable
 msgid "Cayman Islands"
 msgstr "Cayman Islands"
 
-#: classes/helpers/FrmAppHelper.php:359
+#: classes/helpers/FrmAppHelper.php:361
 #@ formidable
 msgid "Central African Republic"
 msgstr "Central Africano República"
 
-#: classes/helpers/FrmAppHelper.php:360
+#: classes/helpers/FrmAppHelper.php:362
 #@ formidable
 msgid "Chad"
 msgstr "Chade"
 
-#: classes/helpers/FrmAppHelper.php:360
+#: classes/helpers/FrmAppHelper.php:362
 #@ formidable
 msgid "Chile"
 msgstr "Chile"
 
-#: classes/helpers/FrmAppHelper.php:360
+#: classes/helpers/FrmAppHelper.php:362
 #@ formidable
 msgid "China"
 msgstr "China"
 
-#: classes/helpers/FrmAppHelper.php:361
+#: classes/helpers/FrmAppHelper.php:363
 #@ formidable
 msgid "Colombia"
 msgstr "Colômbia"
 
-#: classes/helpers/FrmAppHelper.php:361
+#: classes/helpers/FrmAppHelper.php:363
 #@ formidable
 msgid "Comoros"
 msgstr "Comores"
 
-#: classes/helpers/FrmAppHelper.php:361
+#: classes/helpers/FrmAppHelper.php:363
 #@ formidable
 msgid "Congo"
 msgstr "Congo"
 
-#: classes/helpers/FrmAppHelper.php:362
+#: classes/helpers/FrmAppHelper.php:364
 #@ formidable
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: classes/helpers/FrmAppHelper.php:362
+#: classes/helpers/FrmAppHelper.php:364
 #@ formidable
 msgid "C&ocirc;te d'Ivoire"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:362
+#: classes/helpers/FrmAppHelper.php:364
 #@ formidable
 msgid "Croatia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:363
+#: classes/helpers/FrmAppHelper.php:365
 #@ formidable
 msgid "Cuba"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:363
+#: classes/helpers/FrmAppHelper.php:365
 #@ formidable
 msgid "Cyprus"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:363
+#: classes/helpers/FrmAppHelper.php:365
 #@ formidable
 msgid "Czech Republic"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:364
+#: classes/helpers/FrmAppHelper.php:366
 #@ formidable
 msgid "Denmark"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:364
+#: classes/helpers/FrmAppHelper.php:366
 #@ formidable
 msgid "Djibouti"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:364
+#: classes/helpers/FrmAppHelper.php:366
 #@ formidable
 msgid "Dominica"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:365
+#: classes/helpers/FrmAppHelper.php:367
 #@ formidable
 msgid "Dominican Republic"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:365
+#: classes/helpers/FrmAppHelper.php:367
 #@ formidable
 msgid "East Timor"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:365
+#: classes/helpers/FrmAppHelper.php:367
 #@ formidable
 msgid "Ecuador"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:366
+#: classes/helpers/FrmAppHelper.php:368
 #@ formidable
 msgid "Egypt"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:366
+#: classes/helpers/FrmAppHelper.php:368
 #@ formidable
 msgid "El Salvador"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:366
+#: classes/helpers/FrmAppHelper.php:368
 #@ formidable
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:367
+#: classes/helpers/FrmAppHelper.php:369
 #@ formidable
 msgid "Eritrea"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:367
+#: classes/helpers/FrmAppHelper.php:369
 #@ formidable
 msgid "Estonia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:367
+#: classes/helpers/FrmAppHelper.php:369
 #@ formidable
 msgid "Ethiopia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:368
+#: classes/helpers/FrmAppHelper.php:370
 #@ formidable
 msgid "Fiji"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:368
+#: classes/helpers/FrmAppHelper.php:370
 #@ formidable
 msgid "Finland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:368
+#: classes/helpers/FrmAppHelper.php:370
 #@ formidable
 msgid "France"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:369
+#: classes/helpers/FrmAppHelper.php:371
 #@ formidable
 msgid "French Guiana"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:369
+#: classes/helpers/FrmAppHelper.php:371
 #@ formidable
 msgid "French Polynesia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:369
+#: classes/helpers/FrmAppHelper.php:371
 #@ formidable
 msgid "Gabon"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:370
+#: classes/helpers/FrmAppHelper.php:372
 #@ formidable
 msgid "Gambia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:370
+#: classes/helpers/FrmAppHelper.php:372
 #@ formidable
 msgid "Georgia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:370
+#: classes/helpers/FrmAppHelper.php:372
 #@ formidable
 msgid "Germany"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:371
+#: classes/helpers/FrmAppHelper.php:373
 #@ formidable
 msgid "Ghana"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:371
+#: classes/helpers/FrmAppHelper.php:373
 #@ formidable
 msgid "Gibraltar"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:371
+#: classes/helpers/FrmAppHelper.php:373
 #@ formidable
 msgid "Greece"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:372
+#: classes/helpers/FrmAppHelper.php:374
 #@ formidable
 msgid "Greenland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:372
+#: classes/helpers/FrmAppHelper.php:374
 #@ formidable
 msgid "Grenada"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:372
+#: classes/helpers/FrmAppHelper.php:374
 #@ formidable
 msgid "Guam"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:373
+#: classes/helpers/FrmAppHelper.php:375
 #@ formidable
 msgid "Guatemala"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:373
+#: classes/helpers/FrmAppHelper.php:375
 #@ formidable
 msgid "Guinea"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:373
+#: classes/helpers/FrmAppHelper.php:375
 #@ formidable
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:374
+#: classes/helpers/FrmAppHelper.php:376
 #@ formidable
 msgid "Guyana"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:374
+#: classes/helpers/FrmAppHelper.php:376
 #@ formidable
 msgid "Haiti"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:374
+#: classes/helpers/FrmAppHelper.php:376
 #@ formidable
 msgid "Honduras"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:375
+#: classes/helpers/FrmAppHelper.php:377
 #@ formidable
 msgid "Hong Kong"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:375
+#: classes/helpers/FrmAppHelper.php:377
 #@ formidable
 msgid "Hungary"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:375
+#: classes/helpers/FrmAppHelper.php:377
 #@ formidable
 msgid "Iceland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:376
+#: classes/helpers/FrmAppHelper.php:378
 #@ formidable
 msgid "India"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:376
+#: classes/helpers/FrmAppHelper.php:378
 #@ formidable
 msgid "Indonesia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:376
+#: classes/helpers/FrmAppHelper.php:378
 #@ formidable
 msgid "Iran"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:377
+#: classes/helpers/FrmAppHelper.php:379
 #@ formidable
 msgid "Iraq"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:377
+#: classes/helpers/FrmAppHelper.php:379
 #@ formidable
 msgid "Ireland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:377
+#: classes/helpers/FrmAppHelper.php:379
 #@ formidable
 msgid "Israel"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:378
+#: classes/helpers/FrmAppHelper.php:380
 #@ formidable
 msgid "Italy"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:378
+#: classes/helpers/FrmAppHelper.php:380
 #@ formidable
 msgid "Jamaica"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:378
+#: classes/helpers/FrmAppHelper.php:380
 #@ formidable
 msgid "Japan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:379
+#: classes/helpers/FrmAppHelper.php:381
 #@ formidable
 msgid "Jordan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:379
+#: classes/helpers/FrmAppHelper.php:381
 #@ formidable
 msgid "Kazakhstan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:379
+#: classes/helpers/FrmAppHelper.php:381
 #@ formidable
 msgid "Kenya"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:380
+#: classes/helpers/FrmAppHelper.php:382
 #@ formidable
 msgid "Kiribati"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:380
+#: classes/helpers/FrmAppHelper.php:382
 #@ formidable
 msgid "North Korea"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:380
+#: classes/helpers/FrmAppHelper.php:382
 #@ formidable
 msgid "South Korea"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:381
+#: classes/helpers/FrmAppHelper.php:383
 #@ formidable
 msgid "Kuwait"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:381
+#: classes/helpers/FrmAppHelper.php:383
 #@ formidable
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:381
+#: classes/helpers/FrmAppHelper.php:383
 #@ formidable
 msgid "Laos"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:382
+#: classes/helpers/FrmAppHelper.php:384
 #@ formidable
 msgid "Latvia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:382
+#: classes/helpers/FrmAppHelper.php:384
 #@ formidable
 msgid "Lebanon"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:382
+#: classes/helpers/FrmAppHelper.php:384
 #@ formidable
 msgid "Lesotho"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:383
+#: classes/helpers/FrmAppHelper.php:385
 #@ formidable
 msgid "Liberia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:383
+#: classes/helpers/FrmAppHelper.php:385
 #@ formidable
 msgid "Libya"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:383
+#: classes/helpers/FrmAppHelper.php:385
 #@ formidable
 msgid "Liechtenstein"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:384
+#: classes/helpers/FrmAppHelper.php:386
 #@ formidable
 msgid "Lithuania"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:384
+#: classes/helpers/FrmAppHelper.php:386
 #@ formidable
 msgid "Luxembourg"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:384
+#: classes/helpers/FrmAppHelper.php:386
 #@ formidable
 msgid "Macedonia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:385
+#: classes/helpers/FrmAppHelper.php:387
 #@ formidable
 msgid "Madagascar"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:385
+#: classes/helpers/FrmAppHelper.php:387
 #@ formidable
 msgid "Malawi"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:385
+#: classes/helpers/FrmAppHelper.php:387
 #@ formidable
 msgid "Malaysia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:386
+#: classes/helpers/FrmAppHelper.php:388
 #@ formidable
 msgid "Maldives"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:386
+#: classes/helpers/FrmAppHelper.php:388
 #@ formidable
 msgid "Mali"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:386
+#: classes/helpers/FrmAppHelper.php:388
 #@ formidable
 msgid "Malta"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:387
+#: classes/helpers/FrmAppHelper.php:389
 #@ formidable
 msgid "Marshall Islands"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:387
+#: classes/helpers/FrmAppHelper.php:389
 #@ formidable
 msgid "Mauritania"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:387
+#: classes/helpers/FrmAppHelper.php:389
 #@ formidable
 msgid "Mauritius"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:388
+#: classes/helpers/FrmAppHelper.php:390
 #@ formidable
 msgid "Mexico"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:388
+#: classes/helpers/FrmAppHelper.php:390
 #@ formidable
 msgid "Micronesia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:388
+#: classes/helpers/FrmAppHelper.php:390
 #@ formidable
 msgid "Moldova"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:389
+#: classes/helpers/FrmAppHelper.php:391
 #@ formidable
 msgid "Monaco"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:389
+#: classes/helpers/FrmAppHelper.php:391
 #@ formidable
 msgid "Mongolia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:389
+#: classes/helpers/FrmAppHelper.php:391
 #@ formidable
 msgid "Montenegro"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:390
+#: classes/helpers/FrmAppHelper.php:392
 #@ formidable
 msgid "Montserrat"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:390
+#: classes/helpers/FrmAppHelper.php:392
 #@ formidable
 msgid "Morocco"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:390
+#: classes/helpers/FrmAppHelper.php:392
 #@ formidable
 msgid "Mozambique"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:391
+#: classes/helpers/FrmAppHelper.php:393
 #@ formidable
 msgid "Myanmar"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:391
+#: classes/helpers/FrmAppHelper.php:393
 #@ formidable
 msgid "Namibia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:391
+#: classes/helpers/FrmAppHelper.php:393
 #@ formidable
 msgid "Nauru"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:392
+#: classes/helpers/FrmAppHelper.php:394
 #@ formidable
 msgid "Nepal"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:392
+#: classes/helpers/FrmAppHelper.php:394
 #@ formidable
 msgid "Netherlands"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:392
+#: classes/helpers/FrmAppHelper.php:394
 #@ formidable
 msgid "New Zealand"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:393
+#: classes/helpers/FrmAppHelper.php:395
 #@ formidable
 msgid "Nicaragua"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:393
+#: classes/helpers/FrmAppHelper.php:395
 #@ formidable
 msgid "Niger"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:393
+#: classes/helpers/FrmAppHelper.php:395
 #@ formidable
 msgid "Nigeria"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:394
+#: classes/helpers/FrmAppHelper.php:396
 #@ formidable
 msgid "Norway"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:394
+#: classes/helpers/FrmAppHelper.php:396
 #@ formidable
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:394
+#: classes/helpers/FrmAppHelper.php:396
 #@ formidable
 msgid "Oman"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:395
+#: classes/helpers/FrmAppHelper.php:397
 #@ formidable
 msgid "Pakistan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:395
+#: classes/helpers/FrmAppHelper.php:397
 #@ formidable
 msgid "Palau"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:395
+#: classes/helpers/FrmAppHelper.php:397
 #@ formidable
 msgid "Palestine"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:396
+#: classes/helpers/FrmAppHelper.php:398
 #@ formidable
 msgid "Panama"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:396
+#: classes/helpers/FrmAppHelper.php:398
 #@ formidable
 msgid "Papua New Guinea"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:396
+#: classes/helpers/FrmAppHelper.php:398
 #@ formidable
 msgid "Paraguay"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:397
+#: classes/helpers/FrmAppHelper.php:399
 #@ formidable
 msgid "Peru"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:397
+#: classes/helpers/FrmAppHelper.php:399
 #@ formidable
 msgid "Philippines"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:397
+#: classes/helpers/FrmAppHelper.php:399
 #@ formidable
 msgid "Poland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:398
+#: classes/helpers/FrmAppHelper.php:400
 #@ formidable
 msgid "Portugal"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:398
+#: classes/helpers/FrmAppHelper.php:400
 #@ formidable
 msgid "Puerto Rico"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:398
+#: classes/helpers/FrmAppHelper.php:400
 #@ formidable
 msgid "Qatar"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:399
+#: classes/helpers/FrmAppHelper.php:401
 #@ formidable
 msgid "Romania"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:399
+#: classes/helpers/FrmAppHelper.php:401
 #@ formidable
 msgid "Russia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:399
+#: classes/helpers/FrmAppHelper.php:401
 #@ formidable
 msgid "Rwanda"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:400
+#: classes/helpers/FrmAppHelper.php:402
 #@ formidable
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:400
+#: classes/helpers/FrmAppHelper.php:402
 #@ formidable
 msgid "Saint Lucia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:401
+#: classes/helpers/FrmAppHelper.php:403
 #@ formidable
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:401
+#: classes/helpers/FrmAppHelper.php:403
 #@ formidable
 msgid "Samoa"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:402
+#: classes/helpers/FrmAppHelper.php:404
 #@ formidable
 msgid "San Marino"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:402
+#: classes/helpers/FrmAppHelper.php:404
 #@ formidable
 msgid "Sao Tome and Principe"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:402
+#: classes/helpers/FrmAppHelper.php:404
 #@ formidable
 msgid "Saudi Arabia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:403
+#: classes/helpers/FrmAppHelper.php:405
 #@ formidable
 msgid "Senegal"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:403
+#: classes/helpers/FrmAppHelper.php:405
 #@ formidable
 msgid "Serbia and Montenegro"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:403
+#: classes/helpers/FrmAppHelper.php:405
 #@ formidable
 msgid "Seychelles"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:404
+#: classes/helpers/FrmAppHelper.php:406
 #@ formidable
 msgid "Sierra Leone"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:404
+#: classes/helpers/FrmAppHelper.php:406
 #@ formidable
 msgid "Singapore"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:404
+#: classes/helpers/FrmAppHelper.php:406
 #@ formidable
 msgid "Slovakia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:405
+#: classes/helpers/FrmAppHelper.php:407
 #@ formidable
 msgid "Slovenia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:405
+#: classes/helpers/FrmAppHelper.php:407
 #@ formidable
 msgid "Solomon Islands"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:405
+#: classes/helpers/FrmAppHelper.php:407
 #@ formidable
 msgid "Somalia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:406
+#: classes/helpers/FrmAppHelper.php:408
 #@ formidable
 msgid "South Africa"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:406
+#: classes/helpers/FrmAppHelper.php:408
 #@ formidable
 msgid "Spain"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:406
+#: classes/helpers/FrmAppHelper.php:408
 #@ formidable
 msgid "Sri Lanka"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:407
+#: classes/helpers/FrmAppHelper.php:409
 #@ formidable
 msgid "Sudan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:407
+#: classes/helpers/FrmAppHelper.php:409
 #@ formidable
 msgid "Suriname"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:407
+#: classes/helpers/FrmAppHelper.php:409
 #@ formidable
 msgid "Swaziland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:408
+#: classes/helpers/FrmAppHelper.php:410
 #@ formidable
 msgid "Sweden"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:408
+#: classes/helpers/FrmAppHelper.php:410
 #@ formidable
 msgid "Switzerland"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:408
+#: classes/helpers/FrmAppHelper.php:410
 #@ formidable
 msgid "Syria"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:409
+#: classes/helpers/FrmAppHelper.php:411
 #@ formidable
 msgid "Taiwan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:409
+#: classes/helpers/FrmAppHelper.php:411
 #@ formidable
 msgid "Tajikistan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:409
+#: classes/helpers/FrmAppHelper.php:411
 #@ formidable
 msgid "Tanzania"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:410
+#: classes/helpers/FrmAppHelper.php:412
 #@ formidable
 msgid "Thailand"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:410
+#: classes/helpers/FrmAppHelper.php:412
 #@ formidable
 msgid "Togo"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:410
+#: classes/helpers/FrmAppHelper.php:412
 #@ formidable
 msgid "Tonga"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:411
+#: classes/helpers/FrmAppHelper.php:413
 #@ formidable
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:411
+#: classes/helpers/FrmAppHelper.php:413
 #@ formidable
 msgid "Tunisia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:411
+#: classes/helpers/FrmAppHelper.php:413
 #@ formidable
 msgid "Turkey"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:412
+#: classes/helpers/FrmAppHelper.php:414
 #@ formidable
 msgid "Turkmenistan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:412
+#: classes/helpers/FrmAppHelper.php:414
 #@ formidable
 msgid "Tuvalu"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:412
+#: classes/helpers/FrmAppHelper.php:414
 #@ formidable
 msgid "Uganda"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:413
+#: classes/helpers/FrmAppHelper.php:415
 #@ formidable
 msgid "Ukraine"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:413
+#: classes/helpers/FrmAppHelper.php:415
 #@ formidable
 msgid "United Arab Emirates"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:413
+#: classes/helpers/FrmAppHelper.php:415
 #@ formidable
 msgid "United Kingdom"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:414
+#: classes/helpers/FrmAppHelper.php:416
 #@ formidable
 msgid "United States"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:414
+#: classes/helpers/FrmAppHelper.php:416
 #@ formidable
 msgid "Uruguay"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:414
+#: classes/helpers/FrmAppHelper.php:416
 #@ formidable
 msgid "Uzbekistan"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:415
+#: classes/helpers/FrmAppHelper.php:417
 #@ formidable
 msgid "Vanuatu"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:415
+#: classes/helpers/FrmAppHelper.php:417
 #@ formidable
 msgid "Vatican City"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:415
+#: classes/helpers/FrmAppHelper.php:417
 #@ formidable
 msgid "Venezuela"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:416
+#: classes/helpers/FrmAppHelper.php:418
 #@ formidable
 msgid "Vietnam"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:416
+#: classes/helpers/FrmAppHelper.php:418
 #@ formidable
 msgid "Virgin Islands, British"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:417
+#: classes/helpers/FrmAppHelper.php:419
 #@ formidable
 msgid "Virgin Islands, U.S."
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:417
+#: classes/helpers/FrmAppHelper.php:419
 #@ formidable
 msgid "Yemen"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:417
+#: classes/helpers/FrmAppHelper.php:419
 #@ formidable
 msgid "Zambia"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:418
+#: classes/helpers/FrmAppHelper.php:420
 #@ formidable
 msgid "Zimbabwe"
 msgstr ""
@@ -5099,7 +5086,7 @@ msgstr ""
 msgid "Dropdown"
 msgstr ""
 
-#: classes/models/FrmEntry.php:317
+#: classes/models/FrmEntry.php:318
 #@ formidable
 msgid "There was a problem with your submission. Please try again."
 msgstr ""
@@ -5145,13 +5132,13 @@ msgstr ""
 msgid "Build"
 msgstr ""
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1160
+#: pro/classes/helpers/FrmProFieldsHelper.php:1183
 #@ formidable
 msgid "User IP"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:914
-#: pro/classes/helpers/FrmProFieldsHelper.php:1162
+#: pro/classes/controllers/FrmProEntriesController.php:916
+#: pro/classes/helpers/FrmProFieldsHelper.php:1185
 #: pro/classes/views/displays/form.php:124
 #: pro/classes/views/displays/form.php:132
 #: pro/classes/views/displays/form.php:234
@@ -5180,7 +5167,7 @@ msgstr ""
 msgid "less than or equal to"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:912
+#: pro/classes/controllers/FrmProEntriesController.php:914
 #: pro/classes/views/frmpro-entries/show.php:79
 #@ formidable
 msgid "Post"
@@ -5524,7 +5511,7 @@ msgstr ""
 msgid "Entries were Successfully Destroyed"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:737
+#: pro/classes/controllers/FrmProEntriesController.php:739
 #@ formidable
 msgid "Please wait while you are redirected."
 msgstr ""
@@ -5623,8 +5610,8 @@ msgstr ""
 msgid "Use this menu name site-wide"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:1722
-#: pro/classes/controllers/FrmProEntriesController.php:1808
+#: pro/classes/controllers/FrmProEntriesController.php:1724
+#: pro/classes/controllers/FrmProEntriesController.php:1815
 #@ formidable
 msgid "Your entry was successfully deleted"
 msgstr ""
@@ -5677,12 +5664,12 @@ msgstr ""
 msgid "Daily Entries"
 msgstr ""
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1211
+#: pro/classes/helpers/FrmProFieldsHelper.php:1234
 #@ formidable
 msgid "Site Name"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:739
+#: pro/classes/controllers/FrmProEntriesController.php:741
 #, php-format
 #@ formidable
 msgid "%1$sClick here%2$s if you are not automatically redirected."
@@ -5977,7 +5964,7 @@ msgstr ""
 msgid "Displays"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:1799
+#: pro/classes/controllers/FrmProEntriesController.php:1806
 #@ formidable
 msgid "There was an error deleting that entry"
 msgstr ""
@@ -5997,12 +5984,12 @@ msgstr ""
 msgid "Deauthorize this site"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:776
+#: pro/classes/controllers/FrmProEntriesController.php:778
 #@ formidable
 msgid "Create Entry in Form"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:819
+#: pro/classes/controllers/FrmProEntriesController.php:821
 #@ formidable
 msgid "Copied from Post"
 msgstr ""
@@ -6053,6 +6040,7 @@ msgid "hour"
 msgstr ""
 
 #: pro/classes/helpers/FrmProAppHelper.php:128
+#: pro/classes/views/frmpro-forms/add_form_options.php:74
 #@ formidable
 msgid "hours"
 msgstr ""
@@ -6192,5 +6180,10 @@ msgstr ""
 #: pro/classes/views/settings/formroller.php:21
 #@ formidable
 msgid "Max Width"
+msgstr ""
+
+#: pro/classes/views/frmpro-forms/add_form_options.php:73
+#@ formidable
+msgid "Cookie Expiration"
 msgstr ""
 

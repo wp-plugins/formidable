@@ -102,10 +102,10 @@
                         <input type="text" name="options[success_url]" id="success_url" value="<?php echo esc_attr($values['success_url']); ?>" size="55"></td>
                 </tr>
                 
-                <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'page') ? 'style="display:none;"' : ''; ?>><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?></label></td>
+                <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?></label></td>
                     <td><?php if($frmpro_is_installed and isset($values['id'])){ FrmProFieldsHelper::get_shortcode_select($values['id'], 'success_msg'); echo '<br/>'; } ?>
                         <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
-                    <div class="frm_show_form_opt" <?php echo ($values['success_action'] == 'redirect') ? 'style="display:none;"' : ''; ?>>
+                    <div class="frm_show_form_opt">
                     <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                     </div>
                     <td>

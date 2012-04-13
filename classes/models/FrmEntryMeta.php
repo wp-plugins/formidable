@@ -56,7 +56,7 @@ class FrmEntryMeta{
       
       $cached = wp_cache_get( $entry_id, 'frm_entry' );
       if($cached and isset($cached->metas) and isset($cached->metas[$field_id]))
-            return stripslashes_deep($cached->metas[$field_id]);
+            return $cached->metas[$field_id];
             
       if (is_numeric($field_id))
           $query = "SELECT `meta_value` FROM $frmdb->entry_metas WHERE field_id='$field_id' and item_id='$entry_id'";
@@ -64,7 +64,7 @@ class FrmEntryMeta{
           $query = "SELECT `meta_value` FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id WHERE fi.field_key='{$field_id}' and `item_id`='{$entry_id}'";
           
       if($return_var){
-          $result = stripslashes_deep(maybe_unserialize($wpdb->get_var("{$query} LIMIT 1")));
+          $result = maybe_unserialize($wpdb->get_var("{$query} LIMIT 1"));
           if($cached){
               if(!isset($cached->metas))
                   $cached->metas = array();
@@ -89,7 +89,7 @@ class FrmEntryMeta{
       $query = $wpdb->prepare($query_str, $field_id, $entry_id);
 
       if($return_var)
-        return stripslashes($wpdb->get_var("{$query} LIMIT 1"));
+        return $wpdb->get_var("{$query} LIMIT 1");
       else
         return $wpdb->get_col($query, 0);
   }

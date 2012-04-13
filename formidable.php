@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.04
+Version: 1.06.04rc1
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -53,7 +53,7 @@ if (!defined ('IS_WPMU')){
 
 global $frm_version, $frm_db_version;
 $frm_version = '1.06.04';
-$frm_db_version = 8;
+$frm_db_version = 9;
 
 global $frm_ajax_url;
 $frm_ajax_url = admin_url('admin-ajax.php');

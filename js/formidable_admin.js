@@ -11,12 +11,10 @@ window.onscroll = document.documentElement.onscroll = frmSetMenuOffset;
 frmSetMenuOffset();
             
 $("input[name='options[success_action]']").change(function(){
-	$('.success_action_box').hide();
-    if($(this).val()=='redirect'){
-		$('.frm_show_form_opt').hide();
-        $('.success_action_redirect_box.success_action_box, .success_action_message_box.success_action_box').fadeIn('slow');
-    }else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').fadeIn('slow');}
-	else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
+$('.success_action_box').hide();
+if($(this).val()=='redirect'){$('.success_action_redirect_box.success_action_box').fadeIn('slow');}
+else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').fadeIn('slow');}
+else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
 });
 
 if($('.hide_editable').length>0){
@@ -106,6 +104,11 @@ $('.frm_form_builder select[name^="item_meta"]').live('change', function(){
 var n=$(this).attr('name');
 n=n.substring(10,n.length-1);
 frmShowDefaults(n,jQuery(this).val());	
+});
+
+jQuery('#frm_single_entry_type').change(function(){
+if(jQuery('#frm_single_entry_type option:selected').val()=="cookie"){jQuery('#frm_cookie_expiration').fadeIn();}
+else{jQuery('#frm_cookie_expiration').fadeOut();}
 });
 
 if($(".frm_exclude_cat_list .frm_catlevel_2").length>0){

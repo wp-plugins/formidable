@@ -7,7 +7,7 @@ class FrmAppHelper{
             $params = explode('[', $param);
             $param = $params[0];    
         }
-        
+
         $value = (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
         
         if(isset($params) and is_array($value) and !empty($value)){
@@ -218,6 +218,8 @@ class FrmAppHelper{
                     $meta_value = $field->default_value;
                 }else{
                     if($record->post_id and class_exists('FrmProEntryMetaHelper') and isset($field->field_options['post_field']) and $field->field_options['post_field']){
+                        if(!isset($field->field_options['custom_field']))
+                            $field->field_options['custom_field'] = '';
                         $meta_value = FrmProEntryMetaHelper::get_post_value($record->post_id, $field->field_options['post_field'], $field->field_options['custom_field'], array('truncate' => false, 'type' => $field->type, 'form_id' => $field->form_id, 'field' => $field));
                     }else if(isset($record->metas)){
                         $meta_value = isset($record->metas[$field->id]) ? $record->metas[$field->id] : false;
@@ -326,7 +328,7 @@ class FrmAppHelper{
     
     function get_us_states(){
         return apply_filters('frm_us_states', array(
-            'AL' => 'Alabama', 'AK' => 'Alaska', 'AS' => 'Arkansas', 'AZ' => 'Arizona', 
+            'AL' => 'Alabama', 'AK' => 'Alaska', 'AR' => 'Arkansas', 'AZ' => 'Arizona', 
             'CA' => 'California', 'CO' => 'Colorado', 'CT' => 'Connecticut', 'DE' => 'Delaware', 
             'FL' => 'Florida', 'GA' => 'Georgia', 'HI' => 'Hawaii', 'ID' => 'Idaho', 
             'IL' => 'Illinois', 'IN' => 'Indiana', 'IA' => 'Iowa', 'KS' => 'Kansas', 

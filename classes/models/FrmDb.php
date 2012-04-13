@@ -34,7 +34,7 @@ class FrmDb{
         $sql = "CREATE TABLE `{$this->fields}` (
                 `id` int(11) NOT NULL auto_increment,
                 `field_key` varchar(255) default NULL,
-                `name` varchar(255) default NULL,
+                `name` text default NULL,
                 `description` text default NULL,
                 `type` text default NULL,
                 `default_value` longtext default NULL,
