@@ -273,7 +273,7 @@ function frm_field_hover(show, field_id){
 }
 
 function frmSetMenuOffset() { 
-	var fields = jQuery('#frm_form_options .frm_field_list');
+	var fields = jQuery('#postbox-container-1 .frm_field_list');
 	if (!fields) return;
 	var currentOffset = document.documentElement.scrollTop || document.body.scrollTop; // body for Safari
 	var offset=283;

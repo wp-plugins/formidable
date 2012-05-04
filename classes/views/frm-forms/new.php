@@ -9,8 +9,11 @@
         </div>
     <?php } ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
-    <?php require('add_field_links.php'); ?>
-    <div id="post-body">
+    <?php
+        if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<'))
+            require('add_field_links.php'); 
+    ?>
+    <div id="post-body" class="metabox-holder columns-2">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
         <form method="post" >
@@ -35,6 +38,10 @@
         </form>
     </div>
     </div>
+    <?php 
+    if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
+        require('add_field_links.php'); 
+    ?>
     </div>
     </div>
 </div> 

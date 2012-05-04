@@ -6,7 +6,7 @@
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div class="alignright">
-        <div id="frm_form_options">
+        <div id="postbox-container-1">
             <?php if(!isset($hide_preview) or !$hide_preview){ 
                 if (!$values['is_template']){ ?>
             <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
@@ -52,8 +52,9 @@
         <div class="categorydiv postbox">
         <h3 class="hndle"><span><?php echo FrmAppHelper::truncate(stripslashes($values['name']), 40) .' '. __('Settings', 'formidable') ?></span></h3>
         <div class="inside">
-        <ul id="category-tabs" class="category-tabs">
-        	<li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>
+        <div class="contextual-help-tabs">
+        <ul>
+        	<li class="tabs active"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>
         	<li><a onclick="frmSettingsTab(jQuery(this),'notification');"><?php _e('Emails', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'html');"><?php _e('Customize HTML', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'post');"><?php _e('Create Posts', 'formidable') ?></a></li>
@@ -61,7 +62,7 @@
                 <li><a onclick="frmSettingsTab(jQuery(this),'<?php echo $sec_name ?>');"><?php echo ucfirst($sec_name) ?></a></li>
             <?php } ?>
         </ul>
-
+        </div>
         <div style="display:block;" class="advanced_settings tabs-panel">
         	<table class="form-table">
                 <tr>
@@ -188,32 +189,11 @@
              </table>
         </div>
         
-        <div class="html_settings tabs-panel has-right-sidebar" style="display:none;">
-            <div class="inner-sidebar frm_html_legend postbox" style="width:240px;min-width:100px;">
-                <h3><?php _e('Key', 'formidable') ?></h3>
-                <div class="inside">
-                <ul>
-                    <li><b><?php _e('Form Name', 'formidable') ?>:</b> <pre>[form_name]</pre></li>
-                    <li><b><?php _e('Form Description', 'formidable') ?>:</b> <pre>[form_description]</pre></li>
-                    <li><b><?php _e('Form Key', 'formidable') ?>:</b> <pre>[form_key]</pre></li>
-                    <li><b><?php _e('Delete Entry Link', 'formidable') ?>:</b> <pre>[deletelink]</pre></li>
-                </ul>
-                <ul>
-                    <li><b><?php _e('Field Id', 'formidable') ?>:</b> <pre>[id]</pre></li>
-                    <li><b><?php _e('Field Key', 'formidable') ?>:</b> <pre>[key]</pre></li>
-                    <li><b><?php _e('Field Name', 'formidable') ?>:</b> <pre>[field_name]</pre></li>
-                    <li><b><?php _e('Field Description', 'formidable') ?>:</b> <pre>[description]</pre></li>
-                    <li><b><?php _e('Label Position', 'formidable') ?>:</b> <pre>[label_position]</pre></li>
-                    <li><b><?php _e('Required label', 'formidable') ?>:</b> <pre>[required_label]</pre></li>
-                    <li><b><?php _e('Input Field', 'formidable') ?>:</b> <pre>[input]</pre><br/>
-                        <?php _e('Show a single radio or checkbox option by replacing "1" with the order of the option', 'formidable') ?>: <pre>[input opt=1]</pre><br/>
-                        <?php _e('Hide the option labels', 'formidable') ?>: <pre>[input label=0]</pre>
-                    </li>
-                    <li><b><?php _e('Add class name if field is required', 'formidable') ?>:</b> <pre>[required_class]</pre></li>
-                    <li><b><?php _e('Add class name if field has an error on form submit', 'formidable') ?>:</b> <pre>[error_class]</pre></li>
-                </ul>
-                </div>
-            </div>
+        <div class="html_settings tabs-panel has-right-sidebar columns-2" style="display:none;">
+            <?php 
+                if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<'))
+                    require('sidebar-html.php'); 
+            ?>
             
             <div id="post-body-content" class="frm_top_container" style="margin-right:260px;">
                 <p><label class="frm_primary_label"><?php _e('Before Fields', 'formidable') ?></label>
@@ -235,6 +215,10 @@
                 <p><label class="frm_primary_label"><?php _e('After Fields', 'formidable') ?></label>
                 <textarea name="options[after_html]" rows="3" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['after_html']) ?></textarea></p> 
             </div>
+            <?php 
+                if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
+                    require('sidebar-html.php'); 
+            ?>
         </div>
         <div id="post_settings" class="post_settings tabs-panel" style="display:none;">
             <?php if($frmpro_is_installed)

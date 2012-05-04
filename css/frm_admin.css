@@ -118,10 +118,9 @@ ul.frm_form_nav li.last a.current_page{
 
 .frm_form_builder a:hover{text-decoration:underline;}
 
-#frm_form_options{width:270px;}
-#frm_form_options .nodrag a{cursor:pointer;}
-#frm_form_options .button{text-align:center;width:98px;float:left; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:11px !important;}
-#frm_form_options .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
+#postbox-container-1 .nodrag a{cursor:pointer;}
+#postbox-container-1 .button{text-align:center;width:98px;float:left; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:11px !important;}
+#postbox-container-1 .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
 .frm_col_one{margin-right:4px;clear:both;}
 .frm_html_legend pre{display:inline;}
 
@@ -221,20 +220,20 @@ span.howto{display:inline;}
 #frm_form_editor_container .ui-widget-content label{float:left; width:170px; text-align:right; padding-right:5px; clear:both;}
 #frm_form_editor_container .ui-widget-content label.nofloat{clear:none; float:none; margin-left:10px;}
 #frm_form_editor_container .ui-state-default{color:#333;}
-#frm_form_editor_container .ui-state-default a.frm_orange, #frm_form_options a.frm_orange{color:#D54E21;}
+#frm_form_editor_container .ui-state-default a.frm_orange, #postbox-container-1 a.frm_orange{color:#D54E21;}
 
 #new_fields .widget, .frm_settings_page .widget{background:#fff;}
 #new_fields .widget-title h4{font-weight:normal;}
-#new_fields .widget, #frm_form_options .widget, .frm_settings_page .widget{margin-bottom:0;}
+#new_fields .widget, #postbox-container-1 .widget, .frm_settings_page .widget{margin-bottom:0;}
 .frm_settings_page .widget-inside{padding-top:0;padding-bottom:10px;}
 #new_fields .widget, .widget-inside{display: none;}
 #new_fields li.ui-state-default.selected .widget{display:block;}
 #new_fields .form-field .widget{ display:none;}
 #new_fields{min-height:200px;}
-#frm_form_options .ui-state-default, #new_fields li.ui-state-default{
+#postbox-container-1 .ui-state-default, #new_fields li.ui-state-default{
 	border:none;font-weight:normal;background-color:transparent; background-image:none;padding:6px; margin:20px 0;
 }
-#frm_form_options .ui-state-default{padding:0;margin:0;}
+#postbox-container-1 .ui-state-default{padding:0;margin:0;}
 #new_fields li.ui-state-default.edit_field_type_break{border-top:1px dashed #ccc; padding-top:5px;}
 #new_fields .edit_field_type_divider .frm_ipe_field_label,
 #new_fields .edit_field_type_break .frm_ipe_field_label{font-size:116%;}
@@ -248,7 +247,7 @@ span.howto{display:inline;}
 .frm_option_key_label, .frm_option_val_label{font-weight:bold;font-size:11px;}
 .edit_field_type_select .frm_option_val_label{margin-left:12px;}
 
-#frm_form_options .ui-state-default{color:#000;}
+#postbox-container-1 .ui-state-default{color:#000;}
 #new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected, .frm_update_msg{
 	padding:5px;
 	background-color: #f5fafd; /* Fallback */
@@ -297,12 +296,14 @@ span.howto{display:inline;}
 /*hide elements if js is avail*/
 .js select.texture, .js #help{display: none;}
 
-#frm_form_options .frm_field_list{
+#postbox-container-1 .frm_field_list{
 	margin-right:10px;
 	position:fixed;
 	z-index:5;
 	width:270px;
 }
+
+.contextual-help-tabs ul{min-height:300px;}
 
 a{cursor: pointer;}
 

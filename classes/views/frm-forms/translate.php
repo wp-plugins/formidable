@@ -6,7 +6,7 @@
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div class="alignright">
-        <div id="frm_form_options">
+        <div id="postbox-container-1">
             <?php if(!isset($hide_preview) or !$hide_preview){ 
                 if (!$values['is_template']){ ?>
             <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>

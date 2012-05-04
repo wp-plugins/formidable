@@ -161,7 +161,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             //$frm_db_version is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 12))
+            if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 14))
                 $this->install($old_db_version);
         }
 

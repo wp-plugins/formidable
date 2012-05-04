@@ -12,6 +12,9 @@
     	wp_admin_css( 'ms' );
     wp_enqueue_script('utils');
     
+    //3.4 hack
+    remove_action( 'admin_enqueue_scripts', '_wp_customize_loader_localize' );
+    
     do_action('admin_enqueue_scripts', $hook_suffix);
     do_action('admin_print_styles');
     do_action('admin_print_scripts');

@@ -11,13 +11,15 @@
         <div class="categorydiv postbox">
         <h3 class="hndle"><span><?php _e('Settings', 'formidable') ?></span></h3>
         <div class="inside">
-        <ul id="category-tabs" class="category-tabs">
-        	<li class="tabs"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
+        <div class="contextual-help-tabs">
+        <ul>
+        	<li class="tabs active"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>
                 <li><a onclick="frmSettingsTab(jQuery(this),'<?php echo $sec_name ?>');"><?php echo ucfirst($sec_name) ?></a></li>
             <?php } ?>
         </ul>
+        </div>
         
 <?php if (IS_WPMU and !FrmAppHelper::is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
 <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;">
