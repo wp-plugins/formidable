@@ -344,6 +344,13 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function update_message($features){
         include(FRM_VIEWS_PATH .'/shared/update_message.php');
     }
+    
+    function get_postbox_class(){
+        if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
+            return 'postbox-container';
+        else
+            return 'inner-sidebar';
+    }
 
 }
 ?>

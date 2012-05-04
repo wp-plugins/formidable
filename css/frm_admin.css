@@ -118,6 +118,7 @@ ul.frm_form_nav li.last a.current_page{
 
 .frm_form_builder a:hover{text-decoration:underline;}
 
+#postbox-container-1{width:270px;}
 #postbox-container-1 .nodrag a{cursor:pointer;}
 #postbox-container-1 .button{text-align:center;width:98px;float:left; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:11px !important;}
 #postbox-container-1 .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}

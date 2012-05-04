@@ -148,7 +148,7 @@ class FrmEntriesController{
     function &filter_display_value($value, $field){
         $field->field_options = maybe_unserialize($field->field_options);
         
-        if(!in_array($field->type, array('radio', 'checkbox', 'radio')) or !isset($field->field_options['separate_value']) or !$field->field_options['separate_value'])
+        if(!in_array($field->type, array('radio', 'checkbox', 'radio', 'select')) or !isset($field->field_options['separate_value']) or !$field->field_options['separate_value'])
             return $value;
             
         $field->options = maybe_unserialize($field->options);
@@ -167,12 +167,15 @@ class FrmEntriesController{
             unset($opt_key);
             unset($opt);
         }
-        
+
         if(!empty($f_values)){
             foreach((array)$value as $v_key => $val){
                 if(in_array($val, $f_values)){
                     $opt = array_search($val, $f_values);
-                    $value[$v_key] = $f_labels[$opt];
+                    if(is_array($value))
+                        $value[$v_key] = $f_labels[$opt];
+                    else
+                        $value = $f_labels[$opt];
                 }
                 unset($v_key);
                 unset($val);

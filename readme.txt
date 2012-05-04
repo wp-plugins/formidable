@@ -68,6 +68,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Fix to allow access to form, entry, and display pages for WordPress versions < 3.1
 * Fixed default checkbox or radio field values for fields with separate option values
 * Corrected Arkansas abbreviation in templates and bulk edit options
+* Fixed display of radio field values from fields with separate values
 * PRO: Added custom display content box into "create posts" settings tab
 * PRO: Added options to auto-create fields for post status and post categories/taxonomies
 * PRO: Added link to de-authorize a site to use your Pro credentials

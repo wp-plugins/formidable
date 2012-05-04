@@ -1,4 +1,4 @@
-<div id="postbox-container-1" class="inner-sidebar postbox-container frm_html_legend postbox" style="width:240px;min-width:100px;">
+<div id="postbox-container-1" class="<?php echo FrmAppController::get_postbox_class(); ?> frm_html_legend postbox" style="width:240px;min-width:100px;">
     <h3><?php _e('Key', 'formidable') ?></h3>
     <div class="inside">
     <ul>

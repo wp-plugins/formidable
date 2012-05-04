@@ -1,4 +1,4 @@
-<div id="postbox-container-1" class="inner-sidebar postbox-container">
+<div id="postbox-container-1" class="<?php echo FrmAppController::get_postbox_class(); ?>">
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
     <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>:
