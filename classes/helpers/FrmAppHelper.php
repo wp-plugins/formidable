@@ -16,7 +16,7 @@ class FrmAppHelper{
                     continue;
                     
                 $p = trim($p, ']');
-                $value = (isset($value[$p])) ? $value[$p] : $value;
+                $value = (isset($value[$p])) ? $value[$p] : $default;
             }
         }
 

@@ -86,6 +86,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switched phone field to HTML5 "tel" input type
 * PRO: Added a frm_cookie_expiration hook to change the cookie expiration time
 * PRO: Added cookie expiration option
+* PRO: Added frm_used_dates hook for blocked out dates in unique datepickers
+* PRO: Added frm_redirect_url hook
+* PRO: Fixed forms submit button labels for forms in add entry mode that follow a form in edit mode on the same page
+* PRO: Fixed CSV import for delimiters other than a comma
+* PRO: Added three icons to the error icon setting
+* PRO: Fixed duplicate deletion messages when using [deletelink] in the form customizable HTML
+* PRO: Updated calculations to work across multi-paged forms
 
 = 1.06.03 =
 * Added option to not store entries in the database from a specific form

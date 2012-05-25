@@ -299,6 +299,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
 
     function queue_update($force=false){
         static $already_set_option, $already_set_transient;
+        global $frm_version;
 
         if(!is_admin())
             return;
@@ -324,7 +325,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
             
         if(!isset($plugin_updates->checked))
             $plugin_updates->checked = array();
-        $installed_version = $plugin_updates->checked[$this->plugin_name];
+        $installed_version = isset($plugin_updates->checked[$this->plugin_name]) ? $plugin_updates->checked[$this->plugin_name] : $frm_version;
 
         if( $force or version_compare( $curr_version, $installed_version, '>') ){
             $download_url = $this->get_download_url($curr_version);
