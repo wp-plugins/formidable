@@ -92,7 +92,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed CSV import for delimiters other than a comma
 * PRO: Added three icons to the error icon setting
 * PRO: Fixed duplicate deletion messages when using [deletelink] in the form customizable HTML
-* PRO: Updated calculations to work across multi-paged forms
+* PRO: Updated calculations and conditional logic to work across multi-paged forms
+* PRO: Added basic support for data from entries csv import 
+* PRO: Show image for data from entries fields using upload fields
 
 = 1.06.03 =
 * Added option to not store entries in the database from a specific form
