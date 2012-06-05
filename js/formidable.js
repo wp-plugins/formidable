@@ -73,9 +73,9 @@ for(i=0; i<len; i++){
 	if(f.FieldName!=field_id || typeof(selected)=='undefined'){
 		var prevSel=selected;
 		if(f.Type=='radio' || f.Type=='data-radio')
-			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked").val();
+			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
 		else if(f.Type=='select' || f.Type=='data-select')
-			selected=jQuery("select[name='item_meta["+f.FieldName+"]']").val();
+			selected=jQuery("select[name='item_meta["+f.FieldName+"]'], input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
 	}
 
 	if(typeof(selected)=='undefined'){
@@ -85,7 +85,7 @@ for(i=0; i<len; i++){
 	
     if(f.Type=='checkbox'){
         show_fields[f.HideField][i]=false;
-        jQuery("input[name='item_meta["+f.FieldName+"][]']:checked").each(function(){
+        jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"][]']").each(function(){
 			var match=frmOperators(f.Condition,f.Value,jQuery(this).val());
 			if(show_fields[f.HideField][i]==false && match)
 				show_fields[f.HideField][i]=true;
@@ -103,7 +103,7 @@ for(i=0; i<len; i++){
 		}
     }else if(f.Type=='data-checkbox'){
 		var checked_vals=new Array();
-		jQuery("input[name='item_meta["+f.FieldName+"][]']:checked").each(function(){checked_vals.push(jQuery(this).val());});
+		jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"][]']").each(function(){checked_vals.push(jQuery(this).val());});
 		if(typeof(f.DataType)=='undefined' || f.DataType=='' || f.DataType=='data'){
 	        if(checked_vals.length==0){
 				show_fields[f.HideField][i]=false;

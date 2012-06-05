@@ -53,7 +53,7 @@
         <h3 class="hndle"><span><?php echo FrmAppHelper::truncate(stripslashes($values['name']), 40) .' '. __('Settings', 'formidable') ?></span></h3>
         <div class="inside">
         <div class="contextual-help-tabs">
-        <ul>
+        <ul <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'id="category-tabs" class="category-tabs"'; ?>>
         	<li class="tabs active"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>
         	<li><a onclick="frmSettingsTab(jQuery(this),'notification');"><?php _e('Emails', 'formidable') ?></a></li>
             <li><a onclick="frmSettingsTab(jQuery(this),'html');"><?php _e('Customize HTML', 'formidable') ?></a></li>

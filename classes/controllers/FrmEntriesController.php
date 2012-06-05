@@ -10,6 +10,7 @@ class FrmEntriesController{
         add_action('wp', array(&$this, 'process_entry'));
         add_action('frm_wp', array(&$this, 'process_entry'));
         add_filter('frm_redirect_msg', array( &$this, 'delete_entry_before_redirect'), 50, 3);
+        add_filter('frm_redirect_url', array( &$this, 'delete_entry_before_wpredirect'), 50, 3);
         add_action('frm_after_entry_processed', array(&$this, 'delete_entry_after_save'), 100);
         add_filter('frm_email_value', array(&$this, 'filter_email_value'), 10, 3);
     }
@@ -118,12 +119,17 @@ class FrmEntriesController{
         return $redirect_msg;
     }
     
+    function delete_entry_before_wpredirect($url, $form, $atts){
+        $this->_delete_entry($atts['id'], $form);
+        return $url;
+    }
+    
     //Delete entry if not redirected
     function delete_entry_after_save($atts){
         $this->_delete_entry($atts['entry_id'], $atts['form']);
     }
     
-    private function _delete_entry($entry_id, $form){
+    function _delete_entry($entry_id, $form){
         if(!$form)
             return;
         
