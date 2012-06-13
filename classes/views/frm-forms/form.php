@@ -11,7 +11,7 @@
 if (isset($values['fields']) && !empty($values['fields'])){
     foreach($values['fields'] as $field){
         $field_name = "item_meta[". $field['id'] ."]";
-        require('add_field.php');
+        require(FRM_VIEWS_PATH .'/frm-forms/add_field.php');
         unset($field);
         unset($field_name);
     }

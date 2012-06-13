@@ -23,7 +23,7 @@ if(!is_admin()){
 if(empty($frm_settings->invalid_msg)){
     $show_img = false;
     foreach( $errors as $error ){
-        if($show_img and $img and !empty($img)){ 
+        if($show_img and isset($img) and !empty($img)){ 
             ?><img src="<?php echo $img ?>" alt="" /><?php 
         }else{
             $show_img = true;

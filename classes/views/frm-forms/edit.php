@@ -9,13 +9,17 @@
         <div class="alignleft">
             <?php FrmAppController::get_form_nav($id, true); ?>
         </div>
-    <?php } ?>
-    <div id="poststuff" class="metabox-holder has-right-sidebar">
-    <?php 
+    <?php } 
+    
         $show_preview = true;
-        if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<'))
-            require('add_field_links.php'); 
-    ?>
+        if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
+    <div id="poststuff" class="metabox-holder has-right-sidebar">
+    <?php   
+        require(FRM_VIEWS_PATH .'/frm-forms/add_field_links.php'); 
+    }else{ ?>
+        <div id="poststuff">
+<?php } ?>
+
     <div id="post-body" class="metabox-holder columns-2">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
@@ -46,9 +50,9 @@
     </div>
     <?php 
     if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
-        require('add_field_links.php'); 
+        require(FRM_VIEWS_PATH .'/frm-forms/add_field_links.php'); 
     ?>
     </div>
     </div>
 </div>
-<?php require('footer.php'); ?>
+<?php require(FRM_VIEWS_PATH .'/frm-forms/footer.php'); ?>

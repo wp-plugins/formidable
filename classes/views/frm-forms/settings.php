@@ -192,7 +192,7 @@
         <div class="html_settings tabs-panel has-right-sidebar columns-2" style="display:none;">
             <?php 
                 if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<'))
-                    require('sidebar-html.php'); 
+                    require(FRM_VIEWS_PATH .'/frm-forms/sidebar-html.php'); 
             ?>
             
             <div id="post-body-content" class="frm_top_container" style="margin-right:260px;">
@@ -217,7 +217,7 @@
             </div>
             <?php 
                 if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
-                    require('sidebar-html.php'); 
+                    require(FRM_VIEWS_PATH .'/frm-forms/sidebar-html.php'); 
             ?>
         </div>
         <div id="post_settings" class="post_settings tabs-panel" style="display:none;">

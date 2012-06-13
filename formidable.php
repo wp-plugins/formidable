@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.04
+Version: 1.06.05
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -52,7 +52,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.06.04';
+$frm_version = '1.06.05';
 $frm_db_version = 9;
 
 global $frm_ajax_url;
@@ -62,7 +62,7 @@ global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
 $frm_forms_loaded = $frm_saved_entries = array();
 
-require_once(FRM_HELPERS_PATH. "/FrmAppHelper.php");
+require_once(FRM_HELPERS_PATH. '/FrmAppHelper.php');
 global $frm_app_helper;
 $frm_app_helper = new FrmAppHelper();
 
@@ -116,13 +116,13 @@ $frm_update         = new FrmUpdate();
 
 
 // Instansiate Controllers
-require_once(FRM_CONTROLLERS_PATH . "/FrmApiController.php");
-require_once(FRM_CONTROLLERS_PATH . "/FrmAppController.php");
-require_once(FRM_CONTROLLERS_PATH . "/FrmFieldsController.php");
-require_once(FRM_CONTROLLERS_PATH . "/FrmFormsController.php");
-require_once(FRM_CONTROLLERS_PATH . "/FrmEntriesController.php");
-require_once(FRM_CONTROLLERS_PATH . "/FrmSettingsController.php");
-require_once(FRM_CONTROLLERS_PATH . "/FrmStatisticsController.php");
+require_once(FRM_CONTROLLERS_PATH . '/FrmApiController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmAppController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmFieldsController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmFormsController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmEntriesController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmSettingsController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmStatisticsController.php');
 
 global $frm_api_controller;
 global $frm_app_controller;

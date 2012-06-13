@@ -18,7 +18,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
     if( !empty($errors) ){
         $fields = FrmFieldsHelper::get_form_fields($form->id, true);
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
-        require('new.php'); 
+        require(FRM_VIEWS_PATH .'/frm-entries/new.php'); 
 ?>
 <script type="text/javascript">window.onload = function(){var frm_pos=jQuery('#form_<?php echo $form->form_key ?>').offset(); var cOff = document.documentElement.scrollTop || document.body.scrollTop; if(cOff > frm_pos.top) window.scrollTo(frm_pos.left,frm_pos.top);}</script><?php        
     }else{
@@ -32,7 +32,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
             if (!$created or !is_numeric($created) or $conf_method == 'message'){
                 $message = '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? wpautop(do_shortcode($saved_message)) : $frm_settings->failed_msg).'</div>';
                 if (!isset($form->options['show_form']) or $form->options['show_form']){
-                    require('new.php');
+                    require(FRM_VIEWS_PATH .'/frm-entries/new.php');
                 }else{ 
                     global $frm_forms_loaded, $frm_load_css, $frm_css_loaded;
                     $frm_forms_loaded[] = $form; 
@@ -57,7 +57,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
     do_action('frm_display_form_action', $params, $fields, $form, $title, $description);
     if (apply_filters('frm_continue_to_new', true, $form->id, $params['action'])){
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
-        require('new.php');
+        require(FRM_VIEWS_PATH .'/frm-entries/new.php');
     }
 }
 

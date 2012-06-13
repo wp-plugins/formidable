@@ -18,7 +18,7 @@ if(class_exists('WP_List_Table')){
 
 require(FRM_VIEWS_PATH.'/shared/nav.php');
 
-if ($params['template']) require('default-templates.php');
+if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.php');
 
 $wp_list_table->display(); ?>
 
@@ -28,7 +28,7 @@ $wp_list_table->display(); ?>
 do_action('frm_before_item_nav',$sort_str, $sdir_str, $search_str, false);
 require(FRM_VIEWS_PATH.'/shared/nav.php');
 
-if ($params['template']) require('default-templates.php'); ?>
+if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.php'); ?>
         
 <form class="form-fields item-list-form" name="item_list_form" id="posts-filter" method="post" >
   <input type="hidden" name="frm_action" value="list-form"/>

@@ -427,7 +427,7 @@ class FrmAppHelper{
         if($frmpro_is_installed)
             return $message;
             
-        include_once(ABSPATH."/wp-includes/class-IXR.php");
+        include_once(ABSPATH.'/wp-includes/class-IXR.php');
 
         $url = ($frmpro_is_installed) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
         $client = new IXR_Client($url.'xmlrpc.php', false, 80, 5);

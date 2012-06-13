@@ -17,7 +17,7 @@
         </thead>
         <tbody>
             <tr><td>
-            <?php include('no_entries.php'); ?>
+            <?php include(FRM_VIEWS_PATH .'/frm-entries/no_entries.php'); ?>
             </td></tr>
         </tbody>
         <tfoot>

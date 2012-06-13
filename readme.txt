@@ -61,6 +61,14 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.05 =
+* Fixed WP 3.4 layout issues with missing sidebars
+* Added responsive css for WP 3.4 to keep the form builder sidebar box showing on small screens
+* Use absolute path for php includes() and requires() to prevent them from using files from other plugins or themes
+* Updated translations
+* PRO: Prevent wp_redirect from stripping square brackets from urls
+* PRO: Fixed calculations for fields hidden in a collapsible section
+
 = 1.06.04 =
 * Moved form processing to avoid multiple submissions when some plugins are activated and remove the page before redirection
 * Removed BuddyPress filters from the email notifications to avoid forcing them to send from noreply@domain.com

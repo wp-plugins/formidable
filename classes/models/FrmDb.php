@@ -16,6 +16,7 @@ class FrmDb{
     function upgrade($old_db_version=false){
         global $wpdb, $frm_db_version;
         //$frm_db_version is the version of the database we're moving to
+        $old_db_version = (float)$old_db_version;
         if(!$old_db_version)
             $old_db_version = get_option('frm_db_version');
 
@@ -31,80 +32,80 @@ class FrmDb{
         }
 
         /* Create/Upgrade Fields Table */
-        $sql = "CREATE TABLE `{$this->fields}` (
-                `id` int(11) NOT NULL auto_increment,
-                `field_key` varchar(255) default NULL,
-                `name` text default NULL,
-                `description` text default NULL,
-                `type` text default NULL,
-                `default_value` longtext default NULL,
-                `options` longtext default NULL,
-                `field_order` int(11) default 0,
-                `required` int(1) default NULL,
-                `field_options` longtext default NULL,
-                `form_id` int(11) default NULL,
-                `created_at` datetime NOT NULL,
-                PRIMARY KEY  (`id`),
-                KEY `form_id` (`form_id`),
-                UNIQUE KEY `field_key` (`field_key`)
+        $sql = "CREATE TABLE {$this->fields} (
+                id int(11) NOT NULL auto_increment,
+                field_key varchar(255) default NULL,
+                name text default NULL,
+                description text default NULL,
+                type text default NULL,
+                default_value longtext default NULL,
+                options longtext default NULL,
+                field_order int(11) default 0,
+                required int(1) default NULL,
+                field_options longtext default NULL,
+                form_id int(11) default NULL,
+                created_at datetime NOT NULL,
+                PRIMARY KEY  (id),
+                KEY form_id (form_id),
+                UNIQUE KEY field_key (field_key)
               ) {$charset_collate};";
 
         dbDelta($sql);
         
         /* Create/Upgrade Forms Table */
         $sql = "CREATE TABLE {$this->forms} (
-                `id` int(11) NOT NULL auto_increment,
-                `form_key` varchar(255) default NULL,
-                `name` varchar(255) default NULL,
-                `description` text default NULL,
-                `logged_in` boolean default NULL,
-                `editable` boolean default NULL,
-                `is_template` boolean default 0,
-                `default_template` boolean default 0,
-                `status` varchar(255) default NULL,
-                `prli_link_id` int(11) default NULL,
-                `options` longtext default NULL,
-                `created_at` datetime NOT NULL,
-                PRIMARY KEY  (`id`),
-                UNIQUE KEY `form_key` (`form_key`)
+                id int(11) NOT NULL auto_increment,
+                form_key varchar(255) default NULL,
+                name varchar(255) default NULL,
+                description text default NULL,
+                logged_in boolean default NULL,
+                editable boolean default NULL,
+                is_template boolean default 0,
+                default_template boolean default 0,
+                status varchar(255) default NULL,
+                prli_link_id int(11) default NULL,
+                options longtext default NULL,
+                created_at datetime NOT NULL,
+                PRIMARY KEY  (id),
+                UNIQUE KEY form_key (form_key)
               ) {$charset_collate};";
 
         dbDelta($sql);
 
         /* Create/Upgrade Items Table */
         $sql = "CREATE TABLE {$this->entries} (
-                `id` int(11) NOT NULL auto_increment,
-                `item_key` varchar(255) default NULL,
-                `name` varchar(255) default NULL,
-                `description` text default NULL,
-                `ip` text default NULL,
-                `form_id` int(11) default NULL,
-                `post_id` int(11) default NULL,
-                `user_id` int(11) default NULL,
-                `parent_item_id` int(11) default NULL,
-                `updated_by` int(11) default NULL,
-                `created_at` datetime NOT NULL,
-                `updated_at` datetime NOT NULL,
-                PRIMARY KEY  (`id`),
-                KEY `form_id` (`form_id`),
-                KEY `post_id` (`post_id`),
-                KEY `user_id` (`user_id`),
-                KEY `parent_item_id` (`parent_item_id`),
-                UNIQUE KEY `item_key` (`item_key`)
+                id int(11) NOT NULL auto_increment,
+                item_key varchar(255) default NULL,
+                name varchar(255) default NULL,
+                description text default NULL,
+                ip text default NULL,
+                form_id int(11) default NULL,
+                post_id int(11) default NULL,
+                user_id int(11) default NULL,
+                parent_item_id int(11) default NULL,
+                updated_by int(11) default NULL,
+                created_at datetime NOT NULL,
+                updated_at datetime NOT NULL,
+                PRIMARY KEY  (id),
+                KEY form_id (form_id),
+                KEY post_id (post_id),
+                KEY user_id (user_id),
+                KEY parent_item_id (parent_item_id),
+                UNIQUE KEY item_key (item_key)
               ) {$charset_collate};";
 
         dbDelta($sql);
 
         /* Create/Upgrade Meta Table */
         $sql = "CREATE TABLE {$this->entry_metas} (
-                `id` int(11) NOT NULL auto_increment,
-                `meta_value` longtext default NULL,
-                `field_id` int(11) NOT NULL,
-                `item_id` int(11) NOT NULL,
-                `created_at` datetime NOT NULL,
-                PRIMARY KEY  (`id`),
-                KEY `field_id` (`field_id`),
-                KEY `item_id` (`item_id`)
+                id int(11) NOT NULL auto_increment,
+                meta_value longtext default NULL,
+                field_id int(11) NOT NULL,
+                item_id int(11) NOT NULL,
+                created_at datetime NOT NULL,
+                PRIMARY KEY  (id),
+                KEY field_id (field_id),
+                KEY item_id (item_id)
               ) {$charset_collate};";
 
         dbDelta($sql);
@@ -157,7 +158,7 @@ DEFAULT_HTML;
             }
             unset($default_html);
         }
-      
+
         /**** ADD/UPDATE DEFAULT TEMPLATES ****/
         FrmFormsController::add_default_templates(FRM_TEMPLATES_PATH);
 
@@ -165,7 +166,7 @@ DEFAULT_HTML;
         /***** SAVE DB VERSION *****/
         update_option('frm_db_version', $frm_db_version);
         }
-      
+
         do_action('frm_after_install');
     }
     

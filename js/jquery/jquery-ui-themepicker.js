@@ -1,6 +1,3 @@
-//add js to html element for css selectors
-document.documentElement.className = 'js';
-
 //global for tracking open and focused toolbar panels on refresh
 var openGroups = [];
 var focusedEl = null;
