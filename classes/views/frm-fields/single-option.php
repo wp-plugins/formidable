@@ -1,5 +1,5 @@
 <span id="frm_delete_field_<?php echo $field['id']; ?>-<?php echo $opt_key ?>_container" class="frm_single_option">
-<a href="javascript:frm_delete_field_option(<?php echo $field['id']?>,<?php echo $opt_key ?>);" class="frm_single_visible_hover alignleft"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
+<a href="javascript:frm_delete_field_option(<?php echo $field['id']?>,<?php echo $opt_key ?>);" class="frm_single_visible_hover"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" style="vertical-align:middle;" /></a>
 <?php if ($field['type'] != 'select'){ ?>
 <input type="<?php echo $field['type'] ?>" name="<?php echo $field_name ?><?php echo ($field['type'] == 'checkbox')?'[]':''; ?>" value="<?php echo esc_attr($field_val) ?>"<?php echo isset($checked)? $checked : ''; ?>/> 
 <?php } ?>

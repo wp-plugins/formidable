@@ -64,6 +64,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.06.05 =
 * Fixed WP 3.4 layout issues with missing sidebars
 * Added responsive css for WP 3.4 to keep the form builder sidebar box showing on small screens
+* Updated the delete option trash can to appear more easily
 * Use absolute path for php includes() and requires() to prevent them from using files from other plugins or themes
 * Updated translations
 * PRO: Prevent wp_redirect from stripping square brackets from urls
