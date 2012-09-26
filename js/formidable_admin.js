@@ -119,6 +119,21 @@ $('.frm_exclude_cat_list').each(function(){
 	var frm_lev=$(this).find('.frm_catlevel_4'); if(frm_lev.length>0) $(this).find('.check_lev4_label').show();
 });
 }
+
+
+$('a.edit-frm_shortcode').click(function() {
+	if ($('#frm_shortcodediv').is(":hidden")) {
+		$('#frm_shortcodediv').slideDown('fast');
+		$(this).hide();
+	}
+	return false;
+});
+
+$('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
+	$('#frm_shortcodediv').slideUp('fast');
+	$('#frm_shortcodediv').siblings('a.edit-frm_shortcode').show();
+	return false;
+});
 });
 
 function frmUpdateOpts(field_id,ajax_url,opts){

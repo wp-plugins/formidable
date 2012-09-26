@@ -6,18 +6,10 @@
 class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', array( &$this, 'menu' ), 26);
-        add_filter('frm_nav_array', array( &$this, 'frm_nav'), 30);
     }
 
     function menu(){
-        add_submenu_page('formidable', 'Formidable | '. __('Settings', 'formidable'), __('Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', array(&$this, 'route'));
-    }
-    
-    function frm_nav($nav=array()){
-        if(current_user_can('frm_change_settings'))
-            $nav['formidable-settings'] = __('Settings', 'formidable');
-        
-        return $nav;
+        add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', array(&$this, 'route'));
     }
 
     function display_form(){

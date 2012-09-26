@@ -9,7 +9,7 @@
     <div id="post-body">
         <div class="meta-box-sortables">
         <div class="categorydiv postbox">
-        <h3 class="hndle"><span><?php _e('Settings', 'formidable') ?></span></h3>
+        <h3 class="hndle"><span><?php _e('Global Settings', 'formidable') ?></span></h3>
         <div class="inside">
         <div class="contextual-help-tabs">
         <ul <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'id="category-tabs" class="category-tabs"'; ?>>

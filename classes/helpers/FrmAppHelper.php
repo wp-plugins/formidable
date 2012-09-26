@@ -291,7 +291,7 @@ class FrmAppHelper{
 
         if ($form){
             $form->options = maybe_unserialize($form->options);
-            $values['form_name'] = (isset($record->form_id))?($form->name):('');
+            $values['form_name'] = (isset($record->form_id)) ? $form->name : '';
             if (is_array($form->options)){
                 foreach ($form->options as $opt => $value)
                     $values[$opt] = FrmAppHelper::get_param($opt, $value);
@@ -316,7 +316,7 @@ class FrmAppHelper{
             $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
 
         if (!isset($values['after_html']))
-            $values['after_html'] = (isset($_POST['options']['after_html'])?$_POST['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
+            $values['after_html'] = (isset($_POST['options']['after_html']) ? $_POST['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
 
         if ($table == 'entries')
             $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
@@ -426,10 +426,12 @@ class FrmAppHelper{
         
         if($frmpro_is_installed)
             return $message;
-            
+           
+        global $frm_update;
+         
         include_once(ABSPATH.'/wp-includes/class-IXR.php');
 
-        $url = ($frmpro_is_installed) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
+        $url = ($frmpro_is_installed or $frm_update->pro_is_authorized()) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
         $client = new IXR_Client($url.'xmlrpc.php', false, 80, 5);
         
         if ($client->query('frm.get_main_message'))
@@ -445,21 +447,21 @@ class FrmAppHelper{
         if($length == 0)
             return '';
         else if($length <= 10)
-            return substr($str, 0, $length);
+            return mb_substr($str, 0, $length);
             
         $sub = '';
         $len = 0;
 
-        foreach (explode(' ', $str) as $word){
+        foreach (mb_split(' ', $str) as $word){
             $part = (($sub != '') ? ' ' : '') . $word;
             $sub .= $part;
-            $len += strlen($part);
+            $len += mb_strlen($part);
 
-            if (strlen($word) > $minword && strlen($sub) >= $length)
+            if (strlen($word) > $minword && mb_strlen($sub) >= $length)
                 break;
         }
 
-        return $sub . (($len < strlen($str)) ? $continue : '');
+        return $sub . (($len < mb_strlen($str)) ? $continue : '');
     }
     
     function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){

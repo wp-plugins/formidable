@@ -120,8 +120,8 @@ ul.frm_form_nav li.last a.current_page{
 
 #postbox-container-1{width:270px;}
 #postbox-container-1 .nodrag a{cursor:pointer;}
-#postbox-container-1 .button{text-align:center;width:98px;float:left; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:11px !important;}
-#postbox-container-1 .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
+#postbox-container-1 .frm_field_list .button{text-align:center;width:98px;float:left; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:11px !important;}
+#postbox-container-1 .frm_field_list .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
 .frm_col_one{margin-right:4px;clear:both;}
 .frm_html_legend pre{display:inline;}
 
@@ -276,6 +276,9 @@ span.howto{display:inline;}
 .widefat .column-id{width:3.2em;}
 .widefat .column-show_count{width:5em;}
 .widefat .column-shortcode{width:9em;}
+.view-switch{display:none;}
+select[name="m"]{display:none;}
+.edit-php p.search-box{margin-top:-40px;}
 
 .frm_shortcode_select optgroup option{margin-left:1em;}
 .frm_shortcode_select optgroup{padding-top:5px;}
@@ -501,4 +504,5 @@ Clearfix
 #wpcontent, #post-body-content, .has-right-sidebar #post-body{margin:0 !important;}
 .frm_print_graph{display:block !important;max-width:600px;}
 .frm_charts .alignleft{float:none;}
+.pg_even{page-break-before:always;}
 }

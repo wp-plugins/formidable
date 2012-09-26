@@ -61,6 +61,38 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.0 =
+* Fixed conflict with W3TC that was adding slashes into options on the form settings page
+* Removed generic classes from input fields like "text" and "date"
+* Correctly jump down to form with error messages
+* Added frm_setup_new_entry hook
+* Changed substr to mb_substr for language-safe truncation
+* PRO: Use the "customized content" box to save the actual content if no field is selected for the post content
+* PRO: Correctly check uniqueness of post fields when there are no other error messages
+* PRO: If using a number field with the value "0" that is linked through a data from entries field, show 0 instead of nothing
+* PRO: Update for more accurate checking for hierarchal taxonomies when saving posts
+* PRO: Fix to allow tags fields and other fields in the same form that are mapped to the same taxonomy
+* PRO: Fixed conditional logic to work correctly when dependent on the value "0"
+* PRO: Added support for the [frm-search] shortcode into the [formresults] table
+* PRO: Updated NicEdit
+* PRO: Fixed display of shortcodes inside the before or after content areas of the custom display if nesting [get param=something]
+* PRO: Fixed calculations for multiple-paged calculations with checkbox fields that may not be checked
+* PRO: Fixed checkbox fields linked through another field to display properly in a custom display
+* PRO: Fixed separate values to work with sending to email addresses
+* PRO: Show a max of 500 options in a data from entries field in the admin to prevent server limits from making the form inaccessible
+* PRO: Make sure the graphs printed from the reports page are not split when printing
+* PRO: Fixed the link to show more text in the custom display to show the text in place or link to the single page correctly depending on the custom display type
+* PRO: Don't use "just show it" data from entries fields in the email checkbox settings
+* PRO: If http isn't included in a url or image field, automatically add it during validation
+* PRO: Remove post custom fields from database if blank
+
+
+- TODO: Add "This field cannot be blank" to global settings
+- TODO: set frm_display_id post meta when: 
+    - custom display is created (all posts in selected form + post selected for auto-insert)
+    - custom display is updated -> Error message if automatically inserting on page that already has frm_display_id
+    - custom display is deleted (check for next display in line... delete all post meta if none)
+
 = 1.06.05 =
 * Fixed WP 3.4 layout issues with missing sidebars
 * Added responsive css for WP 3.4 to keep the form builder sidebar box showing on small screens
@@ -69,6 +101,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Updated translations
 * PRO: Prevent wp_redirect from stripping square brackets from urls
 * PRO: Fixed calculations for fields hidden in a collapsible section
+* PRO: Fixed delete link to work on pages without forms
+* PRO: Added support to import checkbox field values in multiple columns
 
 = 1.06.04 =
 * Moved form processing to avoid multiple submissions when some plugins are activated and remove the page before redirection

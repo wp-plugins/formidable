@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.05
+Version: 1.07.0
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -30,7 +30,7 @@ define('FRM_CONTROLLERS_PATH', FRM_PATH.'/classes/controllers');
 define('FRM_TEMPLATES_PATH', FRM_PATH.'/classes/templates');
 
 global $frm_siteurl;
-$frm_siteurl = get_bloginfo('url');
+$frm_siteurl = site_url();
 if(is_ssl() and (!preg_match('/^https:\/\/.*\..*$/', $frm_siteurl) or !preg_match('/^https:\/\/.*\..*$/', WP_PLUGIN_URL))){
     $frm_siteurl = str_replace('http://', 'https://', $frm_siteurl);
     define('FRM_URL', str_replace('http://', 'https://', WP_PLUGIN_URL.'/formidable'));

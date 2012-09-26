@@ -257,7 +257,7 @@ class FrmFormsController{
         if(in_array($page, array('post.php', 'page.php', 'page-new.php', 'post-new.php')) or (isset($_GET) and isset($_GET['page']) and $_GET['page'] == 'formidable-entry-templates')){
             if(class_exists('FrmProDisplay')){
                 global $frmpro_display;
-                $displays = $frmpro_display->getAll('', ' ORDER BY name');
+                $displays = $frmpro_display->getAll('', 'post_name');
             }
             require(FRM_VIEWS_PATH.'/frm-forms/insert_form_popup.php');   
         }

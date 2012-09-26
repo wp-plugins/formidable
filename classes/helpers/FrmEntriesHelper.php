@@ -105,7 +105,8 @@ class FrmEntriesHelper{
             if (!isset($values['after_html']))
                 $values['after_html'] = FrmFormsHelper::get_default_html('after');
         }
-        return $values;
+        
+        return apply_filters('frm_setup_new_entry', $values);
     }
     
     function setup_edit_vars($values, $record){

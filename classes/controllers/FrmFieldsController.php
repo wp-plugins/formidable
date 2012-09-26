@@ -359,7 +359,7 @@ class FrmFieldsController{
     function input_html($field, $echo=true){
         global $frm_settings;
         
-        $class = $field['type'];
+        $class = ''; //$field['type'];
         $add_html = '';
         
         if(isset($field['size']) and $field['size'] > 0){

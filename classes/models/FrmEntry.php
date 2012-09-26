@@ -7,6 +7,8 @@ class FrmEntry{
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key');
         $new_values['name'] = isset($values['name']) ? $values['name'] : $values['item_key'];
+        if(is_array($new_values['name']))
+            $new_values['name'] = reset($new_values['name']);
         $new_values['ip'] = $_SERVER['REMOTE_ADDR'];
         
         if(isset($values['description']) and !empty($values['description'])){
@@ -335,9 +337,12 @@ class FrmEntry{
                 $value = $values['item_meta'][$posted_field->id];
                 
             if (isset($posted_field->field_options['default_blank']) and $posted_field->field_options['default_blank'] and $value == $posted_field->default_value)
-                $_POST['item_meta'][$posted_field->id] = $value = '';            
+                $_POST['item_meta'][$posted_field->id] = $value = '';
+            
+            if(is_array($value) and count($value) === 1)
+                $_POST['item_meta'][$posted_field->id] = $value = reset($value); 
                   
-            if($posted_field->type == 'rte' and (trim($value) == '<br>'))
+            if($posted_field->type == 'rte' and !is_array($value) and (trim($value) == '<br>'))
                 $value = '';
             
             if ($posted_field->required == '1' and !is_array($value) and trim($value) == ''){
@@ -365,9 +370,8 @@ class FrmEntry{
             }
             
             $errors = apply_filters('frm_validate_field_entry', $errors, $posted_field, $value);
+            
         }
-
-
         
         global $wpcom_api_key;
         if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){

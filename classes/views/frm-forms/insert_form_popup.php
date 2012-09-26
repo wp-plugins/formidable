@@ -50,7 +50,7 @@
         <select name="frm_add_display_id" id="frm_add_display_id" class="frm-dropdown">
             <option value=""></option>
             <?php foreach ($displays as $display){ ?>
-            <option value="<?php echo $display->id ?>"><?php echo $display->name ?></option>
+            <option value="<?php echo $display->ID ?>"><?php echo $display->post_name ?></option>
             <?php } ?>
         </select>
     </p>
