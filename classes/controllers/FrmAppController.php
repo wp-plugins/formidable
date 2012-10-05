@@ -132,13 +132,14 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         wp_enqueue_script('jquery-ui-core');
         
         if(isset($_GET) and (isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])) or ($pagenow == 'edit.php' and isset($_GET) and isset($_GET['post_type']) and $_GET['post_type'] == 'frm_display')){
+            add_filter('admin_body_class', array(&$this, 'admin_body_class'));
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('admin-widgets');
             wp_enqueue_style('widgets');
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery', 'jquery-ui-draggable'), $frm_version);
             wp_enqueue_script('formidable');
-            wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
+            wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', array(), $frm_version);
             wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
             add_thickbox();
         }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and $_REQUEST['post_type'] == 'frm_display')){
@@ -153,9 +154,17 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
                 wp_enqueue_script('jquery-ui-draggable');
                 wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery', 'jquery-ui-draggable'), $frm_version);
                 wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
-                wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', $frm_version);
+                wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', array(), $frm_version);
             }
         }
+    }
+    
+    function admin_body_class($classes){
+        global $wp_version;
+        if(version_compare( $wp_version, '3.4.9', '>'))
+            $classes .= ' frm_35_trigger';
+        
+        return $classes;
     }
     
     function front_head(){

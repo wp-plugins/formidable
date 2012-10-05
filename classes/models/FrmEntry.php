@@ -98,7 +98,7 @@ class FrmEntry{
         $new_values['name'] = $values->name;
         $new_values['user_id'] = $new_values['updated_by'] = $values->user_id;
         $new_values['form_id'] = ($values->form_id)?(int)$values->form_id: null;
-        $new_values['created_at'] = current_time('mysql', 1);
+        $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
 
         $query_results = $wpdb->insert( $frmdb->entries, $new_values );
         if($query_results){
