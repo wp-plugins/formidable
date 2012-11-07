@@ -72,7 +72,10 @@ class FrmNotification{
             $to_email = get_option('admin_email');
             
         $recipient      = $to_email; //recipient
-        $header         = "From: \"{$reply_to_name}\" <{$reply_to}>\r\n Reply-To: \"{$reply_to_name}\" <{$reply_to}>\r\n Content-Type: {$content_type}; charset=\"" . get_option('blog_charset') . "\"\r\n"; //optional headerfields
+        $header         = array();
+        $header[]       = 'From: "'. $reply_to_name .'" <'. $reply_to .'>';
+        $header[]       = 'Reply-To: "'. $reply_to_name .'" <'. $reply_to .'>';
+        $header[]       = 'Content-Type: '. $content_type .'; charset="'. get_option('blog_charset') . '"';
         $subject        = wp_specialchars_decode(strip_tags(stripslashes($subject)), ENT_QUOTES );
         
         $message        = do_shortcode($message);

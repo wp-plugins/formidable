@@ -61,12 +61,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
-= 1.07.0 =
+= 1.06.06 =
 * Fixed conflict with W3TC that was adding slashes into options on the form settings page
 * Removed generic classes from input fields like "text" and "date"
 * Correctly jump down to form with error messages
 * Added frm_setup_new_entry hook
 * Changed substr to mb_substr for language-safe truncation
+* WP 3.5 compatability
 * PRO: Use the "customized content" box to save the actual content if no field is selected for the post content
 * PRO: Correctly check uniqueness of post fields when there are no other error messages
 * PRO: If using a number field with the value "0" that is linked through a data from entries field, show 0 instead of nothing
@@ -85,13 +86,17 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Don't use "just show it" data from entries fields in the email checkbox settings
 * PRO: If http isn't included in a url or image field, automatically add it during validation
 * PRO: Remove post custom fields from database if blank
+* PRO: Added date entry updated to custom display shortcodes
+* PRO: Fixed frm-stats shortcode to work with post custom fields combined with the value parameter
+* PRO: Fixed div nesting issue when using collapsible section headings followed by non-collapsible sections headings
+* PRO: Added "wrap" parameter to the frm-graph shortcode to wrap the text in long questions
 
 
+- TODO: remove separate values checkbox on checkbox fields used as a taxonomy
+- TODO: hide fields on page load even if the js for field to observe has already been added
+- TODO: When using "single entry" option in custom display, ignore limit and page size
 - TODO: Add "This field cannot be blank" to global settings
-- TODO: set frm_display_id post meta when: 
-    - custom display is created (all posts in selected form + post selected for auto-insert)
-    - custom display is updated -> Error message if automatically inserting on page that already has frm_display_id
-    - custom display is deleted (check for next display in line... delete all post meta if none)
+
 
 = 1.06.05 =
 * Fixed WP 3.4 layout issues with missing sidebars

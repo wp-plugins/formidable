@@ -120,7 +120,10 @@ ul.frm_form_nav li.last a.current_page{
 
 #postbox-container-1{width:270px;}
 #postbox-container-1 .nodrag a{cursor:pointer;}
-#postbox-container-1 .frm_field_list .button{text-align:center;width:98px;float:left; border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:11px !important;}
+#postbox-container-1 .frm_field_list .button{
+	text-align:center;width:47%;float:left;font-size:11px !important; margin-bottom:2px;
+	border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;
+}
 #postbox-container-1 .frm_field_list .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
 .frm_col_one{margin-right:4px;clear:both;}
 .frm_html_legend pre{display:inline;}
@@ -154,7 +157,11 @@ textarea.inplace_field{width:98% !important;}
 .inplace_field{width:70% !important;}
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
-.button-secondary.frm_html_field{background-color:#ededed;padding:10px;line-height:inherit;width:auto;-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;}
+.button-secondary.frm_html_field{
+	background-color:#ededed;padding:10px;line-height:inherit;width:auto;
+	-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;
+	-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;
+}
 #new_fields .frm_rte textarea{
 	width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
 	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
@@ -294,8 +301,8 @@ select[name="m"]{display:none;}
 
 .pro_feature{text-decoration:line-through;}
 .frm_uninstall{padding-right:0.75em;}
-.frm_uninstall a{border-color:red; font-weight:bold; background:#D54E21; color:#fff; text-shadow:none;}
-.frm_uninstall a:hover{background:#264761;color:#fff;}
+.frm_uninstall a{color:#D54E21;}
+.frm_uninstall a:hover{color:#21759B;}
 
 .frm_print_graph{display:none;}
 /*hide elements if js is avail*/
@@ -307,6 +314,16 @@ select.texture{display: none;}
 	z-index:5;
 	width:270px;
 }
+
+#frm_adv_info{position:fixed;z-index:5;width:280px;}
+.frm_noallow{opacity:.5;filter:alpha(opacity=50);cursor:default;}
+.frm_noallow:hover{color:inherit;}
+ul .frm_col_one{float:left;}
+ul .frm_col_two{float:right;}
+.frm_code_list li{width:47%;}
+.frm_code_list.frm_full_width li{width:auto;}
+.frm_code_list a.button{display:block;text-align:center;}
+#frm-insert-fields ul.frm_code_list, #frm-conditionals ul.frm_code_list{padding-right:0.9em;}
 
 .contextual-help-tabs ul{min-height:300px;}
 

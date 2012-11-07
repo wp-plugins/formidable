@@ -145,9 +145,11 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and $_REQUEST['post_type'] == 'frm_display')){
             if(isset($_REQUEST['post_type'])){
                 $post_type = $_REQUEST['post_type'];
-            }else{
+            }else if(isset($_REQUEST['post'])){
                 $post = get_post($_REQUEST['post']);
                 $post_type = $post->post_type;
+            }else{
+                return;
             }
             
             if($post_type == 'frm_display'){

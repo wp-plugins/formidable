@@ -271,9 +271,11 @@ DEFAULT_HTML;
     	
     	if(!function_exists('recaptcha_get_html'))
             require_once(FRM_PATH.'/classes/recaptchalib.php');
+        
+        $lang = apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field);
         ?>
-        <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field) ?>'<?php echo apply_filters('frm_recaptcha_custom', '', $field) ?>};</script>
-        <?php echo recaptcha_get_html($frm_settings->pubkey, $error, is_ssl()) ?>
+        <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $lang ?>'<?php echo apply_filters('frm_recaptcha_custom', '', $field) ?>};</script>
+        <?php echo recaptcha_get_html($frm_settings->pubkey .'&hl='. $lang, $error, is_ssl()) ?>
 <?php
     }
     
@@ -287,12 +289,17 @@ DEFAULT_HTML;
         if(!$name) $name = "item_meta[$field[id]]";
         $id = 'field_'. $field['field_key'];
         $class = $field['type'];
-        
-        $selected = is_array($field['value']) ? reset($field['value']) : $field['value'];
 
         $exclude = (is_array($field['exclude_cat'])) ? implode(',', $field['exclude_cat']) : $field['exclude_cat'];
         $exclude = apply_filters('frm_exclude_cats', $exclude, $field);
         
+        if(is_array($field['value'])){
+            if(!empty($exclude))
+                $field['value'] = array_diff($field['value'], explode(',', $exclude));
+            $selected = reset($field['value']);
+        }else{
+            $selected = $field['value'];
+        }      
         
         $args = array(
             'show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name,

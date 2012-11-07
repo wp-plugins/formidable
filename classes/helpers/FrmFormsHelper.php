@@ -61,9 +61,9 @@ class FrmFormsHelper{
         
         $defaults = FrmFormsHelper::get_default_opts();
         foreach ($defaults as $var => $default)
-            $values[$var] = ($_POST and isset($_POST['options'][$var])) ? $_POST['options'][$var] : $default;
+            $values[$var] = (isset($_POST) and $_POST and isset($_POST['options'][$var])) ? $_POST['options'][$var] : $default;
             
-        $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
+        $values['custom_style'] = (isset($_POST) and $_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
         $values['after_html'] = FrmFormsHelper::get_default_html('after');
         
@@ -127,9 +127,6 @@ BEFORE_HTML;
         
         //replace [form_key]
         $html = str_replace('[form_key]', $form->form_key, $html);
-        
-        if(class_exists('FrmProEntriesController'))
-            $html = str_replace('[deletelink]', FrmProEntriesController::entry_delete_link(array()), $html);
         
         return apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form);
     }

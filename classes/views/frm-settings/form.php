@@ -207,7 +207,7 @@
                 }
         } ?>
         
-        <p class="alignright frm_uninstall" style="padding-top:1.25em;"><a href="javascript:frm_uninstall_now()" class="button-secondary"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
+        <p class="alignright frm_uninstall" style="padding-top:1.25em;"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">
         <input class="button-primary" type="submit" value="<?php _e('Update Options', 'formidable') ?>" />
         </p>

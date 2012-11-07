@@ -394,6 +394,8 @@ class FrmEntry{
 		foreach ( $values['item_meta'] as $val ) {
 			if ( $content != '' )
 				$content .= "\n\n";
+			if(is_array($val))
+			    $val = implode(',', $val);
 			$content .= $val;
 		}
 		
