@@ -9,6 +9,7 @@ ul.frm_form_nav {
 	width:616px;
 	margin:10px 0 13px;
 	height:27px;
+	float:left;
 	*float:right;
 }
 .metabox-holder ul.frm_form_nav{margin-top:0;}
@@ -49,7 +50,7 @@ ul.frm_form_nav li.last a{
 ul.frm_form_nav li.last a.current_page{
 	background:#767676;
 }
-
+p.search-box {margin-top:10px;}
 .wp-admin .form-wrap .frm_forms.with_frm_style{max-width:100%;}
 .wp-admin label.frm_primary_label{font-size:12px;color:#444444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;}
 .wp-admin .with_frm_style .form-field{margin-bottom:20px;}
@@ -121,11 +122,11 @@ ul.frm_form_nav li.last a.current_page{
 #postbox-container-1{width:270px;}
 #postbox-container-1 .nodrag a{cursor:pointer;}
 #postbox-container-1 .frm_field_list .button{
-	text-align:center;width:47%;float:left;font-size:11px !important; margin-bottom:2px;
+	text-align:center;width:46%;float:left;padding-left:0;padding-right:0;font-size:11px !important; margin-bottom:10px;
 	border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;
 }
 #postbox-container-1 .frm_field_list .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
-.frm_col_one{margin-right:4px;clear:both;}
+.frm_col_one{margin-right:10px;clear:both;}
 .frm_html_legend pre{display:inline;}
 
 #ed_fullscreen{display:none !important;}
@@ -177,6 +178,7 @@ textarea.inplace_field{width:98% !important;}
 li.ui-state-default.selected .frm-show-click{display:inline;}
 li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 #new_fields span.ui-icon{width:16px;}
+#form_settings_page .tabs-panel, .frm_settings_form .tabs-panel{max-height:none !important; min-height:260px;}
 .tabs-panel{height:auto !important; min-height:260px;}
 .tabs-panel.panel_secondary{min-height:20px;}
 
@@ -285,7 +287,7 @@ span.howto{display:inline;}
 .widefat .column-shortcode{width:9em;}
 .view-switch{display:none;}
 select[name="m"]{display:none;}
-.edit-php p.search-box{margin-top:-40px;}
+
 
 .frm_shortcode_select optgroup option{margin-left:1em;}
 .frm_shortcode_select optgroup{padding-top:5px;}

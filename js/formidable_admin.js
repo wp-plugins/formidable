@@ -241,8 +241,8 @@ function frmShowDefaults(n,fval){
 function frm_clear_on_focus(field_id, active){
 	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
     var thisid='clear_field_'+field_id;
-    if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';var t='Do not clear default text on click';}
-    else{var switch_to='1';var new_class='';var t='Clear default text on click';}
+    if (active=='1'){var switch_to='0';var new_class='frm_inactive_icon';var t='Do not clear default value when field is clicked';}
+    else{var switch_to='1';var new_class='';var t='Clear default value when field is clicked';}
     jQuery('#'+thisid).replaceWith('<a href="javascript:frm_clear_on_focus('+field_id+','+switch_to+')" class="'+new_class +' frm_action_icon frm_reload_icon" id="'+thisid+'" title="'+t+'"></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_update_ajax_option&field="+field_id+"&clear_on_focus="+switch_to});
 };
@@ -250,8 +250,8 @@ function frm_clear_on_focus(field_id, active){
 function frm_default_blank(field_id,active){
 	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
     var thisid='default_blank_'+field_id;
-    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon'; var t='Default value will pass validation';}
-	else{var switch_to='1';var new_class=''; var t='Default value will NOT pass validation';}
+    if(active=='1'){var switch_to='0';var new_class='frm_inactive_icon'; var t='Default value will pass form validation';}
+	else{var switch_to='1';var new_class=''; var t='Default value will NOT pass form validation';}
     jQuery('#'+thisid).replaceWith('<a href="javascript:frm_default_blank('+field_id+','+switch_to+')" class="'+new_class+' frm_action_icon frm_error_icon" id="'+thisid+'" title="'+t+'"></a>');
     jQuery.ajax({type:"POST",url:ajax_url,data:"action=frm_update_ajax_option&field="+field_id+"&default_blank="+switch_to});
 };
