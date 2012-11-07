@@ -90,12 +90,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed frm-stats shortcode to work with post custom fields combined with the value parameter
 * PRO: Fixed div nesting issue when using collapsible section headings followed by non-collapsible sections headings
 * PRO: Added "wrap" parameter to the frm-graph shortcode to wrap the text in long questions
-
-
-- TODO: remove separate values checkbox on checkbox fields used as a taxonomy
-- TODO: hide fields on page load even if the js for field to observe has already been added
-- TODO: When using "single entry" option in custom display, ignore limit and page size
-- TODO: Add "This field cannot be blank" to global settings
+* PRO: Added localization to custom display calendar to start on day of the week selected in WordPress settings
+* PRO: Removed separate values checkbox for post status and taxonomy fields
 
 
 = 1.06.05 =
