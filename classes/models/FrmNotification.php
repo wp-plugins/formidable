@@ -39,13 +39,13 @@ class FrmNotification{
             
             if(isset($form->options['reply_to']) and (int)$form->options['reply_to'] == $value->field_id and is_email($val))
                 $reply_to = $val;
-            
-            if ($reply_to == '' and is_email($val))
-                $reply_to = $val;
                 
             if(isset($form->options['reply_to_name']) and (int)$form->options['reply_to_name'] == $value->field_id)
                 $reply_to_name = $val;
         }
+            
+        if(empty($reply_to))
+            $reply_to = get_option('admin_email');
           
         $data = maybe_unserialize($entry->description);  
         $user_data = __('User Information', 'formidable') ."\r\n";

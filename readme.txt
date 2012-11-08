@@ -67,7 +67,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Correctly jump down to form with error messages
 * Added frm_setup_new_entry hook
 * Changed substr to mb_substr for language-safe truncation
-* WP 3.5 compatability
+* WP 3.5 compatibility
+* (Free only) Allow emails to be sent from the admin email instead of forcing an email address from the submitted entry
 * PRO: Use the "customized content" box to save the actual content if no field is selected for the post content
 * PRO: Correctly check uniqueness of post fields when there are no other error messages
 * PRO: If using a number field with the value "0" that is linked through a data from entries field, show 0 instead of nothing
@@ -92,6 +93,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added "wrap" parameter to the frm-graph shortcode to wrap the text in long questions
 * PRO: Added localization to custom display calendar to start on day of the week selected in WordPress settings
 * PRO: Removed separate values checkbox for post status and taxonomy fields
+* PRO: Don't double filter forms if inserted in the dynamic box of a custom display used for posts
 
 
 = 1.06.05 =

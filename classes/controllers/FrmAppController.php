@@ -59,7 +59,9 @@ class FrmAppController{
     //#adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL /icon_16.png) no-repeat center;}
     }
     
-    function get_form_nav($id, $show_nav=false, $clear=true){
+    function get_form_nav($id, $show_nav=false){
+        global $pagenow;
+        
         $show_nav = FrmAppHelper::get_param('show_nav', $show_nav);
         
         if($show_nav)
@@ -340,6 +342,15 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
     //formidable shortcode
     function get_form_shortcode($atts){
+        global $frm_skip_shortcode;
+        if($frm_skip_shortcode){
+            $frm_skip_shortcode = false;
+            $sc = '[formidable';
+            foreach($atts as $k => $v)
+                $sc .= ' '. $k .'="'. $v .'"';
+            return $sc .']';
+        }
+        
         global $frm_entries_controller;
         extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array()), $atts));
         do_action('formidable_shortcode_atts', compact('id', 'key', 'title', 'description', 'readonly', 'entry_id', 'fields'));
