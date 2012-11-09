@@ -79,7 +79,8 @@ jQuery('li.ui-state-default').live('click', function(evt){
 	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option') && !$(target).is('.frm_ipe_field_option_key')){ $('.inplace_field').blur();}
 });
 
-$("img.frm_help[title]").hover(
+if($('#frm_tooltip').length==0){$('#wpfooter').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
+$("img.frm_help[title], a.frm_help[title]").hover(
 	function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn();},
 	function(){$('#frm_tooltip').fadeOut();$(this).attr('title',frm_title);}
 );

@@ -93,13 +93,14 @@ p.search-box {margin-top:10px;}
 	box-shadow:5px 5px 25px rgba(0,0,0,0.5);
 	position:fixed;
 	width:100%;
+	min-height:35px;
 	bottom:0;left:0;
 	-webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
     box-sizing:border-box;
 	color:#fff;
 }
-.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
+img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 
 #editorcontainer #dyncontent{
 	margin:0; width:100%;
@@ -325,6 +326,7 @@ ul .frm_col_two{float:right;}
 .frm_code_list li{width:47%;}
 .frm_code_list.frm_full_width li{width:auto;}
 .frm_code_list a.button{display:block;text-align:center;}
+iframe#dyncontent_ifr{min-height:150px;}
 #frm-insert-fields ul.frm_code_list, #frm-conditionals ul.frm_code_list{padding-right:0.9em;}
 
 .contextual-help-tabs ul{min-height:300px;}

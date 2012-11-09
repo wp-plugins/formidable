@@ -2,7 +2,7 @@
     <div class="frmicon icon32"><br/></div>    
     <h2><?php _e('Add New Form', 'formidable') ?></h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
-    <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
+    
     <?php if (!$values['is_template']){ ?>
         <div class="alignleft">
             <?php FrmAppController::get_form_nav($id, true); ?>

@@ -4,7 +4,6 @@
         <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
-    <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div class="alignright">
         <div id="postbox-container-1">
             <?php if(!isset($hide_preview) or !$hide_preview){ 
@@ -67,7 +66,7 @@
         	<table class="form-table">
                 <tr>
                     <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?></label> <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
-                    <td><input type="text" style="width:250px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?> title=true description=true]" /> <?php _e('or', 'formidable') ?>
+                    <td><input type="text" style="width:255px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?> title=true description=true]" /> <?php _e('or', 'formidable') ?>
                         <input type="text" style="width:200px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable key=<?php echo $values['form_key']; ?>]" />
                     </td>
                 </tr>

@@ -3,7 +3,7 @@
     <h2><?php echo ($form) ? (FrmAppHelper::truncate(stripslashes($form->name), 25) .' ') : ''; _e('Entries', 'formidable'); ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
-    <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
+
     <?php if($form) FrmAppController::get_form_nav($form->id, true); ?>
 
     <?php FrmAppController::update_message('view, search, export, and bulk delete your saved entries'); ?>

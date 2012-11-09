@@ -4,7 +4,6 @@
 
     <?php 
         require(FRM_VIEWS_PATH.'/shared/errors.php');
-        require(FRM_VIEWS_PATH.'/shared/nav.php');
         if($form) FrmAppController::get_form_nav($form);
         FrmAppController::update_message('display collected data in lists, calendars, and other formats'); 
     ?>

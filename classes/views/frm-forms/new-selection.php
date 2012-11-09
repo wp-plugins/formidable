@@ -2,9 +2,6 @@
     <div class="frmicon icon32"><br/></div>
     <h2><?php _e('Add New Form', 'formidable') ?></h2>
     
-    <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
-
-    
     <div id="menu-management" class="clear nav-menus-php" style="margin-top:30px;">
         <div class="menu-edit" style="width:300px;float:left;margin-right:30px;">
         <div id="nav-menu-header"><div class="major-publishing-actions" style="padding:8px 0;">

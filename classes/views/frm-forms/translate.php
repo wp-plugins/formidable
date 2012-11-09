@@ -4,7 +4,6 @@
         <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
-    <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     <div class="alignright">
         <div id="postbox-container-1">
             <?php if(!isset($hide_preview) or !$hide_preview){ 

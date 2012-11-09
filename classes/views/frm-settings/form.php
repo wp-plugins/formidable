@@ -3,7 +3,6 @@
     <h2><?php _e('Form Settings', 'formidable'); ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
-    <?php require(FRM_VIEWS_PATH.'/shared/nav.php'); ?>
     
     <div id="poststuff" class="metabox-holder">
     <div id="post-body">
