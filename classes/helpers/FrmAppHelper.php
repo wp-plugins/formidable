@@ -262,7 +262,7 @@ class FrmAppHelper{
                 foreach ($opt_defaults as $opt => $default_opt){
                     $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == ''){
-                        $field_array[$opt] = __('This field cannot be blank', 'formidable');
+                        $field_array[$opt] = $frm_settings->blank_msg;
                     }else if($opt == 'invalid' and $field_array[$opt] == ''){
                         if($field_type == 'captcha')
                             $field_array[$opt] = $frm_settings->re_msg;

@@ -143,6 +143,14 @@
             <tr class="form-field">
                 <td valign="top"><?php _e('Default Messages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></td>
                 <td>        
+                    <?php _e('Blank Field', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a required field is left blank.', 'formidable') ?>" /><br/>
+                    <input type="text" id="frm_blank_msg" name="frm_blank_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->blank_msg)) ?>" />
+                </td>
+            </tr>
+            
+            <tr class="form-field">
+                <td></td> 
+                <td>        
                     <?php _e('Incorrect Field', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a field response is either incorrect or missing.', 'formidable') ?>" /><br/>
                     <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->invalid_msg)) ?>" />
                 </td>

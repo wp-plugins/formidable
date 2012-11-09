@@ -138,7 +138,7 @@ class FrmFieldsHelper{
             'name' => __('Untitled', 'formidable'), 'description' => '', 
             'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 
             'field_order' => $field_count+1, 'required' => false, 
-            'blank' => __('This field cannot be blank', 'formidable'), 
+            'blank' => $frm_settings->blank_msg, 
             'invalid' => __('This field is invalid', 'formidable'), 'form_id' => $form_id,
             'field_options' => $field_options
         );

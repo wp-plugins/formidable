@@ -313,7 +313,7 @@ class FrmEntry{
     }
 
     function validate( $values, $exclude=false ){
-        global $wpdb, $frmdb, $frm_field, $frm_entry_meta;
+        global $wpdb, $frmdb, $frm_field, $frm_entry_meta, $frm_settings;
 
         $errors = array();
         if(!isset($values['form_id']) or !isset($values['item_meta'])){
@@ -346,7 +346,7 @@ class FrmEntry{
                 $value = '';
             
             if ($posted_field->required == '1' and !is_array($value) and trim($value) == ''){
-                $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? (__('This field cannot be blank', 'formidable')) : $posted_field->field_options['blank'];  
+                $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? $frm_settings->blank_msg : $posted_field->field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;
             }

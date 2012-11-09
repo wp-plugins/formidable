@@ -23,6 +23,7 @@ class FrmSettings{
     
     var $success_msg;
     var $failed_msg;
+    var $blank_msg;
     var $invalid_msg;
     var $submit_value;
     var $login_msg;
@@ -114,6 +115,10 @@ class FrmSettings{
             $this->success_msg = __('Your responses were successfully submitted. Thank you!', 'formidable');
         $this->success_msg = stripslashes($this->success_msg);
         
+        if(!isset($this->blank_msg))
+            $this->blank_msg = __('This field cannot be blank.', 'formidable');
+        $this->blank_msg = stripslashes($this->blank_msg);
+        
         if(!isset($this->invalid_msg))
             $this->invalid_msg = __('There was a problem with your submission. Errors are marked below.', 'formidable');
         $this->invalid_msg = stripslashes($this->invalid_msg);
@@ -176,6 +181,7 @@ class FrmSettings{
         $this->accordion_js = isset($params['frm_accordion_js']) ? $params['frm_accordion_js'] : 0;
         
         $this->success_msg = $params['frm_success_msg'];
+        $this->blank_msg = $params['frm_blank_msg'];
         $this->invalid_msg = $params['frm_invalid_msg'];
         $this->failed_msg = $params['frm_failed_msg'];
         $this->submit_value = $params['frm_submit_value'];

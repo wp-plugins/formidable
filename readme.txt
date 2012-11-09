@@ -66,17 +66,24 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Removed generic classes from input fields like "text" and "date"
 * Correctly jump down to form with error messages
 * Added frm_setup_new_entry hook
+* Added "This field cannot be blank" message to global settings
 * Changed substr to mb_substr for language-safe truncation
 * WP 3.5 compatibility
+* Show a message on the form builder page if a reCaptcha is included in the form, but not set up
 * (Free only) Allow emails to be sent from the admin email instead of forcing an email address from the submitted entry
 * PRO: Use the "customized content" box to save the actual content if no field is selected for the post content
+* PRO: Added frm-field-value shortcode to get the value of a field in another form. [frm-field-value field_id=25 user_id=current entry_id=140 ip=1]
+* PRO: Added support for the [frm-search] shortcode into the [formresults] table
+* PRO: Updated NicEdit
+* PRO: If http isn't included in a url or image field, automatically add it during validation
+* PRO: Added "wrap" parameter to the frm-graph shortcode to wrap the text in long questions
+* PRO: Added localization to custom display calendar to start on day of the week selected in WordPress settings
+* PRO: Added entry updated dates to custom display shortcodes
 * PRO: Correctly check uniqueness of post fields when there are no other error messages
 * PRO: If using a number field with the value "0" that is linked through a data from entries field, show 0 instead of nothing
 * PRO: Update for more accurate checking for hierarchal taxonomies when saving posts
 * PRO: Fix to allow tags fields and other fields in the same form that are mapped to the same taxonomy
 * PRO: Fixed conditional logic to work correctly when dependent on the value "0"
-* PRO: Added support for the [frm-search] shortcode into the [formresults] table
-* PRO: Updated NicEdit
 * PRO: Fixed display of shortcodes inside the before or after content areas of the custom display if nesting [get param=something]
 * PRO: Fixed calculations for multiple-paged calculations with checkbox fields that may not be checked
 * PRO: Fixed checkbox fields linked through another field to display properly in a custom display
@@ -84,16 +91,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Show a max of 500 options in a data from entries field in the admin to prevent server limits from making the form inaccessible
 * PRO: Make sure the graphs printed from the reports page are not split when printing
 * PRO: Fixed the link to show more text in the custom display to show the text in place or link to the single page correctly depending on the custom display type
-* PRO: Don't use "just show it" data from entries fields in the email checkbox settings
-* PRO: If http isn't included in a url or image field, automatically add it during validation
+* PRO: Removed "just show it" data from entries fields in the email checkbox settings
 * PRO: Remove post custom fields from database if blank
-* PRO: Added date entry updated to custom display shortcodes
 * PRO: Fixed frm-stats shortcode to work with post custom fields combined with the value parameter
 * PRO: Fixed div nesting issue when using collapsible section headings followed by non-collapsible sections headings
-* PRO: Added "wrap" parameter to the frm-graph shortcode to wrap the text in long questions
-* PRO: Added localization to custom display calendar to start on day of the week selected in WordPress settings
 * PRO: Removed separate values checkbox for post status and taxonomy fields
-* PRO: Don't double filter forms if inserted in the dynamic box of a custom display used for posts
+* PRO: Fixed double filtering forms if inserted in the dynamic box of a custom display used for posts
+* PRO: Fixed page size and limit overriding single entry displays
 
 
 = 1.06.05 =

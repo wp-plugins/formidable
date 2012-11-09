@@ -95,8 +95,12 @@
 <?php
 }else if ($field['type'] == 'captcha'){ 
     global $frm_settings; ?>
-    <img src="<?php echo FRM_URL ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" />
+    <img src="<?php echo FRM_URL ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" class="alignleft"/>
     <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
+    <div style="clear:both"></div>
+    <?php if (empty($frm_settings->pubkey)){ ?>
+    <div class="howto" style="font-weight:bold;color:red;"><?php printf(__('Your captcha will not appear on your form until you %1$sset up%2$s the Public and Private Keys'), '<a href="?page=formidable-settings">', '</a>') ?></div>
+    <?php } ?>
     <input type="hidden" name="<?php echo $field_name ?>" value="1"/>
 <?php 
 }else{
