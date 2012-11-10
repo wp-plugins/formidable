@@ -123,7 +123,7 @@ img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 #postbox-container-1{width:270px;}
 #postbox-container-1 .nodrag a{cursor:pointer;}
 #postbox-container-1 .frm_field_list .button{
-	text-align:center;width:46%;float:left;padding-left:0;padding-right:0;font-size:11px !important; margin-bottom:10px;
+	text-align:center;width:46%;float:left;padding-left:0;padding-right:0;font-size:11px !important; margin-bottom:6px;
 	border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;
 }
 #postbox-container-1 .frm_field_list .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
@@ -248,6 +248,8 @@ span.howto{display:inline;}
 #new_fields li.ui-state-default.edit_field_type_break{border-top:1px dashed #ccc; padding-top:5px;}
 #new_fields .edit_field_type_divider .frm_ipe_field_label,
 #new_fields .edit_field_type_break .frm_ipe_field_label{font-size:116%;}
+
+.frm-category-tabs a{outline:none;}
 
 .frm_ipe_field_option{vertical-align:text-top;}
 .selected .frm_ipe_field_option.frm_with_key,

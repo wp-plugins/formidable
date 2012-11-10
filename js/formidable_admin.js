@@ -55,6 +55,15 @@ $('select[name^="item_meta"], textarea[name^="item_meta"]').css('float','left');
 $('input[name^="item_meta"]').not(':radio, :checkbox').css('float','left');
 }
 
+// tabs
+$('#category-tabs.frm-category-tabs a').click(function(){
+	var t = $(this).attr('href');
+	$(this).parent().addClass('tabs').siblings('li').removeClass('tabs');
+	$('.tabs-panel').hide();
+	$(t).show();
+	return false;
+});
+
 jQuery('.item-list-form').submit(function(){
 if(jQuery('#bulkaction').val()=='delete'){return confirm('Are you sure you want to delete each of the selected items below?');}
 });
