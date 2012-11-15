@@ -340,8 +340,13 @@ function frmDisplayFormSelected(form_id, ajax_url){
 };
 
 function frmInsertFieldCode(element,variable){
-	var element_id=element.closest('div').attr('class').split(' ')[1];
-	if(element.hasClass('frm_noallow')) return;
+	if(typeof(element) == 'object'){
+		var element_id=element.closest('div').attr('class').split(' ')[1];
+		if(element.hasClass('frm_noallow')) return;
+	}else{
+		var element_id=element;
+	}
+	
 	if(!element_id) var rich=true;
 	else var rich=jQuery('#wp-'+element_id+'-wrap.wp-editor-wrap').length > 0;
 	variable='['+variable+']';

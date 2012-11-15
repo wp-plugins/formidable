@@ -338,3 +338,11 @@ function frmDeleteEntry(entry_id,ajax_url,prefix){
 		}
 	});
 }
+
+function frmRemoveDiv(id){
+jQuery(id).fadeOut('slow').replaceWith('');	
+}
+
+function frmClearFile(file){
+file.parent('.frm_file_names').replaceWith('');
+}

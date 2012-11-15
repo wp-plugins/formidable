@@ -62,15 +62,16 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.06.06 =
-* Fixed conflict with W3TC that was adding slashes into options on the form settings page
 * Removed generic classes from input fields like "text" and "date"
 * Correctly jump down to form with error messages
-* Added frm_setup_new_entry hook
+* Added frm_setup_new_entry hook for overriding defaults for all fields in one hook when presenting a blank form
 * Added "This field cannot be blank" message to global settings
 * Changed substr to mb_substr for language-safe truncation
 * WP 3.5 compatibility
+* Fixed conflict with W3TC that was adding slashes into options on the form settings page
 * Show a message on the form builder page if a reCaptcha is included in the form, but not set up
 * (Free only) Allow emails to be sent from the admin email instead of forcing an email address from the submitted entry
+* PRO: Added multiple-image upload
 * PRO: Use the "customized content" box to save the actual content if no field is selected for the post content
 * PRO: Added frm-field-value shortcode to get the value of a field in another form. [frm-field-value field_id=25 user_id=current entry_id=140 ip=1]
 * PRO: Added support for the [frm-search] shortcode into the [formresults] table
