@@ -20,7 +20,7 @@ class FrmAppHelper{
             }
         }
 
-        return $value;
+        return stripslashes_deep($value);
     }
     
     function get_post_param($param, $default=''){
@@ -107,7 +107,7 @@ class FrmAppHelper{
         //    $current = (isset($current['value'])) ? $current['value'] : $current['label'];
         
         if(is_array($values))
-            $values = array_map('trim', $values);
+            $values = array_map(array('FrmAppHelper', 'recursive_trim'), $values);
         else
             $values = trim($values);
         $current = trim($current);
@@ -125,6 +125,15 @@ class FrmAppHelper{
             return true;
         else
             return false;
+    }
+    
+    function recursive_trim(&$value) {
+        if (is_array($value))
+            $value = array_map(array('FrmAppHelper', 'recursive_trim'), $value);
+        else
+            $value = trim($value);
+            
+        return $value;
     }
     
     function esc_textarea( $text ) {
@@ -293,18 +302,34 @@ class FrmAppHelper{
             $form->options = maybe_unserialize($form->options);
             $values['form_name'] = (isset($record->form_id)) ? $form->name : '';
             if (is_array($form->options)){
-                foreach ($form->options as $opt => $value)
+                foreach ($form->options as $opt => $value){
+                    if(in_array($opt, array('email_to', 'reply_to', 'reply_to_name')))
+                        $values['notification'][0][$opt] = FrmAppHelper::get_param('notification[0]['. $opt .']', $value);
+                    
                     $values[$opt] = FrmAppHelper::get_param($opt, $value);
+                }
             }
         }
         
         $form_defaults = FrmFormsHelper::get_default_opts();
-        $form_defaults['email_to'] = ''; //allow blank email address
         
         //set to posted value or default
         foreach ($form_defaults as $opt => $default){
-            if (!isset($values[$opt]) or $values[$opt] == '')
-                $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+            if (!isset($values[$opt]) or $values[$opt] == ''){
+                if($opt == 'notification'){
+                    $values[$opt] = ($_POST and isset($_POST[$opt])) ? $_POST[$opt] : $default;
+                    
+                    foreach($default as $o => $d){
+                        if($o == 'email_to')
+                            $d = ''; //allow blank email address
+                        $values[$opt][0][$o] = ($_POST and isset($_POST[$opt][0][$o])) ? $_POST[$opt][0][$o] : $d;
+                        unset($o);
+                        unset($d);
+                    }
+                }else{
+                    $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+                }
+            }
             unset($opt);
             unset($defaut);
         }
@@ -324,6 +349,22 @@ class FrmAppHelper{
             $values = FrmFormsHelper::setup_edit_vars( $values, $record );
 
         return $values;
+    }
+    
+    function insert_opt_html($args){ 
+        extract($args);
+        
+        $class = '';
+        
+        if(in_array($type, array('email', 'user_id', 'hidden', 'select', 'radio', 'checkbox')))
+            $class .= 'show_frm_not_email_to';
+    ?>
+<li>
+    <a class="frmids alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');return false;" href="#">[<?php echo $id ?>]</a>
+    <a class="frmkeys alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $key ?>');return false;" href="#">[<?php echo FrmAppHelper::truncate($key, 10) ?>]</a>
+    <a class="<?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');return false;" href="#"><?php echo FrmAppHelper::truncate($name, 60) ?></a>
+</li>
+    <?php
     }
     
     function get_us_states(){

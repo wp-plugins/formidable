@@ -17,6 +17,34 @@ else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').
 else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
 });
 
+if($('#frm_adv_info').length>0){ 
+	$('#frm_adv_info').before('<div id="frm_position_ele"></div>');
+	$('.frm_code_list .frmkeys').hide();
+
+	$('.frm_code_list a').addClass('frm_noallow');
+	$('#frm_adv_info a').live('mousedown', function(e){e.preventDefault();});
+
+	$('form *, .wpbody-content').focus(function(){frmToggleAllowedShortcodes($(this).attr('id'));});
+	$('form *, .wpbody-content').focusout(function(){frmToggleAllowedShortcodes('');});
+
+	if(typeof(tinymce)=='object'){  
+	DOM=tinymce.DOM; 
+	if(typeof(DOM.events) != 'undefined'){
+	DOM.events.add( DOM.select('.wp-editor-wrap'), 'mouseover', function(e){
+	if($('*:focus').length>0)return;
+	if(this.id)frmToggleAllowedShortcodes(this.id.slice(3, -5));});
+	DOM.events.add( DOM.select('.wp-editor-wrap'), 'mouseout', function(e){
+	if($('*:focus').length>0)return;
+	if(this.id)frmToggleAllowedShortcodes(this.id.slice(3, -5));});
+	}else{
+	$('.wp-editor-wrap').bind('mouseover', 'mouseout', function(e){
+	    if($('*:focus').length>0)return; 
+	    if(this.id)frmToggleAllowedShortcodes(this.id.slice(3, -5));
+	});    
+	}
+	}
+}
+
 if($('.hide_editable').length>0){
 $('.hide_editable').hide();
 if( $('#editable').attr("checked")) $('.hide_editable').show();
@@ -56,11 +84,17 @@ $('input[name^="item_meta"]').not(':radio, :checkbox').css('float','left');
 }
 
 // tabs
-$('#category-tabs.frm-category-tabs a').click(function(){
+$('.frm-category-tabs a').click(function(){
 	var t = $(this).attr('href');
+	if(typeof(t)=='undefined') return false;
 	$(this).parent().addClass('tabs').siblings('li').removeClass('tabs');
-	$('.tabs-panel').hide();
+	if($(this).closest('div').children('.tabs-panel').length>0)
+		$(this).closest('div').children('.tabs-panel').hide();
+	else
+		$(this).closest('div.inside').children('.tabs-panel').hide();
+	var c = t.replace('#', '.');
 	$(t).show();
+	$(c).show();
 	return false;
 });
 
@@ -285,8 +319,7 @@ function frm_delete_field_option(field_id, opt_key){
 
 function frm_delete_field(field_id){ 
     if(confirm("Are you sure you want to delete this field and all data associated with it?")){
-	if(typeof(__FRMURL)!='undefined')
-		var ajax_url=__FRMURL;
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
     jQuery.ajax({
         type:"POST",url:ajax_url,
         data:"action=frm_delete_field&field_id="+field_id,
@@ -299,6 +332,20 @@ function frm_field_hover(show, field_id){
 	var html_id = '#frm_field_id_'+field_id;
 	if(show){jQuery(html_id).children('.frm-show-hover').css('visibility','visible');}
 	else{if(!jQuery(html_id).is('.selected')){jQuery(html_id).children(".frm-show-hover").css('visibility','hidden');}}
+}
+
+function frmAddEmailList(form_id){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
+	var len=jQuery('.frm_not_email_subject:last').attr('id').replace('email_subject_', '');
+    jQuery.ajax({
+        type:"POST",url:ajax_url,
+        data:"action=frm_add_email_list&list_id="+(len+1)+"&form_id="+form_id,
+        success:function(html){jQuery('#frm_email_add_button').before(html);jQuery('.notification_settings').fadeIn('slow');}
+    });
+}
+
+function frmRemoveEmailList(id){
+    jQuery('#frm_notification_'+id).fadeOut('slow').replaceWith('');
 }
 
 function frmSetMenuOffset(){ 
@@ -355,8 +402,9 @@ function frmInsertFieldCode(element,variable){
 		send_to_editor(variable);
 		return;
 	}
-	var content_box=jQuery("#"+element_id);
+	var content_box=jQuery('#'+element_id);
 	if(content_box){
+		if(content_box.hasClass('frm_not_email_to')) variable=', '+variable;
 		if(document.selection){content_box[0].focus();document.selection.createRange().text=variable;}
 		else if(content_box[0].selectionStart){obj=content_box[0];obj.value=obj.value.substr(0,obj.selectionStart)+variable+obj.value.substr(obj.selectionEnd,obj.value.length);}
 		else{content_box.val(variable+content_box.val());}
@@ -364,15 +412,24 @@ function frmInsertFieldCode(element,variable){
 }
 
 function frmToggleAllowedShortcodes(id){
-  jQuery('#frm-insert-fields, #frm-conditionals, #frm-adv-info-tab').removeClass().addClass('tabs-panel '+id);
-  if(id == 'content' || id == 'wpbody-content' || id == 'dyncontent'){
-      jQuery('.frm_code_list a').removeClass('frm_noallow').addClass('frm_allow');
-  }else if(id == 'before_content' || id == 'after_content'){
-      jQuery('.frm_code_list a').not('.show_'+id).addClass('frm_noallow').removeClass('frm_allow');
-      jQuery('.frm_code_list a.show_'+id).removeClass('frm_noallow').addClass('frm_allow');
-  }else{
-	jQuery('.frm_code_list a').addClass('frm_noallow').removeClass('frm_allow');
-  }
+	var c=id;
+	if(id !=='' && jQuery('#'+id).attr('class') && id !== 'wpbody-content' && id !== 'content'){
+		var c=id+' '+jQuery('#'+id).attr('class').split(' ')[0];
+		var id=jQuery('#'+id).attr('class').split(' ')[0];
+	}
+  	jQuery('#frm-insert-fields, #frm-conditionals, #frm-adv-info-tab').removeClass().addClass('tabs-panel '+c);
+  	var a=['content','wpbody-content','dyncontent','success_url','success_msg','frm_dyncontent','frm_not_email_message',
+'frm_not_email_subject'];
+  	var b=['before_content','after_content', 'frm_not_email_to'];
+  	if(jQuery.inArray(id, a) >= 0){
+    	jQuery('.frm_code_list a').removeClass('frm_noallow').addClass('frm_allow');
+		jQuery('.frm_code_list a.hide_'+id).addClass('frm_noallow').removeClass('frm_allow');
+  	}else if(jQuery.inArray(id, b) >= 0){
+    	jQuery('.frm_code_list a').not('.show_'+id).addClass('frm_noallow').removeClass('frm_allow');
+    	jQuery('.frm_code_list a.show_'+id).removeClass('frm_noallow').addClass('frm_allow');
+  	}else{
+		jQuery('.frm_code_list a').addClass('frm_noallow').removeClass('frm_allow');
+  	}
 }
 
 function frmToggleKeyID(switch_to){
@@ -405,10 +462,13 @@ function frmShowPostOpts(post_field,field_id){
 };
 
 function frmSettingsTab(tab, id){
-	var t = tab.attr('href');
-	tab.parent().addClass('tabs').siblings('li').removeClass('tabs');
-	jQuery('.general_settings,.styling_settings,#form_settings_page .tabs-panel,.mailchimp_settings,.aweber_settings,.frm_settings_form .tabs-panel').hide();
-	jQuery('.'+id+'_settings').show();
+	var t = jQuery('.'+id+'_settings');
+	if(jQuery(t).length==0)
+		return false;
+		
+	tab.parent().addClass('active').siblings('li').removeClass('active');
+	tab.closest('div.inside').children('.tabs-panel').hide();
+	jQuery(t).show();
 	return false;
 }
 

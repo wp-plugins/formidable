@@ -14,38 +14,55 @@ class FrmNotification{
         $form->options = maybe_unserialize($form->options);
         $values = $frm_entry_meta->getAll("it.item_id = $entry_id", " ORDER BY fi.field_order");
         
-        $to_email = $form->options['email_to'];
-        if ($to_email == '')
+        
+        if(isset($form->options['notification']))
+            $notification = reset($form->options['notification']);
+        else
+            $notification = $form->options;
+        
+        $to_email = $notification['email_to']; 
+        if($to_email == '')
             $to_email = get_option('admin_email');
-            
+
         $to_emails = explode(',', $to_email);
         
         $reply_to = $reply_to_name = '';
-            
+
         $opener = sprintf(__('%1$s form has been submitted on %2$s.', 'formidable'), $form->name, $frm_blogname) ."\r\n\r\n";
-        
+
         $entry_data = '';
         foreach ($values as $value){
             $val = apply_filters('frm_email_value', maybe_unserialize($value->meta_value), $value, $entry);
             if (is_array($val))
                 $val = implode(', ', $val);
-            
+
             if($value->field_type == 'textarea'){
                 //$val = str_replace(array("\r\n", "\r", "\n"), "\r\n", $val);
                 $val = "\r\n". $val;
             }
-            
+
             $entry_data .= $value->field_name . ': ' . $val . "\r\n\r\n";
-            
-            if(isset($form->options['reply_to']) and (int)$form->options['reply_to'] == $value->field_id and is_email($val))
+
+            if(isset($notification['reply_to']) and (int)$notification['reply_to'] == $value->field_id and is_email($val))
                 $reply_to = $val;
-                
-            if(isset($form->options['reply_to_name']) and (int)$form->options['reply_to_name'] == $value->field_id)
+
+            if(isset($notification['reply_to_name']) and (int)$notification['reply_to_name'] == $value->field_id)
                 $reply_to_name = $val;
         }
+        
             
-        if(empty($reply_to))
-            $reply_to = get_option('admin_email');
+        if(empty($reply_to)){
+            if($notification['reply_to'] == 'custom')
+                $reply_to = $notification['cust_reply_to'];
+            
+            if(empty($reply_to))  
+                $reply_to = get_option('admin_email');
+        }
+        
+        if(empty($reply_to_name)){
+            if($notification['reply_to_name'] == 'custom')
+                $reply_to_name = $notification['cust_reply_to_name'];
+        }
           
         $data = maybe_unserialize($entry->description);  
         $user_data = __('User Information', 'formidable') ."\r\n";

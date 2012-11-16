@@ -181,7 +181,7 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 #new_fields span.ui-icon{width:16px;}
 #form_settings_page .tabs-panel, .frm_settings_form .tabs-panel{max-height:none !important; min-height:260px;}
 .tabs-panel{height:auto !important; min-height:260px;}
-.tabs-panel.panel_secondary{min-height:20px;}
+.tabs-panel.panel_secondary{min-height:20px;margin-top:10px;}
 
 .frm_action_icon{width:14px; height:14px; background:url(../images/icons.png) no-repeat;display:block;float:left;margin-left:4px;}
 span.frm_action_icon{margin:0 4px 0 0;}
