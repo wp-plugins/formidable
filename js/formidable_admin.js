@@ -88,8 +88,8 @@ $('.frm-category-tabs a').click(function(){
 	var t = $(this).attr('href');
 	if(typeof(t)=='undefined') return false;
 	var c = t.replace('#', '.');
-	$(this).parent().addClass('tabs').siblings('li').removeClass('tabs');
-	if($(this).closest('div').children('.tabs-panel').length>0) $(this).closest('div').children('.tabs-panel').hide();
+	$(this).closest('li').addClass('tabs active').siblings('li').removeClass('tabs active');
+	if($(this).closest('div').find('.tabs-panel').length>0) $(this).closest('div').children('.tabs-panel').hide();
 	else{ $(this).closest('div.inside').find('.tabs-panel').hide(); $(this).closest('div.inside').find('.hide_with_tabs').hide();}
 	$(t).show();
 	$(c).show();
