@@ -70,24 +70,23 @@
                     <td><input type="text" name="options[submit_value]" value="<?php echo esc_attr($values['submit_value']); ?>" /></td>
                 </tr>
                 
-                <tr><td valign="top"><label><?php _e('Action After Form Submission', 'formidable') ?></label>
+                <tr><td valign="top" colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
                     <?php if(!$frmpro_is_installed){ ?>
                     <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" />
                     <?php } ?>
-                    </td>
-                    <td>
+
                         <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <label for="success_action_message"><?php _e('Display a Message', 'formidable') ?></label>
                         <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page" <?php echo $pro_feature ?>><?php _e('Display content from another page', 'formidable') ?></label>
                         <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect" <?php echo $pro_feature ?>><?php _e('Redirect to URL', 'formidable') ?></label>
                     </td>
                 </tr>
                 
-                <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top"><label><?php _e('Redirect to URL', 'formidable') ?></label></td>
-                    <td><input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" size="55"></td>
+                <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2"><label><?php _e('Redirect to URL', 'formidable') ?></label>
+                    <input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" size="55"></td>
                 </tr>
                 
-                <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>><td valign="top"><label><?php _e('Confirmation Message', 'formidable') ?></label></td>
-                    <td><textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
+                <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2"><label><?php _e('Confirmation Message', 'formidable') ?></label>
+                    <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
                     <div class="frm_show_form_opt">
                     <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                     </div>
@@ -120,7 +119,7 @@
                 $first_email = false;
             } 
         ?>
-        <div id="frm_email_add_button" class="notification_settings" style="display:none;margin-top:10px;">
+        <div id="frm_email_add_button" class="notification_settings hide_with_tabs" style="display:none;margin-top:10px;margin-left:150px;">
             <a href="javascript:frmAddEmailList(<?php echo $values['id'] ?>)" class="button-secondary">+ <?php _e('Add Email', 'formidable') ?></a></td>
         </div>
         

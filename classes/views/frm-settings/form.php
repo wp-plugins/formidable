@@ -11,11 +11,11 @@
         <h3 class="hndle"><span><?php _e('Global Settings', 'formidable') ?></span></h3>
         <div class="inside">
         <div class="contextual-help-tabs">
-        <ul <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'id="category-tabs" class="category-tabs"'; ?>>
-        	<li class="tabs active"><a onclick="frmSettingsTab(jQuery(this),'general');" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
-            <li><a onclick="frmSettingsTab(jQuery(this),'styling');" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
+        <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs id="category-tabs'; ?>">
+        	<li class="tabs active"><a href="#general_settings" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
+            <li><a href="#styling_settings" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>
-                <li><a onclick="frmSettingsTab(jQuery(this),'<?php echo $sec_name ?>');"><?php echo ucfirst($sec_name) ?></a></li>
+                <li><a href="#<?php echo $sec_name ?>_settings"><?php echo ucfirst($sec_name) ?></a></li>
             <?php } ?>
         </ul>
         </div>

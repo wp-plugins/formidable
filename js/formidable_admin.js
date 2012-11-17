@@ -62,8 +62,8 @@ if(inside.is(':hidden')){inside.slideDown('fast');}else{inside.slideUp('fast');}
 $('.widget-top,a.widget-action').click(function(){ $(this).closest('div.widget').siblings().children('.widget-inside').slideUp('fast');});
 }
 
-if($(".frm_ipe_form_name").length>0){
-$(".frm_ipe_form_name").editInPlace({
+if($('.frm_ipe_form_name').length>0){
+$('.frm_ipe_form_name').editInPlace({
 url:ajax_url,params:"action=frm_form_name_in_place_edit&form_id="+form_id,value_required:"true",bg_out:'#fff'
 });
 
@@ -87,12 +87,10 @@ $('input[name^="item_meta"]').not(':radio, :checkbox').css('float','left');
 $('.frm-category-tabs a').click(function(){
 	var t = $(this).attr('href');
 	if(typeof(t)=='undefined') return false;
-	$(this).parent().addClass('tabs').siblings('li').removeClass('tabs');
-	if($(this).closest('div').children('.tabs-panel').length>0)
-		$(this).closest('div').children('.tabs-panel').hide();
-	else
-		$(this).closest('div.inside').children('.tabs-panel').hide();
 	var c = t.replace('#', '.');
+	$(this).parent().addClass('tabs').siblings('li').removeClass('tabs');
+	if($(this).closest('div').children('.tabs-panel').length>0) $(this).closest('div').children('.tabs-panel').hide();
+	else{ $(this).closest('div.inside').find('.tabs-panel').hide(); $(this).closest('div.inside').find('.hide_with_tabs').hide();}
 	$(t).show();
 	$(c).show();
 	return false;
@@ -227,6 +225,7 @@ function frmRedirectToForm(form,action){if(form !='') window.location='?page=for
 function frmRedirectToDisplay(form,action){if(form !='') window.location='?page=formidable-entry-templates&frm_action='+action+'&form='+form;}
 
 function frm_add_logic_row(id,ajax_url,form_id){
+if(ajax_url=='' && typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
 jQuery.ajax({
     type:"POST",url:ajax_url,
     data:"action=frm_add_logic_row&form_id="+form_id+"&field_id="+id+"&meta_name="+jQuery('#frm_logic_row_'+id+' > div').size(),
@@ -234,14 +233,29 @@ jQuery.ajax({
 });
 }
 
-function frmGetFieldValues(field_id,current_field_id,row,ajax_url){ 
-    if(field_id){
+function frmAddFormLogicRow(id,form_id){
+if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
+console.log('#frm_notification_'+id+' .frm_logic_row');
+console.log(jQuery('#frm_notification_'+id+' .frm_logic_row').length);
+if(jQuery('#frm_notification_'+id+' .frm_logic_row').length>0)
+	var meta_name=1+parseInt(jQuery('#frm_notification_'+id+' .frm_logic_row:last').attr('id').replace('frm_logic_'+id+'_', ''));
+else var meta_name=0;
+jQuery.ajax({
+    type:"POST",url:ajax_url,
+    data:"action=frm_add_form_logic_row&form_id="+form_id+"&email_id="+id+"&meta_name="+meta_name,
+    success:function(html){jQuery('#frm_logic_row_'+id).append(html);}
+});
+}
+
+function frmGetFieldValues(field_id,current_field_id,row,ajax_url){
+if(ajax_url=='' && typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
+if(field_id){
     jQuery.ajax({
         type:"POST",url:ajax_url,
         data:"action=frm_get_field_values&current_field="+current_field_id+"&field_id="+field_id,
         success:function(msg){jQuery("#frm_show_selected_values_"+current_field_id+'_'+row).html(msg);} 
     });
-    }
+}
 }
 
 function add_frm_field_link(form_id, field_type){
@@ -339,7 +353,7 @@ function frmAddEmailList(form_id){
 	var len=jQuery('.frm_not_email_subject:last').attr('id').replace('email_subject_', '');
     jQuery.ajax({
         type:"POST",url:ajax_url,
-        data:"action=frm_add_email_list&list_id="+(len+1)+"&form_id="+form_id,
+        data:"action=frm_add_email_list&list_id="+(parseInt(len)+1)+"&form_id="+form_id,
         success:function(html){jQuery('#frm_email_add_button').before(html);jQuery('.notification_settings').fadeIn('slow');}
     });
 }
@@ -413,12 +427,13 @@ function frmInsertFieldCode(element,variable){
 
 function frmToggleAllowedShortcodes(id){
 	var c=id;
-	if(id !=='' && jQuery('#'+id).attr('class') && id !== 'wpbody-content' && id !== 'content'){
+	if(id !=='' && jQuery('#'+id).attr('class') && id !== 'wpbody-content' && id !== 'content' && id != 'success_msg'){
 		var c=id+' '+jQuery('#'+id).attr('class').split(' ')[0];
-		var id=jQuery('#'+id).attr('class').split(' ')[0];
+		if(c == 'frm_long_input') var c='';
+		else var id=jQuery('#'+id).attr('class').split(' ')[0];
 	}
   	jQuery('#frm-insert-fields, #frm-conditionals, #frm-adv-info-tab').removeClass().addClass('tabs-panel '+c);
-  	var a=['content','wpbody-content','dyncontent','success_url','success_msg','frm_dyncontent','frm_not_email_message',
+  	var a=['content','wpbody-content','dyncontent','success_url','success_msg','edit_msg','frm_dyncontent','frm_not_email_message',
 'frm_not_email_subject'];
   	var b=['before_content','after_content', 'frm_not_email_to'];
   	if(jQuery.inArray(id, a) >= 0){
