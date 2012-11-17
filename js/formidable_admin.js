@@ -235,8 +235,6 @@ jQuery.ajax({
 
 function frmAddFormLogicRow(id,form_id){
 if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
-console.log('#frm_notification_'+id+' .frm_logic_row');
-console.log(jQuery('#frm_notification_'+id+' .frm_logic_row').length);
 if(jQuery('#frm_notification_'+id+' .frm_logic_row').length>0)
 	var meta_name=1+parseInt(jQuery('#frm_notification_'+id+' .frm_logic_row:last').attr('id').replace('frm_logic_'+id+'_', ''));
 else var meta_name=0;
