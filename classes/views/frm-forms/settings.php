@@ -118,10 +118,11 @@
                 unset($notification);
                 $first_email = false;
             } 
-        ?>
+        if($frmpro_is_installed){ ?>
         <div id="frm_email_add_button" class="notification_settings hide_with_tabs" style="display:none;margin-top:10px;margin-left:150px;">
             <a href="javascript:frmAddEmailList(<?php echo $values['id'] ?>)" class="button-secondary">+ <?php _e('Add Email', 'formidable') ?></a></td>
         </div>
+        <?php } ?>
         
         <div id="html_settings" class="tabs-panel" style="display:none;">
             

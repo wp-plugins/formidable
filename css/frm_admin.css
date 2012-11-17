@@ -183,6 +183,9 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 .tabs-panel{height:auto !important; min-height:260px;}
 .tabs-panel.panel_secondary{min-height:20px;margin-top:10px;margin-left:150px;}
 
+.frm_email_reply_container select{width:150px;}
+.frm_email_reply_container input{width:150px;}
+
 .frm_action_icon{width:14px; height:14px; background:url(../images/icons.png) no-repeat;display:block;float:left;margin-left:4px;}
 span.frm_action_icon{margin:0 4px 0 0;}
 .frm_error_icon,.frm_reload_icon{margin-top:5px;}

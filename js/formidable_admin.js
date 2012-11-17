@@ -90,7 +90,7 @@ $('.frm-category-tabs a').click(function(){
 	var c = t.replace('#', '.');
 	$(this).closest('li').addClass('tabs active').siblings('li').removeClass('tabs active');
 	if($(this).closest('div').find('.tabs-panel').length>0) $(this).closest('div').children('.tabs-panel').hide();
-	else{ $(this).closest('div.inside').find('.tabs-panel').hide(); $(this).closest('div.inside').find('.hide_with_tabs').hide();}
+	else{ $(this).closest('div.inside').find('.tabs-panel, .hide_with_tabs').hide();}
 	$(t).show();
 	$(c).show();
 	return false;
@@ -245,12 +245,12 @@ jQuery.ajax({
 });
 }
 
-function frmGetFieldValues(field_id,current_field_id,row,ajax_url){
+function frmGetFieldValues(field_id,current_field_id,row,ajax_url,name){
 if(ajax_url=='' && typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL; 
 if(field_id){
     jQuery.ajax({
         type:"POST",url:ajax_url,
-        data:"action=frm_get_field_values&current_field="+current_field_id+"&field_id="+field_id,
+        data:"action=frm_get_field_values&current_field="+current_field_id+"&field_id="+field_id+'&name='+name,
         success:function(msg){jQuery("#frm_show_selected_values_"+current_field_id+'_'+row).html(msg);} 
     });
 }
@@ -358,6 +358,15 @@ function frmAddEmailList(form_id){
 
 function frmRemoveEmailList(id){
     jQuery('#frm_notification_'+id).fadeOut('slow').replaceWith('');
+}
+
+function frmCheckCustomEmail(value,id){
+if(value=='custom'){jQuery('#cust_'+id).css('visibility','visible'); jQuery('#cust_'+id).parent('div').show();}
+else{
+jQuery('#cust_'+id).css('visibility','hidden');
+if(id=='reply_to') var a='reply_to_name'; else var a='reply_to';
+if(jQuery('#cust_'+a).css('visibility')=='hidden') jQuery('#frm_cust_reply_container').hide();	
+}
 }
 
 function frmSetMenuOffset(){ 

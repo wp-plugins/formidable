@@ -72,8 +72,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Show a message on the form builder page if a reCaptcha is included in the form, but not set up
 * (Free only) Allow emails to be sent from the admin email instead of forcing an email address from the submitted entry
 * PRO: Added multiple-image upload
+* PRO: Added unlimited emails per form and conditional routing
 * PRO: Use the "customized content" box to save the actual content if no field is selected for the post content
 * PRO: Added frm-field-value shortcode to get the value of a field in another form. [frm-field-value field_id=25 user_id=current entry_id=140 ip=1]
+* PRO: Added frm-show-entry shortcode to show an entry in the same formats as the default email message. [frm-show-entry id=100 plain_text=1 user_info=1]
+* PRO: Added frm_set_get shortcode to artificially set $_GET values for use in custom displays or dynamic defaults values. [frm-set-get any_param="any value" another="value 2"] This can be fetched with [get param="any_param"] [get param="another"]
 * PRO: Added support for the [frm-search] shortcode into the [formresults] table
 * PRO: Updated NicEdit
 * PRO: If http isn't included in a url or image field, automatically add it during validation

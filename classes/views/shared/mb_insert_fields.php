@@ -10,7 +10,7 @@
         
         foreach($fields as $f){ 
             $f->field_options = maybe_unserialize($f->field_options);
-            if($f->type == 'data' and (!isset($f->field_options['data_type']) or $f->field_options['data_type'] == 'show' or $f->field_options['data_type'] == ''))
+            if($f->type == 'data' and (!isset($f->field_options['data_type']) or $f->field_options['data_type'] == 'data' or $f->field_options['data_type'] == ''))
                 continue;
         
         FrmAppHelper::insert_opt_html(array('id' => $f->id, 'key' => $f->field_key, 'name' => $f->name, 'type' => $f->type));
