@@ -498,7 +498,7 @@ class FrmAppHelper{
             $sub .= $part;
             $len += mb_strlen($part);
 
-            if (strlen($word) > $minword && mb_strlen($sub) >= $length)
+            if (str_word_count($sub) > $minword && mb_strlen($sub) >= $length)
                 break;
         }
 
