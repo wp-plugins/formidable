@@ -215,6 +215,7 @@ span.howto{display:inline;}
     float: none;
     line-height: 15px;
     margin-right: 0;
+	font-size:inherit;
 }
 
 .frm_10radio{margin-right:10px; text-align:center; float:left;}
