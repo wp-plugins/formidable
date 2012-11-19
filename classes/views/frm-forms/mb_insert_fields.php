@@ -8,7 +8,10 @@
 	</ul>
 	
 	<div id="frm-insert-fields" class="tabs-panel" style="max-height:none;padding-right:0;">
-        <?php include(FRM_VIEWS_PATH .'/shared/mb_insert_fields.php') ?>
+        <?php 
+        $settings_tab = true;
+        include(FRM_VIEWS_PATH .'/shared/mb_insert_fields.php');
+        unset($settings_tab); ?>
 	</div>
 	
 	<div id="frm-html-tags" class="tabs-panel" style="display:none;max-height:none;padding-right:0;">

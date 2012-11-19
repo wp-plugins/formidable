@@ -123,6 +123,17 @@ jQuery('li.ui-state-default').live('click', function(evt){
 	if(!$(target).is('.inplace_field') && !$(target).is('.frm_ipe_field_label') && !$(target).is('.frm_ipe_field_desc') && !$(target).is('.frm_ipe_field_option') && !$(target).is('.frm_ipe_field_option_key')){ $('.inplace_field').blur();}
 });
 
+jQuery('select.frm_single_post_field').live('change', function(e){
+jQuery('select.frm_single_post_field').removeAttr('style');
+var t=$(this);var v=$(this).val();if(v=='') return false;
+jQuery('select.frm_single_post_field').each(function(){
+if($(this).val() == v && $(this).attr('name')!=t.attr('name')){
+	$(this).css('border-color', 'red');t.val('');
+	alert('Oops. You have already used that field.');return false;
+}
+});	
+});
+
 if($('#frm_tooltip').length==0){$('#wpfooter').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
 $("img.frm_help[title], a.frm_help[title]").hover(
 	function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn();},

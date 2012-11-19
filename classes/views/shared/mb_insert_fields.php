@@ -49,11 +49,16 @@ $entry_shortcodes = array('id' => __('Entry ID', 'formidable'),
     'created-at' => __('Entry created at', 'formidable'),
     'updated-at' => __('Entry updated at', 'formidable'),
     '' => '',
-    'editlink location=&#34;front&#34; label=&#34;Edit&#34; page_id=4' => __('Edit Entry Link', 'formidable'),
-    'detaillink' => __('Single Entry Link', 'formidable'),
     'siteurl' => __('Site URL', 'formidable'),
-    'sitename' => __('Site Name', 'formidable')
+    'sitename' => __('Site Name', 'formidable'),
+    'editlink location=&#34;front&#34; label=&#34;Edit&#34; page_id=4' => __('Edit Entry Link', 'formidable'),
+    'detaillink' => __('Single Entry Link', 'formidable')
 );
+
+if(isset($settings_tab) and $settings_tab){
+   unset($entry_shortcodes['detaillink']);
+   $entry_shortcodes['125 show=&#34;field_label&#34;'] = __('Field Label', 'formidable');
+}
 
 foreach($entry_shortcodes as $skey => $sname){
      if(empty($skey)){
