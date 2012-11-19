@@ -24,8 +24,9 @@ if($('#frm_adv_info').length>0){
 	$('.frm_code_list a').addClass('frm_noallow');
 	$('#frm_adv_info a').live('mousedown', function(e){e.preventDefault();});
 
-	$('form *, .wpbody-content').focus(function(){frmToggleAllowedShortcodes($(this).attr('id'));});
-	$('form *, .wpbody-content').focusout(function(){frmToggleAllowedShortcodes('');});
+	$('form input, form textarea, .wpbody-content').live('focusin focusout', function(e){ 
+		if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; console.log(e.type+' id'+id); frmToggleAllowedShortcodes(id);
+	});
 
 	if(typeof(tinymce)=='object'){  
 	DOM=tinymce.DOM; 
