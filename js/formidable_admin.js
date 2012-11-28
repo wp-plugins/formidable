@@ -19,13 +19,12 @@ else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_actio
 
 if($('#frm_adv_info').length>0){ 
 	$('#frm_adv_info').before('<div id="frm_position_ele"></div>');
-	$('.frm_code_list .frmkeys').hide();
 
 	$('.frm_code_list a').addClass('frm_noallow');
 	$('#frm_adv_info a').live('mousedown', function(e){e.preventDefault();});
 
 	$('form input, form textarea, .wpbody-content').live('focusin focusout', function(e){ 
-		if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; console.log(e.type+' id'+id); frmToggleAllowedShortcodes(id);
+		if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; frmToggleAllowedShortcodes(id);
 	});
 
 	if(typeof(tinymce)=='object'){  

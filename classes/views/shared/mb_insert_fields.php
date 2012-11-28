@@ -77,3 +77,4 @@ foreach($entry_shortcodes as $skey => $sname){
 }
 ?>
 </ul>
+<script type="text/javascript">jQuery(document).ready(function($){ $('.frm_code_list .frmkeys').hide(); });</script>
