@@ -168,7 +168,7 @@ class FrmSettings{
         $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
         $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
         
-        $this->pubkey = $params['frm_pubkey'];
+        $this->pubkey = trim($params['frm_pubkey']);
         $this->privkey = $params['frm_privkey'];
         $this->re_theme = $params['frm_re_theme'];
         $this->re_lang = $params['frm_re_lang'];

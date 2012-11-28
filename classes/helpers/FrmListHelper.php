@@ -205,7 +205,7 @@ class FrmListHelper extends WP_List_Table {
 				    break;
 				case 'name':
 				case 'description':
-				    $val = FrmAppHelper::truncate(strip_tags(stripslashes($item->{$column_name})), 100);
+				    $val = FrmAppHelper::truncate(strip_tags(stripslashes($item->{$column_name})), 50);
 				    break;
 				case 'created_at':
 				    $format = 'Y/m/d'; //get_option('date_format');
