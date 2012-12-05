@@ -75,7 +75,7 @@ jQuery.fn.editInPlace = function(options) {
 		callback:			null,
 		success:			null,
 		error:				function(request){
-                                alert("Failed to save value: " + request.responseText || 'Unspecified Error');
+                                //alert("Failed to save value: " + request.responseText || 'Unspecified Error');
                             }
 	};
 
@@ -217,7 +217,7 @@ jQuery.fn.editInPlace = function(options) {
 							original_element.html(html || new_html);
 						} else {
 							/* failure; put original back */
-							alert("Failed to save value: " + new_html);
+							//alert("Failed to save value: " + new_html);
 							original_element.html(original_html);
 						}
 					} else if (settings.value_required && (new_html == "" || new_html == undefined)) {
