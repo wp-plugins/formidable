@@ -70,6 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * WP 3.5 compatibility
 * Fixed conflict with W3TC that was adding slashes into options on the form settings page
 * Show a message on the form builder page if a reCaptcha is included in the form, but not set up
+* Switch from add_object_page to add_menu_page to prevent menu position conflicts
 * (Free only) Allow emails to be sent from the admin email instead of forcing an email address from the submitted entry
 * PRO: Added multiple-image upload
 * PRO: Added unlimited emails per form and conditional routing
@@ -77,6 +78,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added frm-field-value shortcode to get the value of a field in another form. [frm-field-value field_id=25 user_id=current entry_id=140 ip=1]
 * PRO: Added frm-show-entry shortcode to show an entry in the same formats as the default email message. [frm-show-entry id=100 plain_text=1 user_info=1]
 * PRO: Added frm_set_get shortcode to artificially set $_GET values for use in custom displays or dynamic defaults values. [frm-set-get any_param="any value" another="value 2"] This can be fetched with [get param="any_param"] [get param="another"]
+* PRO: Extended conditional logic for displaying fields to include text, number, email, website, and time fields
 * PRO: Added support for the [frm-search] shortcode into the [formresults] table
 * PRO: Updated NicEdit
 * PRO: If http isn't included in a url or image field, automatically add it during validation
@@ -86,6 +88,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Correctly check uniqueness of post fields when there are no other error messages
 * PRO: If using a number field with the value "0" that is linked through a data from entries field, show 0 instead of nothing
 * PRO: Update for more accurate checking for hierarchal taxonomies when saving posts
+* PRO: Evaluate numbers as numeric instead of a string for conditional logic for hiding and showing fields
 * PRO: Fix to allow tags fields and other fields in the same form that are mapped to the same taxonomy
 * PRO: Fixed conditional logic to work correctly when dependent on the value "0"
 * PRO: Fixed display of shortcodes inside the before or after content areas of the custom display if nesting [get param=something]

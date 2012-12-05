@@ -91,7 +91,7 @@ class FrmNotification{
         $recipient      = $to_email; //recipient
         $header         = array();
         $header[]       = 'From: "'. $reply_to_name .'" <'. $reply_to .'>';
-        $header[]       = 'Reply-To: "'. $reply_to_name .'" <'. $reply_to .'>';
+        $header[]       = 'Reply-To: '. $reply_to;
         $header[]       = 'Content-Type: '. $content_type .'; charset="'. get_option('blog_charset') . '"';
         $subject        = wp_specialchars_decode(strip_tags(stripslashes($subject)), ENT_QUOTES );
         
@@ -106,7 +106,7 @@ class FrmNotification{
         remove_filter('wp_mail_from_name', 'bp_core_email_from_name_filter');
           
         if (!wp_mail($recipient, $subject, $message, $header, $attachments)){
-            $header = "From: \"{$reply_to_name}\" <{$reply_to}>\r\n";
+            $header = 'From: "'. $reply_to_name .'" <'. $reply_to .'>'. "\r\n";
             mail($recipient, $subject, $message, $header);
         }
 

@@ -134,7 +134,7 @@ if($(this).val() == v && $(this).attr('name')!=t.attr('name')){
 });	
 });
 
-if($('#frm_tooltip').length==0){$('#wpfooter').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
+if($('#frm_tooltip').length==0){$('#wpfooter,#footer').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
 $("img.frm_help[title], a.frm_help[title]").hover(
 	function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn();},
 	function(){$('#frm_tooltip').fadeOut();$(this).attr('title',frm_title);}
@@ -449,7 +449,7 @@ function frmInsertFieldCode(element,variable){
 function frmToggleAllowedShortcodes(id){
 	if(typeof(id)=='undefined') var id='';
 	var c=id;
-	if(id !=='' && jQuery('#'+id).attr('class') && id !== 'wpbody-content' && id !== 'content' && id != 'success_msg'){
+	if(id !=='' && jQuery('#'+id).attr('class') && id !== 'wpbody-content' && id !== 'content' && id !== 'dyncontent' && id != 'success_msg'){
 		var d=jQuery('#'+id).attr('class').split(' ')[0];
 		if(d=='frm_long_input' || typeof(d)=='undefined') var d='';
 		else var id=d;

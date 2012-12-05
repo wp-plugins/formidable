@@ -76,6 +76,8 @@ for(i=0; i<len; i++){
 			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
 		else if(f.Type=='select' || f.Type=='data-select')
 			selected=jQuery("select[name='item_meta["+f.FieldName+"]'], input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
+		else if(f.Type !='checkbox' && f.Type !='data-checkbox')
+			selected=jQuery("input[name='item_meta["+f.FieldName+"]']").val();
 	}
 
 	if(typeof(selected)=='undefined'){
@@ -173,6 +175,7 @@ for(i=0; i<len; i++){
 
 function frmOperators(op,a,b){
 	if(typeof(b)=='undefined') b='';
+	if(String(a).search(/^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/) != -1){var a=parseFloat(a);var b=parseFloat(b);}
 	var operators = {
 	    '==': function(c,d){ return c == d },
 		'!=': function(c,d){ return c != d },

@@ -44,10 +44,10 @@ class FrmAppController{
         
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_object_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div');
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div', 32.6);
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_object_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div');
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div', 32.6);
         }
     }
     
