@@ -493,7 +493,12 @@ class FrmAppHelper{
         $sub = '';
         $len = 0;
 
-        foreach (mb_split(' ', $str) as $word){
+        if(function_exists('mb_split'))
+            $words = mb_split(' ', $str);
+        else
+            $words = explode(' ', $str);
+            
+        foreach ($words as $word){
             $part = (($sub != '') ? ' ' : '') . $word;
             $sub .= $part;
             $len += mb_strlen($part);

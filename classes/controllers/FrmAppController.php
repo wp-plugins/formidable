@@ -42,12 +42,16 @@ class FrmAppController{
             unset($frm_role_description);
         }
         
+        $count = count(get_post_types( array( 'show_ui' => true, '_builtin' => false, 'show_in_menu' => true ) ));
+        $pos = ((int)$count > 0) ? 22.7 : 29.3;
+        $pos = apply_filters('frm_menu_position', $pos);
+        
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
-            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div', 32.6);
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div', $pos);
         }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
             global $frmpro_entries_controller;
-            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div', 32.6);
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div', $pos);
         }
     }
     
