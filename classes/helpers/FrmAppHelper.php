@@ -488,26 +488,27 @@ class FrmAppHelper{
         if($length == 0)
             return '';
         else if($length <= 10)
-            return mb_substr($str, 0, $length);
+            return (function_exists('mb_substr')) ? mb_substr($str, 0, $length) : substr($str, 0, $length);
             
         $sub = '';
         $len = 0;
 
-        if(function_exists('mb_split'))
-            $words = mb_split(' ', $str);
-        else
-            $words = explode(' ', $str);
+        $words = (function_exists('mb_split')) ? mb_split(' ', $str) : explode(' ', $str);
             
         foreach ($words as $word){
             $part = (($sub != '') ? ' ' : '') . $word;
             $sub .= $part;
-            $len += mb_strlen($part);
-
-            if (str_word_count($sub) > $minword && mb_strlen($sub) >= $length)
+            $len += (function_exists('mb_strlen')) ? mb_strlen($part) : strlen($part);
+            $total_len = (function_exists('mb_strlen')) ? mb_strlen($sub) : strlen($sub);
+            
+            if (str_word_count($sub) > $minword && $total_len >= $length)
                 break;
+            
+            unset($total_len);
         }
 
-        return $sub . (($len < mb_strlen($str)) ? $continue : '');
+        $original_len = (function_exists('mb_strlen')) ? mb_strlen($str) : strlen($str);
+        return $sub . (($len < $original_len) ? $continue : '');
     }
     
     function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
