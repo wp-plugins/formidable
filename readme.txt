@@ -61,6 +61,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.07 = 
+* Added mb_split fallback for servers without mbstring installed
+* Changed menu position to prevent override
+* PRO: Fixed issue with the form shortcode showing on the page if using multiple forms on a page with default values included
+* PRO: Fixed javascript error in frm-entry-update-field shortcode
+* PRO: Send the "read more" link to the single entry page instead of showing in-place for dynamic displays
+
 = 1.06.06 =
 * Removed generic classes from input fields like "text" and "date"
 * Correctly jump down to form with error messages

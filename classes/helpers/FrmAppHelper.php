@@ -484,25 +484,33 @@ class FrmAppHelper{
     function truncate($str, $length, $minword = 3, $continue = '...'){
         $length = (int)$length;
         $str = stripslashes(strip_tags($str));
+        $original_len = (function_exists('mb_strlen')) ? mb_strlen($str) : strlen($str);
         
-        if($length == 0)
+        if($length == 0){
             return '';
-        else if($length <= 10)
-            return mb_substr($str, 0, $length);
+        }else if($length <= 10){
+            $sub = (function_exists('mb_substr')) ? mb_substr($str, 0, $length) : substr($str, 0, $length);
+            return $sub . (($length < $original_len) ? $continue : '');
+        }
             
         $sub = '';
         $len = 0;
 
-        foreach (mb_split(' ', $str) as $word){
+        $words = (function_exists('mb_split')) ? mb_split(' ', $str) : explode(' ', $str);
+            
+        foreach ($words as $word){
             $part = (($sub != '') ? ' ' : '') . $word;
             $sub .= $part;
-            $len += mb_strlen($part);
-
-            if (str_word_count($sub) > $minword && mb_strlen($sub) >= $length)
+            $len += (function_exists('mb_strlen')) ? mb_strlen($part) : strlen($part);
+            $total_len = (function_exists('mb_strlen')) ? mb_strlen($sub) : strlen($sub);
+            
+            if (str_word_count($sub) > $minword && $total_len >= $length)
                 break;
+            
+            unset($total_len);
         }
-
-        return $sub . (($len < mb_strlen($str)) ? $continue : '');
+        
+        return $sub . (($len < $original_len) ? $continue : '');
     }
     
     function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
