@@ -319,7 +319,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         //if not already checked or URL set to free version or Plugin marked at latest
         if(!empty( $transient->checked ) or 
             (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
-          ($transient->response[$this->plugin_name] == 'latest' 
+          (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed())
           or $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
         
             if( $this->pro_is_authorized() ) {
