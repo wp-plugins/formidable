@@ -2,9 +2,9 @@
 Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
-Requires at least: 2.9
+Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.06.06
+Stable tag: 1.06.07
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
 
@@ -63,8 +63,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 == Changelog ==
 = 1.06.07 = 
 * Added mb_split fallback for servers without mbstring installed
-* Changed menu position to prevent override
-* PRO: Fixed issue with the form shortcode showing on the page if using multiple forms on a page with default values included
+* Changed menu position to prevent override from other plugins and themes
+* PRO: Fixed issue with the form shortcode showing if using multiple forms with default values on the same page
 * PRO: Fixed javascript error in frm-entry-update-field shortcode
 * PRO: Send the "read more" link to the single entry page instead of showing in-place for dynamic displays
 

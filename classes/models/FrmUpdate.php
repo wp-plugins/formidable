@@ -1,4 +1,5 @@
 <?php
+if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 /** Okay, this class is not a pure model -- it contains all the functions
   * necessary to successfully provide an update mechanism for FormidablePro!
@@ -55,7 +56,9 @@ class FrmUpdate{
         $this->pro_wpmu_str = 'proplug-wpmu';
         $this->pro_mothership_xmlrpc_url = $this->pro_mothership . '/xmlrpc.php';
         $this->timeout = 10;
-
+        
+        add_filter('pre_set_site_transient_update_plugins', array( &$this, 'queue_update' ) );
+        
         // Retrieve Pro Credentials
         $this->pro_wpmu = false;
         if (IS_WPMU and get_site_option($this->pro_wpmu_store)){
@@ -68,11 +71,6 @@ class FrmUpdate{
           extract($creds);
           $this->pro_username = ((isset($username) and !empty($username))?$username:'');
           $this->pro_password = ((isset($password) and !empty($password))?$password:'');
-
-          // Plugin Update Actions -- gotta make sure the right url is used with pro ... don't want any downgrades of course
-          add_action('update_option__transient_update_plugins', array(&$this, 'check_for_update_now')); // for WordPress 2.8
-          add_action('admin_init', array(&$this, 'periodically_check_for_update'));
-          add_filter('pre_set_transient_update_plugins', array(&$this, 'force_pro_version') );
         }
     }
 
@@ -261,7 +259,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
             $this->pro_password = (isset($password) and !empty($password)) ? $password : '';
 
             if(!$this->pro_is_installed())
-                $this->queue_update(true);
+                $this->manually_queue_update();
         }
 
         return $user_authorized;
@@ -285,6 +283,20 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
 
         return base64_decode($client->getResponse());
     }
+    
+    public function get_current_info($version, $force=false){
+        include_once( ABSPATH . 'wp-includes/class-IXR.php' );
+
+        $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
+
+        $force = $force ? 'true' : 'false';
+
+        if( !$client->query( 'proplug.get_current_info', $this->pro_username, $this->pro_password, $version, $force, 
+            get_option('siteurl'), $this->plugin_nicename) )
+            return false;
+
+        return $client->getResponse();
+    }
 
     function get_current_version(){
         include_once( ABSPATH . 'wp-includes/class-IXR.php' );
@@ -297,110 +309,36 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         return $client->getResponse();
     }
 
-    function queue_update($force=false){
-        static $already_set_option, $already_set_transient;
-        global $frm_version;
-
-        if(!is_admin())
-            return;
-
-        // Make sure this method doesn't check back with the mothership too often
-        if($already_set_option or $already_set_transient)
-            return;
-
-        if(!$this->pro_is_authorized())
-            return;
-            
-        // If pro is authorized but not installed then we need to force an upgrade
-        if(!$this->pro_is_installed())
-            $force = true;
-
-        $plugin_updates = (function_exists('get_site_transient')) ? get_site_transient('update_plugins') : get_transient('update_plugins'); 
-        if(!$plugin_updates and function_exists('get_transient'))
-            $plugin_updates = get_transient('update_plugins');
-
-        $curr_version = $this->get_current_version();
-        if(!$curr_version)
-            return;
-            
-        if(!isset($plugin_updates->checked))
-            $plugin_updates->checked = array();
-        $installed_version = isset($plugin_updates->checked[$this->plugin_name]) ? $plugin_updates->checked[$this->plugin_name] : $frm_version;
-
-        if( $force or version_compare( $curr_version, $installed_version, '>') ){
-            $download_url = $this->get_download_url($curr_version);
-
-            if(!empty($download_url) and $download_url and $this->user_allowed_to_download()){  
-                if(isset($plugin_updates->response[$this->plugin_name]))
-                    unset($plugin_updates->response[$this->plugin_name]);
-
-                $plugin_updates->response[$this->plugin_name]              = new stdClass();
-                $plugin_updates->response[$this->plugin_name]->id          = '0';
-                $plugin_updates->response[$this->plugin_name]->slug        = $this->plugin_slug;
-                $plugin_updates->response[$this->plugin_name]->new_version = $curr_version;
-                $plugin_updates->response[$this->plugin_name]->url         = $this->plugin_url;
-                $plugin_updates->response[$this->plugin_name]->package     = $download_url;
-            }
-        }else{
-            if(isset($plugin_updates->response[$this->plugin_name]))
-                unset($plugin_updates->response[$this->plugin_name]);
-        }
-
-        if ( function_exists('set_site_transient') and !$already_set_transient ){
-            $already_set_transient = true;
-            set_site_transient('update_plugins', $plugin_updates); // for WordPress 2.9+
-        }
-
-        if( function_exists('set_transient') and !$already_set_option ){
-            $already_set_option = true;
-            set_transient('update_plugins', $plugin_updates); // for WordPress 2.8
-        }
-        
-    }
-
-    function check_for_update_now(){
-        $this->queue_update();
-    }
-
-    function periodically_check_for_update(){
-        $last_checked = get_option($this->pro_last_checked_store);
-
-        if(!$last_checked or ((time() - $last_checked) >= $this->pro_check_interval)){
-            $this->queue_update();
-            update_option($this->pro_last_checked_store, time());
-        }
-    }
   
     //Check if free version will be downloaded. If so, switch it to the Pro version
-    function force_pro_version($plugin_updates){ 
-        if(is_object($plugin_updates) and isset($plugin_updates->response) and 
-          isset($plugin_updates->response[$this->plugin_name]) and $this->pro_is_authorized() and 
-          ($plugin_updates->response[$this->plugin_name] == 'latest' 
-          or $plugin_updates->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/')){ 
-          $curr_version = $this->get_current_version();
-          if(!$curr_version)
-              return;
-              
-          $installed_version = $plugin_updates->checked[$this->plugin_name];
+    function queue_update($transient, $force=false){
+        
+        if(!is_object($transient))
+            return $transient;
+            
+        //if not already checked or URL set to free version or Plugin marked at latest
+        if(!empty( $transient->checked ) or 
+            (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+          ($transient->response[$this->plugin_name] == 'latest' 
+          or $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
+        
+            if( $this->pro_is_authorized() ) {
+                if( !$this->pro_is_installed() ) 
+                    $force = true;
+            
+                $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
 
-          if( version_compare( $curr_version, $installed_version, '>') or !$this->pro_is_installed()){
-              $download_url = $this->get_download_url($curr_version);
-
-              if(!empty($download_url) and $download_url and $this->user_allowed_to_download()){
-                    
-                  if(isset($plugin_updates->response[$this->plugin_name]))
-                      unset($plugin_updates->response[$this->plugin_name]);
-
-                  $plugin_updates->response[$this->plugin_name]              = new stdClass();
-                  $plugin_updates->response[$this->plugin_name]->id          = '0';
-                  $plugin_updates->response[$this->plugin_name]->slug        = $this->plugin_slug;
-                  $plugin_updates->response[$this->plugin_name]->new_version = $curr_version;
-                  $plugin_updates->response[$this->plugin_name]->url         = $this->plugin_url;
-                  $plugin_updates->response[$this->plugin_name]->package     = $download_url;
-              }
-          }
-      }
-      return $plugin_updates;
+                if( $update and !empty( $update ) )
+                    $transient->response[ $this->plugin_name ] = (object) $update;
+            }
+        }
+        
+        return $transient;
+    }
+    
+    public function manually_queue_update() {
+        $transient = get_site_transient('update_plugins');
+        set_site_transient('update_plugins', $this->queue_update($transient, true));
     }
 }
 ?>
