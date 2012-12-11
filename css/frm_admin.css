@@ -127,7 +127,7 @@ img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 	border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;
 }
 #postbox-container-1 .frm_field_list .button a{display:block;font-weight:normal;text-decoration:none;font-size:11px !important;}
-.frm_col_one{margin-right:10px;clear:both;}
+.frm_col_one, #postbox-container-1 .frm_field_list .button.frm_col_one{margin-right:10px;clear:both;}
 .frm_html_legend pre{display:inline;}
 
 #ed_fullscreen{display:none !important;}
