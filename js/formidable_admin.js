@@ -374,12 +374,12 @@ function frmRemoveEmailList(id){
     jQuery('#frm_notification_'+id).fadeOut('slow').replaceWith('');
 }
 
-function frmCheckCustomEmail(value,id){
-if(value=='custom'){jQuery('#cust_'+id).css('visibility','visible'); jQuery('#cust_'+id).parent('div').show();}
+function frmCheckCustomEmail(value,id,key){
+if(value=='custom'){jQuery('#cust_'+id+'_'+key).css('visibility','visible'); jQuery('#frm_cust_reply_container_'+key).show();}
 else{
-jQuery('#cust_'+id).css('visibility','hidden');
+jQuery('#cust_'+id+'_'+key).css('visibility','hidden');
 if(id=='reply_to') var a='reply_to_name'; else var a='reply_to';
-if(jQuery('#cust_'+a).css('visibility')=='hidden') jQuery('#frm_cust_reply_container').hide();	
+if(jQuery('#cust_'+a+'_'+key).css('visibility')=='hidden') jQuery('#frm_cust_reply_container_'+key).hide();	
 }
 }
 

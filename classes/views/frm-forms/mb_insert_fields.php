@@ -9,9 +9,14 @@
 	
 	<div id="frm-insert-fields" class="tabs-panel" style="max-height:none;padding-right:0;">
         <?php 
-        $settings_tab = true;
-        include(FRM_VIEWS_PATH .'/shared/mb_insert_fields.php');
-        unset($settings_tab); ?>
+        if($frmpro_is_installed){
+            $settings_tab = true;
+            include(FRM_VIEWS_PATH .'/shared/mb_insert_fields.php');
+            unset($settings_tab); 
+        }else{
+            echo '<br/><br/>';
+            FrmAppController::update_message('insert field values into your messages');
+        } ?>
 	</div>
 	
 	<div id="frm-html-tags" class="tabs-panel" style="display:none;max-height:none;padding-right:0;">

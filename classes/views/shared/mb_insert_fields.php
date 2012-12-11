@@ -51,14 +51,15 @@ $entry_shortcodes = array('id' => __('Entry ID', 'formidable'),
     '' => '',
     'siteurl' => __('Site URL', 'formidable'),
     'sitename' => __('Site Name', 'formidable'),
-    'editlink location=&#34;front&#34; label=&#34;Edit&#34; page_id=4' => __('Edit Entry Link', 'formidable'),
-    'detaillink' => __('Single Entry Link', 'formidable')
 );
 
 if(isset($settings_tab) and $settings_tab){
-   unset($entry_shortcodes['detaillink']);
-   $entry_shortcodes['125 show=&#34;field_label&#34;'] = __('Field Label', 'formidable');
+    $entry_shortcodes['125 show=&#34;field_label&#34;'] = __('Field Label', 'formidable');
+}else{
+    $entry_shortcodes['detaillink'] = __('Single Entry Link', 'formidable');
+    $entry_shortcodes['editlink location=&#34;front&#34; label=&#34;Edit&#34; page_id=4'] = __('Edit Entry Link', 'formidable');
 }
+$entry_shortcodes['evenodd'] = __('Rotate even/odd', 'formidable');
 
 foreach($entry_shortcodes as $skey => $sname){
      if(empty($skey)){
@@ -77,4 +78,5 @@ foreach($entry_shortcodes as $skey => $sname){
 }
 ?>
 </ul>
+
 <script type="text/javascript">jQuery(document).ready(function($){ $('.frm_code_list .frmkeys').hide(); });</script>

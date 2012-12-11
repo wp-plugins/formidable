@@ -61,6 +61,17 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.08 =
+* Changed class names on action links on the form listing table to prevent conflicts with themes and other plugins
+* PRO: Filter shortcodes if any in the login message
+* PRO: Fixed order of fields shown in default email notification
+* PRO: Keep files attached to the post when editing the entry and using multiple file upload option
+* PRO: Attach file uploads to WP post even if the upload field is not set as a custom field
+* PRO: Fixed bug forcing site name and admin email as the email "from" info when a custom name/email is selected
+* PRO: Send a notification even if the notification before it is empty
+* PRO: Fixed conditional logic on email notifications to make sure they are stopped when they should be
+* PRO: Automatically send emails to the saved value of a field when used in the "Email recipients" box without requiring show=field_value
+
 = 1.06.07 = 
 * Added mb_split fallback for servers without mbstring installed
 * Changed menu position to prevent override from other plugins and themes

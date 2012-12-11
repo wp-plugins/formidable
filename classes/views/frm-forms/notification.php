@@ -4,7 +4,7 @@
     <td width="100px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
     <td class="frm_email_reply_container"><span class="howto"><?php _e('Name', 'formidable') ?></span> 
         
-        <select name="notification[<?php echo $email_key ?>][reply_to_name]" id="reply_to_name_<?php echo $email_key ?>" onchange="frmCheckCustomEmail(this.value,'reply_to_name')">
+        <select name="notification[<?php echo $email_key ?>][reply_to_name]" id="reply_to_name_<?php echo $email_key ?>" onchange="frmCheckCustomEmail(this.value,'reply_to_name',<?php echo $email_key ?>)">
         <option value=""><?php echo FrmAppHelper::truncate(get_option('blogname'), 80); ?></option>
         <option value="custom" <?php selected($notification['reply_to_name'], 'custom'); ?>><?php _e('Custom Name', 'formidable') ?></option>
         <?php 
@@ -28,7 +28,7 @@
     </select>
 
     <span class="howto" ><?php _e('Email', 'formidable') ?></span> 
-    <select name="notification[<?php echo $email_key ?>][reply_to]" id="reply_to_<?php echo $email_key ?>" onchange="frmCheckCustomEmail(this.value,'reply_to')">
+    <select name="notification[<?php echo $email_key ?>][reply_to]" id="reply_to_<?php echo $email_key ?>" onchange="frmCheckCustomEmail(this.value,'reply_to',<?php echo $email_key ?>)">
         <option value=""><?php echo get_option('admin_email') ?></option>
         <option value="custom" <?php selected($notification['reply_to'], 'custom'); ?>><?php _e('Custom Address', 'formidable') ?></option>
         <?php 
@@ -50,11 +50,11 @@
         } ?>
     </select>
     
-    <div id="frm_cust_reply_container" <?php echo ($notification['reply_to_name'] == 'custom' or $notification['reply_to_name'] == 'custom') ? '' : 'style="display:none"'; ?>>
+    <div id="frm_cust_reply_container_<?php echo $email_key ?>" <?php echo ($notification['reply_to_name'] == 'custom' or $notification['reply_to_name'] == 'custom') ? '' : 'style="display:none"'; ?>>
     <span class="howto" style="visibility:hidden;"><?php _e('Name', 'formidable') ?></span> 
-    <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to_name]" value="<?php echo esc_attr($notification['cust_reply_to_name']) ?>" id="cust_reply_to_name" title="<?php _e('Name', 'formidable') ?>" <?php echo ($notification['reply_to_name'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
+    <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to_name]" value="<?php echo esc_attr($notification['cust_reply_to_name']) ?>" id="cust_reply_to_name_<?php echo $email_key ?>" title="<?php _e('Name', 'formidable') ?>" <?php echo ($notification['reply_to_name'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
     <span class="howto" style="visibility:hidden;"><?php _e('Email', 'formidable') ?></span> 
-    <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to]" value="<?php echo esc_attr($notification['cust_reply_to']) ?>" id="cust_reply_to" title="<?php _e('Email Address', 'formidable') ?>" <?php echo ($notification['reply_to'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
+    <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to]" value="<?php echo esc_attr($notification['cust_reply_to']) ?>" id="cust_reply_to_<?php echo $email_key ?>" title="<?php _e('Email Address', 'formidable') ?>" <?php echo ($notification['reply_to'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
     </div>
     </td>
 </tr>

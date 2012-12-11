@@ -148,7 +148,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', array(), $frm_version);
             wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
             add_thickbox();
-        }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and $_REQUEST['post_type'] == 'frm_display')){
+        }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and isset($_REQUEST['post_type']) and $_REQUEST['post_type'] == 'frm_display')){
             if(isset($_REQUEST['post_type'])){
                 $post_type = $_REQUEST['post_type'];
             }else if(isset($_REQUEST['post'])){

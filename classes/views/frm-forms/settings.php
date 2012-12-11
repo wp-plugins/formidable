@@ -3,10 +3,16 @@
     <h2><?php _e('Edit Form', 'formidable') ?>
         <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
     </h2>
-    <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
-
+    <?php require(FRM_VIEWS_PATH.'/shared/errors.php');
     
+    if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
+    <div id="poststuff" class="metabox-holder has-right-sidebar">
+    <?php   
+        require(FRM_VIEWS_PATH .'/frm-forms/sidebar-settings.php'); 
+    }else{ ?>
     <div id="poststuff">
+    <?php } ?>
+    
         <div id="post-body" class="metabox-holder columns-2">
         <div id="post-body-content">
             <div class="alignleft">
@@ -37,7 +43,7 @@
         <h3 class="hndle"><span><?php echo FrmAppHelper::truncate(stripslashes($values['name']), 40) .' '. __('Settings', 'formidable') ?></span></h3>
         <div class="inside">
         <div class="contextual-help-tabs">
-        <ul class="frm-category-tabs<?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?>">
+        <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?>">
         	<li class="tabs active"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>
         	<li><a href="#notification_settings"><?php _e('Emails', 'formidable') ?></a></li>
             <li><a href="#html_settings"><?php _e('Customize HTML', 'formidable') ?></a></li>
@@ -151,7 +157,7 @@
             <?php if($frmpro_is_installed)
                 FrmProFormsController::post_options($values);
             else
-                 FrmAppController::update_message('create and edit posts, pages, and custom post types through your forms');
+                FrmAppController::update_message('create and edit posts, pages, and custom post types through your forms');
             ?>
         </div>
         
@@ -181,25 +187,10 @@
 
 
     </div>
-    <div id="postbox-container-1">
-        <?php if(!isset($hide_preview) or !$hide_preview){ 
-            if (!$values['is_template']){ ?>
-        <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
-        <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?>]" /></p>
-        <?php } ?>
-
-        <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview', 'formidable') ?></a>
-        <?php global $frm_settings; 
-            if ($frm_settings->preview_page_id > 0){ ?>
-            <?php _e('or', 'formidable') ?> 
-            <a href="<?php echo add_query_arg('form', $values['form_key'], get_permalink($frm_settings->preview_page_id)) ?>" target="_blank"><?php _e('Preview in Current Theme', 'formidable') ?></a>
-        <?php } ?>
-        </p>
-        <?php
-        } ?>
-        
-        <?php include(FRM_VIEWS_PATH .'/frm-forms/mb_insert_fields.php') ?>
-    </div>
+    <?php
+        if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
+            require(FRM_VIEWS_PATH .'/frm-forms/sidebar-settings.php'); 
+    ?>
     </div>
 </div>
 </div>

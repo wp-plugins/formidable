@@ -51,7 +51,7 @@ class FrmEntriesController{
             return __('Please select a valid form', 'formidable');
         }else if ($form->logged_in and !$user_ID){
             global $frm_settings;
-            return $frm_settings->login_msg;
+            return do_shortcode($frm_settings->login_msg);
         }
 
         $form->options = stripslashes_deep(maybe_unserialize($form->options));
@@ -60,7 +60,7 @@ class FrmEntriesController{
                 return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);
             }else{
                 global $frm_settings;
-                return $frm_settings->login_msg;
+                return do_shortcode($frm_settings->login_msg);
             }
         }else    
             return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);

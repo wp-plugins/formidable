@@ -401,7 +401,8 @@ class FrmFieldsController{
             $class .= ' '. $field['input_class'];
         
         $class = apply_filters('frm_field_classes', $class, $field);
-        $add_html .= ' class="'.$class.'"';
+        if(!empty($class))
+            $add_html .= ' class="'. $class .'"';
         
         if($echo)
             echo $add_html;

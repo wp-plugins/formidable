@@ -115,17 +115,6 @@ class FrmUpdate{
         return $client->getResponse();
     }
 
-    function user_allowed_to_download(){
-        include_once( ABSPATH . 'wp-includes/class-IXR.php' );
-
-        $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
-
-        if ( !$client->query( 'proplug.is_user_allowed_to_download', $this->pro_username, $this->pro_password, get_option('siteurl'), $this->plugin_nicename ) )
-          return false;
-
-        return $client->getResponse();
-    }
-
     function pro_cred_form(){ 
         global $frmpro_is_installed, $frm_ajax_url; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
@@ -272,17 +261,6 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
 
         return compact('username', 'password', 'wpmu');
     }
-
-    function get_download_url($version){
-        include_once( ABSPATH . 'wp-includes/class-IXR.php' );
-
-        $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
-
-        if( !$client->query( 'proplug.get_encoded_download_url', $this->pro_username, $this->pro_password, $version, get_option('siteurl'), $this->plugin_nicename ) )
-            return false;
-
-        return base64_decode($client->getResponse());
-    }
     
     public function get_current_info($version, $force=false){
         include_once( ABSPATH . 'wp-includes/class-IXR.php' );
@@ -297,28 +275,15 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
 
         return $client->getResponse();
     }
-
-    function get_current_version(){
-        include_once( ABSPATH . 'wp-includes/class-IXR.php' );
-
-        $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
-
-        if( !$client->query( 'proplug.get_current_version', $this->plugin_nicename ) )
-            return false;
-
-        return $client->getResponse();
-    }
-
   
     //Check if free version will be downloaded. If so, switch it to the Pro version
     function queue_update($transient, $force=false){
         
-        if(!is_object($transient))
+        if(!is_object($transient) or empty($transient->checked))
             return $transient;
             
         //if not already checked or URL set to free version or Plugin marked at latest
-        if(!empty( $transient->checked ) or 
-            (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+        if((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
           (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed())
           or $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
         
