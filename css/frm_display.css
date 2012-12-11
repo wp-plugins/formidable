@@ -10,6 +10,7 @@
 .with_frm_style .frm_blank_field label, .with_frm_style .frm_error{color:#be2e17;}
 .with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .with_frm_style .frm_blank_field #recaptcha_area{border:1px solid #be2e17;}
 .with_frm_style .frm_required{color:#ff0000;font-weight:bold;}
+.with_frm_style input.required, .with_frm_style textarea.required, .with_frm_style select.required{color:inherit;}
 .with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;margin:0;}
 .with_frm_style .frm_left_container .frm_checkbox, .with_frm_style .frm_left_container .frm_radio{margin-left:160px;}
 .with_frm_style fieldset{border:none;margin:0;padding:0;}
@@ -23,7 +24,9 @@
 .frm_set_select .with_frm_style .frm_form_fields select, .frm_set_select .with_frm_style .frm_form_fields select.auto_width{width:95%;}
 .with_frm_style .frm_radio label, .with_frm_style .frm_checkbox label{display:inline;}
 .with_frm_style input[type="radio"], .with_frm_style input[type="checkbox"]{width:auto;margin-right:3px;}
-.with_frm_style .frm_message, .with_frm_style .frm_message p{font-size:14px;margin:5px 0 15px;padding:5px 10px;background-color:#FFFFE0;border:1px solid #E6DB55;color:#444444;}
+.with_frm_style .frm_message, .with_frm_style .frm_message p{font-size:14px;margin:5px 0 15px;padding:5px 10px;background-color:#FFFFE0;color:#444444;}
+.with_frm_style .frm_message{border:1px solid #E6DB55;}
+
 
 .frm_forms.with_frm_style{max-width:98%;}
 .frm_form_field.frm_third, .frm_form_field.frm_fourth, .frm_form_field.frm_fifth, .frm_form_field.frm_inline{clear:none;float:left;}
