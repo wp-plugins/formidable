@@ -279,11 +279,11 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     //Check if free version will be downloaded. If so, switch it to the Pro version
     function queue_update($transient, $force=false){
         
-        if(!is_object($transient) or empty($transient->checked))
+        if(!is_object($transient))
             return $transient;
             
         //if not already checked or URL set to free version or Plugin marked at latest
-        if((!isset($transient->response) or !isset($transient->response[$this->plugin_name])) or
+        if(!empty( $transient->checked ) or
           (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
           (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed())
           or $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
