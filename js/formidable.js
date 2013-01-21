@@ -174,7 +174,8 @@ for(i=0; i<len; i++){
 }
 
 function frmOperators(op,a,b){
-	if(typeof(b)=='undefined') b='';
+	if(typeof(b)=='undefined') var b='';
+	if(jQuery.isArray(b) && jQuery.inArray(a,b) > -1) var b=a;
 	if(String(a).search(/^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/) != -1){var a=parseFloat(a);var b=parseFloat(b);}
 	var operators = {
 	    '==': function(c,d){ return c == d },
@@ -244,6 +245,7 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 }
 
 function frmGetFormErrors(object,ajax_url){
+	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
 	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,dataType:'json',

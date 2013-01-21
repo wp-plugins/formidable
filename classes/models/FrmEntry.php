@@ -33,7 +33,7 @@ class FrmEntry{
             if($user_ID)
                 $new_values['user_id'] = $new_values['updated_by'] = $user_ID;
         }
-
+        
         //check for duplicate entries created in the last 5 minutes
         $create_entry = true;
         if(!defined('WP_IMPORTING')){
@@ -96,7 +96,7 @@ class FrmEntry{
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         $new_values['name'] = $values->name;
-        $new_values['user_id'] = $new_values['updated_by'] = $values->user_id;
+        $new_values['user_id'] = $new_values['updated_by'] = (int)$values->user_id;
         $new_values['form_id'] = ($values->form_id)?(int)$values->form_id: null;
         $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
 
@@ -186,14 +186,14 @@ class FrmEntry{
             $metas = $frm_entry_meta->getAll("item_id=$entry->id and field_id != 0");
             $entry_metas = array();
             foreach($metas as $meta_val)
-                $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
+                $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = maybe_unserialize($meta_val->meta_value);
 
             $entry->metas = $entry_metas;
 
             wp_cache_set( $entry->id, $entry, 'frm_entry');
         }
 
-        return $entry;
+        return stripslashes_deep($entry);
     }
     
     function &exists( $id ){
@@ -257,7 +257,7 @@ class FrmEntry{
                     if(!isset($entries[$meta_val->item_id]->metas))
                         $entries[$meta_val->item_id]->metas = array();
                         
-                    $entries[$meta_val->item_id]->metas[$meta_val->field_id] = $entries[$meta_val->item_id]->metas[$meta_val->field_key] = $meta_val->meta_value;
+                    $entries[$meta_val->item_id]->metas[$meta_val->field_id] = $entries[$meta_val->item_id]->metas[$meta_val->field_key] = maybe_unserialize($meta_val->meta_value);
                 }
                 
                 foreach($entries as $entry){
@@ -282,7 +282,8 @@ class FrmEntry{
                 */
             }
         }
-        return $entries;
+        
+        return stripslashes_deep($entries);
     }
 
     // Pagination Methods
@@ -346,7 +347,7 @@ class FrmEntry{
                 $value = '';
             
             if ($posted_field->required == '1' and !is_array($value) and trim($value) == ''){
-                $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? $frm_settings->blank_msg : $posted_field->field_options['blank'];  
+                $errors['field'. $posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? $frm_settings->blank_msg : $posted_field->field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;
             }

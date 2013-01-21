@@ -8,7 +8,7 @@ class FrmAppHelper{
             $param = $params[0];    
         }
 
-        $value = (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param]) ? $_GET[$param] : $default));
+        $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep($_GET[$param]) : $default));
         
         if(isset($params) and is_array($value) and !empty($value)){
             foreach($params as $k => $p){
@@ -20,11 +20,11 @@ class FrmAppHelper{
             }
         }
 
-        return stripslashes_deep($value);
+        return $value;
     }
     
     function get_post_param($param, $default=''){
-        return isset($_POST[$param]) ? $_POST[$param] : $default;
+        return isset($_POST[$param]) ? stripslashes_deep(maybe_unserialize($_POST[$param])) : $default;
     }
     
     function get_pages(){
@@ -214,14 +214,13 @@ class FrmAppHelper{
         $values['id'] = $record->id;
 
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
-              $values[$var] = stripslashes(FrmAppHelper::get_param($var, $default_val));
+              $values[$var] = FrmAppHelper::get_param($var, $default_val);
         if(apply_filters('frm_use_wpautop', true))
             $values['description'] = wpautop($values['description']);
         $values['fields'] = array();
         
         if ($fields){
             foreach($fields as $field){
-                $field->field_options = stripslashes_deep(maybe_unserialize($field->field_options));
 
                 if ($default){
                     $meta_value = $field->default_value;
@@ -238,19 +237,16 @@ class FrmAppHelper{
                 }
                 
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
-                $new_value = (isset($_POST['item_meta'][$field->id])) ? $_POST['item_meta'][$field->id] : $meta_value;
-                $new_value = maybe_unserialize($new_value);
-                if(is_array($new_value))
-                    $new_value = stripslashes_deep($new_value);
+                $new_value = (isset($_POST['item_meta'][$field->id])) ? stripslashes_deep(maybe_unserialize($_POST['item_meta'][$field->id])) : $meta_value;
                 
                 $field_array = array(
                     'id' => $field->id,
                     'value' => $new_value,
-                    'default_value' => stripslashes_deep(maybe_unserialize($field->default_value)),
-                    'name' => stripslashes($field->name),
-                    'description' => stripslashes($field->description),
+                    'default_value' => $field->default_value,
+                    'name' => $field->name,
+                    'description' => $field->description,
                     'type' => apply_filters('frm_field_type', $field_type, $field, $new_value),
-                    'options' => stripslashes_deep(maybe_unserialize($field->options)),
+                    'options' => $field->options,
                     'required' => $field->required,
                     'field_key' => $field->field_key,
                     'field_order' => $field->field_order,
@@ -288,7 +284,17 @@ class FrmAppHelper{
                 if ($field_array['size'] == '')
                     $field_array['size'] = $frm_sidebar_width;
                 
-                $values['fields'][] = apply_filters('frm_setup_edit_fields_vars', stripslashes_deep($field_array), $field, $values['id']);
+                $field_array = apply_filters('frm_setup_edit_fields_vars', $field_array, $field, $values['id']);
+                
+                foreach($field->field_options as $k => $v){
+                    if(!isset($field_array[$k]))
+                        $field_array[$k] = $v;
+                    unset($k);
+                    unset($v);
+                }
+                
+                $values['fields'][] = $field_array;
+                
                 unset($field);   
             }
         }
@@ -483,7 +489,7 @@ class FrmAppHelper{
     
     function truncate($str, $length, $minword = 3, $continue = '...'){
         $length = (int)$length;
-        $str = stripslashes(strip_tags($str));
+        $str = strip_tags($str);
         $original_len = (function_exists('mb_strlen')) ? mb_strlen($str) : strlen($str);
         
         if($length == 0){

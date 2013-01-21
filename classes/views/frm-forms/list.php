@@ -107,19 +107,19 @@ if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.p
         <?php if ($params['template']){ ?>
         <td class="post-title">
             <?php if(current_user_can('frm_edit_forms')){ ?>
-            <a class="row-title" href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))); ?>"><?php echo stripslashes($form->name); ?></a>
+            <a class="row-title" href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)); ?>"><?php echo $form->name; ?></a>
             <?php }else{    
-                    echo stripslashes($form->name); 
+                    echo $form->name; 
                   } ?>
             <br/>
             <div class="row-actions">
                 <?php if(current_user_can('frm_edit_forms')){ ?>
-                <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))); ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span>
-                | <span class="edit"><a href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))); ?>"><?php _e('Edit', 'formidable') ?></a></span>
+                <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)); ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span>
+                | <span class="edit"><a href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)); ?>"><?php _e('Edit', 'formidable') ?></a></span>
                 <?php } ?>
                 <?php do_action('frm_template_action_links', $form); ?>
                 <?php if(current_user_can('frm_delete_forms')){ ?>
-                | <span class="trash"><a href="?page=formidable&amp;frm_=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), strip_tags(stripslashes($form->name))) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))); ?>"><?php _e('Delete', 'formidable') ?></a></span>
+                | <span class="trash"><a href="?page=formidable&amp;frm_=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), strip_tags($form->name)) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)); ?>"><?php _e('Delete', 'formidable') ?></a></span>
                 <?php } ?>
             </div>
         </td>
@@ -128,40 +128,40 @@ if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.p
         <td><?php echo $form->id ?></td>
         <td class="post-title">
             <?php if(current_user_can('frm_edit_forms')){ ?>
-            <a class="row-title" href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))); ?>"><?php echo stripslashes($form->name); ?></a>
+            <a class="row-title" href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)); ?>"><?php echo $form->name; ?></a>
             <?php }else{
-                    echo stripslashes($form->name); 
+                    echo $form->name; 
                   }
             ?>
             <br/>
             <div class="row-actions">
                 <?php if(current_user_can('frm_edit_forms')){ ?>
-                <span class="edit"><a href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?>"><?php _e('Edit', 'formidable') ?></a></span>
-	                | <span><a href="?page=formidable&amp;frm_action=settings&amp;id=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags(stripslashes($form->name))) ?> <?php _e('Settings', 'formidable') ?>"><?php _e('Settings', 'formidable') ?></a></span>	
+                <span class="edit"><a href="?page=formidable&amp;frm_action=edit&amp;id=<?php echo $form->id; ?>" title="<?php _e('Edit', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)) ?>"><?php _e('Edit', 'formidable') ?></a></span>
+	                | <span><a href="?page=formidable&amp;frm_action=settings&amp;id=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags($form->name)) ?> <?php _e('Settings', 'formidable') ?>"><?php _e('Settings', 'formidable') ?></a></span>	
 				<?php } ?>
                     
                 <?php if(current_user_can('frm_view_entries')){ ?>
-                    | <span><a href="?page=formidable-entries&amp;form=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags(stripslashes($form->name))); ?> Entries"><?php _e('Entries', 'formidable') ?></a></span>
-                    | <span><a href="?page=formidable-reports&amp;form=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags(stripslashes($form->name))); ?> Reports"><?php _e('Reports', 'formidable') ?></a></span>
+                    | <span><a href="?page=formidable-entries&amp;form=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags($form->name)); ?> Entries"><?php _e('Entries', 'formidable') ?></a></span>
+                    | <span><a href="?page=formidable-reports&amp;form=<?php echo $form->id; ?>" title="<?php echo esc_attr(strip_tags($form->name)); ?> Reports"><?php _e('Reports', 'formidable') ?></a></span>
                 <?php } ?>
 				
 				<?php if($frmpro_is_installed and current_user_can('frm_create_entries')){ ?>
-                    | <span><a href="?page=formidable-entries&amp;frm_action=new&amp;form=<?php echo $form->id; ?>" title="<?php _e('New', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?> <?php _e('Entry', 'formidable') ?>"><?php _e('New Entry', 'formidable') ?></a></span></br>
+                    | <span><a href="?page=formidable-entries&amp;frm_action=new&amp;form=<?php echo $form->id; ?>" title="<?php _e('New', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)) ?> <?php _e('Entry', 'formidable') ?>"><?php _e('New Entry', 'formidable') ?></a></span></br>
                 <?php } ?>
                 
                 <?php if(current_user_can('frm_edit_forms') and $frmpro_is_installed){ ?>
-                 <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?>"><?php _e('Duplicate', 'formidable') ?></a></span>
-                | <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>&amp;template=1" title="<?php _e('Create', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Create Template', 'formidable') ?></a></span>
-                | <span><a href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=forms&amp;frm_action=export&amp;id=<?php echo $form->id; ?>" title="<?php _e('Export', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Export as Template', 'formidable') ?></a></span>
+                 <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>" title="<?php _e('Copy', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)) ?>"><?php _e('Duplicate', 'formidable') ?></a></span>
+                | <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>&amp;template=1" title="<?php _e('Create', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Create Template', 'formidable') ?></a></span>
+                | <span><a href="<?php echo FRM_SCRIPT_URL ?>&amp;controller=forms&amp;frm_action=export&amp;id=<?php echo $form->id; ?>" title="<?php _e('Export', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)) ?> <?php _e('Template', 'formidable') ?>"><?php _e('Export as Template', 'formidable') ?></a></span>
                 <?php
                 } 
                 
                 if(current_user_can('frm_delete_forms')){ ?>
-                | <span class="trash"><a href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), strip_tags(stripslashes($form->name))) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo esc_attr(strip_tags(stripslashes($form->name))) ?>"><?php _e('Delete', 'formidable') ?></a></span>
+                | <span class="trash"><a href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $form->id; ?>"  onclick="return confirm('<?php printf(__('Are you sure you want to delete your %1$s Form?', 'formidable'), strip_tags($form->name)) ?>');" title="<?php _e('Delete', 'formidable') ?> <?php echo esc_attr(strip_tags($form->name)) ?>"><?php _e('Delete', 'formidable') ?></a></span>
                 <?php } ?>
             </div>
         </td>
-        <td><?php echo stripslashes($form->description) ?></td>
+        <td><?php echo $form->description ?></td>
         <td><?php echo $form->form_key ?></td>
         <td><?php
         $text = $frm_entry->getRecordCount($form->id);

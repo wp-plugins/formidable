@@ -50,7 +50,7 @@
         } ?>
     </select>
     
-    <div id="frm_cust_reply_container_<?php echo $email_key ?>" <?php echo ($notification['reply_to_name'] == 'custom' or $notification['reply_to_name'] == 'custom') ? '' : 'style="display:none"'; ?>>
+    <div id="frm_cust_reply_container_<?php echo $email_key ?>" <?php echo ($notification['reply_to_name'] == 'custom' or $notification['reply_to'] == 'custom') ? '' : 'style="display:none"'; ?>>
     <span class="howto" style="visibility:hidden;"><?php _e('Name', 'formidable') ?></span> 
     <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to_name]" value="<?php echo esc_attr($notification['cust_reply_to_name']) ?>" id="cust_reply_to_name_<?php echo $email_key ?>" title="<?php _e('Name', 'formidable') ?>" <?php echo ($notification['reply_to_name'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
     <span class="howto" style="visibility:hidden;"><?php _e('Email', 'formidable') ?></span> 

@@ -1,7 +1,6 @@
 <?php
 global $frm_form, $frm_field, $frm_entry, $frm_entry_meta, $user_ID, $frm_settings, $frm_created_entry, $frm_form_params;
 $form_name = $form->name;
-$form->options = stripslashes_deep(maybe_unserialize($form->options));
 
 $submit = isset($form->options['submit_value']) ? $form->options['submit_value'] : $frm_settings->submit_value;
 $saved_message = isset($form->options['success_msg']) ? $form->options['success_msg'] : $frm_settings->success_msg;

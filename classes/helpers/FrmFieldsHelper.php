@@ -90,15 +90,14 @@ class FrmFieldsHelper{
         $values['id'] = $record->id;
         $values['form_id'] = $record->form_id;
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
-              $values[$var] = htmlspecialchars(stripslashes(FrmAppHelper::get_param($var, $default)));
+              $values[$var] = htmlspecialchars(FrmAppHelper::get_param($var, $default));
 
         $values['form_name'] = ($record->form_id) ? $frm_form->getName( $record->form_id ) : '';
         
         foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
             $values[$var] = FrmAppHelper::get_param($var, $default);
         
-        $values['options'] = stripslashes_deep(maybe_unserialize($record->options));
-        
+        $values['options'] = $record->options;
         $values['field_options'] = $record->field_options;
         
         $defaults = FrmFieldsHelper::get_default_field_opts($values['type'], $record, true);
@@ -111,7 +110,7 @@ class FrmFieldsHelper{
         foreach($defaults as $opt => $default)
             $values[$opt] = (isset($record->field_options[$opt])) ? $record->field_options[$opt] : $default; 
 
-        $values['custom_html'] = (isset($record->field_options['custom_html'])) ? stripslashes($record->field_options['custom_html']) : FrmFieldsHelper::get_default_html($record->type);
+        $values['custom_html'] = (isset($record->field_options['custom_html'])) ? $record->field_options['custom_html'] : FrmFieldsHelper::get_default_html($record->type);
         
         return apply_filters('frm_setup_edit_field_vars', $values, $values['field_options']);
     }
@@ -175,7 +174,10 @@ DEFAULT_HTML;
         $html = stripslashes($html);
         $html = apply_filters('frm_before_replace_shortcodes', $html, $field, $errors, $form);
         
-        $field_name = "item_meta[". $field['id'] ."]";
+        $field_name = 'item_meta['. $field['id'] .']';
+        if($field['type'] == 'select' and isset($field['multiple']) and $field['multiple'])
+            $field_name .= '[]';
+        
         //replace [id]
         $html = str_replace('[id]', $field['id'], $html);
         
@@ -305,8 +307,10 @@ DEFAULT_HTML;
         $args = array(
             'show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name,
             'id' => $id, 'exclude' => $exclude, 'class' => $class, 'selected' => $selected, 
-            'hide_empty' => false, 'echo' => 0, 'orderby' => 'name' 
+            'hide_empty' => false, 'echo' => 0, 'orderby' => 'name'
         );
+        
+        $args = apply_filters('frm_dropdown_cat', $args, $field);
         
         if(class_exists('FrmProForm')){
             $post_type = FrmProForm::post_type($field['form_id']);

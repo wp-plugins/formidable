@@ -43,7 +43,7 @@ class FrmAppController{
         }
         
         $count = count(get_post_types( array( 'show_ui' => true, '_builtin' => false, 'show_in_menu' => true ) ));
-        $pos = ((int)$count > 0) ? 22.7 : 29.3;
+        $pos = ((int)$count > 0) ? '22.7' : '29.3';
         $pos = apply_filters('frm_menu_position', $pos);
         
         if(current_user_can('frm_view_forms')){

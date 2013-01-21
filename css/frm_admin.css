@@ -93,7 +93,7 @@ p.search-box {margin-top:10px;}
 	box-shadow:5px 5px 25px rgba(0,0,0,0.5);
 	position:fixed;
 	width:100%;
-	min-height:35px;
+	min-height:60px;
 	bottom:0;left:0;
 	-webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;

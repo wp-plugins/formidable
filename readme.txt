@@ -61,6 +61,19 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.09 =
+TODO: make sure displays in trash are not used
+TODO: dynamic email font size in default message
+* PRO: Added multiple option to dropdown fields
+* PRO: Automatically strip javascript before displaying entries through a custom display
+* PRO: Added striphtml=1 and keepjs=1 options for use in custom displays
+* PRO: Added option to get the field description with [125 show="description"]
+* PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications if they are different
+* PRO: Filter shortcodes in success message when the form is limited to one entry per user and editable
+* PRO: Correctly show the taxonomy name even if it is not linked to a post
+* PRO: Fix so post content is replaced when entry is updated instead of only on creation
+* PRO: Fix frm-stats shortcode to allow field keys when using the value option
+
 = 1.06.08 =
 * Changed class names on action links on the form listing table to prevent conflicts with themes and other plugins
 * PRO: Filter shortcodes if any in the login message

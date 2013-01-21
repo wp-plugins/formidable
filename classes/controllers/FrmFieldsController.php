@@ -249,8 +249,6 @@ class FrmFieldsController{
         );
         
         $field = FrmField::getOne($field_id);
-        $field->options = stripslashes_deep(maybe_unserialize($field->options));
-        $field->field_options = maybe_unserialize($field->field_options);
         
         include(FRM_VIEWS_PATH.'/frm-fields/import_choices.php');
         die();

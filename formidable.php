@@ -2,10 +2,11 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.06.08
+Version: 1.06.09
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
+Text Domain: formidable
 */
 
 /*  Copyright 2010  Strategy11  (email : support@strategy11.com)
@@ -52,7 +53,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.06.08';
+$frm_version = '1.06.09';
 $frm_db_version = 9;
 
 global $frm_ajax_url;

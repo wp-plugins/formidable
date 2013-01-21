@@ -31,7 +31,7 @@ if(empty($frm_settings->invalid_msg)){
         echo stripslashes($error) . '<br/>';
     }
 }else{
-    echo stripslashes($frm_settings->invalid_msg);
+    echo $frm_settings->invalid_msg;
 
     $show_img = true;
     foreach( $errors as $err_key => $error ){

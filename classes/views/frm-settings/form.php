@@ -143,7 +143,7 @@
                 <td valign="top"><?php _e('Default Messages', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></td>
                 <td>        
                     <?php _e('Blank Field', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a required field is left blank.', 'formidable') ?>" /><br/>
-                    <input type="text" id="frm_blank_msg" name="frm_blank_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->blank_msg)) ?>" />
+                    <input type="text" id="frm_blank_msg" name="frm_blank_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->blank_msg) ?>" />
                 </td>
             </tr>
             
@@ -151,7 +151,7 @@
                 <td></td> 
                 <td>        
                     <?php _e('Incorrect Field', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a field response is either incorrect or missing.', 'formidable') ?>" /><br/>
-                    <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->invalid_msg)) ?>" />
+                    <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->invalid_msg) ?>" />
                 </td>
             </tr>
             
@@ -159,7 +159,7 @@
                 <td></td>
                 <td>
                     <?php _e('Success Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" /><br/>
-                    <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->success_msg)) ?>" />
+                    <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->success_msg) ?>" />
                 </td>
             </tr>
             
@@ -167,7 +167,7 @@
                 <td></td>
                 <td>        
                     <?php _e('Failed or Duplicate Entry Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong.', 'formidable') ?>" /><br/>
-                    <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->failed_msg)) ?>" />
+                    <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->failed_msg) ?>" />
                 </td>
             </tr> 
             
@@ -175,7 +175,7 @@
                 <td></td>
                 <td>        
                     <?php _e('Login Message', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', 'formidable') ?>" /><br/>
-                    <input type="text" id="frm_login_msg" name="frm_login_msg" class="frm_long_input" value="<?php echo esc_attr(stripslashes($frm_settings->login_msg)) ?>" />
+                    <input type="text" id="frm_login_msg" name="frm_login_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->login_msg) ?>" />
                 </td>
             </tr>
             
@@ -183,7 +183,7 @@
                 <td></td>
                 <td>    
                     <?php _e('Default Submit Button', 'formidable'); ?><br/>
-                    <input type="text" value="<?php echo esc_attr(stripslashes($frm_settings->submit_value)) ?>" id="frm_submit_value" name="frm_submit_value" />
+                    <input type="text" value="<?php echo esc_attr($frm_settings->submit_value) ?>" id="frm_submit_value" name="frm_submit_value" />
                 </td>
             </tr>
             

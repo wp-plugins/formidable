@@ -76,23 +76,27 @@ class FrmField{
 
     function getOne( $id ){
         global $wpdb, $frmdb;
-        $cached = wp_cache_get( $id, 'frm_field' );
-        if($cached) 
-            return $cached;
+        $results = wp_cache_get( $id, 'frm_field' );
+        if(!$results){
           
-        if (is_numeric($id))
-            $where = array('id' => $id);
-        else
-            $where = array('field_key' => $id);
+            if (is_numeric($id))
+                $where = array('id' => $id);
+            else
+                $where = array('field_key' => $id);
 
-        $results = $frmdb->get_one_record($frmdb->fields, $where);
+            $results = $frmdb->get_one_record($frmdb->fields, $where);
+            
+            if($results)
+                wp_cache_set( $results->id, $results, 'frm_field' );
+        }
         
         if($results){
             $results->field_options = maybe_unserialize($results->field_options);
-            wp_cache_set( $results->id, $results, 'frm_field' );
+            $results->options = maybe_unserialize($results->options);
+            $results->default_value = maybe_unserialize($results->default_value);
         }
         
-        return $results;
+        return stripslashes_deep($results);
     }
 
     function getAll($where=array(), $order_by = '', $limit = '', $blog_id=false){
@@ -141,17 +145,21 @@ class FrmField{
         if($results){
             if(is_array($results)){
                 foreach($results as $r_key => $result){
-                    $results[$r_key]->field_options = maybe_unserialize($result->field_options);
                     wp_cache_set($result->id, $result, 'frm_field');
                     wp_cache_set($result->field_key, $result, 'frm_field');
+                    $results[$r_key]->field_options = maybe_unserialize($result->field_options);
+                    $results[$r_key]->options = maybe_unserialize($result->options);
+                    $results[$r_key]->default_value = maybe_unserialize($result->default_value);
                 }
             }else{
-                $results->field_options = maybe_unserialize($results->field_options);
                 wp_cache_set($results->id, $results, 'frm_field');
                 wp_cache_set($results->field_key, $results, 'frm_field');
+                $results->field_options = maybe_unserialize($results->field_options);
+                $results->options = maybe_unserialize($results->options);
+                $results->default_value = maybe_unserialize($results->default_value);
             }
         }
-        return $results;
+        return stripslashes_deep($results);
     }
 
     function getIds($where = '', $order_by = '', $limit = ''){

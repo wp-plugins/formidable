@@ -112,7 +112,7 @@ class FrmListHelper extends WP_List_Table {
 		
 		// Set up the hover actions for this user
 		$actions = array();
-		$title = esc_attr(strip_tags(stripslashes($item->name)));
+		$title = esc_attr(strip_tags($item->name));
 		
 		$edit_link = "?page=formidable&frm_action=edit&id={$item->id}";
 		$actions['frm_edit'] = "<a href='" . wp_nonce_url( $edit_link ) . "'>". __('Edit', 'formidable') ."</a>";
@@ -200,11 +200,11 @@ class FrmListHelper extends WP_List_Table {
 					break;
 				case 'id':
 				case 'form_key':
-				    $val = stripslashes($item->{$column_name});
+				    $val = $item->{$column_name};
 				    break;
 				case 'name':
 				case 'description':
-				    $val = FrmAppHelper::truncate(strip_tags(stripslashes($item->{$column_name})), 50);
+				    $val = FrmAppHelper::truncate(strip_tags($item->{$column_name}), 50);
 				    break;
 				case 'created_at':
 				    $format = 'Y/m/d'; //get_option('date_format');

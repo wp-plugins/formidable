@@ -262,15 +262,16 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         return compact('username', 'password', 'wpmu');
     }
     
-    public function get_current_info($version, $force=false){
+    public function get_current_info($version, $force=false, $plugin=false){
         include_once( ABSPATH . 'wp-includes/class-IXR.php' );
 
         $client = new IXR_Client( $this->pro_mothership_xmlrpc_url, false, 80, $this->timeout );
 
         $force = $force ? 'true' : 'false';
-
+        $plugin = $plugin ? $plugin : $this->plugin_nicename;
+        
         if( !$client->query( 'proplug.get_current_info', $this->pro_username, $this->pro_password, $version, $force, 
-            get_option('siteurl'), $this->plugin_nicename) )
+            get_option('siteurl'), $plugin) )
             return false;
 
         return $client->getResponse();

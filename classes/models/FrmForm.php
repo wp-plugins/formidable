@@ -220,10 +220,11 @@ class FrmForm{
   
   function getName( $id ){
       global $wpdb, $frmdb;
-      $query = "SELECT `name` FROM $frmdb->forms WHERE ";
+      $query = "SELECT name FROM $frmdb->forms WHERE ";
       $query .= (is_numeric($id)) ? "id" : "form_key";
       $query .= "='{$id}'";
-      return $wpdb->get_var($query);
+      $r = $wpdb->get_var($query);
+      return stripslashes($r);
   }
   
   function getIdByKey( $key ){
@@ -248,9 +249,9 @@ class FrmForm{
           $cache = wp_cache_get($id, 'frm_form');
           if($cache){
               if(isset($cache->options))
-                  $cache->options = stripslashes_deep(maybe_unserialize($cache->options));
+                  $cache->options = maybe_unserialize($cache->options);
               
-              return $cache;
+              return stripslashes_deep($cache);
           }
       }
       
@@ -263,9 +264,9 @@ class FrmForm{
       
       if(isset($results->options)){
           wp_cache_set($results->id, $results, 'frm_form');
-          $results->options = stripslashes_deep(maybe_unserialize($results->options));
+          $results->options = maybe_unserialize($results->options);
       }
-      return $results;
+      return stripslashes_deep($results);
   }
 
     function getAll( $where = array(), $order_by = '', $limit = '' ){
@@ -291,8 +292,11 @@ class FrmForm{
                 $results = $wpdb->get_results($query);
             
             if($results){
-                foreach($results as $result)
+                foreach($results as $result){
                     wp_cache_set($result->id, $result, 'frm_form');
+                    $result->options = maybe_unserialize($result->options);
+                }
+                $results = stripslashes_deep($results);
             }
         }
       

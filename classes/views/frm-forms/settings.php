@@ -40,7 +40,7 @@
     <div id="post-body">
         <div class="meta-box-sortables">
         <div class="categorydiv postbox">
-        <h3 class="hndle"><span><?php echo FrmAppHelper::truncate(stripslashes($values['name']), 40) .' '. __('Settings', 'formidable') ?></span></h3>
+        <h3 class="hndle"><span><?php echo FrmAppHelper::truncate($values['name'], 40) .' '. __('Settings', 'formidable') ?></span></h3>
         <div class="inside">
         <div class="contextual-help-tabs">
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?>">

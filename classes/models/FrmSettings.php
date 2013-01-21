@@ -113,30 +113,24 @@ class FrmSettings{
             
         if(!isset($this->success_msg))
             $this->success_msg = __('Your responses were successfully submitted. Thank you!', 'formidable');
-        $this->success_msg = stripslashes($this->success_msg);
         
         if(!isset($this->blank_msg))
             $this->blank_msg = __('This field cannot be blank.', 'formidable');
-        $this->blank_msg = stripslashes($this->blank_msg);
         
         if(!isset($this->invalid_msg))
             $this->invalid_msg = __('There was a problem with your submission. Errors are marked below.', 'formidable');
-        $this->invalid_msg = stripslashes($this->invalid_msg);
         
         if(!isset($this->failed_msg))
             $this->failed_msg = __('We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable');
-        $this->failed_msg = stripslashes($this->failed_msg);
         
         if(!isset($this->submit_value))
             $this->submit_value = __('Submit', 'formidable');
         
         if(!isset($this->login_msg))    
             $this->login_msg = __('You do not have permission to view this form.', 'formidable');
-        $this->login_msg = stripslashes($this->login_msg);
         
         if(!isset($this->admin_permission))
             $this->admin_permission = __("You do not have permission to do that", 'formidable');
-        $this->admin_permission = stripslashes($this->admin_permission);
         
         if(!isset($this->email_to))
             $this->email_to = '[admin_email]';
@@ -145,6 +139,12 @@ class FrmSettings{
         foreach($frm_roles as $frm_role => $frm_role_description){
             if(!isset($this->$frm_role))
                 $this->$frm_role = 'administrator';
+        }
+        
+        foreach($this as $k => $v){
+            $this->{$k} = stripslashes_deep($v);
+            unset($k);
+            unset($v);
         }
     }
 
