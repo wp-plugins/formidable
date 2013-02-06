@@ -248,9 +248,11 @@ function frmGetFormErrors(object,ajax_url){
 	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
 	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
 	jQuery.ajax({
-		type:"POST",url:ajax_url,dataType:'json',
+		type:"POST",url:ajax_url,
 	    data:jQuery(object).serialize()+"&controller=entries&_ajax_nonce=1",
 	    success:function(errObj){
+			if(errObj.indexOf('{') === 0)
+				var errObj=jQuery.parseJSON(errObj);
 			jQuery(object).find('input[type="submit"]').removeAttr('disabled');
 	    	if(errObj=='' || !errObj){
 	            if(jQuery("#frm_loading").length){
@@ -258,6 +260,8 @@ function frmGetFormErrors(object,ajax_url){
 					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
 				}
 	            object.submit();
+			}else if(typeof(errObj) != 'object'){
+				jQuery('#frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container').replaceWith(errObj);
 	        }else{
 	            //show errors
 				var cont_submit=true;
@@ -282,7 +286,7 @@ function frmGetFormErrors(object,ajax_url){
 				if(cont_submit) object.submit();
 	        }
 	    },
-		error:function(html){object.submit();}
+		error:function(html){jQuery(object).find('input[type="submit"]').removeAttr('disabled');object.submit();}
 	});
 }
 

@@ -292,11 +292,24 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
             if( $this->pro_is_authorized() ) {
                 if( !$this->pro_is_installed() ) 
                     $force = true;
+                
+                $expired = true;
+                if(!$force){
+                    $update = get_transient('frm_autoupdate');
+                    $expired = false;
+                }
             
-                $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
+                if(!$update)
+                    $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
 
-                if( $update and !empty( $update ) )
-                    $transient->response[ $this->plugin_name ] = (object) $update;
+                if( $update and !empty( $update ) ){
+                    $update = (object) $update;
+                    $transient->response[ $this->plugin_name ] = $update;
+                    
+                    //only check every 12 hours
+                    if(!$expired)
+                        set_transient( 'frm_autoupdate', $update, 60 * 60 * 12 );
+                }
             }
         }
         

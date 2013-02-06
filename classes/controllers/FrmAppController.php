@@ -56,8 +56,7 @@ class FrmAppController{
     }
     
     function menu_css(){ ?>
-<style type="text/css">
-#adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/form_16.png) no-repeat center;}
+<style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/form_16.png) no-repeat center;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}
 </style>    
 <?php    
     //#adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL /icon_16.png) no-repeat center;}
@@ -151,8 +150,10 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and isset($_REQUEST['post_type']) and $_REQUEST['post_type'] == 'frm_display')){
             if(isset($_REQUEST['post_type'])){
                 $post_type = $_REQUEST['post_type'];
-            }else if(isset($_REQUEST['post'])){
+            }else if(isset($_REQUEST['post']) and !empty($_REQUEST['post'])){
                 $post = get_post($_REQUEST['post']);
+                if(!$post)
+                    return;
                 $post_type = $post->post_type;
             }else{
                 return;
@@ -234,10 +235,8 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             }
         }
 
-        if(!is_admin() and $location != 'header' and !empty($frm_forms_loaded)){ //load formidable js  
-            global $wp_scripts;
-            $wp_scripts->do_items( array('formidable') );
-        }
+        if(!is_admin() and $location != 'header' and !empty($frm_forms_loaded)) //load formidable js  
+            FrmAppHelper::load_scripts(array('formidable'));
     }
   
     function install($old_db_version=false){

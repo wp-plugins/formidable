@@ -27,6 +27,28 @@ class FrmAppHelper{
         return isset($_POST[$param]) ? stripslashes_deep(maybe_unserialize($_POST[$param])) : $default;
     }
     
+    function load_scripts($scripts){
+        global $wp_version;
+        if(version_compare( $wp_version, '3.3', '<')){
+            global $wp_scripts;
+            $wp_scripts->do_items( (array)$scripts );
+        }else{
+            foreach((array)$scripts as $s)
+                wp_enqueue_script($s);
+        }
+    }
+    
+    function load_styles($styles){
+        global $wp_version;
+        if(version_compare( $wp_version, '3.3', '<')){
+            global $wp_styles;
+            $wp_styles->do_items( (array)$styles );
+        }else{
+            foreach((array)$styles as $s)
+                wp_enqueue_style($s);
+        }
+    }
+    
     function get_pages(){
       return get_posts( array('post_type' => 'page', 'post_status' => array('publish', 'private'), 'numberposts' => 999, 'orderby' => 'title', 'order' => 'ASC'));
     }
@@ -238,7 +260,7 @@ class FrmAppHelper{
                 
                 $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
                 $new_value = (isset($_POST['item_meta'][$field->id])) ? stripslashes_deep(maybe_unserialize($_POST['item_meta'][$field->id])) : $meta_value;
-                
+
                 $field_array = array(
                     'id' => $field->id,
                     'value' => $new_value,

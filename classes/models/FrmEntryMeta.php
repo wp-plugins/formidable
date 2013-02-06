@@ -103,8 +103,12 @@ class FrmEntryMeta{
       return $wpdb->get_col("SELECT meta_value FROM $frmdb->entry_metas WHERE item_id='{$entry_id}'");
   }
   
-  function get_entry_metas_for_field($field_id, $order='', $limit='', $value=false, $unique=false){
+  function get_entry_metas_for_field($field_id, $order='', $limit='', $args=array()){
       global $wpdb, $frmdb;
+      
+      $defaults = array('value' => false, 'unique' => false, 'stripslashes' => true);
+      extract(wp_parse_args( $args, $defaults ));
+      
       $query = "SELECT ";
       $query .= ($unique) ? "DISTINCT(em.meta_value)" : "em.meta_value";
       $query .= " FROM $frmdb->entry_metas em ";
@@ -114,7 +118,16 @@ class FrmEntryMeta{
       $query .= "{$order}{$limit}";
       
       $values = $wpdb->get_col($query);
-      return stripslashes_deep(maybe_unserialize($values));
+      if($stripslashes){
+          foreach($values as $k => $v){
+              $values[$k] = maybe_unserialize($v);
+              unset($k);
+              unset($v);
+          }
+          $values = stripslashes_deep($values);
+      }
+
+      return $values;
   }
   
   function get_entry_meta_info($entry_id){
@@ -122,7 +135,7 @@ class FrmEntryMeta{
       return $wpdb->get_results("SELECT * FROM $frmdb->entry_metas WHERE item_id='{$entry_id}'");
   }
     
-  function getAll($where = '', $order_by = '', $limit = ''){
+  function getAll($where = '', $order_by = '', $limit = '', $stripslashes = false){
     global $wpdb, $frmdb, $frm_field, $frm_app_helper;
     $query = "SELECT it.*, fi.type as field_type, fi.field_key as field_key, 
               fi.required as required, fi.form_id as field_form_id, fi.name as field_name, fi.options as fi_options 
@@ -133,6 +146,15 @@ class FrmEntryMeta{
         $results = $wpdb->get_row($query);
     else    
         $results = $wpdb->get_results($query);
+    
+    if($results and $stripslashes){
+        foreach($results as $k => $result){
+            $results[$k]->meta_value = maybe_unserialize($result->meta_value);
+            unset($k);
+            unset($result);
+        }
+    }
+    
     return $results;     
   }
   

@@ -23,7 +23,7 @@ echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $
 
 if($values['fields']){
 foreach($values['fields'] as $field){
-    $field_name = "item_meta[". $field['id'] ."]";
+    $field_name = 'item_meta['. $field['id'] .']';
     if (apply_filters('frm_show_normal_field_type', true, $field['type']))
         echo FrmFieldsHelper::replace_shortcodes($field['custom_html'], $field, $errors, $form);
     else
@@ -52,7 +52,10 @@ if($frm_div){
 </div>
 </fieldset>
 </div>
-<?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); ?>
+<?php echo FrmFormsHelper::replace_shortcodes($values['after_html'], $form); 
+
+global $wp_filter;
+if(isset($wp_filter['frm_entries_footer_scripts']) and !empty($wp_filter['frm_entries_footer_scripts'])){ ?>
 <script type="text/javascript">
 <?php do_action('frm_entries_footer_scripts', $values['fields'], $form); ?>
-</script>
+</script><?php } ?>

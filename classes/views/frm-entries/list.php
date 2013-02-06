@@ -1,6 +1,6 @@
 <div class="wrap">
     <div id="icon-edit-pages" class="icon32"><br/></div>
-    <h2><?php echo ($form) ? (FrmAppHelper::truncate(stripslashes($form->name), 25) .' ') : ''; _e('Entries', 'formidable'); ?></h2>
+    <h2><?php echo ($form) ? (FrmAppHelper::truncate($form->name, 25) .' ') : ''; _e('Entries', 'formidable'); ?></h2>
 
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 

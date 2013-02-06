@@ -84,11 +84,9 @@ class FrmFieldsHelper{
     function setup_edit_vars($record){
         global $frm_entry_meta, $frm_form;
         
-        $values = array();
-        $record->field_options = maybe_unserialize($record->field_options);
+        $values = array('id' => $record->id, 'form_id' => $record->form_id);
+        //$record->field_options = maybe_unserialize($record->field_options);
 
-        $values['id'] = $record->id;
-        $values['form_id'] = $record->form_id;
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
               $values[$var] = htmlspecialchars(FrmAppHelper::get_param($var, $default));
 
@@ -186,7 +184,9 @@ DEFAULT_HTML;
         
         //replace [description] and [required_label] and [error]
         $required = ($field['required'] == '0') ? '' : $field['required_indicator'];
-        $error = isset($errors['field'. $field['id']]) ? stripslashes($errors['field'. $field['id']]) : false; 
+        if(!is_array($errors))
+            $errors = array();
+        $error = (isset($errors['field'. $field['id']])) ? stripslashes($errors['field'. $field['id']]) : false; 
         foreach (array('description' => $field['description'], 'required_label' => $required, 'error' => $error) as $code => $value){
             if (!$value or $value == '')
                 $html = preg_replace('/(\[if\s+'.$code.'\])(.*?)(\[\/if\s+'.$code.'\])/mis', '', $html);

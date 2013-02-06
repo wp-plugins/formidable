@@ -142,7 +142,7 @@
                         foreach($values['fields'] as $field){
                             if (apply_filters('frm_show_custom_html', true, $field['type'])){ ?>
                                 <p><label class="frm_primary_label"><?php echo $field['name'] ?></label>
-                                <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" id="custom_html_<?php echo $field['id'] ?>" class="field_custom_html frm_long_input"><?php echo FrmAppHelper::esc_textarea($field['custom_html']) ?></textarea></p>
+                                <textarea name="field_options[custom_html_<?php echo $field['id'] ?>]" rows="7" id="custom_html_<?php echo $field['id'] ?>" class="field_custom_html frm_long_input"><?php echo FrmAppHelper::esc_textarea(stripslashes($field['custom_html'])) ?></textarea></p>
                             <?php }
                             unset($field);
                         }

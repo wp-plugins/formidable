@@ -62,17 +62,24 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.06.09 =
-TODO: make sure displays in trash are not used
-TODO: dynamic email font size in default message
+* DROPPED PHP4 SUPPORT. Do not update if you run PHP4.
+* Added the "create template" link into the free version
+* Added quotes around the menu position number to minimize conflicts with other plugins
+* Moved all stripslashes to the point the data is retrieved from the database
+* PRO: Added AJAX form submit
+* PRO: Dropped Open Flash Chart support due to security vulnerabilites
 * PRO: Added multiple option to dropdown fields
 * PRO: Automatically strip javascript before displaying entries through a custom display
 * PRO: Added striphtml=1 and keepjs=1 options for use in custom displays
 * PRO: Added option to get the field description with [125 show="description"]
+* PRO: Added link to delete entry only and leave post
 * PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications if they are different
 * PRO: Filter shortcodes in success message when the form is limited to one entry per user and editable
 * PRO: Correctly show the taxonomy name even if it is not linked to a post
 * PRO: Fix so post content is replaced when entry is updated instead of only on creation
 * PRO: Fix frm-stats shortcode to allow field keys when using the value option
+* PRO: Fix for custom displays getting used if they are in the trash
+* PRO: Fix for the bulk delete option showing for users without permission to delete in the bulk actions dropdown on the admin entry listing page
 
 = 1.06.08 =
 * Changed class names on action links on the form listing table to prevent conflicts with themes and other plugins

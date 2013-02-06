@@ -71,7 +71,6 @@ class FrmEntriesHelper{
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);
                     
-
                 $field_array = apply_filters('frm_setup_new_fields_vars', $field_array, $field);
                 
                 foreach($field->field_options as $k => $v){
@@ -81,7 +80,7 @@ class FrmEntriesHelper{
                     unset($v);
                 }
                 
-                $values['fields'][] = stripslashes_deep($field_array);
+                $values['fields'][] = $field_array; //stripslashes_deep($field_array)
              
                 if (!$form or !isset($form->id))
                     $form = $frm_form->getOne($field->form_id);

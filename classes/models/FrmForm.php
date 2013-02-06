@@ -283,8 +283,10 @@ class FrmForm{
             else
                 $results = $wpdb->get_row($query);
                 
-            if($results)
+            if($results){
                 wp_cache_set($results->id, $results, 'frm_form');
+                $results->options = maybe_unserialize($results->options);
+            }
         }else{
             if(is_array($where))
                 $results = $frmdb->get_records($frmdb->forms, $where, $order_by, $limit);
@@ -296,11 +298,10 @@ class FrmForm{
                     wp_cache_set($result->id, $result, 'frm_form');
                     $result->options = maybe_unserialize($result->options);
                 }
-                $results = stripslashes_deep($results);
             }
         }
       
-        return $results;
+        return stripslashes_deep($results);
     }
 
   function validate( $values ){

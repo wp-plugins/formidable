@@ -137,10 +137,7 @@ class FrmListHelper extends WP_List_Table {
         	
         	$actions['frm_duplicate'] = "<a href='" . wp_nonce_url( $duplicate_link ) . "' title='". __('Copy', 'formidable') ." $title'>". __('Duplicate', 'formidable') ."</a>";
         	
-        	if($frmpro_is_installed){
-        	    $actions['frm_template'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) . "' title='". __('Create Template', 'formidable') ."'>". __('Create Template', 'formidable') ."</a>";
-        	    
-        	}
+        	$actions['frm_template'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) . "' title='". __('Create Template', 'formidable') ."'>". __('Create Template', 'formidable') ."</a>";
         }
         
         if($frmpro_is_installed){
