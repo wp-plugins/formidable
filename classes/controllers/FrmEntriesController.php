@@ -140,21 +140,22 @@ class FrmEntriesController{
         }
     }
     
-    function &filter_email_value($value, $meta, $entry){
+    function &filter_email_value($value, $meta, $entry, $atts=array()){
         global $frm_field;
         
         $field = $frm_field->getOne($meta->field_id);
         if(!$field)
             return $value; 
             
-        $value = $this->filter_display_value($value, $field);
+        $value = $this->filter_display_value($value, $field, $atts);
         return $value;
     }
     
-    function &filter_display_value($value, $field){
+    function &filter_display_value($value, $field, $atts=array()){
         $field->field_options = maybe_unserialize($field->field_options);
         
-        if(!in_array($field->type, array('radio', 'checkbox', 'radio', 'select')) or !isset($field->field_options['separate_value']) or !$field->field_options['separate_value'])
+        $saved_value = (isset($atts['saved_value']) and $atts['saved_value']) ? true : false;
+        if(!in_array($field->type, array('radio', 'checkbox', 'radio', 'select')) or !isset($field->field_options['separate_value']) or !$field->field_options['separate_value'] or $saved_value)
             return $value;
             
         $field->options = maybe_unserialize($field->options);

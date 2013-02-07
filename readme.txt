@@ -72,6 +72,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Automatically strip javascript before displaying entries through a custom display
 * PRO: Added striphtml=1 and keepjs=1 options for use in custom displays
 * PRO: Added option to get the field description with [125 show="description"]
+* PRO: Added separate value column on entries page
 * PRO: Added link to delete entry only and leave post
 * PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications if they are different
 * PRO: Filter shortcodes in success message when the form is limited to one entry per user and editable
@@ -80,6 +81,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fix frm-stats shortcode to allow field keys when using the value option
 * PRO: Fix for custom displays getting used if they are in the trash
 * PRO: Fix for the bulk delete option showing for users without permission to delete in the bulk actions dropdown on the admin entry listing page
+* PRO: Fix the delete link in entry edit links shortcode to prevent it from going to a blank form when using the page_id param
 
 = 1.06.08 =
 * Changed class names on action links on the form listing table to prevent conflicts with themes and other plugins
