@@ -63,8 +63,13 @@ $('.widget-top,a.widget-action').click(function(){ $(this).closest('div.widget')
 }
 
 if($('.frm_ipe_form_name').length>0){
+$('.frm_form_builder form:first').submit(function(){$('.inplace_field').blur();})
 $('.frm_ipe_form_name').editInPlace({
 url:ajax_url,params:"action=frm_form_name_in_place_edit&form_id="+form_id,value_required:"true",bg_out:'#fff'
+});
+
+$('.frm_ipe_form_name, .frm_ipe_field_label, .frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key').keypress(function(e){
+if(e.which == 13){$('.inplace_field').blur();return false;}
 });
 
 $(".frm_ipe_form_desc").editInPlace({
