@@ -259,6 +259,9 @@ function frmGetFormErrors(object,ajax_url){
 					var file_val=jQuery(object).find('input[type=file]').val();
 					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
 				}
+				if(jQuery(object).find('#recaptcha_widget_div, #recaptcha_area').length){
+					jQuery(object).find('#recaptcha_widget_div, #recaptcha_area').replaceWith('');
+				}
 	            object.submit();
 			}else if(typeof(errObj) != 'object'){
 				jQuery('#frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container').replaceWith(errObj);
@@ -267,7 +270,7 @@ function frmGetFormErrors(object,ajax_url){
 				var cont_submit=true;
 	            jQuery('.form-field').removeClass('frm_blank_field');
 	            jQuery('.form-field .frm_error').replaceWith('');
-				var jump='';
+				var jump=''; var show_captcha=false;
 	            for (var key in errObj){
 					if(jQuery(object).find('#frm_field_'+key+'_container').length && jQuery('#frm_field_'+key+'_container').is(":visible")){
 						cont_submit=false;
@@ -278,11 +281,14 @@ function frmGetFormErrors(object,ajax_url){
 							if(new_position && cOff > new_position.top)
 								window.scrollTo(new_position.left,new_position.top);
 						}
+						if(jQuery(object).find('#frm_field_'+key+'_container #recaptcha_area').length)
+							var show_captcha=true;
 						jQuery(object).find('#frm_field_'+key+'_container').addClass('frm_blank_field');
 						if(typeof(frmThemeOverride_frmPlaceError) == 'function'){frmThemeOverride_frmPlaceError(key,errObj);}
 						else{jQuery(object).find('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>');}
 					}
 				}
+				if(show_captcha!=true) jQuery(object).find('#recaptcha_widget_div, #recaptcha_area').replaceWith('');
 				if(cont_submit) object.submit();
 	        }
 	    },

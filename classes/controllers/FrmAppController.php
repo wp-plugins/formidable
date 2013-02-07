@@ -189,6 +189,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }
 
         wp_register_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version, true);
+        wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
         wp_enqueue_script('jquery');
         
         if(!is_admin() and $frm_settings->load_style == 'all'){

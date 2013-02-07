@@ -276,10 +276,19 @@ DEFAULT_HTML;
             require_once(FRM_PATH.'/classes/recaptchalib.php');
         
         $lang = apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field);
-        ?>
-        <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $lang ?>'<?php echo apply_filters('frm_recaptcha_custom', '', $field) ?>};</script>
-        <?php echo recaptcha_get_html($frm_settings->pubkey .'&hl='. $lang, $error, is_ssl()) ?>
-<?php
+        
+        if(defined('DOING_AJAX')){ 
+            global $frm_recaptcha_loaded;
+            if(!$frm_recaptcha_loaded)
+                $frm_recaptcha_loaded = '';
+            
+            $frm_recaptcha_loaded .= "Recaptcha.create('". $frm_settings->pubkey ."','field_". $field['field_key'] ."',{theme:'". $frm_settings->re_theme ."',lang:'". $lang ."'". apply_filters('frm_recaptcha_custom', '', $field) ."});";
+            wp_enqueue_script('recaptcha-ajax'); ?>
+<div id="field_<?php echo $field['field_key'] ?>"></div>
+<?php   }else{ ?>
+<script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $lang ?>'<?php echo apply_filters('frm_recaptcha_custom', '', $field) ?>};</script>
+<?php       echo recaptcha_get_html($frm_settings->pubkey .'&hl='. $lang, $error, is_ssl());
+        }
     }
     
     function dropdown_categories($args){
