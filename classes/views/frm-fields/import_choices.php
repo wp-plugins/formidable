@@ -13,9 +13,9 @@
     wp_enqueue_script('utils');
     
     //3.4 hack
-    remove_action( 'admin_enqueue_scripts', '_wp_customize_loader_localize' );
+    //remove_action( 'admin_enqueue_scripts', '_wp_customize_loader_localize' );
     
-    do_action('admin_enqueue_scripts', $hook_suffix);
+    //do_action('admin_enqueue_scripts', $hook_suffix);
     do_action('admin_print_styles');
     do_action('admin_print_scripts');
     
@@ -74,7 +74,7 @@ if(is_array($fopt)){
 </textarea>
 
 <p class="submit clear">
-<input type="button" onclick="window.top.frmUpdateOpts(<?php echo $field->id ?>,'<?php echo $frm_ajax_url ?>', jQuery('#frm_bulk_options').val()); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
+<input type="button" onclick="window.top.frmUpdateOpts(<?php echo $field->id ?>,jQuery('#frm_bulk_options').val()); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
 <input type="button" onclick="window.top.tb_remove();" class="button" value="<?php _e('Cancel', 'formidable') ?>" />
 </p>
 </div>

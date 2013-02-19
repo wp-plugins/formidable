@@ -64,17 +64,21 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.06.09 =
 * DROPPED PHP4 SUPPORT. Do not update if you run PHP4.
 * Added the "create template" link into the free version
-* Added quotes around the menu position number to minimize conflicts with other plugins
+* Added quotes around the menu position number to minimize menu position conflicts with other plugins
 * Moved all stripslashes to the point the data is retrieved from the database
 * PRO: Added AJAX form submit
-* PRO: Dropped Open Flash Chart support due to security vulnerabilites
+* PRO: Dropped Open Flash Chart support due to security vulnerabilities
 * PRO: Added multiple option to dropdown fields
 * PRO: Automatically strip javascript before displaying entries through a custom display
 * PRO: Added striphtml=1 and keepjs=1 options for use in custom displays
 * PRO: Added option to get the field description with [125 show="description"]
 * PRO: Added separate value column on entries page
 * PRO: Added link to delete entry only and leave post
-* PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications if they are different
+* PRO: Added box for custom css in the styling settings
+* PRO: Added buttons to insert default HTML or plain text for those who wish to modify the default message without starting from scratch
+* PRO: Added link to uploaded files in the entry edit form
+* PRO: Switched section headings to use h3 tags by default instead of h2
+* PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications from the same form
 * PRO: Filter shortcodes in success message when the form is limited to one entry per user and editable
 * PRO: Correctly show the taxonomy name even if it is not linked to a post
 * PRO: Fix so post content is replaced when entry is updated instead of only on creation
@@ -82,6 +86,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fix for custom displays getting used if they are in the trash
 * PRO: Fix for the bulk delete option showing for users without permission to delete in the bulk actions dropdown on the admin entry listing page
 * PRO: Fix the delete link in entry edit links shortcode to prevent it from going to a blank form when using the page_id param
+* PRO: Fix calendar to show the correct number of extra boxes when not starting on Sunday
+
 
 = 1.06.08 =
 * Changed class names on action links on the form listing table to prevent conflicts with themes and other plugins

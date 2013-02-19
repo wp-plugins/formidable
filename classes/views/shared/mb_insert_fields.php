@@ -50,16 +50,20 @@ $entry_shortcodes = array('id' => __('Entry ID', 'formidable'),
     'updated-at' => __('Entry updated at', 'formidable'),
     '' => '',
     'siteurl' => __('Site URL', 'formidable'),
-    'sitename' => __('Site Name', 'formidable'),
+    'sitename' => __('Site Name', 'formidable')
 );
 
 if(isset($settings_tab) and $settings_tab){
     $entry_shortcodes['125 show=&#34;field_label&#34;'] = __('Field Label', 'formidable');
+    $entry_shortcodes['default-message'] = __('Default Message', 'formidable');
+    $entry_shortcodes['default-html'] = __('Default HTML', 'formidable');
+    $entry_shortcodes['default-plain'] = __('Default Plain', 'formidable');
 }else{
     $entry_shortcodes['detaillink'] = __('Single Entry Link', 'formidable');
     $entry_shortcodes['editlink location=&#34;front&#34; label=&#34;Edit&#34; page_id=4'] = __('Edit Entry Link', 'formidable');
+    $entry_shortcodes['evenodd'] = __('Rotate even/odd', 'formidable');
 }
-$entry_shortcodes['evenodd'] = __('Rotate even/odd', 'formidable');
+
 
 foreach($entry_shortcodes as $skey => $sname){
      if(empty($skey)){
@@ -69,7 +73,10 @@ foreach($entry_shortcodes as $skey => $sname){
     }
 ?>
 <li class="frm_col_<?php echo $col ?>">
-    <a class="frmbutton button <?php echo ($skey == 'siteurl' or $skey == 'sitename') ? 'show_before_content show_after_content' : ''; ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $skey ?>');return false;" href="#"><?php echo $sname ?></a>
+    <a class="frmbutton button <?php 
+    echo ($skey == 'siteurl' or $skey == 'sitename') ? 'show_before_content show_after_content' : '';
+    echo (strpos($skey, 'default-') === 0) ? 'hide_frm_not_email_subject' : '';
+    ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $skey ?>');return false;" href="#"><?php echo $sname ?></a>
 </li>
 <?php
     $col = ($col == 'one') ? 'two' : 'one';

@@ -8,7 +8,7 @@ class FrmAppHelper{
             $param = $params[0];    
         }
 
-        $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep($_GET[$param]) : $default));
+        $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep(urldecode($_GET[$param])) : $default));
         
         if(isset($params) and is_array($value) and !empty($value)){
             foreach($params as $k => $p){
