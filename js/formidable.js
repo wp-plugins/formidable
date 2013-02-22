@@ -145,8 +145,8 @@ for(i=0; i<len; i++){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
 				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
-				else{jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');}
-			}else{jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');}
+				else{jQuery('#frm_field_'+f.HideField+'_container').show();}
+			}else{jQuery('#frm_field_'+f.HideField+'_container').hide();}
 		}else{
 			hide_later[f.HideField]={'result':show_fields[f.HideField][i],'show':f.Show,'match':'any','fname':f.FieldName};
 		}
@@ -158,11 +158,11 @@ for(i=0; i<len; i++){
 		jQuery.each(hide_later, function(hkey,hvalue){ 
 			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
 				if((hvalue.match=='any' && !frmInArray(true, show_fields[hkey])) || (hvalue.match=='all' && frmInArray(false, show_fields[hkey]))){
-					if(hvalue.show=='show'){jQuery('#frm_field_'+hkey+'_container:hidden').hide(); jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');}
-					else{ jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');}
+					if(hvalue.show=='show'){jQuery('#frm_field_'+hkey+'_container:hidden').hide(); jQuery('#frm_field_'+hkey+'_container').hide();}
+					else{ jQuery('#frm_field_'+hkey+'_container').show();}
 				}else{
-					if(hvalue.show=='show'){ jQuery('#frm_field_'+hkey+'_container').fadeIn('slow');}
-					else{jQuery('#frm_field_'+hkey+'_container:hidden').hide(); jQuery('#frm_field_'+hkey+'_container').fadeOut('slow');}
+					if(hvalue.show=='show'){ jQuery('#frm_field_'+hkey+'_container').show();}
+					else{jQuery('#frm_field_'+hkey+'_container:hidden').hide(); jQuery('#frm_field_'+hkey+'_container').hide();}
 				}
 				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,ajax_url,hvalue.fname);
 				delete hide_later[hkey];
@@ -204,12 +204,12 @@ function frmGetData(f,selected,ajax_url,append){
 		type:"POST",url:ajax_url,
 		data:"controller=fields&frm_action=ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
 		success:function(html){
-			if(html!='') jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow'); 
+			if(html!='') jQuery('#frm_field_'+f.HideField+'_container').show(); 
 			if(append){jQuery('#frm_data_field_'+f.HideField+'_container').append(html);}
 			else{
 				jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
 				var val=jQuery('#frm_data_field_'+f.HideField+'_container').children('input').val();
-				if(html=='' || val=='') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow');
+				if(html=='' || val=='') jQuery('#frm_field_'+f.HideField+'_container').hide();
 				frmCheckDependent('',f.HideField);
 			}
 			return true;
@@ -229,8 +229,8 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 		type:"POST",url:ajax_url,
 		data:"controller=fields&frm_action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
 		success:function(html){
-			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').fadeOut('slow'); 
-			else jQuery('#frm_field_'+f.HideField+'_container').fadeIn('slow');
+			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').hide(); 
+			else jQuery('#frm_field_'+f.HideField+'_container').show();
 			frmCheckDependent(prev,f.HideField);
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
 			if(html!='' && prev!=''){

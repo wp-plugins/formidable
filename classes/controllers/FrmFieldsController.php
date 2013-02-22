@@ -15,6 +15,7 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_add_field_option', array(&$this, 'add_option'));
         add_action('wp_ajax_frm_field_option_ipe', array(&$this, 'edit_option') );
         add_action('wp_ajax_frm_delete_field_option', array(&$this, 'delete_option'));
+        add_action('wp_ajax_frm_import_choices', array(&$this, 'import_choices') );
         add_action('wp_ajax_frm_import_options', array(&$this, 'import_options') );
         add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
         add_filter('frm_field_type' ,array( &$this, 'change_type'));
@@ -199,11 +200,19 @@ class FrmFieldsController{
         die();
     }
     
-    function import_choices($field_id){
+    function import_choices(){
         if(!current_user_can('frm_edit_forms'))
             return;
-          
-        global $frm_ajax_url;
+        
+        $field_id = $_REQUEST['field_id'];
+        	
+        global $current_screen, $hook_suffix;
+
+        // Catch plugins that include admin-header.php before admin.php completes.
+        if ( empty( $current_screen ) ){
+            $hook_suffix = '';
+        	set_current_screen();
+        }
         
         if(function_exists('register_admin_color_schemes'))
             register_admin_color_schemes();

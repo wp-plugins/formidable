@@ -11,7 +11,7 @@ class FrmField{
         foreach (array('name', 'description', 'type', 'default_value') as $col)
             $new_values[$col] = stripslashes($values[$col]);
         
-        $new_values['options'] = $values['options'];
+        $new_values['options'] = maybe_serialize($values['options']);
 
         $new_values['field_order'] = isset($values['field_order'])?(int)$values['field_order']:NULL;
         $new_values['required'] = isset($values['required'])?(int)$values['required']:NULL;

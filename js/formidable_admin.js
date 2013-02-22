@@ -398,7 +398,7 @@ function frmDisplayFormSelected(form_id){
     if (form_id == '') return;
     jQuery.ajax({type:"POST",url:ajaxurl,
         data:"action=frm_get_cd_tags_box&form_id="+form_id,
-        success:function(html){ jQuery('#frm_adv_info').html(html);}
+        success:function(html){ jQuery('#frm_adv_info .categorydiv').html(html);}
     });
     jQuery.ajax({type:"POST",url:ajaxurl,
         data:"action=frm_get_entry_select&form_id="+form_id,

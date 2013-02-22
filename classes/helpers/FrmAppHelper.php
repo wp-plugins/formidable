@@ -164,6 +164,11 @@ class FrmAppHelper{
     	return apply_filters( 'esc_textarea', $safe_text, $text );
     }
     
+    function replace_quotes($val){
+        $val = str_replace(array('&#8220;', '&#8221;', '&#8216;', '&#8217;'), array('"', '"', "'", "'"), $val);
+        return $val;
+    }
+    
     function script_version($handle, $list='scripts'){
         global $wp_scripts;
     	if(!$wp_scripts)

@@ -66,9 +66,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added the "create template" link into the free version
 * Added quotes around the menu position number to minimize menu position conflicts with other plugins
 * Moved all stripslashes to the point the data is retrieved from the database
+* Switched the field options bulk edit to use the admin ajax url to minimize plugin conflicts
 * PRO: Added AJAX form submit
 * PRO: Dropped Open Flash Chart support due to security vulnerabilities
 * PRO: Added multiple option to dropdown fields
+* PRO: Added option to limit by ranges in the frm-stats shortcode. Ex: [frm-stats id=50 '-1 month'<45<'-3 days']
 * PRO: Automatically strip javascript before displaying entries through a custom display
 * PRO: Added striphtml=1 and keepjs=1 options for use in custom displays
 * PRO: Added option to get the field description with [125 show="description"]
@@ -78,6 +80,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added buttons to insert default HTML or plain text for those who wish to modify the default message without starting from scratch
 * PRO: Added link to uploaded files in the entry edit form
 * PRO: Switched section headings to use h3 tags by default instead of h2
+* PRO: Switched conditional fields to show and hide instead of fadeIn and fadeOut
 * PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications from the same form
 * PRO: Filter shortcodes in success message when the form is limited to one entry per user and editable
 * PRO: Correctly show the taxonomy name even if it is not linked to a post

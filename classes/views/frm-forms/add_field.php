@@ -44,7 +44,7 @@
         
         <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
         <?php _e('or', 'formidable'); ?>
-        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(FRM_SCRIPT_URL .'&controller=fields&frm_action=import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
         <?php } ?>
     </div>
 <?php
@@ -89,7 +89,7 @@
             
             <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
             <?php _e('or', 'formidable'); ?>
-            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(FRM_SCRIPT_URL . '&controller=fields&frm_action=import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?plugin=formidable&controller=fields&frm_action=import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
             <?php } ?>
         </div>
 <?php } ?>
