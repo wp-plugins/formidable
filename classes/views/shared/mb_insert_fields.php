@@ -4,11 +4,15 @@
 </ul>
 <ul class="alignleft" style="margin:5px 0 0;"><li><?php _e('Fields from your form', 'formidable') ?>:</li></ul>
 <ul class="frm_code_list frm_full_width" style="clear:both;max-height:150px;overflow:auto;">
-    <?php if(!empty($fields)){
+<?php
+    if(!empty($fields)){
         global $frmdb;
         $linked_forms[] = array();
         
         foreach($fields as $f){ 
+            if(in_array($f->type, array('divider', 'captcha', 'break', 'html')))
+                continue;
+
             $f->field_options = maybe_unserialize($f->field_options);
             if($f->type == 'data' and (!isset($f->field_options['data_type']) or $f->field_options['data_type'] == 'data' or $f->field_options['data_type'] == ''))
                 continue;

@@ -202,6 +202,12 @@ class FrmSettings{
 		}
         
         do_action( 'frm_update_settings', $params );
+        
+        foreach($this as $k => $v){
+            $this->{$k} = stripslashes_deep($v);
+            unset($k);
+            unset($v);
+        }
     }
 
     function store(){

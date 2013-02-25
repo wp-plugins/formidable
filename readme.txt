@@ -90,6 +90,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fix for the bulk delete option showing for users without permission to delete in the bulk actions dropdown on the admin entry listing page
 * PRO: Fix the delete link in entry edit links shortcode to prevent it from going to a blank form when using the page_id param
 * PRO: Fix calendar to show the correct number of extra boxes when not starting on Sunday
+* PRO: Fix for repeated, inline conditional logic in custom displays
 
 
 = 1.06.08 =
