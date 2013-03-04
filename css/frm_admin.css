@@ -524,6 +524,8 @@ Clearfix
 #adminmenuwrap, #adminmenuback, #wphead, #button_bar, #submitdiv, .button-secondary,
 #screen-metas, #screen-meta-links, #footer, #wpfooter, .inner-sidebar, .frm_form_nav, .icon32, 
 .frm_flash_graph, .frm_no_print, object{visibility:hidden;display:none !important;}	
+#poststuff #post-body.columns-2{margin-right:0;}
+.widget, .postbox, .stuffbox, .postbox h3{border-width:0px !important;border-color:#fff;}
 .postbox{background:#fff !important;border:none;position:static;}
 .postbox h3{background:#fff !important;}
 #wpbody-content{float:none;}

@@ -11,7 +11,7 @@ class FrmField{
         foreach (array('name', 'description', 'type', 'default_value') as $col)
             $new_values[$col] = stripslashes($values[$col]);
         
-        $new_values['options'] = maybe_serialize($values['options']);
+        $new_values['options'] = $values['options'];
 
         $new_values['field_order'] = isset($values['field_order'])?(int)$values['field_order']:NULL;
         $new_values['required'] = isset($values['required'])?(int)$values['required']:NULL;
@@ -37,9 +37,10 @@ class FrmField{
             $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
             $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $frmdb->fields, 'field_key');
-            $values['field_options'] = maybe_unserialize($field->field_options);
+            echo 'maybe serialize';
+            $values['options'] = maybe_serialize($field->options);
             $values['form_id'] = $form_id;
-            foreach (array('name', 'description', 'type', 'default_value', 'options', 'field_order', 'required') as $col)
+            foreach (array('name', 'description', 'type', 'default_value', 'field_order', 'required', 'field_options') as $col)
                 $values[$col] = $field->{$col};
             $this->create($values, false);
             unset($field);

@@ -359,6 +359,13 @@ function frmRemoveDiv(id){
 jQuery(id).fadeOut('slow').replaceWith('');	
 }
 
+function frmNextUpload(obj,id,remove){
+obj.wrap('<div class="frm_file_names frm_uploaded_files">'); 
+obj.after(obj.attr('value')+' <a href="#" onclick="frmClearFile(jQuery(this))">'+remove+'</a>');
+obj.hide(); jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" type="file" onchange="frmNextUpload(jQuery(this),'+id+',\''+remove+'\')"/>');
+}
+
 function frmClearFile(file){
 file.parent('.frm_file_names').replaceWith('');
+return false;
 }
