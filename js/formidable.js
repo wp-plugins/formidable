@@ -84,7 +84,6 @@ for(i=0; i<len; i++){
 		selected=jQuery("input[type=hidden][name='item_meta["+f.FieldName+"]']").val();
 		if(typeof(selected)=='undefined') selected='';
 	}
-	
     if(f.Type=='checkbox'){
         show_fields[f.HideField][i]=false;
         jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"][]']").each(function(){
@@ -231,7 +230,6 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 		success:function(html){
 			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').hide(); 
 			else jQuery('#frm_field_'+f.HideField+'_container').show();
-			frmCheckDependent(prev,f.HideField);
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
 			if(html!='' && prev!=''){
 				jQuery.each(prev, function(ckey,cval){
@@ -240,6 +238,7 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 					else{jQuery("input[name='item_meta["+f.HideField+"]']").val(cval);}
 				});
 			}
+			frmCheckDependent('',f.HideField);
 		}
 	});
 }
@@ -263,7 +262,11 @@ function frmGetFormErrors(object,ajax_url){
 					jQuery(object).find('#recaptcha_area').replaceWith('');
 	            object.submit();
 			}else if(typeof(errObj) != 'object'){
-				jQuery('#frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container').replaceWith(errObj);
+				var jump='#frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container';
+				var newPos=jQuery(jump).offset();
+				jQuery(jump).replaceWith(errObj);
+				var cOff=document.documentElement.scrollTop || document.body.scrollTop;
+				if(newPos && cOff > newPos.top) window.scrollTo(newPos.left,newPos.top);
 	        }else{
 	            //show errors
 				var cont_submit=true;
@@ -275,10 +278,9 @@ function frmGetFormErrors(object,ajax_url){
 						cont_submit=false;
 						if(jump==''){
 							jump='#frm_field_'+key+'_container';
-							var new_position=jQuery(object).find(jump).offset();
-							var cOff = document.documentElement.scrollTop || document.body.scrollTop;
-							if(new_position && cOff > new_position.top)
-								window.scrollTo(new_position.left,new_position.top);
+							var newPos=jQuery(object).find(jump).offset();
+							var cOff=document.documentElement.scrollTop || document.body.scrollTop;
+							if(newPos && cOff > newPos.top) window.scrollTo(newPos.left,newPos.top);
 						}
 						if(jQuery(object).find('#frm_field_'+key+'_container #recaptcha_area').length){
 							var show_captcha=true;
@@ -326,16 +328,16 @@ function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id,hclass){
 	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\',\''+hclass+'\')">'+label+'</a>');
 }
 
-function frmUpdateField(entry_id,field_id,value,message,ajax_url){
+function frmUpdateField(entry_id,field_id,value,message,ajax_url,num){
 	jQuery('#frm_update_field_'+entry_id+'_'+field_id).html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=entries&frm_action=update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
 		success:function(html){
 			if(message == '')
-				jQuery('#frm_update_field_'+entry_id+'_'+field_id).fadeOut('slow');
+				jQuery('#frm_update_field_'+entry_id+'_'+field_id+'_'+num).fadeOut('slow');
 			else
-				jQuery('#frm_update_field_'+entry_id+'_'+field_id).replaceWith(message);
+				jQuery('#frm_update_field_'+entry_id+'_'+field_id+'_'+num).replaceWith(message);
 		}
 	});
 }

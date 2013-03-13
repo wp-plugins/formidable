@@ -320,5 +320,33 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         $transient = get_site_transient('update_plugins');
         set_site_transient('update_plugins', $this->queue_update($transient, true));
     }
+    
+    function queue_addon_update($transient, $plugin, $force=false){
+        if(!is_object($transient) or empty($transient->checked))
+            return $transient;
+
+        global $frmpro_is_installed;
+        if($frmpro_is_installed){
+            $expired = true;
+            if(!$force){
+                $update = get_transient($plugin->pro_last_checked_store);
+                $expired = false;
+            }
+
+            if(!$update)
+                $update = $this->get_current_info( $transient->checked[ $plugin->plugin_name ], $force, $plugin->plugin_nicename );
+
+            if( $update and !empty( $update ) ){
+                $update = (object) $update;
+                $transient->response[ $plugin->plugin_name ] = $update;
+                
+                //only check every 12 hours
+                if(!$expired)
+                    set_transient($plugin->pro_last_checked_store, $update, $plugin->pro_check_interval );
+            }
+        }
+        
+        return $transient;
+    }
 }
 ?>

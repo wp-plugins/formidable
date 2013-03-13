@@ -2,13 +2,19 @@
 
 class FrmAppHelper{
     
-    function get_param($param, $default=''){
+    function get_param($param, $default='', $src='get'){
         if(strpos($param, '[')){
             $params = explode('[', $param);
             $param = $params[0];    
         }
 
-        $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep(urldecode($_GET[$param])) : $default));
+        if($src == 'get'){
+            $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep($_GET[$param]) : $default));
+            if(!isset($_POST[$param]) and isset($_GET[$param]) and !is_array($value))
+                $value = urldecode($value);
+        }else{
+            $value = isset($_POST[$param]) ? stripslashes_deep(maybe_unserialize($_POST[$param])) : $default;
+        }
         
         if(isset($params) and is_array($value) and !empty($value)){
             foreach($params as $k => $p){

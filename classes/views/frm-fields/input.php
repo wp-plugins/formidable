@@ -25,9 +25,14 @@
 }else if ($field['type'] == 'select'){ 
     if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         echo FrmFieldsHelper::dropdown_categories(array('name' => $field_name, 'field' => $field) );
-    }else{ ?>
+    }else{ 
+        if($field['read_only'] and $frm_readonly != 'disabled' and (!current_user_can('administrator') or !is_admin())){ ?>
+<input type="hidden" value="<?php echo esc_attr($field['value']) ?>" name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" />
+<select disabled="disabled" <?php do_action('frm_field_input_html', $field) ?>>
+<?php   }else{ ?>        
 <select name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" <?php do_action('frm_field_input_html', $field) ?>>
-    <?php foreach ($field['options'] as $opt_key => $opt){ 
+<?php   } 
+    foreach ($field['options'] as $opt_key => $opt){ 
         $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
         $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field); ?>
 <option value="<?php echo esc_attr($field_val) ?>" <?php if (FrmAppHelper::check_selected($field['value'], $field_val)) echo 'selected="selected"'; ?>><?php echo $opt ?></option>

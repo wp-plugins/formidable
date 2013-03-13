@@ -210,7 +210,7 @@ class FrmFieldsController{
         global $current_screen, $hook_suffix;
 
         // Catch plugins that include admin-header.php before admin.php completes.
-        if ( empty( $current_screen ) ){
+        if (empty( $current_screen ) and function_exists('set_current_screen')){
             $hook_suffix = '';
         	set_current_screen();
         }

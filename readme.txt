@@ -67,7 +67,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added quotes around the menu position number to minimize menu position conflicts with other plugins
 * Moved all stripslashes to the point the data is retrieved from the database
 * Switched the field options bulk edit to use the admin ajax url to minimize plugin conflicts
-* Changed all occurrences of .live() to .on() for jQuery 1.9 compatability
+* Changed all occurrences of .live() to .on() for jQuery 1.9 compatibility
 * PRO: Added AJAX form submit
 * PRO: Dropped Open Flash Chart support due to security vulnerabilities
 * PRO: Added multiple option to dropdown fields
@@ -81,18 +81,27 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added buttons to insert default HTML or plain text for those who wish to modify the default message without starting from scratch
 * PRO: Added link to uploaded files in the entry edit form
 * PRO: Switched section headings to use h3 tags by default instead of h2
+* PRO: Migrated "Allow Only One Entry for Each" fields to the unique checkbox on each field
+* PRO: Allow for multiple uses of frm-entry-update-field for the same field and entry
+* PRO: Allow external short codes in the email recipients box
+* PRO: Allow the frm-search shortcode to be used in text widgets
 * PRO: Switched conditional fields to show and hide instead of fadeIn and fadeOut
 * PRO: Switched rich text fields to default to TinyMCE
 * PRO: Correctly send emails to [admin_email], and allow the same email address to receive multiple notifications from the same form
 * PRO: Filter shortcodes in success message when the form is limited to one entry per user and editable
 * PRO: Correctly show the taxonomy name even if it is not linked to a post
-* PRO: Fix so post content is replaced when entry is updated instead of only on creation
-* PRO: Fix frm-stats shortcode to allow field keys when using the value option
-* PRO: Fix for custom displays getting used if they are in the trash
-* PRO: Fix for the bulk delete option showing for users without permission to delete in the bulk actions dropdown on the admin entry listing page
-* PRO: Fix the delete link in entry edit links shortcode to prevent it from going to a blank form when using the page_id param
-* PRO: Fix calendar to show the correct number of extra boxes when not starting on Sunday
-* PRO: Fix for repeated, inline conditional logic in custom displays
+* PRO: Fixed read-only option to work with dropdown fields
+* PRO: Fixed post password setting
+* PRO: Fixed post content replacement when entry is updated instead of only on creation
+* PRO: Fixed frm-stats shortcode to allow field keys when using the value option
+* PRO: Fixed custom displays getting used if they are in the trash
+* PRO: Fixed custom display pages to not include the unfiltered post content when there are no entries to display
+* PRO: Fixed the bulk delete option showing for users without permission to delete in the bulk actions dropdown on the admin entry listing page
+* PRO: Fixed the delete link in entry edit links shortcode to prevent it from going to a blank form when using the page_id param
+* PRO: Fixed calendar to show the correct number of extra boxes when not starting on Sunday
+* PRO: Fixed repeated, inline conditional logic in custom displays
+* PRO: Fixed option to copy forms to other sites in multi-site installs, so they will no longer be copied when the box is unchecked 
+* PRO: Fixed admin-only fields to not validate for users who can't see the field
 
 
 = 1.06.08 =
