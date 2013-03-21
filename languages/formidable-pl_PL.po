@@ -687,7 +687,7 @@ msgstr "Ładuję..."
 
 #: classes/views/frm-forms/settings.php:59
 #@ formidable
-msgid "Form ShortCodes"
+msgid "Form Shortcodes"
 msgstr "Skróty formularzy"
 
 #: classes/views/frm-forms/settings.php:59
@@ -854,7 +854,7 @@ msgstr "Link bezpośredni"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:194
 #@ formidable
-msgid "ShortCode"
+msgid "Shortcode"
 msgstr "Skrót"
 
 #: classes/helpers/FrmListHelper.php:84
@@ -2695,7 +2695,7 @@ msgstr "Wymagane"
 #: classes/views/frm-forms/list.php:198
 #: pro/classes/views/displays/submitbox_actions.php:2
 #@ formidable
-msgid "ShortCodes"
+msgid "Shortcodes"
 msgstr "Skróty"
 
 #: classes/views/frm-settings/form.php:185

@@ -75,7 +75,7 @@ if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.p
             </th>
             <th class="manage-column" width="60px"><?php _e('Entries', 'formidable') ?></th>
             <th class="manage-column" width="115px"><?php _e('Direct Link', 'formidable') ?></th>
-            <th class="manage-column" width="115px"><?php _e('ShortCodes', 'formidable') ?></th>
+            <th class="manage-column" width="115px"><?php _e('Shortcodes', 'formidable') ?></th>
         <?php } ?>
     </tr>
     </thead>
@@ -195,7 +195,7 @@ if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.p
             <th class="manage-column"><?php _e('Key', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Entries', 'formidable') ?></th>
             <th class="manage-column"><?php _e('Direct Link', 'formidable') ?></th>
-            <th class="manage-column"><?php _e('ShortCodes', 'formidable') ?></th>
+            <th class="manage-column"><?php _e('Shortcodes', 'formidable') ?></th>
         <?php } ?>
     </tr>
     </tfoot>

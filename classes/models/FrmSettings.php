@@ -24,6 +24,7 @@ class FrmSettings{
     var $success_msg;
     var $failed_msg;
     var $blank_msg;
+    var $unique_msg;
     var $invalid_msg;
     var $submit_value;
     var $login_msg;
@@ -45,32 +46,33 @@ class FrmSettings{
     function FrmSettings(){
         $this->set_default_options();
     }
+    
+    function default_options(){
+        return array(
+            'menu'      => 'Formidable',
+            'mu_menu'   => 0,
+            'preview_page_id' => 0,
+            'lock_keys' => false,
+            'track'     => false,
+            'use_html'  => true,
+            'jquery_css' => false,
+            'accordion_js' => false,
+            
+            'success_msg' => __('Your responses were successfully submitted. Thank you!', 'formidable'),
+            'blank_msg' => __('This field cannot be blank.', 'formidable'),
+            'unique_msg' => __('This value must be unique.', 'formidable'),
+            'invalid_msg' => __('There was a problem with your submission. Errors are marked below.', 'formidable'),
+            'failed_msg' => __('We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable'),
+            'submit_value' => __('Submit', 'formidable'),
+            'login_msg' => __('You do not have permission to view this form.', 'formidable'),
+            'admin_permission' => __('You do not have permission to do that', 'formidable'),
+            
+            'email_to' => '[admin_email]',
+        );
+    }
 
-    function set_default_options(){
-        if(!isset($this->menu))
-            $this->menu = 'Formidable';
-        
-        if(!isset($this->mu_menu))
-            $this->mu_menu = 0;
-        
-        if(IS_WPMU and is_admin()){
-            $mu_menu = get_site_option('frm_admin_menu_name');
-            if($mu_menu and !empty($mu_menu)){
-                $this->menu = $mu_menu;
-                $this->mu_menu = 1;
-            }
-        }
-          
-        if(!isset($this->preview_page_id))
-          $this->preview_page_id = 0;
-          
+    function set_default_options(){          
         $this->preview_page_id_str = 'frm-preview-page-id';
-        
-        if(!isset($this->lock_keys))
-            $this->lock_keys = false;
-        
-        if(!isset($this->track))
-            $this->track = false;
           
         if(!isset($this->pubkey)){
             if(IS_WPMU)
@@ -92,10 +94,6 @@ class FrmSettings{
          
         if(!isset($this->re_msg) or empty($this->re_msg))
             $this->re_msg = __('The reCAPTCHA was not entered correctly', 'formidable');
-
-        
-        if(!isset($this->use_html))
-            $this->use_html = true;
             
         if(!isset($this->load_style)){
             if(!isset($this->custom_style))
@@ -105,35 +103,23 @@ class FrmSettings{
                 
             $this->load_style = ($this->custom_stylesheet) ? 'none' : 'all';
         }
-            
-        if(!isset($this->jquery_css))
-            $this->jquery_css = false;
-        if(!isset($this->accordion_js))
-            $this->accordion_js = false;
-            
-        if(!isset($this->success_msg))
-            $this->success_msg = __('Your responses were successfully submitted. Thank you!', 'formidable');
         
-        if(!isset($this->blank_msg))
-            $this->blank_msg = __('This field cannot be blank.', 'formidable');
+        $settings = $this->default_options();
         
-        if(!isset($this->invalid_msg))
-            $this->invalid_msg = __('There was a problem with your submission. Errors are marked below.', 'formidable');
+        foreach($settings as $setting => $default){
+            if(!isset($this->{$setting}))
+                $this->{$setting} = $default;
+            unset($setting);
+            unset($default);
+        }
         
-        if(!isset($this->failed_msg))
-            $this->failed_msg = __('We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable');
-        
-        if(!isset($this->submit_value))
-            $this->submit_value = __('Submit', 'formidable');
-        
-        if(!isset($this->login_msg))    
-            $this->login_msg = __('You do not have permission to view this form.', 'formidable');
-        
-        if(!isset($this->admin_permission))
-            $this->admin_permission = __("You do not have permission to do that", 'formidable');
-        
-        if(!isset($this->email_to))
-            $this->email_to = '[admin_email]';
+        if(IS_WPMU and is_admin()){
+            $mu_menu = get_site_option('frm_admin_menu_name');
+            if($mu_menu and !empty($mu_menu)){
+                $this->menu = $mu_menu;
+                $this->mu_menu = 1;
+            }
+        }
         
         $frm_roles = FrmAppHelper::frm_capabilities();
         foreach($frm_roles as $frm_role => $frm_role_description){
@@ -157,35 +143,34 @@ class FrmSettings{
 
     function update($params){
         global $wp_roles;
-        $this->menu = $params['frm_menu'];
+        
         $this->mu_menu = isset($params['frm_mu_menu']) ? $params['frm_mu_menu'] : 0;
         if($this->mu_menu)
             update_site_option('frm_admin_menu_name', $this->menu);
         else if(FrmAppHelper::is_super_admin())
             update_site_option('frm_admin_menu_name', false);
         
-        $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
-        $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
-        $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
-        
         $this->pubkey = trim($params['frm_pubkey']);
         $this->privkey = $params['frm_privkey'];
         $this->re_theme = $params['frm_re_theme'];
         $this->re_lang = $params['frm_re_lang'];
         
+        $settings = $this->default_options();
+        
+        foreach($settings as $setting => $default){
+            if(isset($params['frm_'. $setting]))
+                $this->{$setting} = $params['frm_'. $setting];
+        }
+        
+        $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
+        $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
+        $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
+        
         $this->use_html = isset($params['frm_use_html']) ? $params['frm_use_html'] : 0;
-        $this->load_style = $params['frm_load_style'];
         //$this->custom_style = isset($params['frm_custom_style']) ? $params['frm_custom_style'] : 0;
         //$this->custom_stylesheet = isset($params['frm_custom_stylesheet']) ? $params['frm_custom_stylesheet'] : 0;
         $this->jquery_css = isset($params['frm_jquery_css']) ? $params['frm_jquery_css'] : 0;
         $this->accordion_js = isset($params['frm_accordion_js']) ? $params['frm_accordion_js'] : 0;
-        
-        $this->success_msg = $params['frm_success_msg'];
-        $this->blank_msg = $params['frm_blank_msg'];
-        $this->invalid_msg = $params['frm_invalid_msg'];
-        $this->failed_msg = $params['frm_failed_msg'];
-        $this->submit_value = $params['frm_submit_value'];
-        $this->login_msg = $params['frm_login_msg'];
         
         //update roles
         $frm_roles = FrmAppHelper::frm_capabilities();

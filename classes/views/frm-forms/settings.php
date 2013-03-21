@@ -34,8 +34,8 @@
     
     <div class="clear"></div> 
 
-        <input type="hidden" name="id" value="<?php echo $id; ?>" />
-        <input type="hidden" name="frm_action" value="update_settings" />
+    <input type="hidden" name="id" value="<?php echo $id; ?>" />
+    <input type="hidden" name="frm_action" value="update_settings" />
     <div id="poststuff" class="metabox-holder">
     <div id="post-body">
         <div class="meta-box-sortables">
@@ -56,24 +56,16 @@
         <div style="display:block;" class="advanced_settings tabs-panel">
         	<table class="form-table">
                 <tr>
-                    <td width="200px"><label><?php _e('Form ShortCodes', 'formidable') ?></label> <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a></td>
-                    <td><input type="text" style="width:255px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?> title=true description=true]" /> <?php _e('or', 'formidable') ?>
-                        <input type="text" style="width:200px; border:none; background:transparent;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable key=<?php echo $values['form_key']; ?>]" />
-                    </td>
-                </tr>
-
-                <tr>
                     <td><label><?php _e('Form Key', 'formidable') ?></label></td>
                     <td><input type="text" name="form_key" value="<?php echo esc_attr($values['form_key']); ?>" /></td>
                 </tr>
 
-                <tr><td><label><?php _e('Styling', 'formidable') ?></label></td>
-                    <td><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
-                    <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
-                </tr> 
-
                 <tr><td><label><?php _e('Submit Button Text', 'formidable') ?></label></td>
                     <td><input type="text" name="options[submit_value]" value="<?php echo esc_attr($values['submit_value']); ?>" /></td>
+                </tr>
+                
+                <tr><td colspan="2"><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
+                    <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                 </tr>
                 
                 <tr><td valign="top" colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
@@ -92,12 +84,13 @@
                 </tr>
                 
                 <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2"><label><?php _e('Confirmation Message', 'formidable') ?></label>
-                    <textarea id="success_msg" name="options[success_msg]" cols="50" rows="4" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
+                    <textarea id="success_msg" name="options[success_msg]" cols="50" rows="3" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
                     <div class="frm_show_form_opt">
                     <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
                     </div>
                     <td>
                 </tr>
+
 
                 <?php do_action('frm_additional_form_options', $values); ?> 
                 

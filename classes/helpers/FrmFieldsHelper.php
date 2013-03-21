@@ -135,13 +135,13 @@ class FrmFieldsHelper{
             'name' => __('Untitled', 'formidable'), 'description' => '', 
             'field_key' => $key, 'type' => $type, 'options'=>'', 'default_value'=>'', 
             'field_order' => $field_count+1, 'required' => false, 
-            'blank' => $frm_settings->blank_msg, 
+            'blank' => $frm_settings->blank_msg, 'unique_msg' => $frm_settings->unique_msg,
             'invalid' => __('This field is invalid', 'formidable'), 'form_id' => $form_id,
             'field_options' => $field_options
         );
     }
     
-    function get_form_fields($form_id, $error=false){ 
+    function get_form_fields($form_id, $error=false){
         global $frm_field;
         $fields = apply_filters('frm_get_paged_fields', false, $form_id, $error);
         if (!$fields)
@@ -285,7 +285,7 @@ DEFAULT_HTML;
                 $frm_recaptcha_loaded = '';
             
             $frm_recaptcha_loaded .= "Recaptcha.create('". $frm_settings->pubkey ."','field_". $field['field_key'] ."',{theme:'". $frm_settings->re_theme ."',lang:'". $lang ."'". apply_filters('frm_recaptcha_custom', '', $field) ."});";
-            wp_enqueue_script('recaptcha-ajax'); ?>
+?>
 <div id="field_<?php echo $field['field_key'] ?>"></div>
 <?php   }else{ ?>
 <script type="text/javascript">var RecaptchaOptions={theme:'<?php echo $frm_settings->re_theme ?>',lang:'<?php echo $lang ?>'<?php echo apply_filters('frm_recaptcha_custom', '', $field) ?>};</script>

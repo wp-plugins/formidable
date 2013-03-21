@@ -219,6 +219,7 @@ function frmToggleLogic(id){
 $ele = jQuery('#'+id);
 $ele.fadeOut('slow'); $ele.next('.frm_logic_rows').fadeIn('slow');
 }
+function frmToggleDiv(div){jQuery(div).fadeToggle('fast');}
 function frm_show_div(div,value,show_if,class_id){
 if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div).fadeOut('slow');
 }
@@ -258,12 +259,12 @@ jQuery.ajax({
 });
 }
 
-function frmGetFieldValues(field_id,current_field_id,row,name){
-if(field_id){
+function frmGetFieldValues(f,cur,r,t,n){
+if(f){
     jQuery.ajax({
         type:"POST",url:ajaxurl,
-        data:"action=frm_get_field_values&current_field="+current_field_id+"&field_id="+field_id+'&name='+name,
-        success:function(msg){jQuery("#frm_show_selected_values_"+current_field_id+'_'+row).html(msg);} 
+        data:"action=frm_get_field_values&current_field="+cur+"&field_id="+f+'&name='+n+'&t='+t,
+        success:function(msg){jQuery("#frm_show_selected_values_"+cur+'_'+r).html(msg);} 
     });
 }
 }
@@ -283,12 +284,18 @@ success:function(msg){jQuery('#new_fields').append(msg);}
 function frm_mark_required(field_id,required){
     var thisid='req_field_'+field_id;
     if(required=='0'){var switch_to='1';var atitle='Click to Mark as Not Required';var checked='checked="checked"';
-	jQuery('.frm_required_details'+field_id).fadeIn('slow');}
+	jQuery('.frm_required_details'+field_id).fadeIn('fast');}
 	else{var switch_to='0';var atitle='Click to Mark as Required';var checked='';
-	jQuery('.frm_required_details'+field_id).fadeOut('slow');}
+	jQuery('.frm_required_details'+field_id).fadeOut('fast');}
     jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+')" class="frm_action_icon frm_required_icon alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"></a>');
 	jQuery('#frm_'+thisid).replaceWith('<input type="checkbox" id="frm_'+thisid+'" name="field_options[required_'+field_id+']" value="1" '+checked+' onclick="frm_mark_required('+field_id+','+switch_to+')" />');
     jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
+};
+
+function frmMarkUnique(field_id){
+    var thisid='uniq_field_'+field_id;
+    if(jQuery('#frm_'+thisid).is(':checked')){jQuery('.frm_unique_details'+field_id).fadeIn('fast');}
+	else{jQuery('.frm_unique_details'+field_id).fadeOut('fast');}
 };
 
 function frmSeparateValue(field_id){

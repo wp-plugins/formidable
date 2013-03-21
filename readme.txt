@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added AJAX form submit
 * PRO: Dropped Open Flash Chart support due to security vulnerabilities
 * PRO: Added multiple option to dropdown fields
+* PRO: Added unique error message into global and field settings
 * PRO: Added option to limit by ranges in the frm-stats shortcode. Ex: [frm-stats id=50 '-1 month'<45<'-3 days']
 * PRO: Automatically strip javascript before displaying entries through a custom display
 * PRO: Added striphtml=1 and keepjs=1 options for use in custom displays
@@ -80,6 +81,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added box for custom css in the styling settings
 * PRO: Added buttons to insert default HTML or plain text for those who wish to modify the default message without starting from scratch
 * PRO: Added link to uploaded files in the entry edit form
+* PRO: Added "like" and "not like" options to the conditional logic for hiding and showing fields
 * PRO: Switched section headings to use h3 tags by default instead of h2
 * PRO: Migrated "Allow Only One Entry for Each" fields to the unique checkbox on each field
 * PRO: Allow for multiple uses of frm-entry-update-field for the same field and entry

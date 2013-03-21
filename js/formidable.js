@@ -180,7 +180,9 @@ function frmOperators(op,a,b){
 	    '==': function(c,d){ return c == d },
 		'!=': function(c,d){ return c != d },
 	    '<': function(c,d){ return c > d },
-		'>': function(c,d){ return c < d }
+		'>': function(c,d){ return c < d },
+		'LIKE': function(c,d){return d.indexOf(c) != -1},
+		'not LIKE': function(c,d){return d.indexOf(c) == -1}
 	};
 	return operators[op](a,b);
 }

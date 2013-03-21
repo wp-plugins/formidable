@@ -152,6 +152,18 @@
                 <td>        
                     <?php _e('Incorrect Field', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a field response is either incorrect or missing.', 'formidable') ?>" /><br/>
                     <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->invalid_msg) ?>" />
+        
+        <?php if($frmpro_is_installed){ ?>
+                </td>
+            </tr>
+            <tr class="form-field">
+                <td></td>
+                <td>        
+                    <?php _e('Unique Value', 'formidable'); ?> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user selects a value in a unique field that has already been used.', 'formidable') ?>" /><br/>
+                    <input type="text" id="frm_unique_msg" name="frm_unique_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" />
+        <?php }else{ ?>
+            <input type="hidden" id="frm_unique_msg" name="frm_unique_msg" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" />    
+        <?php } ?>    
                 </td>
             </tr>
             
@@ -162,7 +174,6 @@
                     <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->success_msg) ?>" />
                 </td>
             </tr>
-            
             <tr class="form-field">
                 <td></td>
                 <td>        
