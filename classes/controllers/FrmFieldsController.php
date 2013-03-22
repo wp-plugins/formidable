@@ -138,8 +138,15 @@ class FrmFieldsController{
             $last = max(array_keys($options));
         else
             $last = 0;
+        
         $opt_key = $last + 1;
-        $opt = 'Option '.(count($options)+1);
+        $first_opt = reset($options);
+        $next_opt = count($options);
+        if($first_opt != '')
+            $next_opt++;
+        $opt = __('Option', 'formidable') .' '. $next_opt;
+        unset($next_opt);
+        
         $field_val = $opt;
         $options[$opt_key] = $opt;
         $frm_field->update($id, array('options' => maybe_serialize($options)));

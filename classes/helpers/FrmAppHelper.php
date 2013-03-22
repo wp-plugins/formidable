@@ -298,7 +298,7 @@ class FrmAppHelper{
                 $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field, true);
                 
                 foreach ($opt_defaults as $opt => $default_opt){
-                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? $_POST['field_options'][$opt.'_'.$field->id] : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
+                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? stripslashes_deep(maybe_unserialize($_POST['field_options'][$opt.'_'.$field->id])) : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == ''){
                         $field_array[$opt] = $frm_settings->blank_msg;
                     }else if($opt == 'invalid' and $field_array[$opt] == ''){
