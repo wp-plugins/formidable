@@ -2788,7 +2788,7 @@ msgstr ""
 
 #: pro/classes/controllers/FrmProDisplaysController.php:333
 #@ formidable
-msgid "Form and Display Type"
+msgid "Format"
 msgstr ""
 
 #: pro/classes/views/displays/mb_form_disp_type.php:13
@@ -5878,7 +5878,7 @@ msgstr ""
 #: classes/views/frm-forms/mb_insert_fields.php:2
 #: pro/classes/controllers/FrmProDisplaysController.php:339
 #@ formidable
-msgid "Content Customization"
+msgid "Customization"
 msgstr ""
 
 #: classes/views/frm-forms/mb_insert_fields.php:6
