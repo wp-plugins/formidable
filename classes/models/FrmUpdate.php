@@ -293,6 +293,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
                 if( !$this->pro_is_installed() ) 
                     $force = true;
                 
+                $update = false;
                 $expired = true;
                 if(!$force){
                     $update = get_transient('frm_autoupdate');

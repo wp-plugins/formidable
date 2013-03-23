@@ -160,8 +160,12 @@ class FrmSettings{
         foreach($settings as $setting => $default){
             if(isset($params['frm_'. $setting]))
                 $this->{$setting} = $params['frm_'. $setting];
+            
+            unset($setting);
+            unset($default);
         }
         
+        $this->load_style = $params['frm_load_style'];
         $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
         $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
         $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
