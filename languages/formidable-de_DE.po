@@ -4681,7 +4681,7 @@ msgstr "Wenn ihr Radio, Checkbox, Dropdown oder User ID Feld einen dynamischen W
 
 #: pro/classes/views/frmpro-fields/options-form.php:33
 #@ formidable
-msgid "Make this section collapsable"
+msgid "Make this section collapsible"
 msgstr "Machen Sie diesen Bereich ausklappbar"
 
 #: pro/classes/views/frmpro-fields/options-form.php:49

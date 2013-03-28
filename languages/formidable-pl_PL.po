@@ -1893,7 +1893,7 @@ msgstr "Ogranicz możliwości wyboru do tych stworzonych przez użytkownika w tr
 
 #: pro/classes/views/frmpro-fields/options-form.php:33
 #@ formidable
-msgid "Make this section collapsable"
+msgid "Make this section collapsible"
 msgstr "Zwiń to co zaznaczyłeś"
 
 #: pro/classes/views/frmpro-fields/options-form.php:49

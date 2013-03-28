@@ -1881,7 +1881,7 @@ msgstr "Limitar opções de seleção  aos criados pelo usuário que está preen
 
 #: pro/classes/views/frmpro-fields/options-form.php:33
 #@ formidable
-msgid "Make this section collapsable"
+msgid "Make this section collapsible"
 msgstr "Faça esta seção dobrável"
 
 #: pro/classes/views/frmpro-fields/options-form.php:49
