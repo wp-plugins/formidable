@@ -408,7 +408,7 @@ class FrmFieldsController{
                 $add_html .= ' onfocus="frmClearDefault('."'". $val ."'". ',this)" onblur="frmReplaceDefault('."'". $val ."'". ',this)"';
                 
                 if($field['value'] == $field['default_value'])
-                    $add_html .= ' style="font-style:italic;"';
+                    $class .= ' frm_default';
             }
         }
         

@@ -149,7 +149,7 @@ if ($display['options']){ ?>
                         </span>
                         </td>
                     </tr>
-                    <tr class="frm_required_details<?php echo $field['id'] ?>"<?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?></label></td>  
+                    <tr class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>><td><label><?php _e('Error message for blank required field', 'formidable') ?></label></td>  
                         <td><input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['blank']); ?>" class="frm_long_input" /></td>
                     </tr>
                 <?php } ?>
@@ -161,7 +161,7 @@ if ($display['options']){ ?>
                 <?php if ($display['size']){ ?>
                     <tr><td width="150px"><label><?php _e('Field Size', 'formidable') ?></label></td>
                         <td>
-                        <?php if($field['type'] == 'select' or $field['type'] == 'time'){ ?>
+                        <?php if(in_array($field['type'], array('select', 'time', 'data'))){ ?>
                             <?php if(!isset($values['custom_style']) or $values['custom_style']){ ?>
                                 <input type="checkbox" name="field_options[size_<?php echo $field['id'] ?>]" value="1" <?php echo (isset($field['size']) and $field['size'])? 'checked="checked"':''; ?> /> <span class="howto"><?php _e('automatic width', 'formidable') ?></span>
                             <?php }

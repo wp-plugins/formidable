@@ -26,11 +26,11 @@ function frmFindParentObj($obj){return $obj.parent().parent().parent().prev().ch
 
 function frmClearDefault(default_value,thefield){
 var default_value=default_value.replace(/(\n|\r\n)/g, '\r');var this_val=thefield.value.replace(/(\n|\r\n)/g, '\r');
-if(this_val==default_value){thefield.value='';thefield.style.fontStyle='inherit';}
+if(this_val==default_value){thefield.value='';jQuery(thefield).removeClass('frm_default');}
 }
 function frmReplaceDefault(default_value,thefield){
 var default_value=default_value.replace(/(\n|\r\n)/g, '\r');
-if(thefield.value==''){thefield.value=default_value;thefield.style.fontStyle='italic';}
+if(thefield.value==''){thefield.value=default_value;jQuery(thefield).addClass('frm_default');}
 }
 
 function frmCheckDependent(selected,field_id){
@@ -122,7 +122,7 @@ for(i=0; i<len; i++){
     }else if(f.Type=='data-select' && typeof(f.LinkedField)!='undefined'){
 		if(f.DataType=='' || f.DataType=='data'){
             if(selected==''){show_fields[f.HideField][i]=false; jQuery('#frm_data_field_'+f.HideField+'_container').html('');}
-			else if(selected && selected.length>1){
+			else if(selected && jQuery.isArray(selected)){
 				show_fields[f.HideField][i]=true;
 				jQuery('#frm_data_field_'+f.HideField+'_container').html('');
 				jQuery.each(selected, function(ckey,cval){frmGetData(f,cval,ajax_url,1); });}
@@ -260,7 +260,7 @@ function frmGetFormErrors(object,ajax_url){
 			if(errObj.indexOf('{') === 0)
 				var errObj=jQuery.parseJSON(errObj);
 			jQuery(object).find('input[type="submit"]').removeAttr('disabled');
-	    	if(errObj=='' || !errObj || errObj=='0'){
+	    	if(errObj=='' || !errObj || errObj=='0' || (typeof(errObj) != 'object' && errObj.indexOf('<!DOCTYPE') === 0)){
 	            if(jQuery("#frm_loading").length){
 					var file_val=jQuery(object).find('input[type=file]').val();
 					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}

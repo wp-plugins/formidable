@@ -64,6 +64,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.06.10 =
 * Allow the usage of any html attributes inside the [input] tag in the customizable HTML
 * PRO: Added "Chosen" autocomplete to dropdown fields
+* PRO: Added automatic width option to data from entries fields
 * PRO: Extended the "admin only" field option to all user roles, or only logged-in or logged-out users
 * PRO: Added multiple-select to data from entries dropdowns
 * PRO: Added more info to the form settings sidebar
