@@ -43,15 +43,6 @@ class FrmEntriesHelper{
                     'field_order' => $field->field_order,
                     'form_id' => $field->form_id
                 );
-                
-                /*if(in_array($field_array['type'], array('checkbox', 'radio', 'select')) and !empty($field_array['options'])){
-                    foreach((array)$field_array['options'] as $opt_key => $opt){
-                        if(!is_array($opt))
-                            $field_array['options'][$opt_key] = array('label' => $opt);
-                        unset($opt);
-                        unset($opt_key);
-                    }
-                } */
 
                 $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field, true);
                 $opt_defaults['required_indicator'] = '';
@@ -80,7 +71,7 @@ class FrmEntriesHelper{
                     unset($v);
                 }
                 
-                $values['fields'][] = $field_array; //stripslashes_deep($field_array)
+                $values['fields'][] = $field_array;
              
                 if (!$form or !isset($form->id))
                     $form = $frm_form->getOne($field->form_id);
@@ -146,5 +137,3 @@ class FrmEntriesHelper{
         do_action('frm_enqueue_form_scripts', $params);
     }
 }
-
-?>

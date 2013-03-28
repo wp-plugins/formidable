@@ -58,6 +58,7 @@ class FrmUpdate{
         $this->timeout = 10;
         
         add_filter('pre_set_site_transient_update_plugins', array( &$this, 'queue_update' ) );
+        add_filter('site_transient_update_plugins', array( &$this, 'unqueue_update' ) );
         
         // Retrieve Pro Credentials
         $this->pro_wpmu = false;
@@ -309,11 +310,21 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
                     
                     //only check every 12 hours
                     if(!$expired)
-                        set_transient( 'frm_autoupdate', $update, 60 * 60 * 12 );
+                        set_transient( 'frm_autoupdate', $update, $this->pro_check_interval );
                 }
             }
         }
         
+        return $transient;
+    }
+    
+    function unqueue_update($transient){
+        if(!empty( $transient->checked ) and isset($transient->response) and isset($transient->response[$this->plugin_name]) and $this->pro_is_installed()){
+            //make sure it doesn't show there is an update if plugin is up-to-date
+            if(isset($transient->checked[ $this->plugin_name ]) and 
+                $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version)
+                unset($transient->response[$this->plugin_name]);
+        }
         return $transient;
     }
     
@@ -350,4 +361,3 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         return $transient;
     }
 }
-?>

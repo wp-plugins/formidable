@@ -122,6 +122,10 @@ for(i=0; i<len; i++){
     }else if(f.Type=='data-select' && typeof(f.LinkedField)!='undefined'){
 		if(f.DataType=='' || f.DataType=='data'){
             if(selected==''){show_fields[f.HideField][i]=false; jQuery('#frm_data_field_'+f.HideField+'_container').html('');}
+			else if(selected && selected.length>1){
+				show_fields[f.HideField][i]=true;
+				jQuery('#frm_data_field_'+f.HideField+'_container').html('');
+				jQuery.each(selected, function(ckey,cval){frmGetData(f,cval,ajax_url,1); });}
             else{show_fields[f.HideField][i]={'funcName':'frmGetData','f':f,'sel':selected};}
         }else{
             if(selected==''){show_fields[f.HideField][i]=false;}
@@ -252,10 +256,11 @@ function frmGetFormErrors(object,ajax_url){
 		type:"POST",url:ajax_url,
 	    data:jQuery(object).serialize()+"&controller=entries&_ajax_nonce=1",
 	    success:function(errObj){
+			errObj=errObj.replace(/^\s+|\s+$/g,'');
 			if(errObj.indexOf('{') === 0)
 				var errObj=jQuery.parseJSON(errObj);
 			jQuery(object).find('input[type="submit"]').removeAttr('disabled');
-	    	if(errObj=='' || !errObj){
+	    	if(errObj=='' || !errObj || errObj=='0'){
 	            if(jQuery("#frm_loading").length){
 					var file_val=jQuery(object).find('input[type=file]').val();
 					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}

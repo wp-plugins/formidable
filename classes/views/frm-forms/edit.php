@@ -23,7 +23,7 @@
     <div id="post-body" class="metabox-holder columns-2">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
-    <form method="post" >
+    <form method="post">
         <p style="margin-top:0;">
             <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
             <?php _e('or', 'formidable') ?>

@@ -285,4 +285,3 @@ DEFAULT_HTML;
         do_action('frm_after_uninstall');
     }
 }
-?>

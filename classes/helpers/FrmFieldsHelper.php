@@ -34,11 +34,10 @@ class FrmFieldsHelper{
             'data' => __('Data from Entries', 'formidable'),
             //'form' => __('SubForm', 'formidable'),
             'hidden' => __('Hidden Field', 'formidable'), 
-            'user_id' => __('Hidden User ID', 'formidable'),
+            'user_id' => __('User ID (hidden)', 'formidable'),
             'password'  => __('Password', 'formidable'),
             'html' => __('HTML', 'formidable'),
             'tag' => __('Tags', 'formidable')
-            //'multiple' => 'Multiple Select Box', //http://code.google.com/p/jquery-asmselect/
             //'address' => 'Address' //Address line 1, Address line 2, City, State/Providence, Postal Code, Select Country 
             //'city_selector' => 'US State/County/City selector', 
             //'full_name' => 'First and Last Name', 
@@ -175,7 +174,7 @@ DEFAULT_HTML;
         $html = apply_filters('frm_before_replace_shortcodes', $html, $field, $errors, $form);
         
         $field_name = 'item_meta['. $field['id'] .']';
-        if($field['type'] == 'select' and isset($field['multiple']) and $field['multiple'])
+        if(isset($field['multiple']) and $field['multiple'] and ($field['type'] == 'select' or ($field['type'] == 'data' and isset($field['data_type']) and $field['data_type'] == 'select')))
             $field_name .= '[]';
         
         //replace [id]
@@ -247,6 +246,9 @@ DEFAULT_HTML;
             if($tag == 'input'){
                 if(isset($atts['opt'])) $atts['opt']--;
                 $field['input_class'] = isset($atts['class']) ? $atts['class'] : '';
+                if(isset($atts['class']))
+                    unset($atts['class']);
+                $field['shortcodes'] = $atts;
                 ob_start();
                 include(FRM_VIEWS_PATH.'/frm-fields/input.php');
                 $replace_with = ob_get_contents();
@@ -354,5 +356,3 @@ DEFAULT_HTML;
     }
     
 }
-
-?>

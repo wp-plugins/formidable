@@ -49,4 +49,3 @@ class FrmSettingsController{
             return $this->display_form();
     }
 }
-?>

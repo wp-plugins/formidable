@@ -3,7 +3,7 @@ Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
 Requires at least: 3.0
-Tested up to: 3.5
+Tested up to: 3.5.1
 Stable tag: 1.06.09
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
@@ -61,6 +61,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.10 =
+* Allow the usage of any html attributes inside the [input] tag in the customizable HTML
+* PRO: Added "Chosen" autocomplete to dropdown fields
+* PRO: Extended the "admin only" field option to all user roles, or only logged-in or logged-out users
+* PRO: Added multiple-select to data from entries dropdowns
+* PRO: Added more info to the form settings sidebar
+* PRO: Resolved conflict between ajax submit and plugins/themes with whitespace in php files
+* PRO: Fixed template export to properly serialize and escape for multiple choice fields
+
 = 1.06.09 =
 * DROPPED PHP4 SUPPORT. Do not update if you run PHP4.
 * Added the "create template" link into the free version
@@ -104,7 +113,6 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed repeated, inline conditional logic in custom displays
 * PRO: Fixed option to copy forms to other sites in multi-site installs, so they will no longer be copied when the box is unchecked 
 * PRO: Fixed admin-only fields to not validate for users who can't see the field
-
 
 = 1.06.08 =
 * Changed class names on action links on the form listing table to prevent conflicts with themes and other plugins
@@ -168,7 +176,6 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Removed separate values checkbox for post status and taxonomy fields
 * PRO: Fixed double filtering forms if inserted in the dynamic box of a custom display used for posts
 * PRO: Fixed page size and limit overriding single entry displays
-
 
 = 1.06.05 =
 * Fixed WP 3.4 layout issues with missing sidebars
@@ -657,7 +664,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 = 1.02.01 =
 * Emailer now works for everyone! (hopefully)
 * Optionally Reset HTML. Just clear out the box for the HTML for that field and hit update.
-* PRO: Fixed collapsable section to use correct default HTML. 
+* PRO: Fixed collapsible section to use correct default HTML. 
 * PRO: Only call rich text javascript on entries pages
 * PRO: A few small reports modifications. Report for the User ID field will show the percentage of your users who have submitted the form if you are allowing edits with only one submission per user.
 

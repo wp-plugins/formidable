@@ -418,6 +418,14 @@ class FrmFieldsController{
         $class = apply_filters('frm_field_classes', $class, $field);
         if(!empty($class))
             $add_html .= ' class="'. $class .'"';
+            
+        if(isset($field['shortcodes']) and !empty($field['shortcodes'])){
+            foreach($field['shortcodes'] as $k => $v){
+                $add_html .= ' '. $k .'="'. $v .'"';
+                unset($k);
+                unset($v);
+            }
+        }
         
         if($echo)
             echo $add_html;
@@ -443,4 +451,3 @@ class FrmFieldsController{
         return $opt;
     }
 }
-?>

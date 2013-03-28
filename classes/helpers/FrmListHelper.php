@@ -247,7 +247,4 @@ class FrmListHelper extends WP_List_Table {
 		return $r;
 	}
 	
-
 }
-
-?>

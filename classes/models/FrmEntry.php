@@ -338,10 +338,10 @@ class FrmEntry{
                 $value = $values['item_meta'][$posted_field->id];
                 
             if (isset($posted_field->field_options['default_blank']) and $posted_field->field_options['default_blank'] and $value == $posted_field->default_value)
-                $_POST['item_meta'][$posted_field->id] = $value = '';
+                $value = '';
             
             if(is_array($value) and count($value) === 1)
-                $_POST['item_meta'][$posted_field->id] = $value = reset($value); 
+                $value = reset($value); 
                   
             if($posted_field->type == 'rte' and !is_array($value) and (trim($value) == '<br>'))
                 $value = '';
@@ -351,7 +351,9 @@ class FrmEntry{
             }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;
             }
-                
+            
+            $_POST['item_meta'][$posted_field->id] = $value;
+             
             if ($posted_field->type == 'captcha' and isset($_POST['recaptcha_challenge_field'])){
                 global $frm_settings;
 
@@ -427,4 +429,3 @@ class FrmEntry{
     }
     
 }
-?>
