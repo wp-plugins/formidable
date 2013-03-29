@@ -126,8 +126,8 @@ if($('#bulkaction').val()=='delete'){return confirm('Are you sure you want to de
 
 if($('#frm_tooltip').length==0){$('#wpfooter,#footer').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
 $("img.frm_help[title], a.frm_help[title]").hover(
-	function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn();},
-	function(){$('#frm_tooltip').fadeOut();$(this).attr('title',frm_title);}
+	function(){frm_title=$(this).attr('title');$(this).removeAttr('title');$('#frm_tooltip').html(frm_title).fadeIn('fast');},
+	function(){$('#frm_tooltip').fadeOut('fast');$(this).attr('title',frm_title);}
 );
 
 $("select[name='frm_theme_selector'] option").each(function(){
