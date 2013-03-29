@@ -215,7 +215,7 @@ function frmGetData(f,selected,ajax_url,append){
 				jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
 				var val=jQuery('#frm_data_field_'+f.HideField+'_container').children('input').val();
 				if(html=='' || val=='') jQuery('#frm_field_'+f.HideField+'_container').hide();
-				frmCheckDependent('',f.HideField);
+				frmCheckDependent(selected,f.HideField);
 			}
 			return true;
 		}
