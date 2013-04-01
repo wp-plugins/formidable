@@ -57,8 +57,7 @@ class FrmUpdate{
         $this->pro_mothership_xmlrpc_url = $this->pro_mothership . '/xmlrpc.php';
         $this->timeout = 10;
         
-        add_filter('pre_set_site_transient_update_plugins', array( &$this, 'queue_update' ) );
-        add_filter('site_transient_update_plugins', array( &$this, 'unqueue_update' ) );
+        add_filter('site_transient_update_plugins', array( &$this, 'queue_update' ) );
         
         // Retrieve Pro Credentials
         $this->pro_wpmu = false;
@@ -280,51 +279,46 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
   
     //Check if free version will be downloaded. If so, switch it to the Pro version
     function queue_update($transient, $force=false){
-        
         if(!is_object($transient))
             return $transient;
             
-        //if not already checked or URL set to free version or Plugin marked at latest
-        if(!empty( $transient->checked ) or
-          (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
-          (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed())
-          or $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
+        if(!empty( $transient->checked ) and isset($transient->response) and isset($transient->response[$this->plugin_name])){
+            //make sure it doesn't show there is an update if plugin is up-to-date
+            if($this->pro_is_installed() and isset($transient->checked[ $this->plugin_name ]) and 
+                $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version){
+                unset($transient->response[$this->plugin_name]);
+            }else if(!empty( $transient->checked ) or
+                (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+                (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
+                $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
         
-            if( $this->pro_is_authorized() ) {
-                if( !$this->pro_is_installed() ) 
-                    $force = true;
-                
-                $update = false;
-                $expired = true;
-                if(!$force){
-                    $update = get_transient('frm_autoupdate');
-                    $expired = false;
-                }
-            
-                if(!$update)
-                    $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
+                if( $this->pro_is_authorized() ) {
+                    if( !$this->pro_is_installed() )
+                        $force = true;
 
-                if( $update and !empty( $update ) ){
-                    $update = (object) $update;
-                    $transient->response[ $this->plugin_name ] = $update;
-                    
-                    //only check every 12 hours
-                    if(!$expired)
-                        set_transient( 'frm_autoupdate', $update, $this->pro_check_interval );
+                    $update = false;
+                    $expired = true;
+                    if(!$force){
+                        $update = get_transient('frm_autoupdate');
+                        if($update)
+                            $expired = false;
+                    }
+
+                    if(!$update)
+                        $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
+
+                    if( $update and !empty( $update ) ){
+                        $update = (object) $update;
+                        $transient->response[ $this->plugin_name ] = $update;
+
+                        //only check every 12 hours
+                        if($expired)
+                            set_transient( 'frm_autoupdate', $update, $this->pro_check_interval );
+                    }
                 }
             }
         }
         
-        return $transient;
-    }
-    
-    function unqueue_update($transient){
-        if(!empty( $transient->checked ) and isset($transient->response) and isset($transient->response[$this->plugin_name]) and $this->pro_is_installed()){
-            //make sure it doesn't show there is an update if plugin is up-to-date
-            if(isset($transient->checked[ $this->plugin_name ]) and 
-                $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version)
-                unset($transient->response[$this->plugin_name]);
-        }
         return $transient;
     }
     
