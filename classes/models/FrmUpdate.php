@@ -281,40 +281,42 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     function queue_update($transient, $force=false){
         if(!is_object($transient))
             return $transient;
-            
-        if(!empty( $transient->checked ) and isset($transient->response) and isset($transient->response[$this->plugin_name])){
-            //make sure it doesn't show there is an update if plugin is up-to-date
-            if($this->pro_is_installed() and isset($transient->checked[ $this->plugin_name ]) and 
-                $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version){
-                unset($transient->response[$this->plugin_name]);
-            }else if(!empty( $transient->checked ) or
-                (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
-                (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
-                $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
+
+        //make sure it doesn't show there is an update if plugin is up-to-date
+        if($this->pro_is_installed() and !empty( $transient->checked ) and 
+            isset($transient->response[$this->plugin_name]) and
+            isset($transient->response) and isset($transient->checked[ $this->plugin_name ]) and 
+            $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version){
+                    
+            unset($transient->response[$this->plugin_name]);
+                
+        }else if(!empty( $transient->checked ) or
+            (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+            (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
+            $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
         
-                if( $this->pro_is_authorized() ) {
-                    if( !$this->pro_is_installed() )
-                        $force = true;
+            if( $this->pro_is_authorized() ) {
+                if( !$this->pro_is_installed() )
+                    $force = true;
 
-                    $update = false;
-                    $expired = true;
-                    if(!$force){
-                        $update = get_transient('frm_autoupdate');
-                        if($update)
-                            $expired = false;
-                    }
+                $update = false;
+                $expired = true;
+                if(!$force){
+                    $update = get_transient('frm_autoupdate');
+                    if($update)
+                        $expired = false;
+                }
 
-                    if(!$update)
-                        $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
+                if(!$update)
+                    $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
 
-                    if( $update and !empty( $update ) ){
-                        $update = (object) $update;
-                        $transient->response[ $this->plugin_name ] = $update;
+                if( $update and !empty( $update ) ){
+                    $update = (object) $update;
+                    $transient->response[ $this->plugin_name ] = $update;
 
-                        //only check every 12 hours
-                        if($expired)
-                            set_transient( 'frm_autoupdate', $update, $this->pro_check_interval );
-                    }
+                    //only check every 12 hours
+                    if($expired)
+                        set_transient( 'frm_autoupdate', $update, $this->pro_check_interval );
                 }
             }
         }
@@ -336,7 +338,8 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
             $expired = true;
             if(!$force){
                 $update = get_transient($plugin->pro_last_checked_store);
-                $expired = false;
+                if($update)
+                    $expired = false;
             }
 
             if(!$update)
@@ -347,7 +350,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
                 $transient->response[ $plugin->plugin_name ] = $update;
                 
                 //only check every 12 hours
-                if(!$expired)
+                if($expired)
                     set_transient($plugin->pro_last_checked_store, $update, $plugin->pro_check_interval );
             }
         }
