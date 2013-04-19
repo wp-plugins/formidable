@@ -44,7 +44,7 @@ class FrmUpdate{
         $this->pro_cred_store       = 'frmpro-credentials';
         $this->pro_auth_store       = 'frmpro-authorized';
         $this->pro_wpmu_store       = 'frmpro-wpmu-sitewide';
-        $this->pro_last_checked_store = 'frmpro_last_checked_update';
+        $this->pro_last_checked_store = 'frm_autoupdate';
         $this->pro_username_label    = __('Formidable Pro Username', 'formidable');
         $this->pro_password_label    = __('Formidable Pro Password', 'formidable');
         $this->pro_error_message_str = __('Your Formidable Pro Username or Password was Invalid', 'formidable');
@@ -281,28 +281,35 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     function queue_update($transient, $force=false){
         if(!is_object($transient))
             return $transient;
-
+        
+        global $frm_checked;
+        if($frm_checked)
+            return $transient;
+            
         //make sure it doesn't show there is an update if plugin is up-to-date
         if($this->pro_is_installed() and !empty( $transient->checked ) and 
-            isset($transient->response[$this->plugin_name]) and
-            isset($transient->response) and isset($transient->checked[ $this->plugin_name ]) and 
-            $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version){
-                    
-            unset($transient->response[$this->plugin_name]);
-                
+            isset($transient->checked[ $this->plugin_name ]) and 
+            ((isset($transient->response) and isset($transient->response[$this->plugin_name]) and 
+            $transient->checked[ $this->plugin_name ] == $transient->response[$this->plugin_name]->new_version) or
+            (!isset($transient->response)) or empty($transient->response))){
+            
+            if(isset($transient->response[$this->plugin_name]))        
+                unset($transient->response[$this->plugin_name]);
+            delete_site_transient($this->pro_last_checked_store);
+            $frm_checked = true;
         }else if(!empty( $transient->checked ) or
             (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
         
-            if( $this->pro_is_authorized() ) {
+            if( $this->pro_is_authorized()) {
                 if( !$this->pro_is_installed() )
                     $force = true;
 
                 $update = false;
                 $expired = true;
                 if(!$force){
-                    $update = get_transient('frm_autoupdate');
+                    $update = get_site_transient($this->pro_last_checked_store);
                     if($update)
                         $expired = false;
                 }
@@ -316,8 +323,10 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
 
                     //only check every 12 hours
                     if($expired)
-                        set_transient( 'frm_autoupdate', $update, $this->pro_check_interval );
+                        set_site_transient( $this->pro_last_checked_store, $update, $this->pro_check_interval );
                 }
+                
+                $frm_checked = true;
             }
         }
         
@@ -337,7 +346,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
         if($frmpro_is_installed){
             $expired = true;
             if(!$force){
-                $update = get_transient($plugin->pro_last_checked_store);
+                $update = get_site_transient($plugin->pro_last_checked_store);
                 if($update)
                     $expired = false;
             }
@@ -351,7 +360,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
                 
                 //only check every 12 hours
                 if($expired)
-                    set_transient($plugin->pro_last_checked_store, $update, $plugin->pro_check_interval );
+                    set_site_transient($plugin->pro_last_checked_store, $update, $plugin->pro_check_interval );
             }
         }
         

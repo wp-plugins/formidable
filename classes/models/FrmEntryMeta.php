@@ -92,10 +92,14 @@ class FrmEntryMeta{
       $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id=%d and item_id=%d";
       $query = $wpdb->prepare($query_str, $field_id, $entry_id);
 
-      if($return_var)
-        return $wpdb->get_var("{$query} LIMIT 1");
-      else
-        return $wpdb->get_col($query, 0);
+      if($return_var){
+          $var = $wpdb->get_var("{$query} LIMIT 1");
+          if($var)
+            $var = stripslashes_deep(maybe_unserialize($var));
+      }else{
+          $var = $wpdb->get_col($query, 0);
+      }
+      return $var;
   }
 
   function get_entry_metas($entry_id){

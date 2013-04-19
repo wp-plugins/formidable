@@ -61,6 +61,14 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.11 =
+* Added container in default html for new check box and radio fields
+* PRO: Added a print link on the view entry page in the back-end
+* PRO: Added support for category stats in the frm-stats shortcode
+* PRO: Allow the edit link to dynamically get the id of the entry when used on a post page. Ex: [frm-entry-edit-link id=current label="Edit" page_id=92]
+* PRO: Allow dropdown fields to be selected as the post title
+* PRO: Updated input mask script to 1.3.1
+
 = 1.06.10 =
 * Allow the usage of any html attributes inside the [input] tag in the customizable HTML
 * PRO: Added "Chosen" autocomplete to dropdown fields

@@ -115,6 +115,8 @@ class FrmFieldsController{
             $field = FrmFieldsHelper::setup_edit_vars($frm_field->getOne($field_id));
             $field_name = "item_meta[$field_id]";
             $id = $field['form_id'];
+            if($field['type'] == 'html')
+                $field['stop_filter'] = true;
             require(FRM_VIEWS_PATH.'/frm-forms/add_field.php'); 
             require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
         }
@@ -421,6 +423,7 @@ class FrmFieldsController{
             
         if(isset($field['shortcodes']) and !empty($field['shortcodes'])){
             foreach($field['shortcodes'] as $k => $v){
+                if($k == 'opt') continue;
                 $add_html .= ' '. $k .'="'. $v .'"';
                 unset($k);
                 unset($v);

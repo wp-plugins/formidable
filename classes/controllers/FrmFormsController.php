@@ -167,7 +167,7 @@ class FrmFormsController{
         global $frm_form;
         
         $params = $this->get_params();
-        $record = $frm_form->duplicate( $params['id'], $params['template'] );
+        $record = $frm_form->duplicate( $params['id'], $params['template'], true );
         $message = ($params['template']) ? __('Form template was Successfully Created', 'formidable') : __('Form was Successfully Copied', 'formidable');
         if ($record)
             return $this->get_edit_vars($record, '', $message, true);

@@ -41,7 +41,8 @@ class FrmEntriesController{
         global $frm_form, $user_ID, $frm_settings, $post;
         if ($id) $form = $frm_form->getOne((int)$id);
         else if ($key) $form = $frm_form->getOne($key);
-        
+        else $form = false;
+
         $form = apply_filters('frm_pre_display_form', $form);
         
         if(!$form or 

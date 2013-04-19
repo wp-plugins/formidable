@@ -163,7 +163,7 @@ if ($display['options']){ ?>
                         <td>
                         <?php if(in_array($field['type'], array('select', 'time', 'data'))){ ?>
                             <?php if(!isset($values['custom_style']) or $values['custom_style']){ ?>
-                                <input type="checkbox" name="field_options[size_<?php echo $field['id'] ?>]" value="1" <?php echo (isset($field['size']) and $field['size'])? 'checked="checked"':''; ?> /> <span class="howto"><?php _e('automatic width', 'formidable') ?></span>
+                                <input type="checkbox" name="field_options[size_<?php echo $field['id'] ?>]" value="1" <?php echo (isset($field['size']) and $field['size'])? 'checked="checked"':''; ?> /> <?php _e('automatic width', 'formidable') ?>
                             <?php }
                             }else{ ?>
                                 <input type="text" name="field_options[size_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['size']); ?>" size="5" /> <span class="howto"><?php echo ($field['type'] == 'textarea' || $field['type'] == 'rte')? __('columns wide', 'formidable') : __('characters wide', 'formidable') ?></span>

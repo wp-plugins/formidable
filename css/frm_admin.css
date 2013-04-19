@@ -335,7 +335,7 @@ ul .frm_col_two{float:right;}
 iframe#dyncontent_ifr{min-height:150px;}
 #frm-insert-fields ul.frm_code_list, #frm-conditionals ul.frm_code_list{padding-right:0.9em;}
 
-.contextual-help-tabs ul{min-height:300px;}
+.wrap .contextual-help-tabs ul{min-height:300px;}
 
 a{cursor: pointer;}
 
