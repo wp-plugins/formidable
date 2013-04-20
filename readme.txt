@@ -62,12 +62,20 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.06.11 =
+* Added styling classes: two thirds, scroll box, columns (frm_scroll_box, frm_two_col, frm_three_col, frm_first_two_thirds, frm_last_two_thirds)
 * Added container in default html for new check box and radio fields
 * PRO: Added a print link on the view entry page in the back-end
 * PRO: Added support for category stats in the frm-stats shortcode
 * PRO: Allow the edit link to dynamically get the id of the entry when used on a post page. Ex: [frm-entry-edit-link id=current label="Edit" page_id=92]
+* PRO: Allow non-admin users to see the user ID drop down in the back-end when they have permission to edit entries from the back-end
+* PRO: Added frm_data_sort hook for sorting data from entries options
 * PRO: Allow dropdown fields to be selected as the post title
+* PRO: Switched data from entries drop downs to use field key in the html id instead of the field id for consistency
+* PRO: When importing templates, use the path shown in the box whether it has been saved or not
+* PRO: Fixed admin-only fields to still save to created post
+* PRO: Fixed issue preventing required multiple file upload fields from being required
 * PRO: Updated input mask script to 1.3.1
+
 
 = 1.06.10 =
 * Allow the usage of any html attributes inside the [input] tag in the customizable HTML

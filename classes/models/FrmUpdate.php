@@ -7,7 +7,6 @@ if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 class FrmUpdate{
     var $plugin_nicename;
     var $plugin_name;
-    var $plugin_slug;
     var $plugin_url;
     var $pro_script;
     var $pro_mothership;
@@ -18,10 +17,6 @@ class FrmUpdate{
 
     var $pro_username_label;
     var $pro_password_label;
-
-    var $pro_username_str;
-    var $pro_password_str;
-    var $pro_wpmu_str;
 
     var $pro_error_message_str;
 
@@ -37,7 +32,6 @@ class FrmUpdate{
         // Where all the vitals are defined for this plugin
         $this->plugin_nicename      = 'formidable';
         $this->plugin_name          = 'formidable/formidable.php';
-        $this->plugin_slug          = 'formidable';
         $this->plugin_url           = 'http://formidablepro.com/formidable-wordpress-plugin';
         $this->pro_script           = FRM_PATH . '/pro/formidable-pro.php';
         $this->pro_mothership       = 'http://formidablepro.com';
@@ -51,9 +45,6 @@ class FrmUpdate{
 
         // Don't modify these variables
         $this->pro_check_interval = 60*60*12; // Checking every 12 hours
-        $this->pro_username_str = 'proplug-username';
-        $this->pro_password_str = 'proplug-password';
-        $this->pro_wpmu_str = 'proplug-wpmu';
         $this->pro_mothership_xmlrpc_url = $this->pro_mothership . '/xmlrpc.php';
         $this->timeout = 10;
         
@@ -121,7 +112,7 @@ class FrmUpdate{
             if($this->process_pro_cred_form()){ ?>
 <div id="message" class="updated fade"><strong>
 <?php
-            if(!$this->pro_is_installed()){
+            if(!$this->pro_is_authorized()){
                 $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $this->plugin_name, 'upgrade-plugin_' . $this->plugin_name);
                 printf(__('Your Username & Password were accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); 
             }else{ 
@@ -196,17 +187,17 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     <table class="form-table">
         <tr class="form-field">
             <td valign="top" width="150px"><?php echo $this->pro_username_label; ?></td>
-            <td><input type="text" name="<?php echo $this->pro_username_str; ?>" value=""/></td>
+            <td><input type="text" name="proplug-username" value=""/></td>
         </tr>
         <tr class="form-field">
             <td valign="top"><?php echo $this->pro_password_label; ?></td>
-            <td><input type="password" name="<?php echo $this->pro_password_str; ?>" value=""/></td>
+            <td><input type="password" name="proplug-password" value=""/></td>
         </tr>
         <?php if (IS_WPMU){ ?>
         <tr>
             <td valign="top"><?php _e('WordPress MU', 'formidable'); ?></td>
             <td valign="top">
-                <input type="checkbox" value="1" name="<?php echo $this->pro_wpmu_str; ?>" <?php checked($wpmu, 1) ?> />
+                <input type="checkbox" value="1" name="proplug-wpmu" <?php checked($wpmu, 1) ?> />
                 <?php _e('Use this username and password to enable Formidable Pro site-wide', 'formidable'); ?>
             </td>
         </tr>
@@ -255,9 +246,9 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     }
 
     function get_pro_cred_form_vals(){
-        $username = ((isset($_POST[$this->pro_username_str]))?$_POST[$this->pro_username_str]:$this->pro_username);
-        $password = ((isset($_POST[$this->pro_password_str]))?$_POST[$this->pro_password_str]:$this->pro_password);
-        $wpmu = (isset($_POST[$this->pro_wpmu_str])) ? true : $this->pro_wpmu;
+        $username = (isset($_POST['proplug-username'])) ? $_POST['proplug-username'] : $this->pro_username;
+        $password = (isset($_POST['proplug-password'])) ? $_POST['proplug-password'] : $this->pro_password;
+        $wpmu = (isset($_POST['proplug-wpmu'])) ? true : $this->pro_wpmu;
 
         return compact('username', 'password', 'wpmu');
     }
@@ -269,7 +260,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
 
         $force = $force ? 'true' : 'false';
         $plugin = $plugin ? $plugin : $this->plugin_nicename;
-        
+      
         if( !$client->query( 'proplug.get_current_info', $this->pro_username, $this->pro_password, $version, $force, 
             get_option('siteurl'), $plugin) )
             return false;
@@ -281,11 +272,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     function queue_update($transient, $force=false){
         if(!is_object($transient))
             return $transient;
-        
-        global $frm_checked;
-        if($frm_checked)
-            return $transient;
-            
+           
         //make sure it doesn't show there is an update if plugin is up-to-date
         if($this->pro_is_installed() and !empty( $transient->checked ) and 
             isset($transient->checked[ $this->plugin_name ]) and 
@@ -295,38 +282,18 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
             
             if(isset($transient->response[$this->plugin_name]))        
                 unset($transient->response[$this->plugin_name]);
-            delete_site_transient($this->pro_last_checked_store);
-            $frm_checked = true;
+            set_site_transient( $this->pro_last_checked_store, 'latest', $this->pro_check_interval );
         }else if(!empty( $transient->checked ) or
             (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
-        
+
             if( $this->pro_is_authorized()) {
-                if( !$this->pro_is_installed() )
+                if( !$this->pro_is_installed() or (isset($transient->response[$this->plugin_name]) and $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))
                     $force = true;
-
-                $update = false;
-                $expired = true;
-                if(!$force){
-                    $update = get_site_transient($this->pro_last_checked_store);
-                    if($update)
-                        $expired = false;
-                }
-
-                if(!$update)
-                    $update = $this->get_current_info( $transient->checked[ $this->plugin_name ], $force );
-
-                if( $update and !empty( $update ) ){
-                    $update = (object) $update;
-                    $transient->response[ $this->plugin_name ] = $update;
-
-                    //only check every 12 hours
-                    if($expired)
-                        set_site_transient( $this->pro_last_checked_store, $update, $this->pro_check_interval );
-                }
-                
-                $frm_checked = true;
+                    
+                $plugin = $this;
+                $transient = $this->get_plugin_info($transient, $plugin, $force);
             }
         }
         
@@ -343,24 +310,48 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
             return $transient;
 
         global $frmpro_is_installed;
-        if($frmpro_is_installed){
+        if($frmpro_is_installed)
+            $transient = $this->get_plugin_info($transient, $plugin, $force);
+        
+        return $transient;
+    }
+    
+    function get_plugin_info($transient, $plugin, $force=false){
+        if(empty($transient->checked) or empty($transient->checked[ $plugin->plugin_name ]))
+            return $transient;
+        
+        $update = get_site_transient($plugin->pro_last_checked_store);
+
+        if($update and $force){
+            if($update == 'latest' or version_compare($transient->checked[ $plugin->plugin_name ], $update->new_version, '<'))
+                $update = false;
+        }
+        
+        $expired = false;
+        if(!$update){
+            $update = $this->get_current_info( $transient->checked[ $plugin->plugin_name ], $force, $plugin->plugin_nicename );
             $expired = true;
-            if(!$force){
-                $update = get_site_transient($plugin->pro_last_checked_store);
-                if($update)
-                    $expired = false;
-            }
-
-            if(!$update)
-                $update = $this->get_current_info( $transient->checked[ $plugin->plugin_name ], $force, $plugin->plugin_nicename );
-
-            if( $update and !empty( $update ) ){
+        }
+         
+        //only check periodically   
+        if($expired){
+            if(!$update or empty($update))
+                $update = 'latest';
+            else
                 $update = (object) $update;
+  
+            set_site_transient($plugin->pro_last_checked_store, $update, $plugin->pro_check_interval );
+        }
+
+        if( $update and !empty( $update ) and $update != 'latest'){
+            $update = (object) $update;
+            
+            if(!$force and isset($update->new_version) and version_compare($transient->checked[ $plugin->plugin_name ], $update->new_version, '>=')){
+                if(isset($transient->response[ $plugin->plugin_name ]))
+                    unset($transient->response[ $plugin->plugin_name ]);
+                set_site_transient($plugin->pro_last_checked_store, 'latest', $plugin->pro_check_interval );
+            }else{
                 $transient->response[ $plugin->plugin_name ] = $update;
-                
-                //only check every 12 hours
-                if($expired)
-                    set_site_transient($plugin->pro_last_checked_store, $update, $plugin->pro_check_interval );
             }
         }
         
