@@ -275,7 +275,7 @@ function frmGetFormErrors(object,ajax_url){
 				var newPos=jump.offset();
 				jump.replaceWith(errObj);
 				var cOff=document.documentElement.scrollTop || document.body.scrollTop;
-				if(newPos && cOff > newPos.top) window.scrollTo(newPos.left,newPos.top);
+				if(newPos && newPos.top > 0 && cOff > newPos.top) window.scrollTo(newPos.left,newPos.top);
 	        }else{
 	            //show errors
 				var cont_submit=true;
