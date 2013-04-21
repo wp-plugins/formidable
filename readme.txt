@@ -75,6 +75,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed admin-only fields to still save to created post
 * PRO: Fixed issue preventing required multiple file upload fields from being required
 * PRO: Updated input mask script to 1.3.1
+* PRO: Added hooks for entries in the admin: frm_row_actions, frm_edit_entry_publish_box, frm_show_entry_publish_box, frm_edit_entry_sidebar
 
 
 = 1.06.10 =

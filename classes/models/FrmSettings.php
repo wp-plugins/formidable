@@ -128,7 +128,7 @@ class FrmSettings{
         }
         
         foreach($this as $k => $v){
-            $this->{$k} = stripslashes_deep($v);
+            //$this->{$k} = stripslashes_deep($v);
             unset($k);
             unset($v);
         }
