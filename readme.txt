@@ -62,7 +62,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.06.11 =
-* Added styling classes: two thirds, scroll box, columns (frm_scroll_box, frm_two_col, frm_three_col, frm_first_two_thirds, frm_last_two_thirds)
+* Added styling classes: two thirds, scroll box, columns (frm_first_two_thirds, frm_last_two_thirds, frm_scroll_box, frm_total, frm_two_col, frm_three_col, frm_four_col, )
 * Added container in default html for new check box and radio fields
 * PRO: Added a print link on the view entry page in the back-end
 * PRO: Added support for category stats in the frm-stats shortcode
