@@ -51,7 +51,7 @@
 .frm_full .wp-editor-wrap input{width:auto !important;}
 .frm_form_field.frm_two_col .frm_radio, .frm_form_field.frm_three_col .frm_radio, .frm_form_field.frm_four_col .frm_radio, .frm_form_field.frm_two_col .frm_checkbox, .frm_form_field.frm_three_col .frm_checkbox, .frm_form_field.frm_four_col .frm_checkbox {float:left; margin-right:5px;}
 .frm_form_field.frm_two_col .frm_radio, .frm_form_field.frm_two_col .frm_checkbox {width:45%;}
-.frm_form_field.frm_three_col .frm_radio, .frm_form_field.frm_three_col .frm_checkbox {width:32%;}
+.frm_form_field.frm_three_col .frm_radio, .frm_form_field.frm_three_col .frm_checkbox {width:30%;}
 .frm_form_field.frm_four_col .frm_radio, .frm_form_field.frm_four_col .frm_checkbox  {width:20%; margin-right:3px;}
 .frm_form_field.frm_two_col .frm_opt_container, .frm_form_field.frm_three_col .frm_opt_container, .frm_form_field.frm_four_col .frm_opt_container {background:none;border:none;}
 .frm_form_field.frm_scroll_box .frm_opt_container{height: 100px; overflow:auto;}
