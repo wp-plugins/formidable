@@ -275,7 +275,12 @@ function frmGetFormErrors(object,ajax_url){
 				var newPos=jump.offset();
 				jump.replaceWith(errObj);
 				var cOff=document.documentElement.scrollTop || document.body.scrollTop;
-				if(newPos && newPos.top > 0 && cOff > newPos.top) window.scrollTo(newPos.left,newPos.top);
+				if(newPos && newPos.top > 0 && cOff > newPos.top) window.scrollTo(0,newPos.top);
+				if(typeof(frmThemeOverride_frmAfterSubmit) == 'function'){
+					var fin=jQuery(errObj).find('input[name="form_id"]').val();
+					if(fin) var p=jQuery('input[name="frm_page_order_'+fin+'"]').val();
+					frmThemeOverride_frmAfterSubmit(fin,p,errObj);
+				}
 	        }else{
 	            //show errors
 				var cont_submit=true;

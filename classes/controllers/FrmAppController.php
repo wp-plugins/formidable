@@ -107,7 +107,7 @@ class FrmAppController{
             global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if(((int)$db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 18)){ //this number should match the db_version in FrmDb.php
+            if(((int)$db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 19)){ //this number should match the db_version in FrmDb.php
             ?>
 <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="#" onclick="frm_install_now();return false;"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
@@ -184,13 +184,23 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             //$frm_db_version is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 18))
+            if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 19))
                 $this->install($old_db_version);
         }
 
         wp_register_script('formidable', FRM_URL . '/js/formidable.js', array('jquery'), $frm_version, true);
         wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
         wp_enqueue_script('jquery');
+        
+        $style = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+        if($style){
+            foreach((array)$style as $k => $file){
+                $k = $k ? 'frm-forms'. $k : 'formidable';
+                wp_register_style($k, $file, array(), $frm_version);
+                unset($k);
+                unset($file);
+            }
+        }
         
         if(!is_admin() and $frm_settings->load_style == 'all'){
             $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', 'header');
@@ -332,10 +342,10 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
         if($controller == 'forms' and !in_array($action, array('export', 'import', 'xml')))
             $frm_forms_controller->preview($this->get_param('form'));
-        else if($controller == 'fields' and $action == 'import_choices')
-             $frm_fields_controller->import_choices($this->get_param('field_id'));
         else
             do_action('frm_standalone_route', $controller, $action);
+            
+        do_action('frm_ajax_'. $controller .'_'. $action);
     }
 
     // Utility function to grab the parameter whether it's a get or post

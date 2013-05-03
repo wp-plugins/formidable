@@ -188,6 +188,12 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 });
 });
 
+function frmSubmitBuild(){
+	var form=jQuery('#frm_build_form');
+	jQuery('#frm_compact_fields').val(form.serialize());
+	jQuery('#frm_js_build_form').submit();
+}
+
 function frmClickWidget(obj){
 if(obj.hasClass('widget-action')) return;
 if(obj.parents().hasClass('frm_35_trigger')) return;

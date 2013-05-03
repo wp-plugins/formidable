@@ -61,6 +61,17 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.06.12 =
+* Submit build form in one input to prevent max_input_vars limitations
+* PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
+* PRO: Updated value in CSV for file upload fields
+* PRO: Updated timezone used in CSV export
+* PRO: Removed border styling from the container around radio and checkbox fields
+* PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javscript after ajax submit
+* PRO: Updated star rating javascript version
+* PRO: Don't show custom display content for password protected posts until allowed
+* PRO: Switched front-end ajax to use hooks (frm_ajax_{controller}_{action})
+
 = 1.06.11 =
 * Added styling classes: two thirds, scroll box, columns (frm_first_two_thirds, frm_last_two_thirds, frm_scroll_box, frm_total, frm_two_col, frm_three_col, frm_four_col, )
 * Added container in default html for new check box and radio fields

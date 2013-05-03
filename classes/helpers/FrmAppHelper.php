@@ -504,7 +504,7 @@ class FrmAppHelper{
     function frm_get_main_message( $message = ''){
         global $frmpro_is_installed;
         
-        if($frmpro_is_installed)
+        //if($frmpro_is_installed)
             return $message;
            
         global $frm_update;

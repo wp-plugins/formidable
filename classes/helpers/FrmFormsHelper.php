@@ -45,38 +45,52 @@ class FrmFormsHelper{
         echo ($sort_col == $col and $sort_dir == 'desc') ? ' asc' : ' desc';
     }
     
-    function setup_new_vars(){
+    function setup_new_vars($values=array()){
         global $frmdb, $frm_settings;
-        $values = array();
-        foreach (array('name' => __('Untitled Form', 'formidable'), 'description' => '') as $var => $default)
-            $values[$var] = FrmAppHelper::get_param($var, $default);
+        
+        if(!empty($values)){
+            $post_values = $values;
+        }else{
+            $values = array();
+            $post_values = $_POST;
+        }
+        
+        foreach (array('name' => __('Untitled Form', 'formidable'), 'description' => '') as $var => $default){
+            if(!isset($values[$var]))
+                $values[$var] = FrmAppHelper::get_param($var, $default);
+        }
         
         if(apply_filters('frm_use_wpautop', true))
             $values['description'] = wpautop($values['description']);
         
-        foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default)
-            $values[$var] = FrmAppHelper::get_param($var, $default);
+        foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default){
+            if(!isset($values[$var]))
+                $values[$var] = FrmAppHelper::get_param($var, $default);
+        }
             
-        $values['form_key'] = ($_POST and isset($_POST['form_key'])) ? $_POST['form_key'] : (FrmAppHelper::get_unique_key('', $frmdb->forms, 'form_key'));
+        if(!isset($values['form_key']))
+            $values['form_key'] = ($post_values and isset($post_values['form_key'])) ? $post_values['form_key'] : FrmAppHelper::get_unique_key('', $frmdb->forms, 'form_key');
         
         $defaults = FrmFormsHelper::get_default_opts();
         foreach ($defaults as $var => $default){
             if($var == 'notification'){
-                $values[$var] = array();
+                if(!isset($values[$var]))
+                    $values[$var] = array();
+                
                 foreach($default as $k => $v){
-                    $values[$var][$k] = (isset($_POST) and $_POST and isset($_POST['notification'][$var])) ? $_POST['notification'][$var] : $v;
+                    $values[$var][$k] = ($post_values and isset($post_values['notification'][$var])) ? $post_values['notification'][$var] : $v;
                     unset($k);
                     unset($v);
                 }
             }else{
-                $values[$var] = (isset($_POST) and $_POST and isset($_POST['options'][$var])) ? $_POST['options'][$var] : $default;
+                $values[$var] = ($post_values and isset($post_values['options'][$var])) ? $post_values['options'][$var] : $default;
             }
             
             unset($var);
             unset($default);
         }
             
-        $values['custom_style'] = (isset($_POST) and $_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
+        $values['custom_style'] = ($post_values and isset($post_values['options']['custom_style'])) ? $post_values['options']['custom_style'] : ($frm_settings->load_style != 'none');
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
         $values['after_html'] = FrmFormsHelper::get_default_html('after');
         

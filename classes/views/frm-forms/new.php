@@ -20,9 +20,9 @@
     <div id="post-body" class="metabox-holder columns-2">
     <div id="post-body-content">
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
-        <form method="post" >
+        <form method="post" id="frm_build_form">
             <p style="margin-top:0;">
-                <input type="submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <input type="button" onclick="frmSubmitBuild()" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
             </p>
@@ -35,7 +35,7 @@
             <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>
 
             <p>
-                <input type="submit" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <input type="button" onclick="frmSubmitBuild()" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
             </p>

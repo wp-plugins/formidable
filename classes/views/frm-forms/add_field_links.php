@@ -75,7 +75,14 @@
             </ul>
 
     	</div>
-    	
+    	<?php $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+        $action = FrmAppHelper::get_param($action);
+        $button = ($action == 'new') ? __('Create', 'formidable') : __('Update', 'formidable');
+        ?>
+    	<form method="post" id="frm_js_build_form">
+    	    <input type="hidden" id="frm_compact_fields" name="frm_compact_fields" value="" />
+    	    <p><input type="button" onclick="frmSubmitBuild()" value="<?php echo esc_attr($button) ?>" class="button-primary" /></p>
+    	</form>
     	<?php do_action('frm_extra_form_instructions'); ?>
     </div>
     </div>

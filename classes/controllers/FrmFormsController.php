@@ -60,16 +60,20 @@ class FrmFormsController{
         return $this->display_forms_list();
     }
     
-    function new_form(){
+    function new_form($values=false){
         global $frm_form, $frmpro_is_installed, $frm_ajax_url;
         
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
-        $action = FrmAppHelper::get_param($action);
+        if($values){
+            $action = $values[$action];
+        }else{
+            $action = FrmAppHelper::get_param($action);
+        }
         if ($action == 'create'){
-            return $this->create();
+            return $this->create($values);
         }else if ($action == 'new'){
             $frm_field_selection = FrmFieldsHelper::field_selection();  
-            $values = FrmFormsHelper::setup_new_vars();
+            $values = FrmFormsHelper::setup_new_vars($values);
             $id = $frm_form->create( $values );
             $values['id'] = $id;
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
@@ -79,10 +83,14 @@ class FrmFormsController{
         }
     }
     
-    function create(){
+    function create($values=false){
         global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
-        $errors = $frm_form->validate($_POST);
-        $id = (int)FrmAppHelper::get_param('id');
+        if(!$values)
+            $values = $_POST;
+
+        $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
+        
+        $errors = $frm_form->validate($values);
         
         if( count($errors) > 0 ){
             $hide_preview = true;
@@ -92,21 +100,21 @@ class FrmFormsController{
             $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         }else{
-            $record = $frm_form->update( $id, $_POST, true );
+            $record = $frm_form->update( $id, $values, true );
             die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&frm_action=settings&id='. $id) .'"</script>');
             //$message = __('Form was Successfully Created', 'formidable');
             //return $this->settings($record, $message);
         }
     }
     
-    function edit(){
-        $id = FrmAppHelper::get_param('id');
+    function edit($values=false){
+        $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
         return $this->get_edit_vars($id);
     }
     
     function settings($id=false, $message=''){
         if(!$id or !is_numeric($id))
-            $id = FrmAppHelper::get_param('id');
+            $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
         return $this->get_settings_vars($id, '', $message);
     }
     
@@ -150,14 +158,17 @@ class FrmFormsController{
         die();
     }
     
-    function update(){
+    function update($values=false){
         global $frm_form;
-        $errors = $frm_form->validate($_POST);
-        $id = FrmAppHelper::get_param('id');
+
+        if(!$values)
+            $values = $_POST;
+        $errors = $frm_form->validate($values);
+        $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
         if( count($errors) > 0 ){
             return $this->get_edit_vars($id, $errors);
         }else{
-            $record = $frm_form->update( $_POST['id'], $_POST );
+            $record = $frm_form->update( $id, $values );
             $message = __('Form was Successfully Updated', 'formidable');
             return $this->get_edit_vars($id, '', $message);
         }
@@ -497,16 +508,23 @@ class FrmFormsController{
 
     function route(){
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
-        $action = FrmAppHelper::get_param($action);
+        $vars = false;
+        if(isset($_REQUEST['frm_compact_fields'])){
+            $vars = array();
+            parse_str($_REQUEST['frm_compact_fields'], $vars);
+            $action = $vars[$action];
+        }else{
+            $action = FrmAppHelper::get_param($action);
+        }
         
         if($action == 'new')
-            return $this->new_form();
+            return $this->new_form($vars);
         else if($action == 'create')
-            return $this->create();
+            return $this->create($vars);
         else if($action == 'edit')
-            return $this->edit();
+            return $this->edit($vars);
         else if($action == 'update')
-            return $this->update();
+            return $this->update($vars);
         else if($action == 'duplicate')
             return $this->duplicate();
         else if($action == 'destroy')
