@@ -127,10 +127,12 @@ class FrmForm{
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();
         $existing_keys = array_keys($values['item_meta']);
+        
         foreach ($all_fields as $fid){
             if (!in_array($fid->id, $existing_keys))
                 $values['item_meta'][$fid->id] = '';
         }
+        
         foreach ($values['item_meta'] as $field_id => $default_value){ 
             $field = $frm_field->getOne($field_id);
             if (!$field) continue;

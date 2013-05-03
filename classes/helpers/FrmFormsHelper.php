@@ -97,12 +97,15 @@ class FrmFormsHelper{
         return apply_filters('frm_setup_new_form_vars', $values);
     }
     
-    function setup_edit_vars($values, $record){
+    function setup_edit_vars($values, $record, $post_values=array()){
         global $frm_form;
+        
+        if(empty($post_values))
+            $post_values = $_POST;
 
-        $values['form_key'] = FrmAppHelper::get_param('form_key', $record->form_key);
-        $values['default_template'] = FrmAppHelper::get_param('default_template', $record->default_template);
-        $values['is_template'] = FrmAppHelper::get_param('is_template', $record->is_template);
+        $values['form_key'] = isset($post_values['form_key']) ? stripslashes_deep($post_values['form_key']) : $record->form_key;
+        $values['default_template'] = isset($post_values['default_template']) ? $post_values['default_template'] : $record->default_template;
+        $values['is_template'] = isset($post_values['is_template']) ? $post_values['is_template'] : $record->is_template;
 
         return apply_filters('frm_setup_edit_form_vars', $values);
     }

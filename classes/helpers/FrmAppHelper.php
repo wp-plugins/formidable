@@ -239,18 +239,20 @@ class FrmAppHelper{
     }
 
     //Editing a Form or Entry
-    function setup_edit_vars($record, $table, $fields='', $default=false){
+    function setup_edit_vars($record, $table, $fields='', $default=false, $post_values=array()){
         if(!$record) return false;
         global $frm_entry_meta, $frm_form, $frm_settings, $frm_sidebar_width;
-        $values = array();
-
-        $values['id'] = $record->id;
+        
+        if(empty($post_values))
+            $post_values = $_POST;
+        
+        $values = array('id' => $record->id, 'fields' => array());
 
         foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default_val)
               $values[$var] = FrmAppHelper::get_param($var, $default_val);
+              
         if(apply_filters('frm_use_wpautop', true))
             $values['description'] = wpautop($values['description']);
-        $values['fields'] = array();
         
         if ($fields){
             foreach($fields as $field){
@@ -269,8 +271,8 @@ class FrmAppHelper{
                     }
                 }
                 
-                $field_type = isset($_POST['field_options']['type_'.$field->id]) ? $_POST['field_options']['type_'.$field->id] : $field->type;
-                $new_value = (isset($_POST['item_meta'][$field->id])) ? stripslashes_deep(maybe_unserialize($_POST['item_meta'][$field->id])) : $meta_value;
+                $field_type = isset($post_values['field_options']['type_'.$field->id]) ? $post_values['field_options']['type_'.$field->id] : $field->type;
+                $new_value = (isset($post_values['item_meta'][$field->id])) ? stripslashes_deep(maybe_unserialize($post_values['item_meta'][$field->id])) : $meta_value;
 
                 $field_array = array(
                     'id' => $field->id,
@@ -298,7 +300,7 @@ class FrmAppHelper{
                 $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field, true);
                 
                 foreach ($opt_defaults as $opt => $default_opt){
-                    $field_array[$opt] = ($_POST and isset($_POST['field_options'][$opt.'_'.$field->id]) ) ? stripslashes_deep(maybe_unserialize($_POST['field_options'][$opt.'_'.$field->id])) : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
+                    $field_array[$opt] = ($post_values and isset($post_values['field_options'][$opt.'_'.$field->id]) ) ? stripslashes_deep(maybe_unserialize($post_values['field_options'][$opt.'_'.$field->id])) : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == ''){
                         $field_array[$opt] = $frm_settings->blank_msg;
                     }else if($opt == 'invalid' and $field_array[$opt] == ''){
@@ -343,9 +345,9 @@ class FrmAppHelper{
             if (is_array($form->options)){
                 foreach ($form->options as $opt => $value){
                     if(in_array($opt, array('email_to', 'reply_to', 'reply_to_name')))
-                        $values['notification'][0][$opt] = FrmAppHelper::get_param('notification[0]['. $opt .']', $value);
+                        $values['notification'][0][$opt] = isset($post_values["notification[0][$opt]"]) ? stripslashes_deep(maybe_unserialize($post_values["notification[0][$opt]"])) : $value;
                     
-                    $values[$opt] = FrmAppHelper::get_param($opt, $value);
+                    $values[$opt] = isset($post_values[$opt]) ? stripslashes_deep(maybe_unserialize($post_values[$opt])) : $value;
                 }
             }
         }
@@ -356,17 +358,17 @@ class FrmAppHelper{
         foreach ($form_defaults as $opt => $default){
             if (!isset($values[$opt]) or $values[$opt] == ''){
                 if($opt == 'notification'){
-                    $values[$opt] = ($_POST and isset($_POST[$opt])) ? $_POST[$opt] : $default;
+                    $values[$opt] = ($post_values and isset($post_values[$opt])) ? $post_values[$opt] : $default;
                     
                     foreach($default as $o => $d){
                         if($o == 'email_to')
                             $d = ''; //allow blank email address
-                        $values[$opt][0][$o] = ($_POST and isset($_POST[$opt][0][$o])) ? $_POST[$opt][0][$o] : $d;
+                        $values[$opt][0][$o] = ($post_values and isset($post_values[$opt][0][$o])) ? $post_values[$opt][0][$o] : $d;
                         unset($o);
                         unset($d);
                     }
                 }else{
-                    $values[$opt] = ($_POST and isset($_POST['options'][$opt])) ? $_POST['options'][$opt] : $default;
+                    $values[$opt] = ($post_values and isset($post_values['options'][$opt])) ? $post_values['options'][$opt] : $default;
                 }
             }
             unset($opt);
@@ -374,18 +376,18 @@ class FrmAppHelper{
         }
             
         if (!isset($values['custom_style']))
-            $values['custom_style'] = ($_POST and isset($_POST['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
+            $values['custom_style'] = ($post_values and isset($post_values['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
 
         if (!isset($values['before_html']))
-            $values['before_html'] = (isset($_POST['options']['before_html']) ? $_POST['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
+            $values['before_html'] = (isset($post_values['options']['before_html']) ? $post_values['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
 
         if (!isset($values['after_html']))
-            $values['after_html'] = (isset($_POST['options']['after_html']) ? $_POST['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
+            $values['after_html'] = (isset($post_values['options']['after_html']) ? $post_values['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
 
         if ($table == 'entries')
             $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
         else if ($table == 'forms')
-            $values = FrmFormsHelper::setup_edit_vars( $values, $record );
+            $values = FrmFormsHelper::setup_edit_vars( $values, $record, $post_values );
 
         return $values;
     }
