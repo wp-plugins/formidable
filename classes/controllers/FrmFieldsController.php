@@ -5,6 +5,7 @@
  
 class FrmFieldsController{
     function FrmFieldsController(){
+        add_action('wp_ajax_frm_load_field', array(&$this, 'load_field'));
         add_action('wp_ajax_frm_insert_field', array(&$this, 'create') );
         add_action('wp_ajax_frm_field_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_field_desc_in_place_edit', array(&$this, 'edit_description') );
@@ -25,8 +26,32 @@ class FrmFieldsController{
         add_filter('frm_field_label_seen', array( &$this, 'check_label'), 10, 3);
     }
     
+    function load_field(){
+        global $frm_field, $frm_form;
+        
+        $field_id = $_POST['field_id'];
+        if(!$field_id or !is_numeric($field_id))
+            die();
+        
+        $field = $frm_field->getOne($field_id);
+        $id = $field->form_id;
+        $form = $frm_form->getOne( $id );
+        $values = FrmAppHelper::setup_edit_vars($form, 'forms', array($field), true);
+        $field = $values['fields'][$field->id];
+        $field_name = "item_meta[$field_id]";
+        
+        $values = array();
+        if(class_exists('FrmProForm'))
+            $values['post_type'] = FrmProForm::post_type($id);
+            
+        require(FRM_VIEWS_PATH .'/frm-forms/add_field.php'); 
+        require(FRM_VIEWS_PATH .'/frm-forms/new-field-js.php');
+        
+        die();
+    }
+    
     function create(){
-        global $frm_field, $frm_ajax_url;
+        global $frm_field;
         $field_data = $_POST['field'];
         $form_id = $_POST['form_id'];
         $values = array();

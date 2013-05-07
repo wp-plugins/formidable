@@ -63,9 +63,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 == Changelog ==
 = 1.06.12 =
 * Submit build form in one input to prevent max_input_vars limitations
+* Load fields on the build page with ajax for long forms
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export
+* PRO: Added column in CSV for value for fields that are set to use separate values
 * PRO: Removed border styling from the container around radio and checkbox fields
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javscript after ajax submit
 * PRO: Updated star rating javascript version

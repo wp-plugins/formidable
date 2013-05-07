@@ -9,12 +9,15 @@
 <ul id="new_fields">
 <?php
 if (isset($values['fields']) && !empty($values['fields'])){
+    $count = 0;
     foreach($values['fields'] as $field){
+        $count++;
         $field_name = "item_meta[". $field['id'] ."]";
         require(FRM_VIEWS_PATH .'/frm-forms/add_field.php');
         unset($field);
         unset($field_name);
     }
+    unset($count);
 } ?>
 </ul>
 

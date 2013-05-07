@@ -509,9 +509,10 @@ class FrmFormsController{
     function route(){
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $vars = false;
-        if(isset($_REQUEST['frm_compact_fields'])){
-            $vars = array();
-            parse_str($_REQUEST['frm_compact_fields'], $vars);
+        if(isset($_POST['frm_compact_fields'])){
+            $json_vars = nl2br(stripslashes($_POST['frm_compact_fields']));
+            $json_vars = json_decode($json_vars, true);
+            $vars = FrmAppHelper::json_to_array($json_vars);
             $action = $vars[$action];
         }else{
             $action = FrmAppHelper::get_param($action);

@@ -1,288 +1,646 @@
 /*
- * Another In Place Editor - a jQuery edit in place plugin
- *
- * Copyright (c) 2009 Dave Hauenstein
- *
- * License:
- * This source file is subject to the BSD license bundled with this package.
- * Available online: {@link http://www.opensource.org/licenses/bsd-license.php}
- * If you did not receive a copy of the license, and are unable to obtain it,
- * email davehauenstein@gmail.com,
- * and I will send you a copy.
- *
- * Project home:
- * http://code.google.com/p/jquery-in-place-editor/
- *
- */
 
-/*
- * Version 1.0.1
- *
- * bg_out (string) default: transparent hex code of background color on restore from hover
- * bg_over (string) default: #ffc hex code of background color on hover
- * callback (function) default: null function to be called when editing is complete; cancels ajax submission to the url param
- * cancel_button (string) default: <input type=”submit” class=”inplace_cancel” value=”Cancel”/> image button tag to use as “Cancel” button
- * default_text (string) default: “(Click here to add text)” text to show up if the element that has this functionality is empty
- * element_id (string) default: element_id name of parameter holding element_id
- * error (function) this function gets called if server responds with an error
- * field_type (string) “text”, “textarea”, or “select”; default: “text” The type of form field that will appear on instantiation
- * on_blur (string) “save” or null; default: “save” what to do on blur; will be overridden if $param show_buttons is true
- * original_html (string) default: original_html name of parameter holding original_html
- * params (string) example: first_name=dave&last_name=hauenstein paramters sent via the post request to the server
- * save_button (string) default: <input type=”submit” class=”inplace_save” value=”Save”/> image button tag to use as “Save” button
- * saving_image (string) default: uses saving text specify an image location instead of text while server is saving
- * saving_text (string) default: “Saving…” text to be used when server is saving information
- * select_options (string) comma delimited list of options if field_type is set to select
- * select_text (string)default text to show up in select box
- * show_buttons (boolean) default: false will show the buttons: cancel or save; will automatically cancel out the onBlur functionality
- * success (function) default: null this function gets called if server responds with a success
- * textarea_cols (integer) default: 25 set cols attribute of textarea, if field_type is set to textarea
- * textarea_rows (integer) default: 10 set rows attribute of textarea, if field_type is set to textarea
- * update_value (string) default: update_value name of parameter holding update_value
- * url (string) POST URL to send edited content
- * value_required (string) default: false if set to true, the element will not be saved unless a value is entered
- *
- */
+A jQuery edit in place plugin
 
-jQuery.fn.editInPlace = function(options) {
-	var browserName=navigator.appName;
-	if(browserName=='Microsoft Internet Explorer')
-		var iebuttons=true;
-	else 
-		var iebuttons=false;
-	/* DEFINE THE DEFAULT SETTINGS, SWITCH THEM WITH THE OPTIONS USER PROVIDES */
-	var settings = {
-		url:				"",
-		params:				"",
-		field_type:			"text",
-		select_options:		"",
-		textarea_cols:		"25",
-		textarea_rows:		"10",
-		bg_over:			"#ffffe0",
-		bg_out:				"transparent",
-		saving_text:		"Saving...",
-		saving_image:		"",
-		default_text:		"(Click here to add text)",
-		select_text:		"Choose new value",
-		value_required:		null,
-		element_id:			"element_id",
-		update_value:		"update_value",
-		original_html:		"original_html",
-		save_button:		'<button class="inplace_save">Save</button>',
-		cancel_button:		'<button class="inplace_cancel">Cancel</button>',
-		show_buttons:		iebuttons,
-		on_blur:			"save",
-		callback:			null,
-		success:			null,
-		error:				function(request){
-                                //alert("Failed to save value: " + request.responseText || 'Unspecified Error');
-                            }
-	};
+Version 2.3.0
 
-	if(options) {
-		jQuery.extend(settings, options);
-	}
+Authors:
+	Dave Hauenstein
+	Martin Häcker <spamfaenger [at] gmx [dot] de>
 
-	/* preload the loading icon if it exists */
-	if(settings.saving_image != ""){
-		var loading_image = new Image();
-		loading_image.src = settings.saving_image;
-	}
+Project home:
+	http://code.google.com/p/jquery-in-place-editor/
 
-	/* THIS FUNCTION WILL TRIM WHITESPACE FROM BEFORE/AFTER A STRING */
-	String.prototype.trim = function() {
-		return this.replace(/^\s+/, '')
-							 .replace(/\s+$/, '');
-	};
+Patches with tests welcomed! For guidance see the tests  </spec/unit/>. To submit, attach them to the bug tracker.
 
-	/* THIS FUNCTION WILL ESCAPE ANY HTML ENTITIES SO "Quoted Values" work */
-	String.prototype.escape_html = function() {
-		return this.replace(/&/g, "&amp;")
-							 .replace(/</g, "&lt;")
-							 .replace(/>/g, "&gt;")
-							 .replace(/"/g, "&quot;");
-  };
+License:
+This source file is subject to the BSD license bundled with this package.
+Available online: {@link http://www.opensource.org/licenses/bsd-license.php}
+If you did not receive a copy of the license, and are unable to obtain it, 
+learn to use a search engine.
 
-	/* CREATE THE INPLACE EDITOR */
-	return this.each(function(){
+*/
 
-		if(jQuery(this).html() == "") jQuery(this).html(settings.default_text);
+(function($){
 
-		var editing = false;
-
-		//save the original element - for change of scope
-		var original_element = jQuery(this);
-
-		var click_count = 0;
-
-		jQuery(this)
-
-		.mouseover(function(){
-			jQuery(this).css("background", settings.bg_over);
-		})
-
-		.mouseout(function(){
-			jQuery(this).css("background", settings.bg_out);
-		})
-
-		.click(function(){
-			click_count++;
-
-			if(!editing)
-			{
-				jQuery('.inplace_field').blur();
-				jQuery(this).focus();
-				
-				editing = true;
-
-				//save original text - for cancellation functionality
-				var original_html = jQuery(this).html();
-				var buttons_code  = (settings.show_buttons) ? settings.save_button + ' ' + settings.cancel_button : '';
-
-				//if html is our default text, clear it out to prevent saving accidentally
-				if (original_html == settings.default_text) jQuery(this).html('');
-
-				if (settings.field_type == "textarea")
-				{
-					var use_field_type = '<textarea name="inplace_value" class="inplace_field" rows="' + settings.textarea_rows + '" cols="' + settings.textarea_cols + '">' + jQuery(this).html().trim().escape_html() + '</textarea>';
-				}
-				else if(settings.field_type == "text")
-				{
-					var use_field_type = '<input type="text" name="inplace_value" class="inplace_field" value="' +
-											jQuery(this).html().trim().escape_html() + '" />';
-				}
-				else if(settings.field_type == "select")
-				{
-					var optionsArray = settings.select_options.split(',');
-					var use_field_type = '<select name="inplace_value" class="inplace_field"><option value="">' + settings.select_text + '</option>';
-						for(var i=0; i<optionsArray.length; i++){
-							var optionsValuesArray = optionsArray[i].split(':');
-							var use_value = optionsValuesArray[1] || optionsValuesArray[0];
-							var selected = use_value == original_html ? 'selected="selected" ' : '';
-							use_field_type += '<option ' + selected + 'value="' + use_value.trim().escape_html() + '">' + optionsValuesArray[0].trim().escape_html() + '</option>';
-                        }
-						use_field_type += '</select>';
-				}
-
-				/* insert the new in place form after the element they click, then empty out the original element */
-				jQuery(this).html(use_field_type + ' ' + buttons_code);
-
-			}/* END- if(!editing) -END */
-
-			if(click_count == 1)
-			{
-				function cancelAction()
-				{
-					editing = false;
-					click_count = 0;
-
-					/* put the original background color in */
-					original_element.css("background", settings.bg_out);
-
-					/* put back the original text */
-					original_element.html(original_html);
-
-					return false;
-				}
-
-				function saveAction()
-				{ 
-					/* put the original background color in */
-					original_element.css("background", settings.bg_out);
-
-                    var this_elem = jQuery(this);
-
-					var new_html = encodeURIComponent((this_elem.is('form')) ? this_elem.children(0).val() : this_elem.parent().children(0).val());
-
-					/* set saving message */
-					if(settings.saving_image != ""){
-						var saving_message = '<img src="' + settings.saving_image + '" alt="Saving..." />';
-					} else {
-						var saving_message = settings.saving_text;
-					}
-
-					/* place the saving text/image in the original element */
-					original_element.html(saving_message);
-
-					if(settings.params != ""){
-						settings.params = "&" + settings.params;
-					}
-
-					if(settings.callback) {
-						html = settings.callback(original_element.attr("id"), new_html, original_html, settings.params);
-						editing = false;
-						click_count = 0;
-						if (html) {
-							/* put the newly updated info into the original element */
-							original_element.html(html || new_html);
-						} else {
-							/* failure; put original back */
-							//alert("Failed to save value: " + new_html);
-							original_element.html(original_html);
-						}
-					} else if (settings.value_required && (new_html == "" || new_html == undefined)) {
-						editing = false;
-						click_count = 0;
-						original_element.html(original_html);
-						alert("Error: You must enter a value to save this field");
-					} else {
-						jQuery.ajax({
-							url: settings.url,
-							type: "POST",
-							data: settings.update_value + '=' + new_html + '&' + settings.element_id + '=' + original_element.attr("id") + settings.params + '&' + settings.original_html + '=' + original_html,
-							dataType: "html",
-							complete: function(request){
-								editing = false;
-								click_count = 0;
-							},
-							success: function(html){
-								/* if the text returned by the server is empty, */
-   								/* put a marker as text in the original element */
-								var new_text = html || settings.default_text;
-
-								/* put the newly updated info into the original element */
-								original_element.html(new_text);
-								if (settings.success) settings.success(html, original_element);
-							},
-							error: function(request) {
-								original_element.html(original_html);
-								if (settings.error) settings.error(request, original_element);
-							}
-						});
-					}
-
-					return false;
-				}
-
-				/* set the focus to the new input element */
-				original_element.children(".inplace_field").focus().select();
-
-				/* CLICK CANCEL BUTTON functionality */
-				original_element.children(".inplace_cancel").click(cancelAction);
-
-				/* CLICK SAVE BUTTON functionality */
-				original_element.children(".inplace_save").click(saveAction);
-
-                /* if cancel/save buttons should be shown, cancel blur functionality */
-                if(!settings.show_buttons){
-                    /* if on_blur is set to save, set the save funcion */
-    				if(settings.on_blur == "save")
-    					original_element.children(".inplace_field").blur(saveAction);
-    				/* if on_blur is set to cancel, set the cancel funcion */
-    				else
-    					original_element.children(".inplace_field").blur(cancelAction);
-                }
-
-				/* hit esc key */
-				jQuery(document).keyup(function(event){
-				    if (event.keyCode == 27) {
-						cancelAction();
-				    }
-				});
-
-                original_element.submit(saveAction);
-
-			}/* END- if(click_count == 1) -END */
-		});
+$.fn.editInPlace = function(options) {
+	
+	var settings = $.extend({}, $.fn.editInPlace.defaults, options);
+	assertMandatorySettingsArePresent(settings);
+	preloadImage(settings.saving_image);
+	
+	return this.each(function() {
+		var dom = $(this);
+		// This won't work with live queries as there is no specific element to attach this
+		// one way to deal with this could be to store a reference to self and then compare that in click?
+		if (dom.data('editInPlace'))
+			return; // already an editor here
+		dom.data('editInPlace', true);
+		
+		new InlineEditor(settings, dom).init();
 	});
 };
+
+/// Switch these through the dictionary argument to $(aSelector).editInPlace(overideOptions)
+/// Required Options: Either url or callback, so the editor knows what to do with the edited values.
+$.fn.editInPlace.defaults = {
+	url:				"", // string: POST URL to send edited content
+	bg_over:			"#ffc", // string: background color of hover of unactivated editor
+	bg_out:				"transparent", // string: background color on restore from hover
+	hover_class:		"",  // string: class added to root element during hover. Will override bg_over and bg_out
+	show_buttons:		false, // boolean: will show the buttons: cancel or save; will automatically cancel out the onBlur functionality
+	save_button:		'<button class="inplace_save">Save</button>', // string: image button tag to use as “Save” button
+	cancel_button:		'<button class="inplace_cancel">Cancel</button>', // string: image button tag to use as “Cancel” button
+	params:				"", // string: example: first_name=dave&last_name=hauenstein extra paramters sent via the post request to the server
+	field_type:			"text", // string: "text", "textarea", or "select";  The type of form field that will appear on instantiation
+	default_text:		"(Click here to add text)", // string: text to show up if the element that has this functionality is empty
+	use_html:			false, // boolean, set to true if the editor should use jQuery.fn.html() to extract the value to show from the dom node
+	textarea_rows:		10, // integer: set rows attribute of textarea, if field_type is set to textarea. Use CSS if possible though
+	textarea_cols:		25, // integer: set cols attribute of textarea, if field_type is set to textarea. Use CSS if possible though
+	select_text:		"Choose new value", // string: default text to show up in select box
+	select_options:		"", // string or array: Used if field_type is set to 'select'. Can be comma delimited list of options 'textandValue,text:value', Array of options ['textAndValue', 'text:value'] or array of arrays ['textAndValue', ['text', 'value']]. The last form is especially usefull if your labels or values contain colons)
+	text_size:			null, // integer: set cols attribute of text input, if field_type is set to text. Use CSS if possible though
+	
+	// Specifying callback_skip_dom_reset will disable all saving_* options
+	saving_text:		undefined, // string: text to be used when server is saving information. Example "Saving..."
+	saving_image:		"", // string: uses saving text specify an image location instead of text while server is saving
+	saving_animation_color: 'transparent', // hex color string, will be the color the pulsing animation during the save pulses to. Note: Only works if jquery-ui is loaded
+	
+	value_required:		false, // boolean: if set to true, the element will not be saved unless a value is entered
+	element_id:			"element_id", // string: name of parameter holding the id or the editable
+	update_value:		"update_value", // string: name of parameter holding the updated/edited value
+	original_value:		'original_value', // string: name of parameter holding the updated/edited value
+	original_html:		"original_html", // string: name of parameter holding original_html value of the editable /* DEPRECATED in 2.2.0 */ use original_value instead.
+	save_if_nothing_changed:	false,  // boolean: submit to function or server even if the user did not change anything
+	on_blur:			"save", // string: "save" or null; what to do on blur; will be overridden if show_buttons is true
+	cancel:				"", // string: if not empty, a jquery selector for elements that will not cause the editor to open even though they are clicked. E.g. if you have extra buttons inside editable fields
+	
+	// All callbacks will have this set to the DOM node of the editor that triggered the callback
+	
+	callback:			null, // function: function to be called when editing is complete; cancels ajax submission to the url param. Prototype: function(idOfEditor, enteredText, orinalHTMLContent, settingsParams, callbacks). The function needs to return the value that should be shown in the dom. Returning undefined means cancel and will restore the dom and trigger an error. callbacks is a dictionary with two functions didStartSaving and didEndSaving() that you can use to tell the inline editor that it should start and stop any saving animations it has configured. /* DEPRECATED in 2.1.0 */ Parameter idOfEditor, use $(this).attr('id') instead
+	callback_skip_dom_reset: false, // boolean: set this to true if the callback should handle replacing the editor with the new value to show
+	success:			null, // function: this function gets called if server responds with a success. Prototype: function(newEditorContentString)
+	error:				null, // function: this function gets called if server responds with an error. Prototype: function(request)
+	error_sink:			function(idOfEditor, errorString) { alert(errorString); }, // function: gets id of the editor and the error. Make sure the editor has an id, or it will just be undefined. If set to null, no error will be reported. /* DEPRECATED in 2.1.0 */ Parameter idOfEditor, use $(this).attr('id') instead
+	preinit:			null, // function: this function gets called after a click on an editable element but before the editor opens. If you return false, the inline editor will not open. Prototype: function(currentDomNode). DEPRECATED in 2.2.0 use delegate shouldOpenEditInPlace call instead
+	postclose:			null, // function: this function gets called after the inline editor has closed and all values are updated. Prototype: function(currentDomNode). DEPRECATED in 2.2.0 use delegate didCloseEditInPlace call instead
+	delegate:			null // object: if it has methods with the name of the callbacks documented below in delegateExample these will be called. This means that you just need to impelment the callbacks you are interested in.
+};
+
+// Lifecycle events that the delegate can implement
+// this will always be fixed to the delegate
+var delegateExample = {
+	// called while opening the editor.
+	// return false to prevent editor from opening
+	shouldOpenEditInPlace: function(aDOMNode, aSettingsDict, triggeringEvent) {},
+	// return content to show in inplace editor
+	willOpenEditInPlace: function(aDOMNode, aSettingsDict) {},
+	didOpenEditInPlace: function(aDOMNode, aSettingsDict) {},
+	
+	// called while closing the editor
+	// return false to prevent the editor from closing
+	shouldCloseEditInPlace: function(aDOMNode, aSettingsDict, triggeringEvent) {},
+	// return value will be shown during saving
+	willCloseEditInPlace: function(aDOMNode, aSettingsDict) {},
+	didCloseEditInPlace: function(aDOMNode, aSettingsDict) {},
+	
+	missingCommaErrorPreventer:''
+};
+
+
+function InlineEditor(settings, dom) {
+	this.settings = settings;
+	this.dom = dom;
+	this.originalValue = null;
+	this.didInsertDefaultText = false;
+	this.shouldDelayReinit = false;
+};
+
+$.extend(InlineEditor.prototype, {
+	
+	init: function() {
+		this.setDefaultTextIfNeccessary();
+		this.connectOpeningEvents();
+	},
+	
+	reinit: function() {
+		if (this.shouldDelayReinit)
+			return;
+		
+		this.triggerCallback(this.settings.postclose, /* DEPRECATED in 2.1.0 */ this.dom);
+		this.triggerDelegateCall('didCloseEditInPlace');
+		
+		this.markEditorAsInactive();
+		this.connectOpeningEvents();
+	},
+	
+	setDefaultTextIfNeccessary: function() {
+		if('' !== this.dom.html())
+			return;
+		
+		this.dom.html(this.settings.default_text);
+		this.didInsertDefaultText = true;
+	},
+	
+	connectOpeningEvents: function() {
+		var that = this;
+		this.dom
+			.bind('mouseenter.editInPlace', function(){ that.addHoverEffect(); })
+			.bind('mouseleave.editInPlace', function(){ that.removeHoverEffect(); })
+			.bind('click.editInPlace', function(anEvent){ that.openEditor(anEvent); });
+	},
+	
+	disconnectOpeningEvents: function() {
+	 	// prevent re-opening the editor when it is already open
+		this.dom.unbind('.editInPlace');
+	},
+	
+	addHoverEffect: function() {
+		if (this.settings.hover_class)
+			this.dom.addClass(this.settings.hover_class);
+		else
+			this.dom.css("background-color", this.settings.bg_over);
+	},
+	
+	removeHoverEffect: function() {
+		if (this.settings.hover_class)
+			this.dom.removeClass(this.settings.hover_class);
+		else
+			this.dom.css("background-color", this.settings.bg_out);
+	},
+	
+	openEditor: function(anEvent) {
+		if ( ! this.shouldOpenEditor(anEvent))
+			return;
+		
+		this.disconnectOpeningEvents();
+		this.removeHoverEffect();
+		this.removeInsertedDefaultTextIfNeccessary();
+		this.saveOriginalValue();
+		this.markEditorAsActive();
+		this.replaceContentWithEditor();
+		this.setInitialValue();
+		this.workAroundMissingBlurBug();
+		this.connectClosingEventsToEditor();
+		this.triggerDelegateCall('didOpenEditInPlace');
+	},
+	
+	shouldOpenEditor: function(anEvent) {
+		if (this.isClickedObjectCancelled(anEvent.target))
+			return false;
+		
+		if (false === this.triggerCallback(this.settings.preinit, /* DEPRECATED in 2.1.0 */ this.dom))
+			return false;
+		
+		if (false === this.triggerDelegateCall('shouldOpenEditInPlace', true, anEvent))
+			return false;
+		
+		return true;
+	},
+	
+	removeInsertedDefaultTextIfNeccessary: function() {
+		if ( ! this.didInsertDefaultText
+			|| this.dom.html() !== this.settings.default_text)
+			return;
+		
+		this.dom.html('');
+		this.didInsertDefaultText = false;
+	},
+	
+	isClickedObjectCancelled: function(eventTarget) {
+		if ( ! this.settings.cancel)
+			return false;
+		
+		var eventTargetAndParents = $(eventTarget).parents().andSelf();
+		var elementsMatchingCancelSelector = eventTargetAndParents.filter(this.settings.cancel);
+		return 0 !== elementsMatchingCancelSelector.length;
+	},
+	
+	saveOriginalValue: function() {
+		if (this.settings.use_html)
+			this.originalValue = this.dom.html();
+		else
+			this.originalValue = trim(this.dom.text());
+	},
+	
+	restoreOriginalValue: function() {
+		this.setClosedEditorContent(this.originalValue);
+	},
+	
+	setClosedEditorContent: function(aValue) {
+		if (this.settings.use_html)
+			this.dom.html(aValue);
+		else
+			this.dom.text(aValue);
+	},
+	
+	workAroundMissingBlurBug: function() {
+		// Strangely, all browser will forget to send a blur event to an input element
+		// when another one is created and selected programmatically. (at least under some circumstances). 
+		// This means that if another inline editor is opened, existing inline editors will _not_ close 
+		// if they are configured to submit when blurred.
+		
+		// Using parents() instead document as base to workaround the fact that in the unittests
+		// the editor is not a child of window.document but of a document fragment
+		var ourInput = this.dom.find(':input');
+		this.dom.parents(':last').find('.editInPlace-active :input').not(ourInput).blur();
+	},
+	
+	replaceContentWithEditor: function() {
+		var buttons_html  = (this.settings.show_buttons) ? this.settings.save_button + ' ' + this.settings.cancel_button : '';
+		var editorElement = this.createEditorElement(); // needs to happen before anything is replaced
+		/* insert the new in place form after the element they click, then empty out the original element */
+		this.dom.html('<form class="inplace_form" style="display: inline; margin: 0; padding: 0;"></form>')
+			.find('form')
+				.append(editorElement)
+				.append(buttons_html);
+	},
+	
+	createEditorElement: function() {
+		if (-1 === $.inArray(this.settings.field_type, ['text', 'textarea', 'select']))
+			throw "Unknown field_type <fnord>, supported are 'text', 'textarea' and 'select'";
+		
+		var editor = null;
+		if ("select" === this.settings.field_type)
+			editor = this.createSelectEditor();
+		else if ("text" === this.settings.field_type)
+			editor = $('<input type="text" ' + this.inputNameAndClass() 
+				+ ' size="' + this.settings.text_size  + '" />');
+		else if ("textarea" === this.settings.field_type)
+			editor = $('<textarea ' + this.inputNameAndClass() 
+				+ ' rows="' + this.settings.textarea_rows + '" '
+				+ ' cols="' + this.settings.textarea_cols + '" />');
+		
+		return editor;
+	},
+	
+	setInitialValue: function() {
+		var initialValue = this.triggerDelegateCall('willOpenEditInPlace', this.originalValue);
+		var editor = this.dom.find(':input');
+		editor.val(initialValue);
+		
+		// Workaround for select fields which don't contain the original value.
+		// Somehow the browsers don't like to select the instructional choice (disabled) in that case
+		if (editor.val() !== initialValue)
+			editor.val(''); // selects instructional choice
+	},
+	
+	inputNameAndClass: function() {
+		return ' name="inplace_value" class="inplace_field" ';
+	},
+	
+	createSelectEditor: function() {
+		var editor = $('<select' + this.inputNameAndClass() + '>'
+			+	'<option disabled="true" value="">' + this.settings.select_text + '</option>'
+			+ '</select>');
+		
+		var optionsArray = this.settings.select_options;
+		if ( ! $.isArray(optionsArray))
+			optionsArray = optionsArray.split(',');
+		
+		for (var i=0; i<optionsArray.length; i++) {
+			var currentTextAndValue = optionsArray[i];
+			if ( ! $.isArray(currentTextAndValue))
+				currentTextAndValue = currentTextAndValue.split(':');
+			
+			var value = trim(currentTextAndValue[1] || currentTextAndValue[0]);
+			var text = trim(currentTextAndValue[0]);
+			
+			var option = $('<option>').val(value).text(text);
+			editor.append(option);
+		}
+		
+		return editor;
+	},
+	
+	connectClosingEventsToEditor: function() {
+		var that = this;
+		function cancelEditorAction(anEvent) {
+			that.handleCancelEditor(anEvent);
+			return false; // stop event bubbling
+		}
+		function saveEditorAction(anEvent) {
+			that.handleSaveEditor(anEvent);
+			return false; // stop event bubbling
+		}
+		
+		var form = this.dom.find("form");
+		
+		form.find(".inplace_field").focus().select();
+		form.find(".inplace_cancel").click(cancelEditorAction);
+		form.find(".inplace_save").click(saveEditorAction);
+		
+		if ( ! this.settings.show_buttons) {
+				// TODO: Firefox has a bug where blur is not reliably called when focus is lost 
+				//       (for example by another editor appearing)
+			if ("save" === this.settings.on_blur)
+				form.find(".inplace_field").blur(saveEditorAction);
+			else
+				form.find(".inplace_field").blur(cancelEditorAction);
+			
+			// workaround for msie & firefox bug where it won't submit on enter if no button is shown
+			if ($.browser.mozilla || $.browser.msie)
+				this.bindSubmitOnEnterInInput();
+		}
+		
+		form.keyup(function(anEvent) {
+			// allow canceling with escape
+			var escape = 27;
+			if (escape === anEvent.which)
+				return cancelEditorAction();
+		});
+		
+		// workaround for webkit nightlies where they won't submit at all on enter
+		// REFACT: find a way to just target the nightlies
+		if ($.browser.safari)
+			this.bindSubmitOnEnterInInput();
+		
+		
+		form.submit(saveEditorAction);
+	},
+	
+	bindSubmitOnEnterInInput: function() {
+		if ('textarea' === this.settings.field_type)
+			return; // can't enter newlines otherwise
+		
+		var that = this;
+		this.dom.find(':input').keyup(function(event) {
+			var enter = 13;
+			if (enter === event.which)
+				return that.dom.find('form').submit();
+		});
+	 	
+	},
+	
+	handleCancelEditor: function(anEvent) {
+		// REFACT: remove duplication between save and cancel
+		if (false === this.triggerDelegateCall('shouldCloseEditInPlace', true, anEvent))
+			return;
+		
+		var enteredText = this.dom.find(':input').val();
+		enteredText = this.triggerDelegateCall('willCloseEditInPlace', enteredText);
+		
+		this.restoreOriginalValue();
+		if (hasContent(enteredText) 
+			&& ! this.isDisabledDefaultSelectChoice())
+			this.setClosedEditorContent(enteredText);
+		this.reinit();
+	},
+	
+	handleSaveEditor: function(anEvent) {
+		if (false === this.triggerDelegateCall('shouldCloseEditInPlace', true, anEvent))
+			return;
+		
+		var enteredText = this.dom.find(':input').val();
+		enteredText = this.triggerDelegateCall('willCloseEditInPlace', enteredText);
+		
+		if (this.isDisabledDefaultSelectChoice()
+			|| this.isUnchangedInput(enteredText)) {
+			this.handleCancelEditor(anEvent);
+			return;
+		}
+		
+		if (this.didForgetRequiredText(enteredText)) {
+			this.handleCancelEditor(anEvent);
+			this.reportError("Error: You must enter a value to save this field");
+			return;
+		}
+		
+		this.showSaving(enteredText);
+		
+		if (this.settings.callback)
+			this.handleSubmitToCallback(enteredText);
+		else
+			this.handleSubmitToServer(enteredText);
+	},
+	
+	didForgetRequiredText: function(enteredText) {
+		return this.settings.value_required 
+			&& ("" === enteredText 
+				|| undefined === enteredText
+				|| null === enteredText);
+	},
+	
+	isDisabledDefaultSelectChoice: function() {
+		return this.dom.find('option').eq(0).is(':selected:disabled');
+	},
+	
+	isUnchangedInput: function(enteredText) {
+		return ! this.settings.save_if_nothing_changed
+			&& this.originalValue === enteredText;
+	},
+	
+	showSaving: function(enteredText) {
+		if (this.settings.callback && this.settings.callback_skip_dom_reset)
+			return;
+		
+		var savingMessage = enteredText;
+		if (hasContent(this.settings.saving_text))
+			savingMessage = this.settings.saving_text;
+		if(hasContent(this.settings.saving_image))
+			// REFACT: alt should be the configured saving message
+			savingMessage = $('<img />').attr('src', this.settings.saving_image).attr('alt', savingMessage);
+		this.dom.html(savingMessage);
+	},
+	
+	handleSubmitToCallback: function(enteredText) {
+		// REFACT: consider to encode enteredText and originalHTML before giving it to the callback
+		this.enableOrDisableAnimationCallbacks(true, false);
+		var newHTML = this.triggerCallback(this.settings.callback, /* DEPRECATED in 2.1.0 */ this.id(), enteredText, this.originalValue, 
+			this.settings.params, this.savingAnimationCallbacks());
+		
+		if (this.settings.callback_skip_dom_reset)
+			; // do nothing
+		else if (undefined === newHTML) {
+			// failure; put original back
+			this.reportError("Error: Failed to save value: " + enteredText);
+			this.restoreOriginalValue();
+		}
+		else
+			// REFACT: use setClosedEditorContent
+			this.dom.html(newHTML);
+		
+		if (this.didCallNoCallbacks()) {
+			this.enableOrDisableAnimationCallbacks(false, false);
+			this.reinit();
+		}
+	},
+	
+	handleSubmitToServer: function(enteredText) {
+		var data = this.settings.update_value + '=' + encodeURIComponent(enteredText) 
+			+ '&' + this.settings.element_id + '=' + this.dom.attr("id") 
+			+ ((this.settings.params) ? '&' + this.settings.params : '')
+			+ '&' + this.settings.original_html + '=' + encodeURIComponent(this.originalValue) /* DEPRECATED in 2.2.0 */
+			+ '&' + this.settings.original_value + '=' + encodeURIComponent(this.originalValue);
+		
+		this.enableOrDisableAnimationCallbacks(true, false);
+		this.didStartSaving();
+		var that = this;
+		$.ajax({
+			url: that.settings.url,
+			type: "POST",
+			data: data,
+			dataType: "html",
+			complete: function(request){
+				that.didEndSaving();
+			},
+			success: function(html){
+				var new_text = html || that.settings.default_text;
+				
+				/* put the newly updated info into the original element */
+				// FIXME: should be affected by the preferences switch
+				that.dom.html(new_text);
+				// REFACT: remove dom parameter, already in this, not documented, should be easy to remove
+				// REFACT: callback should be able to override what gets put into the DOM
+				that.triggerCallback(that.settings.success, html);
+			},
+			error: function(request) {
+				that.dom.html(that.originalHTML); // REFACT: what about a restorePreEditingContent()
+				if (that.settings.error)
+					// REFACT: remove dom parameter, already in this, not documented, can remove without deprecation
+					// REFACT: callback should be able to override what gets entered into the DOM
+					that.triggerCallback(that.settings.error, request);
+				else
+					that.reportError("Failed to save value: " + request.responseText || 'Unspecified Error');
+			}
+		});
+	},
+	
+	// Utilities .........................................................
+	
+	triggerCallback: function(aCallback /*, arguments */) {
+		if ( ! aCallback)
+			return; // callback wasn't specified after all
+		
+		var callbackArguments = Array.prototype.slice.call(arguments, 1);
+		return aCallback.apply(this.dom[0], callbackArguments);
+	},
+	
+	/// defaultReturnValue is only used if the delegate returns undefined
+	triggerDelegateCall: function(aDelegateMethodName, defaultReturnValue, optionalEvent) {
+		// REFACT: consider to trigger equivalent callbacks automatically via a mapping table?
+		if ( ! this.settings.delegate
+			|| ! $.isFunction(this.settings.delegate[aDelegateMethodName]))
+			return defaultReturnValue;
+		
+		var delegateReturnValue =  this.settings.delegate[aDelegateMethodName](this.dom, this.settings, optionalEvent);
+		return (undefined === delegateReturnValue)
+			? defaultReturnValue
+			: delegateReturnValue;
+	},
+	
+	reportError: function(anErrorString) {
+		this.triggerCallback(this.settings.error_sink, /* DEPRECATED in 2.1.0 */ this.id(), anErrorString);
+	},
+	
+	// REFACT: this method should go, callbacks should get the dom node itself as an argument
+	id: function() {
+		return this.dom.attr('id');
+	},
+	
+	markEditorAsActive: function() {
+		this.dom.addClass('editInPlace-active');
+	},
+	
+	markEditorAsInactive: function() {
+		this.dom.removeClass('editInPlace-active');
+	},
+	
+	// REFACT: consider rename, doesn't deal with animation directly
+	savingAnimationCallbacks: function() {
+		var that = this;
+		return {
+			didStartSaving: function() { that.didStartSaving(); },
+			didEndSaving: function() { that.didEndSaving(); }
+		};
+	},
+	
+	enableOrDisableAnimationCallbacks: function(shouldEnableStart, shouldEnableEnd) {
+		this.didStartSaving.enabled = shouldEnableStart;
+		this.didEndSaving.enabled = shouldEnableEnd;
+	},
+	
+	didCallNoCallbacks: function() {
+		return this.didStartSaving.enabled && ! this.didEndSaving.enabled;
+	},
+	
+	assertCanCall: function(methodName) {
+		if ( ! this[methodName].enabled)
+			throw new Error('Cannot call ' + methodName + ' now. See documentation for details.');
+	},
+	
+	didStartSaving: function() {
+		this.assertCanCall('didStartSaving');
+		this.shouldDelayReinit = true;
+		this.enableOrDisableAnimationCallbacks(false, true);
+		
+		this.startSavingAnimation();
+	},
+	
+	didEndSaving: function() {
+		this.assertCanCall('didEndSaving');
+		this.shouldDelayReinit = false;
+		this.enableOrDisableAnimationCallbacks(false, false);
+		this.reinit();
+		
+		this.stopSavingAnimation();
+	},
+	
+	startSavingAnimation: function() {
+		var that = this;
+		this.dom
+			.animate({ backgroundColor: this.settings.saving_animation_color }, 400)
+			.animate({ backgroundColor: 'transparent'}, 400, 'swing', function(){
+				// In the tests animations are turned off - i.e they happen instantaneously.
+				// Hence we need to prevent this from becomming an unbounded recursion.
+				setTimeout(function(){ that.startSavingAnimation(); }, 10);
+			});
+	},
+	
+	stopSavingAnimation: function() {
+		this.dom
+			.stop(true)
+			.css({backgroundColor: ''});
+	},
+	
+	missingCommaErrorPreventer:''
+});
+
+
+
+// Private helpers .......................................................
+
+function assertMandatorySettingsArePresent(options) {
+	// one of these needs to be non falsy
+	if (options.url || options.callback)
+		return;
+	
+	throw new Error("Need to set either url: or callback: option for the inline editor to work.");
+}
+
+/* preload the loading icon if it is configured */
+function preloadImage(anImageURL) {
+	if ('' === anImageURL)
+		return;
+	
+	var loading_image = new Image();
+	loading_image.src = anImageURL;
+}
+
+function trim(aString) {
+	return aString
+		.replace(/^\s+/, '')
+		.replace(/\s+$/, '');
+}
+
+function hasContent(something) {
+	if (undefined === something || null === something)
+		return false;
+	
+	if (0 === something.length)
+		return false;
+	
+	return true;
+}
+
+})(jQuery);

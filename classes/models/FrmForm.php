@@ -129,7 +129,7 @@ class FrmForm{
         $existing_keys = array_keys($values['item_meta']);
         
         foreach ($all_fields as $fid){
-            if (!in_array($fid->id, $existing_keys))
+            if (!in_array($fid->id, $existing_keys) and (!isset($values['frm_fields_submitted']) or in_array($fid->id, $values['frm_fields_submitted'])))
                 $values['item_meta'][$fid->id] = '';
         }
         
@@ -156,6 +156,7 @@ class FrmForm{
                 
                 foreach (array('size', 'max', 'label', 'invalid', 'required_indicator', 'blank', 'classes') as $opt)
                     $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : ''; 
+                
                 $field_options['separate_value'] = isset($values['field_options']['separate_value_'.$field_id]) ? trim($values['field_options']['separate_value_'.$field_id]) : 0; 
                     
                 $field_options = apply_filters('frm_update_field_options', $field_options, $field, $values);

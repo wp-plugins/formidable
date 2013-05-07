@@ -72,12 +72,14 @@ class FrmAppHelper{
     }
     
     function wp_roles_dropdown($field_name, $capability){
+        global $frm_editable_roles;
         $field_value = FrmAppHelper::get_param($field_name);
-    	$editable_roles = get_editable_roles();
+        if(!$frm_editable_roles)
+    	    $frm_editable_roles = get_editable_roles();
 
     ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
-            <?php foreach($editable_roles as $role => $details){ 
+            <?php foreach($frm_editable_roles as $role => $details){ 
                 $name = translate_user_role($details['name'] ); ?>
                 <option value="<?php echo esc_attr($role) ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $role) or (!isset($_POST[$field_name]) and $capability == $role))?' selected="selected"':''); ?>><?php echo $name ?> </option>
             <?php } ?>
@@ -328,7 +330,7 @@ class FrmAppHelper{
                     unset($v);
                 }
                 
-                $values['fields'][] = $field_array;
+                $values['fields'][$field->id] = $field_array;
                 
                 unset($field);   
             }
@@ -655,6 +657,48 @@ class FrmAppHelper{
     	$referrerinfo .= "\r\n";
     	
     	return $referrerinfo;
-    }    
+    }
+    
+    function json_to_array($json_vars){
+        $vars = array();
+        foreach($json_vars as $jv){
+            $jv_name = explode('[', $jv['name']);
+            $last = end($jv_name);
+            foreach($jv_name as $p => $n){
+                
+                $name = trim($n, ']');
+                if($p == 0){
+                    $l1 = $name;
+                    if($n == $last)
+                        $vars[$l1] = $jv['value'];
+                    elseif(!isset($vars[$l1]) and $n != $last)
+                        $vars[$l1] = array();
+                }
+                
+                if($p == 1){
+                    $l2 = $name;
+                    if($n == $last)
+                        $vars[$l1][$l2] = $jv['value'];
+                    else if(!isset($vars[$l1][$l2]))
+                        $vars[$l1][$l2] = array();
+                }
+                
+                if($p == 2){
+                    $l3 = $name;
+                    if($n == $last)
+                        $vars[$l1][$l2][$l3] = $jv['value'];
+                    else if(!isset($vars[$l1][$l2][$l3]))
+                        $vars[$l1][$l2][$l3] = array();
+                }
+                 
+                unset($n);
+            }
+            
+            unset($last);
+            unset($jv);
+        }
+        
+        return $vars;
+    }
     
 }

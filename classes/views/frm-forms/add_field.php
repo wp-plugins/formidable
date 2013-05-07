@@ -1,4 +1,13 @@
-<?php $display = apply_filters('frm_display_field_options', array(
+<?php
+if(isset($count) and $count > 5){ ?>
+<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading">
+<img src="<?php echo FRM_IMAGES_URL ?>/ajax_loader.gif" />
+</li>
+<?php
+   return;
+}
+
+$display = apply_filters('frm_display_field_options', array(
     'type' => $field['type'], 'field_data' => $field, 'required' => true, 
     'description' => true, 'options' => true, 'label_position' => true, 
     'invalid' => false, 'size' => false, 'clear_on_focus' => false, 
@@ -9,8 +18,8 @@
     <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
     <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php _e('Delete Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
     <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
+    <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>"/>
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
-    
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
         <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>)" class="frm_action_icon frm_required_icon alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
