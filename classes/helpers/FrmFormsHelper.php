@@ -165,7 +165,7 @@ BEFORE_HTML;
                     $replace_with = $form->description;
             }else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry'])){
                 $replace_with = $_GET['entry'];
-            }else if($code == 'button_label'){
+            }else if($code == 'button_label' and strpos($html, $code)){
                 $replace_with = apply_filters('frm_submit_button', $show, $form);
             }
                 
