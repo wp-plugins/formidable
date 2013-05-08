@@ -663,34 +663,36 @@ class FrmAppHelper{
         $vars = array();
         foreach($json_vars as $jv){
             $jv_name = explode('[', $jv['name']);
-            $last = end($jv_name);
+            $last = count($jv_name)-1;
             foreach($jv_name as $p => $n){
-                
                 $name = trim($n, ']');
-                if($p == 0){
+                $this_val = ($p == $last) ? $jv['value'] : array();
+                   
+                if(!$p){
                     $l1 = $name;
-                    if($n == $last)
-                        $vars[$l1] = $jv['value'];
-                    elseif(!isset($vars[$l1]) and $n != $last)
-                        $vars[$l1] = array();
+                    if($name == '')
+                        $vars[] = $this_val;
+                    else if(!isset($vars[$l1]))
+                        $vars[$l1] = $this_val;
                 }
                 
                 if($p == 1){
                     $l2 = $name;
-                    if($n == $last)
-                        $vars[$l1][$l2] = $jv['value'];
+                    if($name == '')
+                        $vars[$l1][] = $this_val;
                     else if(!isset($vars[$l1][$l2]))
-                        $vars[$l1][$l2] = array();
+                        $vars[$l1][$l2] = $this_val;
                 }
                 
                 if($p == 2){
                     $l3 = $name;
-                    if($n == $last)
-                        $vars[$l1][$l2][$l3] = $jv['value'];
+                    if($name == '')
+                        $vars[$l1][$l2][] = $this_val;
                     else if(!isset($vars[$l1][$l2][$l3]))
-                        $vars[$l1][$l2][$l3] = array();
+                        $vars[$l1][$l2][$l3] = $this_val;
                 }
-                 
+                
+                unset($this_val);
                 unset($n);
             }
             

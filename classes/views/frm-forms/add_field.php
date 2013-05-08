@@ -18,7 +18,7 @@ $display = apply_filters('frm_display_field_options', array(
     <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
     <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php _e('Delete Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
     <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
-    <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>"/>
+    <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>" />
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
@@ -98,7 +98,7 @@ $display = apply_filters('frm_display_field_options', array(
             
             <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
             <?php _e('or', 'formidable'); ?>
-            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?plugin=formidable&controller=fields&frm_action=import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
             <?php } ?>
         </div>
 <?php } ?>

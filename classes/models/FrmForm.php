@@ -127,9 +127,9 @@ class FrmForm{
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();
         $existing_keys = array_keys($values['item_meta']);
-        
+
         foreach ($all_fields as $fid){
-            if (!in_array($fid->id, $existing_keys) and (!isset($values['frm_fields_submitted']) or in_array($fid->id, $values['frm_fields_submitted'])))
+            if (!in_array($fid->id, $existing_keys) and isset($values['frm_fields_submitted']) and in_array($fid->id, $values['frm_fields_submitted']))
                 $values['item_meta'][$fid->id] = '';
         }
         
