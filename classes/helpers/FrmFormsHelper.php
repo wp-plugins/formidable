@@ -155,7 +155,7 @@ BEFORE_HTML;
     }
     
     function replace_shortcodes($html, $form, $title=false, $description=false){
-        foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true, 'button_label' => $title) as $code => $show){
+        foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true) as $code => $show){
             if ($code == 'form_name'){
                 $replace_with = $form->name;
             }else if ($code == 'form_description'){
@@ -165,8 +165,6 @@ BEFORE_HTML;
                     $replace_with = $form->description;
             }else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry'])){
                 $replace_with = $_GET['entry'];
-            }else if($code == 'button_label' and strpos($html, $code)){
-                $replace_with = apply_filters('frm_submit_button', $show, $form);
             }
                 
             if (($show == true || $show == 'true') && $replace_with != '' ){
@@ -180,6 +178,11 @@ BEFORE_HTML;
         
         //replace [form_key]
         $html = str_replace('[form_key]', $form->form_key, $html);
+        
+        if(strpos($html, '[button_label]')){
+            $replace_with = apply_filters('frm_submit_button', $title, $form);
+            $html = str_replace('[button_label]', $replace_with, $html);
+        }
         
         return apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form);
     }
