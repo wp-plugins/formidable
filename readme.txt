@@ -61,14 +61,16 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
-= 1.06.12 =
+= 1.07.0 =
 * Submit build form in one input to prevent max_input_vars limitations
-* Load fields on the build page with ajax for long forms
+* Load fields on the build page with ajax for long forms and other form builder page optimization
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export
 * PRO: Added column in CSV for value for fields that are set to use separate values
 * PRO: Removed border styling from the container around radio and checkbox fields
+* PRO: Copy conditional logic and field calculations into duplicated forms
+* PRO: Allow clickable=1 to be used with Google formresults shortcode
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javscript after ajax submit
 * PRO: Updated star rating javascript version
 * PRO: Don't show custom display content for password protected posts until allowed

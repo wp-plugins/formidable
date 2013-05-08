@@ -122,7 +122,7 @@ class FrmForm{
         $query_results = true;
     }
 
-    $all_fields = $frm_field->getAll(array('fi.form_id' => $id));
+    $all_fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
     if ($all_fields and (isset($values['options']) or isset($values['item_meta']) or isset($values['field_options']))){
         if(!isset($values['item_meta']))
             $values['item_meta'] = array();

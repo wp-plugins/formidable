@@ -8,7 +8,7 @@
     <?php if(isset($show_preview)){ ?>
     <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview Form', 'formidable') ?></a>
     <?php global $frm_settings; 
-        if ($frm_settings->preview_page_id > 0){ ?>
+        if (!empty($frm_settings->preview_page_id)){ ?>
         <?php _e('or', 'formidable') ?> 
         <a href="<?php echo add_query_arg('form', $values['form_key'], get_permalink($frm_settings->preview_page_id)) ?>" target="_blank"><?php _e('Preview in Current Theme', 'formidable') ?></a>
     <?php } ?>
@@ -77,7 +77,7 @@
     	</div>
     	<?php $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = FrmAppHelper::get_param($action);
-        $button = ($action == 'new') ? __('Create', 'formidable') : __('Update', 'formidable');
+        $button = ($action == 'new' or $action == 'duplicate') ? __('Create', 'formidable') : __('Update', 'formidable');
         ?>
     	<form method="post" id="frm_js_build_form">
     	    <input type="hidden" id="frm_compact_fields" name="frm_compact_fields" value="" />

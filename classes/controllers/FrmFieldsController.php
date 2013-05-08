@@ -33,6 +33,7 @@ class FrmFieldsController{
         if(!$field_id or !is_numeric($field_id))
             die();
         
+        $_GET['page'] = 'formidable';
         $field = $frm_field->getOne($field_id);
         $id = $field->form_id;
         $form = $frm_form->getOne( $id );

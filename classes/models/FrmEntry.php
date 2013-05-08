@@ -329,7 +329,7 @@ class FrmEntry{
         if($exclude)
             $where .= " and fi.type not in ('". implode("','", $exclude) ."')";
             
-        $posted_fields = $frm_field->getAll($where, 'fi.field_order');
+        $posted_fields = $frm_field->getAll($where, 'field_order');
 
         foreach($posted_fields as $posted_field){ 
             $posted_field->field_options = maybe_unserialize($posted_field->field_options);
