@@ -24,8 +24,8 @@ learn to use a search engine.
 (function($){
 
 $.fn.editInPlace = function(options) {
-	
 	var settings = $.extend({}, $.fn.editInPlace.defaults, options);
+	if(settings.type == 'textarea') settings.use_html = true;
 	assertMandatorySettingsArePresent(settings);
 	preloadImage(settings.saving_image);
 	
@@ -45,10 +45,10 @@ $.fn.editInPlace = function(options) {
 /// Required Options: Either url or callback, so the editor knows what to do with the edited values.
 $.fn.editInPlace.defaults = {
 	url:				"", // string: POST URL to send edited content
-	bg_over:			"#ffc", // string: background color of hover of unactivated editor
+	bg_over:			"#ffffde", // string: background color of hover of unactivated editor
 	bg_out:				"transparent", // string: background color on restore from hover
 	hover_class:		"",  // string: class added to root element during hover. Will override bg_over and bg_out
-	show_buttons:		false, // boolean: will show the buttons: cancel or save; will automatically cancel out the onBlur functionality
+	show_buttons:		((navigator.appName=='Microsoft Internet Explorer') ? true : false), // boolean: will show the buttons: cancel or save; will automatically cancel out the onBlur functionality
 	save_button:		'<button class="inplace_save">Save</button>', // string: image button tag to use as “Save” button
 	cancel_button:		'<button class="inplace_cancel">Cancel</button>', // string: image button tag to use as “Cancel” button
 	params:				"", // string: example: first_name=dave&last_name=hauenstein extra paramters sent via the post request to the server
@@ -250,7 +250,7 @@ $.extend(InlineEditor.prototype, {
 		var buttons_html  = (this.settings.show_buttons) ? this.settings.save_button + ' ' + this.settings.cancel_button : '';
 		var editorElement = this.createEditorElement(); // needs to happen before anything is replaced
 		/* insert the new in place form after the element they click, then empty out the original element */
-		this.dom.html('<form class="inplace_form" style="display: inline; margin: 0; padding: 0;"></form>')
+		this.dom.html('').append('<form class="inplace_form" style="display: inline; margin: 0; padding: 0;"></form>')
 			.find('form')
 				.append(editorElement)
 				.append(buttons_html);
@@ -449,9 +449,9 @@ $.extend(InlineEditor.prototype, {
 		var newHTML = this.triggerCallback(this.settings.callback, /* DEPRECATED in 2.1.0 */ this.id(), enteredText, this.originalValue, 
 			this.settings.params, this.savingAnimationCallbacks());
 		
-		if (this.settings.callback_skip_dom_reset)
-			; // do nothing
-		else if (undefined === newHTML) {
+		if (this.settings.callback_skip_dom_reset){
+			// do nothing
+		}else if (undefined === newHTML) {
 			// failure; put original back
 			this.reportError("Error: Failed to save value: " + enteredText);
 			this.restoreOriginalValue();

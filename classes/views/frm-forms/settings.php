@@ -79,8 +79,8 @@
                     </td>
                 </tr>
                 
-                <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2"><label><?php _e('Redirect to URL', 'formidable') ?></label>
-                    <input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" size="55"></td>
+                <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2">
+                    <input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" style="width:98%" placeholder="http://example.com" /></td>
                 </tr>
                 
                 <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2"><label><?php _e('Confirmation Message', 'formidable') ?></label>
