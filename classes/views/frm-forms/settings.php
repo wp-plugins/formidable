@@ -144,6 +144,9 @@
 
                 <p><label class="frm_primary_label"><?php _e('After Fields', 'formidable') ?></label>
                 <textarea name="options[after_html]" rows="3" id="after_html" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea(stripslashes($values['after_html'])) ?></textarea></p> 
+                
+                <p><label class="frm_primary_label"><?php _e('Submit Button', 'formidable') ?></label>
+                <textarea name="options[submit_html]" rows="3" id="submit_html" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea(stripslashes($values['submit_html'])) ?></textarea></p>
             </div>
         </div>
         <div id="post_settings" class="tabs-panel" style="display:none;">

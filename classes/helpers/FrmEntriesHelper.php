@@ -103,6 +103,9 @@ class FrmEntriesHelper{
 
             if (!isset($values['after_html']))
                 $values['after_html'] = FrmFormsHelper::get_default_html('after');
+                
+            if (!isset($values['submit_html']))
+                $values['submit_html'] = FrmFormsHelper::get_default_html('submit');
         }
         
         return apply_filters('frm_setup_new_entry', $values);
@@ -110,7 +113,7 @@ class FrmEntriesHelper{
     
     function setup_edit_vars($values, $record){
         //$values['description'] = maybe_unserialize( $record->description );
-        $values['item_key'] = ($_POST and isset($_POST['item_key']))?$_POST['item_key']:$record->item_key;
+        $values['item_key'] = ($_POST and isset($_POST['item_key'])) ? $_POST['item_key'] : $record->item_key;
         $values['form_id'] = $record->form_id;
         return apply_filters('frm_setup_edit_entry_vars', $values, $record);
     }

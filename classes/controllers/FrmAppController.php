@@ -107,7 +107,7 @@ class FrmAppController{
             global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if(((int)$db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 19)){ //this number should match the db_version in FrmDb.php
+            if(((int)$db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 20)){ //this number should match the db_version in FrmDb.php
             ?>
 <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="#" onclick="frm_install_now();return false;"><?php _e('Update Now', 'formidable') ?></a></div>  
 <script type="text/javascript">
@@ -138,6 +138,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         
         if(isset($_GET) and (isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])) or ($pagenow == 'edit.php' and isset($_GET) and isset($_GET['post_type']) and $_GET['post_type'] == 'frm_display')){
             add_filter('admin_body_class', array(&$this, 'admin_body_class'));
+            
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
             wp_enqueue_script('admin-widgets');
@@ -184,7 +185,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             //$frm_db_version is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
-            if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 19))
+            if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 20))
                 $this->install($old_db_version);
         }
 

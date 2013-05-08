@@ -64,6 +64,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.07.0 =
 * Submit build form in one input to prevent max_input_vars limitations
 * Load fields on the build page with ajax for long forms and other form builder page optimization
+* Added submit button to customizable HTML
+* Create entry key from first required text field
+* Set the default name of a field to the field type instead of "Untitled"
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export

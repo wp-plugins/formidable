@@ -76,6 +76,14 @@ class FrmFieldsHelper{
             $values['field_options']['max'] = '5';
         else if ($type == 'captcha')
             $values['invalid'] = $frm_settings->re_msg;
+            
+        $fields = self::field_selection();
+        $fields = array_merge($fields, self::pro_field_selection());
+
+        if(isset($fields[$type]))
+            $values['name'] = $fields[$type];
+
+        unset($fields);
         
         return $values;
     }

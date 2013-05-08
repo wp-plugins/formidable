@@ -385,6 +385,9 @@ class FrmAppHelper{
 
         if (!isset($values['after_html']))
             $values['after_html'] = (isset($post_values['options']['after_html']) ? $post_values['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
+        
+        if (!isset($values['submit_html']))
+            $values['submit_html'] = (isset($post_values['options']['submit_html']) ? $post_values['options']['submit_html'] : FrmFormsHelper::get_default_html('submit'));
 
         if ($table == 'entries')
             $values = FrmEntriesHelper::setup_edit_vars( $values, $record );

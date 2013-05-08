@@ -517,7 +517,7 @@ function frmToggleAllowedShortcodes(id){
   	jQuery('#frm-insert-fields,#frm-conditionals,#frm-adv-info-tab,#frm-html-tags').removeClass().addClass('tabs-panel '+c);
   	var a=['content','wpbody-content','dyncontent','success_url','success_msg','edit_msg','frm_dyncontent','frm_not_email_message',
 'frm_not_email_subject'];
-  	var b=['before_content','after_content','frm_not_email_to','after_html','before_html','field_custom_html'];
+  	var b=['before_content','after_content','frm_not_email_to','after_html','before_html','submit_html','field_custom_html'];
   	if(jQuery.inArray(id, a) >= 0){
     	jQuery('.frm_code_list a').removeClass('frm_noallow').addClass('frm_allow');
 		jQuery('.frm_code_list a.hide_'+id).addClass('frm_noallow').removeClass('frm_allow');

@@ -14,7 +14,7 @@
 .with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;margin:0;}
 .with_frm_style .frm_left_container .frm_checkbox, .with_frm_style .frm_left_container .frm_radio{margin-left:160px;}
 .with_frm_style fieldset{border:none;margin:0;padding:0;}
-.with_frm_style p.submit{padding-top:20px;padding-bottom:20px;}
+.with_frm_style p.frm_submit{padding-top:20px;padding-bottom:20px;}
 .with_frm_style p.description, .with_frm_style div.description, .with_frm_style .frm_description, .with_frm_style .frm_error{margin:0;padding:0;font-size:11px;font-weight:normal;text-align:left;font-style:normal;}
 .with_frm_style .frm_left_container .description, .with_frm_style .frm_left_container .frm_error, .with_frm_style .frm_left_container .frm_description{margin-left:160px;}
 .with_frm_style .frm_error{font-weight:bold;}

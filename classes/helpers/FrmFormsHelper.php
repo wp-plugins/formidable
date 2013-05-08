@@ -93,6 +93,7 @@ class FrmFormsHelper{
         $values['custom_style'] = ($post_values and isset($post_values['options']['custom_style'])) ? $post_values['options']['custom_style'] : ($frm_settings->load_style != 'none');
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
         $values['after_html'] = FrmFormsHelper::get_default_html('after');
+        $values['submit_html'] = FrmFormsHelper::get_default_html('submit');
         
         return apply_filters('frm_setup_new_form_vars', $values);
     }
@@ -125,7 +126,13 @@ class FrmFormsHelper{
     }
     
     function get_default_html($loc){
-        if ($loc == 'before'){
+        if($loc == 'submit'){
+            $default_html = <<<SUBMIT_HTML
+<p class="frm_submit">
+<input type="submit" value="[button_label]" [button_action] />
+</p>
+SUBMIT_HTML;
+        }else if ($loc == 'before'){
             $default_html = <<<BEFORE_HTML
 [if form_name]<h3>[form_name]</h3>[/if form_name]
 [if form_description]<div class="frm_description">[form_description]</div>[/if form_description]
@@ -133,11 +140,22 @@ BEFORE_HTML;
         }else{
             $default_html = '';
         }
+        
         return $default_html;
     }
     
+    function get_custom_submit($html, $form, $submit, $form_action){
+        $button = FrmFormsHelper::replace_shortcodes($html, $form, $submit, $form_action);
+        if(strpos($button, '[button_action]')){
+            $button_parts = explode('[button_action]', $button);
+            echo $button_parts[0];
+            do_action('frm_submit_button_action', $form, $form_action);
+            echo $button_parts[1];
+        }
+    }
+    
     function replace_shortcodes($html, $form, $title=false, $description=false){
-        foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true) as $code => $show){
+        foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true, 'button_label' => $title) as $code => $show){
             if ($code == 'form_name'){
                 $replace_with = $form->name;
             }else if ($code == 'form_description'){
@@ -147,6 +165,8 @@ BEFORE_HTML;
                     $replace_with = $form->description;
             }else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry'])){
                 $replace_with = $_GET['entry'];
+            }else if($code == 'button_label'){
+                $replace_with = apply_filters('frm_submit_button', $replace_with, $form);
             }
                 
             if (($show == true || $show == 'true') && $replace_with != '' ){
@@ -156,7 +176,7 @@ BEFORE_HTML;
                 $html = preg_replace('/(\[if\s+'.$code.'\])(.*?)(\[\/if\s+'.$code.'\])/mis', '', $html);
             }
             $html = str_replace('['.$code.']', $replace_with, $html);   
-        }   
+        }
         
         //replace [form_key]
         $html = str_replace('[form_key]', $form->form_key, $html);

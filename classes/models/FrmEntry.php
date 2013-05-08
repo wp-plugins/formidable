@@ -321,9 +321,11 @@ class FrmEntry{
             $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');
             return $errors;
         }
-
-        if( !isset($values['item_key']) or $values['item_key'] == '' )
+        
+        if( !isset($values['item_key']) or $values['item_key'] == '' ){
             $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
+            $gen_key = true;
+        }
         
         $where = apply_filters('frm_posted_field_ids', 'fi.form_id='. (int)$values['form_id']);
         if($exclude)
@@ -350,6 +352,10 @@ class FrmEntry{
                 $errors['field'. $posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? $frm_settings->blank_msg : $posted_field->field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;
+                if(isset($gen_key) and $gen_key){
+                    $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key($value, $frmdb->entries, 'item_key');
+                    $gen_key = false;
+                }
             }
             
             $_POST['item_meta'][$posted_field->id] = $value;
@@ -367,7 +373,7 @@ class FrmEntry{
 
                 if (!$response->is_valid) {
                     // What happens when the CAPTCHA was entered incorrectly
-                    $errors['captcha-'.$response->error] = $errors['field'.$posted_field->id] = (!isset($posted_field->field_options['invalid']) or $posted_field->field_options['invalid'] == '') ? $frm_settings->re_msg : $posted_field->field_options['invalid'];
+                    $errors['captcha-'. $response->error] = $errors['field'. $posted_field->id] = (!isset($posted_field->field_options['invalid']) or $posted_field->field_options['invalid'] == '') ? $frm_settings->re_msg : $posted_field->field_options['invalid'];
                 }
 
             }

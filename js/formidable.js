@@ -261,7 +261,6 @@ function frmGetFormErrors(object,ajax_url){
 			errObj=errObj.replace(/^\s+|\s+$/g,'');
 			if(errObj.indexOf('{') === 0)
 				var errObj=jQuery.parseJSON(errObj);
-			jQuery(object).find('input[type="submit"]').removeAttr('disabled');
 	    	if(errObj=='' || !errObj || errObj=='0' || (typeof(errObj) != 'object' && errObj.indexOf('<!DOCTYPE') === 0)){
 	            if(jQuery("#frm_loading").length){
 					var file_val=jQuery(object).find('input[type=file]').val();
@@ -282,6 +281,8 @@ function frmGetFormErrors(object,ajax_url){
 					frmThemeOverride_frmAfterSubmit(fin,p,errObj);
 				}
 	        }else{
+				jQuery(object).find('input[type="submit"]').removeAttr('disabled');
+				
 	            //show errors
 				var cont_submit=true;
 	            jQuery('.form-field').removeClass('frm_blank_field');

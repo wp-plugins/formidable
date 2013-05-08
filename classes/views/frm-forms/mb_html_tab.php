@@ -40,6 +40,15 @@
     	</li>
         <?php
             $col = ($col == 'one') ? 'two' : 'one'; 
+        }
+        
+        foreach(array(
+            'button_label' => __('Button Label', 'formidable'), 'button_action' => __('Button Hook', 'formidable')) as $skey => $sname){ ?>
+        <li class="frm_col_<?php echo $col ?>">
+    	    <a class="show_submit_html frmbutton button" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $skey ?>');return false;" href="#"><?php echo $sname; ?></a>
+    	</li>
+        <?php
+            $col = ($col == 'one') ? 'two' : 'one'; 
         } ?>
     </ul>
 </div>
