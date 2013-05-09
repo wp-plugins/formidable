@@ -73,7 +73,7 @@ class FrmAppController{
 
     // Adds a settings link to the plugins page
     function settings_link($links, $file){
-        $settings = '<a href="'.admin_url('admin.php?page=formidable').'">' . __('Settings', 'formidable') . '</a>';
+        $settings = '<a href="'. admin_url('admin.php?page=formidable-settings') .'">' . __('Settings', 'formidable') . '</a>';
         array_unshift($links, $settings);
         
         return $links;
