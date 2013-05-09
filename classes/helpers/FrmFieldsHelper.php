@@ -150,9 +150,8 @@ class FrmFieldsHelper{
     
     function get_form_fields($form_id, $error=false){
         global $frm_field;
-        $fields = apply_filters('frm_get_paged_fields', false, $form_id, $error);
-        if (!$fields)
-            $fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
+        $fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
+        $fields = apply_filters('frm_get_paged_fields', $fields, $form_id, $error); 
         return $fields;
     }
     

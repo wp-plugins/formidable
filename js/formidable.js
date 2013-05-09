@@ -1,5 +1,28 @@
 jQuery(document).ready(function($){
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
+
+if($.isFunction($.on)){
+	$(document).on('click', '.frm-show-form input[type="submit"]', function(){ 
+		if($(this).attr('name') == 'frm_prev_page'){
+			var f = $(this).parents('form:first');
+			var v = $(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
+			$('.frm_next_page').val(v); 
+		}else {
+			$('.frm_next_page').val('');
+		}
+	});
+}else{
+	$('.frm-show-form input[type="submit"]').live('click', function(){
+		if($(this).attr('name') == 'frm_prev_page'){
+			var f = $(this).parents('form:first');
+			var v = $(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
+			$('.frm_next_page').val(v);
+		}else{ 
+			$('.frm_next_page').val(''); 
+		}
+	});
+}
+
 });
 
 function frmToggleSection($sec){
@@ -254,6 +277,7 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 function frmGetFormErrors(object,ajax_url){
 	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
 	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
+	jQuery(object).find('.frm_ajax_loading').css('visibility', 'visible');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 	    data:jQuery(object).serialize()+"&controller=entries&_ajax_nonce=1",
@@ -266,15 +290,17 @@ function frmGetFormErrors(object,ajax_url){
 					var file_val=jQuery(object).find('input[type=file]').val();
 					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
 				}
-				if(jQuery(object).find('#recaptcha_area').length)
+				if(jQuery(object).find('#recaptcha_area').length && (jQuery(object).find('.frm_next_page').length < 0 || jQuery(object).find('.frm_next_page').val() < 1))
 					jQuery(object).find('#recaptcha_area').replaceWith('');
+				
 	            object.submit();
 			}else if(typeof(errObj) != 'object'){
+				jQuery(object).find('.frm_ajax_loading').css('visibility', 'hidden');
 				var jump=jQuery(object).closest('#frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container');
-				var newPos=jump.offset();
+				var newPos=jump.offset().top;
 				jump.replaceWith(errObj);
 				var cOff=document.documentElement.scrollTop || document.body.scrollTop;
-				if(newPos && newPos.top > 0 && cOff > newPos.top) window.scrollTo(0,newPos.top);
+				if(newPos && newPos > 0 && cOff > newPos) jQuery(window).scrollTop(newPos);
 				if(typeof(frmThemeOverride_frmAfterSubmit) == 'function'){
 					var fin=jQuery(errObj).find('input[name="form_id"]').val();
 					if(fin) var p=jQuery('input[name="frm_page_order_'+fin+'"]').val();
@@ -282,6 +308,7 @@ function frmGetFormErrors(object,ajax_url){
 				}
 	        }else{
 				jQuery(object).find('input[type="submit"]').removeAttr('disabled');
+				jQuery(object).find('.frm_ajax_loading').css('visibility', 'hidden');
 				
 	            //show errors
 				var cont_submit=true;
@@ -293,9 +320,11 @@ function frmGetFormErrors(object,ajax_url){
 						cont_submit=false;
 						if(jump==''){
 							jump='#frm_field_'+key+'_container';
-							var newPos=jQuery(object).find(jump).offset();
+							var newPos=jQuery(object).find(jump).offset().top;
+							var m=jQuery('html').css('margin-top');
+							if(newPos && m) newPos=newPos-parseInt(m);
 							var cOff=document.documentElement.scrollTop || document.body.scrollTop;
-							if(newPos && cOff > newPos.top) window.scrollTo(newPos.left,newPos.top);
+							if(newPos && cOff > newPos) jQuery(window).scrollTop(newPos-4);
 						}
 						if(jQuery(object).find('#frm_field_'+key+'_container #recaptcha_area').length){
 							var show_captcha=true;

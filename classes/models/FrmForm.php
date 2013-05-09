@@ -107,7 +107,7 @@ class FrmForm{
         $options['custom_style'] = isset($values['options']['custom_style']) ? $values['options']['custom_style'] : 0;
         $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
         $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
-        $options['submit_html'] = isset($values['options']['submit_html']) ? $values['options']['submit_html'] : FrmFormsHelper::get_default_html('submit');
+        $options['submit_html'] = (isset($values['options']['submit_html']) and $values['options']['submit_html'] != '') ? $values['options']['submit_html'] : FrmFormsHelper::get_default_html('submit');
         
         $options = apply_filters('frm_form_options_before_update', $options, $values);
         $new_values['options'] = serialize($options);

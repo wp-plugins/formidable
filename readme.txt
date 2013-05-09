@@ -67,6 +67,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added submit button to customizable HTML
 * Create entry key from first required text field
 * Set the default name of a field to the field type instead of "Untitled"
+* Added minified version of formidable.js
+* PRO: Added back button on multi-paged forms
+* PRO: Added loading indicator by submit button
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export

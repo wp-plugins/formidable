@@ -127,9 +127,13 @@ class FrmFormsHelper{
     
     function get_default_html($loc){
         if($loc == 'submit'){
+            $sending = __('Sending', 'formidable');
+            $img = FRM_IMAGES_URL .'/ajax_loader.gif';
             $default_html = <<<SUBMIT_HTML
 <p class="frm_submit">
+[if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" [back_hook] />[/if back_button]
 <input type="submit" value="[button_label]" [button_action] />
+<img class="frm_ajax_loading" src="$img" alt="$sending"/>
 </p>
 SUBMIT_HTML;
         }else if ($loc == 'before'){
@@ -184,7 +188,12 @@ BEFORE_HTML;
             $html = str_replace('[button_label]', $replace_with, $html);
         }
         
-        return apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form);
+        $html = apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form);
+        
+        if(strpos($html, '[if back_button]'))
+            $html = preg_replace('/(\[if\s+back_button\])(.*?)(\[\/if\s+back_button\])/mis', '', $html);
+        
+        return $html;
     }
 
 }

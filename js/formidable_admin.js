@@ -596,7 +596,7 @@ function frmShowPostOpts(post_field,field_id){
 function frmCheckDupPost(t){
 jQuery('select.frm_single_post_field').removeAttr('style');
 var v=t.val();
-if(v=='') return false;
+if(v=='' || v=='checkbox') return false;
 jQuery('select.frm_single_post_field').each(function(){
 if(jQuery(this).val() == v && jQuery(this).attr('name')!=t.attr('name')){
 	jQuery(this).css('border-color', 'red');t.val('');
