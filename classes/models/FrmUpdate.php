@@ -284,6 +284,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
                 unset($transient->response[$this->plugin_name]);
             set_site_transient( $this->pro_last_checked_store, 'latest', $this->pro_check_interval );
         }else if(!empty( $transient->checked ) or
+            (isset($transient->response) and !isset($transient->response[$this->plugin_name])) or
             (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/extend/plugins/'. $this->plugin_nicename .'/'))){
@@ -317,7 +318,7 @@ success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_
     }
     
     function get_plugin_info($transient, $plugin, $force=false){
-        if(empty($transient->checked) or empty($transient->checked[ $plugin->plugin_name ]))
+        if((empty($transient->checked) or empty($transient->checked[ $plugin->plugin_name ])) and !$force)
             return $transient;
         
         $update = get_site_transient($plugin->pro_last_checked_store);

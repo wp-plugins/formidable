@@ -188,7 +188,6 @@ class FrmFieldsController{
         $field['separate_value'] = isset($field_data->field_options['separate_value']) ? $field_data->field_options['separate_value'] : 0;
         $field_name = "item_meta[$id]";
         
-        require(FRM_VIEWS_PATH.'/frm-forms/new-option-js.php');
         require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
         die();
     }

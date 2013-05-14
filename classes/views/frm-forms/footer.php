@@ -17,7 +17,7 @@ $("#new_fields").sortable({
             success:function(msg){ 
                 $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);
                 var regex = /id="(\S+)"/; match=regex.exec(msg);
-                $('#'+match[1]+' .frm_ipe_field_label').click();
+                $('#'+match[1]+' .frm_ipe_field_label').mouseover().click();
                 var order= $('#new_fields').sortable('serialize');
                 jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_field_order&"+order});
             }
