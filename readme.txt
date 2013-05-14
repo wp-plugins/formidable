@@ -68,6 +68,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Create entry key from first required text field
 * Set the default name of a field to the field type instead of "Untitled"
 * Added minified version of formidable.js
+* Added warning message if a non-unique value is added as a field value
 * PRO: Added back button on multi-paged forms
 * PRO: Added loading indicator by submit button
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
@@ -77,7 +78,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Removed border styling from the container around radio and checkbox fields
 * PRO: Copy conditional logic and field calculations into duplicated forms
 * PRO: Allow clickable=1 to be used with Google formresults shortcode
-* PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javscript after ajax submit
+* PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
 * PRO: Updated star rating javascript version
 * PRO: Don't show custom display content for password protected posts until allowed
 * PRO: Switched front-end ajax to use hooks (frm_ajax_{controller}_{action})

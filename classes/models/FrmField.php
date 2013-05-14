@@ -13,11 +13,17 @@ class FrmField{
         
         $new_values['options'] = $values['options'];
 
-        $new_values['field_order'] = isset($values['field_order'])?(int)$values['field_order']:NULL;
-        $new_values['required'] = isset($values['required'])?(int)$values['required']:NULL;
-        $new_values['form_id'] = isset($values['form_id'])?(int)$values['form_id']:NULL;
-        $new_values['field_options'] = is_array($values['field_options']) ? serialize($values['field_options']) : $values['field_options'];
+        $new_values['field_order'] = isset($values['field_order']) ? (int)$values['field_order'] : NULL;
+        $new_values['required'] = isset($values['required']) ? (int)$values['required'] : NULL;
+        $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id'] : NULL;
+        $new_values['field_options'] = $values['field_options'];
         $new_values['created_at'] = current_time('mysql', 1);
+        if(isset($values['id'])){
+            global $frm_duplicate_ids;
+            $frm_duplicate_ids[$values['field_key']] = $new_values['field_key'];
+            $new_values = apply_filters('frm_duplicated_field', $new_values);
+        }
+        $new_values['field_options'] = is_array($new_values['field_options']) ? serialize($new_values['field_options']) : $new_values['field_options'];
         
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
@@ -26,7 +32,10 @@ class FrmField{
         if($return){
             if($query_results){
                 delete_transient('frm_all_form_fields_'. $new_values['form_id']);
-                return $wpdb->insert_id;
+                $new_id = $wpdb->insert_id;
+                if(isset($values['id']))
+                    $frm_duplicate_ids[$values['id']] = $new_id;
+                return $new_id;
             }else{
                 return false;
             }
@@ -67,7 +76,8 @@ class FrmField{
             $form_id = $values['form_id'];
         }else{
             $field = $this->getOne($id);
-            $form_id = $field->form_id;
+            if($field)
+                $form_id = $field->form_id;
             unset($field);
         }
         unset($values);
