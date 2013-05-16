@@ -81,7 +81,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
 * PRO: Updated star rating javascript version
 * PRO: Don't show custom display content for password protected posts until allowed
+* PRO: Switch the cancel link to edit link after a form is submitted with in-place-edit and ajax
 * PRO: Switched front-end ajax to use hooks (frm_ajax_{controller}_{action})
+* PRO: Call ajax later on the init hook to prevent php notices when WooCommerce is active
 
 = 1.06.11 =
 * Added styling classes: two thirds, scroll box, columns (frm_first_two_thirds, frm_last_two_thirds, frm_scroll_box, frm_total, frm_two_col, frm_three_col, frm_four_col, )

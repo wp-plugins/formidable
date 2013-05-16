@@ -20,7 +20,7 @@ class FrmAppController{
         add_action('wp_ajax_frm_deauthorize', array(&$this, 'deauthorize') );
 
         // Used to process standalone requests
-        add_action('init', array(&$this, 'parse_standalone_request'));
+        add_action('init', array(&$this, 'parse_standalone_request'), 40);
         // Update the session data
         add_action('init', array(&$this, 'referer_session'), 1);
         

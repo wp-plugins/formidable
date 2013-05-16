@@ -306,6 +306,10 @@ function frmGetFormErrors(object,ajax_url){
 					if(fin) var p=jQuery('input[name="frm_page_order_'+fin+'"]').val();
 					frmThemeOverride_frmAfterSubmit(fin,p,errObj);
 				}
+				if(jQuery(object).find('input[name="id"]').length > 0){
+					var eid = jQuery(object).find('input[name="id"]').val();
+					var oc = jQuery('#frm_edit_'+eid).find('a').addClass('frm_ajax_editted').click();
+				}
 	        }else{
 				jQuery(object).find('input[type="submit"]').removeAttr('disabled');
 				jQuery(object).find('.frm_ajax_loading').css('visibility', 'hidden');
@@ -367,8 +371,10 @@ function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel,hclass){
 
 function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id,hclass){
 	var cancel=jQuery('#frm_edit_'+entry_id).text();
-	jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
-	jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
+	if(!jQuery('#frm_edit_'+entry_id).find('a').hasClass('frm_ajax_editted')){
+		jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
+		jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
+	}
 	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\',\''+hclass+'\')">'+label+'</a>');
 }
 
