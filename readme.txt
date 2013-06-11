@@ -69,13 +69,17 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Set the default name of a field to the field type instead of "Untitled"
 * Added minified version of formidable.js
 * Added warning message if a non-unique value is added as a field value
+* Removed messages for strict standards
 * PRO: Added back button on multi-paged forms
-* PRO: Added loading indicator by submit button
+* PRO: Added loading indicator by submit button and on dependent data from entries fields
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export
 * PRO: Added column in CSV for value for fields that are set to use separate values
 * PRO: Removed border styling from the container around radio and checkbox fields
+* PRO: Added frm_order_display hook
+* PRO: Added utf8 support to sanitize_url=1 option
+* PRO: Added "confirm" option to frm-entry-links shortocode that is used before an entry is deleted
 * PRO: Copy conditional logic and field calculations into duplicated forms
 * PRO: Allow clickable=1 to be used with Google formresults shortcode
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
@@ -84,6 +88,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switch the cancel link to edit link after a form is submitted with in-place-edit and ajax
 * PRO: Switched front-end ajax to use hooks (frm_ajax_{controller}_{action})
 * PRO: Call ajax later on the init hook to prevent php notices when WooCommerce is active
+* PRO: Delete entries on the same page as the frm-entry-links shortcode, and added a confirmation message: confirm="Are you sure?"
+* PRO: Allow for quotation marks in field labels for the csv export
+* PRO: Correctly check if jQuery on() function exists
 
 = 1.06.11 =
 * Added styling classes: two thirds, scroll box, columns (frm_first_two_thirds, frm_last_two_thirds, frm_scroll_box, frm_total, frm_two_col, frm_three_col, frm_four_col, )
@@ -100,7 +107,6 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed issue preventing required multiple file upload fields from being required
 * PRO: Updated input mask script to 1.3.1
 * PRO: Added hooks for entries in the admin: frm_row_actions, frm_edit_entry_publish_box, frm_show_entry_publish_box, frm_edit_entry_sidebar
-
 
 = 1.06.10 =
 * Allow the usage of any html attributes inside the [input] tag in the customizable HTML

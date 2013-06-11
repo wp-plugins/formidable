@@ -5,7 +5,7 @@
  
 class FrmFieldsController{
     function FrmFieldsController(){
-        add_action('wp_ajax_frm_load_field', array(&$this, 'load_field'));
+        add_action('wp_ajax_frm_load_field', 'FrmFieldsController::load_field');
         add_action('wp_ajax_frm_insert_field', array(&$this, 'create') );
         add_action('wp_ajax_frm_field_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_field_desc_in_place_edit', array(&$this, 'edit_description') );
@@ -19,14 +19,14 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_import_choices', array(&$this, 'import_choices') );
         add_action('wp_ajax_frm_import_options', array(&$this, 'import_options') );
         add_action('wp_ajax_frm_update_field_order', array(&$this, 'update_order') );
-        add_filter('frm_field_type' ,array( &$this, 'change_type'));
+        add_filter('frm_field_type', 'FrmFieldsController::change_type');
         add_filter('frm_display_field_options', array(&$this, 'display_field_options'));
-        add_action('frm_field_input_html', array(&$this, 'input_html'));
+        add_action('frm_field_input_html', 'FrmFieldsController::input_html');
         add_filter('frm_field_value_saved', array( &$this, 'check_value'), 50, 3);
         add_filter('frm_field_label_seen', array( &$this, 'check_label'), 10, 3);
     }
     
-    function load_field(){
+    public static function load_field(){
         global $frm_field, $frm_form;
         
         $field_id = $_POST['field_id'];
@@ -45,8 +45,8 @@ class FrmFieldsController{
         if(class_exists('FrmProForm'))
             $values['post_type'] = FrmProForm::post_type($id);
             
-        require(FRM_VIEWS_PATH .'/frm-forms/add_field.php'); 
-        require(FRM_VIEWS_PATH .'/frm-forms/new-field-js.php');
+        include(FRM_VIEWS_PATH .'/frm-forms/add_field.php'); 
+        include(FRM_VIEWS_PATH .'/frm-forms/new-field-js.php');
         
         die();
     }
@@ -120,7 +120,7 @@ class FrmFieldsController{
     }
     
     function duplicate(){
-        global $frmdb, $frm_field, $frm_app_helper, $frm_ajax_url;
+        global $frmdb, $frm_field;
         
         $copy_field = $frm_field->getOne($_POST['field_id']);
         if (!$copy_field) return;
@@ -132,7 +132,7 @@ class FrmFieldsController{
         $values['form_id'] = $copy_field->form_id;
         foreach (array('name', 'description', 'type', 'field_options', 'required') as $col)
             $values[$col] = $copy_field->{$col};
-        $field_count = $frm_app_helper->getRecordCount("form_id='$copy_field->form_id'", $frmdb->fields);
+        $field_count = FrmAppHelper::getRecordCount("form_id='$copy_field->form_id'", $frmdb->fields);
         $values['field_order'] = $field_count + 1;
         
         $field_id = $frm_field->create($values);
@@ -157,7 +157,7 @@ class FrmFieldsController{
 
     /* Field Options */
     function add_option(){
-        global $frm_field, $frm_ajax_url;
+        global $frm_field;
 
         $id = $_POST['field_id'];
         $field = $frm_field->getOne($id);
@@ -241,7 +241,7 @@ class FrmFieldsController{
         
         $field_id = $_REQUEST['field_id'];
         	
-        global $current_screen, $hook_suffix;
+        global $current_screen, $hook_suffix, $frm_field;
 
         // Catch plugins that include admin-header.php before admin.php completes.
         if (empty( $current_screen ) and function_exists('set_current_screen')){
@@ -292,7 +292,7 @@ class FrmFieldsController{
             __('Disagree', 'formidable'), __('Strongly Disagree', 'formidable'), __('N/A', 'formidable')
         );
         
-        $field = FrmField::getOne($field_id);
+        $field = $frm_field->getOne($field_id);
         
         include(FRM_VIEWS_PATH.'/frm-fields/import_choices.php');
         die();
@@ -302,7 +302,7 @@ class FrmFieldsController{
         if(!is_admin() or !current_user_can('frm_edit_forms'))
             return;
         
-        global $frm_field, $frm_ajax_url;
+        global $frm_field;
         
         extract($_POST);
         
@@ -357,7 +357,7 @@ class FrmFieldsController{
         die();
     }
     
-    function change_type($type){
+    public static function change_type($type){
         global $frmpro_is_installed;
 
         if ($frmpro_is_installed) return $type;
@@ -398,7 +398,7 @@ class FrmFieldsController{
         return $display;
     }
     
-    function input_html($field, $echo=true){
+    public static function input_html($field, $echo=true){
         global $frm_settings;
         
         $class = ''; //$field['type'];

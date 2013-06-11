@@ -2,7 +2,7 @@
 
 class FrmFieldsHelper{
     
-    function field_selection(){
+    public static function field_selection(){
         $fields = apply_filters('frm_available_fields', array(
             'text' => __('Single Line Text', 'formidable'),
             'textarea' => __('Paragraph Text', 'formidable'),
@@ -16,7 +16,7 @@ class FrmFieldsHelper{
         return $fields;
     }
     
-    function pro_field_selection(){
+    public static function pro_field_selection(){
         return apply_filters('frm_pro_available_fields', array(
             'email' => __('Email Address', 'formidable'),
             'url' => __('Website/URL', 'formidable'),
@@ -45,7 +45,7 @@ class FrmFieldsHelper{
         ));
     }
     
-    function setup_new_vars($type='', $form_id=''){
+    public static function setup_new_vars($type='', $form_id=''){
         global $frm_settings;
         
         $defaults = FrmFieldsHelper::get_default_field_opts($type, $form_id);
@@ -88,7 +88,7 @@ class FrmFieldsHelper{
         return $values;
     }
     
-    function setup_edit_vars($record){
+    public static function setup_edit_vars($record){
         global $frm_entry_meta, $frm_form;
         
         $values = array('id' => $record->id, 'form_id' => $record->form_id);
@@ -120,7 +120,7 @@ class FrmFieldsHelper{
         return apply_filters('frm_setup_edit_field_vars', $values, $values['field_options']);
     }
     
-    function get_default_field_opts($type, $field, $limit=false){
+    public static function get_default_field_opts($type, $field, $limit=false){
         $field_options = array(
             'size' => '', 'max' => '', 'label' => '', 'blank' => '', 
             'required_indicator' => '*', 'invalid' => '', 'separate_value' => 0,
@@ -131,12 +131,12 @@ class FrmFieldsHelper{
         if($limit)
             return $field_options;
         
-        global $frmdb, $frm_app_helper, $frm_settings;
+        global $frmdb, $frm_settings;
         
         $form_id = (is_numeric($field)) ? $field : $field->form_id;
         
         $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key') : $field->field_key;
-        $field_count = $frm_app_helper->getRecordCount("form_id='$form_id'", $frmdb->fields);
+        $field_count = FrmAppHelper::getRecordCount("form_id='$form_id'", $frmdb->fields);
         
         return array(
             'name' => __('Untitled', 'formidable'), 'description' => '', 
@@ -148,14 +148,14 @@ class FrmFieldsHelper{
         );
     }
     
-    function get_form_fields($form_id, $error=false){
+    public static function get_form_fields($form_id, $error=false){
         global $frm_field;
         $fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
         $fields = apply_filters('frm_get_paged_fields', $fields, $form_id, $error); 
         return $fields;
     }
     
-    function get_default_html($type='text'){
+    public static function get_default_html($type='text'){
         if (apply_filters('frm_normal_field_type_html', true, $type)){
             if(in_array($type, array('radio', 'checkbox', 'data'))){
                 $for = 'for="field_[key]"';
@@ -181,7 +181,7 @@ DEFAULT_HTML;
         return apply_filters('frm_custom_html', $default_html, $type);
     }
     
-    function replace_shortcodes($html, $field, $errors=array(), $form=false){
+    public static function replace_shortcodes($html, $field, $errors=array(), $form=false){
         global $frm_readonly;
         
         $html = stripslashes($html);
@@ -287,7 +287,7 @@ DEFAULT_HTML;
         return apply_filters('frm_replace_shortcodes', $html, $field, array('errors' => $errors, 'form' => $form));
     }
     
-    function display_recaptcha($field, $error=null){
+    public static function display_recaptcha($field, $error=null){
     	global $frm_settings;
     	
     	if(!function_exists('recaptcha_get_html'))
@@ -309,7 +309,7 @@ DEFAULT_HTML;
         }
     }
     
-    function dropdown_categories($args){
+    public static function dropdown_categories($args){
         global $frmpro_is_installed;
         
         $defaults = array('field' => false, 'name' => false);
@@ -356,15 +356,28 @@ DEFAULT_HTML;
             $add_html .= FrmProFieldsController::input_html($field, false);
         
         $dropdown = str_replace("<select name='$name' id='$id' class='$class'", "<select name='$name' id='$id' ". $add_html, $dropdown);
+        
+        if(is_array($field['value'])){
+            $skip = true;
+            foreach($field['value'] as $v){
+                if($skip){
+                    $skip = false;
+                    continue;
+                }
+                $dropdown = str_replace(' value="'. $v. '"', ' value="'. $v .'" selected="selected"', $dropdown);
+                unset($v);
+            }
+        }
+        
         return $dropdown;
     }
     
-    function show_onfocus_js($field_id, $clear_on_focus){ ?>
+    public static function show_onfocus_js($field_id, $clear_on_focus){ ?>
     <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('%1$sclear default value when field is clicked', 'formidable'), ($clear_on_focus) ? '': __('Do not', 'formidable').' ' ); ?>"></a>
     <?php
     }
     
-    function show_default_blank_js($field_id, $default_blank){ ?>
+    public static function show_default_blank_js($field_id, $default_blank){ ?>
     <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_error_icon" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('Default value will %1$spass form validation', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"></a>
     <?php
     }

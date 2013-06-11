@@ -12,7 +12,7 @@ class FrmAppController{
         add_action('admin_notices', array( &$this, 'pro_get_started_headline'));
         add_filter('the_content', array( &$this, 'page_route' ), 10);
         add_action('init', array(&$this, 'front_head'));
-        add_action('wp_footer', array(&$this, 'footer_js'), 1, 0);
+        add_action('wp_footer', 'FrmAppController::footer_js', 1, 0);
         add_action('admin_init', array( &$this, 'admin_js'), 11);
         register_activation_hook(FRM_PATH.'/formidable.php', array( &$this, 'install' ));
         add_action('wp_ajax_frm_install', array(&$this, 'install') );
@@ -49,9 +49,8 @@ class FrmAppController{
         if(current_user_can('frm_view_forms')){
             global $frm_forms_controller;
             add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div', $pos);
-        }elseif(current_user_can('frm_view_entries') and $frmpro_is_installed){
-            global $frmpro_entries_controller;
-            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', array($frmpro_entries_controller, 'route'), 'div', $pos);
+        }else if(current_user_can('frm_view_entries') and $frmpro_is_installed){
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', 'FrmProEntriesController::route', 'div', $pos);
         }
     }
     
@@ -62,7 +61,7 @@ class FrmAppController{
     //#adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL /icon_16.png) no-repeat center;}
     }
     
-    function get_form_nav($id, $show_nav=false){
+    public static function get_form_nav($id, $show_nav=false){
         global $pagenow;
         
         $show_nav = FrmAppHelper::get_param('show_nav', $show_nav);
@@ -104,7 +103,7 @@ class FrmAppController{
             return;
          
         if(!isset($_GET['activate'])){  
-            global $frmpro_is_installed, $frm_db_version, $frm_ajax_url;
+            global $frmpro_is_installed, $frm_db_version;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
             if(((int)$db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 20)){ //this number should match the db_version in FrmDb.php
@@ -113,7 +112,7 @@ class FrmAppController{
 <script type="text/javascript">
 function frm_install_now(){ 
 jQuery('#frm_install_link').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" />');
-jQuery.ajax({type:"POST",url:"<?php echo $frm_ajax_url ?>",data:"action=frm_install",
+jQuery.ajax({type:"POST",url:"<?php echo admin_url('admin-ajax.php') ?>",data:"action=frm_install",
 success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 });
 };
@@ -146,7 +145,6 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery', 'jquery-ui-draggable'), $frm_version);
             wp_enqueue_script('formidable');
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', array(), $frm_version);
-            wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
             add_thickbox();
         }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and isset($_REQUEST['post_type']) and $_REQUEST['post_type'] == 'frm_display')){
             if(isset($_REQUEST['post_type'])){
@@ -163,7 +161,6 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             if($post_type == 'frm_display'){
                 wp_enqueue_script('jquery-ui-draggable');
                 wp_enqueue_script('formidable_admin', FRM_URL . '/js/formidable_admin.js', array('jquery', 'jquery-ui-draggable'), $frm_version);
-                wp_enqueue_script('jquery-elastic', FRM_URL.'/js/jquery/jquery.elastic.js', array('jquery'));
                 wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', array(), $frm_version);
             }
         }
@@ -219,7 +216,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }
     }
     
-    function footer_js($location='footer'){
+    public static function footer_js($location='footer'){
         global $frm_load_css, $frm_settings, $frm_version, $frm_css_loaded, $frm_forms_loaded;
 
         if($frm_load_css and !is_admin() and ($frm_settings->load_style != 'none')){
@@ -326,10 +323,10 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
     // The tight way to process standalone requests dogg...
     function parse_standalone_request(){
-        $plugin     = $this->get_param('plugin');
+        $plugin     = FrmAppHelper::get_param('plugin');
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
-        $action = $this->get_param($action);  
-        $controller = $this->get_param('controller');
+        $action = FrmAppHelper::get_param($action);  
+        $controller = FrmAppHelper::get_param('controller');
 
         if( !empty($plugin) and $plugin == 'formidable' and !empty($controller) ){
           $this->standalone_route($controller, $action);
@@ -342,16 +339,11 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         global $frm_forms_controller, $frm_fields_controller;
 
         if($controller == 'forms' and !in_array($action, array('export', 'import', 'xml')))
-            $frm_forms_controller->preview($this->get_param('form'));
+            $frm_forms_controller->preview(FrmAppHelper::get_param('form'));
         else
             do_action('frm_standalone_route', $controller, $action);
             
         do_action('frm_ajax_'. $controller .'_'. $action);
-    }
-
-    // Utility function to grab the parameter whether it's a get or post
-    function get_param($param, $default=''){
-        return (isset($_POST[$param]) ? $_POST[$param] : (isset($_GET[$param])?$_GET[$param]:$default));
     }
 
 
@@ -365,10 +357,9 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             return $sc .']';
         }
         
-        global $frm_entries_controller;
         extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array()), $atts));
         do_action('formidable_shortcode_atts', compact('id', 'key', 'title', 'description', 'readonly', 'entry_id', 'fields'));
-        return $frm_entries_controller->show_form($id, $key, $title, $description); 
+        return FrmEntriesController::show_form($id, $key, $title, $description); 
     }
 
     //filter form shortcode in text widgets
@@ -386,7 +377,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         include(FRM_VIEWS_PATH .'/shared/update_message.php');
     }
     
-    function get_postbox_class(){
+    public static function get_postbox_class(){
         if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
             return 'postbox-container';
         else

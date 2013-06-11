@@ -1,7 +1,7 @@
 <?php
 
 class FrmFormsHelper{
-    function get_direct_link($key, $prli_link_id=false){
+    public static function get_direct_link($key, $prli_link_id=false){
         global $frm_siteurl;
         $target_url = esc_url($frm_siteurl . '/index.php?plugin=formidable&controller=forms&frm_action=preview&form='.$key);
         if ($prli_link_id && class_exists('PrliLink')){
@@ -11,7 +11,7 @@ class FrmFormsHelper{
         return $target_url;
     }
     
-    function get_template_dropdown($templates){ ?>
+    public static function get_template_dropdown($templates){ ?>
         <select id="select_form" name="select_form" onChange="frmAddNewForm(this.value,'duplicate')">
             <option value="">- <?php _e('Create Form from Template', 'formidable') ?> -</option>
             <?php foreach ($templates as $temp){ ?>
@@ -21,7 +21,7 @@ class FrmFormsHelper{
     <?php    
     }
     
-    function forms_dropdown( $field_name, $field_value='', $blank=true, $field_id=false, $onchange=false ){
+    public static function forms_dropdown( $field_name, $field_value='', $blank=true, $field_id=false, $onchange=false ){
         global $frm_form;
         if (!$field_id)
             $field_id = $field_name;
@@ -40,12 +40,12 @@ class FrmFormsHelper{
         <?php
     }
     
-    function get_sortable_classes($col, $sort_col, $sort_dir){
+    public static function get_sortable_classes($col, $sort_col, $sort_dir){
         echo ($sort_col == $col) ? 'sorted' : 'sortable'; 
         echo ($sort_col == $col and $sort_dir == 'desc') ? ' asc' : ' desc';
     }
     
-    function setup_new_vars($values=array()){
+    public static function setup_new_vars($values=array()){
         global $frmdb, $frm_settings;
         
         if(!empty($values)){
@@ -98,7 +98,7 @@ class FrmFormsHelper{
         return apply_filters('frm_setup_new_form_vars', $values);
     }
     
-    function setup_edit_vars($values, $record, $post_values=array()){
+    public static function setup_edit_vars($values, $record, $post_values=array()){
         global $frm_form;
         
         if(empty($post_values))
@@ -111,7 +111,7 @@ class FrmFormsHelper{
         return apply_filters('frm_setup_edit_form_vars', $values);
     }
     
-    function get_default_opts(){
+    public static function get_default_opts(){
         global $frm_settings;
         
         return array(
@@ -125,7 +125,7 @@ class FrmFormsHelper{
         );
     }
     
-    function get_default_html($loc){
+    public static function get_default_html($loc){
         if($loc == 'submit'){
             $sending = __('Sending', 'formidable');
             $img = FRM_IMAGES_URL .'/ajax_loader.gif';
@@ -148,7 +148,7 @@ BEFORE_HTML;
         return $default_html;
     }
     
-    function get_custom_submit($html, $form, $submit, $form_action){
+    public static function get_custom_submit($html, $form, $submit, $form_action){
         $button = FrmFormsHelper::replace_shortcodes($html, $form, $submit, $form_action);
         if(strpos($button, '[button_action]')){
             $button_parts = explode('[button_action]', $button);
@@ -158,7 +158,7 @@ BEFORE_HTML;
         }
     }
     
-    function replace_shortcodes($html, $form, $title=false, $description=false){
+    public static function replace_shortcodes($html, $form, $title=false, $description=false){
         foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true) as $code => $show){
             if ($code == 'form_name'){
                 $replace_with = $form->name;

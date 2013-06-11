@@ -6,23 +6,23 @@
 class FrmEntriesController{
     
     function FrmEntriesController(){
-        add_action('admin_menu', array( &$this, 'menu' ), 20);
-        add_action('wp', array(&$this, 'process_entry'), 10, 0);
-        add_action('frm_wp', array(&$this, 'process_entry'), 10, 0);
-        add_filter('frm_redirect_msg', array( &$this, 'delete_entry_before_redirect'), 50, 3);
-        add_filter('frm_redirect_url', array( &$this, 'delete_entry_before_wpredirect'), 50, 3);
-        add_action('frm_after_entry_processed', array(&$this, 'delete_entry_after_save'), 100);
-        add_filter('frm_email_value', array(&$this, 'filter_email_value'), 10, 3);
+        add_action('admin_menu', 'FrmEntriesController::menu', 20);
+        add_action('wp', 'FrmEntriesController::process_entry', 10, 0);
+        add_action('frm_wp', 'FrmEntriesController::process_entry', 10, 0);
+        add_filter('frm_redirect_msg', 'FrmEntriesController::delete_entry_before_redirect', 50, 3);
+        add_filter('frm_redirect_url', 'FrmEntriesController::delete_entry_before_wpredirect', 50, 3);
+        add_action('frm_after_entry_processed', 'FrmEntriesController::delete_entry_after_save', 100);
+        add_filter('frm_email_value', 'FrmEntriesController::filter_email_value', 10, 3);
     }
     
-    function menu(){
+    public static function menu(){
         global $frmpro_is_installed;
         if(!$frmpro_is_installed){
-            add_submenu_page('formidable', 'Formidable |'. __('Entries', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Entries', 'formidable') .'</span>', 'administrator', 'formidable-entries',array(&$this, 'list_entries'));
+            add_submenu_page('formidable', 'Formidable |'. __('Entries', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Entries', 'formidable') .'</span>', 'administrator', 'formidable-entries', 'FrmEntriesController::list_entries');
         }
     }
     
-    function list_entries(){
+    public static function list_entries(){
         global $frm_form, $frm_entry;
         $form_select = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')", ' ORDER BY name');
         $form_id = FrmAppHelper::get_param('form', false);
@@ -37,7 +37,7 @@ class FrmEntriesController{
         require(FRM_VIEWS_PATH.'/frm-entries/list.php');
     }
     
-    function show_form($id='', $key='', $title=false, $description=false){
+    public static function show_form($id='', $key='', $title=false, $description=false){
         global $frm_form, $user_ID, $frm_settings, $post;
         if ($id) $form = $frm_form->getOne((int)$id);
         else if ($key) $form = $frm_form->getOne($key);
@@ -66,7 +66,7 @@ class FrmEntriesController{
             return FrmEntriesController::get_form(FRM_VIEWS_PATH.'/frm-entries/frm-entry.php', $form, $title, $description);
     }
     
-    function get_form($filename, $form, $title, $description) {
+    public static function get_form($filename, $form, $title, $description) {
         if (is_file($filename)) {
             ob_start();
             include $filename;
@@ -77,7 +77,7 @@ class FrmEntriesController{
         return false;
     }
     
-    function process_entry($errors=''){
+    public static function process_entry($errors=''){
         if(is_admin() or !isset($_POST) or !isset($_POST['form_id']) or !is_numeric($_POST['form_id']) or !isset($_POST['item_key']))
             return;
 
@@ -115,20 +115,20 @@ class FrmEntriesController{
     }
     
     //Delete entry if it shouldn't be saved before redirect
-    function delete_entry_before_redirect($redirect_msg, $atts){
-        $this->_delete_entry($atts['entry_id'], $atts['form']);
+    public static function delete_entry_before_redirect($redirect_msg, $atts){
+        self::_delete_entry($atts['entry_id'], $atts['form']);
         return $redirect_msg;
     }
     
-    function delete_entry_before_wpredirect($url, $form, $atts){
+    public static function delete_entry_before_wpredirect($url, $form, $atts){
         if(!defined('DOING_AJAX'))
-            $this->_delete_entry($atts['id'], $form);
+            self::_delete_entry($atts['id'], $form);
         return $url;
     }
     
     //Delete entry if not redirected
-    function delete_entry_after_save($atts){
-        $this->_delete_entry($atts['entry_id'], $atts['form']);
+    public static function delete_entry_after_save($atts){
+        self::_delete_entry($atts['entry_id'], $atts['form']);
     }
     
     function _delete_entry($entry_id, $form){
@@ -142,18 +142,18 @@ class FrmEntriesController{
         }
     }
     
-    function &filter_email_value($value, $meta, $entry, $atts=array()){
+    public static function &filter_email_value($value, $meta, $entry, $atts=array()){
         global $frm_field;
         
         $field = $frm_field->getOne($meta->field_id);
         if(!$field)
             return $value; 
             
-        $value = $this->filter_display_value($value, $field, $atts);
+        $value = self::filter_display_value($value, $field, $atts);
         return $value;
     }
     
-    function &filter_display_value($value, $field, $atts=array()){
+    public static function &filter_display_value($value, $field, $atts=array()){
         $field->field_options = maybe_unserialize($field->field_options);
         
         $saved_value = (isset($atts['saved_value']) and $atts['saved_value']) ? true : false;
@@ -194,7 +194,7 @@ class FrmEntriesController{
         return $value;
     }
     
-    function get_params($form=null){
+    public static function get_params($form=null){
         global $frm_form, $frm_form_params;
 
         if(!$form)

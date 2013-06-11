@@ -277,12 +277,12 @@ class FrmForm{
   }
 
     function getAll( $where = array(), $order_by = '', $limit = '' ){
-        global $wpdb, $frmdb, $frm_app_helper;
+        global $wpdb, $frmdb;
         
         if(is_numeric($limit))
             $limit = " LIMIT {$limit}";
             
-        $query = 'SELECT * FROM ' . $frmdb->forms . $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+        $query = 'SELECT * FROM ' . $frmdb->forms . FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
             
         if ($limit == ' LIMIT 1' or $limit == 1){
             if(is_array($where))

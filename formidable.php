@@ -64,7 +64,6 @@ $frm_load_css = $frm_css_loaded = false;
 $frm_forms_loaded = $frm_saved_entries = array();
 
 require_once(FRM_HELPERS_PATH. '/FrmAppHelper.php');
-global $frm_app_helper;
 $frm_app_helper = new FrmAppHelper();
 
 /***** SETUP SETTINGS OBJECT *****/
@@ -127,7 +126,6 @@ require_once(FRM_CONTROLLERS_PATH . '/FrmStatisticsController.php');
 
 global $frm_api_controller;
 global $frm_app_controller;
-global $frm_entries_controller;
 global $frm_fields_controller;
 global $frm_forms_controller;
 global $frm_settings_controller;
@@ -135,7 +133,7 @@ global $frm_statistics_controller;
 
 $frm_api_controller         = new FrmApiController();
 $frm_app_controller         = new FrmAppController();
-$frm_entries_controller     = new FrmEntriesController();
+$obj = new FrmEntriesController();
 $frm_fields_controller      = new FrmFieldsController();
 $frm_forms_controller       = new FrmFormsController();
 $frm_settings_controller    = new FrmSettingsController();

@@ -130,7 +130,7 @@ class FrmField{
     }
 
     function getAll($where=array(), $order_by = '', $limit = '', $blog_id=false){
-        global $wpdb, $frmdb, $frm_app_helper;
+        global $wpdb, $frmdb;
         
         if ($blog_id and IS_WPMU){
             global $wpmuBaseTablePrefix;
@@ -163,18 +163,20 @@ class FrmField{
             $query .= "{$where}{$order_by}{$limit}";
             $query = $wpdb->prepare($query, $values);
         }else{
-            $query .= $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+            $query .= FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         }
         
         if ($limit == ' LIMIT 1' or $limit == 1){
             $results = $wpdb->get_row($query);
         }else{
-            if($order_by == ' ORDER BY field_order' and empty($limit) and empty($blog_id) and is_array($old_where) and count($old_where) == 1 and reset(array_keys($old_where)) == 'fi.form_id'){
+            $ak = is_array($old_where) ? array_keys($old_where) : $old_where; 
+            if($order_by == ' ORDER BY field_order' and empty($limit) and empty($blog_id) and is_array($old_where) and count($old_where) == 1 and reset($ak) == 'fi.form_id'){
                 $save_cache = true;
                 $results = get_transient('frm_all_form_fields_'. reset($old_where));
                 if($results)
                     $cached = true;
             }
+            unset($ak);
             if(!isset($cached))
                 $results = $wpdb->get_results($query);
         }
@@ -203,10 +205,10 @@ class FrmField{
     }
 
     function getIds($where = '', $order_by = '', $limit = ''){
-        global $wpdb, $frmdb, $frm_app_helper;
+        global $wpdb, $frmdb;
         $query = "SELECT fi.id  FROM $frmdb->fields fi " .
                  "LEFT OUTER JOIN $frmdb->forms fr ON fi.form_id=fr.id" . 
-                 $frm_app_helper->prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
+                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         if ($limit == ' LIMIT 1' or $limit == 1)
             $results = $wpdb->get_row($query);
         else

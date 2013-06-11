@@ -1,5 +1,5 @@
 <script type="text/javascript">
-__FRMURL='<?php echo $frm_ajax_url ?>';
+__FRMURL='<?php echo admin_url("admin-ajax.php") ?>';
 __FRMDEFDESC="<?php _e('(Click here to add form description or instructions)', 'formidable') ?>";
 __FRMDEFBLANK="<?php _e('(Blank)', 'formidable') ?>";
 

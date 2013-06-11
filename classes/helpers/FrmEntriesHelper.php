@@ -2,7 +2,7 @@
 
 class FrmEntriesHelper{
 
-    function setup_new_vars($fields, $form='', $reset=false){
+    public static function setup_new_vars($fields, $form='', $reset=false){
         global $frm_form, $frm_settings, $frm_sidebar_width;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
@@ -111,14 +111,14 @@ class FrmEntriesHelper{
         return apply_filters('frm_setup_new_entry', $values);
     }
     
-    function setup_edit_vars($values, $record){
+    public static function setup_edit_vars($values, $record){
         //$values['description'] = maybe_unserialize( $record->description );
         $values['item_key'] = ($_POST and isset($_POST['item_key'])) ? $_POST['item_key'] : $record->item_key;
         $values['form_id'] = $record->form_id;
         return apply_filters('frm_setup_edit_entry_vars', $values, $record);
     }
 
-    function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
+    public static function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
         global $wpdb, $frmdb;
 
         $entries = $frmdb->get_records($frmdb->entries, array('form_id' => $form_id), 'name', 999, 'id,item_key,name');
@@ -136,7 +136,7 @@ class FrmEntriesHelper{
         <?php
     }
     
-    function enqueue_scripts($params){
+    public static function enqueue_scripts($params){
         do_action('frm_enqueue_form_scripts', $params);
     }
 }

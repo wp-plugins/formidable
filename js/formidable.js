@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
 
-if($.isFunction($.on)){
+if($.isFunction($.fn.on)){
 	$(document).on('click', '.frm-show-form input[type="submit"]', function(){ 
 		if($(this).attr('name') == 'frm_prev_page'){
 			var f = $(this).parents('form:first');
@@ -40,7 +40,7 @@ function frmCheckParents(id){
 var $chk=jQuery('#'+id);var ischecked=$chk.is(":checked");
 if(!ischecked) return;
 $chk.parent().parent().siblings().children("label").children("input").each(function(){
-	var b= this.checked;ischecked=ischecked || b;
+	var b= $(this).is(':checked');ischecked=ischecked || b;
 });
 frmCheckParentNodes(ischecked, $chk);
 }
@@ -227,6 +227,8 @@ else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,ajax
 }
 
 function frmGetData(f,selected,ajax_url,append){
+	if(!append)
+		jQuery('#frm_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=fields&frm_action=ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
@@ -245,6 +247,7 @@ function frmGetData(f,selected,ajax_url,append){
 }
 
 function frmGetDataOpts(f,selected,ajax_url,field_id){
+	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	var prev=new Array();
 	if(f.DataType=='checkbox' || f.DataType=='radio'){
 		jQuery("input[name='item_meta["+f.HideField+"][]']:checked").each(function(){prev.push(jQuery(this).val());});
@@ -261,7 +264,10 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').hide(); 
 			else if(f.MatchType!='all') jQuery('#frm_field_'+f.HideField+'_container').show();
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
-			if(html!='' && prev!=''){
+			if(jQuery(html).hasClass('frm_chzn'))
+				jQuery('.frm_chzn').chosen();
+			
+			if(html!='' && prev!=''){				
 				jQuery.each(prev, function(ckey,cval){
 					if(f.DataType=='checkbox'){jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');}
 					else if(f.DataType=='select'){

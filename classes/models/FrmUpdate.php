@@ -107,7 +107,7 @@ class FrmUpdate{
     }
 
     function pro_cred_form(){ 
-        global $frmpro_is_installed, $frm_ajax_url; 
+        global $frmpro_is_installed; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
             if($this->process_pro_cred_form()){ ?>
 <div id="message" class="updated fade"><strong>
@@ -154,7 +154,7 @@ jQuery('#pro_cred_form,.frm_pro_installed').toggle();
 }
 function frm_deauthorize(){
 jQuery('#frm_deauthorize_link').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" id="frm_deauthorize_link" />');
-jQuery.ajax({type:"POST",url:"<?php echo $frm_ajax_url ?>",data:"action=frm_deauthorize",
+jQuery.ajax({type:"POST",url:"<?php echo admin_url('admin-ajax.php') ?>",data:"action=frm_deauthorize",
 success:function(msg){jQuery("#frm_deauthorize_link").fadeOut("slow"); frm_show_auth_form();}
 });
 };

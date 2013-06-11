@@ -61,7 +61,7 @@ class FrmFormsController{
     }
     
     function new_form($values=false){
-        global $frm_form, $frmpro_is_installed, $frm_ajax_url;
+        global $frm_form, $frmpro_is_installed;
         
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         if($values){
@@ -275,7 +275,7 @@ class FrmFormsController{
     }
 
     function display_forms_list($params=false, $message='', $page_params_ov = false, $current_page_ov = false, $errors = array()){
-        global $wpdb, $frmdb, $frm_app_helper, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
+        global $wpdb, $frmdb, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
         
         if(!$params)
             $params = $this->get_params();
@@ -323,11 +323,11 @@ class FrmFormsController{
             $sdir_str = $form_vars['sdir_str'];
             $search_str = $form_vars['search_str'];
 
-            $record_count = $frm_app_helper->getRecordCount($form_vars['where_clause'], $frmdb->forms);
-            $page_count = $frm_app_helper->getPageCount($frm_page_size, $record_count, $frmdb->forms);
-            $forms = $frm_app_helper->getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
-            $page_last_record = $frm_app_helper->getLastRecordNum($record_count,$current_page,$frm_page_size);
-            $page_first_record = $frm_app_helper->getFirstRecordNum($record_count,$current_page,$frm_page_size);
+            $record_count = FrmAppHelper::getRecordCount($form_vars['where_clause'], $frmdb->forms);
+            $page_count = FrmAppHelper::getPageCount($frm_page_size, $record_count, $frmdb->forms);
+            $forms = FrmAppHelper::getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
+            $page_last_record = FrmAppHelper::getLastRecordNum($record_count,$current_page,$frm_page_size);
+            $page_first_record = FrmAppHelper::getFirstRecordNum($record_count,$current_page,$frm_page_size);
         }
         
         require(FRM_VIEWS_PATH.'/frm-forms/list.php');
@@ -446,7 +446,7 @@ class FrmFormsController{
     }
 
     function get_edit_vars($id, $errors = '', $message='', $create_link=false){
-        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
+        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll(array('fi.form_id' => $record->id), 'field_order');
@@ -465,7 +465,7 @@ class FrmFormsController{
     }
     
     function get_settings_vars($id, $errors = '', $message=''){
-        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed, $frm_ajax_url;
+        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $record = $frm_form->getOne( $id );
         $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);

@@ -28,7 +28,7 @@ class FrmListHelper extends WP_List_Table {
 	}
 
 	function prepare_items() {
-	    global $frmdb, $wpdb, $per_page, $frm_settings, $frm_form, $frm_app_helper;
+	    global $frmdb, $wpdb, $per_page, $frm_settings, $frm_form;
 		$paged = $this->get_pagenum();
 		$default_orderby = 'name';
 		$default_order = 'ASC';
@@ -63,7 +63,7 @@ class FrmListHelper extends WP_List_Table {
 	    }
 	    
         $this->items = $frm_form->getAll($s_query, " ORDER BY $orderby $order", " LIMIT $start, $per_page", true, false);
-        $total_items = $frm_app_helper->getRecordCount($s_query, $this->table_name);
+        $total_items = FrmAppHelper::getRecordCount($s_query, $this->table_name);
 		
 
 		$this->set_pagination_args( array(

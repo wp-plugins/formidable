@@ -191,5 +191,5 @@
 </div>
 </div>
 <script type="text/javascript">
-__FRMURL='<?php echo $frm_ajax_url ?>';
+__FRMURL='<?php echo admin_url("admin-ajax.php") ?>';
 </script>

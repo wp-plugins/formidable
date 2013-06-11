@@ -21,7 +21,7 @@ $field_values['name'] = 'Name';
 $field_values['description'] = 'First';
 $field_values['required'] = 1;
 $field_values['field_order'] = '1';
-$field_values['field_options']['classes'] = 'frm_left_half';
+$field_values['field_options']['classes'] = 'frm_first_half';
 $frm_field->create( $field_values );
 
 $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('text', $form_id));
@@ -29,7 +29,7 @@ $field_values['name'] = $field_values['description'] = 'Last';
 $field_values['required'] = 1;
 $field_values['field_order'] = '2';
 $field_values['field_options']['label'] = 'hidden';
-$field_values['field_options']['classes'] = 'frm_right_half';
+$field_values['field_options']['classes'] = 'frm_last_half';
 $frm_field->create( $field_values );
 unset($field_values);
 

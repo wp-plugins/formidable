@@ -2,7 +2,7 @@
 
 class FrmAppHelper{
     
-    function get_param($param, $default='', $src='get'){
+    public static function get_param($param, $default='', $src='get'){
         if(strpos($param, '[')){
             $params = explode('[', $param);
             $param = $params[0];    
@@ -11,7 +11,7 @@ class FrmAppHelper{
         if($src == 'get'){
             $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep($_GET[$param]) : $default));
             if(!isset($_POST[$param]) and isset($_GET[$param]) and !is_array($value))
-                $value = urldecode($value);
+                $value = stripslashes_deep(urldecode($_GET[$param]));
         }else{
             $value = isset($_POST[$param]) ? stripslashes_deep(maybe_unserialize($_POST[$param])) : $default;
         }
@@ -29,11 +29,11 @@ class FrmAppHelper{
         return $value;
     }
     
-    function get_post_param($param, $default=''){
+    public static function get_post_param($param, $default=''){
         return isset($_POST[$param]) ? stripslashes_deep(maybe_unserialize($_POST[$param])) : $default;
     }
     
-    function load_scripts($scripts){
+    public static function load_scripts($scripts){
         global $wp_version;
         if(version_compare( $wp_version, '3.3', '<')){
             global $wp_scripts;
@@ -44,7 +44,7 @@ class FrmAppHelper{
         }
     }
     
-    function load_styles($styles){
+    public static function load_styles($styles){
         global $wp_version;
         if(version_compare( $wp_version, '3.3', '<')){
             global $wp_styles;
@@ -55,11 +55,11 @@ class FrmAppHelper{
         }
     }
     
-    function get_pages(){
+    public static function get_pages(){
       return get_posts( array('post_type' => 'page', 'post_status' => array('publish', 'private'), 'numberposts' => 999, 'orderby' => 'title', 'order' => 'ASC'));
     }
   
-    function wp_pages_dropdown($field_name, $page_id, $truncate=false){
+    public static function wp_pages_dropdown($field_name, $page_id, $truncate=false){
         $pages = FrmAppHelper::get_pages();
     ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
@@ -71,7 +71,7 @@ class FrmAppHelper{
     <?php
     }
     
-    function wp_roles_dropdown($field_name, $capability){
+    public static function wp_roles_dropdown($field_name, $capability){
         global $frm_editable_roles;
         $field_value = FrmAppHelper::get_param($field_name);
         if(!$frm_editable_roles)
@@ -87,7 +87,7 @@ class FrmAppHelper{
     <?php
     }
     
-    function frm_capabilities(){
+    static public function frm_capabilities(){
         global $frmpro_is_installed;
         $cap = array(
             'frm_view_forms' => __('View Forms and Templates', 'formidable'),
@@ -106,7 +106,7 @@ class FrmAppHelper{
         return $cap;
     }
     
-    function user_has_permission($needed_role){        
+    public static function user_has_permission($needed_role){        
         if($needed_role == '' or current_user_can($needed_role))
             return true;
             
@@ -120,19 +120,19 @@ class FrmAppHelper{
         return false;
     }
     
-    function is_super_admin($user_id=false){
+    public static function is_super_admin($user_id=false){
         if(function_exists('is_super_admin'))
             return is_super_admin($user_id);
         else
             return is_site_admin($user_id);
     }
     
-    function checked($values, $current){
+    public static function checked($values, $current){
         if(FrmAppHelper::check_selected($values, $current))
             echo ' checked="checked"';
     }
     
-    function check_selected($values, $current){
+    public static function check_selected($values, $current){
         //if(is_array($current))
         //    $current = (isset($current['value'])) ? $current['value'] : $current['label'];
         
@@ -157,7 +157,7 @@ class FrmAppHelper{
             return false;
     }
     
-    function recursive_trim(&$value) {
+    public static function recursive_trim(&$value) {
         if (is_array($value))
             $value = array_map(array('FrmAppHelper', 'recursive_trim'), $value);
         else
@@ -166,18 +166,18 @@ class FrmAppHelper{
         return $value;
     }
     
-    function esc_textarea( $text ) {
+    public static function esc_textarea( $text ) {
         $safe_text = str_replace('&quot;', '"', $text);
         $safe_text = htmlspecialchars( $safe_text, ENT_NOQUOTES );
     	return apply_filters( 'esc_textarea', $safe_text, $text );
     }
     
-    function replace_quotes($val){
+    public static function replace_quotes($val){
         $val = str_replace(array('&#8220;', '&#8221;', '&#8216;', '&#8217;'), array('"', '"', "'", "'"), $val);
         return $val;
     }
     
-    function script_version($handle, $list='scripts'){
+    public static function script_version($handle, $list='scripts'){
         global $wp_scripts;
     	if(!$wp_scripts)
     	    return false;
@@ -193,7 +193,7 @@ class FrmAppHelper{
     	return $ver;
     }
     
-    function get_file_contents($filename){
+    public static function get_file_contents($filename){
         if (is_file($filename)){
             ob_start();
             include $filename;
@@ -204,7 +204,7 @@ class FrmAppHelper{
         return false;
     }
     
-    function get_unique_key($name='', $table_name, $column, $id = 0, $num_chars = 6){
+    public static function get_unique_key($name='', $table_name, $column, $id = 0, $num_chars = 6){
         global $wpdb;
 
         $key = '';
@@ -241,7 +241,7 @@ class FrmAppHelper{
     }
 
     //Editing a Form or Entry
-    function setup_edit_vars($record, $table, $fields='', $default=false, $post_values=array()){
+    public static function setup_edit_vars($record, $table, $fields='', $default=false, $post_values=array()){
         if(!$record) return false;
         global $frm_entry_meta, $frm_form, $frm_settings, $frm_sidebar_width;
         
@@ -397,7 +397,7 @@ class FrmAppHelper{
         return $values;
     }
     
-    function insert_opt_html($args){ 
+    public static function insert_opt_html($args){ 
         extract($args);
         
         $class = '';
@@ -413,7 +413,7 @@ class FrmAppHelper{
     <?php
     }
     
-    function get_us_states(){
+    public static function get_us_states(){
         return apply_filters('frm_us_states', array(
             'AL' => 'Alabama', 'AK' => 'Alaska', 'AR' => 'Arkansas', 'AZ' => 'Arizona', 
             'CA' => 'California', 'CO' => 'Colorado', 'CT' => 'Connecticut', 'DE' => 'Delaware', 
@@ -431,7 +431,7 @@ class FrmAppHelper{
         ));
     }
     
-    function get_countries(){
+    public static function get_countries(){
         return apply_filters('frm_countries', array(
             __('Afghanistan', 'formidable'), __('Albania', 'formidable'), __('Algeria', 'formidable'), 
             __('American Samoa', 'formidable'), __('Andorra', 'formidable'), __('Angola', 'formidable'),
@@ -508,7 +508,7 @@ class FrmAppHelper{
         ));
     }
     
-    function frm_get_main_message( $message = ''){
+    public static function frm_get_main_message( $message = ''){
         global $frmpro_is_installed;
         
         //if($frmpro_is_installed)
@@ -527,7 +527,7 @@ class FrmAppHelper{
       return $message;
     }
     
-    function truncate($str, $length, $minword = 3, $continue = '...'){
+    public static function truncate($str, $length, $minword = 3, $continue = '...'){
         $length = (int)$length;
         $str = strip_tags($str);
         $original_len = (function_exists('mb_strlen')) ? mb_strlen($str) : strlen($str);
@@ -559,7 +559,7 @@ class FrmAppHelper{
         return $sub . (($len < $original_len) ? $continue : '');
     }
     
-    function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
+    public static function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
         if(is_array($where)){
             global $frmdb, $wpdb;
             extract($frmdb->get_where_clause_and_values( $where ));
@@ -572,40 +572,40 @@ class FrmAppHelper{
     }
     
     // Pagination Methods
-    function getLastRecordNum($r_count,$current_p,$p_size){
+    public static function getLastRecordNum($r_count,$current_p,$p_size){
       return (($r_count < ($current_p * $p_size))?$r_count:($current_p * $p_size));
     }
 
-    function getFirstRecordNum($r_count,$current_p,$p_size){
+    public static function getFirstRecordNum($r_count,$current_p,$p_size){
       if($current_p == 1)
         return 1;
       else
-        return ($this->getLastRecordNum($r_count,($current_p - 1),$p_size) + 1);
+        return (self::getLastRecordNum($r_count,($current_p - 1),$p_size) + 1);
     }
     
-    function getRecordCount($where="", $table_name){
-        global $wpdb, $frm_app_helper;
-        $query = 'SELECT COUNT(*) FROM ' . $table_name . $frm_app_helper->prepend_and_or_where(' WHERE ', $where);
+    public static function getRecordCount($where="", $table_name){
+        global $wpdb;
+        $query = 'SELECT COUNT(*) FROM ' . $table_name . FrmAppHelper::prepend_and_or_where(' WHERE ', $where);
         return $wpdb->get_var($query);
     }
 
-    function getPageCount($p_size, $where="", $table_name){
+    public static function getPageCount($p_size, $where="", $table_name){
         if(is_numeric($where))
             return ceil((int)$where / (int)$p_size);
         else
-            return ceil((int)$this->getRecordCount($where, $table_name) / (int)$p_size);
+            return ceil((int)self::getRecordCount($where, $table_name) / (int)$p_size);
     }
 
-    function getPage($current_p,$p_size, $where = "", $order_by = '', $table_name){
-        global $wpdb, $frm_app_helper;
+    public static function getPage($current_p,$p_size, $where = "", $order_by = '', $table_name){
+        global $wpdb;
         $end_index = $current_p * $p_size;
         $start_index = $end_index - $p_size;
-        $query = 'SELECT *  FROM ' . $table_name . $frm_app_helper->prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
+        $query = 'SELECT *  FROM ' . $table_name . FrmAppHelper::prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
         $results = $wpdb->get_results($query);
         return $results;
     }
     
-    function get_referer_query($query) {
+    public static function get_referer_query($query) {
     	if (strpos($query, "google.")) {
     	    //$pattern = '/^.*\/search.*[\?&]q=(.*)$/';
             $pattern = '/^.*[\?&]q=(.*)$/';
@@ -623,7 +623,7 @@ class FrmAppHelper{
     	return urldecode($querystr);
     }
     
-    function get_referer_info(){
+    public static function get_referer_info(){
         $referrerinfo = '';
     	$keywords = array();
     	$i = 1;
@@ -662,7 +662,7 @@ class FrmAppHelper{
     	return $referrerinfo;
     }
     
-    function json_to_array($json_vars){
+    public static function json_to_array($json_vars){
         $vars = array();
         foreach($json_vars as $jv){
             $jv_name = explode('[', $jv['name']);
