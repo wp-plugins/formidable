@@ -252,7 +252,8 @@ DEFAULT_HTML;
             wp_die($frm_settings->admin_permission);
         }
         
-        global $frm_update, $wpdb;
+        global $wpdb;
+        
         $wpdb->query('DROP TABLE IF EXISTS '. $this->fields);
         $wpdb->query('DROP TABLE IF EXISTS '. $this->forms);
         $wpdb->query('DROP TABLE IF EXISTS '. $this->entries);
@@ -260,6 +261,8 @@ DEFAULT_HTML;
         
         delete_option('frm_options');
         delete_option('frm_db_version');
+        
+        $frm_update = new FrmUpdatesController();
         delete_option($frm_update->pro_last_checked_store);
         delete_option($frm_update->pro_auth_store);
         delete_option($frm_update->pro_cred_store);

@@ -15,7 +15,7 @@
         foreach($values['fields'] as $val_key => $fo){
             if(in_array($fo['type'], $field_select)){ ?>
                 <option value="<?php echo $fo['id'] ?>" <?php selected($notification['reply_to_name'], $fo['id']); ?>><?php echo FrmAppHelper::truncate($fo['name'], 40) ?></option>
-    <?php }else if($fo['type'] == 'data' and $fo['data_type'] != 'data'){
+    <?php }else if($fo['type'] == 'data' and isset($fo['data_type']) and $fo['data_type'] != 'data'){
             if(isset($values['fields'][$val_key]['linked'])){
                 foreach($values['fields'][$val_key]['linked'] as $linked_field){ 
                 if(!in_array($linked_field->type, $field_select)) continue; ?>
@@ -38,7 +38,7 @@
         foreach($values['fields'] as $val_key => $fo){
             if(in_array($fo['type'], $field_select)){ ?>
                 <option value="<?php echo $fo['id'] ?>" <?php selected($notification['reply_to'], $fo['id']); ?>><?php echo FrmAppHelper::truncate($fo['name'], 40) ?></option>
-        <?php }else if($fo['type'] == 'data' and $fo['data_type'] != 'data'){
+        <?php }else if($fo['type'] == 'data' and isset($fo['data_type']) and $fo['data_type'] != 'data'){
                 if(isset($values['fields'][$val_key]['linked'])){ ?>
                 <?php foreach($values['fields'][$val_key]['linked'] as $linked_field){ 
                     if(!in_array($linked_field->type, $field_select)) continue; ?>

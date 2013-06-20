@@ -79,8 +79,7 @@ class FrmAppController{
     }
     
     function pro_action_needed( $plugin ){
-        global $frm_update;
-       
+        $frm_update = new FrmUpdatesController();
         if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
             if (IS_WPMU and $frm_update->pro_wpmu and !FrmAppHelper::is_super_admin())
                 return;
@@ -93,7 +92,7 @@ class FrmAppController{
     }
 
     function pro_get_started_headline(){
-        global $frm_update;
+        $frm_update = new FrmUpdatesController();
 
         // Don't display this error as we're upgrading the thing... cmon
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')

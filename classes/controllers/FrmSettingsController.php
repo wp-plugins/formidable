@@ -13,7 +13,9 @@ class FrmSettingsController{
     }
 
     function display_form(){
-      global $frm_settings, $frmpro_is_installed, $frm_update;
+      global $frm_settings, $frmpro_is_installed;
+      
+      $frm_update = new FrmUpdatesController();
       $frm_roles = FrmAppHelper::frm_capabilities();
       
       $uploads = wp_upload_dir();
@@ -24,8 +26,9 @@ class FrmSettingsController{
     }
 
     function process_form(){
-      global $frm_settings, $frmpro_is_installed, $frm_update;
+      global $frm_settings, $frmpro_is_installed;
 
+      $frm_update = new FrmUpdatesController();
       //$errors = $frm_settings->validate($_POST,array());
       $errors = array();
       $frm_settings->update($_POST);

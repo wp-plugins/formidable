@@ -11,7 +11,7 @@ class FrmAppHelper{
         if($src == 'get'){
             $value = (isset($_POST[$param]) ? stripslashes_deep($_POST[$param]) : (isset($_GET[$param]) ? stripslashes_deep($_GET[$param]) : $default));
             if(!isset($_POST[$param]) and isset($_GET[$param]) and !is_array($value))
-                $value = stripslashes_deep(urldecode($_GET[$param]));
+                $value = stripslashes_deep(htmlspecialchars_decode(urldecode($_GET[$param])));
         }else{
             $value = isset($_POST[$param]) ? stripslashes_deep(maybe_unserialize($_POST[$param])) : $default;
         }
@@ -514,7 +514,7 @@ class FrmAppHelper{
         //if($frmpro_is_installed)
             return $message;
            
-        global $frm_update;
+        $frm_update = new FrmUpdatesController();
          
         include_once(ABSPATH.'/wp-includes/class-IXR.php');
 

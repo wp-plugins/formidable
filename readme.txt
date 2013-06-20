@@ -71,7 +71,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added warning message if a non-unique value is added as a field value
 * Removed messages for strict standards
 * PRO: Added back button on multi-paged forms
+* PRO: Added conditional logic on page breaks for skipping pages
 * PRO: Added loading indicator by submit button and on dependent data from entries fields
+* PRO: Switched out username and passwords for license numbers
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export
@@ -82,6 +84,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added "confirm" option to frm-entry-links shortocode that is used before an entry is deleted
 * PRO: Copy conditional logic and field calculations into duplicated forms
 * PRO: Allow clickable=1 to be used with Google formresults shortcode
+* PRO: No longer require fields in a conditionally hidden section heading
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
 * PRO: Updated star rating javascript version
 * PRO: Don't show custom display content for password protected posts until allowed
@@ -91,6 +94,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Delete entries on the same page as the frm-entry-links shortcode, and added a confirmation message: confirm="Are you sure?"
 * PRO: Allow for quotation marks in field labels for the csv export
 * PRO: Correctly check if jQuery on() function exists
+* PRO: Fixed calendar display for months starting on Sunday when the week start day is set to Monday
+* PRO: Removed "custom display" from the post type options on the "create posts" settings tab
 
 = 1.06.11 =
 * Added styling classes: two thirds, scroll box, columns (frm_first_two_thirds, frm_last_two_thirds, frm_scroll_box, frm_total, frm_two_col, frm_three_col, frm_four_col, )

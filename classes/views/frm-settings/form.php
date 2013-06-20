@@ -27,7 +27,9 @@
     <div class="postbox">
         <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro Account Information', 'formidable')?></h3>
         <div class="inside">
-            <?php $frm_update->pro_cred_form(); ?>
+            <?php 
+            $upd = new FrmUpdatesController();
+            $upd->pro_cred_form(); ?>
         </div>
     </div>
 <?php } ?>

@@ -148,7 +148,7 @@ class FrmForm{
                     $field_options['custom_html'] = isset($values['field_options']['custom_html_'.$field_id]) ? $values['field_options']['custom_html_'.$field_id] : (isset($field_options['custom_html']) ? $field_options['custom_html'] : FrmFieldsHelper::get_default_html($field->type));
                     $field_options = apply_filters('frm_update_form_field_options', $field_options, $field, $values);
                     $frm_field->update($field_id, array('field_options' => $field_options));
-                }else if($field->type == 'hidden'){
+                }else if($field->type == 'hidden' or $field->type == 'user_id'){
                     $prev_opts = $field_options;
                     $field_options = apply_filters('frm_update_form_field_options', $field_options, $field, $values);
                     if($prev_opts != $field_options)

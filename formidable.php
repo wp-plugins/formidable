@@ -96,7 +96,7 @@ require_once(FRM_MODELS_PATH.'/FrmForm.php');
 require_once(FRM_MODELS_PATH.'/FrmEntry.php');
 require_once(FRM_MODELS_PATH.'/FrmEntryMeta.php');
 require_once(FRM_MODELS_PATH.'/FrmNotification.php');
-include_once(FRM_MODELS_PATH.'/FrmUpdate.php');
+//include_once(FRM_MODELS_PATH.'/FrmUpdate.php');
 
 global $frmdb;
 global $frm_field;
@@ -104,7 +104,6 @@ global $frm_form;
 global $frm_entry;
 global $frm_entry_meta;
 global $frm_notification;
-global $frm_update;
 
 $frmdb              = new FrmDb();
 $frm_field          = new FrmField();
@@ -112,7 +111,7 @@ $frm_form           = new FrmForm();
 $frm_entry          = new FrmEntry();
 $frm_entry_meta     = new FrmEntryMeta();
 $frm_notification   = new FrmNotification();
-$frm_update         = new FrmUpdate();
+//$frm_update         = new FrmUpdate();
 
 
 // Instansiate Controllers
@@ -123,6 +122,7 @@ require_once(FRM_CONTROLLERS_PATH . '/FrmFormsController.php');
 require_once(FRM_CONTROLLERS_PATH . '/FrmEntriesController.php');
 require_once(FRM_CONTROLLERS_PATH . '/FrmSettingsController.php');
 require_once(FRM_CONTROLLERS_PATH . '/FrmStatisticsController.php');
+require_once(FRM_CONTROLLERS_PATH . '/FrmUpdatesController.php');
 
 global $frm_api_controller;
 global $frm_app_controller;
@@ -138,6 +138,7 @@ $frm_fields_controller      = new FrmFieldsController();
 $frm_forms_controller       = new FrmFormsController();
 $frm_settings_controller    = new FrmSettingsController();
 $frm_statistics_controller  = new FrmStatisticsController();
+$frm_update  = new FrmUpdatesController();
 
 // Instansiate Helpers
 require_once(FRM_HELPERS_PATH. '/FrmEntriesHelper.php');

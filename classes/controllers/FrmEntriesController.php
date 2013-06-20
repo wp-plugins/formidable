@@ -131,7 +131,7 @@ class FrmEntriesController{
         self::_delete_entry($atts['entry_id'], $atts['form']);
     }
     
-    function _delete_entry($entry_id, $form){
+    private static function _delete_entry($entry_id, $form){
         if(!$form)
             return;
         

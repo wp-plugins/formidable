@@ -314,7 +314,7 @@ function frmGetFormErrors(object,ajax_url){
 				}
 				if(jQuery(object).find('input[name="id"]').length > 0){
 					var eid = jQuery(object).find('input[name="id"]').val();
-					var oc = jQuery('#frm_edit_'+eid).find('a').addClass('frm_ajax_editted').click();
+					var oc = jQuery('#frm_edit_'+eid).find('a').addClass('frm_ajax_edited').click();
 				}
 	        }else{
 				jQuery(object).find('input[type="submit"]').removeAttr('disabled');
@@ -377,7 +377,7 @@ function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel,hclass){
 
 function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id,hclass){
 	var cancel=jQuery('#frm_edit_'+entry_id).text();
-	if(!jQuery('#frm_edit_'+entry_id).find('a').hasClass('frm_ajax_editted')){
+	if(!jQuery('#frm_edit_'+entry_id).find('a').hasClass('frm_ajax_edited')){
 		jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
 		jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
 	}

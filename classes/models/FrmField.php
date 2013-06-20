@@ -116,8 +116,10 @@ class FrmField{
 
             $results = $frmdb->get_one_record($frmdb->fields, $where);
             
-            if($results)
+            if($results){
                 wp_cache_set( $results->id, $results, 'frm_field' );
+                wp_cache_set( $results->field_key, $results, 'frm_field' );
+            }
         }
         
         if($results){

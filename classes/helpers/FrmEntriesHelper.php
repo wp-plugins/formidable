@@ -17,7 +17,7 @@ class FrmEntriesHelper{
                 if ($reset)
                     $new_value = $default;
                 else
-                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? $_POST['item_meta'][$field->id] : $default;
+                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : $default;
                 
                 $is_default = ($new_value == $default) ? true : false;
                     
