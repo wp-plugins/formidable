@@ -228,7 +228,7 @@ else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,ajax
 
 function frmGetData(f,selected,ajax_url,append){
 	if(!append)
-		jQuery('#frm_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
+		jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=fields&frm_action=ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
