@@ -48,6 +48,8 @@ class FrmField{
         foreach ($fields as $field){
             $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
+            if($copy_keys and substr($field->field_key, -1) == 2)
+                $new_key = rtrim($new_key, 2);
             $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $frmdb->fields, 'field_key');
             $values['options'] = maybe_serialize($field->options);
             $values['form_id'] = $form_id;

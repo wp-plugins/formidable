@@ -87,6 +87,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: No longer require fields in a conditionally hidden section heading
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
 * PRO: Updated star rating javascript version
+* PRO: Check field key when creating a form from a template to see if the trailing "2" can be removed
 * PRO: Don't show custom display content for password protected posts until allowed
 * PRO: Switch the cancel link to edit link after a form is submitted with in-place-edit and ajax
 * PRO: Switched front-end ajax to use hooks (frm_ajax_{controller}_{action})
