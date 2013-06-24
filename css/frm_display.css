@@ -57,4 +57,4 @@
 .frm_form_field.frm_two_col .frm_opt_container, .frm_form_field.frm_three_col .frm_opt_container, .frm_form_field.frm_four_col .frm_opt_container{background:none;}
 .frm_form_field.frm_scroll_box .frm_opt_container{height: 100px; overflow:auto;}
 .frm_form_field.frm_two_col .frm_opt_container:after, .frm_form_field.frm_three_col .frm_opt_container:after, .frm_form_field.frm_four_col .frm_opt_container:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
-.frm_form_field.frm_total input, .frm_form_field.frm_total textarea{opacity:1;background-color:transparent;border:none;font-weight:bold;}
+.frm_form_field.frm_total input, .frm_form_field.frm_total textarea{opacity:1;background-color:transparent;border:none;font-weight:bold;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;}
