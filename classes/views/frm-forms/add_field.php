@@ -42,7 +42,7 @@ $display = apply_filters('frm_display_field_options', array(
     }else{ ?>
         <div id="frm_field_<?php echo $field['id'] ?>_opts" class="clear<?php echo (count($field['options']) > 10) ? ' frm_field_opts_list' : ''; ?>">
         <?php do_action('frm_add_multiple_opts_labels', $field); ?>
-        <?php require(FRM_VIEWS_PATH.'/frm-fields/radio.php'); ?>
+        <?php include(FRM_VIEWS_PATH .'/frm-fields/radio.php'); ?>
         </div>
     <?php
     }

@@ -37,13 +37,13 @@ class FrmFieldsController{
         $field = $frm_field->getOne($field_id);
         $id = $field->form_id;
         $form = $frm_form->getOne( $id );
-        $values = FrmAppHelper::setup_edit_vars($form, 'forms', array($field), true);
-        $field = $values['fields'][$field->id];
+        $field = FrmFieldsHelper::setup_edit_vars($field, true);
+        
         $field_name = "item_meta[$field_id]";
         
         $values = array();
         if(class_exists('FrmProForm'))
-            $values['post_type'] = FrmProForm::post_type($id);
+            $values['post_type'] = FrmProForm::post_type($form);
             
         include(FRM_VIEWS_PATH .'/frm-forms/add_field.php'); 
         include(FRM_VIEWS_PATH .'/frm-forms/new-field-js.php');
@@ -405,12 +405,12 @@ class FrmFieldsController{
         $add_html = '';
         
         if(isset($field['size']) and $field['size'] > 0){
-            if(!in_array($field['type'], array('textarea', 'select', 'data', 'time')))
+            if(!in_array($field['type'], array('textarea', 'select', 'data', 'time', 'hidden')))
                 $add_html .= ' size="'. $field['size'] .'"';
             $class .= " auto_width";
         }
         
-        if(isset($field['max']) and !in_array($field['type'], array('textarea', 'rte')) and !empty($field['max']))
+        if(isset($field['max']) and !in_array($field['type'], array('textarea', 'rte', 'hidden')) and !empty($field['max']))
             $add_html .= ' maxlength="'. $field['max'] .'"';
         
         if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){

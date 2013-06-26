@@ -155,6 +155,7 @@ img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 
 .form-table .form-field input, .form-table .form-field .quicktags-toolbar input,
 .form-field input, .form-field textarea, .form-field .quicktags-toolbar input{width:auto;}
+.form-table.frm_lics_form td{padding:0;}
 .form-field input[type="checkbox"], .form-field input[type="radio"]{border:none !important;}
 textarea.inplace_field{width:98% !important;}
 .inplace_field{width:70% !important;}

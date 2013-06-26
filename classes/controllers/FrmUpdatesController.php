@@ -113,7 +113,7 @@ class FrmUpdatesController{
             return false;
         
         $license = $client->getResponse();
-        
+
         if($license and !empty($license))  
             $this->_update_auth(array('license' => $license, 'wpmu' => $this->pro_wpmu));
 
@@ -144,7 +144,11 @@ class FrmUpdatesController{
         } 
 ?>
 <div style="float:left;width:55%">
-    <?php $this->display_form(); ?>
+    <?php $this->display_form(); 
+    
+    if(!$frmpro_is_installed){ ?>
+    <p>Already signed up? <a href="http://formidablepro.com/account/" target="_blank"><?php _e('Click here', 'formidable') ?></a> to get your license number.</p>
+    <?php } ?>
 </div>
 
 <?php if($frmpro_is_installed){ ?>
@@ -174,7 +178,6 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
 
 <div style="float:right;width:40%">       
     <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
-
     <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
 </div>
 <?php   } ?>
@@ -195,7 +198,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
     <input type="hidden" name="process_cred_form" value="Y" />
     <?php wp_nonce_field('cred_form'); ?>
 
-    <table class="form-table">
+    <table class="form-table frm_lics_form">
         <tr class="form-field">
             <td valign="top" width="150px"><?php echo $this->pro_license_label; ?></td>
             <td><input type="text" name="<?php echo $this->pro_license_str; ?>" value="<?php echo $this->license ?>" style="width:97%;"/></td>
@@ -211,8 +214,9 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         </tr>
         <?php } ?>
         <tr>
-            <td colspan="2">
-                <input class="button-secondary" type="submit" value="<?php _e('Save', 'formidable'); ?>" />
+            <td></td>
+            <td>    
+                <input class="button-secondary" type="submit" value="<?php _e('Save License', 'formidable'); ?>" />
                 <?php if($frmpro_is_installed){ 
                     _e('or', 'formidable'); 
                 ?>
@@ -486,9 +490,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
 <?php
     }
 
-    function send_mothership_request( $endpoint,
-                                                    $args=array(),
-                                                    $domain=false){
+    function send_mothership_request( $endpoint, $args=array(), $domain=false){
         if(empty($domain))
             $domain = $this->pro_mothership;
         $uri = "{$domain}{$endpoint}";

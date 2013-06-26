@@ -34,7 +34,7 @@ class FrmEntriesController{
         if($form)
             $entry_count = $frm_entry->getRecordCount($form->id);
             
-        require(FRM_VIEWS_PATH.'/frm-entries/list.php');
+        include(FRM_VIEWS_PATH.'/frm-entries/list.php');
     }
     
     public static function show_form($id='', $key='', $title=false, $description=false){

@@ -267,6 +267,8 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     function deauthorize(){
         delete_option('frmpro-credentials');
         delete_option('frmpro-authorized');
+        delete_site_option('frmpro-credentials');
+        delete_site_option('frmpro-authorized');
     }
     
     // Routes for wordpress pages -- we're just replacing content here folks.
@@ -329,7 +331,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
         if( !empty($plugin) and $plugin == 'formidable' and !empty($controller) ){
           $this->standalone_route($controller, $action);
-          exit;
+          die();
         }
     }
 

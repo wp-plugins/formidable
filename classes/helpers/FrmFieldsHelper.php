@@ -88,20 +88,35 @@ class FrmFieldsHelper{
         return $values;
     }
     
-    public static function setup_edit_vars($record){
+    public static function setup_edit_vars($record, $doing_ajax=false){
         global $frm_entry_meta, $frm_form;
         
         $values = array('id' => $record->id, 'form_id' => $record->form_id);
-        //$record->field_options = maybe_unserialize($record->field_options);
-
-        foreach (array('name' => $record->name, 'description' => $record->description) as $var => $default)
-              $values[$var] = htmlspecialchars(FrmAppHelper::get_param($var, $default));
-
-        $values['form_name'] = ($record->form_id) ? $frm_form->getName( $record->form_id ) : '';
+        $defaults = array('name' => $record->name, 'description' => $record->description);
+        $default_opts = array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required);
         
-        foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default)
-            $values[$var] = FrmAppHelper::get_param($var, $default);
+        if($doing_ajax){
+            $values = $values + $defaults + $default_opts;
+            $values['form_name'] = '';
+        }else{
+            foreach ($defaults as $var => $default){
+                $values[$var] = htmlspecialchars(FrmAppHelper::get_param($var, $default));
+                unset($var);
+                unset($default);
+            }
+            
+            foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default){
+                $values[$var] = FrmAppHelper::get_param($var, $default);
+                unset($var);
+                unset($default);
+            }
+            
+            $values['form_name'] = ($record->form_id) ? $frm_form->getName( $record->form_id ) : '';
+        }
         
+        unset($defaults);
+        unset($default_opts);
+             
         $values['options'] = $record->options;
         $values['field_options'] = $record->field_options;
         
@@ -112,8 +127,11 @@ class FrmFieldsHelper{
             $defaults['invalid'] = $frm_settings->re_msg;
         }
             
-        foreach($defaults as $opt => $default)
-            $values[$opt] = (isset($record->field_options[$opt])) ? $record->field_options[$opt] : $default; 
+        foreach($defaults as $opt => $default){
+            $values[$opt] = (isset($record->field_options[$opt])) ? $record->field_options[$opt] : $default;
+            unset($opt);
+            unset($default);
+        }
 
         $values['custom_html'] = (isset($record->field_options['custom_html'])) ? $record->field_options['custom_html'] : FrmFieldsHelper::get_default_html($record->type);
         
