@@ -374,7 +374,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         return do_shortcode( $matches[0] );
     }
     
-    function update_message($features){
+    public static function update_message($features){
         include(FRM_VIEWS_PATH .'/shared/update_message.php');
     }
     

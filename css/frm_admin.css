@@ -251,9 +251,13 @@ span.howto{display:inline;}
 	border:none;font-weight:normal;background-color:transparent; background-image:none;padding:6px; margin:20px 0;
 }
 #postbox-container-1 .ui-state-default{padding:0;margin:0;}
-#new_fields li.ui-state-default.edit_field_type_break{border-top:1px dashed #ccc; padding-top:5px;}
-#new_fields .edit_field_type_divider .frm_ipe_field_label,
-#new_fields .edit_field_type_break .frm_ipe_field_label{font-size:116%;}
+#new_fields li.ui-state-default.edit_field_type_break{border-bottom:1px dashed #ccc; padding-bottom:5px;}
+#new_fields .edit_field_type_divider .frm_ipe_field_label{font-size:116%;}
+#new_fields .edit_field_type_break .frm_ipe_field_label.button{
+	width:150px;
+	text-align:center;
+	margin-bottom:3px;
+}
 
 .frm-category-tabs a{outline:none;}
 

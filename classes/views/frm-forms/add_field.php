@@ -25,7 +25,7 @@ $display = apply_filters('frm_display_field_options', array(
         <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>)" class="frm_action_icon frm_required_icon alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
-    <label class="frm_ipe_field_label frm_primary_label" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
+    <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
 
 <div class="frm_form_fields">    
 <?php if ($display['type'] == 'text'){ ?>
