@@ -58,3 +58,4 @@
 .frm_form_field.frm_scroll_box .frm_opt_container{height: 100px; overflow:auto;}
 .frm_form_field.frm_two_col .frm_opt_container:after, .frm_form_field.frm_three_col .frm_opt_container:after, .frm_form_field.frm_four_col .frm_opt_container:after{content:".";display:block;clear:both;visibility:hidden;line-height:0;height:0;}
 .frm_form_field.frm_total input, .frm_form_field.frm_total textarea{opacity:1;background-color:transparent;border:none;font-weight:bold;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;}
+.with_frm_style .frm_inline_container.frm_grid_first label.frm_primary_label, .with_frm_style .frm_inline_container.frm_grid label.frm_primary_label, .with_frm_style .frm_inline_container.frm_grid_odd label.frm_primary_label, .with_frm_style .frm_inline_container.frm_grid_first .frm_opt_container, .with_frm_style .frm_inline_container.frm_grid .frm_opt_container, .with_frm_style .frm_inline_container.frm_grid_odd .frm_opt_container {margin-right:0;}
