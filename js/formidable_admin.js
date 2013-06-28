@@ -244,7 +244,7 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 });
 
 function frmLoadField(field_id){
-	if(jQuery('#frm_field_id_'+field_id).next().length){
+	if(jQuery('#frm_field_id_'+field_id).next().length > 0){
 		var next_id=jQuery('#frm_field_id_'+field_id).next().attr('id').replace('frm_field_id_', '');
 		setTimeout(function(){frmLoadField(next_id);}, 400);
 	}

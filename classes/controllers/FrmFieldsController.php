@@ -29,21 +29,19 @@ class FrmFieldsController{
     public static function load_field(){
         global $frm_field, $frm_form;
         
-        $field_id = $_POST['field_id'];
+        $id = $field_id = $_POST['field_id'];
         if(!$field_id or !is_numeric($field_id))
             die();
         
         $_GET['page'] = 'formidable';
         $field = $frm_field->getOne($field_id);
-        $id = $field->form_id;
-        $form = $frm_form->getOne( $id );
         $field = FrmFieldsHelper::setup_edit_vars($field, true);
+        if(!isset($field['value']))
+            $field['value'] = '';
         
         $field_name = "item_meta[$field_id]";
         
         $values = array();
-        if(class_exists('FrmProForm'))
-            $values['post_type'] = FrmProForm::post_type($form);
             
         include(FRM_VIEWS_PATH .'/frm-forms/add_field.php'); 
         include(FRM_VIEWS_PATH .'/frm-forms/new-field-js.php');

@@ -120,7 +120,7 @@ class FrmFieldsHelper{
         $values['options'] = $record->options;
         $values['field_options'] = $record->field_options;
         
-        $defaults = FrmFieldsHelper::get_default_field_opts($values['type'], $record, true);
+        $defaults = self::get_default_field_opts($values['type'], $record, true);
         
         if($values['type'] == 'captcha'){
             global $frm_settings;
@@ -133,9 +133,9 @@ class FrmFieldsHelper{
             unset($default);
         }
 
-        $values['custom_html'] = (isset($record->field_options['custom_html'])) ? $record->field_options['custom_html'] : FrmFieldsHelper::get_default_html($record->type);
+        $values['custom_html'] = (isset($record->field_options['custom_html'])) ? $record->field_options['custom_html'] : self::get_default_html($record->type);
         
-        return apply_filters('frm_setup_edit_field_vars', $values, $values['field_options']);
+        return apply_filters('frm_setup_edit_field_vars', $values, array('doing_ajax' => $doing_ajax));
     }
     
     public static function get_default_field_opts($type, $field, $limit=false){
