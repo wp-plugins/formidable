@@ -24,6 +24,13 @@ learn to use a search engine.
 (function($){
 
 $.fn.editInPlace = function(options) {
+	jQuery.browser = {};
+	jQuery.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+	jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+	jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+	jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+	jQuery.browser.safari = navigator.userAgent.indexOf("Safari") > -1;
+	
 	var settings = $.extend({}, $.fn.editInPlace.defaults, options);
 	if(settings.type == 'textarea') settings.use_html = true;
 	assertMandatorySettingsArePresent(settings);
