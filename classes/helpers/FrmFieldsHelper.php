@@ -330,7 +330,7 @@ DEFAULT_HTML;
     public static function dropdown_categories($args){
         global $frmpro_is_installed;
         
-        $defaults = array('field' => false, 'name' => false);
+        $defaults = array('field' => false, 'name' => false, 'show_option_all' => ' ');
         extract(wp_parse_args($args, $defaults));
         
         if(!$field) return;
@@ -350,7 +350,7 @@ DEFAULT_HTML;
         }      
         
         $args = array(
-            'show_option_all' => ' ', 'hierarchical' => 1, 'name' => $name,
+            'show_option_all' => $show_option_all, 'hierarchical' => 1, 'name' => $name,
             'id' => $id, 'exclude' => $exclude, 'class' => $class, 'selected' => $selected, 
             'hide_empty' => false, 'echo' => 0, 'orderby' => 'name'
         );

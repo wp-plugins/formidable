@@ -248,9 +248,10 @@ function frmLoadField(field_id){
 		var next_id=jQuery('#frm_field_id_'+field_id).next().attr('id').replace('frm_field_id_', '');
 		setTimeout(function(){frmLoadField(next_id);}, 400);
 	}
+	var f=jQuery('#frm_field_id_'+field_id+' .frm_hidden_fdata').html();
 	jQuery.ajax({
 		type:"POST",url:ajaxurl,
-		data:{action:'frm_load_field',field_id:field_id},
+		data:{action:'frm_load_field',field_id:field_id,field:f},
 		success:function(html){
 			jQuery('#frm_field_id_'+field_id).replaceWith(html);
 		}

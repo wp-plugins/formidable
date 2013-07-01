@@ -34,8 +34,7 @@ class FrmFieldsController{
             die();
         
         $_GET['page'] = 'formidable';
-        $field = $frm_field->getOne($field_id);
-        $field = FrmFieldsHelper::setup_edit_vars($field, true);
+        $field = json_decode(stripslashes_deep($_POST['field']), true);
         if(!isset($field['value']))
             $field['value'] = '';
         
