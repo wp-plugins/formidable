@@ -102,6 +102,7 @@ p.search-box {margin-top:10px;}
 	color:#fff;
 }
 img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
+.frm-loading-img{background:url(../images/ajax_loader.gif) no-repeat center center;padding:6px 12px;visibility:hidden;}
 
 #editorcontainer #dyncontent{
 	margin:0; width:100%;
@@ -138,8 +139,8 @@ img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 }
 .frm_ipe_form_name input.inplace_field{
 	border:none; width:90% !important; 
-	font-size:1.1em; background:transparent; 
-	font-weight: 200;
+	font-size:1em; background:transparent; 
+	font-weight: 200; box-shadow:none;
 }
 .frm_field_opts_list{
 	height:105px; margin-top:10px;
@@ -257,6 +258,10 @@ span.howto{display:inline;}
 	width:150px;
 	text-align:center;
 	margin-bottom:3px;
+}
+#new_fields .edit_field_type_break input.inplace_field{
+	text-align:center;width:150px;background-color:transparent;
+	border:none;box-shadow:none;
 }
 
 .frm-category-tabs a{outline:none;}

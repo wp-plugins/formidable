@@ -22,9 +22,10 @@
     <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
         
             <p style="margin-top:0;">
-                <input type="button" onclick="frmSubmitBuild()" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <input type="button" onclick="frmSubmitBuild(this)" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
+                <span class="frm-loading-img"></span>
             </p>
             
         <form method="post" id="frm_build_form">
@@ -36,9 +37,10 @@
             <?php require(FRM_VIEWS_PATH.'/frm-forms/form.php'); ?>
 
             <p>
-                <input type="button" onclick="frmSubmitBuild()" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <input type="button" onclick="frmSubmitBuild(this)" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
+                <span class="frm-loading-img"></span>
             </p>
         </form>
     </div>

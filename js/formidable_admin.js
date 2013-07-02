@@ -258,10 +258,19 @@ function frmLoadField(field_id){
 	});
 }
 
-function frmSubmitBuild(){
+function frmSubmitBuild(b){
+	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
 	var form=jQuery('#frm_build_form');
-	jQuery('#frm_compact_fields').val(JSON.stringify(form.serializeArray()));
-	jQuery('#frm_js_build_form').submit();
+	var v=JSON.stringify(form.serializeArray());
+	jQuery('#frm_compact_fields').val(v);
+	jQuery.ajax({
+		type:"POST",url:ajaxurl,
+	    data:{action:'frm_save_form','frm_compact_fields':v},
+	    success:function(errObj){
+			jQuery(b).nextAll('.frm-loading-img').css('visibility', 'hidden');
+		},
+		error:function(html){jQuery('#frm_js_build_form').submit();}
+	});
 }
 
 function frmClickWidget(obj){

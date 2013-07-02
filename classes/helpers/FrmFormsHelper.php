@@ -121,7 +121,7 @@ class FrmFormsHelper{
             ),
             'submit_value' => $frm_settings->submit_value, 'success_action' => 'message',
             'success_msg' => $frm_settings->success_msg, 'show_form' => 0, 'akismet' => '',
-            'no_save' => 0
+            'no_save' => 0, 'ajax_load' => false
         );
     }
     

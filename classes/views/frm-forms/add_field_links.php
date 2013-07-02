@@ -81,7 +81,9 @@
         ?>
     	<form method="post" id="frm_js_build_form">
     	    <input type="hidden" id="frm_compact_fields" name="frm_compact_fields" value="" />
-    	    <p><input type="button" onclick="frmSubmitBuild()" value="<?php echo esc_attr($button) ?>" class="button-primary" /></p>
+    	    <p><input type="button" onclick="frmSubmitBuild(this)" value="<?php echo esc_attr($button) ?>" class="button-primary" />
+    	        <span class="frm-loading-img"></span>
+    	    </p>
     	</form>
     	<?php do_action('frm_extra_form_instructions'); ?>
     </div>

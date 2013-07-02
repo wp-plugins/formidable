@@ -62,7 +62,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.07.0 =
-* Submit build form in one input to prevent max_input_vars limitations
+* Submit build form in one input with ajax to prevent max_input_vars limitations
 * Load fields on the build page with ajax for long forms and other form builder page optimization
 * Added submit button to customizable HTML
 * Create entry key from first required text field

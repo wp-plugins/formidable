@@ -11,6 +11,7 @@ class FrmFormsController{
         add_action('wp_ajax_frm_form_name_in_place_edit', array(&$this, 'edit_name') );
         add_action('wp_ajax_frm_form_desc_in_place_edit', array(&$this, 'edit_description') );
         add_action('wp_ajax_frm_delete_form_wo_fields',array(&$this, 'destroy_wo_fields'));
+        add_action('wp_ajax_frm_save_form', array(&$this, 'route') );
         add_filter('frm_submit_button', array(&$this, 'submit_button_label'));
         add_filter('media_buttons_context', array(&$this, 'insert_form_button'));
         //add_action('media_buttons', array(&$this, 'show_form_button'), 20);
@@ -458,6 +459,8 @@ class FrmFormsController{
         
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
+        else if(defined('DOING_AJAX'))
+            die();
         else if($create_link)
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
         else
@@ -510,6 +513,10 @@ class FrmFormsController{
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $vars = false;
         if(isset($_POST['frm_compact_fields'])){
+            if(!current_user_can('frm_edit_forms') and !current_user_can('administrator')){
+                global $frm_settings;
+                wp_die($frm_settings->admin_permission);
+            }
             $json_vars = nl2br(stripslashes($_POST['frm_compact_fields']));
             $json_vars = json_decode($json_vars, true);
             $vars = FrmAppHelper::json_to_array($json_vars);
