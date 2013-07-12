@@ -96,7 +96,7 @@
 
                 <?php do_action('frm_additional_form_options', $values); ?> 
                 
-                <tr><td colspan="2"><input type="checkbox" name="options[no_save]" id="no_save" value="1" <?php checked($values['no_save'], 1); ?> /> <?php _e('Do not store any entries submitted from this form.', 'formidable') ?> <span class="howto"><?php _e('Warning: There is no way retrieve unsaved entries.', 'formidable') ?></span></td></tr>
+                <tr><td colspan="2"><input type="checkbox" name="options[no_save]" id="no_save" value="1" <?php checked($values['no_save'], 1); ?> /> <?php _e('Do not store any entries submitted from this form.', 'formidable') ?> <span class="howto"><?php _e('Warning: There is no way to retrieve unsaved entries.', 'formidable') ?></span></td></tr>
                 
                 <?php if (function_exists( 'akismet_http_post' )){ ?>
                 <tr><td colspan="2"><?php _e('Use Akismet to check entries for spam for', 'formidable') ?>

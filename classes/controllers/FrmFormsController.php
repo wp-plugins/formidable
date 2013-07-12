@@ -513,7 +513,7 @@ class FrmFormsController{
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $vars = false;
         if(isset($_POST['frm_compact_fields'])){
-            if(!current_user_can('frm_edit_forms') and !current_user_can('administrator')){
+            if(!current_user_can('frm_edit_forms') and !is_super_admin()){
                 global $frm_settings;
                 wp_die($frm_settings->admin_permission);
             }

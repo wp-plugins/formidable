@@ -122,7 +122,8 @@ class FrmDb{
         }
       
         if($frm_db_version >= 4 and $old_db_version < 4){
-            $user_ids = FrmEntryMeta::getAll("fi.type='user_id'");
+            global $frm_entry_meta;
+            $user_ids = $frm_entry_meta->getAll("fi.type='user_id'");
             foreach($user_ids as $user_id)
                 $wpdb->update( $this->entries, array('user_id' => $user_id->meta_value), array('id' => $user_id->item_id) );
         }
@@ -247,7 +248,7 @@ DEFAULT_HTML;
     }
     
     function uninstall(){
-        if(!current_user_can('administrator')){
+        if(!is_super_admin()){
             global $frm_settings;
             wp_die($frm_settings->admin_permission);
         }

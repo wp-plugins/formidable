@@ -32,7 +32,7 @@ class FrmAppController{
     function menu(){
         global $frmpro_is_installed, $frm_settings;
         
-        if(current_user_can('administrator') and !current_user_can('frm_view_forms')){
+        if(is_super_admin() and !current_user_can('frm_view_forms')){
             global $current_user;
             $frm_roles = FrmAppHelper::frm_capabilities();
             foreach($frm_roles as $frm_role => $frm_role_description)
@@ -98,7 +98,7 @@ class FrmAppController{
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
             return;
     
-        if (IS_WPMU and !current_user_can('administrator'))
+        if (IS_WPMU and !is_super_admin())
             return;
          
         if(!isset($_GET['activate'])){  
@@ -253,7 +253,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     }
     
     function uninstall(){
-        if(current_user_can('administrator')){
+        if(is_super_admin()){
             global $frmdb;
             $frmdb->uninstall();
             return true;
