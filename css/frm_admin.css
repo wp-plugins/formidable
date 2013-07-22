@@ -8,39 +8,39 @@ ul.frm_form_nav {
 	border-radius: 5px;	
 	width:616px;
 	margin:10px 0 13px;
-	height:27px;
+	height:24px;
 	float:left;
 	*float:right;
 }
 .metabox-holder ul.frm_form_nav{margin-top:0;}
 ul.frm_form_nav li{
 	float:right;
-	width:122px;
+	width:120px;
 	margin:0;
-}
-.frm_form_nav li.current_page {
-	background-position: right 0;
-	color:#fff;
+	border-right:solid 1px #c6c6c6;
+	border-left:solid 1px #ffffff;
 }
 .frm_form_nav a {
-	background: url("../images/form_nav_bg6.png") no-repeat scroll right -28px;
-	font-size:17px;
+	/*background: url("../images/form_nav_bg6.png") no-repeat scroll right -28px;*/
+	font-size:15px;
 	text-decoration:none;
 	display:block;
-	width:128px;
-	height:21px;
-	padding-top:6px;
+	width:126px;
+	height:20px;
+	padding-top:4px;
 	text-align:center;
 }
+.frm_form_nav a:active, .frm_form_nav a:focus  {outline:none; border:none;}
 .frm_form_nav li a.current_page {
 	background-position: right 0;
 	color:#fff;
+	background: #767676;
 }
 ul.frm_form_nav li.first a{
 	border-radius: 5px 0 0 5px;
 }
 ul.frm_form_nav li.last {
-	width:128px;
+	width:126px;
 }
 ul.frm_form_nav li.last a{
 	background-color: #ececec;
