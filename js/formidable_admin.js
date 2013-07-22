@@ -259,6 +259,8 @@ function frmLoadField(field_id){
 }
 
 function frmSubmitBuild(b){
+	var p=jQuery(b).val();
+	jQuery(b).val(__FRMSAVING);
 	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
 	var form=jQuery('#frm_build_form');
 	var v=JSON.stringify(form.serializeArray());
@@ -267,7 +269,9 @@ function frmSubmitBuild(b){
 		type:"POST",url:ajaxurl,
 	    data:{action:'frm_save_form','frm_compact_fields':v},
 	    success:function(errObj){
+			jQuery(b).val(__FRMSAVED);
 			jQuery(b).nextAll('.frm-loading-img').css('visibility', 'hidden');
+			setTimeout(function(){jQuery(b).fadeOut('slow', function(){jQuery(b).val(p);jQuery(b).show();});}, 2000);
 		},
 		error:function(html){jQuery('#frm_js_build_form').submit();}
 	});

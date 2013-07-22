@@ -77,6 +77,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export
+* PRO: Include comments in the CSV export
 * PRO: Added column in CSV for value for fields that are set to use separate values
 * PRO: Removed border styling from the container around radio and checkbox fields
 * PRO: Added frm_order_display hook
@@ -97,6 +98,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Correctly check if jQuery on() function exists
 * PRO: Fixed calendar display for months starting on Sunday when the week start day is set to Monday
 * PRO: Removed "custom display" from the post type options on the "create posts" settings tab
+* PRO: Allow multiple values to be imported into an entry via csv in a multi-select dropdown field
 
 = 1.06.11 =
 * Added styling classes: two thirds, scroll box, columns (frm_first_two_thirds, frm_last_two_thirds, frm_scroll_box, frm_total, frm_two_col, frm_three_col, frm_four_col, )

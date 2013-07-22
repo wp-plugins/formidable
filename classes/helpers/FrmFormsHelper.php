@@ -130,11 +130,11 @@ class FrmFormsHelper{
             $sending = __('Sending', 'formidable');
             $img = FRM_IMAGES_URL .'/ajax_loader.gif';
             $default_html = <<<SUBMIT_HTML
-<p class="frm_submit">
+<div class="frm_submit">
 [if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" [back_hook] />[/if back_button]
 <input type="submit" value="[button_label]" [button_action] />
 <img class="frm_ajax_loading" src="$img" alt="$sending"/>
-</p>
+</div>
 SUBMIT_HTML;
         }else if ($loc == 'before'){
             $default_html = <<<BEFORE_HTML

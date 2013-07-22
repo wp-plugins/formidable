@@ -517,7 +517,7 @@ class FrmFormsController{
                 global $frm_settings;
                 wp_die($frm_settings->admin_permission);
             }
-            $json_vars = nl2br(stripslashes($_POST['frm_compact_fields']));
+            $json_vars = htmlspecialchars_decode(nl2br(stripslashes($_POST['frm_compact_fields'])));
             $json_vars = json_decode($json_vars, true);
             $vars = FrmAppHelper::json_to_array($json_vars);
             $action = $vars[$action];

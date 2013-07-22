@@ -34,7 +34,8 @@ class FrmFieldsController{
             die();
         
         $_GET['page'] = 'formidable';
-        $field = json_decode(stripslashes_deep($_POST['field']), true);
+        $field = htmlspecialchars_decode(nl2br(stripslashes_deep($_POST['field'])));
+        $field = json_decode($field, true);
         if(!isset($field['value']))
             $field['value'] = '';
         

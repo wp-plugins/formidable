@@ -158,9 +158,10 @@ class FrmForm{
             }else{
                 //updating the form
                 
-                foreach (array('size', 'max', 'label', 'invalid', 'required_indicator', 'blank', 'classes') as $opt)
+                foreach (array('size', 'max', 'label', 'invalid', 'blank', 'classes') as $opt)
                     $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : ''; 
                 
+                $field_options['required_indicator'] = isset($values['field_options']['required_indicator_'. $field_id]) ? trim($values['field_options']['required_indicator_'. $field_id]) : '*'; 
                 $field_options['separate_value'] = isset($values['field_options']['separate_value_'.$field_id]) ? trim($values['field_options']['separate_value_'.$field_id]) : 0; 
                     
                 $field_options = apply_filters('frm_update_field_options', $field_options, $field, $values);

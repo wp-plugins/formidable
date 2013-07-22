@@ -153,13 +153,13 @@ class FrmUpdatesController{
 
 <?php if($frmpro_is_installed){ ?>
 <div class="frm_pro_installed">
-<p><strong class="alignleft" style="margin-right:10px;"><?php _e('Formidable Pro is Installed', 'formidable') ?></strong>
+<div><strong class="alignleft" style="margin-right:10px;"><?php _e('Formidable Pro is Installed', 'formidable') ?></strong>
     <a href="javascript:frm_show_auth_form()" class="button-secondary alignleft"><?php _e('Enter new license', 'formidable') ?></a>
     <a href="javascript:frm_deauthorize()" onclick="return confirm('<?php echo esc_attr(__('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable')) ?>')" id="frm_deauthorize_link" class="button-secondary alignright"><?php _e('Deauthorize this site', 'formidable') ?></a>
-</p>
+</div>
 <div class="clear"></div>
 </div>
-<p><a href="http://formidablepro.com/account/" target="_blank"><?php _e('Account', 'formidable') ?></a> |
+<p class="frm_aff_link"><a href="http://formidablepro.com/account/" target="_blank"><?php _e('Account', 'formidable') ?></a> |
     <a href="http://formidablepro.com/affiliate-dashboard/" target="_blank"><?php _e('Affiliate Dashboard', 'formidable') ?></a>
 </p>
 
@@ -201,7 +201,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
     <table class="form-table frm_lics_form">
         <tr class="form-field">
             <td valign="top" width="150px"><?php echo $this->pro_license_label; ?></td>
-            <td><input type="text" name="<?php echo $this->pro_license_str; ?>" value="<?php echo $this->license ?>" style="width:97%;"/></td>
+            <td><input type="text" name="<?php echo $this->pro_license_str; ?>" value="" style="width:97%;"/></td>
         </tr>
         
         <?php if (IS_WPMU){ ?>

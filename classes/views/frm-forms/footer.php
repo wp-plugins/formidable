@@ -2,6 +2,8 @@
 __FRMURL='<?php echo admin_url("admin-ajax.php") ?>';
 __FRMDEFDESC="<?php _e('(Click here to add form description or instructions)', 'formidable') ?>";
 __FRMDEFBLANK="<?php _e('(Blank)', 'formidable') ?>";
+__FRMSAVING="<?php esc_attr(_e('Saving', 'formidable')) ?>";
+__FRMSAVED="<?php esc_attr(_e('Saved', 'formidable')) ?>";
 
 jQuery(document).ready(function($){
 
