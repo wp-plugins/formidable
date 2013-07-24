@@ -6,10 +6,10 @@
     }else{ ?>
         <div id="taxonomy-linkcategory" class="categorydiv">
             <ul id="category-tabs" class="category-tabs frm-category-tabs">
-        		<li class="tabs" ><a href="#frm-insert-fields" id="frm_insert_fields_tab" ><?php _e( 'Insert Fields', 'formidable' ); ?></a></li>
+        		<li class="tabs" ><a href="#frm-insert-fields-box" id="frm_insert_fields_tab" ><?php _e( 'Insert Fields', 'formidable' ); ?></a></li>
         		<li class="hide-if-no-js"><a href="#frm-html-tags" id="frm_html_tags_tab" ><?php _e( 'HTML Tags', 'formidable' ); ?></a></li>
         	</ul>
-        	<div id="frm-insert-fields" class="tabs-panel" style="max-height:none;padding-right:0;">
+        	<div id="frm-insert-fields-box" class="tabs-panel" style="max-height:none;padding-right:0;">
         	    <br/><br/>
                 <?php FrmAppController::update_message('insert field values into your messages'); ?>
         	</div>

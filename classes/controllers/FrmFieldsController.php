@@ -73,7 +73,7 @@ class FrmFieldsController{
     
     function edit_name(){
         global $frm_field;
-        $id = str_replace('field_', '', $_POST['element_id']);
+        $id = str_replace('field_label_', '', $_POST['element_id']);
         $values = array('name' => trim($_POST['update_value']));
         if ($_POST['original_html'] == 'Untitled')
             $values['field_key'] = $_POST['update_value'];
@@ -85,7 +85,7 @@ class FrmFieldsController{
 
     function edit_description(){
         global $frm_field;
-        $id = str_replace('field_', '', $_POST['element_id']);
+        $id = str_replace('field_description_', '', $_POST['element_id']);
         $frm_field->update($id, array('description' => $_POST['update_value']));
         echo stripslashes($_POST['update_value']);
         die();

@@ -26,13 +26,13 @@ $display = apply_filters('frm_display_field_options', array(
         <a href="javascript:frm_mark_required(<?php echo $field['id']; ?>,<?php echo $field_required = ($field['required'] == '0')? '0' : '1'; ?>)" class="frm_action_icon frm_required_icon alignleft frm_required<?php echo $field_required ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
-    <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
+    <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_label_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
 
 <div class="frm_form_fields">    
 <?php if ($display['type'] == 'text'){ ?>
-    <input type="text" name="<?php echo $field_name ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'.$field['size'] .'"' : ''; ?> /> 
+    <input type="text" name="<?php echo $field_name ?>" id="field_<?php echo $field['id'] ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'. $field['size'] .'"' : ''; ?> class="dyn_default_value" /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
-    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'.$field['size'].'"' ?> rows="<?php echo $field['max']; ?>"><?php echo FrmAppHelper::esc_textarea($field['default_value']); ?></textarea> 
+    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'. $field['size'] .'"' ?> rows="<?php echo $field['max']; ?>" id="field_<?php echo $field['id'] ?>" class="dyn_default_value"><?php echo FrmAppHelper::esc_textarea($field['default_value']); ?></textarea> 
   
 <?php 
 
@@ -138,7 +138,7 @@ if ($display['clear_on_focus']){ ?>
 </div>
 <?php
 if ($display['description']){ ?> 
-    <div class="frm_ipe_field_desc description frm-show-click" id="field_<?php echo $field['id']; ?>"><?php echo ($field['description'] == '') ? __('(Click here to add form description or instructions)', 'formidable') : $field['description']; ?></div> 
+    <div class="frm_ipe_field_desc description frm-show-click" id="field_description_<?php echo $field['id']; ?>"><?php echo ($field['description'] == '') ? __('(Click here to add form description or instructions)', 'formidable') : $field['description']; ?></div> 
 <?php
 }
 
@@ -200,7 +200,7 @@ if ($display['options']){ ?>
                 <?php if ($display['css']){ ?>
                 <tr><td><label><?php _e('CSS layout classes', 'formidable') ?></label> 
                     <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" /></td>
-                    <td><input type="text" name="field_options[classes_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['classes']) ?>" class="frm_long_input" />
+                    <td><input type="text" name="field_options[classes_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['classes']) ?>" id="frm_classes_<?php echo $field['id'] ?>" class="frm_classes frm_long_input" />
                     </td>  
                 </tr>
                 <?php } ?>
