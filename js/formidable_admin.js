@@ -557,7 +557,7 @@ function frmInsertFieldCode(element,variable){
 	if(!element_id) var rich=true;
 	else var rich=jQuery('#wp-'+element_id+'-wrap.wp-editor-wrap').length > 0;
 
-	if(element_id.substring(0,11)!='frm_classes')
+	if(element_id.substring(0,11)=='frm_classes')
 		variable=variable+' ';
 	else
 		variable='['+variable+']';
@@ -580,6 +580,7 @@ function frmInsertFieldCode(element,variable){
 			frmInsertContent(content_box,variable);
 		}
 	}
+	return false;
 }
 
 function frmInsertContent(content_box,variable){
@@ -613,6 +614,15 @@ function frmToggleAllowedShortcodes(id){
   	}else{
 		jQuery('.frm_code_list a').addClass('frm_noallow').removeClass('frm_allow');
   	}
+
+	//Automatically select a tab
+	if(id=='dyn_default_value'){
+		jQuery('#frm_dynamic_values_tab').click();
+	}else if(id=='frm_classes'){
+		jQuery('#frm_layout_classes_tab').click();
+	}else if(jQuery('.frm_form_builder').length>0){
+		jQuery('#frm_insert_fields_tab').click();
+	}
 }
 
 function frmToggleKeyID(switch_to){

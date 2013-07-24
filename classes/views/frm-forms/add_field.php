@@ -1,7 +1,7 @@
 <?php
 if(isset($values) and isset($values['ajax_load']) and $values['ajax_load'] and isset($count) and $count > 10){ ?>
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading">
-<img src="<?php echo FRM_IMAGES_URL ?>/ajax_loader.gif" />
+<img src="<?php echo FRM_IMAGES_URL ?>/ajax_loader.gif" alt="<?php _e('Loading', 'formidable') ?>" />
 <span class="frm_hidden_fdata" style="display:none"><?php echo htmlspecialchars(json_encode($field)) ?></span>
 </li>
 <?php

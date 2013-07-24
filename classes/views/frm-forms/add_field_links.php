@@ -17,12 +17,12 @@
     } ?>
     <div id="frm_position_ele"></div>
     
-    <div class="postbox frm_field_list">
+    <div id="frm_adv_info" class="postbox frm_field_list">
     <div class="inside">
     <div id="taxonomy-linkcategory" class="categorydiv">
         <ul id="category-tabs" class="category-tabs frm-category-tabs">
-    		<li class="tabs" ><a href="#frm-insert-fields"><?php _e( 'Fields', 'formidable' ); ?></a></li>
-    		<li class="hide-if-no-js"><a href="#frm-layout-classes"><?php _e( 'Layout', 'formidable' ); ?></a></li>
+    		<li class="tabs" ><a href="#frm-insert-fields" id="frm_insert_fields_tab"><?php _e( 'Fields', 'formidable' ); ?></a></li>
+    		<li class="hide-if-no-js"><a href="#frm-layout-classes" id="frm_layout_classes_tab"><?php _e( 'Layout', 'formidable' ); ?></a></li>
     		<?php do_action('frm_extra_form_instruction_tabs'); ?>
     		<li class="hide-if-no-js"><a href="#frm-keys-and-actions"><?php _e( 'Key', 'formidable' ); ?></a></li>
     	</ul>
