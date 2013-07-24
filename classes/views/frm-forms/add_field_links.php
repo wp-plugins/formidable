@@ -5,7 +5,7 @@
     <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /></p>
     <?php } ?>
     
-    <?php if(isset($show_preview)){ ?>
+    <?php if(isset($values['form_key'])){ ?>
     <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview Form', 'formidable') ?></a>
     <?php global $frm_settings; 
         if (!empty($frm_settings->preview_page_id)){ ?>

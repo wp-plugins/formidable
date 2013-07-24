@@ -11,7 +11,6 @@
         </div>
     <?php } 
     
-        $show_preview = true;
         if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
     <?php   

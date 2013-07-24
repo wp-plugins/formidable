@@ -65,6 +65,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Submit build form in one input with ajax to prevent max_input_vars limitations
 * Load fields on the build page with ajax for long forms and other form builder page optimization
 * Added submit button to customizable HTML
+* Added clickable styling classes to form builder sidebar
 * Create entry key from first required text field
 * Set the default name of a field to the field type instead of "Untitled"
 * Added minified version of formidable.js
@@ -78,6 +79,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated value in CSV for file upload fields
 * PRO: Updated timezone used in CSV export
 * PRO: Include comments in the CSV export
+* PRO: Made dynamic default values clickable on form builder page
 * PRO: Added column in CSV for value for fields that are set to use separate values
 * PRO: Removed border styling from the container around radio and checkbox fields
 * PRO: Added frm_order_display hook
