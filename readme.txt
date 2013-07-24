@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added minified version of formidable.js
 * Added warning message if a non-unique value is added as a field value
 * Removed messages for strict standards
+* Fixed inline and left labels for checkboxes
 * PRO: Added back button on multi-paged forms
 * PRO: Added conditional logic on page breaks for skipping pages
 * PRO: Added loading indicator by submit button and on dependent data from entries fields
