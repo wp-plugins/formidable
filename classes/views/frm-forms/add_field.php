@@ -30,9 +30,9 @@ $display = apply_filters('frm_display_field_options', array(
 
 <div class="frm_form_fields">    
 <?php if ($display['type'] == 'text'){ ?>
-    <input type="text" name="<?php echo $field_name ?>" id="field_<?php echo $field['id'] ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'. $field['size'] .'"' : ''; ?> class="dyn_default_value" /> 
+    <input type="text" name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'. $field['size'] .'"' : ''; ?> class="dyn_default_value" /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
-    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'. $field['size'] .'"' ?> rows="<?php echo $field['max']; ?>" id="field_<?php echo $field['id'] ?>" class="dyn_default_value"><?php echo FrmAppHelper::esc_textarea($field['default_value']); ?></textarea> 
+    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'. $field['size'] .'"' ?> rows="<?php echo $field['max']; ?>" id="field_<?php echo $field['field_key'] ?>" class="dyn_default_value"><?php echo FrmAppHelper::esc_textarea($field['default_value']); ?></textarea> 
   
 <?php 
 

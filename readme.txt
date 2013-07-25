@@ -78,10 +78,10 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switched out username and passwords for license numbers
 * PRO: Updated timestamp in CSV to adjust for WordPress timezone selection
 * PRO: Updated value in CSV for file upload fields
-* PRO: Updated timezone used in CSV export
 * PRO: Include comments in the CSV export
 * PRO: Made dynamic default values clickable on form builder page
 * PRO: Added column in CSV for value for fields that are set to use separate values
+* PRO: Allow for quotation marks in field labels for the CSV export
 * PRO: Removed border styling from the container around radio and checkbox fields
 * PRO: Added frm_order_display hook
 * PRO: Added utf8 support to sanitize_url=1 option
@@ -97,7 +97,6 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switched front-end ajax to use hooks (frm_ajax_{controller}_{action})
 * PRO: Call ajax later on the init hook to prevent php notices when WooCommerce is active
 * PRO: Delete entries on the same page as the frm-entry-links shortcode, and added a confirmation message: confirm="Are you sure?"
-* PRO: Allow for quotation marks in field labels for the csv export
 * PRO: Correctly check if jQuery on() function exists
 * PRO: Fixed calendar display for months starting on Sunday when the week start day is set to Monday
 * PRO: Removed "custom display" from the post type options on the "create posts" settings tab

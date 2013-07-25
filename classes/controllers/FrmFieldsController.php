@@ -400,6 +400,10 @@ class FrmFieldsController{
         global $frm_settings;
         
         $class = ''; //$field['type'];
+        
+        if(is_admin() and !in_array($field['type'], array('scale', 'radio', 'checkbox', 'data')))
+            $class .= 'dyn_default_value';
+        
         $add_html = '';
         
         if(isset($field['size']) and $field['size'] > 0){
@@ -442,7 +446,7 @@ class FrmFieldsController{
         
         $class = apply_filters('frm_field_classes', $class, $field);
         if(!empty($class))
-            $add_html .= ' class="'. $class .'"';
+            $add_html .= ' class="'. trim($class) .'"';
             
         if(isset($field['shortcodes']) and !empty($field['shortcodes'])){
             foreach($field['shortcodes'] as $k => $v){
