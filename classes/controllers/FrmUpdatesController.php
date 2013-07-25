@@ -440,7 +440,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
             //don't check for update if pro is not installed
             global $frmpro_is_installed;
             if(!$frmpro_is_installed)
-                return $transient;
+                return false;
         }
         
         if(!$force)

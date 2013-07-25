@@ -90,6 +90,13 @@
                     </div>
                     <td>
                 </tr>
+                <?php if($frmpro_is_installed){ ?>
+                <tr class="success_action_page_box success_action_box" <?php echo ($values['success_action'] == 'page') ? '' : 'style="display:none;"'; ?>><td><label><?php _e('Use Content from Page', 'formidable') ?></label></td>
+                    <td>
+                        <?php FrmAppHelper::wp_pages_dropdown( 'options[success_page_id]', $values['success_page_id'] ) ?>
+                    </td>
+                </tr>
+                <?php } ?>
                 
                 <tr><td colspan="2"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <label for="ajax_load"><?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Recommended for long forms.', 'formidable') ?>" /></td></tr>
 
