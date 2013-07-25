@@ -91,7 +91,7 @@
                     <td>
                 </tr>
                 
-                <tr><td colspan="2"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <label for="ajax_load"><?php _e('Load form builder page with AJAX', 'formidable') ?></label></td></tr>
+                <tr><td colspan="2"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <label for="ajax_load"><?php _e('Load and save form builder page with AJAX', 'formidable') ?></label></td></tr>
 
 
                 <?php do_action('frm_additional_form_options', $values); ?> 
