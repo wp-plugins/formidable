@@ -17,7 +17,7 @@
     } ?>
     <div id="frm_position_ele"></div>
     
-    <div id="frm_adv_info" class="postbox frm_field_list">
+    <div class="postbox frm_field_list">
     <div class="inside">
     <div id="taxonomy-linkcategory" class="categorydiv">
         <ul id="category-tabs" class="category-tabs frm-category-tabs">
@@ -141,7 +141,7 @@
         ?>
     	<form method="post" id="frm_js_build_form">
     	    <input type="hidden" id="frm_compact_fields" name="frm_compact_fields" value="" />
-    	    <p><input type="button" onclick="frmSubmitBuild(this)" value="<?php echo esc_attr($button) ?>" class="button-primary" />
+    	    <p><input type="button" onclick="frmSubmit<?php echo (isset($values['ajax_load']) and $values['ajax_load']) ? 'Build' : 'NoAjax'; ?>(this)" value="<?php echo esc_attr($button) ?>" class="frm_submit_form button-primary" id="frm_submit_side" />
     	        <span class="frm-loading-img"></span>
     	    </p>
     	</form>

@@ -10,20 +10,20 @@ else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').
 else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
 });
 
-if($('#frm_adv_info').length>0 || $('#frm-layout-classes').length>0){ 
+if($('#frm_adv_info').length>0 || $('.frm_field_list').length>0){
 	$('#frm_adv_info').before('<div id="frm_position_ele"></div>');
 
 	$('.frm_code_list a').addClass('frm_noallow');
 
 	if($.isFunction($.fn.on)){
-		$(document).on('focusin focusout', 'form input, form textarea, .wpbody-content', function(e){ 
-			if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; frmToggleAllowedShortcodes(id);
+		$(document).on('focusin focusout', 'form input, form textarea, .wpbody-content', function(e){
+			if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; frmToggleAllowedShortcodes(id,e.type);
 		});
-		$('#postbox-container-1').on('mousedown', '#frm_adv_info a', function(e){e.preventDefault();});
+		$('#postbox-container-1').on('mousedown', '#frm_adv_info a, .frm_field_list a', function(e){e.preventDefault();});
 	}else{
-		$('#frm_adv_info a').live('mousedown', function(e){e.preventDefault();});
+		$('#frm_adv_info a, .frm_field_list a').live('mousedown', function(e){e.preventDefault();});
 		$('form input, form textarea, .wpbody-content').live('focusin focusout', function(e){ 
-			if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; frmToggleAllowedShortcodes(id);
+			if(e.type=='focusin') var id=$(this).attr('id'); else var id=''; frmToggleAllowedShortcodes(id,e.type);
 		});
 	}
 
@@ -32,20 +32,20 @@ if($('#frm_adv_info').length>0 || $('#frm-layout-classes').length>0){
 		if(typeof(DOM.events) !='undefined'){
 			DOM.events.add( DOM.select('.wp-editor-wrap'), 'mouseover', function(e){
 				if($('*:focus').length>0)return;
-				if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5));});
+				if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5),'focusin');});
 			DOM.events.add( DOM.select('.wp-editor-wrap'), 'mouseout', function(e){
 				if($('*:focus').length>0)return;
-				if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5));});
+				if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5),'focusin');});
 		}else{
 			if($.isFunction($.fn.on)){
 				$('#frm_dyncontent').on('mouseover mouseout', '.wp-editor-wrap', function(e){
 	    			if($('*:focus').length>0)return; 
-	    			if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5));
+	    			if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5),'focusin');
 				});
 			}else{
 				$('.wp-editor-wrap').live('mouseover mouseout', function(e){
 		    		if($('*:focus').length>0)return; 
-		    		if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5));
+		    		if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5),'focusin');
 				});
 			}
 		}
@@ -275,6 +275,15 @@ function frmSubmitBuild(b){
 		},
 		error:function(html){jQuery('#frm_js_build_form').submit();}
 	});
+}
+
+function frmSubmitNoAjax(b){
+	var p=jQuery(b).val();
+	jQuery(b).val(__FRMSAVING);
+	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
+	var form=jQuery('#frm_build_form');
+	jQuery('#frm_compact_fields').val(JSON.stringify(form.serializeArray()));
+	jQuery('#frm_js_build_form').submit();
 }
 
 function frmClickWidget(obj){
@@ -591,7 +600,7 @@ function frmInsertContent(content_box,variable){
 	else{content_box.val(variable+content_box.val());}
 }
 
-function frmToggleAllowedShortcodes(id){
+function frmToggleAllowedShortcodes(id,f){
 	if(typeof(id)=='undefined') var id='';
 	var c=id;
 	if(id !=='' && jQuery('#'+id).attr('class') && id !== 'wpbody-content' && id !== 'content' && id !== 'dyncontent' && id != 'success_msg'){
@@ -620,7 +629,7 @@ function frmToggleAllowedShortcodes(id){
 		jQuery('#frm_dynamic_values_tab').click();
 	}else if(id=='frm_classes'){
 		jQuery('#frm_layout_classes_tab').click();
-	}else if(jQuery('.frm_form_builder').length>0){
+	}else if(jQuery('.frm_form_builder').length>0 && f=='focusin'){
 		jQuery('#frm_insert_fields_tab').click();
 	}
 }
