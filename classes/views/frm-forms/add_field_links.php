@@ -1,7 +1,7 @@
 <div id="postbox-container-1" class="<?php echo FrmAppController::get_postbox_class(); ?>">
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
-    <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>:
+    <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page, display or text widget', 'formidable') ?>:
     <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /></p>
     <?php } ?>
     
@@ -28,7 +28,7 @@
     	</ul>
 
     	<div id="frm-insert-fields" class="tabs-panel" style="max-height:none;overflow:visible;">
-    	    <p class="howto"><?php _e('Click on or drag a field into your form', 'formidable') ?></p>
+    	    <p class="howto"><?php _e('Click or drag to add a field into your form', 'formidable') ?></p>
 			<ul class="field_type_list">
             <?php 
             $col_class = 'frm_col_one';
@@ -54,27 +54,28 @@
     	<?php do_action('frm_extra_form_instructions'); ?>
     	
     	<div id="frm-layout-classes" class="tabs-panel" style="display:none;max-height:none;">
+			<p class="howto"><?php _e('Add classes in the "CSS layout classes" field option', 'formidable') ?></p>
     	    <ul class="frm_code_list">
     	    <?php $classes = array(
-    	            'frm_first_half' => __('1st 1/2', 'formidable'), 
+    	            'frm_first_half' => __('First 1/2', 'formidable'), 
     	            'frm_last_half' => __('Last 1/2', 'formidable'),
-    	            'frm_first_third' => __('1st 1/3', 'formidable'),
+    	            'frm_first_third' => __('First 1/3', 'formidable'),
     	            'frm_last_third' => __('Last 1/3', 'formidable'),
-    	            'frm_first_two_thirds' => __('1st 2/3', 'formidable'),
+    	            'frm_first_two_thirds' => __('First 2/3', 'formidable'),
     	            'frm_last_two_thirds' => __('Last 2/3', 'formidable'),
     	            'frm_third' => __('1/3', 'formidable'),
     	            'frm_fourth' => __('1/4', 'formidable'),
-    	            'frm_first_fourth' => array('label' => __('1st 1/4', 'formidable')),
+    	            'frm_first_fourth' => array('label' => __('First 1/4', 'formidable')),
     	            'frm_last_fourth' => __('Last 1/4', 'formidable'), 
-    	            'frm_first_fifth' => __('1st 1/5', 'formidable'),
+    	            'frm_first_fifth' => __('First 1/5', 'formidable'),
     	            'frm_last_fifth' => __('Last 1/5', 'formidable'),
     	            'frm_fifth' => __('1/5', 'formidable'),
     	            'frm_inline' => array('label' => __('Inline', 'formidable'), 'title' => __('Align fields in a row without a specific width.', 'formidable')),
-    	            'frm_first_inline' => array('label' => __('1st Inline', 'formidable'), 'title' => __('Align fields at the beginning of a row without a specific width.', 'formidable')), 
+    	            'frm_first_inline' => array('label' => __('First Inline', 'formidable'), 'title' => __('Align fields at the beginning of a row without a specific width.', 'formidable')), 
     	            'frm_last_inline' => array('label' => __('Last Inline', 'formidable'), 'title' => __('Align fields at the end of a row without a specific width.', 'formidable')),
     	            
     	            'frm_full' => array('label' => __('100% width', 'formidable'), 'title' => __('Force the field to fill the full space with 100% width.', 'formidable')),
-    	            'frm_grid_first' => __('1st Grid Row', 'formidable'), 
+    	            'frm_grid_first' => __('First Grid Row', 'formidable'), 
     	            'frm_grid' => __('Even Grid Row', 'formidable'),
     	            'frm_grid_odd' => __('Odd Grid Row', 'formidable'),
     	            'frm_two_col' => array('label' => __('2 Col Options', 'formidable'), 'title' => __('Put your radio button or checkbox options into two columns.', 'formidable')),
