@@ -422,7 +422,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
                 $transient->response[$plugin->plugin_name]->package = $version_info['url'];
             }else{
                 //new version available, but no permission
-                $expired = isset($version_info['expired']) ? __('expired') : __('invalid');
+                $expired = isset($version_info['expired']) ? __('expired', 'formidable') : __('invalid', 'formidable');
                 $transient->response[$plugin->plugin_name]->upgrade_notice = sprintf(__('An update is available, but your license is %s.', 'formidable'), $expired);
             }
             
