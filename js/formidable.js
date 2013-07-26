@@ -104,6 +104,7 @@ for(i=0; i<len; i++){
 		selected=jQuery("input[type=hidden][name='item_meta["+f.FieldName+"]']").val();
 		if(typeof(selected)=='undefined') selected='';
 	}
+
     if(f.Type=='checkbox'){
         show_fields[f.HideField][i]=false;
         jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"][]']").each(function(){
@@ -247,7 +248,6 @@ function frmGetData(f,selected,ajax_url,append){
 }
 
 function frmGetDataOpts(f,selected,ajax_url,field_id){
-	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	var prev=new Array();
 	if(f.DataType=='checkbox' || f.DataType=='radio'){
 		jQuery("input[name='item_meta["+f.HideField+"][]']:checked").each(function(){prev.push(jQuery(this).val());});
@@ -256,6 +256,7 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 		if(jQuery("select[name='item_meta["+f.HideField+"][]']").length>0) var mult='[]'; else var mult='';
 		prev.push(jQuery("select[name='item_meta["+f.HideField+"]"+mult+"']").val());
 	}else{prev.push(jQuery("input[name='item_meta["+f.HideField+"]']").val());}
+	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	if(prev.length==0) var prev='';
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
