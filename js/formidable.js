@@ -297,7 +297,7 @@ function frmGetFormErrors(object,ajax_url){
 					var file_val=jQuery(object).find('input[type=file]').val();
 					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery("#frm_loading").fadeIn('slow');},2000);}
 				}
-				if(jQuery(object).find('#recaptcha_area').length && (jQuery(object).find('.frm_next_page').length < 0 || jQuery(object).find('.frm_next_page').val() < 1))
+				if(jQuery(object).find('#recaptcha_area').length && (jQuery(object).find('.frm_next_page').length < 1 || jQuery(object).find('.frm_next_page').val() < 1))
 					jQuery(object).find('#recaptcha_area').replaceWith('');
 				
 	            object.submit();
