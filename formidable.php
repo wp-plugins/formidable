@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.07.0rc2
+Version: 1.07.0
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -21,13 +21,12 @@ Text Domain: formidable
     GNU General Public License for more details.
 */
 
-define('FRM_PLUGIN_TITLE', 'Formidable');
-define('FRM_PLUGIN_NAME', 'formidable');
-define('FRM_PATH', WP_PLUGIN_DIR.'/formidable');
-define('FRM_MODELS_PATH', FRM_PATH.'/classes/models');
+
+define('FRM_PATH', WP_PLUGIN_DIR.'/'. dirname( plugin_basename( __FILE__ ) ));
 define('FRM_VIEWS_PATH', FRM_PATH.'/classes/views');
-define('FRM_HELPERS_PATH', FRM_PATH.'/classes/helpers');
-define('FRM_CONTROLLERS_PATH', FRM_PATH.'/classes/controllers');
+$frm_models_path = FRM_PATH .'/classes/models';
+$frm_helpers_path = FRM_PATH .'/classes/helpers';
+$frm_controllers_path = FRM_PATH .'/classes/controllers';
 define('FRM_TEMPLATES_PATH', FRM_PATH.'/classes/templates');
 
 global $frm_siteurl;
@@ -43,7 +42,7 @@ define('FRM_IMAGES_URL', FRM_URL.'/images');
 
 load_plugin_textdomain('formidable', false, 'formidable/languages/' );
 
-require_once(FRM_MODELS_PATH.'/FrmSettings.php');
+require_once($frm_models_path .'/FrmSettings.php');
 
 // Check for WPMU installation
 if (!defined ('IS_WPMU')){
@@ -53,7 +52,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.07.0rc2';
+$frm_version = '1.07.0';
 $frm_db_version = 9;
 
 global $frm_ajax_url;
@@ -63,7 +62,7 @@ global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
 $frm_forms_loaded = $frm_saved_entries = array();
 
-require_once(FRM_HELPERS_PATH. '/FrmAppHelper.php');
+require_once($frm_helpers_path .'/FrmAppHelper.php');
 $frm_app_helper = new FrmAppHelper();
 
 /***** SETUP SETTINGS OBJECT *****/
@@ -90,13 +89,14 @@ if(!is_object($frm_settings)){
 $frm_settings->set_default_options(); // Sets defaults for unset options
 
 // Instansiate Models
-require_once(FRM_MODELS_PATH.'/FrmDb.php');  
-require_once(FRM_MODELS_PATH.'/FrmField.php');
-require_once(FRM_MODELS_PATH.'/FrmForm.php');
-require_once(FRM_MODELS_PATH.'/FrmEntry.php');
-require_once(FRM_MODELS_PATH.'/FrmEntryMeta.php');
-require_once(FRM_MODELS_PATH.'/FrmNotification.php');
-//include_once(FRM_MODELS_PATH.'/FrmUpdate.php');
+require_once($frm_models_path .'/FrmDb.php');  
+require_once($frm_models_path .'/FrmField.php');
+require_once($frm_models_path .'/FrmForm.php');
+require_once($frm_models_path .'/FrmEntry.php');
+require_once($frm_models_path .'/FrmEntryMeta.php');
+require_once($frm_models_path .'/FrmNotification.php');
+//include_once($frm_models_path .'/FrmUpdate.php');
+unset($frm_models_path);
 
 global $frmdb;
 global $frm_field;
@@ -115,39 +115,29 @@ $frm_notification   = new FrmNotification();
 
 
 // Instansiate Controllers
-require_once(FRM_CONTROLLERS_PATH . '/FrmApiController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmAppController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmFieldsController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmFormsController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmEntriesController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmSettingsController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmStatisticsController.php');
-require_once(FRM_CONTROLLERS_PATH . '/FrmUpdatesController.php');
+require_once($frm_controllers_path .'/FrmApiController.php');
+require_once($frm_controllers_path .'/FrmAppController.php');
+require_once($frm_controllers_path .'/FrmFieldsController.php');
+require_once($frm_controllers_path .'/FrmFormsController.php');
+require_once($frm_controllers_path .'/FrmEntriesController.php');
+require_once($frm_controllers_path .'/FrmSettingsController.php');
+require_once($frm_controllers_path .'/FrmStatisticsController.php');
+require_once($frm_controllers_path .'/FrmUpdatesController.php');
+unset($frm_controllers_path);
 
-global $frm_api_controller;
-global $frm_app_controller;
-global $frm_fields_controller;
-global $frm_forms_controller;
-global $frm_settings_controller;
-global $frm_statistics_controller;
-
-$frm_api_controller         = new FrmApiController();
-$frm_app_controller         = new FrmAppController();
+$obj = new FrmAppController();
 $obj = new FrmEntriesController();
-$frm_fields_controller      = new FrmFieldsController();
-$frm_forms_controller       = new FrmFormsController();
-$frm_settings_controller    = new FrmSettingsController();
-$frm_statistics_controller  = new FrmStatisticsController();
+$obj = new FrmFieldsController();
+$obj = new FrmFormsController();
+$obj = new FrmSettingsController();
+$obj = new FrmStatisticsController();
 $frm_update  = new FrmUpdatesController();
 
 // Instansiate Helpers
-require_once(FRM_HELPERS_PATH. '/FrmEntriesHelper.php');
-require_once(FRM_HELPERS_PATH. '/FrmFieldsHelper.php');
-require_once(FRM_HELPERS_PATH. '/FrmFormsHelper.php');
-
-global $frm_fields_helper;
-
-$frm_fields_helper = new FrmFieldsHelper();
+require_once($frm_helpers_path .'/FrmEntriesHelper.php');
+require_once($frm_helpers_path .'/FrmFieldsHelper.php');
+require_once($frm_helpers_path .'/FrmFormsHelper.php');
+unset($frm_helpers_path);
 
 global $frmpro_is_installed;
 $frmpro_is_installed = $frm_update->pro_is_installed_and_authorized();

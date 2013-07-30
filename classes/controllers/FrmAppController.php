@@ -5,31 +5,31 @@
  
 class FrmAppController{
     function FrmAppController(){
-        add_action('admin_menu', array( &$this, 'menu' ), 1);
-        add_action('admin_head', array(&$this, 'menu_css'));
-        add_filter('plugin_action_links_formidable/formidable.php', array( &$this, 'settings_link'), 10, 2 );
-        add_action('after_plugin_row_formidable/formidable.php', array( &$this, 'pro_action_needed'));
-        add_action('admin_notices', array( &$this, 'pro_get_started_headline'));
-        add_filter('the_content', array( &$this, 'page_route' ), 10);
-        add_action('init', array(&$this, 'front_head'));
+        add_action('admin_menu', 'FrmAppController::menu', 1);
+        add_action('admin_head', 'FrmAppController::menu_css');
+        add_filter('plugin_action_links_formidable/formidable.php', 'FrmAppController::settings_link', 10, 2 );
+        add_action('after_plugin_row_formidable/formidable.php', 'FrmAppController::pro_action_needed');
+        add_action('admin_notices', 'FrmAppController::pro_get_started_headline');
+        add_filter('the_content', 'FrmAppController::page_route', 10);
+        add_action('init', 'FrmAppController::front_head');
         add_action('wp_footer', 'FrmAppController::footer_js', 1, 0);
-        add_action('admin_init', array( &$this, 'admin_js'), 11);
-        register_activation_hook(FRM_PATH.'/formidable.php', array( &$this, 'install' ));
-        add_action('wp_ajax_frm_install', array(&$this, 'install') );
-        add_action('wp_ajax_frm_uninstall', array(&$this, 'uninstall') );
-        add_action('wp_ajax_frm_deauthorize', array(&$this, 'deauthorize') );
+        add_action('admin_init', 'FrmAppController::admin_js', 11);
+        register_activation_hook(FRM_PATH.'/formidable.php', 'FrmAppController::install');
+        add_action('wp_ajax_frm_install', 'FrmAppController::install');
+        add_action('wp_ajax_frm_uninstall', 'FrmAppController::uninstall');
+        add_action('wp_ajax_frm_deauthorize', 'FrmAppController::deauthorize');
 
         // Used to process standalone requests
-        add_action('init', array(&$this, 'parse_standalone_request'), 40);
+        add_action('init', 'FrmAppController::parse_standalone_request', 40);
         // Update the session data
-        add_action('init', array(&$this, 'referer_session'), 1);
+        add_action('init', 'FrmAppController::referer_session', 1);
         
         //Shortcodes
-        add_shortcode('formidable', array(&$this, 'get_form_shortcode'));
-        add_filter( 'widget_text', array(&$this, 'widget_text_filter'), 9 );
+        add_shortcode('formidable', 'FrmAppController::get_form_shortcode');
+        add_filter( 'widget_text', 'FrmAppController::widget_text_filter', 9 );
     }
     
-    function menu(){
+    public static function menu(){
         global $frmpro_is_installed, $frm_settings;
         
         if(is_super_admin() and !current_user_can('frm_view_forms')){
@@ -47,14 +47,13 @@ class FrmAppController{
         $pos = apply_filters('frm_menu_position', $pos);
         
         if(current_user_can('frm_view_forms')){
-            global $frm_forms_controller;
-            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', array($frm_forms_controller, 'route'), 'div', $pos);
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', 'FrmFormsController::route', 'div', $pos);
         }else if(current_user_can('frm_view_entries') and $frmpro_is_installed){
             add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', 'FrmProEntriesController::route', 'div', $pos);
         }
     }
     
-    function menu_css(){ ?>
+    public static function menu_css(){ ?>
 <style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/form_16.png) no-repeat center;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}
 </style>    
 <?php    
@@ -71,14 +70,14 @@ class FrmAppController{
     }
 
     // Adds a settings link to the plugins page
-    function settings_link($links, $file){
+    public static function settings_link($links, $file){
         $settings = '<a href="'. admin_url('admin.php?page=formidable-settings') .'">' . __('Settings', 'formidable') . '</a>';
         array_unshift($links, $settings);
         
         return $links;
     }
     
-    function pro_action_needed( $plugin ){
+    public static function pro_action_needed( $plugin ){
         $frm_update = new FrmUpdatesController();
         if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
             if (IS_WPMU and $frm_update->pro_wpmu and !FrmAppHelper::is_super_admin())
@@ -91,7 +90,7 @@ class FrmAppController{
         }
     }
 
-    function pro_get_started_headline(){
+    public static function pro_get_started_headline(){
         $frm_update = new FrmUpdatesController();
 
         // Don't display this error as we're upgrading the thing... cmon
@@ -129,13 +128,13 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }
     }
     
-    function admin_js(){
+    public static function admin_js(){
         global $frm_version, $pagenow;
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
         
         if(isset($_GET) and (isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])) or ($pagenow == 'edit.php' and isset($_GET) and isset($_GET['post_type']) and $_GET['post_type'] == 'frm_display')){
-            add_filter('admin_body_class', array(&$this, 'admin_body_class'));
+            add_filter('admin_body_class', 'FrmAppController::admin_body_class');
             
             wp_enqueue_script('jquery-ui-sortable');
             wp_enqueue_script('jquery-ui-draggable');
@@ -165,7 +164,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }
     }
     
-    function admin_body_class($classes){
+    public static function admin_body_class($classes){
         global $wp_version;
         if(version_compare( $wp_version, '3.4.9', '>'))
             $classes .= ' frm_35_trigger';
@@ -173,7 +172,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         return $classes;
     }
     
-    function front_head(){
+    public static function front_head(){
         global $frm_settings, $frm_version, $frm_db_version;
         
         if (IS_WPMU){
@@ -182,7 +181,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             $old_db_version = get_option('frm_db_version');
             $pro_db_version = ($frmpro_is_installed) ? get_option('frmpro_db_version') : false;
             if(((int)$old_db_version < (int)$frm_db_version) or ($frmpro_is_installed and (int)$pro_db_version < 21))
-                $this->install($old_db_version);
+                self::install($old_db_version);
         }
 
         wp_register_script('formidable', FRM_URL . '/js/formidable.min.js', array('jquery'), $frm_version, true);
@@ -247,12 +246,12 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             FrmAppHelper::load_scripts(array('formidable'));
     }
   
-    function install($old_db_version=false){
+    public static function install($old_db_version=false){
         global $frmdb;
         $frmdb->upgrade($old_db_version);
     }
     
-    function uninstall(){
+    public static function uninstall(){
         if(is_super_admin()){
             global $frmdb;
             $frmdb->uninstall();
@@ -264,7 +263,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         }
     }
     
-    function deauthorize(){
+    public static function deauthorize(){
         delete_option('frmpro-credentials');
         delete_option('frmpro-authorized');
         delete_site_option('frmpro-credentials');
@@ -272,18 +271,17 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     }
     
     // Routes for wordpress pages -- we're just replacing content here folks.
-    function page_route($content){
+    public static function page_route($content){
         global $post, $frm_settings;
 
         if( $post && $post->ID == $frm_settings->preview_page_id && isset($_GET['form'])){
-            global $frm_forms_controller;
-            $content = $frm_forms_controller->page_preview();
+            $content = FrmFormsController::page_preview();
         }
 
         return $content;
     }
     
-    function referer_session() {
+    public static function referer_session() {
     	global $frm_siteurl, $frm_settings;
     	
     	if(!isset($frm_settings->track) or !$frm_settings->track or defined('WP_IMPORTING'))
@@ -323,24 +321,22 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     }
 
     // The tight way to process standalone requests dogg...
-    function parse_standalone_request(){
+    public static function parse_standalone_request(){
         $plugin     = FrmAppHelper::get_param('plugin');
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = FrmAppHelper::get_param($action);  
         $controller = FrmAppHelper::get_param('controller');
 
         if( !empty($plugin) and $plugin == 'formidable' and !empty($controller) ){
-          $this->standalone_route($controller, $action);
+          self::standalone_route($controller, $action);
           die();
         }
     }
 
     // Routes for standalone / ajax requests
-    function standalone_route($controller, $action=''){
-        global $frm_forms_controller, $frm_fields_controller;
-
+    public static function standalone_route($controller, $action=''){
         if($controller == 'forms' and !in_array($action, array('export', 'import', 'xml')))
-            $frm_forms_controller->preview(FrmAppHelper::get_param('form'));
+            FrmFormsController::preview(FrmAppHelper::get_param('form'));
         else
             do_action('frm_standalone_route', $controller, $action);
             
@@ -349,7 +345,7 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
 
     //formidable shortcode
-    function get_form_shortcode($atts){
+    public static function get_form_shortcode($atts){
         global $frm_skip_shortcode;
         if($frm_skip_shortcode){
             $sc = '[formidable';
@@ -364,13 +360,13 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
     }
 
     //filter form shortcode in text widgets
-    function widget_text_filter( $content ){
+    public static function widget_text_filter( $content ){
     	$regex = '/\[\s*formidable\s+.*\]/';
-    	return preg_replace_callback( $regex, array($this, 'widget_text_filter_callback'), $content );
+    	return preg_replace_callback( $regex, 'FrmAppController::widget_text_filter_callback', $content );
     }
 
 
-    function widget_text_filter_callback( $matches ) {
+    public static function widget_text_filter_callback( $matches ) {
         return do_shortcode( $matches[0] );
     }
     

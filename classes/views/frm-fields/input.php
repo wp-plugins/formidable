@@ -35,7 +35,8 @@
     foreach ($field['options'] as $opt_key => $opt){ 
         $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
         $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field); ?>
-<option value="<?php echo esc_attr($field_val) ?>" <?php if (FrmAppHelper::check_selected($field['value'], $field_val)) echo 'selected="selected"'; ?>><?php echo $opt ?></option>
+<option value="<?php echo esc_attr($field_val) ?>" <?php
+if (FrmAppHelper::check_selected($field['value'], $field_val)) echo ' selected="selected"'; ?>><?php echo ($opt == '') ? ' ' : $opt; ?></option>
     <?php } ?>
 </select>
 <?php }

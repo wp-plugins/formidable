@@ -5,14 +5,14 @@
  
 class FrmSettingsController{
     function FrmSettingsController(){
-        add_action('admin_menu', array( &$this, 'menu' ), 26);
+        add_action('admin_menu', 'FrmSettingsController::menu', 26);
     }
 
-    function menu(){
-        add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', array(&$this, 'route'));
+    public static function menu(){
+        add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', 'FrmSettingsController::route');
     }
 
-    function display_form(){
+    public static function display_form(){
       global $frm_settings, $frmpro_is_installed;
       
       $frm_update = new FrmUpdatesController();
@@ -25,7 +25,7 @@ class FrmSettingsController{
       require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 
-    function process_form(){
+    public static function process_form(){
       global $frm_settings, $frmpro_is_installed;
 
       $frm_update = new FrmUpdatesController();
@@ -43,12 +43,12 @@ class FrmSettingsController{
       require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
     
-    function route(){
+    public static function route(){
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = FrmAppHelper::get_param($action);
         if($action == 'process-form')
-            return $this->process_form();
+            return self::process_form();
         else
-            return $this->display_form();
+            return self::display_form();
     }
 }

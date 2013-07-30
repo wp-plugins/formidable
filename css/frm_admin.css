@@ -299,6 +299,19 @@ span.howto{display:inline;}
 	background-image: -webkit-linear-gradient(top, #eff8ff, #e8eff4); /* new Webkit */
 	background-image: linear-gradient(top, #eff8ff, #e8eff4); /* proposed W3C Markup */
 }
+
+.frm_email_actions.feature-filter{
+	font-weight:bold;
+	border:1px solid #DFDFDF;
+	background-color:#EEEEEE;
+	padding-top:3px;
+	font-size:16px;
+	line-height:20px;
+}
+.frm_email_icons{
+	padding-left:15px;
+}
+
 .frm_update_msg{border-style:solid;margin:5px 0 15px;}
 .widefat td{width:auto;}
 .widefat .column-id{width:3.2em;}

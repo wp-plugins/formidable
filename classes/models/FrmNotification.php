@@ -70,7 +70,7 @@ class FrmNotification{
         $user_data .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
         $user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
 
-        $mail_body = $opener . $entry_data ."\r\n". $user_data;
+        $mail_body = stripslashes($opener . $entry_data ."\r\n". $user_data);
         $subject = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, $frm_blogname); //subject
 
         if(is_array($to_emails)){
@@ -96,7 +96,7 @@ class FrmNotification{
         $subject        = wp_specialchars_decode(strip_tags(stripslashes($subject)), ENT_QUOTES );
         
         $message        = do_shortcode($message);
-        $message        = wordwrap(stripslashes($message), 70, "\r\n"); //in case any lines are longer than 70 chars
+        $message        = wordwrap($message, 70, "\r\n"); //in case any lines are longer than 70 chars
         if($plain_text)
             $message    = wp_specialchars_decode(strip_tags($message), ENT_QUOTES );
 

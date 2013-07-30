@@ -2,7 +2,18 @@
 <table class="form-table">
 <tr valign="top">
     <td width="100px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
-    <td class="frm_email_reply_container"><span class="howto"><?php _e('Name', 'formidable') ?></span> 
+    <td class="frm_email_reply_container">
+        <div class="alignright frm_email_actions feature-filter">
+            <?php echo $email_key; ?>
+            <span class="frm_email_icons">
+            <?php if($email_key > 0){ ?>
+                <a href="javascript:frmRemoveEmailList(<?php echo $email_key ?>)">
+                <img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php _e('Remove Email', 'formidable') ?>" title="<?php _e('Remove Email', 'formidable') ?>" />
+                </a>
+            <?php } ?>
+            </span>
+        </div>
+        <span class="howto"><?php _e('Name', 'formidable') ?></span> 
         
         <select name="notification[<?php echo $email_key ?>][reply_to_name]" id="reply_to_name_<?php echo $email_key ?>" onchange="frmCheckCustomEmail(this.value,'reply_to_name',<?php echo $email_key ?>)">
         <option value=""><?php echo FrmAppHelper::truncate(get_option('blogname'), 80); ?></option>

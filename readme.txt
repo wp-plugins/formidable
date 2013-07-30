@@ -87,7 +87,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added utf8 support to sanitize_url=1 option
 * PRO: Added "confirm" option to frm-entry-links shortocode that is used before an entry is deleted
 * PRO: Copy conditional logic and field calculations into duplicated forms
-* PRO: Allow clickable=1 to be used with Google formresults shortcode
+* PRO: Allow clickable=1 and images to be used with Google formresults shortcode
+* PRO: Allow [25 show="user_email"] for data from entries fields to get user info from the user ID from the linked form
 * PRO: No longer require fields in a conditionally hidden section heading
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
 * PRO: Updated star rating javascript version
