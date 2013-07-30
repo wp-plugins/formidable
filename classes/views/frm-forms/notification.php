@@ -5,13 +5,13 @@
     <td class="frm_email_reply_container">
         <div class="alignright frm_email_actions feature-filter">
             <?php echo $email_key; ?>
-            <span class="frm_email_icons">
             <?php if($email_key > 0){ ?>
+            <span class="frm_email_icons">
                 <a href="javascript:frmRemoveEmailList(<?php echo $email_key ?>)">
                 <img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php _e('Remove Email', 'formidable') ?>" title="<?php _e('Remove Email', 'formidable') ?>" />
                 </a>
-            <?php } ?>
             </span>
+            <?php } ?>
         </div>
         <span class="howto"><?php _e('Name', 'formidable') ?></span> 
         
