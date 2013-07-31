@@ -36,17 +36,6 @@ if($sec.hasClass('active')){
 }
 }
 
-function frmCheckParents(id){ 
-var $chk=jQuery('#'+id);var ischecked=$chk.is(":checked");
-if(!ischecked) return;
-$chk.parent().parent().siblings().children("label").children("input").each(function(){
-	var b= $(this).is(':checked');ischecked=ischecked || b;
-});
-frmCheckParentNodes(ischecked, $chk);
-}
-function frmCheckParentNodes(b,$obj){$prt=frmFindParentObj($obj);if($prt.length !=0){$prt[0].checked=b;frmCheckParentNodes(b,$prt);}}
-function frmFindParentObj($obj){return $obj.parent().parent().parent().prev().children("input");}
-
 function frmClearDefault(default_value,thefield){
 var default_value=default_value.replace(/(\n|\r\n)/g, '\r');var this_val=thefield.value.replace(/(\n|\r\n)/g, '\r');
 if(this_val==default_value){thefield.value='';jQuery(thefield).removeClass('frm_default');}
@@ -257,23 +246,34 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 		prev.push(jQuery("select[name='item_meta["+f.HideField+"]"+mult+"']").val());
 	}else{prev.push(jQuery("input[name='item_meta["+f.HideField+"]']").val());}
 	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
-	if(prev.length==0) var prev='';
+	if(prev.length==0) prev='';
 	jQuery.ajax({
 		type:"POST",url:ajax_url,
 		data:"controller=fields&frm_action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
 		success:function(html){
-			if(html=='') jQuery('#frm_field_'+f.HideField+'_container').hide(); 
-			else if(f.MatchType!='all') jQuery('#frm_field_'+f.HideField+'_container').show();
+			if(html==''){
+				jQuery('#frm_field_'+f.HideField+'_container').hide();
+				prev='';
+			}else if(f.MatchType!='all'){
+				jQuery('#frm_field_'+f.HideField+'_container').show();
+			}
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
 			if(jQuery(html).hasClass('frm_chzn'))
 				jQuery('.frm_chzn').chosen();
 			
-			if(html!='' && prev!=''){				
+			if(html!='' && prev!=''){
+				//select options that were selected previously			
 				jQuery.each(prev, function(ckey,cval){
-					if(f.DataType=='checkbox'){jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');}
-					else if(f.DataType=='select'){
-						jQuery("select[name='item_meta["+f.HideField+"]"+mult+"']").val(cval);}
-					else{jQuery("input[name='item_meta["+f.HideField+"]']").val(cval);}
+					if(f.DataType=='checkbox'){
+						jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');
+					}else if(f.DataType=='select'){
+						if(jQuery("select[name='item_meta["+f.HideField+"]"+mult+"'] option[value="+cval+"]").length>0)
+							jQuery("select[name='item_meta["+f.HideField+"]"+mult+"']").val(cval);
+						else
+							prev.splice(ckey,1); //remove options that no longer exist
+					}else{
+						jQuery("input[name='item_meta["+f.HideField+"]']").val(cval);
+					}
 				});
 			}
 			frmCheckDependent(prev,f.HideField);
