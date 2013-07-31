@@ -276,9 +276,17 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 					else{jQuery("input[name='item_meta["+f.HideField+"]']").val(cval);}
 				});
 			}
-			frmCheckDependent('',f.HideField);
+			frmCheckDependent(prev,f.HideField);
 		}
 	});
+}
+
+function frmOnSubmit(e){
+	e.preventDefault();
+	if(jQuery(this).find('.wp-editor-wrap').length){
+		tinyMCE.triggerSave();
+	}
+	frmGetFormErrors(this);
 }
 
 function frmGetFormErrors(object,ajax_url){

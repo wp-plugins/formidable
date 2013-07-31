@@ -244,8 +244,8 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 });
 
 function frmLoadField(field_id){
-	if(jQuery('#frm_field_id_'+field_id).next().length > 0){
-		var next_id=jQuery('#frm_field_id_'+field_id).next().attr('id').replace('frm_field_id_', '');
+	if(jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').length > 0){
+		var next_id=jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').attr('id').replace('frm_field_id_', '');
 		setTimeout(function(){frmLoadField(next_id);}, 400);
 	}
 	var f=jQuery('#frm_field_id_'+field_id+' .frm_hidden_fdata').html();
