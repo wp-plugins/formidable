@@ -447,6 +447,9 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         if(!$force)
             $version_info = get_site_transient( $plugin->pro_last_checked_store );
         
+        if($version_info and !is_array($version_info))
+            $version_info = false;
+        
         if(!isset($version_info) or !$version_info){
             $download_url = '';
             $errors = false;
@@ -478,7 +481,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
             set_site_transient( $plugin->pro_last_checked_store, $version_info, $plugin->pro_check_interval );
         }
 
-        return $version_info;
+        return (array)$version_info;
     }
 
     function manually_queue_update(){
