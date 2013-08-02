@@ -94,7 +94,7 @@ class FrmUpdatesController{
         
         if( !empty($this->license) ){
             $new_auth = $this->check_license();
-            return $new_auth;
+            return $new_auth['auth'];
         }
 
         return false;
@@ -122,7 +122,8 @@ class FrmUpdatesController{
     public function pro_cred_form(){ 
         global $frmpro_is_installed; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
-            if($this->process_form()){ ?>
+            $response = $this->process_form();
+            if($response['auth']){ ?>
 <div id="message" class="updated fade"><strong>
 <?php
             if(!$this->pro_is_authorized() and !$this->pro_is_installed()){
@@ -136,7 +137,7 @@ class FrmUpdatesController{
 <?php       }else{ ?>
 <div class="error">
     <ul>
-        <li><strong><?php _e('ERROR', 'formidable'); ?></strong>: <?php echo $this->pro_error_message_str; ?></li>
+        <li><strong><?php _e('ERROR', 'formidable'); ?></strong>: <?php echo $response['response']; ?></li>
     </ul>
 </div>
 <?php
@@ -234,7 +235,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         $creds = $this->get_pro_cred_form_vals();
         $user_authorized = $this->check_license($creds['license']);
 
-        if(!empty($user_authorized) and $user_authorized){
+        if(!empty($user_authorized['auth']) and $user_authorized['auth']){
             $this->_update_auth($creds);
 
             if(!$this->pro_is_installed())
@@ -301,21 +302,21 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
     }
     
     function check_license($license=false){
-        $save = false;
+        $save = true;
         if(empty($license)){
             $license = $this->license;
-            $save = true;
+            $save = false;
         }
             
         if(empty($license))
-            return false;
+            return array('auth' => false, 'response' => __('Please enter a license number', 'formidable'));
         
         $domain = home_url();
         $args = compact('domain');
         
         $act = $this->send_mothership_request($this->plugin_nicename .'/activate/'. $license, $args);
          
-        if(!$save){  
+        if($save){  
             $auth = false;
             if(!is_array($act)){
                 $errors[] = $act;
@@ -341,10 +342,10 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
 
             }
             
-            return $auth;
+            return array('auth' => $auth, 'response' => $act);
         }
         
-        return false;
+        return array('auth' => false, 'response' => __('Please enter a license number', 'formidable'));
     }
 
     function deactivate(){

@@ -9,7 +9,7 @@ class FrmField{
         $new_values['field_key'] = FrmAppHelper::get_unique_key($key, $frmdb->fields, 'field_key');
 
         foreach (array('name', 'description', 'type', 'default_value') as $col)
-            $new_values[$col] = stripslashes($values[$col]);
+            $new_values[$col] = stripslashes_deep($values[$col]);
         
         $new_values['options'] = $values['options'];
 

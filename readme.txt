@@ -90,6 +90,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Copy conditional logic and field calculations into duplicated forms
 * PRO: Allow clickable=1 and images to be used with Google formresults shortcode
 * PRO: Allow [25 show="user_email"] for data from entries fields to get user info from the user ID from the linked form, and [25 show="30" show_info="user_email"] to get values from a field linked through 2 data from entries fields
+* PRO: Allow tags fields to be used with hierarchal taxonomies
 * PRO: No longer require fields in a conditionally hidden section heading
 * PRO: Added option for frmThemeOverride_frmAfterSubmit function for custom javascript after ajax submit
 * PRO: Updated star rating javascript version
