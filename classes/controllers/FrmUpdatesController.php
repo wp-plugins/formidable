@@ -504,8 +504,11 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         $resp = wp_remote_post($uri, $arg_array);
         $body = wp_remote_retrieve_body( $resp );
 
-        if($body == 'error' or is_wp_error($body)){
-            return __('You had an HTTP error connecting to Strategy11\'s Mothership API', 'formidable');
+        if($body == 'error' or is_wp_error($body) or is_wp_error($resp)){
+            $message = __('You had an HTTP error connecting to Strategy11\'s Mothership API', 'formidable');
+            if(is_wp_error($resp))
+                $message .= ' '. $resp->get_error_message();
+            return $message;
         }else{
             if(null !== ($json_res = json_decode($body, true))){
                 if(isset($json_res['error']))
