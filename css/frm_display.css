@@ -6,7 +6,7 @@
 .with_frm_style .frm_none_container label.frm_primary_label{display:none;}
 .with_frm_style .frm_hidden_container label.frm_primary_label{visibility:hidden;}
 .with_frm_style .frm_inline_container label.frm_primary_label, .with_frm_style .frm_inline_container .frm_opt_container {display:inline;padding-right:10px;}
-.with_frm_style .horizontal_radio .frm_checkbox, .with_frm_style .horizontal_radio .frm_radio {margin-right:1.5%;}
+.with_frm_style .horizontal_radio .frm_checkbox, .with_frm_style .horizontal_radio .frm_radio {margin-right:5px;}
 .with_frm_style .form-field, .with_frm_style .frm_form_field{margin-bottom:15px;}
 .with_frm_style .frm_blank_field label, .with_frm_style .frm_error{color:#be2e17;}
 .with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .with_frm_style .frm_blank_field #recaptcha_area{border:1px solid #be2e17;}
