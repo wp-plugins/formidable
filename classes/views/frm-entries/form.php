@@ -9,7 +9,7 @@ $frm_css_loaded = true;
 }
 
 echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
-<div class="frm_form_fields">
+<div class="frm_form_fields <?php echo apply_filters('frm_form_fields_class', '', $values); ?>">
 <fieldset>
 <div>
 <input type="hidden" name="frm_action" value="<?php echo esc_attr($form_action) ?>" />

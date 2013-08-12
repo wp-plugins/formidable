@@ -45,8 +45,8 @@ class FrmFormsController{
     public static function head(){
         global $frm_settings;
 
-        $js_file  = array(FRM_URL . '/js/jquery/jquery-ui-themepicker.js', FRM_URL.'/js/jquery/jquery.editinplace.packed.js');
-        require(FRM_VIEWS_PATH . '/shared/head.php');
+        wp_enqueue_script('formidable-editinplace');
+        wp_enqueue_script('jquery-frm-themepicker');
     }
     
     public static function list_form(){

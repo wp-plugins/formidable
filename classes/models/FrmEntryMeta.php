@@ -58,8 +58,10 @@ class FrmEntryMeta{
       $field_id = (int)$field_id;
       
       $cached = wp_cache_get( $entry_id, 'frm_entry' );
-      if($cached and isset($cached->metas) and isset($cached->metas[$field_id]))
-            return $cached->metas[$field_id];
+      if($cached and isset($cached->metas) and isset($cached->metas[$field_id])){
+            $result = $cached->metas[$field_id];
+            return stripslashes_deep($result);
+        }
             
       if (is_numeric($field_id))
           $query = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id='$field_id' and item_id='$entry_id'";
@@ -86,8 +88,10 @@ class FrmEntryMeta{
       global $wpdb, $frmdb;
       
       $entry = wp_cache_get($entry_id, 'frm_entry');
-      if($return_var and $entry and isset($entry->metas) and isset($entry->metas[$field_id]))
-        return $entry->metas[$field_id];
+      if($return_var and $entry and isset($entry->metas) and isset($entry->metas[$field_id])){
+          $var = $entry->metas[$field_id];
+          return stripslashes_deep($var);
+      }
         
       $query_str = "SELECT meta_value FROM $frmdb->entry_metas WHERE field_id=%d and item_id=%d";
       $query = $wpdb->prepare($query_str, $field_id, $entry_id);

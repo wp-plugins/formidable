@@ -1,7 +1,7 @@
 === Formidable Forms ===
 Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
-Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu
+Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.0
 Tested up to: 3.6
 Stable tag: 1.07.0
@@ -61,6 +61,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.01 =
+* Added for attribute to labels for newly created fields
+* Fixed issue with slashes showing in content if retrieved from cache
+* Prevent multiple checks for updates when pro is authorized, but free version is installed
+* Added frm_form_fields_class hook
+* PRO: Fixed days events are shown on the calendar with months starting on Sunday and week start day set to Monday
+* PRO: Added option to not load a JQuery UI stylesheet
+* PRO: Added "Entry ID" option to the back-end entry search options
+
 = 1.07.0 =
 * Submit build form in one input with ajax to prevent max_input_vars limitations
 * Load fields on the build page with ajax for long forms and other form builder page optimization

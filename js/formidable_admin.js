@@ -188,9 +188,14 @@ $(this).hover(function(){$('#frm_show_cal').removeClass().addClass($(this).attr(
 });
 
 $("select[name='frm_theme_selector']").change(function(){
-var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.3/themes/'+$(this).val()+'/jquery-ui.css';
+if($(this).val() == -1){
+	var themeName=-1;
+	var css=-1;
+}else{
+	var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.3/themes/'+$(this).val()+'/jquery-ui.css';
+	var themeName=$("select[name='frm_theme_selector'] option[value='"+$(this).val()+"']").text();
+}
 frmUpdateCSS(css);
-var themeName=$("select[name='frm_theme_selector'] option[value='"+$(this).val()+"']").text();
 $('input[name="frm_theme_css"]').val($(this).val()); $('input[name="frm_theme_name"]').val(themeName);
 return false;
 });
@@ -724,12 +729,15 @@ function frmSettingsTab(tab, id){
 
 //function to append a new theme stylesheet with the new style changes
 function frmUpdateCSS(locStr){
+	if(locStr == -1){
+		jQuery('link.ui-theme').remove();
+		return false;
+	}
 	var cssLink = jQuery('<link href="'+locStr+'" type="text/css" rel="Stylesheet" class="ui-theme" />');
-	jQuery("head").append(cssLink);
+	jQuery('head').append(cssLink);
 	
-	if( jQuery("link.ui-theme").size() > 3){
-		jQuery("link.ui-theme:first").remove();
-	}	
+	if( jQuery('link.ui-theme').size() > 3)
+		jQuery('link.ui-theme:first').remove();
 }
 
 function frmGetMetaValue(id, meta_name){

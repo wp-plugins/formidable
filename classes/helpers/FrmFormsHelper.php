@@ -121,7 +121,7 @@ class FrmFormsHelper{
             ),
             'submit_value' => $frm_settings->submit_value, 'success_action' => 'message',
             'success_msg' => $frm_settings->success_msg, 'show_form' => 0, 'akismet' => '',
-            'no_save' => 0, 'ajax_load' => false
+            'no_save' => 0, 'ajax_load' => 0
         );
     }
     
@@ -133,7 +133,7 @@ class FrmFormsHelper{
 <div class="frm_submit">
 [if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" [back_hook] />[/if back_button]
 <input type="submit" value="[button_label]" [button_action] />
-<img class="frm_ajax_loading" src="$img" alt="$sending"/>
+<img class="frm_ajax_loading" src="$img" alt="$sending" style="visibility:hidden;" />
 </div>
 SUBMIT_HTML;
         }else if ($loc == 'before'){
@@ -153,6 +153,7 @@ BEFORE_HTML;
         if(strpos($button, '[button_action]')){
             $button_parts = explode('[button_action]', $button);
             echo $button_parts[0];
+            //echo ' id="frm_submit_"';
             do_action('frm_submit_button_action', $form, $form_action);
             echo $button_parts[1];
         }

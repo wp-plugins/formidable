@@ -119,6 +119,7 @@ class FrmUpdatesController{
 
         return $client->getResponse();
     }
+    
     public function pro_cred_form(){ 
         global $frmpro_is_installed; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
@@ -394,12 +395,18 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/plugins/'. $this->plugin_nicename .'/'))){
 
-            if( $this->pro_is_authorized()) {
-                if( !$this->pro_is_installed())
+            if( $this->pro_is_authorized() and !$this->pro_is_installed()){
+                $version_info = get_site_transient( $this->pro_last_checked_store );
+                global $frm_version;
+                
+                //don't force an api check if the transient has already been forced
+                if($version_info and is_array($version_info) and $transient->response[$this->plugin_name]->url == 'http://formidablepro.com/' and isset($version_info['version']) and version_compare($version_info['version'], $frm_version, '=') and isset($version_info['url']) and $version_info['url'] == $transient->response[$this->plugin_name]->package)
+                    $force = false;
+                else
                     $force = true;
-                    
-                $transient = $this->queue_addon_update($transient, $plugin, $force, false);
             }
+                
+            $transient = $this->queue_addon_update($transient, $plugin, $force, false);
         }
         
         return $transient;
@@ -447,7 +454,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         if(!$force)
             $version_info = get_site_transient( $plugin->pro_last_checked_store );
         
-        if($version_info and !is_array($version_info))
+        if(isset($version_info) and $version_info and !is_array($version_info))
             $version_info = false;
         
         if(!isset($version_info) or !$version_info){
@@ -520,6 +527,8 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
                     return $json_res['error'];
                 else
                     return $json_res;
+            }else if(isset($resp['response']) and isset($resp['response']['code'])){
+                return 'There was a '. $resp['response']['code'] .' error: '. $resp['response']['message'];
             }else{
                 return __( 'Your License Key was invalid', 'formidable');
             }

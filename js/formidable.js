@@ -1,4 +1,5 @@
 jQuery(document).ready(function($){
+$('.frm_ajax_loading').css('visibility', 'hidden');
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
 
 if($.isFunction($.fn.on)){
@@ -96,7 +97,7 @@ for(i=0; i<len; i++){
 
     if(f.Type=='checkbox'){
         show_fields[f.HideField][i]=false;
-        jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"][]']").each(function(){
+        jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name^='item_meta["+f.FieldName+"]']").each(function(){
 			var match=frmOperators(f.Condition,f.Value,jQuery(this).val());
 			if(show_fields[f.HideField][i]==false && match)
 				show_fields[f.HideField][i]=true;
@@ -428,7 +429,7 @@ jQuery(id).fadeOut('slow').replaceWith('');
 
 function frmNextUpload(obj,id,remove){
 obj.wrap('<div class="frm_file_names frm_uploaded_files">'); 
-obj.after(obj.val()+' <a href="#" onclick="frmClearFile(jQuery(this))">'+remove+'</a>');
+obj.after(obj.val()+' <a href="#" onclick="frmClearFile(jQuery(this));return false;">'+remove+'</a>');
 obj.hide(); jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" type="file" onchange="frmNextUpload(jQuery(this),'+id+',\''+remove+'\')"/>');
 }
 

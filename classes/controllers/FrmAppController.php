@@ -144,6 +144,10 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
             wp_enqueue_script('formidable');
             wp_enqueue_style('formidable-admin', FRM_URL. '/css/frm_admin.css', array(), $frm_version);
             add_thickbox();
+            
+            wp_register_script('formidable-editinplace', FRM_URL .'/js/jquery/jquery.editinplace.packed.js', array('jquery'), '2.3.0');
+            wp_register_script('jquery-frm-themepicker', FRM_URL .'/js/jquery/jquery-ui-themepicker.js', array('jquery'), $frm_version);
+            
         }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and isset($_REQUEST['post_type']) and $_REQUEST['post_type'] == 'frm_display')){
             if(isset($_REQUEST['post_type'])){
                 $post_type = $_REQUEST['post_type'];

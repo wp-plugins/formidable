@@ -176,10 +176,13 @@ class FrmFieldsHelper{
     public static function get_default_html($type='text'){
         if (apply_filters('frm_normal_field_type_html', true, $type)){
             $input = (in_array($type, array('radio', 'checkbox', 'data'))) ? '<div class="frm_opt_container">[input]</div>' : '[input]';
+            $for = '';
+            if(!in_array($type, array('radio', 'checkbox', 'data', 'scale')))
+                $for = 'for="field_[key]"';
             
             $default_html = <<<DEFAULT_HTML
 <div id="frm_field_[id]_container" class="frm_form_field form-field [required_class][error_class]">
-    <label class="frm_primary_label">[field_name]
+    <label $for class="frm_primary_label">[field_name]
         <span class="frm_required">[required_label]</span>
     </label>
     $input
