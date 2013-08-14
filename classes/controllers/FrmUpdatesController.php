@@ -502,13 +502,16 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
     }
 
     function send_mothership_request( $endpoint, $args=array(), $domain=false){
+        global $frm_version;
+        
         if(empty($domain))
             $domain = $this->pro_mothership;
         $uri = "{$domain}{$endpoint}";
 
         $arg_array = array( 'body'      => $args,
                             'timeout'   => 15,
-                            'sslverify' => false
+                            'sslverify' => false,
+                            'user-agent' => 'Formidable/'. $frm_version .'; '. get_bloginfo( 'url' )
                           );
 
         $resp = wp_remote_post($uri, $arg_array);
