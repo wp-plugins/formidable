@@ -192,27 +192,18 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
         wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
         wp_enqueue_script('jquery');
         
-        $style = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css');
+        $style = apply_filters('get_frm_stylesheet', array('frm-forms' => FRM_URL .'/css/frm_display.css'));
         if($style){
             foreach((array)$style as $k => $file){
-                $k = $k ? 'frm-forms'. $k : 'formidable';
                 wp_register_style($k, $file, array(), $frm_version);
+                if(!is_admin() and $frm_settings->load_style == 'all')
+                    wp_enqueue_style($k);
                 unset($k);
                 unset($file);
             }
         }
         
-        if(!is_admin() and $frm_settings->load_style == 'all'){
-            $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', 'header');
-            if(is_array($css)){
-                foreach($css as $css_key => $file)
-                    wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
-                unset($css_key);
-                unset($file);
-            }else
-                wp_enqueue_style('frm-forms', $css, array(), $frm_version);
-            unset($css);
-                
+        if(!is_admin() and $frm_settings->load_style == 'all'){                
             global $frm_css_loaded;
             $frm_css_loaded = true;
         }
@@ -223,25 +214,20 @@ success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
 
         if($frm_load_css and !is_admin() and ($frm_settings->load_style != 'none')){
             if($frm_css_loaded)
-                $css = apply_filters('get_frm_stylesheet', '', $location);
+                $css = apply_filters('get_frm_stylesheet', array());
             else
-                $css = apply_filters('get_frm_stylesheet', FRM_URL .'/css/frm_display.css', $location);
+                $css = apply_filters('get_frm_stylesheet', array('frm-forms' => FRM_URL .'/css/frm_display.css'));
              
             if(!empty($css)){
                 echo "\n".'<script type="text/javascript">';
-                if(is_array($css)){
-                    foreach($css as $css_key => $file){
-                        echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms'. ($css_key + $frm_css_loaded) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
-                        //wp_enqueue_style('frm-forms'.$css_key, $file, array(), $frm_version);
-                        unset($css_key);
-                        unset($file);
-                    }
-                }else{
-                    echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\'frm-forms-css\' href=\''. $css. '\' type=\'text/css\' media=\'all\' /%3E"));';
+                foreach((array)$css as $css_key => $file){
+                    echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\''. ($css_key + $frm_css_loaded) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
+                    //wp_enqueue_style($css_key);
+                    unset($css_key);
+                    unset($file);
                 }
                 unset($css);
 
-                    //wp_enqueue_style('frm-forms', $css, array(), $frm_version);
                 echo '</script>'."\n";
             }
         }

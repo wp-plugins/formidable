@@ -69,6 +69,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed days events are shown on the calendar with months starting on Sunday and week start day set to Monday
 * PRO: Added option to not load a JQuery UI stylesheet
 * PRO: Added "Entry ID" option to the back-end entry search options
+* PRO: Added frm_csv_filename hook for changing the csv file name
 
 = 1.07.0 =
 * Submit build form in one input with ajax to prevent max_input_vars limitations
