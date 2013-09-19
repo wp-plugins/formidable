@@ -62,7 +62,12 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.07.02 =
+* Remove slashes from a single entry retrieved from cache
+* Remove slashes added by ajax before saving to db
+* Fixed naming so plugin info and change log links are correct on plugins page
 * PRO: Allow the field value to be used to filter data from entries values in custom displays
+* PRO: Allow for quotation marks in values used to get stats in the frm-stats shortcode
+* PRO: Fixed entry listing widget to get values from stats for more accuracy
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields
