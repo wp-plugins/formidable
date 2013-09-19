@@ -422,10 +422,10 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         if($version_info and isset($version_info['version']) and ($force or version_compare($version_info['version'], $installed_version, '>'))){
             $transient->response[$plugin->plugin_name] = new stdClass();
             $transient->response[$plugin->plugin_name]->id = 0;
-            $transient->response[$plugin->plugin_name]->slug = $plugin->plugin_name;
+            $transient->response[$plugin->plugin_name]->slug = $plugin->plugin_nicename;
             $transient->response[$plugin->plugin_name]->new_version = $version_info['version'];
             $transient->response[$plugin->plugin_name]->url = 'http://formidablepro.com/';
-            
+
             if(isset($version_info['url'])){
                 $transient->response[$plugin->plugin_name]->package = $version_info['url'];
             }else{
@@ -509,7 +509,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         $uri = "{$domain}{$endpoint}";
 
         $arg_array = array( 'body'      => $args,
-                            'timeout'   => 15,
+                            'timeout'   => $this->timeout,
                             'sslverify' => false,
                             'user-agent' => 'Formidable/'. $frm_version .'; '. get_bloginfo( 'url' )
                           );
@@ -526,12 +526,12 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
             return __('You had an HTTP error connecting to Strategy11\'s API', 'formidable');
         }else{
             if(null !== ($json_res = json_decode($body, true))){
-                if(isset($json_res['error']))
+                if(is_array($json_res) and isset($json_res['error']))
                     return $json_res['error'];
                 else
                     return $json_res;
             }else if(isset($resp['response']) and isset($resp['response']['code'])){
-                return 'There was a '. $resp['response']['code'] .' error: '. $resp['response']['message'];
+                return 'There was a '. $resp['response']['code'] .' error: '. $resp['response']['message']. ' '. $resp['body'];
             }else{
                 return __( 'Your License Key was invalid', 'formidable');
             }
@@ -546,5 +546,6 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
         if(empty($hlpdsk_settings->license) and (!isset($_REQUEST['page']) or $_REQUEST['page'] != 'hlp-settings'))
             include(FRM_PATH . '/classes/views/update/activation_warning.php');  
     }
+    
 }
 

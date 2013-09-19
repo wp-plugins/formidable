@@ -400,7 +400,7 @@ function frmUpdateField(entry_id,field_id,value,message,ajax_url,num){
 		type:"POST",url:ajax_url,
 		data:"controller=entries&frm_action=update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
 		success:function(html){
-			if(message == '')
+			if(message.replace(/^\s+|\s+$/g,'') == '')
 				jQuery('#frm_update_field_'+entry_id+'_'+field_id+'_'+num).fadeOut('slow');
 			else
 				jQuery('#frm_update_field_'+entry_id+'_'+field_id+'_'+num).replaceWith(message);
@@ -414,7 +414,7 @@ function frmDeleteEntry(entry_id,ajax_url,prefix){
 		type:"POST",url:ajax_url,
 		data:"controller=entries&frm_action=destroy&entry="+entry_id,
 		success:function(html){
-			if(html == 'success')
+			if(html.replace(/^\s+|\s+$/g,'') == 'success')
 				jQuery('#'+prefix+entry_id).fadeOut('slow');
 			else
 				jQuery('#frm_delete_'+entry_id).replaceWith(html);

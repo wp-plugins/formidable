@@ -10,7 +10,7 @@ class FrmEntryMeta{
     $new_values['field_id'] = $field_id;
     $new_values['created_at'] = current_time('mysql', 1);
     $new_values = apply_filters('frm_add_entry_meta', $new_values);
-    
+
     $wpdb->insert( $frmdb->entry_metas, $new_values );
   }
 
@@ -26,6 +26,8 @@ class FrmEntryMeta{
     foreach($values as $field_id => $meta_value){
         if(is_array($values[$field_id]))
             $values[$field_id] = (empty($values[$field_id])) ? false : maybe_serialize($values[$field_id]);
+        else
+            $values[$field_id] = stripslashes_deep($values[$field_id]);
         $this->update_entry_meta($entry_id, $field_id, '', $values[$field_id]);
     }
   }

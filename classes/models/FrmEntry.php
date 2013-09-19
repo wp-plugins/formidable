@@ -170,7 +170,7 @@ class FrmEntry{
       
         $entry = wp_cache_get( $id, 'frm_entry' );
         if($entry)
-            return $entry;
+            return stripslashes_deep($entry);
 
         $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
                   LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id WHERE ";

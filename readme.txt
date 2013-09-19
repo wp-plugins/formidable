@@ -61,6 +61,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.02 =
+* PRO: Allow the field value to be used to filter data from entries values in custom displays
+
 = 1.07.01 =
 * Added for attribute to labels for newly created fields
 * Fixed issue with slashes showing in content if retrieved from cache
@@ -70,6 +73,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added option to not load a JQuery UI stylesheet
 * PRO: Added "Entry ID" option to the back-end entry search options
 * PRO: Added frm_csv_filename hook for changing the csv file name
+* PRO: Allow siteurl and sitename in after content box in custom display
+* PRO: Allow autocomplete selection to be unselected on front-end
+* PRO: Fixed conditional validation for fields in a conditional section heading beyond page 1
 
 = 1.07.0 =
 * Submit build form in one input with ajax to prevent max_input_vars limitations
