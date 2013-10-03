@@ -1,7 +1,7 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
     <h2><?php _e('Edit Form', 'formidable') ?>
-        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php');
     
@@ -199,6 +199,3 @@
     </div>
 </div>
 </div>
-<script type="text/javascript">
-__FRMURL='<?php echo admin_url("admin-ajax.php") ?>';
-</script>

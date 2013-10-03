@@ -18,6 +18,9 @@ class FrmFormsController{
         add_action('admin_footer',  'FrmFormsController::insert_form_popup');
         
         add_filter('set-screen-option', 'FrmFormsController::save_per_page', 10, 3);
+        
+        add_action('wp_ajax_frm_forms_preview', 'FrmFormsController::preview');
+        add_action('wp_ajax_nopriv_frm_forms_preview', 'FrmFormsController::preview');
     }
     
     public static function menu(){
@@ -28,14 +31,12 @@ class FrmFormsController{
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-new', 'FrmFormsController::head');
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-templates', 'FrmFormsController::head');
         
-        if(class_exists('WP_List_Table')){
-            add_filter('manage_toplevel_page_formidable_columns', 'FrmFormsController::get_columns', 0 );
-	        add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_columns', 'FrmFormsController::get_columns', 0 );
-	        add_filter('manage_toplevel_page_formidable_sortable_columns', 'FrmFormsController::get_sortable_columns');
-	        add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_sortable_columns', 'FrmFormsController::get_sortable_columns');
-	        add_filter('get_user_option_managetoplevel_page_formidablecolumnshidden', 'FrmFormsController::hidden_columns');
-	        add_filter('get_user_option_manage'. sanitize_title($frm_settings->menu) .'_page_formidable-templatescolumnshidden', 'FrmFormsController::hidden_columns');
-        }
+        add_filter('manage_toplevel_page_formidable_columns', 'FrmFormsController::get_columns', 0 );
+	    add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_columns', 'FrmFormsController::get_columns', 0 );
+	    add_filter('manage_toplevel_page_formidable_sortable_columns', 'FrmFormsController::get_sortable_columns');
+	    add_filter('manage_'. sanitize_title($frm_settings->menu) .'_page_formidable-templates_sortable_columns', 'FrmFormsController::get_sortable_columns');
+	    add_filter('get_user_option_managetoplevel_page_formidablecolumnshidden', 'FrmFormsController::hidden_columns');
+	    add_filter('get_user_option_manage'. sanitize_title($frm_settings->menu) .'_page_formidable-templatescolumnshidden', 'FrmFormsController::hidden_columns');
     }
     
     public static function lower_menu(){
@@ -198,6 +199,7 @@ class FrmFormsController{
 
     public static function preview(){
         do_action('frm_wp');
+        define('FRM_PREVIEW', true);
         
         global $frm_form, $frm_settings, $frmpro_is_installed;
         if ( !defined( 'ABSPATH' ) && !defined( 'XMLRPC_REQUEST' )) {
@@ -219,7 +221,8 @@ class FrmFormsController{
         $form = $frm_form->getAll(array('form_key' => $key), '', 1);
         if (!$form) $form = $frm_form->getAll(array(), '', 1);
         
-        require(FRM_VIEWS_PATH.'/frm-entries/direct.php');   
+        require(FRM_VIEWS_PATH.'/frm-entries/direct.php');
+        die(); 
     }
     
     public static function destroy(){
@@ -280,10 +283,7 @@ class FrmFormsController{
         
         if(!$params)
             $params = self::get_params();
-            
-        if($message=='')
-            $message = FrmAppHelper::frm_get_main_message();
-            
+        
         $page_params = '&action=0&&frm_action=0&page=formidable';
         
         if ($params['template']){
@@ -291,45 +291,25 @@ class FrmFormsController{
             $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
         }
         
-        if(class_exists('WP_List_Table')){
-            require_once( FRM_PATH .'/classes/helpers/FrmListHelper.php' );
+        require_once( FRM_PATH .'/classes/helpers/FrmListHelper.php' );
             
-            $args = array('table_name' => $frmdb->forms, 'params' => $params);
-            $args['page_name'] = $params['template'] ? '-template' : '';
-            $wp_list_table = new FrmListHelper($args);
-            unset($args);
+        $args = array('table_name' => $frmdb->forms, 'params' => $params);
+        $args['page_name'] = $params['template'] ? '-template' : '';
+        $wp_list_table = new FrmListHelper($args);
+        unset($args);
 
-            $pagenum = $wp_list_table->get_pagenum();
+        $pagenum = $wp_list_table->get_pagenum();
 
-            $wp_list_table->prepare_items();
+        $wp_list_table->prepare_items();
 
-            $total_pages = $wp_list_table->get_pagination_arg( 'total_pages' );
-            if ( $pagenum > $total_pages && $total_pages > 0 ) {
-            	wp_redirect( add_query_arg( 'paged', $total_pages ) );
-            	die();
-            }
-            
-            if ( ! empty( $_REQUEST['s'] ) )
-                $page_params .= '&s='. urlencode($_REQUEST['s']);
-        }else{
-  
-            $where_clause = " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ".$params['template'];
-
-            $form_vars = self::get_form_sort_vars($params, $where_clause);
-
-            $current_page = ($current_page_ov) ? $current_page_ov : $params['paged'];
-            $page_params .= ($page_params_ov) ? $page_params_ov : $form_vars['page_params'];
-
-            $sort_str = $form_vars['sort_str'];
-            $sdir_str = $form_vars['sdir_str'];
-            $search_str = $form_vars['search_str'];
-
-            $record_count = FrmAppHelper::getRecordCount($form_vars['where_clause'], $frmdb->forms);
-            $page_count = FrmAppHelper::getPageCount($frm_page_size, $record_count, $frmdb->forms);
-            $forms = FrmAppHelper::getPage($current_page, $frm_page_size, $form_vars['where_clause'], $form_vars['order_by'], $frmdb->forms);
-            $page_last_record = FrmAppHelper::getLastRecordNum($record_count,$current_page,$frm_page_size);
-            $page_first_record = FrmAppHelper::getFirstRecordNum($record_count,$current_page,$frm_page_size);
+        $total_pages = $wp_list_table->get_pagination_arg( 'total_pages' );
+        if ( $pagenum > $total_pages && $total_pages > 0 ) {
+            wp_redirect( add_query_arg( 'paged', $total_pages ) );
+            die();
         }
+            
+        if ( ! empty( $_REQUEST['s'] ) )
+            $page_params .= '&s='. urlencode($_REQUEST['s']);
         
         require(FRM_VIEWS_PATH.'/frm-forms/list.php');
     }
@@ -391,8 +371,8 @@ class FrmFormsController{
     public static function get_columns($columns){
 	    $columns['cb'] = '<input type="checkbox" />';
         $columns['id'] = 'ID';
-        $columns['name'] = __('Name', 'formidable');
-        $columns['description'] = __('Description', 'formidable');
+        $columns['name'] = __('Name');
+        $columns['description'] = __('Description');
         $columns['form_key'] = __('Key', 'formidable');
         
         if($_GET['page'] == 'formidable-templates'){

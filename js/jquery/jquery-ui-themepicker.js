@@ -30,7 +30,7 @@ var hash = {
 	refreshToHash: function(locStr) {
 		if(locStr) var newHash = true;
 		locStr = locStr || hash.currHash();
-		updateCSS(locStr);
+		frmUpdateCSS(locStr);
 		// remember which groups are open
 		openGroups = [];
 		jQuery('div.theme-group-content').each(function(i){
@@ -108,9 +108,9 @@ jQuery.fn.applyFarbtastic = function() {
 
 //function called after a change event in the form
 function formChange(){
-	var locStr = jQuery('form[name="frm_settings_form"]').serialize();
+	var locStr = jQuery('.frm_settings_page input, .frm_settings_page select, .frm_settings_page textarea').serialize();
 	locStr = hash.clean(locStr);
-	updateCSS(locStr);
+	frmUpdateCSS(locStr);
 	hash.updateHash(locStr, true);
 };
 

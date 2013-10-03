@@ -16,9 +16,9 @@ $display = apply_filters('frm_display_field_options', array(
 )); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
-    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="Move Field"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="Move" /></a>
-    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php _e('Delete Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="Delete" /></a>
-    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php _e('Duplicate Field', 'formidable') ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
+    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="<?php echo esc_attr(__('Move Field', 'formidable')) ?>"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="<?php echo esc_attr(__('Move')) ?>" /></a>
+    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php echo esc_attr(__('Delete Field', 'formidable')) ?>"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php echo esc_attr(__('Delete')) ?>" /></a>
+    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php echo esc_attr(__('Duplicate Field', 'formidable')) ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
     <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>" />
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ($display['required']){ ?>

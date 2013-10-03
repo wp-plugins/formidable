@@ -20,7 +20,7 @@
         </ul>
         </div>
         
-<?php if (IS_WPMU and !FrmAppHelper::is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
+<?php if (IS_WPMU and !is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
 <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;">
 <?php }else{ ?>
 <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
@@ -38,7 +38,7 @@
     <form name="frm_settings_form" method="post" class="frm_settings_form">
         <input type="hidden" name="frm_action" value="process-form" />
         <input type="hidden" name="action" value="process-form" />
-        <?php wp_nonce_field('update-options'); ?>
+        <?php wp_nonce_field('process_form_nonce', 'process_form'); ?>
             
         <div class="general_settings tabs-panel" style="border-top:none;">
         <table class="form-table">
@@ -51,7 +51,7 @@
                 <td valign="top" width="200px"><?php _e('Admin menu label', 'formidable'); ?> </td>
                 <td>
                     <input type="text" name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
-                    <?php if (IS_WPMU and FrmAppHelper::is_super_admin()){ ?>
+                    <?php if (IS_WPMU and is_super_admin()){ ?>
                     <input type="checkbox" name="frm_mu_menu" id="frm_mu_menu" value="1" <?php checked($frm_settings->mu_menu, 1) ?> /> <?php _e('Use this menu name site-wide', 'formidable'); ?>
                     <?php } ?>
                 </td>
@@ -240,15 +240,3 @@
 
 </div>
 </div>
-
-
-<script type="text/javascript">
-function frm_uninstall_now(){ 
-if(confirm("<?php _e('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable') ?>")){
-    jQuery('.frm_uninstall a').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="Loading..." />');
-    jQuery.ajax({type:"POST",url:"<?php echo admin_url('admin-ajax.php') ?>",data:"action=frm_uninstall",
-    success:function(msg){jQuery(".frm_uninstall").fadeOut("slow");}
-    });
-}
-};
-</script>

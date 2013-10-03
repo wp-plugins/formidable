@@ -2,8 +2,8 @@
 Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
-Requires at least: 3.0
-Tested up to: 3.6
+Requires at least: 3.1
+Tested up to: 3.6.1
 Stable tag: 1.07.01
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
@@ -65,9 +65,16 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Remove slashes from a single entry retrieved from cache
 * Remove slashes added by ajax before saving to db
 * Fixed naming so plugin info and change log links are correct on plugins page
+* Updated default submit button HTML to include [frmurl] for a dynamic url
+* Added nonce fields and checking for increased security
+* Updated duplicate entry checking for more accuracy
+* Added French translation
+* PRO: Added exclude_fields to the form shortcode. Ex [formidable id=2 exclude_fields="25,26"]
 * PRO: Allow the field value to be used to filter data from entries values in custom displays
 * PRO: Allow for quotation marks in values used to get stats in the frm-stats shortcode
 * PRO: Fixed entry listing widget to get values from stats for more accuracy
+* PRO: Updated template export to include all form settings
+* PRO: Drop WP_List_Table fallback for < WP 3.1
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

@@ -38,8 +38,9 @@ class FrmEntry{
         $create_entry = true;
         if(!defined('WP_IMPORTING')){
             $check_val = $new_values;
-            $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*60*5))); 
+            $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*5))); 
             unset($check_val['created_at']);
+            unset($check_val['updated_at']);
             unset($check_val['id']);
             unset($check_val['item_key']);
             if($new_values['item_key'] == $new_values['name'])
@@ -53,7 +54,7 @@ class FrmEntry{
                         $create_entry = false;
                         //add more checks here to make sure it's a duplicate
                         if (isset($values['item_meta'])){
-                            $metas = FrmEntryMeta::get_entry_meta_info($entry_exist->id);
+                            $metas = $frm_entry_meta->get_entry_meta_info($entry_exist->id);
                             $field_metas = array();
                             foreach($metas as $meta)
                                 $field_metas[$meta->field_id] = $meta->meta_value;
@@ -85,7 +86,7 @@ class FrmEntry{
             do_action('frm_after_create_entry_'. $new_values['form_id'], $entry_id);
             return $entry_id;
         }else
-           return false;
+            return false;
     }
     
     function duplicate( $id ){
@@ -145,24 +146,24 @@ class FrmEntry{
     }
 
     function &destroy( $id ){
-      global $wpdb, $frmdb;
-      $id = (int)$id;
+        global $wpdb, $frmdb;
+        $id = (int)$id;
       
-      do_action('frm_before_destroy_entry', $id);
+        do_action('frm_before_destroy_entry', $id);
       
-      wp_cache_delete( $id, 'frm_entry');
-      $wpdb->query('DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id);
-      $result = $wpdb->query('DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id);
-      return $result;
+        wp_cache_delete( $id, 'frm_entry');
+        $wpdb->query('DELETE FROM ' . $frmdb->entry_metas .  ' WHERE item_id=' . $id);
+        $result = $wpdb->query('DELETE FROM ' . $frmdb->entries .  ' WHERE id=' . $id);
+        return $result;
     }
     
     function &update_form( $id, $value, $form_id ){
-      global $wpdb, $frmdb;
-      $form_id = isset($value) ? $form_id : NULL;
-      $result = $wpdb->update( $frmdb->entries, array('form_id' => $form_id), array( 'id' => $id ) );
-      if($result)
-          wp_cache_delete( $id, 'frm_entry');
-      return $result;
+        global $wpdb, $frmdb;
+        $form_id = isset($value) ? $form_id : NULL;
+        $result = $wpdb->update( $frmdb->entries, array('form_id' => $form_id), array( 'id' => $id ) );
+        if($result)
+            wp_cache_delete( $id, 'frm_entry');
+        return $result;
     }
     
     function getOne( $id, $meta=false){
@@ -306,20 +307,19 @@ class FrmEntry{
     }
 
     function getPage($current_p, $p_size, $where = '', $order_by = ''){
-      global $wpdb, $frmdb;
-      $end_index = $current_p * $p_size;
-      $start_index = $end_index - $p_size;
-      $results = $this->getAll($where, $order_by, " LIMIT $start_index,$p_size;", true);
-      return $results;
+        global $wpdb, $frmdb;
+        $end_index = $current_p * $p_size;
+        $start_index = $end_index - $p_size;
+        $results = $this->getAll($where, $order_by, " LIMIT $start_index,$p_size;", true);
+        return $results;
     }
 
     function validate( $values, $exclude=false ){
         global $wpdb, $frmdb, $frm_field, $frm_entry_meta, $frm_settings;
 
         $errors = array();
-        if(!isset($values['form_id']) or !isset($values['item_meta'])){
+        if(!isset($values['form_id']) or !isset($values['item_meta']) or (isset($_POST) and (!isset($_POST['submit_entry']) or !wp_verify_nonce($_POST['submit_entry'], 'submit_entry_nonce')))){
             $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');
-            return $errors;
         }
         
         if( !isset($values['item_key']) or $values['item_key'] == '' ){

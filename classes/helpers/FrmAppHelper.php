@@ -120,13 +120,6 @@ class FrmAppHelper{
         return false;
     }
     
-    public static function is_super_admin($user_id=false){
-        if(function_exists('is_super_admin'))
-            return is_super_admin($user_id);
-        else
-            return is_site_admin($user_id);
-    }
-    
     public static function checked($values, $current){
         if(FrmAppHelper::check_selected($values, $current))
             echo ' checked="checked"';
@@ -508,25 +501,6 @@ class FrmAppHelper{
         ));
     }
     
-    public static function frm_get_main_message( $message = ''){
-        global $frmpro_is_installed;
-        
-        //if($frmpro_is_installed)
-            return $message;
-           
-        $frm_update = new FrmUpdatesController();
-         
-        include_once(ABSPATH.'/wp-includes/class-IXR.php');
-
-        $url = ($frmpro_is_installed or $frm_update->pro_is_authorized()) ? 'http://formidablepro.com/' : 'http://blog.strategy11.com/';
-        $client = new IXR_Client($url.'xmlrpc.php', false, 80, 5);
-        
-        if ($client->query('frm.get_main_message'))
-            $message = $client->getResponse();
-
-      return $message;
-    }
-    
     public static function truncate($str, $length, $minword = 3, $continue = '...'){
         $length = (int)$length;
         $str = strip_tags($str);
@@ -587,22 +561,6 @@ class FrmAppHelper{
         global $wpdb;
         $query = 'SELECT COUNT(*) FROM ' . $table_name . FrmAppHelper::prepend_and_or_where(' WHERE ', $where);
         return $wpdb->get_var($query);
-    }
-
-    public static function getPageCount($p_size, $where="", $table_name){
-        if(is_numeric($where))
-            return ceil((int)$where / (int)$p_size);
-        else
-            return ceil((int)self::getRecordCount($where, $table_name) / (int)$p_size);
-    }
-
-    public static function getPage($current_p,$p_size, $where = "", $order_by = '', $table_name){
-        global $wpdb;
-        $end_index = $current_p * $p_size;
-        $start_index = $end_index - $p_size;
-        $query = 'SELECT *  FROM ' . $table_name . FrmAppHelper::prepend_and_or_where(' WHERE', $where) . $order_by .' LIMIT ' . $start_index . ',' . $p_size;
-        $results = $wpdb->get_results($query);
-        return $results;
     }
     
     public static function get_referer_query($query) {

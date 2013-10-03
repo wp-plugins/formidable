@@ -4,8 +4,8 @@
 <table class="widefat post fixed" id="posts-filter" cellspacing="0">
     <thead>
     <tr>
-        <th class="manage-column" width="30%"><?php _e('Name', 'formidable') ?></th>
-        <th class="manage-column"><?php _e('Description', 'formidable') ?></th>
+        <th class="manage-column" width="30%"><?php _e('Name') ?></th>
+        <th class="manage-column"><?php _e('Description') ?></th>
     </tr>
     </thead>
 <?php if(empty($default_templates)){ ?>
@@ -27,7 +27,7 @@
                 if ($frm_settings->preview_page_id > 0)
                    $url = add_query_arg('form', $form->form_key, get_permalink($frm_settings->preview_page_id));
                 ?>
-                <span><a href="<?php echo $url ?>" title="View <?php echo esc_attr($form->name) ?>" target="blank"><?php _e('View', 'formidable') ?></a></span>
+                <span><a href="<?php echo $url ?>" title="View <?php echo esc_attr($form->name) ?>" target="blank"><?php _e('View') ?></a></span>
             </div>
         </td>
         <td><?php echo $form->description ?></td>
@@ -38,8 +38,8 @@
 ?>
     <tfoot>
     <tr>
-        <th class="manage-column"><?php _e('Name', 'formidable') ?></th>
-        <th class="manage-column"><?php _e('Description', 'formidable') ?></th>
+        <th class="manage-column"><?php _e('Name') ?></th>
+        <th class="manage-column"><?php _e('Description') ?></th>
     </tr>
     </tfoot>
 </table>

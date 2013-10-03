@@ -52,4 +52,3 @@
     </div>
     </div>
 </div> 
-<?php require(FRM_VIEWS_PATH .'/frm-forms/footer.php'); ?>

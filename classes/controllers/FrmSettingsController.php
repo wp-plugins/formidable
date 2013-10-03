@@ -26,21 +26,24 @@ class FrmSettingsController{
     }
 
     public static function process_form(){
-      global $frm_settings, $frmpro_is_installed;
+        global $frm_settings, $frmpro_is_installed;
+        
+        if(!isset($_POST['process_form']) or !wp_verify_nonce($_POST['process_form'], 'process_form_nonce'))
+            wp_die($frm_settings->admin_permission);
 
-      $frm_update = new FrmUpdatesController();
-      //$errors = $frm_settings->validate($_POST,array());
-      $errors = array();
-      $frm_settings->update($_POST);
+        $frm_update = new FrmUpdatesController();
+        //$errors = $frm_settings->validate($_POST,array());
+        $errors = array();
+        $frm_settings->update($_POST);
       
-      if( empty($errors) ){
-        $frm_settings->store();
-        $message = __('Settings Saved', 'formidable');
-      }
-      $frm_roles = FrmAppHelper::frm_capabilities();
-      $sections = apply_filters('frm_add_settings_section', array());
+        if( empty($errors) ){
+            $frm_settings->store();
+            $message = __('Settings Saved', 'formidable');
+        }
+        $frm_roles = FrmAppHelper::frm_capabilities();
+        $sections = apply_filters('frm_add_settings_section', array());
       
-      require(FRM_VIEWS_PATH . '/frm-settings/form.php');
+        require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
     
     public static function route(){

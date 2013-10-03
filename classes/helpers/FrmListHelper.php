@@ -82,7 +82,7 @@ class FrmListHelper extends WP_List_Table {
             </ol>
 <?php   }else{ 
             _e('No Forms Found', 'formidable') ?>. 
-            <a href="?page=formidable-new"><?php _e('Add New', 'formidable'); ?></a>
+            <a href="?page=formidable-new"><?php _e('Add New'); ?></a>
 <?php   }
 	}
 	
@@ -91,7 +91,7 @@ class FrmListHelper extends WP_List_Table {
 	    
 	    $actions = array();
 	    if($frmpro_is_installed){
-            $actions['bulk_delete'] = __('Delete', 'formidable');
+            $actions['bulk_delete'] = __('Delete');
             $actions['bulk_export'] = __('Export to XML', 'formidable');
         }
             
@@ -115,7 +115,7 @@ class FrmListHelper extends WP_List_Table {
 		$title = esc_attr(strip_tags($item->name));
 		
 		$edit_link = "?page=formidable&frm_action=edit&id={$item->id}";
-		$actions['frm_edit'] = "<a href='" . wp_nonce_url( $edit_link ) . "'>". __('Edit', 'formidable') ."</a>";
+		$actions['frm_edit'] = "<a href='" . wp_nonce_url( $edit_link ) . "'>". __('Edit') ."</a>";
 		
 		$duplicate_link = "?page=formidable&frm_action=duplicate&id={$item->id}";
 		
@@ -141,12 +141,12 @@ class FrmListHelper extends WP_List_Table {
         }
         
         if($frmpro_is_installed){
-    	    $actions['export_template'] = "<a href='" . wp_nonce_url( FRM_SCRIPT_URL ."&controller=forms&frm_action=export&id={$item->id}" ) . "' title='$title ". __('Export Template', 'formidable') ."'>". __('Export Template', 'formidable') ."</a>";
+    	    $actions['export_template'] = "<a href='" . wp_nonce_url( admin_url( 'admin-ajax.php' ) ."?action=frm_forms_export&id={$item->id}" ) . "' title='$title ". __('Export Template', 'formidable') ."'>". __('Export Template', 'formidable') ."</a>";
     	    
     	}
         
         $delete_link = "?page=formidable&frm_action=destroy&id={$item->id}";
-		$actions['frm_delete'] = "<a class='submitdelete' href='" . wp_nonce_url( $delete_link ) . "' onclick='return confirm(\"". __('Are you sure you want to delete that?', 'formidable') ."\")'>" . __( 'Delete', 'formidable' ) . "</a>";
+		$actions['frm_delete'] = "<a class='submitdelete' href='" . wp_nonce_url( $delete_link ) . "' onclick='return confirm(\"". __('Are you sure you want to delete that?', 'formidable') ."\")'>" . __( 'Delete' ) . "</a>";
         
         if(!current_user_can('frm_view_entries')){
             if(isset($actions['frm_entries']))

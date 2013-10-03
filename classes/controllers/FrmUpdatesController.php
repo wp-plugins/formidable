@@ -123,7 +123,13 @@ class FrmUpdatesController{
     public function pro_cred_form(){ 
         global $frmpro_is_installed; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
-            $response = $this->process_form();
+            if(!isset($_POST['cred_form']) or !wp_verify_nonce($_POST['cred_form'], 'cred_form_nonce')){
+                global $frm_settings;
+                $response = array('response' => $frm_settings->admin_permission, 'auth' => false);
+            }else{
+                $response = $this->process_form();
+            }
+            
             if($response['auth']){ ?>
 <div id="message" class="updated fade"><strong>
 <?php
@@ -161,21 +167,8 @@ class FrmUpdatesController{
 </div>
 <div class="clear"></div>
 </div>
-<p class="frm_aff_link"><a href="http://formidablepro.com/account/" target="_blank"><?php _e('Account', 'formidable') ?></a> |
-    <a href="http://formidablepro.com/affiliate-dashboard/" target="_blank"><?php _e('Affiliate Dashboard', 'formidable') ?></a>
-</p>
+<p class="frm_aff_link"><a href="http://formidablepro.com/account/" target="_blank"><?php _e('Account', 'formidable') ?></a></p>
 
-<script type="text/javascript">
-function frm_show_auth_form(){
-jQuery('#pro_cred_form,.frm_pro_installed').toggle();
-}
-function frm_deauthorize(){
-jQuery('#frm_deauthorize_link').replaceWith('<img src="<?php echo FRM_IMAGES_URL; ?>/wpspin_light.gif" alt="<?php _e('Loading...', 'formidable'); ?>" id="frm_deauthorize_link" />');
-jQuery.ajax({type:'POST',url:ajaxurl,data:'action=frm_deauthorize',
-success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_auth_form();}
-});
-};
-</script>
 <?php   }else{ ?>   
 
 <div style="float:right;width:40%">       
@@ -198,7 +191,7 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
 <div id="pro_cred_form" <?php echo ($frmpro_is_installed) ? 'style="display:none;"' : ''; ?>>
     <form name="cred_form" method="post" autocomplete="off">
     <input type="hidden" name="process_cred_form" value="Y" />
-    <?php wp_nonce_field('cred_form'); ?>
+    <?php wp_nonce_field('cred_form_nonce', 'cred_form'); ?>
 
     <table class="form-table frm_lics_form">
         <tr class="form-field">

@@ -26,7 +26,7 @@
     if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         echo FrmFieldsHelper::dropdown_categories(array('name' => $field_name, 'field' => $field) );
     }else{ 
-        if($field['read_only'] and $frm_readonly != 'disabled' and (!is_super_admin() or !is_admin())){ ?>
+        if($field['read_only'] and $frm_readonly != 'disabled' and (!is_super_admin() or (!is_admin() and !defined('DOING_AJAX')))){ ?>
 <input type="hidden" value="<?php echo esc_attr($field['value']) ?>" name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" />
 <select disabled="disabled" <?php do_action('frm_field_input_html', $field) ?>>
 <?php   }else{ ?>        
@@ -61,7 +61,7 @@ if (FrmAppHelper::check_selected($field['value'], $field_val)) echo ' selected="
         }
     }
 
-}else if ($field['type'] == 'captcha' and !is_admin()){
+}else if ($field['type'] == 'captcha' and (!is_admin() or defined('DOING_AJAX'))){
         global $frm_settings;
         $error_msg = null;
         if(!empty($errors)){

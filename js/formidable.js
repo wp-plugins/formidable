@@ -48,7 +48,6 @@ if(thefield.value==''){thefield.value=default_value;jQuery(thefield).addClass('f
 
 function frmCheckDependent(selected,field_id){
 if(typeof(__FRMRULES)!='undefined') var rules=__FRMRULES;
-if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
 if(typeof(rules)=='undefined') return;
 			
 rules=rules[field_id];
@@ -127,8 +126,8 @@ for(i=0; i<len; i++){
 			}else{
 				show_fields[f.HideField][i]=true;
 				jQuery('#frm_data_field_'+f.HideField+'_container').html('');
-				frmGetData(f,checked_vals,ajax_url,1);
-				//jQuery.each(checked_vals, function(ckey,cval){frmGetData(f,cval,ajax_url,1); });
+				frmGetData(f,checked_vals,1);
+				//jQuery.each(checked_vals, function(ckey,cval){frmGetData(f,cval,1); });
 			}
 		}else{
 	        if(checked_vals.length==0){show_fields[f.HideField][i]=false;}
@@ -140,7 +139,7 @@ for(i=0; i<len; i++){
 			else if(selected && jQuery.isArray(selected)){
 				show_fields[f.HideField][i]=true;
 				jQuery('#frm_data_field_'+f.HideField+'_container').html('');
-				frmGetData(f,selected,ajax_url,1);
+				frmGetData(f,selected,1);
 			}else{show_fields[f.HideField][i]={'funcName':'frmGetData','f':f,'sel':selected};}
         }else{
             if(selected==''){show_fields[f.HideField][i]=false;}
@@ -160,7 +159,7 @@ for(i=0; i<len; i++){
 	if(f.MatchType=='any'){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
-				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],ajax_url,f.FieldName);}
+				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],f.FieldName);}
 				else{jQuery('#frm_field_'+f.HideField+'_container').show();}
 			}else{jQuery('#frm_field_'+f.HideField+'_container').hide();}
 		}else{
@@ -180,7 +179,7 @@ for(i=0; i<len; i++){
 					if(hvalue.show=='show'){ jQuery('#frm_field_'+hvalue.fkey+'_container').show();}
 					else{jQuery('#frm_field_'+hvalue.fkey+'_container:hidden').hide(); jQuery('#frm_field_'+hvalue.fkey+'_container').hide();}
 				}
-				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,ajax_url,hvalue.fname);
+				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,hvalue.fname);
 				delete hide_later[hkey];
 			}
 		});
@@ -212,17 +211,17 @@ function frmInArray(needle, haystack){
     return false;
 }
 
-function frmShowField(funcInfo,ajax_url,field_id){
-if(funcInfo.funcName=='frmGetDataOpts'){frmGetDataOpts(funcInfo.f,funcInfo.sel,ajax_url,field_id);}
-else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,ajax_url,0);}
+function frmShowField(funcInfo,field_id){
+if(funcInfo.funcName=='frmGetDataOpts'){frmGetDataOpts(funcInfo.f,funcInfo.sel,field_id);}
+else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,0);}
 }
 
-function frmGetData(f,selected,ajax_url,append){
+function frmGetData(f,selected,append){
 	if(!append)
 		jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
-		type:"POST",url:ajax_url,
-		data:"controller=fields&frm_action=ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
+		type:"POST",url:frm_js.ajax_url,
+		data:"action=frm_fields_ajax_get_data&entry_id="+selected+"&field_id="+f.LinkedField+"&current_field="+f.HideField,
 		success:function(html){
 			if(html!='') jQuery('#frm_field_'+f.HideField+'_container').show(); 
 			if(append){jQuery('#frm_data_field_'+f.HideField+'_container').append(html);}
@@ -237,10 +236,10 @@ function frmGetData(f,selected,ajax_url,append){
 	});
 }
 
-function frmGetDataOpts(f,selected,ajax_url,field_id){
+function frmGetDataOpts(f,selected,field_id){
 	var prev=new Array();
 	if(f.DataType=='checkbox' || f.DataType=='radio'){
-		jQuery("input[name='item_meta["+f.HideField+"][]']:checked").each(function(){prev.push(jQuery(this).val());});
+		jQuery("input[name^='item_meta["+f.HideField+"]']:checked, input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
 	}else if(f.DataType=='select'){
 		//TODO: get previous value for multi-selects and set it!
 		if(jQuery("select[name='item_meta["+f.HideField+"][]']").length>0) var mult='[]'; else var mult='';
@@ -248,9 +247,10 @@ function frmGetDataOpts(f,selected,ajax_url,field_id){
 	}else{prev.push(jQuery("input[name='item_meta["+f.HideField+"]']").val());}
 	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	if(prev.length==0) prev='';
+
 	jQuery.ajax({
-		type:"POST",url:ajax_url,
-		data:"controller=fields&frm_action=ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
+		type:"POST",url:frm_js.ajax_url,
+		data:"action=frm_fields_ajax_data_options&hide_field="+field_id+"&entry_id="+selected+"&selected_field_id="+f.LinkedField+"&field_id="+f.HideField,
 		success:function(html){
 			if(html==''){
 				jQuery('#frm_field_'+f.HideField+'_container').hide();
@@ -290,13 +290,12 @@ function frmOnSubmit(e){
 	frmGetFormErrors(this);
 }
 
-function frmGetFormErrors(object,ajax_url){
-	if(typeof(__FRMURL)!='undefined') var ajax_url=__FRMURL;
+function frmGetFormErrors(object){
 	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
 	jQuery(object).find('.frm_ajax_loading').css('visibility', 'visible');
 	jQuery.ajax({
-		type:"POST",url:ajax_url,
-	    data:jQuery(object).serialize()+"&controller=entries&_ajax_nonce=1",
+		type:"POST",url:frm_js.ajax_url,
+	    data:jQuery(object).serialize()+"&action=frm_entries_"+jQuery(object).find('input[name="frm_action"]').val()+"&_ajax_nonce=1",
 	    success:function(errObj){
 			errObj=errObj.replace(/^\s+|\s+$/g,'');
 			if(errObj.indexOf('{') === 0)
@@ -363,42 +362,34 @@ function frmGetFormErrors(object,ajax_url){
 	});
 }
 
-function frmGetEntryToEdit(form_id,entry_id,post_id,ajax_url){
-jQuery.ajax({
-	type:"POST",url:ajax_url,
-	data:"controller=entries&frm_action=edit_entry_ajax&id="+form_id+"&post_id="+post_id+"entry_id="+entry_id,
-	success:function(form){jQuery('#frm_form_'+form_id+'_container').replaceWith(form);}
-});
-}
-
-function frmEditEntry(entry_id,ajax_url,prefix,post_id,form_id,cancel,hclass){
+function frmEditEntry(entry_id,prefix,post_id,form_id,cancel,hclass){
 	var label=jQuery('#frm_edit_'+entry_id).text();
 	var orig=jQuery('#'+prefix+entry_id).html();
 	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="'+prefix+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
 	jQuery.ajax({
-		type:"POST",url:ajax_url,dataType:"html",
-		data:"controller=entries&frm_action=edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
+		type:"POST",url:frm_js.ajax_url,dataType:"html",
+		data:"action=frm_entries_edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
 		success:function(html){
 			jQuery('#'+prefix+entry_id).children('.frm-loading-img').replaceWith(html);
-			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\',\''+ajax_url+'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
+			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
 		}
 	});
 }
 
-function frmCancelEdit(entry_id,prefix,label,ajax_url,post_id,form_id,hclass){
+function frmCancelEdit(entry_id,prefix,label,post_id,form_id,hclass){
 	var cancel=jQuery('#frm_edit_'+entry_id).text();
 	if(!jQuery('#frm_edit_'+entry_id).find('a').hasClass('frm_ajax_edited')){
 		jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
 		jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
 	}
-	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+ajax_url+'\',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\',\''+hclass+'\')">'+label+'</a>');
+	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\',\''+hclass+'\')">'+label+'</a>');
 }
 
-function frmUpdateField(entry_id,field_id,value,message,ajax_url,num){
+function frmUpdateField(entry_id,field_id,value,message,num){
 	jQuery('#frm_update_field_'+entry_id+'_'+field_id).html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
-		type:"POST",url:ajax_url,
-		data:"controller=entries&frm_action=update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
+		type:"POST",url:frm_js.ajax_url,
+		data:"action=frm_entries_update_field_ajax&entry_id="+entry_id+"&field_id="+field_id+"&value="+value,
 		success:function(html){
 			if(message.replace(/^\s+|\s+$/g,'') == '')
 				jQuery('#frm_update_field_'+entry_id+'_'+field_id+'_'+num).fadeOut('slow');
@@ -408,11 +399,11 @@ function frmUpdateField(entry_id,field_id,value,message,ajax_url,num){
 	});
 }
 
-function frmDeleteEntry(entry_id,ajax_url,prefix){	
+function frmDeleteEntry(entry_id,prefix){	
 	jQuery('#frm_delete_'+entry_id).replaceWith('<span class="frm-loading-img" id="frm_delete_'+entry_id+'"></span>');
 	jQuery.ajax({
-		type:"POST",url:ajax_url,
-		data:"controller=entries&frm_action=destroy&entry="+entry_id,
+		type:"POST",url:frm_js.ajax_url,
+		data:"action=frm_entries_destroy&entry="+entry_id,
 		success:function(html){
 			if(html.replace(/^\s+|\s+$/g,'') == 'success')
 				jQuery('#'+prefix+entry_id).fadeOut('slow');
@@ -436,4 +427,13 @@ obj.hide(); jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+
 function frmClearFile(file){
 file.parent('.frm_file_names').replaceWith('');
 return false;
+}
+
+function frm_resend_email(entry_id,form_id){
+	jQuery('#frm_resend_email').replaceWith('<img id="frm_resend_email" src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
+	jQuery.ajax({
+		type:"POST",url:frm_js.ajax_url,
+		data:"action=frm_entries_send_email&entry_id="+entry_id+"&form_id="+form_id+"&type=email",
+		success:function(msg){ jQuery('#frm_resend_email').replaceWith(msg);}
+	});
 }

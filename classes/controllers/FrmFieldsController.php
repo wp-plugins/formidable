@@ -130,7 +130,7 @@ class FrmFieldsController{
         $values['form_id'] = $copy_field->form_id;
         foreach (array('name', 'description', 'type', 'field_options', 'required') as $col)
             $values[$col] = $copy_field->{$col};
-        $field_count = FrmAppHelper::getRecordCount("form_id='$copy_field->form_id'", $frmdb->fields);
+        $field_count = FrmAppHelper::getRecordCount(array('form_id' => $copy_field->form_id), $frmdb->fields);
         $values['field_order'] = $field_count + 1;
         
         $field_id = $frm_field->create($values);
@@ -401,7 +401,7 @@ class FrmFieldsController{
         
         $class = ''; //$field['type'];
         
-        if(is_admin() and !in_array($field['type'], array('scale', 'radio', 'checkbox', 'data')))
+        if(is_admin() and !defined('DOING_AJAX') and !in_array($field['type'], array('scale', 'radio', 'checkbox', 'data')))
             $class .= 'dyn_default_value';
         
         $add_html = '';

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.07.02
+Version: 1.07.02b1
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -40,8 +40,6 @@ if(is_ssl() and (!preg_match('/^https:\/\/.*\..*$/', $frm_siteurl) or !preg_matc
 define('FRM_SCRIPT_URL', $frm_siteurl . (is_admin() ? '/wp-admin' : '') .'/index.php?plugin=formidable');
 define('FRM_IMAGES_URL', FRM_URL.'/images');
 
-load_plugin_textdomain('formidable', false, 'formidable/languages/' );
-
 require_once($frm_models_path .'/FrmSettings.php');
 
 // Check for WPMU installation
@@ -52,7 +50,7 @@ if (!defined ('IS_WPMU')){
 }
 
 global $frm_version, $frm_db_version;
-$frm_version = '1.07.02';
+$frm_version = '1.07.02b1';
 $frm_db_version = 9;
 
 global $frm_ajax_url;
@@ -95,7 +93,6 @@ require_once($frm_models_path .'/FrmForm.php');
 require_once($frm_models_path .'/FrmEntry.php');
 require_once($frm_models_path .'/FrmEntryMeta.php');
 require_once($frm_models_path .'/FrmNotification.php');
-//include_once($frm_models_path .'/FrmUpdate.php');
 unset($frm_models_path);
 
 global $frmdb;

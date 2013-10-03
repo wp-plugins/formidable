@@ -1,7 +1,7 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php echo __('Edit', 'formidable') .' '. (($values['is_template']) ? __('Template', 'formidable') : __('Form', 'formidable')); ?>
-        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+    <h2><?php echo __('Edit') .' '. (($values['is_template']) ? __('Template', 'formidable') : __('Form', 'formidable')); ?>
+        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
 
@@ -57,4 +57,3 @@
     </div>
     </div>
 </div>
-<?php require(FRM_VIEWS_PATH .'/frm-forms/footer.php'); ?>

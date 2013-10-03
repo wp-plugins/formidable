@@ -2,8 +2,8 @@
 
 class FrmFormsHelper{
     public static function get_direct_link($key, $prli_link_id=false){
-        global $frm_siteurl;
-        $target_url = esc_url($frm_siteurl . '/index.php?plugin=formidable&controller=forms&frm_action=preview&form='.$key);
+        global $frm_ajax_url;
+        $target_url = esc_url($frm_ajax_url . '?action=frm_forms_preview&form='.$key);
         if ($prli_link_id && class_exists('PrliLink')){
             $prli = prli_get_pretty_link_url($prli_link_id);
             if ($prli) $target_url = $prli;
@@ -128,7 +128,7 @@ class FrmFormsHelper{
     public static function get_default_html($loc){
         if($loc == 'submit'){
             $sending = __('Sending', 'formidable');
-            $img = FRM_IMAGES_URL .'/ajax_loader.gif';
+            $img = '[frmurl]/images/ajax_loader.gif';
             $default_html = <<<SUBMIT_HTML
 <div class="frm_submit">
 [if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" [back_hook] />[/if back_button]
@@ -183,6 +183,9 @@ BEFORE_HTML;
         
         //replace [form_key]
         $html = str_replace('[form_key]', $form->form_key, $html);
+        
+        //replace [frmurl]
+        $html = str_replace('[frmurl]', FRM_URL, $html);
         
         if(strpos($html, '[button_label]')){
             $replace_with = apply_filters('frm_submit_button', $title, $form);

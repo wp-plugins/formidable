@@ -1,7 +1,7 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
     <h2><?php _e('Translate Form', 'formidable') ?>
-        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New', 'formidable'); ?></a>
+        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
     <?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
     <div class="alignright">

@@ -154,7 +154,7 @@ class FrmFieldsHelper{
         $form_id = (is_numeric($field)) ? $field : $field->form_id;
         
         $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key') : $field->field_key;
-        $field_count = FrmAppHelper::getRecordCount("form_id='$form_id'", $frmdb->fields);
+        $field_count = FrmAppHelper::getRecordCount(array('form_id' => $form_id), $frmdb->fields);
         
         return array(
             'name' => __('Untitled', 'formidable'), 'description' => '', 
@@ -310,7 +310,7 @@ DEFAULT_HTML;
         
         $lang = apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field);
         
-        if(defined('DOING_AJAX')){ 
+        if(defined('DOING_AJAX') and !defined('FRM_PREVIEW')){ 
             global $frm_recaptcha_loaded;
             if(!$frm_recaptcha_loaded)
                 $frm_recaptcha_loaded = '';

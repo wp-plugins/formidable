@@ -13,7 +13,7 @@
             </span>
             <?php } ?>
         </div>
-        <span class="howto"><?php _e('Name', 'formidable') ?></span> 
+        <span class="howto"><?php _e('Name') ?></span> 
         
         <select name="notification[<?php echo $email_key ?>][reply_to_name]" id="reply_to_name_<?php echo $email_key ?>" onchange="frmCheckCustomEmail(this.value,'reply_to_name',<?php echo $email_key ?>)">
         <option value=""><?php echo FrmAppHelper::truncate(get_option('blogname'), 80); ?></option>
@@ -62,8 +62,8 @@
     </select>
     
     <div id="frm_cust_reply_container_<?php echo $email_key ?>" <?php echo ($notification['reply_to_name'] == 'custom' or $notification['reply_to'] == 'custom') ? '' : 'style="display:none"'; ?>>
-    <span class="howto" style="visibility:hidden;"><?php _e('Name', 'formidable') ?></span> 
-    <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to_name]" value="<?php echo esc_attr($notification['cust_reply_to_name']) ?>" id="cust_reply_to_name_<?php echo $email_key ?>" title="<?php _e('Name', 'formidable') ?>" <?php echo ($notification['reply_to_name'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
+    <span class="howto" style="visibility:hidden;"><?php _e('Name') ?></span> 
+    <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to_name]" value="<?php echo esc_attr($notification['cust_reply_to_name']) ?>" id="cust_reply_to_name_<?php echo $email_key ?>" title="<?php _e('Name') ?>" <?php echo ($notification['reply_to_name'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
     <span class="howto" style="visibility:hidden;"><?php _e('Email', 'formidable') ?></span> 
     <input type="text" name="notification[<?php echo $email_key ?>][cust_reply_to]" value="<?php echo esc_attr($notification['cust_reply_to']) ?>" id="cust_reply_to_<?php echo $email_key ?>" title="<?php _e('Email Address', 'formidable') ?>" <?php echo ($notification['reply_to'] == 'custom') ? '' : 'style="visibility:hidden;"'; ?> />
     </div>

@@ -78,7 +78,7 @@ class FrmEntriesController{
     }
     
     public static function process_entry($errors=''){
-        if(is_admin() or !isset($_POST) or !isset($_POST['form_id']) or !is_numeric($_POST['form_id']) or !isset($_POST['item_key']))
+        if((is_admin() and !defined('DOING_AJAX')) or !isset($_POST) or !isset($_POST['form_id']) or !is_numeric($_POST['form_id']) or !isset($_POST['item_key']))
             return;
 
         global $frm_entry, $frm_form, $frm_created_entry, $frm_form_params;
@@ -94,10 +94,10 @@ class FrmEntriesController{
         
         if(!$frm_created_entry)
             $frm_created_entry = array();
-          
+        
         if(isset($frm_created_entry[$_POST['form_id']]))
             return;
-            
+           
         if($errors == '')
             $errors = $frm_entry->validate($_POST);
         $frm_created_entry[$_POST['form_id']] = array('errors' => $errors);

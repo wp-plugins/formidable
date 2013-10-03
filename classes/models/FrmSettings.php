@@ -147,7 +147,7 @@ class FrmSettings{
         $this->mu_menu = isset($params['frm_mu_menu']) ? $params['frm_mu_menu'] : 0;
         if($this->mu_menu)
             update_site_option('frm_admin_menu_name', $this->menu);
-        else if(FrmAppHelper::is_super_admin())
+        else if(is_super_admin())
             update_site_option('frm_admin_menu_name', false);
         
         $this->pubkey = trim($params['frm_pubkey']);

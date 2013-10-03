@@ -10,6 +10,32 @@ else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').
 else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
 });
 
+if($('#new_fields').length>0){
+$('#new_fields').sortable({
+    placeholder:'sortable-placeholder',axis:'y',cursor:'move',opacity:0.65,
+    cancel:'.widget,.frm_field_opts_list,input,textarea,select',
+    accepts:'field_type_list',revert:true,forcePlaceholderSize:true,
+    receive:function(event,ui){
+        var new_id=(ui.item).attr('id');
+        jQuery('#new_fields .frmbutton.frm_t'+new_id).replaceWith('<img class="frmbutton frmbutton_loadingnow" id="'+new_id+'" src="'+frm_js.images_url+'/ajax_loader.gif" alt="'+frm_js.loading+'" />');
+        jQuery.ajax({
+            type:"POST",url:ajaxurl,data:"action=frm_insert_field&form_id="+$('input[name="id"]').val()+"&field="+new_id,
+            success:function(msg){ 
+                $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);
+                var regex = /id="(\S+)"/; match=regex.exec(msg);
+                $('#'+match[1]+' .frm_ipe_field_label').mouseover().click();
+                var order= $('#new_fields').sortable('serialize');
+                jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_field_order&"+order});
+            }
+        });
+    },
+    update:function(){
+        var order= $('#new_fields').sortable('serialize');
+        jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_field_order&"+order});
+    }
+});
+}
+
 if($('#frm_adv_info').length>0 || $('.frm_field_list').length>0){
 	$('#frm_adv_info').before('<div id="frm_position_ele"></div>');
 
@@ -82,7 +108,7 @@ if(e.which == 13){$('.inplace_field').blur();return false;}
 
 $(".frm_ipe_form_desc").editInPlace({
 url:ajaxurl,params:"action=frm_form_desc_in_place_edit&form_id="+form_id,
-field_type:"textarea",textarea_rows:3,textarea_cols:60,default_text:__FRMDEFDESC
+field_type:"textarea",textarea_rows:3,textarea_cols:60,default_text:frm_admin_js.desc
 });
 
 if($.isFunction($.fn.on)){
@@ -92,13 +118,13 @@ if($.isFunction($.fn.on)){
 	
 	$('#new_fields').on('mouseenter', '.frm_ipe_field_desc', function(){ 
 	    $(this).editInPlace({
-			url:ajaxurl,params:"action=frm_field_desc_in_place_edit",default_text:__FRMDEFDESC,field_type:'textarea',textarea_rows:3
+			url:ajaxurl,params:"action=frm_field_desc_in_place_edit",default_text:frm_admin_js.desc,field_type:'textarea',textarea_rows:3
 		});
 	});
 	
 	$('#new_fields').on('mouseenter', '.frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key', function(){  
 	    $(this).editInPlace({
-			default_text:__FRMDEFBLANK,
+			default_text:frm_admin_js.blank,
 			callback:function(d,text){
 				var id=$(this).attr('id');
 				jQuery.ajax({
@@ -122,7 +148,7 @@ if($.isFunction($.fn.on)){
 	
 	$('.frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key').live('mouseenter',function(){  
 	    $(this).editInPlace({
-			default_text:__FRMDEFBLANK,
+			default_text:frm_admin_js.blank,
 			callback:function(d,text){
 				var id=$(this).attr('id');
 				jQuery.ajax({
@@ -142,7 +168,7 @@ if($.isFunction($.fn.on)){
 	
 	$('.frm_ipe_field_desc').live('mouseenter', function(){  
 	    $(this).editInPlace({
-			url:ajaxurl,params:"action=frm_field_desc_in_place_edit",default_text:__FRMDEFDESC,field_type:'textarea',textarea_rows:3
+			url:ajaxurl,params:"action=frm_field_desc_in_place_edit",default_text:frm_admin_js.desc,field_type:'textarea',textarea_rows:3
 		});
 	});
 }
@@ -195,7 +221,7 @@ if($(this).val() == -1){
 	var css='https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.3/themes/'+$(this).val()+'/jquery-ui.css';
 	var themeName=$("select[name='frm_theme_selector'] option[value='"+$(this).val()+"']").text();
 }
-frmUpdateCSS(css);
+frmUpdateUICSS(css);
 $('input[name="frm_theme_css"]').val($(this).val()); $('input[name="frm_theme_name"]').val(themeName);
 return false;
 });
@@ -265,7 +291,7 @@ function frmLoadField(field_id){
 
 function frmSubmitBuild(b){
 	var p=jQuery(b).val();
-	jQuery(b).val(__FRMSAVING);
+	jQuery(b).val(frm_admin_js.saving);
 	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
 	var form=jQuery('#frm_build_form');
 	var v=JSON.stringify(form.serializeArray());
@@ -274,7 +300,7 @@ function frmSubmitBuild(b){
 		type:"POST",url:ajaxurl,
 	    data:{action:'frm_save_form','frm_compact_fields':v},
 	    success:function(errObj){
-			jQuery(b).val(__FRMSAVED);
+			jQuery(b).val(frm_admin_js.saved);
 			jQuery(b).nextAll('.frm-loading-img').css('visibility', 'hidden');
 			setTimeout(function(){jQuery(b).fadeOut('slow', function(){jQuery(b).val(p);jQuery(b).show();});}, 2000);
 		},
@@ -284,7 +310,7 @@ function frmSubmitBuild(b){
 
 function frmSubmitNoAjax(b){
 	var p=jQuery(b).val();
-	jQuery(b).val(__FRMSAVING);
+	jQuery(b).val(frm_admin_js.saving);
 	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
 	var form=jQuery('#frm_build_form');
 	jQuery('#frm_compact_fields').val(JSON.stringify(form.serializeArray()));
@@ -646,6 +672,24 @@ function frmToggleKeyID(switch_to){
 	jQuery('.'+switch_to).addClass('current');
 }
 
+function frm_add_postmeta_row(id){
+var meta_name=frmGetMetaValue('frm_postmeta_', jQuery('#frm_postmeta_rows > div').size());
+jQuery.ajax({
+    type:"POST",url:ajaxurl,
+    data:"action=frm_add_postmeta_row&form_id="+id+"&meta_name="+meta_name,
+    success:function(html){jQuery('#frm_postmeta_rows').append(html);}
+});
+}
+
+function frm_add_posttax_row(id){
+var post_type=jQuery('select[name="options[post_type]"]').val();
+var meta_name=frmGetMetaValue('frm_posttax_', jQuery('#frm_posttax_rows > div').size());
+jQuery.ajax({
+    type:"POST",url:ajaxurl,
+    data:"action=frm_add_posttax_row&form_id="+id+"&post_type="+post_type+"&meta_name="+meta_name,
+    success:function(html){jQuery('#frm_posttax_rows').append(html);}
+});
+}
 
 function frm_insert_where_options(value,where_key){
 	jQuery.ajax({
@@ -728,7 +772,7 @@ function frmSettingsTab(tab, id){
 }
 
 //function to append a new theme stylesheet with the new style changes
-function frmUpdateCSS(locStr){
+function frmUpdateUICSS(locStr){
 	if(locStr == -1){
 		jQuery('link.ui-theme').remove();
 		return false;
@@ -738,6 +782,49 @@ function frmUpdateCSS(locStr){
 	
 	if( jQuery('link.ui-theme').size() > 3)
 		jQuery('link.ui-theme:first').remove();
+}
+
+function frmUpdateCSS(locStr){
+	jQuery("head").append('<link href="'+ ajaxurl +'?action=frmpro_css&amp;'+ locStr +'" type="text/css" rel="Stylesheet" class="frm-custom-theme"/>');
+	if( jQuery("link.frm-custom-theme").size() > 3){
+		jQuery("link.frm-custom-theme:first").remove();
+	}
+}
+
+function frm_import_templates(thisid){
+    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
+    jQuery.ajax({
+		type:"POST",url:ajaxurl,
+		data:{'action':'frm_forms_import','path':jQuery('#frm_template_path').val()},
+        success:function(msg){ 
+			jQuery('#'+thisid).replaceWith(frm_admin_js.templates_updated);
+		}
+    });
+}
+
+function frmImportCsv(formID){
+	if(typeof(__FRMURLVARS)!='undefined') var urlVars=__FRMURLVARS;
+	else urlVars='';
+	
+    jQuery('#frm_import_link').replaceWith('<img src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
+    jQuery.ajax({
+		type:"POST",url:ajaxurl,
+		data:"action=frm_import_csv&frm_skip_cookie=1"+urlVars,
+    success:function(count){
+        if(parseInt(count) > 0){
+			jQuery("#frm_import_message .frm_message").html('The next 250 of the remaining '+count+' entries are importing.<br/> If your browser doesn&#8217;t start loading the next set automatically, click this button: <a id="frm_import_link"  class="button-secondary" href="javascript:frmImportCsv('+formID+')">Import Now</a>');
+            location.href = "?page="+frm_admin_js.get_page+"&frm_action=import&step=import"+urlVars;
+        }else{ 
+            jQuery("#frm_import_message").fadeOut("slow");
+            location.href = "?page=formidable-entries&frm_action=list&form="+formID;
+        }
+    }
+    });
+}
+
+function frmSetPosClass(value){
+if(value=='none') value='top';
+jQuery('.frm_pos_container').removeClass('frm_top_container frm_left_container frm_right_container').addClass('frm_'+value+'_container');    
 }
 
 function frmGetMetaValue(id, meta_name){
@@ -753,3 +840,32 @@ function frmShowTooltip(type,tip){
 		jQuery('#frm_tooltip').fadeOut('fast');tip.attr('title',frm_title);
 	}
 }
+
+function frm_install_now(){ 
+	jQuery('#frm_install_link').replaceWith('<img src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
+	jQuery.ajax({
+		type:"POST",url:ajaxurl,data:"action=frm_install",
+		success:function(msg){jQuery("#frm_install_message").fadeOut("slow");}
+	});
+}
+
+function frm_uninstall_now(){ 
+if(confirm(frm_admin_js.confirm_uninstall)){
+    jQuery('.frm_uninstall a').replaceWith('<img src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
+    jQuery.ajax({
+		type:"POST",url:ajaxurl,data:"action=frm_uninstall",
+    	success:function(msg){jQuery(".frm_uninstall").fadeOut("slow");}
+    });
+}
+}
+
+function frm_show_auth_form(){
+jQuery('#pro_cred_form,.frm_pro_installed').toggle();
+}
+
+function frm_deauthorize(){
+jQuery('#frm_deauthorize_link').replaceWith('<img src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" id="frm_deauthorize_link" />');
+jQuery.ajax({type:'POST',url:ajaxurl,data:'action=frm_deauthorize',
+success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_auth_form();}
+});
+};

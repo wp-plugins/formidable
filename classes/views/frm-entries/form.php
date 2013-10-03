@@ -15,6 +15,8 @@ echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $
 <input type="hidden" name="frm_action" value="<?php echo esc_attr($form_action) ?>" />
 <input type="hidden" name="form_id" value="<?php echo esc_attr($form->id) ?>" />
 <input type="hidden" name="form_key" value="<?php echo esc_attr($form->form_key) ?>" />
+<?php wp_nonce_field('submit_entry_nonce', 'submit_entry'); ?>
+
 <?php if (isset($id)){ ?><input type="hidden" name="id" value="<?php echo esc_attr($id) ?>" /><?php } ?>
 <?php if (isset($controller) && isset($plugin)){ ?>
 <input type="hidden" name="controller" value="<?php echo esc_attr($controller); ?>" />
@@ -33,7 +35,7 @@ foreach($values['fields'] as $field){
 }    
 }
 
-if (is_admin() && !$frm_settings->lock_keys){ ?>
+if ((is_admin() and !defined('DOING_AJAX')) and !$frm_settings->lock_keys){ ?>
 <div class="frm_form_field form-field">
 <label class="frm_primary_label"><?php _e('Entry Key', 'formidable') ?></label>   
 <input type="text" name="item_key" value="<?php echo esc_attr($values['item_key']) ?>" />
@@ -60,6 +62,6 @@ if(isset($wp_filter['frm_entries_footer_scripts']) and !empty($wp_filter['frm_en
 <?php do_action('frm_entries_footer_scripts', $values['fields'], $form); ?>
 </script><?php } ?>
 
-<?php if (!$form->is_template and $form->status == 'published' and !is_admin())
+<?php if (!$form->is_template and $form->status == 'published' and (!is_admin() or defined('DOING_AJAX')))
     FrmFormsHelper::get_custom_submit($values['submit_html'], $form, $submit, $form_action);
 ?>
