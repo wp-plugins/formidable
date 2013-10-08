@@ -71,7 +71,7 @@ class FrmField{
 
         if (isset($values['field_options']) and is_array($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
-
+        
         $query_results = $wpdb->update( $frmdb->fields, $values, array( 'id' => $id ) );
         
         if(isset($values['form_id'])){
@@ -156,10 +156,7 @@ class FrmField{
         if(is_numeric($limit))
             $limit = " LIMIT {$limit}";
         
-        $query = 'SELECT fi.*, ' .
-                 'fr.name as form_name ' . 
-                 'FROM '. $table_name . ' fi ' .
-                 'LEFT OUTER JOIN ' . $form_table_name . ' fr ON fi.form_id=fr.id';
+        $query = "SELECT fi.*, fr.name as form_name  FROM {$table_name} fi LEFT OUTER JOIN {$form_table_name} fr ON fi.form_id=fr.id";
         $old_where = $where;         
         if(is_array($where)){       
             extract($frmdb->get_where_clause_and_values( $where ));
@@ -205,6 +202,7 @@ class FrmField{
                 $results->default_value = maybe_unserialize($results->default_value);
             }
         }
+        
         return stripslashes_deep($results);
     }
 

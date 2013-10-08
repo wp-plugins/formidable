@@ -225,7 +225,9 @@ class FrmAppController{
                 'desc' => __('(Click here to add form description or instructions)', 'formidable'),
                 'blank' => __('(Blank)', 'formidable'),
                 'saving' => esc_attr(__('Saving', 'formidable')),
-                'saved' => esc_attr(__('Saved', 'formidable'))
+                'saved' => esc_attr(__('Saved', 'formidable')),
+                'ok'    => __('OK'),
+                'cancel' => __('Cancel')
             ));
         }
     }

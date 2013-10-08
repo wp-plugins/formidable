@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
     function frm_insert_form(){
         var form_id=jQuery("#frm_add_form_id").val();
         if(form_id==""){alert("<?php _e('Please select a form', 'formidable') ?>");return;}

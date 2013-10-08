@@ -54,21 +54,16 @@
         </ul>
         </div>
         <div style="display:block;" class="advanced_settings tabs-panel">
-        	<table class="form-table">
-                <tr>
-                    <td><label><?php _e('Form Key', 'formidable') ?></label></td>
-                    <td><input type="text" name="form_key" value="<?php echo esc_attr($values['form_key']); ?>" /></td>
-                </tr>
-
-                <tr><td><label><?php _e('Submit Button Text', 'formidable') ?></label></td>
-                    <td><input type="text" name="options[submit_value]" value="<?php echo esc_attr($values['submit_value']); ?>" /></td>
-                </tr>
-                
+        	<table class="form-table">                
                 <tr><td colspan="2"><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
                     <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                 </tr>
+
+                <tr><td colspan="2"><label><?php _e('Submit Button Text', 'formidable') ?></label>
+                    <input type="text" name="options[submit_value]" value="<?php echo esc_attr($values['submit_value']); ?>" /></td>
+                </tr>
                 
-                <tr><td valign="top" colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
+                <tr><td colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
                     <?php if(!$frmpro_is_installed){ ?>
                     <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" />
                     <?php } ?>
@@ -76,27 +71,27 @@
                         <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <label for="success_action_message"><?php _e('Display a Message', 'formidable') ?></label>
                         <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page" <?php echo $pro_feature ?>><?php _e('Display content from another page', 'formidable') ?></label>
                         <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect" <?php echo $pro_feature ?>><?php _e('Redirect to URL', 'formidable') ?></label>
+                        
+                        <p class="frm_indent_opt success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>>
+                            <input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" style="width:98%" placeholder="http://example.com" />
+                        </p>
+                        
+                        <div class="frm_indent_opt success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>>
+                            <p><label for="success_msg"><?php _e('Confirmation Message', 'formidable') ?></label>
+                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="2" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea></p>
+                            <p class="frm_show_form_opt">
+                            <label for="show_form"><input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <?php _e('Show the form with the success message.', 'formidable')?></label>
+                            </p>
+                        </div>
+                        
+                        <?php if($frmpro_is_installed){ ?>
+                        <p class="frm_indent_opt success_action_page_box success_action_box" <?php echo ($values['success_action'] == 'page') ? '' : 'style="display:none;"'; ?>>
+                            <label><?php _e('Use Content from Page', 'formidable') ?></label>
+                            <?php FrmAppHelper::wp_pages_dropdown( 'options[success_page_id]', $values['success_page_id'] ) ?>
+                        </p>
+                        <?php } ?>
                     </td>
                 </tr>
-                
-                <tr class="success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2">
-                    <input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" style="width:98%" placeholder="http://example.com" /></td>
-                </tr>
-                
-                <tr class="success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>><td valign="top" colspan="2"><label><?php _e('Confirmation Message', 'formidable') ?></label>
-                    <textarea id="success_msg" name="options[success_msg]" cols="50" rows="3" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea> <br/>
-                    <div class="frm_show_form_opt">
-                    <input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <label for="show_form"><?php _e('Show the form with the success message.', 'formidable')?></label>
-                    </div>
-                    <td>
-                </tr>
-                <?php if($frmpro_is_installed){ ?>
-                <tr class="success_action_page_box success_action_box" <?php echo ($values['success_action'] == 'page') ? '' : 'style="display:none;"'; ?>><td><label><?php _e('Use Content from Page', 'formidable') ?></label></td>
-                    <td>
-                        <?php FrmAppHelper::wp_pages_dropdown( 'options[success_page_id]', $values['success_page_id'] ) ?>
-                    </td>
-                </tr>
-                <?php } ?>
                 
                 <tr><td colspan="2"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <label for="ajax_load"><?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Recommended for long forms.', 'formidable') ?>" /></td></tr>
 

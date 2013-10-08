@@ -20,6 +20,9 @@ class FrmEntry{
                                                         'referrer' => $referrerinfo));
         }
         
+        if(isset($values['frm_saving_draft']) and $values['frm_saving_draft'] == 1)
+            $new_values['is_draft'] = 1;
+        
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
         $new_values['created_at'] = $new_values['updated_at'] = isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1);
         
@@ -41,6 +44,7 @@ class FrmEntry{
             $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*5))); 
             unset($check_val['created_at']);
             unset($check_val['updated_at']);
+            unset($check_val['is_draft']);
             unset($check_val['id']);
             unset($check_val['item_key']);
             if($new_values['item_key'] == $new_values['name'])
@@ -129,6 +133,8 @@ class FrmEntry{
         $new_values['updated_at'] = current_time('mysql', 1);
         if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
             $new_values['user_id'] = $values['frm_user_id'];
+            
+        $new_values['is_draft'] = (isset($values['frm_saving_draft']) and $values['frm_saving_draft'] == 1) ? 1 : 0;
 
         global $user_ID;
         $new_values['updated_by'] = $user_ID;
@@ -228,7 +234,7 @@ class FrmEntry{
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         }else{
             $query = "SELECT it.id, it.item_key, it.name, it.ip, it.form_id, it.post_id, it.user_id, it.updated_by,
-                it.created_at, it.updated_at FROM $frmdb->entries it" .
+                it.created_at, it.updated_at, it.is_draft FROM $frmdb->entries it" .
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         }
         $entries = $wpdb->get_results($query, OBJECT_K);

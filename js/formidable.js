@@ -3,28 +3,29 @@ $('.frm_ajax_loading').css('visibility', 'hidden');
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
 
 if($.isFunction($.fn.on)){
-	$(document).on('click', '.frm-show-form input[type="submit"]', function(){ 
-		if($(this).attr('name') == 'frm_prev_page'){
-			var f = $(this).parents('form:first');
-			var v = $(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
-			$('.frm_next_page').val(v); 
-		}else {
-			$('.frm_next_page').val('');
-		}
-	});
+	$(document).on('click', '.frm-show-form input[type="submit"]', function(){frmSetNextPage($(this));});
 }else{
-	$('.frm-show-form input[type="submit"]').live('click', function(){
-		if($(this).attr('name') == 'frm_prev_page'){
-			var f = $(this).parents('form:first');
-			var v = $(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
-			$('.frm_next_page').val(v);
-		}else{ 
-			$('.frm_next_page').val(''); 
-		}
-	});
+	$('.frm-show-form input[type="submit"]').live('click', function(){frmSetNextPage($(this));});
 }
 
 });
+
+function frmSetNextPage(field){
+	var f = field.parents('form:first');
+	if(field.attr('name') == 'frm_prev_page'){
+		var v = jQuery(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
+		var d = '';
+	}else if(field.attr('name') == 'frm_save_draft'){
+		var v = '';
+		var d = 1;
+	}else{
+		var v = '';
+		var d = '';
+	}
+	
+	jQuery('.frm_next_page').val(v);
+	jQuery('.frm_saving_draft').val(d);
+}
 
 function frmToggleSection($sec){
 $sec.next('.frm_toggle_container').slideToggle(200);
@@ -437,3 +438,17 @@ function frm_resend_email(entry_id,form_id){
 		success:function(msg){ jQuery('#frm_resend_email').replaceWith(msg);}
 	});
 }
+
+jQuery.fn.frmVisible = function() {
+    return this.css('visibility', 'visible');
+};
+
+jQuery.fn.frmInvisible = function() {
+    return this.css('visibility', 'hidden');
+};
+
+jQuery.fn.frmVisibilityToggle = function() {
+    return this.css('visibility', function(i, visibility) {
+        return (visibility == 'visible') ? 'hidden' : 'visible';
+    });
+};

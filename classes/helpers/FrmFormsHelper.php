@@ -196,6 +196,9 @@ BEFORE_HTML;
         
         if(strpos($html, '[if back_button]'))
             $html = preg_replace('/(\[if\s+back_button\])(.*?)(\[\/if\s+back_button\])/mis', '', $html);
+            
+        if(strpos($html, '[if save_draft]'))
+            $html = preg_replace('/(\[if\s+save_draft\])(.*?)(\[\/if\s+save_draft\])/mis', '', $html);
         
         return $html;
     }

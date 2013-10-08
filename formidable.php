@@ -51,7 +51,7 @@ if (!defined ('IS_WPMU')){
 
 global $frm_version, $frm_db_version;
 $frm_version = '1.07.02b1';
-$frm_db_version = 9;
+$frm_db_version = 10;
 
 global $frm_ajax_url;
 $frm_ajax_url = admin_url('admin-ajax.php');

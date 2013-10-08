@@ -8,7 +8,7 @@ class FrmFormsController{
         add_action('admin_menu', 'FrmFormsController::menu');
         add_action('admin_menu', 'FrmFormsController::lower_menu', 90);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head');
-        add_action('wp_ajax_frm_form_name_in_place_edit', 'FrmFormsController::edit_name');
+        add_action('wp_ajax_frm_form_key_in_place_edit', 'FrmFormsController::edit_key');
         add_action('wp_ajax_frm_form_desc_in_place_edit', 'FrmFormsController::edit_description');
         add_action('wp_ajax_frm_delete_form_wo_fields', 'FrmFormsController::destroy_wo_fields');
         add_action('wp_ajax_frm_save_form', 'FrmFormsController::route');
@@ -142,11 +142,12 @@ class FrmFormsController{
         include(FRM_VIEWS_PATH . '/frm-forms/translate.php');
     }
     
-    public static function edit_name(){
-        global $frm_form;
-        $values = array('name' => trim($_POST['update_value']));
+    public static function edit_key(){
+        global $frm_form, $wpdb, $frmdb;
+        $values = array('form_key' => trim($_POST['update_value']));
         $form = $frm_form->update($_POST['form_id'], $values);
-        echo stripslashes($_POST['update_value']);  
+        $key = $wpdb->get_var($wpdb->prepare("SELECT form_key FROM $frmdb->forms WHERE id=%d", $_POST['form_id']));
+        echo stripslashes($key);  
         die();
     }
 
@@ -312,60 +313,6 @@ class FrmFormsController{
             $page_params .= '&s='. urlencode($_REQUEST['s']);
         
         require(FRM_VIEWS_PATH.'/frm-forms/list.php');
-    }
-    
-    public static function get_form_sort_vars($params,$where_clause = ''){
-        $order_by = '';
-        $page_params = '';
-
-        // These will have to work with both get and post
-        $sort_str = $params['sort'];
-        $sdir_str = $params['sdir'];
-        $search_str = $params['search'];
-
-        // Insert search string
-        if(!empty($search_str)){
-            $search_params = explode(" ", $search_str);
-
-            foreach($search_params as $search_param){
-                if(!empty($where_clause))
-                    $where_clause .= " AND";
-
-                $where_clause .= " (name like '%$search_param%' OR description like '%$search_param%' OR created_at like '%$search_param%')";
-            }
-
-            $page_params .="&search=$search_str";
-        }
-
-        // make sure page params stay correct
-        if(!empty($sort_str))
-            $page_params .="&sort=$sort_str";
-
-        if(!empty($sdir_str))
-            $page_params .= "&sdir=$sdir_str";
-
-        // Add order by clause
-        switch($sort_str){
-            case "id":
-            case "name":
-            case "description":
-            case "form_key":
-                $order_by .= " ORDER BY $sort_str";
-                break;
-            default:
-                $order_by .= " ORDER BY name";
-        }
-
-        // Toggle ascending / descending
-        if((empty($sort_str) and empty($sdir_str)) or $sdir_str == 'asc'){
-            $order_by .= ' ASC';
-            $sdir_str = 'asc';
-        }else{
-            $order_by .= ' DESC';
-            $sdir_str = 'desc';
-        }
-
-        return compact('order_by', 'sort_str', 'sdir_str', 'search_str', 'where_clause', 'page_params');
     }
     
     public static function get_columns($columns){

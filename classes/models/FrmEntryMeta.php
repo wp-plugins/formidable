@@ -170,6 +170,10 @@ class FrmEntryMeta{
   
   function getEntryIds($where = '', $order_by = '', $limit = '', $unique=true){
     global $wpdb, $frmdb;
+    if(is_array($where))
+        $where['is_draft'] = 0;
+    else if(!empty($where))
+        $where .= ' AND is_draft=0';
     $query = "SELECT ";
     $query .= ($unique) ? "DISTINCT(it.item_id)" : "it.item_id";
     $query .= " FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id". FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
@@ -179,13 +183,6 @@ class FrmEntryMeta{
         $results = $wpdb->get_col($query);
     
     return $results;     
-  }
-  
-  function getRecordCount($where=""){
-    global $wpdb, $frmdb;
-    $query = "SELECT COUNT(*) FROM $frmdb->entry_metas it LEFT OUTER JOIN  $frmdb->fields fi ON it.field_id=fi.id" .
-        FrmAppHelper::prepend_and_or_where(' WHERE ', $where);
-    return $wpdb->get_var($query);
   }
   
   function search_entry_metas($search, $field_id='', $operator){

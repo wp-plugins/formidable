@@ -106,9 +106,12 @@ class FrmAppHelper{
         return $cap;
     }
     
-    public static function user_has_permission($needed_role){        
+    public static function user_has_permission($needed_role){
         if($needed_role == '' or current_user_can($needed_role))
             return true;
+            
+        if($needed_role == '-1')
+            return false;
             
         $roles = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber' );
         foreach ($roles as $role){

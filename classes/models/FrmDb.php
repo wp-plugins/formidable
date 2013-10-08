@@ -83,6 +83,7 @@ class FrmDb{
                 post_id int(11) default NULL,
                 user_id int(11) default NULL,
                 parent_item_id int(11) default NULL,
+                is_draft boolean default 0,
                 updated_by int(11) default NULL,
                 created_at datetime NOT NULL,
                 updated_at datetime NOT NULL,

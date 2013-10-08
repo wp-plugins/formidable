@@ -1,10 +1,17 @@
 <div id="frm_form_editor_container">
 <div id="titlediv">
-<div id="form_desc" class="edit_form_item frm_field_box frm_head_box">
-    <h2 class="frm_ipe_form_name" id="frmform_<?php echo $id; ?>"><?php echo $values['name']; ?></h2>
-    <div class="frm_ipe_form_desc"><?php echo $values['description']; ?></div>
+    <input type="text" name="name" value="<?php echo esc_attr($values['name']); ?>" id="title" />
+    <div id="edit-slug-box" class="hide-if-no-js">
+        <div class="alignright" style="width:13em;max-width:30%">
+        <strong><?php _e('Form Key:', 'formidable') ?></strong>
+        <div id="editable-post-name" class="frm_ipe_form_key" title="<?php _e('Click to edit.', 'formidable') ?>"><?php echo $values['form_key']; ?></div>
+        </div>
+        <div class="frm_ipe_form_desc alignleft" style="width:70%"><?php echo $values['description']; ?></div>
+        <div style="clear:both"></div>
+    </div>
 </div>
-</div>
+
+
 
 <ul id="new_fields">
 <?php
