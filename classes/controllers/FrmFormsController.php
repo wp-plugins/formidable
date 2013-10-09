@@ -292,7 +292,7 @@ class FrmFormsController{
             $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
         }
         
-        require_once( FRM_PATH .'/classes/helpers/FrmListHelper.php' );
+        require( FRM_PATH .'/classes/helpers/FrmListHelper.php' );
             
         $args = array('table_name' => $frmdb->forms, 'params' => $params);
         $args['page_name'] = $params['template'] ? '-template' : '';
@@ -432,7 +432,7 @@ class FrmFormsController{
             $values['status'] = 'published';
             if($default) $values['default_template'] = 1;
             
-            include_once($templates[$i]);
+            include($templates[$i]);
         }
     }
 

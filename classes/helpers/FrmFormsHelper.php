@@ -148,8 +148,8 @@ BEFORE_HTML;
         return $default_html;
     }
     
-    public static function get_custom_submit($html, $form, $submit, $form_action){
-        $button = FrmFormsHelper::replace_shortcodes($html, $form, $submit, $form_action);
+    public static function get_custom_submit($html, $form, $submit, $form_action, $values){
+        $button = FrmFormsHelper::replace_shortcodes($html, $form, $submit, $form_action, $values);
         if(strpos($button, '[button_action]')){
             $button_parts = explode('[button_action]', $button);
             echo $button_parts[0];
@@ -159,7 +159,7 @@ BEFORE_HTML;
         }
     }
     
-    public static function replace_shortcodes($html, $form, $title=false, $description=false){
+    public static function replace_shortcodes($html, $form, $title=false, $description=false, $values=array()){
         foreach (array('form_name' => $title, 'form_description' => $description, 'entry_key' => true) as $code => $show){
             if ($code == 'form_name'){
                 $replace_with = $form->name;
@@ -192,7 +192,7 @@ BEFORE_HTML;
             $html = str_replace('[button_label]', $replace_with, $html);
         }
         
-        $html = apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form);
+        $html = apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form, $values);
         
         if(strpos($html, '[if back_button]'))
             $html = preg_replace('/(\[if\s+back_button\])(.*?)(\[\/if\s+back_button\])/mis', '', $html);

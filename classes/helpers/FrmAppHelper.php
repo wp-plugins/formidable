@@ -107,12 +107,12 @@ class FrmAppHelper{
     }
     
     public static function user_has_permission($needed_role){
-        if($needed_role == '' or current_user_can($needed_role))
-            return true;
-            
         if($needed_role == '-1')
             return false;
             
+        if($needed_role == '' or current_user_can($needed_role))
+            return true;
+           
         $roles = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber' );
         foreach ($roles as $role){
         	if (current_user_can($role))
@@ -376,14 +376,11 @@ class FrmAppHelper{
         if (!isset($values['custom_style']))
             $values['custom_style'] = ($post_values and isset($post_values['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
 
-        if (!isset($values['before_html']))
-            $values['before_html'] = (isset($post_values['options']['before_html']) ? $post_values['options']['before_html'] : FrmFormsHelper::get_default_html('before'));
-
-        if (!isset($values['after_html']))
-            $values['after_html'] = (isset($post_values['options']['after_html']) ? $post_values['options']['after_html'] : FrmFormsHelper::get_default_html('after'));
-        
-        if (!isset($values['submit_html']))
-            $values['submit_html'] = (isset($post_values['options']['submit_html']) ? $post_values['options']['submit_html'] : FrmFormsHelper::get_default_html('submit'));
+        foreach(array('before', 'after', 'submit') as $h){
+            if (!isset($values[$h.'_html']))
+                $values[$h .'_html'] = (isset($post_values['options'][$h .'_html']) ? $post_values['options'][$h .'_html'] : FrmFormsHelper::get_default_html($h));
+            unset($h);
+        }
 
         if ($table == 'entries')
             $values = FrmEntriesHelper::setup_edit_vars( $values, $record );

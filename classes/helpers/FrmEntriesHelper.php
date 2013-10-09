@@ -115,6 +115,7 @@ class FrmEntriesHelper{
         //$values['description'] = maybe_unserialize( $record->description );
         $values['item_key'] = ($_POST and isset($_POST['item_key'])) ? $_POST['item_key'] : $record->item_key;
         $values['form_id'] = $record->form_id;
+        $values['is_draft'] = $record->is_draft;
         return apply_filters('frm_setup_edit_entry_vars', $values, $record);
     }
 

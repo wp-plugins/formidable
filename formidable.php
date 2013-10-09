@@ -40,7 +40,7 @@ if(is_ssl() and (!preg_match('/^https:\/\/.*\..*$/', $frm_siteurl) or !preg_matc
 define('FRM_SCRIPT_URL', $frm_siteurl . (is_admin() ? '/wp-admin' : '') .'/index.php?plugin=formidable');
 define('FRM_IMAGES_URL', FRM_URL.'/images');
 
-require_once($frm_models_path .'/FrmSettings.php');
+require($frm_models_path .'/FrmSettings.php');
 
 // Check for WPMU installation
 if (!defined ('IS_WPMU')){
@@ -60,7 +60,7 @@ global $frm_load_css, $frm_forms_loaded, $frm_css_loaded, $frm_saved_entries;
 $frm_load_css = $frm_css_loaded = false;
 $frm_forms_loaded = $frm_saved_entries = array();
 
-require_once($frm_helpers_path .'/FrmAppHelper.php');
+require($frm_helpers_path .'/FrmAppHelper.php');
 $frm_app_helper = new FrmAppHelper();
 
 /***** SETUP SETTINGS OBJECT *****/
@@ -87,12 +87,12 @@ if(!is_object($frm_settings)){
 $frm_settings->set_default_options(); // Sets defaults for unset options
 
 // Instansiate Models
-require_once($frm_models_path .'/FrmDb.php');  
-require_once($frm_models_path .'/FrmField.php');
-require_once($frm_models_path .'/FrmForm.php');
-require_once($frm_models_path .'/FrmEntry.php');
-require_once($frm_models_path .'/FrmEntryMeta.php');
-require_once($frm_models_path .'/FrmNotification.php');
+require($frm_models_path .'/FrmDb.php');  
+require($frm_models_path .'/FrmField.php');
+require($frm_models_path .'/FrmForm.php');
+require($frm_models_path .'/FrmEntry.php');
+require($frm_models_path .'/FrmEntryMeta.php');
+require($frm_models_path .'/FrmNotification.php');
 unset($frm_models_path);
 
 global $frmdb;
@@ -112,14 +112,14 @@ $frm_notification   = new FrmNotification();
 
 
 // Instansiate Controllers
-require_once($frm_controllers_path .'/FrmApiController.php');
-require_once($frm_controllers_path .'/FrmAppController.php');
-require_once($frm_controllers_path .'/FrmFieldsController.php');
-require_once($frm_controllers_path .'/FrmFormsController.php');
-require_once($frm_controllers_path .'/FrmEntriesController.php');
-require_once($frm_controllers_path .'/FrmSettingsController.php');
-require_once($frm_controllers_path .'/FrmStatisticsController.php');
-require_once($frm_controllers_path .'/FrmUpdatesController.php');
+require($frm_controllers_path .'/FrmApiController.php');
+require($frm_controllers_path .'/FrmAppController.php');
+require($frm_controllers_path .'/FrmFieldsController.php');
+require($frm_controllers_path .'/FrmFormsController.php');
+require($frm_controllers_path .'/FrmEntriesController.php');
+require($frm_controllers_path .'/FrmSettingsController.php');
+require($frm_controllers_path .'/FrmStatisticsController.php');
+require($frm_controllers_path .'/FrmUpdatesController.php');
 unset($frm_controllers_path);
 
 $obj = new FrmAppController();
@@ -131,16 +131,16 @@ $obj = new FrmStatisticsController();
 $frm_update  = new FrmUpdatesController();
 
 // Instansiate Helpers
-require_once($frm_helpers_path .'/FrmEntriesHelper.php');
-require_once($frm_helpers_path .'/FrmFieldsHelper.php');
-require_once($frm_helpers_path .'/FrmFormsHelper.php');
+require($frm_helpers_path .'/FrmEntriesHelper.php');
+require($frm_helpers_path .'/FrmFieldsHelper.php');
+require($frm_helpers_path .'/FrmFormsHelper.php');
 unset($frm_helpers_path);
 
 global $frmpro_is_installed;
 $frmpro_is_installed = $frm_update->pro_is_installed_and_authorized();
 
 if($frmpro_is_installed)
-  require_once(FRM_PATH .'/pro/formidable-pro.php');
+  require(FRM_PATH .'/pro/formidable-pro.php');
     
 // The number of items per page on a table
 global $frm_page_size;
@@ -151,6 +151,6 @@ $frm_sidebar_width = '';
 
 // Register Widgets
 if(class_exists('WP_Widget')){
-    require_once(FRM_PATH . '/classes/widgets/FrmShowForm.php');
+    require(FRM_PATH . '/classes/widgets/FrmShowForm.php');
     add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
 }
