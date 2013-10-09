@@ -3,19 +3,19 @@ $('.frm_ajax_loading').css('visibility', 'hidden');
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
 
 if($.isFunction($.fn.on)){
-	$(document).on('click', '.frm-show-form input[type="submit"]', function(){frmSetNextPage($(this));});
+	$(document).on('click', '.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft', frmSetNextPage);
 }else{
-	$('.frm-show-form input[type="submit"]').live('click', function(){frmSetNextPage($(this));});
+	$('.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft').live('click', frmSetNextPage);
 }
 
 });
 
-function frmSetNextPage(field){
-	var f = field.parents('form:first');
-	if(field.attr('name') == 'frm_prev_page'){
+function frmSetNextPage(){
+	var f = jQuery(this).parents('form:first');
+	if(jQuery(this).attr('name') == 'frm_prev_page' || jQuery(this).hasClass('frm_prev_page')){
 		var v = jQuery(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
 		var d = '';
-	}else if(field.attr('name') == 'frm_save_draft'){
+	}else if(jQuery(this).attr('name') == 'frm_save_draft' || jQuery(this).hasClass('frm_save_draft')){
 		var v = '';
 		var d = 1;
 	}else{
@@ -25,6 +25,7 @@ function frmSetNextPage(field){
 	
 	jQuery('.frm_next_page').val(v);
 	jQuery('.frm_saving_draft').val(d);
+	f.submit();
 }
 
 function frmToggleSection($sec){
@@ -292,7 +293,7 @@ function frmOnSubmit(e){
 }
 
 function frmGetFormErrors(object){
-	jQuery(object).find('input[type="submit"]').attr('disabled','disabled');
+	jQuery(object).find('input[type="submit"], input[type="button"]').attr('disabled','disabled');
 	jQuery(object).find('.frm_ajax_loading').css('visibility', 'visible');
 	jQuery.ajax({
 		type:"POST",url:frm_js.ajax_url,
@@ -327,7 +328,7 @@ function frmGetFormErrors(object){
 					var oc = jQuery('#frm_edit_'+eid).find('a').addClass('frm_ajax_edited').click();
 				}
 	        }else{
-				jQuery(object).find('input[type="submit"]').removeAttr('disabled');
+				jQuery(object).find('input[type="submit"], input[type="button"]').removeAttr('disabled');
 				jQuery(object).find('.frm_ajax_loading').css('visibility', 'hidden');
 				
 	            //show errors
@@ -359,7 +360,7 @@ function frmGetFormErrors(object){
 				if(cont_submit) object.submit();
 	        }
 	    },
-		error:function(html){jQuery(object).find('input[type="submit"]').removeAttr('disabled');object.submit();}
+		error:function(html){jQuery(object).find('input[type="submit"], input[type="button"]').removeAttr('disabled');object.submit();}
 	});
 }
 

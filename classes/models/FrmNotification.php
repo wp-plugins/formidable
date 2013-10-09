@@ -1,4 +1,9 @@
 <?php
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmNotification'))
+    return;
+
 class FrmNotification{
     function FrmNotification(){
         add_action('frm_after_create_entry', array(&$this, 'entry_created'), 10, 2);

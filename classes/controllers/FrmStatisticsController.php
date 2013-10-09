@@ -1,5 +1,9 @@
 <?php
- 
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmStatisticsController'))
+    return;
+
 class FrmStatisticsController{
     function FrmStatisticsController(){
         add_action('admin_menu', 'FrmStatisticsController::menu', 24);

@@ -1,5 +1,10 @@
 <?php
 
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmEntriesHelper'))
+    return;
+
 class FrmEntriesHelper{
 
     public static function setup_new_vars($fields, $form='', $reset=false){

@@ -1,5 +1,8 @@
 <?php
-if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmUpdatesController'))
+    return;
 
 // Contains all the functions necessary to provide an update mechanism for FormidablePro!
 

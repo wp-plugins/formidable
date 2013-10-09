@@ -1,4 +1,8 @@
 <?php
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmFormsHelper'))
+    return;
 
 class FrmFormsHelper{
     public static function get_direct_link($key, $prli_link_id=false){
@@ -131,9 +135,10 @@ class FrmFormsHelper{
             $img = '[frmurl]/images/ajax_loader.gif';
             $default_html = <<<SUBMIT_HTML
 <div class="frm_submit">
-[if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" [back_hook] />[/if back_button]
+[if back_button]<input type="button" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" class="frm_prev_page" [back_hook] />[/if back_button]
 <input type="submit" value="[button_label]" [button_action] />
 <img class="frm_ajax_loading" src="$img" alt="$sending" style="visibility:hidden;" />
+[if save_draft]<a class="frm_save_draft" [draft_hook]>[draft_label]</a>[/if save_draft]
 </div>
 SUBMIT_HTML;
         }else if ($loc == 'before'){

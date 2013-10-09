@@ -1,5 +1,10 @@
 <?php
 
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmFieldsHelper'))
+    return;
+
 class FrmFieldsHelper{
     
     public static function field_selection(){
@@ -10,7 +15,6 @@ class FrmFieldsHelper{
             'radio' => __('Radio Buttons', 'formidable'),
             'select' => __('Dropdown', 'formidable'),
             'captcha' => __('reCAPTCHA', 'formidable')
-            //'nucaptcha' => __('NuCaptcha (SPAM Control)', 'formidable')
         ));
         
         return $fields;
@@ -306,7 +310,7 @@ DEFAULT_HTML;
     	global $frm_settings;
     	
     	if(!function_exists('recaptcha_get_html'))
-            require_once(FRM_PATH.'/classes/recaptchalib.php');
+            require(FRM_PATH.'/classes/recaptchalib.php');
         
         $lang = apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field);
         

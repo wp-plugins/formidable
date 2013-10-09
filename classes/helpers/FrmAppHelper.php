@@ -1,4 +1,8 @@
 <?php
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmAppHelper'))
+    return;
 
 class FrmAppHelper{
     

@@ -1,5 +1,10 @@
 <?php
 
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmListHelper'))
+    return;
+
 class FrmListHelper extends WP_List_Table {
     var $table_name;
     var $page_name;

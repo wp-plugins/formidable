@@ -1,4 +1,9 @@
 <?php
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmEntry'))
+    return;
+
 class FrmEntry{
 
     function create( $values ){
@@ -370,7 +375,7 @@ class FrmEntry{
                 global $frm_settings;
 
                 if(!function_exists('recaptcha_check_answer'))
-                    require_once(FRM_PATH.'/classes/recaptchalib.php');
+                    require(FRM_PATH.'/classes/recaptchalib.php');
 
                 $response = recaptcha_check_answer($frm_settings->privkey,
                                                 $_SERVER['REMOTE_ADDR'],
@@ -438,6 +443,15 @@ class FrmEntry{
 
 		$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
 		return ( is_array($response) and $response[1] == 'true' ) ? true : false;
+    }
+    
+    function is_draft($id){
+        $entry = wp_cache_get( $id, 'frm_entry' );
+        if($entry)
+            return $entry->is_draft;
+        
+        global $wpdb, $frmdb;
+        return $wpdb->get_var($wpdb->prepare("SELECT is_draft FROM $frmdb->entries WHERE id=%d", $id));
     }
     
 }
