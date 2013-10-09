@@ -1,4 +1,9 @@
 <?php
+if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+
+if(class_exists('FrmEntryMeta'))
+    return;
+
 class FrmEntryMeta{
 
   function add_entry_meta($entry_id, $field_id, $meta_key='', $meta_value){
@@ -170,10 +175,6 @@ class FrmEntryMeta{
   
   function getEntryIds($where = '', $order_by = '', $limit = '', $unique=true){
     global $wpdb, $frmdb;
-    if(is_array($where))
-        $where['is_draft'] = 0;
-    else if(!empty($where))
-        $where .= ' AND is_draft=0';
     $query = "SELECT ";
     $query .= ($unique) ? "DISTINCT(it.item_id)" : "it.item_id";
     $query .= " FROM $frmdb->entry_metas it LEFT OUTER JOIN $frmdb->fields fi ON it.field_id=fi.id". FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
