@@ -106,8 +106,9 @@ class FrmEntry{
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key('', $frmdb->entries, 'item_key');
         $new_values['name'] = $values->name;
+        $new_values['is_draft'] = $values->is_draft;
         $new_values['user_id'] = $new_values['updated_by'] = (int)$values->user_id;
-        $new_values['form_id'] = ($values->form_id)?(int)$values->form_id: null;
+        $new_values['form_id'] = $values->form_id ? (int)$values->form_id: null;
         $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
 
         $query_results = $wpdb->insert( $frmdb->entries, $new_values );
@@ -133,7 +134,7 @@ class FrmEntry{
         if (isset($values['item_key']))
             $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $frmdb->entries, 'item_key', $id);
 
-        $new_values['name'] = isset($values['name'])?$values['name']:'';
+        $new_values['name'] = isset($values['name']) ? $values['name'] : '';
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id'] : null;
         $new_values['updated_at'] = current_time('mysql', 1);
         if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
@@ -144,6 +145,7 @@ class FrmEntry{
         global $user_ID;
         $new_values['updated_by'] = $user_ID;
 
+        $new_values = apply_filters('frm_update_entry', $new_values, $id);
         $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
         if($query_results)
             wp_cache_delete( $id, 'frm_entry');
@@ -443,15 +445,6 @@ class FrmEntry{
 
 		$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
 		return ( is_array($response) and $response[1] == 'true' ) ? true : false;
-    }
-    
-    function is_draft($id){
-        $entry = wp_cache_get( $id, 'frm_entry' );
-        if($entry)
-            return $entry->is_draft;
-        
-        global $wpdb, $frmdb;
-        return $wpdb->get_var($wpdb->prepare("SELECT is_draft FROM $frmdb->entries WHERE id=%d", $id));
     }
     
 }

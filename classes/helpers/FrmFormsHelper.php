@@ -132,13 +132,14 @@ class FrmFormsHelper{
     public static function get_default_html($loc){
         if($loc == 'submit'){
             $sending = __('Sending', 'formidable');
+            $draft_link = self::get_draft_link();
             $img = '[frmurl]/images/ajax_loader.gif';
             $default_html = <<<SUBMIT_HTML
 <div class="frm_submit">
 [if back_button]<input type="button" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" class="frm_prev_page" [back_hook] />[/if back_button]
 <input type="submit" value="[button_label]" [button_action] />
 <img class="frm_ajax_loading" src="$img" alt="$sending" style="visibility:hidden;" />
-[if save_draft]<a class="frm_save_draft" [draft_hook]>[draft_label]</a>[/if save_draft]
+$draft_link
 </div>
 SUBMIT_HTML;
         }else if ($loc == 'before'){
@@ -151,6 +152,11 @@ BEFORE_HTML;
         }
         
         return $default_html;
+    }
+    
+    public static function get_draft_link(){
+        $link = '[if save_draft]<a class="frm_save_draft" [draft_hook]>[draft_label]</a>[/if save_draft]';
+        return $link;
     }
     
     public static function get_custom_submit($html, $form, $submit, $form_action, $values){
