@@ -465,6 +465,19 @@ function frmMarkUnique(field_id){
 	else{jQuery('.frm_unique_details'+field_id).fadeOut('fast');}
 };
 
+//Jamie's added code
+/*function frm_add_confirm_field(id,form_id){
+	if(jQuery('#frm_confirm_field_'+id).is(':checked')){
+		jQuery.ajax({
+    		type:"POST",url:ajaxurl,
+    		data:"action=frm_add_logic_row&form_id="+form_id+"&field_id="+id+"&meta_name="+jQuery('#confirm_logic_row_'+id+' > div').size(),
+    		success:function(html){jQuery('#confirm_logic_row_'+id).append(html);}
+		});
+	}
+	else{frm_remove_tag('#frm_logic_'+id+'_0');}
+}*/
+//**********End of added code
+
 function frmSeparateValue(field_id){
 	jQuery('.field_'+field_id+'_option_key').toggle();
 	jQuery('.field_'+field_id+'_option').toggleClass('frm_with_key');
