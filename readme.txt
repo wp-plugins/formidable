@@ -77,6 +77,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed entry listing widget to get values from stats for more accuracy
 * PRO: Updated template export to include all form settings
 * PRO: Drop WP_List_Table fallback for < WP 3.1
+* PRO: Make custom display pagination unique to allow multiple paginated displays on a single page
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

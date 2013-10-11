@@ -59,10 +59,8 @@ class FrmAppController{
     }
     
     public static function menu_css(){ ?>
-<style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL ?>/form_16.png) no-repeat center;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}
-</style>    
-<?php    
-    //#adminmenu .toplevel_page_formidable:hover div.wp-menu-image{background: url(<?php echo FRM_IMAGES_URL /icon_16.png) no-repeat center;}
+<style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image, .frm-buttons-icon{background:url(<?php echo FRM_URL ?>/images/form_16.png) no-repeat center -26px;}#adminmenu .toplevel_page_formidable:hover .wp-menu-image, #adminmenu .wp-has-current-submenu.toplevel_page_formidable .wp-menu-image{background-position:center 5px;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}.frm-buttons-icon{display:inline-block;height:16px;margin:0 2px;vertical-align: text-top;width:16px;background-position:left -30px;background-size:15px 44px;}</style>    
+<?php
     }
     
     public static function get_form_nav($id, $show_nav=false){
@@ -217,7 +215,7 @@ class FrmAppController{
     public static function localize_script($location){
         wp_localize_script('formidable', 'frm_js', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
-            'images_url' => FRM_IMAGES_URL,
+            'images_url' => FRM_URL .'/images',
             'loading' => __('Loading&hellip;')
         ));
         
@@ -344,19 +342,14 @@ class FrmAppController{
         $controller = FrmAppHelper::get_param('controller');
         
         if( !empty($plugin) and $plugin == 'formidable' and !empty($controller) ){
-            self::standalone_route($controller, $action);
+            if($controller == 'forms')
+                FrmFormsController::preview(FrmAppHelper::get_param('form'));
+            else
+                do_action('frm_standalone_route', $controller, $action);
+
+            do_action('frm_ajax_'. $controller .'_'. $action);
             die();
         }
-    }
-    
-    // Routes for standalone / ajax requests
-    public static function standalone_route($controller, $action=''){
-        if($controller == 'forms')
-            FrmFormsController::preview(FrmAppHelper::get_param('form'));
-        else
-            do_action('frm_standalone_route', $controller, $action);
-    
-        do_action('frm_ajax_'. $controller .'_'. $action);
     }
     
     //formidable shortcode

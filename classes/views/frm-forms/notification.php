@@ -1,14 +1,14 @@
 <div id="frm_notification_<?php echo $email_key ?>" class="tabs-panel notification_settings <?php if(!$first_email) echo 'panel_secondary' ?>" style="display:none;">
 <table class="form-table">
 <tr valign="top">
-    <td width="100px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
+    <td width="100px"><label><?php _e('From/Reply to', 'formidable') ?></label> <img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>" /></td>
     <td class="frm_email_reply_container">
         <div class="alignright frm_email_actions feature-filter">
             <?php echo $email_key; ?>
             <?php if($email_key > 0){ ?>
             <span class="frm_email_icons">
                 <a href="javascript:frmRemoveEmailList(<?php echo $email_key ?>)">
-                <img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php _e('Remove Email', 'formidable') ?>" title="<?php _e('Remove Email', 'formidable') ?>" />
+                <img src="<?php echo FRM_URL ?>/images/trash.png" alt="<?php _e('Remove Email', 'formidable') ?>" title="<?php _e('Remove Email', 'formidable') ?>" />
                 </a>
             </span>
             <?php } ?>
@@ -71,7 +71,7 @@
 </tr>
 
  <tr>
-     <td colspan="2"><label><?php _e('Email Recipients', 'formidable') ?></label> <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page. &lt;br/&gt;PRO only: Leave blank if you do not want email notifications for this form.', 'formidable') ?>" />
+     <td colspan="2"><label><?php _e('Email Recipients', 'formidable') ?></label> <img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page. &lt;br/&gt;PRO only: Leave blank if you do not want email notifications for this form.', 'formidable') ?>" />
     <input type="text" name="notification[<?php echo $email_key ?>][email_to]" value="<?php echo esc_attr($notification['email_to']); ?>" class="frm_not_email_to frm_long_input" id="email_to_<?php echo $email_key ?>" /></td>
 </tr>
 <?php if(!$frmpro_is_installed){ ?>

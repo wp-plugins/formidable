@@ -2,15 +2,15 @@
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
     <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
-        <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a>
+        <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a>
         <a href="#" onclick="frmToggleDiv('.frm_ext_sc')"><?php _e('Show more', 'formidable') ?></a>
-    <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?>]" />
+    <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?>]" />
     <span class="frm_ext_sc">
-    <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?> title=true description=true]" />
-    <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable key=<?php echo $values['form_key']; ?>]" /><br/>
+    <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?> title=true description=true]" />
+    <input type="text" readonly="true" class="frm_select_box" value="[formidable key=<?php echo $values['form_key']; ?>]" /><br/>
     
     <?php _e('Insert in a template', 'formidable') ?>
-    <input type="text" style="font-size:10px;width:100%;text-align:center;" readonly="true" onclick="this.select();" onfocus="this.select();" value="&lt;?php echo FrmAppController::get_form_shortcode(array('id' => <?php echo $id; ?>, 'title' => false, 'description' => false)); ?&gt;" />
+    <input type="text" readonly="true" class="frm_select_box" value="&lt;?php echo FrmAppController::get_form_shortcode(array('id' => <?php echo $id; ?>, 'title' => false, 'description' => false)); ?&gt;" />
     </span>
     </p>
     </tr>

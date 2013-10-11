@@ -1,7 +1,7 @@
 <?php
 if(isset($values) and isset($values['ajax_load']) and $values['ajax_load'] and isset($count) and $count > 10){ ?>
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading">
-<img src="<?php echo FRM_IMAGES_URL ?>/ajax_loader.gif" alt="<?php _e('Loading', 'formidable') ?>" />
+<img src="<?php echo FRM_URL ?>/images/ajax_loader.gif" alt="<?php _e('Loading', 'formidable') ?>" />
 <span class="frm_hidden_fdata" style="display:none"><?php echo htmlspecialchars(json_encode($field)) ?></span>
 </li>
 <?php
@@ -16,9 +16,9 @@ $display = apply_filters('frm_display_field_options', array(
 )); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
-    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="<?php echo esc_attr(__('Move Field', 'formidable')) ?>"><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="<?php echo esc_attr(__('Move')) ?>" /></a>
-    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php echo esc_attr(__('Delete Field', 'formidable')) ?>"><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php echo esc_attr(__('Delete')) ?>" /></a>
-    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php echo esc_attr(__('Duplicate Field', 'formidable')) ?>"><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
+    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon" title="<?php echo esc_attr(__('Move Field', 'formidable')) ?>"><img src="<?php echo FRM_URL ?>/images/move.png" alt="<?php echo esc_attr(__('Move')) ?>" /></a>
+    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php echo esc_attr(__('Delete Field', 'formidable')) ?>"><img src="<?php echo FRM_URL ?>/images/trash.png" alt="<?php echo esc_attr(__('Delete')) ?>" /></a>
+    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="alignright frm-show-hover frm-hover-icon" title="<?php echo esc_attr(__('Duplicate Field', 'formidable')) ?>"><img src="<?php echo FRM_URL ?>/images/duplicate.png" alt="<?php _e('Duplicate', 'formidable') ?>" /></a>
     <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>" />
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ($display['required']){ ?>
@@ -109,7 +109,7 @@ $display = apply_filters('frm_display_field_options', array(
     global $frm_settings; ?>
     <img src="<?php echo FRM_URL ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" class="alignleft"/>
     <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
-    <div style="clear:both"></div>
+    <div class="clear"></div>
     <?php if (empty($frm_settings->pubkey)){ ?>
     <div class="howto" style="font-weight:bold;color:red;"><?php printf(__('Your captcha will not appear on your form until you %1$sset up%2$s the Public and Private Keys', 'formidable'), '<a href="?page=formidable-settings">', '</a>') ?></div>
     <?php } ?>
@@ -199,7 +199,7 @@ if ($display['options']){ ?>
                 <?php } ?>
                 <?php if ($display['css']){ ?>
                 <tr><td><label><?php _e('CSS layout classes', 'formidable') ?></label> 
-                    <img src="<?php echo FRM_IMAGES_URL ?>/tooltip.png" alt="?" class="frm_help" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" /></td>
+                    <img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" /></td>
                     <td><input type="text" name="field_options[classes_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['classes']) ?>" id="frm_classes_<?php echo $field['id'] ?>" class="frm_classes frm_long_input" />
                     </td>  
                 </tr>

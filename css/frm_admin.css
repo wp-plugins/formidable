@@ -150,6 +150,9 @@ img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 .form-table.frm_lics_form td{padding:0;}
 .frm_pro_installed{margin-top:0.5em;}
 .frm_aff_link{float:right;}
+.frm_select_box{text-align:center;font-weight:bold;width:100%;}
+.wp-list-table .frm_select_box{text-align:left;font-weight:normal;font-size:10px;}
+.wp-list-table .frm_no_items.frm_select_box{text-align:center;font-weight:bold;width:500px;max-width:100%;font-size:inherit;}
 .form-field input[type="checkbox"], .form-field input[type="radio"]{border:none !important;}
 textarea.inplace_field{width:98% !important;}
 .inplace_field{width:70% !important;}

@@ -263,14 +263,14 @@ class FrmFormsController{
     
     public static function insert_form_button($content){
         if(current_user_can('frm_view_forms'))
-            $content .= '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'.FRM_IMAGES_URL.'/form_16.png" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
+            $content .= '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox button insert-media add_media" title="' . __("Add Formidable Form", 'formidable') . '"><span class="frm-buttons-icon"></span> '. __('Add Form', 'formidable') . '</a>';
         return $content;
     }
     
     public static function show_form_button($id){
         if($id != 'content')
             return;
-        echo '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'. esc_url(FRM_IMAGES_URL.'/form_16.png'). '" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
+        echo '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'. esc_url(FRM_URL .'/images/form_16.png') .'" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
     }
     
     public static function insert_form_popup(){

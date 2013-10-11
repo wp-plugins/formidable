@@ -21,16 +21,17 @@
         win.send_to_editor("[frm-search]");
     }
 </script>
+<style type="text/css">
+#frm_popup_content h3{
+    color:#5A5A5A;
+    font-family:Georgia,"Times New Roman",Times,serif;
+    font-weight:normal;
+    font-size:1.6em;
+}
+.frm_box_line{border-bottom:1px solid #DFDFDF;display:block;margin:20px 0;}
+</style>
 
 <div id="frm_insert_form" style="display:none;">
-    <style>
-    #frm_popup_content h3{
-        color:#5A5A5A;
-        font-family:Georgia,"Times New Roman",Times,serif;
-        font-weight:normal;
-        font-size:1.6em;
-    }
-    </style>
     <div class="wrap" id="frm_popup_content">
     <h3><?php _e("Select a form to insert", "formidable"); ?></h3>
     
@@ -43,7 +44,7 @@
     <p><input type="button" class="button-primary" value="Insert Form" onclick="frm_insert_form();" /></p>
         
 <?php if(isset($displays) and !empty($displays)){ ?>
-    <div style="border-bottom:1px solid #DFDFDF;display:block;margin:20px 0;"></div>
+    <div class="frm_box_line"></div>
     <h3><?php _e('Select custom display to insert', 'formidable'); ?></h3>
     
     <p>
@@ -61,7 +62,7 @@
     
     <p><input type="button" class="button-primary" value="Insert Display" onclick="frm_insert_display();" /></p>
     
-    <div style="border-bottom:1px solid #DFDFDF;display:block;margin:20px 0;"></div>
+    <div class="frm_box_line"></div>
     <h3><?php _e("Insert a search box", "formidable"); ?></h3>
     <p><input type="button" class="button-primary" value="Insert Search" onclick="frm_insert_search();" /></p>
 <?php } ?>

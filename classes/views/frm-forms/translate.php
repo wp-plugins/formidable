@@ -9,7 +9,7 @@
             <?php if(!isset($hide_preview) or !$hide_preview){ 
                 if (!$values['is_template']){ ?>
             <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
-            <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus="this.select();" value="[formidable id=<?php echo $id; ?>]" /></p>
+            <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?>]" /></p>
             <?php } ?>
 
             <p class="frm_orange"><a href="<?php echo FrmFormsHelper::get_direct_link($values['form_key']); ?>" target="_blank"><?php _e('Preview', 'formidable') ?></a>

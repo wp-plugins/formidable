@@ -36,13 +36,13 @@ if(isset($form->options['no_save']) and $form->options['no_save']){ ?>
     <tr class="alternate"><td colspan="<?php echo $colspan ?>">    
         <h3><?php _e('Option 3: Insert the shortcode or PHP', 'formidable') ?></h3>
         <p><?php _e('Insert the following shortcode in your page, post, or text widget. This will be replaced with your form:', 'formidable') ?><br/>
-            <input type="text" style="text-align:center;font-weight:bold;width:500px;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $form->id; ?>]' />
+            <input type="text" readonly="true" class="frm_select_box frm_no_items" value="[formidable id=<?php echo $form->id; ?>]" />
         </p>
         <p><?php _e('Show the form with the title and description:', 'formidable') ?><br/>
-            <input type="text" style="text-align:center;font-weight:bold;width:500px;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $form->id; ?> title=true description=true]' />
+            <input type="text" readonly="true" class="frm_select_box frm_no_items" value="[formidable id=<?php echo $form->id; ?> title=true description=true]" />
         </p>
         
         <p><?php _e('Insert into a theme template file:', 'formidable') ?><br/>
-            <input type="text" style="text-align:center;font-weight:bold;width:500px;" readonly="true" onclick="this.select();" onfocus="this.select();" value="echo FrmEntriesController::show_form(<?php echo $form->id; ?>, $key='', $title=true, $description=true);" />
+            <input type="text" readonly="true" class="frm_select_box frm_no_items" value="echo FrmEntriesController::show_form(<?php echo $form->id; ?>, $key='', $title=true, $description=true);" />
         </p>
 <?php } ?>

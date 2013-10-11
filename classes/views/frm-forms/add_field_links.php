@@ -2,7 +2,7 @@
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
     <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page, display or text widget', 'formidable') ?>:
-    <input type="text" style="text-align:center;font-weight:bold;width:100%;" readonly="true" onclick="this.select();" onfocus='this.select();' value='[formidable id=<?php echo $id; ?>]' /></p>
+    <input type="text" readonly="true" class="frm_select_box" value='[formidable id=<?php echo $id; ?>]' /></p>
     <?php } ?>
     
     <?php if(isset($values['form_key'])){ ?>
@@ -125,11 +125,11 @@
                     = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
                 <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
                     = <?php _e('default value will pass validation', 'formidable') ?></li>
-                <li><span><img src="<?php echo FRM_IMAGES_URL ?>/trash.png" alt="<?php echo esc_attr(__('Delete')) ?>" /></span> 
+                <li><span><img src="<?php echo FRM_URL ?>/images/trash.png" alt="<?php echo esc_attr(__('Delete')) ?>" /></span> 
                     = <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                <li><span><img src="<?php echo FRM_IMAGES_URL ?>/duplicate.png" alt="<?php echo esc_attr(__('Move')) ?>" /></span> 
+                <li><span><img src="<?php echo FRM_URL ?>/images/duplicate.png" alt="<?php echo esc_attr(__('Move')) ?>" /></span> 
                     = <?php _e('duplicate field', 'formidable') ?></li>
-                <li><span><img src="<?php echo FRM_IMAGES_URL ?>/move.png" alt="<?php echo esc_attr(__('Move')) ?>" /></span> 
+                <li><span><img src="<?php echo FRM_URL ?>/images/move.png" alt="<?php echo esc_attr(__('Move')) ?>" /></span> 
                     = <?php _e('move field', 'formidable') ?></li>
             </ul>
 

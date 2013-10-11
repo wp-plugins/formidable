@@ -1,5 +1,4 @@
 jQuery(document).ready(function($){
-var form_id=$('input[name="id"]').val();
 
 window.onscroll=document.documentElement.onscroll=frmSetMenuOffset;
 frmSetMenuOffset();
@@ -108,6 +107,7 @@ $('.widget-top,a.widget-action').click(function(){ $(this).closest('div.widget')
 }
 
 if($('.frm_ipe_form_desc').length){
+var form_id=$('input[name="id"]').val();
 $('.frm_form_builder form:first').submit(function(){$('.inplace_field').blur();})
 
 $('.frm_ipe_form_key').editInPlace({
@@ -258,6 +258,9 @@ $('.frm_form_builder input[name^="item_meta"], .frm_form_builder textarea[name^=
 $('.frm_form_builder select[name^="item_meta"]').live('change', function(){frmTriggerDefaults($(this))});
 $('img.frm_help, a.frm_help').live('mouseenter mouseleave', function(evt){frmShowTooltip(evt.type,$(this));});	
 }
+
+$('.frm_select_box').click(function(){this.select();});
+$('.frm_select_box').focus(function(){this.select();});
 
 jQuery('#frm_single_entry_type').change(function(){
 if(jQuery('#frm_single_entry_type option:selected').val()=="cookie"){jQuery('#frm_cookie_expiration').fadeIn();}
