@@ -68,7 +68,7 @@ class FrmEntry{
                             foreach($metas as $meta)
                                 $field_metas[$meta->field_id] = $meta->meta_value;
 
-                            $diff = array_diff_assoc($field_metas, $values['item_meta']);
+                            $diff = array_diff_assoc($field_metas, array_map('maybe_serialize', $values['item_meta']));
                             foreach($diff as $field_id => $meta_value){
                                 if(!empty($meta_value) and !$create_entry)
                                     $create_entry = true;

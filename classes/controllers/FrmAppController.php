@@ -190,7 +190,8 @@ class FrmAppController{
         }
 
         wp_register_script('formidable', FRM_URL . '/js/formidable.min.js', array('jquery'), $frm_version, true);
-        self::localize_script('front');
+        if(!is_admin() or defined('DOING_AJAX'))
+            self::localize_script('front');
         
         wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
         wp_enqueue_script('jquery');

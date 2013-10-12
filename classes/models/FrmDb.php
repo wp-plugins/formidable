@@ -164,7 +164,44 @@ DEFAULT_HTML;
                 unset($field);
             }
             unset($default_html);
+            unset($old_default_html);
+            unset($fields);
         }
+        
+        if($frm_db_version >= 11 and $old_db_version < 11){
+            $forms = $wpdb->get_results("SELECT id, options FROM $this->forms");
+            $sending = __('Sending', 'formidable');
+            $img = FRM_URL .'/images/ajax_loader.gif';
+            $old_default_html = <<<DEFAULT_HTML
+<div class="frm_submit">
+[if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" [back_hook] />[/if back_button]
+<input type="submit" value="[button_label]" [button_action] />
+<img class="frm_ajax_loading" src="$img" alt="$sending" style="visibility:hidden;" />
+</div>
+DEFAULT_HTML;
+            unset($sending);
+            unset($img);
+            
+            $new_default_html = FrmFormsHelper::get_default_html('submit');
+            $draft_link = FrmFormsHelper::get_draft_link();
+            foreach($forms as $form){
+                $form->options = maybe_unserialize($form->options);
+                if(!isset($form->options['submit_html']) or empty($form->options['submit_html']))
+                    continue;
+                
+                if((stripslashes($form->options['submit_html']) != $new_default_html) and (stripslashes($form->options['submit_html']) == $old_default_html)){
+                    $form->options['submit_html'] = $new_default_html;
+                    $wpdb->update($this->forms, array('options' => serialize($form->options)), array( 'id' => $form->id ));
+                }else if(!strpos($form->options['submit_html'], 'save_draft')){
+                    $form->options['submit_html'] = preg_replace('~\<\/div\>(?!.*\<\/div\>)~', $draft_link ."\r\n</div>", $form->options['submit_html']);
+                    $wpdb->update($this->forms, array('options' => serialize($form->options)), array( 'id' => $form->id ));
+                }
+                unset($form);
+            }
+            unset($forms);
+        }
+        
+        
 
         /**** ADD/UPDATE DEFAULT TEMPLATES ****/
         FrmFormsController::add_default_templates(FRM_TEMPLATES_PATH);

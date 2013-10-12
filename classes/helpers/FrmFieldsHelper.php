@@ -392,12 +392,12 @@ DEFAULT_HTML;
     }
     
     public static function show_onfocus_js($field_id, $clear_on_focus){ ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php printf(__('%1$sclear default value when field is clicked', 'formidable'), ($clear_on_focus) ? '': __('Do not', 'formidable').' ' ); ?>"></a>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php echo $clear_on_focus ? __('Clear default value when field is clicked', 'formidable') : __('Do not clear default value when field is clicked', 'formidable'); ?>"></a>
     <?php
     }
     
     public static function show_default_blank_js($field_id, $default_blank){ ?>
-    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_error_icon" id="default_blank_<?php echo $field_id; ?>" title="<?php printf(__('Default value will %1$spass form validation', 'formidable'), ($default_blank) ? __('not', 'formidable').' ' :'' ); ?>"></a>
+    <a href="javascript:frm_default_blank(<?php echo $field_id; ?>,<?php echo $default_blank ?>)" class="<?php echo ($default_blank) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_error_icon" id="default_blank_<?php echo $field_id; ?>" title="<?php echo $default_blank ? __('Default value will NOT pass form validation', 'formidable') : __('Default value will pass form validation', 'formidable'); ?>"></a>
     <?php
     }
     
