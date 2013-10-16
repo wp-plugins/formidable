@@ -71,11 +71,8 @@ class FrmFormsController{
         global $frm_form, $frmpro_is_installed;
         
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
-        if($values){
-            $action = $values[$action];
-        }else{
-            $action = FrmAppHelper::get_param($action);
-        }
+        $action = ($values) ? $values[$action] : FrmAppHelper::get_param($action);
+        
         if ($action == 'create'){
             return self::create($values);
         }else if ($action == 'new'){
@@ -94,7 +91,12 @@ class FrmFormsController{
         global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         if(!$values)
             $values = $_POST;
-
+        
+        if($_POST and (!isset($values['frm_save_form']) or !wp_verify_nonce($values['frm_save_form'], 'frm_save_form_nonce'))){
+            global $frm_settings;
+            $errors['form'] = $frm_settings->admin_permission;
+        }
+        
         $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
         
         $errors = $frm_form->validate($values);
@@ -106,7 +108,7 @@ class FrmFormsController{
             $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
             $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
             require(FRM_VIEWS_PATH.'/frm-forms/new.php');
-        }else{
+        }else{    
             $record = $frm_form->update( $id, $values, true );
             die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&frm_action=settings&id='. $id) .'"</script>');
             //$message = __('Form was Successfully Created', 'formidable');
@@ -129,7 +131,9 @@ class FrmFormsController{
         global $frm_form;
         
         $id = FrmAppHelper::get_param('id');
+        
         $errors = $frm_form->validate($_POST);
+        
         if( count($errors) > 0 ){
             return self::get_settings_vars($id, $errors);
         }else{
@@ -137,14 +141,6 @@ class FrmFormsController{
             $message = __('Settings Successfully Updated', 'formidable');
             return self::get_settings_vars($id, '', $message);
         }
-    }
-    
-    public static function translate($action){
-        global $frmpro_is_installed, $frm_form;
-        $id = FrmAppHelper::get_param('id', false);
-        $form = $frm_form->getOne($id);
-        $values = (array)$form;
-        include(FRM_VIEWS_PATH . '/frm-forms/translate.php');
     }
     
     public static function edit_key(){
@@ -171,8 +167,16 @@ class FrmFormsController{
 
         if(!$values)
             $values = $_POST;
+        
         $errors = $frm_form->validate($values);
+        
+        if($_POST and (!isset($values['frm_save_form']) or !wp_verify_nonce($values['frm_save_form'], 'frm_save_form_nonce'))){
+            global $frm_settings;
+            $errors['form'] = $frm_settings->admin_permission;
+        }
+        
         $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
+        
         if( count($errors) > 0 ){
             return self::get_edit_vars($id, $errors);
         }else{
@@ -378,7 +382,7 @@ class FrmFormsController{
         return $save;
     }
 
-    public static function get_edit_vars($id, $errors = '', $message='', $create_link=false){
+    private static function get_edit_vars($id, $errors = '', $message='', $create_link=false){
         global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
@@ -475,9 +479,11 @@ class FrmFormsController{
             return self::settings();
         else if($action == 'update_settings')
             return self::update_settings();
-        else if($action == 'translate' or $action == 'update_translate')
-            return self::translate($action);
         else{
+            do_action('frm_form_action_'. $action);
+            if(apply_filters('frm_form_stop_action_'. $action, false))
+                return;
+            
             $action = FrmAppHelper::get_param('action');
             if($action == -1)
                 $action = FrmAppHelper::get_param('action2');

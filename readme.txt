@@ -67,6 +67,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Fixed naming so plugin info and change log links are correct on plugins page
 * Updated default submit button HTML to include [frmurl] for a dynamic url
 * Added nonce fields and checking for increased security
+* Switched to placeholder with IE fallback for those using HTML5
 * Updated duplicate entry checking for more accuracy
 * Added French translation
 * PRO: Added option to save drafts
@@ -78,6 +79,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated template export to include all form settings
 * PRO: Drop WP_List_Table fallback for < WP 3.1
 * PRO: Make custom display pagination unique to allow multiple paginated displays on a single page
+* PRO: Remove WPML-related translating options, and move to the add-on
+* PRO: Added [entry_count] for use in custom displays
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

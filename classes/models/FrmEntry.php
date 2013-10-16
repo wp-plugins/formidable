@@ -331,7 +331,7 @@ class FrmEntry{
         global $wpdb, $frmdb, $frm_field, $frm_entry_meta, $frm_settings;
 
         $errors = array();
-        if(!isset($values['form_id']) or !isset($values['item_meta']) or (isset($_POST) and (!isset($_POST['submit_entry']) or !wp_verify_nonce($_POST['submit_entry'], 'submit_entry_nonce')))){
+        if(!isset($values['form_id']) or !isset($values['item_meta']) or (isset($_POST) and (!isset($_POST['frm_submit_entry']) or !wp_verify_nonce($_POST['frm_submit_entry'], 'frm_submit_entry_nonce')))){
             $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');
         }
         

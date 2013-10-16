@@ -256,8 +256,7 @@ class FrmAppHelper{
         if(apply_filters('frm_use_wpautop', true))
             $values['description'] = wpautop($values['description']);
         
-        if ($fields){
-            foreach($fields as $field){
+            foreach((array)$fields as $field){
 
                 if ($default){
                     $meta_value = $field->default_value;
@@ -334,7 +333,6 @@ class FrmAppHelper{
                 
                 unset($field);   
             }
-        }
       
         if ($table == 'entries')
             $form = $frm_form->getOne( $record->form_id );

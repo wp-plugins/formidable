@@ -38,7 +38,7 @@ if(is_ssl() and (!preg_match('/^https:\/\/.*\..*$/', $frm_siteurl) or !preg_matc
     define('FRM_URL', WP_PLUGIN_URL.'/formidable');  //plugins_url('/formidable')
     
 define('FRM_SCRIPT_URL', $frm_siteurl . (is_admin() ? '/wp-admin' : '') .'/index.php?plugin=formidable');
-define('FRM_IMAGES_URL', FRM_URL.'/images');
+define('FRM_IMAGES_URL', FRM_URL.'/images'); //deprecated
 
 require($frm_models_path .'/FrmSettings.php');
 

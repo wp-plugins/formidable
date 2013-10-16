@@ -97,7 +97,11 @@ class FrmFieldsHelper{
         
         $values = array('id' => $record->id, 'form_id' => $record->form_id);
         $defaults = array('name' => $record->name, 'description' => $record->description);
-        $default_opts = array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required);
+        $default_opts = array(
+            'field_key' => $record->field_key, 'type' => $record->type, 
+            'default_value'=> $record->default_value, 'field_order' => $record->field_order, 
+            'required' => $record->required
+        );
         
         if($doing_ajax){
             $values = $values + $defaults + $default_opts;

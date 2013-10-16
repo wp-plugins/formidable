@@ -97,7 +97,7 @@ class FrmListHelper extends WP_List_Table {
 	    $actions = array();
 	    if($frmpro_is_installed){
             $actions['bulk_delete'] = __('Delete');
-            $actions['bulk_export'] = __('Export to XML', 'formidable');
+            //$actions['bulk_export'] = __('Export to XML', 'formidable');
         }
             
         return $actions;

@@ -195,6 +195,7 @@ class FrmAppController{
         
         wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
         wp_enqueue_script('jquery');
+        wp_register_script('jquery-placeholder', FRM_URL .'/js/jquery/jquery-placeholder.js', array('jquery'), '2.0.7', true);
         
         $style = apply_filters('get_frm_stylesheet', array('frm-forms' => FRM_URL .'/css/frm_display.css'));
         if($style){

@@ -1,6 +1,7 @@
 jQuery(document).ready(function($){
 $('.frm_ajax_loading').css('visibility', 'hidden');
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
+$('.frm-show-form input, .frm-show-form textarea').placeholder();
 
 if($.isFunction($.fn.on)){
 	$(document).on('click', '.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft', frmSetNextPage);

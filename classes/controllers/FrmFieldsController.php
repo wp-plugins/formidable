@@ -80,8 +80,7 @@ class FrmFieldsController{
         global $frm_field;
         $id = str_replace('field_label_', '', $_POST['element_id']);
         $values = array('name' => trim($_POST['update_value']));
-        if ($_POST['original_html'] == 'Untitled')
-            $values['field_key'] = $_POST['update_value'];
+        $values['field_key'] = $_POST['update_value'];
         $form = $frm_field->update($id, $values);
         echo stripslashes($_POST['update_value']);  
         die();
@@ -420,29 +419,33 @@ class FrmFieldsController{
         if(isset($field['max']) and !in_array($field['type'], array('textarea', 'rte', 'hidden')) and !empty($field['max']))
             $add_html .= ' maxlength="'. $field['max'] .'"';
         
-        if(!is_admin() or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable_entries'){
-            $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
-            $action = FrmAppHelper::get_param($action);
-            
+        if(!is_admin() or defined('DOING_AJAX') or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable-entries'){
             if(isset($field['required']) and $field['required']){
+                $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
+                $action = FrmAppHelper::get_param($action);
+                
                 //if($field['type'] != 'checkbox')
                 //    $add_html .= ' required="required"';
                     
                 if($field['type'] == 'file' and $action == 'edit'){
                     //don't add the required class if this is a file upload when editing
-                }else
+                }else{
                     $class .= " required";
+                }
+                unset($action);
             }
-
-            //if($frm_settings->use_html and isset($field['default_value']) and !empty($field['default_value']) and isset($field['clear_on_focus']) and $field['clear_on_focus'] and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))) 
-            //    $add_html .= ' placeholder="'.$field['default_value'].'"';
-
+            
             if(isset($field['clear_on_focus']) and $field['clear_on_focus'] and !empty($field['default_value'])){
-                $val = str_replace(array("\r\n", "\n"), '\r', addslashes(str_replace('&#039;', "'", esc_attr($field['default_value']))));
-                $add_html .= ' onfocus="frmClearDefault('."'". $val ."'". ',this)" onblur="frmReplaceDefault('."'". $val ."'". ',this)"';
                 
-                if($field['value'] == $field['default_value'])
-                    $class .= ' frm_default';
+                if($frm_settings->use_html and !in_array($field['type'], array('select', 'radio', 'checkbox', 'hidden'))){ 
+                    $add_html .= ' placeholder="'. esc_attr($field['default_value']) .'"';
+                    FrmAppHelper::load_scripts('jquery-placeholder');
+                }else if(!$frm_settings->use_html){
+                    $val = str_replace(array("\r\n", "\n"), '\r', addslashes(str_replace('&#039;', "'", esc_attr($field['default_value']))));
+                    $add_html .= ' onfocus="frmClearDefault('."'". $val ."'". ',this)" onblur="frmReplaceDefault('."'". $val ."'". ',this)"';
+                    if($field['value'] == $field['default_value'])
+                        $class .= ' frm_default';
+                }
             }
         }
         
@@ -450,12 +453,13 @@ class FrmFieldsController{
             $class .= ' '. $field['input_class'];
         
         $class = apply_filters('frm_field_classes', $class, $field);
+        
         if(!empty($class))
             $add_html .= ' class="'. trim($class) .'"';
             
         if(isset($field['shortcodes']) and !empty($field['shortcodes'])){
             foreach($field['shortcodes'] as $k => $v){
-                if($k == 'opt') continue;
+                if($k == 'opt' or strpos($add_html, " $k=")) continue;
                 $add_html .= ' '. $k .'="'. $v .'"';
                 unset($k);
                 unset($v);

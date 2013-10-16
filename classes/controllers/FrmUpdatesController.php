@@ -44,7 +44,7 @@ class FrmUpdatesController{
         $this->pro_last_checked_store = 'frm_autoupdate';
         $this->pro_license_label    = __('Formidable Pro License', 'formidable');
         $this->pro_error_message_str = __('Your Formidable Pro License was Invalid', 'formidable');
-        $this->pro_check_interval = 60*60*12; // Checking every 12 hours
+        $this->pro_check_interval = 60*60*24; // Checking every 24 hours
         $this->timeout = 10;
         
         // Don't modify these variables
@@ -126,7 +126,7 @@ class FrmUpdatesController{
     public function pro_cred_form(){ 
         global $frmpro_is_installed; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
-            if(!isset($_POST['cred_form']) or !wp_verify_nonce($_POST['cred_form'], 'cred_form_nonce')){
+            if(!isset($_POST['frm_cred']) or !wp_verify_nonce($_POST['frm_cred'], 'frm_cred_nonce')){
                 global $frm_settings;
                 $response = array('response' => $frm_settings->admin_permission, 'auth' => false);
             }else{
@@ -194,7 +194,7 @@ class FrmUpdatesController{
 <div id="pro_cred_form" <?php echo ($frmpro_is_installed) ? 'style="display:none;"' : ''; ?>>
     <form name="cred_form" method="post" autocomplete="off">
     <input type="hidden" name="process_cred_form" value="Y" />
-    <?php wp_nonce_field('cred_form_nonce', 'cred_form'); ?>
+    <?php wp_nonce_field('frm_cred_nonce', 'frm_cred'); ?>
 
     <table class="form-table frm_lics_form">
         <tr class="form-field">
@@ -371,7 +371,7 @@ class FrmUpdatesController{
     }
 
     function queue_update($transient, $force=false){
-        if(!is_object($transient))
+        if(!is_object($transient) or !$this->pro_is_authorized())
             return $transient;
 
         $plugin = $this;
@@ -386,12 +386,11 @@ class FrmUpdatesController{
             if(isset($transient->response[$this->plugin_name]))        
                 unset($transient->response[$this->plugin_name]);
             set_site_transient( $this->pro_last_checked_store, 'latest', $this->pro_check_interval );
-        }else if(!empty( $transient->checked ) or
-            (isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+        }else if((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/plugins/'. $this->plugin_nicename .'/'))){
 
-            if( $this->pro_is_authorized() and !$this->pro_is_installed()){
+            if(!$this->pro_is_installed()){
                 $version_info = get_site_transient( $this->pro_last_checked_store );
                 global $frm_version;
                 
@@ -401,7 +400,7 @@ class FrmUpdatesController{
                 else
                     $force = true;
             }
-                
+            
             $transient = $this->queue_addon_update($transient, $plugin, $force, false);
         }
         
@@ -409,7 +408,7 @@ class FrmUpdatesController{
     }
     
     function queue_addon_update($transient, $plugin, $force=false, $checked=true){
-        if(!is_object($transient) or ($checked and empty($transient->checked)))
+        if(!$this->pro_is_authorized() or !is_object($transient) or $checked or empty($transient->checked))
             return $transient;
         
         $version_info = $this->get_version($transient->checked[ $plugin->plugin_name ], $force, $plugin);
@@ -527,7 +526,7 @@ class FrmUpdatesController{
                 else
                     return $json_res;
             }else if(isset($resp['response']) and isset($resp['response']['code'])){
-                return 'There was a '. $resp['response']['code'] .' error: '. $resp['response']['message']. ' '. $resp['body'];
+                return sprintf(__('There was a $1%s error: $2%s', 'formidable'), $resp['response']['code'], $resp['response']['message'] .' '. $resp['body']);
             }else{
                 return __( 'Your License Key was invalid', 'formidable');
             }

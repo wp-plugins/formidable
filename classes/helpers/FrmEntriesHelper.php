@@ -14,15 +14,15 @@ class FrmEntriesHelper{
             $values[$var] = FrmAppHelper::get_post_param($var, $default);
             
         $values['fields'] = array();
-        if ($fields){
-            foreach($fields as $field){
+        if (!empty($fields)){
+            foreach((array)$fields as $field){
                 $field->field_options = maybe_unserialize($field->field_options);
                 $default = $field->default_value;
               
                 if ($reset)
                     $new_value = $default;
                 else
-                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : $default;
+                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : '';
                 
                 $is_default = ($new_value == $default) ? true : false;
                     

@@ -1,3 +1,5 @@
+<?php wp_nonce_field('frm_save_form_nonce', 'frm_save_form'); ?>
+
 <div id="frm_form_editor_container">
 <div id="titlediv">
     <input type="text" name="name" value="<?php echo esc_attr($values['name']); ?>" id="title" />
@@ -10,8 +12,6 @@
         <div style="clear:both"></div>
     </div>
 </div>
-
-
 
 <ul id="new_fields">
 <?php

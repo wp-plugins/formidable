@@ -50,7 +50,7 @@ class FrmField{
     function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
         global $frmdb, $frm_duplicate_ids;
         $fields = $this->getAll(array('fi.form_id' => $old_form_id), 'field_order', '', $blog_id);
-        foreach ($fields as $field){
+        foreach ((array)$fields as $field){
             $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
             if($copy_keys and substr($field->field_key, -1) == 2)
