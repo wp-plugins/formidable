@@ -22,7 +22,7 @@ class FrmEntriesHelper{
                 if ($reset)
                     $new_value = $default;
                 else
-                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : '';
+                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : ((isset($field->field_options['clear_on_focus']) and $field->field_options['clear_on_focus'] ) ? '' : $default );
                 
                 $is_default = ($new_value == $default) ? true : false;
                     
