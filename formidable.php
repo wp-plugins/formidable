@@ -42,13 +42,6 @@ define('FRM_IMAGES_URL', FRM_URL.'/images'); //deprecated
 
 require($frm_models_path .'/FrmSettings.php');
 
-// Check for WPMU installation
-if (!defined ('IS_WPMU')){
-    global $wpmu_version;
-    $is_wpmu = ((function_exists('is_multisite') and is_multisite()) or $wpmu_version) ? 1 : 0;
-    define('IS_WPMU', $is_wpmu);
-}
-
 global $frm_version, $frm_db_version;
 $frm_version = '1.07.02b1';
 $frm_db_version = 11;

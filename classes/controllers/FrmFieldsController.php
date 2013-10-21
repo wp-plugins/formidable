@@ -80,7 +80,6 @@ class FrmFieldsController{
         global $frm_field;
         $id = str_replace('field_label_', '', $_POST['element_id']);
         $values = array('name' => trim($_POST['update_value']));
-        $values['field_key'] = $_POST['update_value'];
         $form = $frm_field->update($id, $values);
         echo stripslashes($_POST['update_value']);  
         die();

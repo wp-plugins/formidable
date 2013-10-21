@@ -80,7 +80,7 @@ class FrmSettings{
         $this->preview_page_id_str = 'frm-preview-page-id';
           
         if(!isset($this->pubkey)){
-            if(IS_WPMU)
+            if(is_multisite())
                $recaptcha_opt = get_site_option('recaptcha'); // get the options from the database
             else
                $recaptcha_opt = get_option('recaptcha');
@@ -118,7 +118,7 @@ class FrmSettings{
             unset($default);
         }
         
-        if(IS_WPMU and is_admin()){
+        if(is_multisite() and is_admin()){
             $mu_menu = get_site_option('frm_admin_menu_name');
             if($mu_menu and !empty($mu_menu)){
                 $this->menu = $mu_menu;

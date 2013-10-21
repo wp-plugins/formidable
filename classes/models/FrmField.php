@@ -70,7 +70,7 @@ class FrmField{
 
     function update( $id, $values ){
         global $wpdb, $frmdb;
-
+        
         if (isset($values['field_key']))
             $values['field_key'] = FrmAppHelper::get_unique_key($values['field_key'], $frmdb->fields, 'field_key', $id);
 
@@ -131,6 +131,8 @@ class FrmField{
         
         if($results){
             $results->field_options = maybe_unserialize($results->field_options);
+            if(isset($results->field_options['format']) and !empty($results->field_options['format']))
+                $results->field_options['format'] = addslashes($results->field_options['format']);
             $results->options = maybe_unserialize($results->options);
             $results->default_value = maybe_unserialize($results->default_value);
         }
@@ -141,7 +143,7 @@ class FrmField{
     function getAll($where=array(), $order_by = '', $limit = '', $blog_id=false){
         global $wpdb, $frmdb;
         
-        if ($blog_id and IS_WPMU){
+        if ($blog_id and is_multisite()){
             global $wpmuBaseTablePrefix;
             if($wpmuBaseTablePrefix)
                 $prefix = "{$wpmuBaseTablePrefix}{$blog_id}_";
@@ -179,7 +181,7 @@ class FrmField{
             if($order_by == ' ORDER BY field_order' and empty($limit) and empty($blog_id) and is_array($old_where) and count($old_where) == 1 and reset($ak) == 'fi.form_id'){
                 $save_cache = true;
                 $results = get_transient('frm_all_form_fields_'. reset($old_where));
-                if($results)
+                if($results and (is_array($results) or is_object($results)))
                     $cached = true;
             }
             unset($ak);
@@ -193,6 +195,8 @@ class FrmField{
                     wp_cache_set($result->id, $result, 'frm_field');
                     wp_cache_set($result->field_key, $result, 'frm_field');
                     $results[$r_key]->field_options = maybe_unserialize($result->field_options);
+                    if(isset($results[$r_key]->field_options['format']) and !empty($results[$r_key]->field_options['format']))
+                        $results[$r_key]->field_options['format'] = addslashes($results[$r_key]->field_options['format']);
                     $results[$r_key]->options = maybe_unserialize($result->options);
                     $results[$r_key]->default_value = maybe_unserialize($result->default_value);
                     $form_id = $result->form_id;
@@ -203,6 +207,8 @@ class FrmField{
                 wp_cache_set($results->id, $results, 'frm_field');
                 wp_cache_set($results->field_key, $results, 'frm_field');
                 $results->field_options = maybe_unserialize($results->field_options);
+                if(isset($results->field_options['format']) and !empty($results->field_options['format']))
+                    $results->field_options['format'] = addslashes($results->field_options['format']);
                 $results->options = maybe_unserialize($results->options);
                 $results->default_value = maybe_unserialize($results->default_value);
             }

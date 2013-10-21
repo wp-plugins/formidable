@@ -20,7 +20,7 @@
         </ul>
         </div>
         
-<?php if (IS_WPMU and !is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
+<?php if (is_multisite() and !is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
 <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;">
 <?php }else{ ?>
 <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
@@ -51,7 +51,7 @@
                 <td valign="top" width="200px"><?php _e('Admin menu label', 'formidable'); ?> </td>
                 <td>
                     <input type="text" name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
-                    <?php if (IS_WPMU and is_super_admin()){ ?>
+                    <?php if (is_multisite() and is_super_admin()){ ?>
                     <input type="checkbox" name="frm_mu_menu" id="frm_mu_menu" value="1" <?php checked($frm_settings->mu_menu, 1) ?> /> <?php _e('Use this menu name site-wide', 'formidable'); ?>
                     <?php } ?>
                 </td>

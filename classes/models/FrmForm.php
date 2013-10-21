@@ -249,7 +249,7 @@ class FrmForm{
   function getOne( $id, $blog_id=false ){
       global $wpdb, $frmdb;
       
-      if ($blog_id and IS_WPMU){
+      if ($blog_id and is_multisite()){
           global $wpmuBaseTablePrefix;
           if($wpmuBaseTablePrefix)
               $prefix = "{$wpmuBaseTablePrefix}{$blog_id}_";

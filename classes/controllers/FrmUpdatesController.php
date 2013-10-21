@@ -58,7 +58,7 @@ class FrmUpdatesController{
         
         // Retrieve Pro Credentials
         $this->pro_wpmu = false;
-        if (IS_WPMU and get_site_option($this->pro_wpmu_store)){
+        if (is_multisite() and get_site_option($this->pro_wpmu_store)){
             $creds = get_site_option($this->pro_cred_store);
             $this->pro_wpmu = true;
         }else
@@ -87,7 +87,7 @@ class FrmUpdatesController{
                 return false;
         }
             
-        if (IS_WPMU and $this->pro_wpmu)
+        if (is_multisite() and $this->pro_wpmu)
             $authorized = get_site_option($this->pro_auth_store);
         else
             $authorized = get_option($this->pro_auth_store);
@@ -202,7 +202,7 @@ class FrmUpdatesController{
             <td><input type="text" name="<?php echo $this->pro_license_str; ?>" value="" style="width:97%;"/></td>
         </tr>
         
-        <?php if (IS_WPMU){ ?>
+        <?php if (is_multisite()){ ?>
         <tr>
             <td valign="top"><?php _e('WordPress MU', 'formidable'); ?></td>
             <td valign="top">
@@ -243,7 +243,7 @@ class FrmUpdatesController{
     }
     
     private function _update_auth($creds){
-        if (IS_WPMU)
+        if (is_multisite())
             update_site_option($this->pro_wpmu_store, $creds['wpmu']);
 
         if ($creds['wpmu']){
@@ -326,7 +326,7 @@ class FrmUpdatesController{
                 $wpmu = (isset($_POST) and isset($_POST['proplug-wpmu'])) ? true : $this->pro_wpmu;
 
                 //save response
-                if (IS_WPMU)
+                if (is_multisite())
                     update_site_option($this->pro_wpmu_store, $wpmu);
 
                 if ($wpmu){

@@ -70,6 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Switched to placeholder with IE fallback for those using HTML5
 * Updated duplicate entry checking for more accuracy
 * Added French translation
+* Removed unnecessary definitions: FRM_IMAGES_URL, IS_WPMU, FRMPRO_IMAGES_URL
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
 * PRO: Added exclude_fields to the form shortcode. Ex [formidable id=2 exclude_fields="25,26"]
@@ -81,6 +82,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Make custom display pagination unique to allow multiple paginated displays on a single page
 * PRO: Remove WPML-related translating options, and move to the add-on
 * PRO: Added [entry_count] for use in custom displays
+* PRO: Allow a blank option for multiselect data from entries fields when set to autocomplete
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

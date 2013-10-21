@@ -83,7 +83,7 @@ class FrmAppController{
     public static function pro_action_needed( $plugin ){
         $frm_update = new FrmUpdatesController();
         if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
-            if (IS_WPMU and $frm_update->pro_wpmu and !is_super_admin())
+            if (is_multisite() and $frm_update->pro_wpmu and !is_super_admin())
                 return;
             $frm_update->manually_queue_update();
             $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $plugin, 'upgrade-plugin_' . $plugin);
@@ -100,7 +100,7 @@ class FrmAppController{
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
             return;
     
-        if (IS_WPMU and !is_super_admin())
+        if (is_multisite() and !is_super_admin())
             return;
          
         if(!isset($_GET['activate'])){  
@@ -180,7 +180,7 @@ class FrmAppController{
     public static function front_head(){
         global $frm_settings, $frm_version, $frm_db_version;
 
-        if (IS_WPMU){
+        if (is_multisite()){
             global $frmpro_is_installed;
             //$frm_db_version is the version of the database we're moving to
             $old_db_version = get_option('frm_db_version');
