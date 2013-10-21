@@ -386,9 +386,10 @@ class FrmUpdatesController{
             if(isset($transient->response[$this->plugin_name]))        
                 unset($transient->response[$this->plugin_name]);
             set_site_transient( $this->pro_last_checked_store, 'latest', $this->pro_check_interval );
-        }else if((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+        }else if(((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
-            $transient->response[$this->plugin_name]->url == 'http://wordpress.org/plugins/'. $this->plugin_nicename .'/'))){
+            $transient->response[$this->plugin_name]->url == 'http://wordpress.org/plugins/'. $this->plugin_nicename .'/'))) or
+            ((!isset($transient->response) or !isset($transient->response[$this->plugin_name])) and !$this->pro_is_installed())){
 
             if(!$this->pro_is_installed()){
                 $version_info = get_site_transient( $this->pro_last_checked_store );
@@ -427,6 +428,7 @@ class FrmUpdatesController{
                 //new version available, but no permission
                 $expired = isset($version_info['expired']) ? __('expired', 'formidable') : __('invalid', 'formidable');
                 $transient->response[$plugin->plugin_name]->upgrade_notice = sprintf(__('An update is available, but your license is %s.', 'formidable'), $expired);
+                add_filter('frm_pro_update_msg', array(&$this, 'no_permission_msg'));
             }
             
             set_site_transient('update_plugins', $transient);
@@ -446,8 +448,16 @@ class FrmUpdatesController{
                 return false;
         }
         
-        if(!$force)
+        if(!$force){
             $version_info = get_site_transient( $plugin->pro_last_checked_store );
+        }else{
+            global $frm_forced;
+            if($frm_forced){
+                $version_info = $frm_forced;
+                if(!is_array($frm_forced))
+                    return false;
+            }
+        }
         
         if(isset($version_info) and $version_info and !is_array($version_info))
             $version_info = false;
@@ -476,6 +486,9 @@ class FrmUpdatesController{
                 $errors = !is_array($version_info) ? true : false;
             }
             
+            //don't force again on same page
+            $frm_forced = $version_info;
+            
             if($errors)
                 return false;
             
@@ -502,7 +515,7 @@ class FrmUpdatesController{
         if(empty($domain))
             $domain = $this->pro_mothership;
         $uri = "{$domain}{$endpoint}";
-
+        
         $arg_array = array( 'body'      => $args,
                             'timeout'   => $this->timeout,
                             'sslverify' => false,
@@ -526,7 +539,7 @@ class FrmUpdatesController{
                 else
                     return $json_res;
             }else if(isset($resp['response']) and isset($resp['response']['code'])){
-                return sprintf(__('There was a $1%s error: $2%s', 'formidable'), $resp['response']['code'], $resp['response']['message'] .' '. $resp['body']);
+                return sprintf(__('There was a %1$s error: %2$s', 'formidable'), $resp['response']['code'], $resp['response']['message'] .' '. $resp['body']);
             }else{
                 return __( 'Your License Key was invalid', 'formidable');
             }
@@ -540,6 +553,10 @@ class FrmUpdatesController{
 
         if(empty($hlpdsk_settings->license) and (!isset($_REQUEST['page']) or $_REQUEST['page'] != 'hlp-settings'))
             include(FRM_PATH . '/classes/views/update/activation_warning.php');  
+    }
+    
+    function no_permission_msg(){
+        return __('An update is available, but your license is expired or invalid.', 'formidable');
     }
     
 }
