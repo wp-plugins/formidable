@@ -136,10 +136,10 @@ class FrmUpdatesController{
             if($response['auth']){ ?>
 <div id="message" class="updated fade"><strong>
 <?php
-            if(!$this->pro_is_authorized() and !$this->pro_is_installed()){
+            if(!$this->pro_is_installed()){
                 $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $this->plugin_name, 'upgrade-plugin_' . $this->plugin_name);
                 printf(__('Your License was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); 
-            }else if($this->pro_is_installed()){ 
+            }else{ 
                 $frmpro_is_installed = $this->pro_is_installed_and_authorized();
                 _e('Your Pro installation is now active. Enjoy!', 'formidable');
             } ?>
@@ -235,8 +235,11 @@ class FrmUpdatesController{
         if(!empty($user_authorized['auth']) and $user_authorized['auth']){
             $this->_update_auth($creds);
 
-            if(!$this->pro_is_installed())
+            if(!$this->pro_is_installed()){
+                global $frm_force_check;
+                $frm_force_check = true;
                 $this->manually_queue_update();
+            }
         }
 
         return $user_authorized;
@@ -253,9 +256,8 @@ class FrmUpdatesController{
             update_option($this->pro_cred_store, $creds);
             update_option($this->pro_auth_store, true);
         }
-
-        extract($creds);
-        $this->license = (isset($license) and !empty($license)) ? $license : '';
+        
+        $this->license = (isset($creds['license']) and !empty($creds['license'])) ? $creds['license'] : '';
     }
 
     function get_pro_cred_form_vals(){
@@ -374,6 +376,8 @@ class FrmUpdatesController{
         if(!is_object($transient) or !$this->pro_is_authorized())
             return $transient;
 
+        global $frm_force_check;
+        
         $plugin = $this;
         
         //make sure it doesn't show there is an update if plugin is up-to-date
@@ -386,10 +390,11 @@ class FrmUpdatesController{
             if(isset($transient->response[$this->plugin_name]))        
                 unset($transient->response[$this->plugin_name]);
             set_site_transient( $this->pro_last_checked_store, 'latest', $this->pro_check_interval );
-        }else if(((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
+        }else if($frm_force_check or
+            (((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/plugins/'. $this->plugin_nicename .'/'))) or
-            ((!isset($transient->response) or !isset($transient->response[$this->plugin_name])) and !$this->pro_is_installed())){
+            ((!isset($transient->response) or !isset($transient->response[$this->plugin_name])) and !$this->pro_is_installed()))){
 
             if(!$this->pro_is_installed()){
                 $version_info = get_site_transient( $this->pro_last_checked_store );
@@ -403,6 +408,11 @@ class FrmUpdatesController{
             }
             
             $transient = $this->queue_addon_update($transient, $plugin, $force, false);
+            remove_filter('frm_pro_update_msg', array(&$this, 'no_permission_msg'));
+        }else if(isset($transient->response) and isset($transient->response[$this->plugin_name]) and
+            isset($transient->response[$this->plugin_name]->upgrade_notice) and
+            !empty($transient->response[$this->plugin_name]->upgrade_notice)){
+            add_filter('frm_pro_update_msg', array(&$this, 'no_permission_msg'));
         }
         
         return $transient;
@@ -556,7 +566,7 @@ class FrmUpdatesController{
     }
     
     function no_permission_msg(){
-        return __('An update is available, but your license is expired or invalid.', 'formidable');
+        return __('A Formidable Pro update is available, but your license is invalid.', 'formidable');
     }
     
 }
