@@ -20,7 +20,8 @@ if($.isFunction($.fn.on)){
 
 });
 
-function frmSetNextPage(){
+function frmSetNextPage(e){
+	e.preventDefault();
 	var f = jQuery(this).parents('form:first');
 	if(jQuery(this).attr('name') == 'frm_prev_page' || jQuery(this).hasClass('frm_prev_page')){
 		var v = jQuery(f).find('.frm_next_page').attr('id').replace('frm_next_p_', '');
@@ -35,7 +36,9 @@ function frmSetNextPage(){
 	
 	jQuery('.frm_next_page').val(v);
 	jQuery('.frm_saving_draft').val(d);
-	f.submit();
+	
+	//if(jQuery(this).attr('type') != 'submit')
+		f.trigger('submit');
 }
 
 function frmToggleSection($sec){
