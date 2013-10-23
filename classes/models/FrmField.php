@@ -28,11 +28,17 @@ class FrmField{
             $frm_duplicate_ids[$values['field_key']] = $new_values['field_key'];
             $new_values = apply_filters('frm_duplicated_field', $new_values);
         }
-        $new_values['field_options'] = is_array($new_values['field_options']) ? serialize($new_values['field_options']) : $new_values['field_options'];
+        
+        foreach($new_values as $k => $v){
+            if(is_array($v))
+                $new_values[$k] = serialize($v);
+            unset($k);
+            unset($v);
+        }
         
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
-
+        
         $query_results = $wpdb->insert( $frmdb->fields, $new_values );
         if($return){
             if($query_results){

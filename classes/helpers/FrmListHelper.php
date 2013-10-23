@@ -51,7 +51,7 @@ class FrmListHelper extends WP_List_Table {
 		if($s != ''){
 		    $s = stripslashes($s);
 		    preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $s, $matches);
-		    $search_terms = array_map('_search_terms_tidy', $matches[0]);
+		    $search_terms = array_map('trim', $matches[0]);
 		}
 		
 		$s_query =  " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ". (int)$this->params['template'];

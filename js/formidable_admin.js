@@ -213,13 +213,13 @@ $('.frm_select_box').click(function(){this.select();});
 $('.frm_select_box').focus(function(){this.select();});
 
 jQuery('#frm_single_entry_type').change(function(){
-if(jQuery('#frm_single_entry_type option:selected').val()=="cookie"){jQuery('#frm_cookie_expiration').fadeIn();}
-else{jQuery('#frm_cookie_expiration').fadeOut();}
+if(jQuery('#frm_single_entry_type option:selected').val()=="cookie"){jQuery('#frm_cookie_expiration').fadeIn('slow');}
+else{jQuery('#frm_cookie_expiration').fadeOut('slow');}
 });
 
 jQuery('#single_entry').change(function(){
-if(jQuery('#single_entry').is(':checked') && jQuery('#frm_single_entry_type option:selected').val()=='cookie'){jQuery('#frm_cookie_expiration').fadeIn();}
-else{jQuery('#frm_cookie_expiration').fadeOut();}
+if(jQuery('#single_entry').is(':checked') && jQuery('#frm_single_entry_type option:selected').val()=='cookie'){jQuery('#frm_cookie_expiration').fadeIn('slow');}
+else{jQuery('#frm_cookie_expiration').fadeOut('slow');}
 });
 
 if($(".frm_exclude_cat_list .frm_catlevel_2").length>0){
@@ -558,7 +558,7 @@ if(jQuery('#cust_'+a+'_'+key).css('visibility')=='hidden') jQuery('#frm_cust_rep
 
 function frmSetMenuOffset(){ 
 	var fields = jQuery('#postbox-container-1 .frm_field_list');
-	if(fields.length>0){
+	if(fields.length){
 		var offset=283;
 	}else{
 		var fields = jQuery('#frm_adv_info');

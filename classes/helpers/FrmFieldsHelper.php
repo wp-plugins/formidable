@@ -396,7 +396,7 @@ DEFAULT_HTML;
     }
     
     public static function show_onfocus_js($field_id, $clear_on_focus){ ?>
-    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php echo $clear_on_focus ? __('Clear default value when field is clicked', 'formidable') : __('Do not clear default value when field is clicked', 'formidable'); ?>"></a>
+    <a href="javascript:frm_clear_on_focus(<?php echo $field_id; ?>,<?php echo $clear_on_focus; ?>)" class="<?php echo ($clear_on_focus) ?'':'frm_inactive_icon '; ?>frm_default_val_icons frm_action_icon frm_reload_icon" id="clear_field_<?php echo $field_id; ?>" title="<?php echo esc_attr($clear_on_focus ? __('Clear default value when typing', 'formidable') : __('Do not clear default value when typing', 'formidable')); ?>"></a>
     <?php
     }
     

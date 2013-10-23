@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Updated duplicate entry checking for more accuracy
 * Added French translation
 * Removed unnecessary definitions: FRM_IMAGES_URL, IS_WPMU, FRMPRO_IMAGES_URL
+* PRO: Switch field IDs in email settings in duplicated form
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
 * PRO: Added exclude_fields to the form shortcode. Ex [formidable id=2 exclude_fields="25,26"]
