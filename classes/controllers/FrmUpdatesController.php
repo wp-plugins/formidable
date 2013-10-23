@@ -418,7 +418,7 @@ class FrmUpdatesController{
         return $transient;
     }
     
-    function queue_addon_update($transient, $plugin, $force=false, $checked=true){
+    function queue_addon_update($transient, $plugin, $force=false, $checked=false){
         if(!$this->pro_is_authorized() or !is_object($transient) or $checked or empty($transient->checked))
             return $transient;
         
