@@ -465,4 +465,11 @@ jQuery.fn.frmVisibilityToggle = function() {
     return this.css('visibility', function(i, visibility) {
         return (visibility == 'visible') ? 'hidden' : 'visible';
     });
-};
+}
+
+function frmScrollFrm(id){
+	var frmPos = jQuery('#frm_form_'+id+'_container').offset(); 
+	var cOff = document.documentElement.scrollTop || document.body.scrollTop;
+	if(frmPos) 
+		window.scrollTo(frmPos.left, (frmPos.top-28));
+}

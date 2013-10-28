@@ -231,7 +231,11 @@ class FrmAppController{
                 'saving' => esc_attr(__('Saving', 'formidable')),
                 'saved' => esc_attr(__('Saved', 'formidable')),
                 'ok'    => __('OK'),
-                'cancel' => __('Cancel')
+                'cancel' => __('Cancel'),
+                'clear_default' => __('Clear default value when typing', 'formidable'),
+                'no_clear_default' => __('Do not clear default value when typing', 'formidable'),
+                'valid_default' => __('Default value will pass form validation', 'formidable'),
+                'no_valid_default' => __('Default value will NOT pass form validation', 'formidable')
             ));
         }
     }
