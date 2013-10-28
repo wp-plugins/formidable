@@ -19,7 +19,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
         $values = FrmEntriesHelper::setup_new_vars($fields, $form);
         require(FRM_VIEWS_PATH .'/frm-entries/new.php'); 
 ?>
-<script type="text/javascript">jQuery(document).ready(function($){frmScrollFrm(<?php echo $form->id ?>);})</script><?php        
+<script type="text/javascript">jQuery(document).ready(function($){frmScrollMsg(<?php echo $form->id ?>);})</script><?php        
     }else{
         $fields = FrmFieldsHelper::get_form_fields($form->id);
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);

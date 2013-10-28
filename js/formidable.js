@@ -467,7 +467,7 @@ jQuery.fn.frmVisibilityToggle = function() {
     });
 }
 
-function frmScrollFrm(id){
+function frmScrollMsg(id){
 	var frmPos = jQuery('#frm_form_'+id+'_container').offset(); 
 	var cOff = document.documentElement.scrollTop || document.body.scrollTop;
 	if(frmPos) 
