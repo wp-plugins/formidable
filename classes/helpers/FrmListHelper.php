@@ -205,6 +205,11 @@ class FrmListHelper extends WP_List_Table {
 				    $val = $item->{$column_name};
 				    break;
 				case 'name':
+				    if(trim($item->{$column_name}) == '')
+				        $val = __('(no title)');
+				    else
+				        $val = FrmAppHelper::truncate(strip_tags($item->{$column_name}), 50);
+				    break;
 				case 'description':
 				    $val = FrmAppHelper::truncate(strip_tags($item->{$column_name}), 50);
 				    break;

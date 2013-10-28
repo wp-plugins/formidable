@@ -667,7 +667,8 @@ function frmToggleAllowedShortcodes(id,f){
 		jQuery('#frm_dynamic_values_tab').click();
 	}else if(id=='frm_classes'){
 		jQuery('#frm_layout_classes_tab').click();
-	}else if(jQuery('.frm_form_builder').length && (f=='focusin' || jQuery('#frm-dynamic-values').is(':visible'))){
+	}else if(jQuery('.frm_form_builder').length && 
+		(f=='focusin' || jQuery('#frm-dynamic-values').is(':visible') || jQuery('#frm-layout-classes').is(':visible'))){
 		jQuery('#frm_insert_fields_tab').click();
 	}
 }

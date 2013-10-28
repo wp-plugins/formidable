@@ -59,7 +59,7 @@ class FrmFormsHelper{
             $post_values = $_POST;
         }
         
-        foreach (array('name' => __('Untitled Form', 'formidable'), 'description' => '') as $var => $default){
+        foreach (array('name' => '', 'description' => '') as $var => $default){
             if(!isset($values[$var]))
                 $values[$var] = FrmAppHelper::get_param($var, $default);
         }

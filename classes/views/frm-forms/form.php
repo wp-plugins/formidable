@@ -2,7 +2,7 @@
 
 <div id="frm_form_editor_container">
 <div id="titlediv">
-    <input type="text" name="name" value="<?php echo esc_attr($values['name']); ?>" id="title" />
+    <input type="text" name="name" value="<?php echo esc_attr($values['name']); ?>" id="title" placeholder="<?php echo esc_attr(__('Enter title here')) ?>" />
     <div id="edit-slug-box" class="hide-if-no-js">
         <div class="alignright" style="width:13em;max-width:30%">
         <strong><?php _e('Form Key:', 'formidable') ?></strong>
