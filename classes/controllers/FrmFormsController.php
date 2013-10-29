@@ -442,6 +442,14 @@ class FrmFormsController{
             if($default) $values['default_template'] = 1;
             
             include($templates[$i]);
+            
+            if($form)
+                $form = $frm_form->getOne($form->id);
+            else
+                $form = $frm_form->getAll($template_query, '', 1);
+            
+            if($form)
+                do_action('frm_after_duplicate_form', $form->id, (array)$form);
         }
     }
 

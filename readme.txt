@@ -84,6 +84,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Remove WPML-related translating options, and move to the add-on
 * PRO: Added [entry_count] for use in custom displays
 * PRO: Allow a blank option for multiselect data from entries fields when set to autocomplete
+* PRO: Adjust imported created and updated times from server setting to UTC
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields
