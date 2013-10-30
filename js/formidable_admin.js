@@ -33,6 +33,8 @@ $('#new_fields').sortable({
         jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_field_order&"+order});
     }
 });
+if($('input[name="name"]').val() == '')
+	$('input[name="name"]').focus();
 }
 
 if($('#frm_adv_info').length || $('.frm_field_list').length){
