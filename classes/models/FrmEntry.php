@@ -199,8 +199,12 @@ class FrmEntry{
             global $frm_entry_meta;
             $metas = $frm_entry_meta->getAll("item_id=$entry->id and field_id != 0");
             $entry_metas = array();
-            foreach($metas as $meta_val)
+            
+            foreach($metas as $meta_val){
                 $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = maybe_unserialize($meta_val->meta_value);
+                unset($meta_val);
+            }
+            unset($metas);
 
             $entry->metas = $entry_metas;
 
@@ -329,7 +333,7 @@ class FrmEntry{
 
     function validate( $values, $exclude=false ){
         global $wpdb, $frmdb, $frm_field, $frm_entry_meta, $frm_settings;
-
+        
         $errors = array();
         if(!isset($values['form_id']) or !isset($values['item_meta']) or (isset($_POST) and (!isset($_POST['frm_submit_entry']) or !wp_verify_nonce($_POST['frm_submit_entry'], 'frm_submit_entry_nonce')))){
             $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');

@@ -126,8 +126,7 @@ class FrmEntriesController{
     }
     
     public static function delete_entry_before_wpredirect($url, $form, $atts){
-        if(!defined('DOING_AJAX'))
-            self::_delete_entry($atts['id'], $form);
+        self::_delete_entry($atts['id'], $form);
         return $url;
     }
     

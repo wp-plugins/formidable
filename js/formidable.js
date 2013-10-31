@@ -301,7 +301,7 @@ function frmGetDataOpts(f,selected,field_id){
 
 function frmOnSubmit(e){
 	e.preventDefault();
-	if(jQuery(this).find('.wp-editor-wrap').length){
+	if(jQuery(this).find('.wp-editor-wrap').length && typeof(tinyMCE) != 'undefined'){
 		tinyMCE.triggerSave();
 	}
 	frmGetFormErrors(this);
