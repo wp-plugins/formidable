@@ -12,12 +12,8 @@ if($.isFunction($.fn.placeholder)){
 	});
 }
 
-if($.isFunction($.fn.on)){
-	$(document).on('click', '.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft', frmSetNextPage);
-}else{
-	$('.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft').live('click', frmSetNextPage);
-}
-
+$(document).on('click', '.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft', frmSetNextPage);
+$(document).on('click', '.frm_remove_link', frmRemoveDiv);
 });
 
 function frmSetNextPage(e){
@@ -338,7 +334,7 @@ function frmGetFormErrors(object){
 					if(fin) var p=jQuery('input[name="frm_page_order_'+fin+'"]').val();
 					frmThemeOverride_frmAfterSubmit(fin,p,errObj);
 				}
-				if(jQuery(object).find('input[name="id"]').length > 0){
+				if(jQuery(object).find('input[name="id"]').length){
 					var eid = jQuery(object).find('input[name="id"]').val();
 					var oc = jQuery('#frm_edit_'+eid).find('a').addClass('frm_ajax_edited').click();
 				}
@@ -431,8 +427,8 @@ function frmDeleteEntry(entry_id,prefix){
 	});
 }
 
-function frmRemoveDiv(id){
-jQuery(id).fadeOut('slow').replaceWith('');	
+function frmRemoveDiv(){
+jQuery(this).parent('.frm_uploaded_files').fadeOut('slow').replaceWith('');	
 }
 
 function frmNextUpload(obj,id,remove){
@@ -475,3 +471,4 @@ function frmScrollMsg(id){
 	if(frmPos) 
 		window.scrollTo(frmPos.left, (frmPos.top-28));
 }
+

@@ -80,7 +80,7 @@ class FrmForm{
        $form_id = $wpdb->insert_id;
        $frm_field->duplicate($id, $form_id, $copy_keys, $blog_id);
        
-       do_action('frm_after_duplicate_form', $form_id, $new_values);    
+       do_action('frm_after_duplicate_form', $form_id, $new_values);
        return $form_id;
    }else
       return false;

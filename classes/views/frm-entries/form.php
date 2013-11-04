@@ -31,7 +31,7 @@ foreach($values['fields'] as $field){
     else
         do_action('frm_show_other_field_type', $field, $form);
     
-    do_action('frm_get_field_scripts', $field);
+    do_action('frm_get_field_scripts', $field, $form);
 }    
 }
 

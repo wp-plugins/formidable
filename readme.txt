@@ -2,7 +2,7 @@
 Contributors: sswells, srwells
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
-Requires at least: 3.1
+Requires at least: 3.3
 Tested up to: 3.6.1
 Stable tag: 1.07.01
 
@@ -71,6 +71,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Updated duplicate entry checking for more accuracy
 * Added French translation
 * Removed unnecessary definitions: FRM_IMAGES_URL, IS_WPMU, FRMPRO_IMAGES_URL
+* Dropped support for < jQuery 1.7 (< WP 3.3)
 * PRO: Switch field IDs in email settings in duplicated form
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
@@ -85,6 +86,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added [entry_count] for use in custom displays
 * PRO: Allow a blank option for multiselect data from entries fields when set to autocomplete
 * PRO: Adjust imported created and updated times from server setting to UTC
+* PRO: Switch time field generation from javascript to php
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields
