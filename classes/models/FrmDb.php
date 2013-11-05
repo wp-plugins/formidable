@@ -122,7 +122,7 @@ class FrmDb{
             $all_entries = $frm_entry->getAll();
             foreach($all_entries as $ent){
                 $opts = maybe_unserialize($ent->description);
-                if(is_array($opts))
+                if(is_array($opts) and in_array($opts['ip']))
                     $wpdb->update( $this->entries, array('ip' => $opts['ip']), array( 'id' => $ent->id ) );
             }
         }

@@ -154,6 +154,7 @@ if($('#bulkaction').val()=='delete'){return confirm('Are you sure you want to de
 
 if($('#frm_tooltip').length==0){$('#wpfooter,#footer').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
 
+$('#frm_install_link').click(function(){frm_install_now()});
 $("select[name='frm_theme_selector'] option").each(function(){
 $(this).hover(function(){$('#frm_show_cal').removeClass().addClass($(this).attr('id'));},'');
 });
@@ -845,6 +846,8 @@ jQuery('#pro_cred_form,.frm_pro_installed').toggle();
 }
 
 function frm_deauthorize(){
+if(!confirm(frm_admin_js.deauthorize))
+	return;
 jQuery('#frm_deauthorize_link').replaceWith('<img src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" id="frm_deauthorize_link" />');
 jQuery.ajax({type:'POST',url:ajaxurl,data:'action=frm_deauthorize',
 success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_auth_form();}

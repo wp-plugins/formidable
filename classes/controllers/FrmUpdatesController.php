@@ -166,7 +166,7 @@ class FrmUpdatesController{
 <div class="frm_pro_installed">
 <div><strong class="alignleft" style="margin-right:10px;"><?php _e('Formidable Pro is Installed', 'formidable') ?></strong>
     <a href="javascript:frm_show_auth_form()" class="button-secondary alignleft"><?php _e('Enter new license', 'formidable') ?></a>
-    <a href="javascript:frm_deauthorize()" onclick="return confirm('<?php echo esc_attr(__('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable')) ?>')" id="frm_deauthorize_link" class="button-secondary alignright"><?php _e('Deauthorize this site', 'formidable') ?></a>
+    <a href="javascript:frm_deauthorize()" id="frm_deauthorize_link" class="button-secondary alignright"><?php _e('Deauthorize this site', 'formidable') ?></a>
 </div>
 <div class="clear"></div>
 </div>
