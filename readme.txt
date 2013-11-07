@@ -72,6 +72,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added French translation
 * Removed unnecessary definitions: FRM_IMAGES_URL, IS_WPMU, FRMPRO_IMAGES_URL
 * Dropped support for < jQuery 1.7 (< WP 3.3)
+* Added frm_radio_class and frm_checkbox_class hooks
+* Moved radio and checkbox inputs inside the label tags
 * PRO: Switch field IDs in email settings in duplicated form
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
@@ -87,6 +89,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow a blank option for multiselect data from entries fields when set to autocomplete
 * PRO: Adjust imported created and updated times from server setting to UTC
 * PRO: Switch time field generation from javascript to php
+* PRO: Allow [if created-at less_than="-1 month"]
+* PRO: Added frm_default_field_opts hook
+* PRO: Only show "create entry in form" box if user has permission to create entries
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

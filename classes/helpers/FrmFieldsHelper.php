@@ -205,8 +205,6 @@ DEFAULT_HTML;
     }
     
     public static function replace_shortcodes($html, $field, $errors=array(), $form=false){
-        global $frm_readonly;
-        
         $html = stripslashes($html);
         $html = apply_filters('frm_before_replace_shortcodes', $html, $field, $errors, $form);
         

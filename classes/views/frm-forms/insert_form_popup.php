@@ -37,8 +37,8 @@
     
     <p><?php FrmFormsHelper::forms_dropdown( 'frm_add_form_id' )?></p>
 
-    <p><input type="checkbox" id="frm_display_title" /> <label for="frm_display_title"><?php _e("Display form title", "formidable"); ?></label> &nbsp; &nbsp;
-        <input type="checkbox" id="frm_display_description" /> <label for="frm_display_description"><?php _e("Display form description", "formidable"); ?></label>
+    <p><label for="frm_display_title"><input type="checkbox" id="frm_display_title" /> <?php _e("Display form title", "formidable"); ?></label> &nbsp; &nbsp;
+        <label for="frm_display_description"><input type="checkbox" id="frm_display_description" /> <?php _e("Display form description", "formidable"); ?></label>
     </p>
     
     <p><input type="button" class="button-primary" value="Insert Form" onclick="frm_insert_form();" /></p>
@@ -56,7 +56,7 @@
         </select>
     </p>
     
-    <p><input type="checkbox" id="frm_filter_content" /> <label for="frm_filter_content"><?php _e("Filter shortcodes within the custom display content", "formidable"); ?></label>
+    <p><label for="frm_filter_content"><input type="checkbox" id="frm_filter_content" /> <?php _e("Filter shortcodes within the custom display content", "formidable"); ?></label>
         <span class="howto"><?php _e("Note: In some cases, this option can create an infinite loop", "formidable"); ?></span>
     </p>
     
