@@ -52,18 +52,18 @@ ul.frm_form_nav li.last a.current_page{
 p.search-box {margin-top:10px;}
 .wp-admin .form-wrap .frm_forms.with_frm_style{max-width:100%;}
 .wp-admin label.frm_primary_label{font-size:12px;color:#444444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;}
-.wp-admin .with_frm_style .form-field{margin-bottom:20px;}
-.wp-admin .with_frm_style div.description, .wp-admin .frm_error{margin:0;padding:0;font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:11px;color:#666666;font-weight:normal;text-align:left;font-style:normal;}
+.wp-admin .with_frm_style form .form-field{margin-bottom:20px;}
+.wp-admin .with_frm_style form div.description, .wp-admin .frm_error{margin:0;padding:0;font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:11px;color:#666666;font-weight:normal;text-align:left;font-style:normal;}
 .wp-admin .frm_error{color:#ff0000;}
-.wp-admin .with_frm_style .frm_blank_field input, .wp-admin .with_frm_style .frm_blank_field textarea, .wp-admin .with_frm_style .frm_blank_field select, .wp-admin .with_frm_style .frm_blank_field #recaptcha_area{border-color:#ff0000;}
-.wp-admin .with_frm_style .frm_blank_field label{color:#ff0000;}
+.wp-admin .with_frm_style form .frm_blank_field input, .wp-admin .with_frm_style form .frm_blank_field textarea, .wp-admin .with_frm_style form .frm_blank_field select, .wp-admin .with_frm_style form .frm_blank_field #recaptcha_area{border-color:#ff0000;}
+.wp-admin .with_frm_style form .frm_blank_field label{color:#B94A48;}
 .wp-admin .frm_required{color:#ff0000;font-weight:bold;}
 .wp-admin .form-field label.frm_primary_label{display:block;float:none;width:auto;}
 .wp-admin .with_frm_style .wp-editor-container textarea, .wp-admin .postbox .wp-editor-container textarea{border:none;}
 .wp-admin .with_frm_style .mceIframeContainer, .wp-admin .postbox .mceIframeContainer{background-color:#fff;}
 
 .wp-admin .frm_10radio{margin-right:10px;text-align:center;float:left;}
-.wp-admin .frm_form_fields input, .wp-admin .frm_form_fields select, .wp-admin .frm_form_fields textarea{
+.wp-admin .frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:13px;margin-bottom:0;width:400px;
 	-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;
 	color:#222222;background-color:#eeeeee;border:1px solid #DFDFDF;

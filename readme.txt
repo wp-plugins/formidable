@@ -74,6 +74,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Dropped support for < jQuery 1.7 (< WP 3.3)
 * Added frm_radio_class and frm_checkbox_class hooks
 * Moved radio and checkbox inputs inside the label tags
+* Updated default styling
 * PRO: Switch field IDs in email settings in duplicated form
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
@@ -92,6 +93,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow [if created-at less_than="-1 month"]
 * PRO: Added frm_default_field_opts hook
 * PRO: Only show "create entry in form" box if user has permission to create entries
+* PRO: Removed icons from error message
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

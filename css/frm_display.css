@@ -10,7 +10,7 @@
 .with_frm_style .form-field, .with_frm_style .frm_form_field{margin-bottom:15px;}
 .with_frm_style .frm_blank_field label, .with_frm_style .frm_error{color:#be2e17;}
 .with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .with_frm_style .frm_blank_field #recaptcha_area{border:1px solid #be2e17;}
-.with_frm_style .frm_required{color:#ff0000;font-weight:bold;}
+.with_frm_style .frm_required{color:#B94A48;font-weight:bold;}
 .with_frm_style input.required, .with_frm_style textarea.required, .with_frm_style select.required{color:inherit;}
 .with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;margin:0;}
 .with_frm_style .frm_left_container .frm_checkbox, .with_frm_style .frm_left_container .frm_radio{margin-left:160px;}
@@ -25,8 +25,10 @@
 .frm_set_select .with_frm_style .frm_form_fields select, .frm_set_select .with_frm_style .frm_form_fields select.auto_width{width:95%;}
 .with_frm_style .frm_radio label, .with_frm_style .frm_checkbox label{display:inline;}
 .with_frm_style input[type="radio"], .with_frm_style input[type="checkbox"]{width:auto;margin-right:3px;}
-.with_frm_style .frm_message, .with_frm_style .frm_message p{font-size:14px;margin:5px 0 15px;padding:5px 10px;background-color:#FFFFE0;color:#444444;}
-.with_frm_style .frm_message{border:1px solid #E6DB55;}
+.with_frm_style .frm_error_style, .with_frm_style .frm_message{padding:15px;font-size:14px;margin:5px 0 15px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;}
+.with_frm_style .frm_message, .with_frm_style .frm_message p{font-size:14px;color:#468847;}
+.with_frm_style .frm_message{border:1px solid #D6E9C6;background-color:#DFF0D8;}
+.with_frm_style .frm_error_style{color:#B94A48;border:1px solid #EBCCD1;background-color:#F2DEDE;}
 .with_frm_style .frm_default, .with_frm_style .placeholder{font-style:italic;}
 .frm_ajax_loading{visibility:hidden;}
 
