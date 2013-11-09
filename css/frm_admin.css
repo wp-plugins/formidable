@@ -316,6 +316,7 @@ span.howto{display:inline;}
 .frm_option_key_label, .frm_option_val_label{font-weight:bold;font-size:11px;}
 .edit_field_type_select .frm_option_val_label{margin-left:12px;}
 
+.postbox .frm-help-tabs{padding-left:0;margin-left:-4px !important;}
 #postbox-container-1 .ui-state-default{color:#000;}
 #new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected, .frm_update_msg{
 	padding:5px;

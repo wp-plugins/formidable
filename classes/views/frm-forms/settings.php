@@ -39,7 +39,7 @@
         <div class="meta-box-sortables">
         <div class="categorydiv postbox">
         <h3 class="hndle"><span><?php echo FrmAppHelper::truncate($values['name'], 40) .' '. __('Settings', 'formidable') ?></span></h3>
-        <div class="inside">
+        <div class="inside frm-help-tabs">
         <div class="contextual-help-tabs">
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?> frm-form-setting-tabs">
             <?php $a = isset($_GET['t']) ? $_GET['t'] : 'advanced_settings'; ?>
