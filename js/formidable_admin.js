@@ -130,21 +130,9 @@ frmLoadField(load_field_id);
 // tabs
 $('.frm-category-tabs a').click(function(){
 	var t = $(this).attr('href');
-	if(typeof(t)=='undefined') return false;
-	var c = t.replace('#', '.');
-	var pro=$('#taxonomy-linkcategory .frm-category-tabs li').length > 2;
-	$(this).closest('li').addClass('tabs active').siblings('li').removeClass('tabs active');
-	if($(this).closest('div').find('.tabs-panel').length>0) $(this).closest('div').children('.tabs-panel').hide();
-	else{ $(this).closest('div.inside').find('.tabs-panel, .hide_with_tabs').hide();
-	if($(this).closest('ul').hasClass('frm-form-setting-tabs')){
-		if(t=='#html_settings'){if(pro){$('#taxonomy-linkcategory .frm-category-tabs li').hide();$('#frm_html_tab').show();}$('#frm_html_tags_tab').click();}
-		else if($('#frm_html_tags_tab').is(':visible')){
-			if(pro){$('#taxonomy-linkcategory .frm-category-tabs li').show();$('#frm_html_tab').hide();}
-			$('#frm_insert_fields_tab').click();
-		}
-	}}
-	$(t).show();
-	$(c).show();
+	if(typeof(t)!='undefined'){
+		frmClickTab(t, $(this));
+	}
 	return false;
 });
 
@@ -157,6 +145,24 @@ if($('#frm_tooltip').length==0){$('#wpfooter,#footer').prepend('<div id="frm_too
 $('#frm_install_link').click(function(){frm_install_now()});
 $("select[name='frm_theme_selector'] option").each(function(){
 $(this).hover(function(){$('#frm_show_cal').removeClass().addClass($(this).attr('id'));},'');
+});
+
+$('.frm_reset_style').click(function(){
+	jQuery.ajax({
+		type:'POST',url:ajaxurl,
+	    data:'action=frm_settings_reset',
+		success:function(errObj){
+			errObj=errObj.replace(/^\s+|\s+$/g,'');
+			if(errObj.indexOf('{') === 0)
+				var errObj=jQuery.parseJSON(errObj);
+			for (var key in errObj){
+				$('input[name="frm_'+key+'"], select[name="frm_'+key+'"]').val(errObj[key]);
+			}
+			$('select[name="frm_theme_selector"]').val(errObj['theme_css']).change();
+			$('#frm_submit_style, #frm_auto_width').prop('checked', false); //checkboxes
+			$('#frm_fieldset').change();
+		}
+	});
 });
 
 $("select[name='frm_theme_selector']").change(function(){
@@ -218,6 +224,44 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 	return false;
 });
 });
+
+function frmClickTab(t, link){
+	var c = t.replace('#', '.');
+	var pro=jQuery('#taxonomy-linkcategory .frm-category-tabs li').length > 2;
+	link.closest('li').addClass('tabs active').siblings('li').removeClass('tabs active');
+	if(link.closest('div').find('.tabs-panel').length>0) link.closest('div').children('.tabs-panel').hide();
+	else{link.closest('div.inside').find('.tabs-panel, .hide_with_tabs').hide();
+	if(link.closest('ul').hasClass('frm-form-setting-tabs')){
+		if(t=='#html_settings'){
+			if(pro){
+				jQuery('#taxonomy-linkcategory .frm-category-tabs li').hide();
+				jQuery('#frm_html_tab').show();
+			}
+			jQuery('#frm_html_tags_tab').click();
+		}else if(jQuery('#frm_html_tags_tab').is(':visible')){
+			if(pro){jQuery('#taxonomy-linkcategory .frm-category-tabs li').show();jQuery('#frm_html_tab').hide();}
+			jQuery('#frm_insert_fields_tab').click();
+		}
+	}}
+	jQuery(t).show();
+	jQuery(c).show();
+	
+	if(jQuery('.frm_form_settings').length){
+		jQuery('.frm_form_settings').attr('action', '?page=formidable&frm_action=settings&id='+jQuery('.frm_form_settings input[name="id"]').val()+'&t='+t.replace('#', ''));
+	}else{
+		jQuery('.frm_settings_form').attr('action', '?page=formidable-settings&t='+t.replace('#', ''));
+	}
+}
+
+function frmSettingsTab(tab, id){
+	var t = jQuery('.'+id+'_settings');
+	if(jQuery(t).length){
+		tab.parent().addClass('active').siblings('li').removeClass('active');
+		tab.closest('div.inside').children('.tabs-panel').hide();
+		jQuery(t).show();
+	}
+	return false;
+}
 
 function frmLoadField(field_id){
 	if(jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').length > 0){
@@ -740,17 +784,6 @@ if(jQuery(this).val() == v && jQuery(this).attr('name')!=t.attr('name')){
 	return false;
 }
 });
-}
-
-function frmSettingsTab(tab, id){
-	var t = jQuery('.'+id+'_settings');
-	if(jQuery(t).length==0)
-		return false;
-		
-	tab.parent().addClass('active').siblings('li').removeClass('active');
-	tab.closest('div.inside').children('.tabs-panel').hide();
-	jQuery(t).show();
-	return false;
 }
 
 //function to append a new theme stylesheet with the new style changes

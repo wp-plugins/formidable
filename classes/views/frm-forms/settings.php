@@ -19,7 +19,7 @@
             <?php FrmAppController::get_form_nav($id, true); ?>
             </div>
             
-<form method="post">     
+<form method="post" class="frm_form_settings">     
     <p style="clear:left;">        
         <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
@@ -42,16 +42,17 @@
         <div class="inside">
         <div class="contextual-help-tabs">
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?> frm-form-setting-tabs">
-        	<li class="tabs active"><a onclick="frmSettingsTab(jQuery(this),'advanced');"><?php _e('General', 'formidable') ?></a></li>
-        	<li><a href="#notification_settings"><?php _e('Emails', 'formidable') ?></a></li>
-            <li><a href="#html_settings"><?php _e('Customize HTML', 'formidable') ?></a></li>
-            <li><a href="#post_settings"><?php _e('Create Posts', 'formidable') ?></a></li>
+            <?php $a = isset($_GET['t']) ? $_GET['t'] : 'advanced_settings'; ?>
+        	<li <?php echo ($a == 'advanced_settings') ? 'class="tabs active"' : '' ?>><a href="#advanced_settings"><?php _e('General', 'formidable') ?></a></li>
+        	<li <?php echo ($a == 'notification_settings') ? 'class="tabs active"' : '' ?>><a href="#notification_settings"><?php _e('Emails', 'formidable') ?></a></li>
+            <li <?php echo ($a == 'html_settings') ? 'class="tabs active"' : '' ?>><a href="#html_settings"><?php _e('Customize HTML', 'formidable') ?></a></li>
+            <li <?php echo ($a == 'post_settings') ? 'class="tabs active"' : '' ?>><a href="#post_settings"><?php _e('Create Posts', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>
-                <li><a onclick="frmSettingsTab(jQuery(this),'<?php echo $sec_name ?>');"><?php echo ucfirst($sec_name) ?></a></li>
+                <li <?php echo ($a == $sec_name .'_settings') ? 'class="tabs active"' : '' ?>><a href="#<?php echo $sec_name ?>_settings"><?php echo ucfirst($sec_name) ?></a></li>
             <?php } ?>
         </ul>
         </div>
-        <div style="display:block;" class="advanced_settings tabs-panel">
+        <div style="display:<?php echo ($a == 'advanced_settings') ? 'block' : 'none'; ?>;" class="advanced_settings tabs-panel">
         	<table class="form-table">                
                 <tr><td colspan="2"><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
                     <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
@@ -125,7 +126,7 @@
         </div>
         <?php } ?>
         
-        <div id="html_settings" class="tabs-panel" style="display:none;">
+        <div id="html_settings" class="tabs-panel" style="display:<?php echo ($a == 'html_settings') ? 'block' : 'none'; ?>;">
             
             <div id="post-body-content" class="frm_top_container" style="margin-right:260px;">
                 <p><label class="frm_primary_label"><?php _e('Before Fields', 'formidable') ?></label>
@@ -151,7 +152,7 @@
                 <textarea name="options[submit_html]" rows="3" id="submit_html" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea(stripslashes($values['submit_html'])) ?></textarea></p>
             </div>
         </div>
-        <div id="post_settings" class="tabs-panel" style="display:none;">
+        <div id="post_settings" class="tabs-panel" style="display:<?php echo ($a == 'post_settings') ? 'block' : 'none'; ?>;">
             <?php if($frmpro_is_installed)
                 FrmProFormsController::post_options($values);
             else
@@ -159,13 +160,15 @@
             ?>
         </div>
         
-        <?php foreach($sections as $sec_name => $section){
+        <?php foreach($sections as $sec_name => $section){ ?>
+            <div id="<?php echo $sec_name ?>_settings" class="tabs-panel" style="display:<?php echo ($a == $sec_name .'_settings') ? 'block' : 'none'; ?>;"><?php
             if(isset($section['class'])){
                 call_user_func(array($section['class'], $section['function']), $values); 
             }else{
                 call_user_func((isset($section['function']) ? $section['function'] : $section), $values); 
-            }
-        } ?>
+            } ?>
+            </div>
+        <?php } ?>
     
         <?php do_action('frm_add_form_option_section', $values); ?>
         <div class="clear"></div>

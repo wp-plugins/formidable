@@ -79,6 +79,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
 * PRO: Added exclude_fields to the form shortcode. Ex [formidable id=2 exclude_fields="25,26"]
+* PRO: Added styling reset button on styling page
 * PRO: Allow the field value to be used to filter data from entries values in custom displays
 * PRO: Allow for quotation marks in values used to get stats in the frm-stats shortcode
 * PRO: Fixed entry listing widget to get values from stats for more accuracy

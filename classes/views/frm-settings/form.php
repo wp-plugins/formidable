@@ -12,18 +12,19 @@
         <div class="inside">
         <div class="contextual-help-tabs">
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs id="category-tabs'; ?>">
-        	<li class="tabs active"><a href="#general_settings" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
-            <li><a href="#styling_settings" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
+            <?php $a = isset($_GET['t']) ? $_GET['t'] : 'general_settings'; ?>
+        	<li <?php echo ($a == 'general_settings') ? 'class="tabs active"' : '' ?>><a href="#general_settings" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
+            <li <?php echo ($a == 'styling_settings') ? 'class="tabs active"' : '' ?>><a href="#styling_settings" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>
-                <li><a href="#<?php echo $sec_name ?>_settings"><?php echo ucfirst($sec_name) ?></a></li>
+                <li <?php echo ($a == $sec_name .'_settings') ? 'class="tabs active"' : '' ?>><a href="#<?php echo $sec_name ?>_settings"><?php echo ucfirst($sec_name) ?></a></li>
             <?php } ?>
         </ul>
         </div>
         
 <?php if (is_multisite() and !is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
-<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;">
+<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;display:<?php echo ($a == 'general_settings') ? 'block' : 'none'; ?>;">
 <?php }else{ ?>
-<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;">
+<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;display:<?php echo ($a == 'general_settings') ? 'block' : 'none'; ?>;">
     <div class="postbox">
         <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro Account Information', 'formidable')?></h3>
         <div class="inside">
@@ -35,12 +36,12 @@
 <?php } ?>
 </div>
     
-    <form name="frm_settings_form" method="post" class="frm_settings_form">
+    <form name="frm_settings_form" method="post" class="frm_settings_form" action="?page=formidable-settings<?php echo (isset($_GET['t'])) ? '&amp;t='. $_GET['t'] : ''; ?>">
         <input type="hidden" name="frm_action" value="process-form" />
         <input type="hidden" name="action" value="process-form" />
         <?php wp_nonce_field('process_form_nonce', 'process_form'); ?>
             
-        <div class="general_settings tabs-panel" style="border-top:none;">
+        <div class="general_settings tabs-panel" style="border-top:none;display:<?php echo ($a == 'general_settings') ? 'block' : 'none'; ?>;">
         <table class="form-table">
             <tr><td colspan="2">
                 <p class="submit" style="padding:0;">
@@ -203,7 +204,7 @@
             <?php if(!$frmpro_is_installed){ ?>
             </table>
             </div>
-            <div class="styling_settings tabs-panel" style="display:none;">
+            <div class="styling_settings tabs-panel" style="display:<?php echo ($a == 'styling_settings') ? 'block' : 'none'; ?>;">
             <table class="form-table">
                 <tr><td>
                 <div class="frm_update_msg">
@@ -219,13 +220,17 @@
         </table>
         </div>
            
-        <?php foreach($sections as $sec_name => $section){
+        <?php foreach($sections as $sec_name => $section){ 
+            if($a == $sec_name .'_settings'){ ?>
+<style type="text/css">.<?php echo $sec_name ?>_settings{display:block !important;}</style><?php }?>
+            <div id="<?php echo $sec_name ?>_settings" class="tabs-panel" style="display:<?php echo ($a == $sec_name .'_settings') ? 'block' : 'none'; ?>;"><?php
                 if(isset($section['class'])){
                     call_user_func(array($section['class'], $section['function'])); 
                 }else{
                     call_user_func((isset($section['function']) ? $section['function'] : $section)); 
-                }
-        } ?>
+                } ?>
+            </div>
+        <?php } ?>
         
         <p class="alignright frm_uninstall" style="padding-top:1.25em;"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
         <p class="submit">

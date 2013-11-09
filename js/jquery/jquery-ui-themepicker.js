@@ -130,7 +130,7 @@ jQuery(document).ready(function($){
 	}).blur(function(){ $(this).removeClass('focus');});
 	
 	// change event in form
-	$('form[name="frm_settings_form"]').bind('change', function() {
+	$('form[name="frm_settings_form"] .styling_settings').bind('change', function() {
 		formChange();
 		return false;
 	});

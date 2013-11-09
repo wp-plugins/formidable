@@ -30,33 +30,42 @@ class FrmSettingsController{
       require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
 
-    public static function process_form(){
+    public static function process_form($stop_load=false){        
         global $frm_settings, $frmpro_is_installed;
         
         if(!isset($_POST['process_form']) or !wp_verify_nonce($_POST['process_form'], 'process_form_nonce'))
             wp_die($frm_settings->admin_permission);
+        
+        global $frm_settings_routed;
+        if(!$frm_settings_routed){
+            $frm_update = new FrmUpdatesController();
+            //$errors = $frm_settings->validate($_POST,array());
+            $errors = array();
+            $frm_settings->update($_POST);
 
-        $frm_update = new FrmUpdatesController();
-        //$errors = $frm_settings->validate($_POST,array());
-        $errors = array();
-        $frm_settings->update($_POST);
-      
-        if( empty($errors) ){
-            $frm_settings->store();
-            $message = __('Settings Saved', 'formidable');
+            if( empty($errors) ){
+                $frm_settings->store();
+                $message = __('Settings Saved', 'formidable');
+            }
         }
+        
+        if($stop_load == 'stop_load'){
+            $frm_settings_routed = true;
+            return;
+        }
+        
         $frm_roles = FrmAppHelper::frm_capabilities();
         $sections = apply_filters('frm_add_settings_section', array());
       
         require(FRM_VIEWS_PATH . '/frm-settings/form.php');
     }
     
-    public static function route(){
+    public static function route($stop_load=false){
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = FrmAppHelper::get_param($action);
         if($action == 'process-form')
-            return self::process_form();
-        else
+            return self::process_form($stop_load);
+        else if($stop_load != 'stop_load')
             return self::display_form();
     }
 }
