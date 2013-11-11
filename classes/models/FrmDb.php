@@ -296,7 +296,7 @@ DEFAULT_HTML;
             wp_die($frm_settings->admin_permission);
         }
         
-        global $wpdb;
+        global $wpdb, $wp_roles;
         
         $wpdb->query('DROP TABLE IF EXISTS '. $this->fields);
         $wpdb->query('DROP TABLE IF EXISTS '. $this->forms);
@@ -321,8 +321,6 @@ DEFAULT_HTML;
                 unset($role);
                 unset($details);
     		}
-    		unset($role);
-    		unset($details);
     		unset($frm_role);
     		unset($frm_role_description);
 		}

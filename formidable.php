@@ -22,7 +22,7 @@ Text Domain: formidable
 */
 
 
-define('FRM_PATH', WP_PLUGIN_DIR.'/'. dirname( plugin_basename( __FILE__ ) ));
+define('FRM_PATH', dirname( __FILE__ ));
 define('FRM_VIEWS_PATH', FRM_PATH.'/classes/views');
 $frm_models_path = FRM_PATH .'/classes/models';
 $frm_helpers_path = FRM_PATH .'/classes/helpers';

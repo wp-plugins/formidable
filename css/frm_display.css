@@ -20,7 +20,7 @@
 .with_frm_style .frm_left_container .description, .with_frm_style .frm_left_container .frm_error, .with_frm_style .frm_left_container .frm_description{margin-left:160px;}
 .with_frm_style .frm_error{font-weight:bold;}
 .with_frm_style .frm_form_fields input, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{font-size:13px;margin-bottom:0;}
-.with_frm_style .frm_form_fields input, #wpcontent .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{border-width:1px;border-style:solid;width:400px;font-size:13px;padding:2px;}
+.with_frm_style .frm_form_fields input, #wpcontent .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields select, .with_frm_style .frm_form_fields textarea{border-width:1px;border-style:solid;width:400px;max-width:100%;font-size:13px;padding:2px;}
 .with_frm_style .frm_form_fields input.auto_width, .with_frm_style .frm_form_fields select.auto_width, .with_frm_style .frm_form_fields textarea.auto_width{width:auto;}
 .frm_set_select .with_frm_style .frm_form_fields select, .frm_set_select .with_frm_style .frm_form_fields select.auto_width{width:95%;}
 .with_frm_style .frm_radio label, .with_frm_style .frm_checkbox label{display:inline;}
