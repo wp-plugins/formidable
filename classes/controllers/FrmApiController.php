@@ -24,7 +24,7 @@ class FrmApiController{
     }
 
     function get_frm_items($args = null){ 
-        global $frm_entry, $frm_form, $frm_entry_meta;
+        global $frm_entry;
 
         $defaults = array(
         	'form_key' => '', 'order' => '', 'limit' => '',
@@ -34,6 +34,7 @@ class FrmApiController{
 
         $r = wp_parse_args( $args, $defaults ); 
 
+        $frm_form = new FrmForm();
         $form = $frm_form->getOne($r['form_key']);
 
         $where = " (it.form_id='". $form->id ."')";
@@ -50,6 +51,7 @@ class FrmApiController{
     	$items = $frm_entry->getAll($where, $r['order'], $r['limit']);
 
     	if (!($r['search'] == '') and $r['search_type'] == 'meta'){ //search meta values
+    	    $frm_entry_meta = new FrmEntryMeta();
     	    $item_ids = $frm_entry_meta->search_entry_metas($r['search'], $r['search_field'], $r['search_operator']);
             $item_list = array();
             foreach ($items as $item){

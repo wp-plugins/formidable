@@ -6,14 +6,14 @@
         <?php } ?>
     </h2>
   
-<?php require(FRM_VIEWS_PATH.'/shared/errors.php'); ?>
+<?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>
 
 <form id="posts-filter" method="get">
     <input type="hidden" name="page" value="<?php echo $_GET['page'] ?>" />
     <input type="hidden" name="frm_action" value="list" />
 <?php $wp_list_table->search_box( __( 'Search', 'formidable' ), 'entry' ); 
 
-if ($params['template']) require(FRM_VIEWS_PATH .'/frm-forms/default-templates.php');
+if ($params['template']) require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/default-templates.php');
 
 $wp_list_table->display(); ?>
 </form>

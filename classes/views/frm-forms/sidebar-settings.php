@@ -2,7 +2,7 @@
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
     <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
-        <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a>
+        <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a>
         <a href="#" onclick="frmToggleDiv('.frm_ext_sc')"><?php _e('Show more', 'formidable') ?></a>
     <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?>]" />
     <span class="frm_ext_sc">
@@ -26,5 +26,5 @@
     <?php
     } ?>
     
-    <?php include(FRM_VIEWS_PATH .'/frm-forms/mb_insert_fields.php') ?>
+    <?php include(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/mb_insert_fields.php') ?>
 </div>

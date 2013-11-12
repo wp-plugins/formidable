@@ -36,7 +36,7 @@ class FrmUpdatesController{
         $this->plugin_nicename      = 'formidable';
         $this->plugin_name          = 'formidable/formidable.php';
         $this->plugin_url           = 'http://formidablepro.com/formidable-wordpress-plugin';
-        $this->pro_script           = FRM_PATH . '/pro/formidable-pro.php';
+        $this->pro_script           = FrmAppHelper::plugin_path() . '/pro/formidable-pro.php';
         $this->pro_mothership       = 'http://api.strategy11.com/plugin-updates/';
         $this->pro_cred_store       = 'frmpro-credentials';
         $this->pro_auth_store       = 'frmpro-authorized';
@@ -124,7 +124,7 @@ class FrmUpdatesController{
     }
     
     public function pro_cred_form(){ 
-        global $frmpro_is_installed; 
+        global $frm_vars; 
         if(isset($_POST) and isset($_POST['process_cred_form']) and $_POST['process_cred_form'] == 'Y'){
             if(!isset($_POST['frm_cred']) or !wp_verify_nonce($_POST['frm_cred'], 'frm_cred_nonce')){
                 global $frm_settings;
@@ -140,7 +140,7 @@ class FrmUpdatesController{
                 $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $this->plugin_name, 'upgrade-plugin_' . $this->plugin_name);
                 printf(__('Your License was accepted<br/>Now you can %1$sUpgrade Automatically!%2$s', 'formidable'), "<a href='{$inst_install_url}'>","</a>"); 
             }else{ 
-                $frmpro_is_installed = $this->pro_is_installed_and_authorized();
+                $frm_vars['pro_is_installed'] = $this->pro_is_installed_and_authorized();
                 _e('Your Pro installation is now active. Enjoy!', 'formidable');
             } ?>
 </strong></div>
@@ -157,12 +157,12 @@ class FrmUpdatesController{
 <div style="float:left;width:55%">
     <?php $this->display_form(); 
     
-    if(!$frmpro_is_installed){ ?>
+    if(!$frm_vars['pro_is_installed']){ ?>
     <p>Already signed up? <a href="http://formidablepro.com/account/" target="_blank"><?php _e('Click here', 'formidable') ?></a> to get your license number.</p>
     <?php } ?>
 </div>
 
-<?php if($frmpro_is_installed){ ?>
+<?php if($frm_vars['pro_is_installed']){ ?>
 <div class="frm_pro_installed">
 <div><strong class="alignleft" style="margin-right:10px;"><?php _e('Formidable Pro is Installed', 'formidable') ?></strong>
     <a href="javascript:frm_show_auth_form()" class="button-secondary alignleft"><?php _e('Enter new license', 'formidable') ?></a>
@@ -186,28 +186,28 @@ class FrmUpdatesController{
     }
 
     function display_form(){
-        global $frmpro_is_installed;
+        global $frm_vars;
         
         // Yah, this is the view for the credentials form -- this class isn't a true model
         extract($this->get_pro_cred_form_vals());
         ?>
-<div id="pro_cred_form" <?php echo ($frmpro_is_installed) ? 'style="display:none;"' : ''; ?>>
+<div id="pro_cred_form" <?php echo $frm_vars['pro_is_installed'] ? 'style="display:none;"' : ''; ?>>
     <form name="cred_form" method="post" autocomplete="off">
     <input type="hidden" name="process_cred_form" value="Y" />
     <?php wp_nonce_field('frm_cred_nonce', 'frm_cred'); ?>
 
     <table class="form-table frm_lics_form">
         <tr class="form-field">
-            <td valign="top" width="150px"><?php echo $this->pro_license_label; ?></td>
+            <td width="150px"><?php echo $this->pro_license_label; ?></td>
             <td><input type="text" name="<?php echo $this->pro_license_str; ?>" value="" style="width:97%;"/></td>
         </tr>
         
         <?php if (is_multisite()){ ?>
         <tr>
-            <td valign="top"><?php _e('WordPress MU', 'formidable'); ?></td>
-            <td valign="top">
-                <input type="checkbox" value="1" name="proplug-wpmu" <?php checked($wpmu, 1) ?> />
-                <?php _e('Use this license to enable Formidable Pro site-wide', 'formidable'); ?>
+            <td><?php _e('WordPress MU', 'formidable'); ?></td>
+            <td>
+                <label for="proplug-wpmu"><input type="checkbox" value="1" name="proplug-wpmu" id="proplug-wpmu" <?php checked($wpmu, 1) ?> />
+                <?php _e('Use this license to enable Formidable Pro site-wide', 'formidable'); ?></label>
             </td>
         </tr>
         <?php } ?>
@@ -215,7 +215,7 @@ class FrmUpdatesController{
             <td></td>
             <td>    
                 <input class="button-secondary" type="submit" value="<?php _e('Save License', 'formidable'); ?>" />
-                <?php if($frmpro_is_installed){ 
+                <?php if($frm_vars['pro_is_installed']){ 
                     _e('or', 'formidable'); 
                 ?>
                 <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Cancel', 'formidable'); ?></a>
@@ -236,8 +236,8 @@ class FrmUpdatesController{
             $this->_update_auth($creds);
 
             if(!$this->pro_is_installed()){
-                global $frm_force_check;
-                $frm_force_check = true;
+                global $frm_vars;
+                $frm_vars['force_check'] = true;
                 $this->manually_queue_update();
             }
         }
@@ -273,7 +273,7 @@ class FrmUpdatesController{
         
         if(!isset($_POST['hlpdsk_license']) or empty($_POST['hlpdsk_license'])){
             $errors[] = __('Please enter a license number', 'formidable');
-            include(FRM_PATH .'/classes/views/shared/errors.php'); 
+            include(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); 
             die();
         }
             
@@ -296,7 +296,7 @@ class FrmUpdatesController{
             $errors[] = $e->getMessage();
         }
         
-        include(FRM_PATH .'/classes/views/shared/errors.php'); 
+        include(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); 
         die();
     }
     
@@ -368,7 +368,7 @@ class FrmUpdatesController{
             $errors[] = $e->getMessage();
         }
 
-        include(FRM_PATH .'/classes/views/shared/errors.php'); 
+        include(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); 
         die();
     }
 
@@ -376,7 +376,7 @@ class FrmUpdatesController{
         if(!is_object($transient) or !$this->pro_is_authorized())
             return $transient;
 
-        global $frm_force_check;
+        global $frm_vars;
         
         $plugin = $this;
         
@@ -390,7 +390,7 @@ class FrmUpdatesController{
             if(isset($transient->response[$this->plugin_name]))        
                 unset($transient->response[$this->plugin_name]);
             set_site_transient( $this->pro_last_checked_store, 'latest', $this->pro_check_interval );
-        }else if($frm_force_check or
+        }else if((isset($frm_vars['force_check']) and $frm_vars['force_check']) or
             (((isset($transient->response) and isset($transient->response[$this->plugin_name]) and  
             (($transient->response[$this->plugin_name] == 'latest' and !$this->pro_is_installed()) or 
             $transient->response[$this->plugin_name]->url == 'http://wordpress.org/plugins/'. $this->plugin_nicename .'/'))) or
@@ -398,10 +398,9 @@ class FrmUpdatesController{
 
             if(!$this->pro_is_installed()){
                 $version_info = get_site_transient( $this->pro_last_checked_store );
-                global $frm_version;
                 
                 //don't force an api check if the transient has already been forced
-                if($version_info and is_array($version_info) and $transient->response[$this->plugin_name]->url == 'http://formidablepro.com/' and isset($version_info['version']) and version_compare($version_info['version'], $frm_version, '=') and isset($version_info['url']) and $version_info['url'] == $transient->response[$this->plugin_name]->package)
+                if($version_info and is_array($version_info) and $transient->response[$this->plugin_name]->url == 'http://formidablepro.com/' and isset($version_info['version']) and version_compare($version_info['version'], FrmAppHelper::plugin_version(), '=') and isset($version_info['url']) and $version_info['url'] == $transient->response[$this->plugin_name]->package)
                     $force = false;
                 else
                     $force = true;
@@ -451,20 +450,19 @@ class FrmUpdatesController{
     }
     
     function get_version($version, $force=false, $plugin=false){
+        global $frm_vars;
         if($plugin and $plugin->plugin_nicename != $this->plugin_nicename){
             //don't check for update if pro is not installed
-            global $frmpro_is_installed;
-            if(!$frmpro_is_installed)
+            if(!$frm_vars['pro_is_installed'])
                 return false;
         }
         
         if(!$force){
             $version_info = get_site_transient( $plugin->pro_last_checked_store );
         }else{
-            global $frm_forced;
-            if($frm_forced){
-                $version_info = $frm_forced;
-                if(!is_array($frm_forced))
+            if(isset($frm_vars['forced']) and $frm_vars['forced']){
+                $version_info = $frm_vars['forced'];
+                if(!is_array($frm_vars['forced']))
                     return false;
             }
         }
@@ -497,7 +495,7 @@ class FrmUpdatesController{
             }
             
             //don't force again on same page
-            $frm_forced = $version_info;
+            $frm_vars['forced'] = $version_info;
             
             if($errors)
                 return false;
@@ -519,9 +517,7 @@ class FrmUpdatesController{
 <?php
     }
 
-    function send_mothership_request( $endpoint, $args=array(), $domain=false){
-        global $frm_version;
-        
+    function send_mothership_request( $endpoint, $args=array(), $domain=false){        
         if(empty($domain))
             $domain = $this->pro_mothership;
         $uri = "{$domain}{$endpoint}";
@@ -529,7 +525,7 @@ class FrmUpdatesController{
         $arg_array = array( 'body'      => $args,
                             'timeout'   => $this->timeout,
                             'sslverify' => false,
-                            'user-agent' => 'Formidable/'. $frm_version .'; '. get_bloginfo( 'url' )
+                            'user-agent' => 'Formidable/'. FrmAppHelper::plugin_version() .'; '. get_bloginfo( 'url' )
                           );
 
         $resp = wp_remote_post($uri, $arg_array);
@@ -562,7 +558,7 @@ class FrmUpdatesController{
         $hlpdsk_settings = HlpdskSettings::fetch();
 
         if(empty($hlpdsk_settings->license) and (!isset($_REQUEST['page']) or $_REQUEST['page'] != 'hlp-settings'))
-            include(FRM_PATH . '/classes/views/update/activation_warning.php');  
+            include(FrmAppHelper::plugin_path() . '/classes/views/update/activation_warning.php');  
     }
     
     function no_permission_msg(){

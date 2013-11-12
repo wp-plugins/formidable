@@ -31,7 +31,7 @@ if(isset($form->options['no_save']) and $form->options['no_save']){ ?>
             <li><?php _e('Select a form from the "Form" drop-down.', 'formidable') ?></li>
             <li><?php _e('Click the "Save" button', 'formidable') ?></li>
         </ol>
-        <img src="<?php echo FRM_URL ?>/screenshot-2.png" alt="<?php echo esc_attr(__('Formidable Form Widget', 'formidable')) ?>" title="<?php echo esc_attr(__('Formidable Form Widget', 'formidable')) ?>" height="261" width="252" />
+        <img src="<?php echo FrmAppHelper::plugin_url() ?>/screenshot-2.png" alt="<?php esc_attr_e('Formidable Form Widget', 'formidable') ?>" title="<?php esc_attr_e('Formidable Form Widget', 'formidable') ?>" height="261" width="252" />
     </td></tr>
     <tr class="alternate"><td colspan="<?php echo $colspan ?>">    
         <h3><?php _e('Option 3: Insert the shortcode or PHP', 'formidable') ?></h3>

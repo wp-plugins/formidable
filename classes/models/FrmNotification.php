@@ -11,10 +11,11 @@ class FrmNotification{
     
     function entry_created($entry_id, $form_id){
         if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
-        global $frm_form, $frm_entry, $frm_entry_meta;
+        global $frm_entry, $frm_entry_meta;
 
         $frm_blogname = wp_specialchars_decode( get_option('blogname'), ENT_QUOTES );
         $entry = $frm_entry->getOne($entry_id);
+        $frm_form = new FrmForm();
         $form = $frm_form->getOne($form_id);
         $form->options = maybe_unserialize($form->options);
         $values = $frm_entry_meta->getAll("it.item_id = $entry_id", " ORDER BY fi.field_order");

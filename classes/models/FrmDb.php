@@ -19,8 +19,9 @@ class FrmDb{
     }
     
     function upgrade($old_db_version=false){
-        global $wpdb, $frm_db_version;
+        global $wpdb;
         //$frm_db_version is the version of the database we're moving to
+        $frm_db_version = FrmAppHelper::DBVERSION;
         $old_db_version = (float)$old_db_version;
         if(!$old_db_version)
             $old_db_version = get_option('frm_db_version');
@@ -171,7 +172,7 @@ DEFAULT_HTML;
         if($frm_db_version >= 11 and $old_db_version < 11){
             $forms = $wpdb->get_results("SELECT id, options FROM $this->forms");
             $sending = __('Sending', 'formidable');
-            $img = FRM_URL .'/images/ajax_loader.gif';
+            $img = FrmAppHelper::plugin_url() .'/images/ajax_loader.gif';
             $old_default_html = <<<DEFAULT_HTML
 <div class="frm_submit">
 [if back_button]<input type="submit" value="[back_label]" name="frm_prev_page" formnovalidate="formnovalidate" [back_hook] />[/if back_button]
@@ -204,7 +205,7 @@ DEFAULT_HTML;
         
 
         /**** ADD/UPDATE DEFAULT TEMPLATES ****/
-        FrmFormsController::add_default_templates(FRM_TEMPLATES_PATH);
+        FrmFormsController::add_default_templates(FrmAppHelper::plugin_path().'/classes/templates');
 
       
         /***** SAVE DB VERSION *****/

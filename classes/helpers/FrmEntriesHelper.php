@@ -8,11 +8,11 @@ if(class_exists('FrmEntriesHelper'))
 class FrmEntriesHelper{
 
     public static function setup_new_vars($fields, $form='', $reset=false){
-        global $frm_form, $frm_settings, $frm_sidebar_width;
+        global $frm_settings, $frm_vars;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
             $values[$var] = FrmAppHelper::get_post_param($var, $default);
-            
+        
         $values['fields'] = array();
         if (!empty($fields)){
             foreach((array)$fields as $field){
@@ -61,7 +61,7 @@ class FrmEntriesHelper{
                 unset($opt_defaults);
                 
                 if ($field_array['size'] == '')
-                    $field_array['size'] = $frm_sidebar_width;
+                    $field_array['size'] = $frm_vars['sidebar_width'];
             
                 
                 if ($field_array['custom_html'] == '')
@@ -78,8 +78,10 @@ class FrmEntriesHelper{
                 
                 $values['fields'][] = $field_array;
              
-                if (!$form or !isset($form->id))
+                if (!$form or !isset($form->id)){
+                    $frm_form = new FrmForm();
                     $form = $frm_form->getOne($field->form_id);
+                }
             }
 
             $form->options = maybe_unserialize($form->options);

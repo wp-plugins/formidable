@@ -3,12 +3,12 @@
     <h2><?php _e('Edit Form', 'formidable') ?>
         <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
-    <?php require(FRM_VIEWS_PATH.'/shared/errors.php');
+    <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
     
     if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
     <?php   
-        require(FRM_VIEWS_PATH .'/frm-forms/sidebar-settings.php'); 
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/sidebar-settings.php'); 
     }else{ ?>
     <div id="poststuff">
     <?php } ?>
@@ -54,8 +54,8 @@
         </div>
         <div style="display:<?php echo ($a == 'advanced_settings') ? 'block' : 'none'; ?>;" class="advanced_settings tabs-panel">
         	<table class="form-table">                
-                <tr><td colspan="2"><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
-                    <label for="custom_style"><?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
+                <tr><td colspan="2"><label for="custom_style"><input type="checkbox" name="options[custom_style]" id="custom_style" <?php echo ($values['custom_style']) ? ' checked="checked"' : ''; ?> value="1" />
+                    <?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                 </tr>
 
                 <tr><td colspan="2"><label><?php _e('Submit Button Text', 'formidable') ?></label>
@@ -63,13 +63,13 @@
                 </tr>
                 
                 <tr><td colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
-                    <?php if(!$frmpro_is_installed){ ?>
-                    <img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" />
+                    <?php if(!$frm_vars['pro_is_installed']){ ?>
+                    <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" />
                     <?php } ?>
 
-                        <input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <label for="success_action_message"><?php _e('Display a Message', 'formidable') ?></label>
-                        <input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_page" <?php echo $pro_feature ?>><?php _e('Display content from another page', 'formidable') ?></label>
-                        <input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frmpro_is_installed) echo 'disabled="disabled" '; ?>/> <label for="success_action_redirect" <?php echo $pro_feature ?>><?php _e('Redirect to URL', 'formidable') ?></label>
+                        <label for="success_action_message"><input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <?php _e('Display a Message', 'formidable') ?></label>
+                        <label for="success_action_page" <?php echo $pro_feature ?>><input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frm_vars['pro_is_installed']) echo 'disabled="disabled" '; ?>/> <?php _e('Display content from another page', 'formidable') ?></label>
+                        <label for="success_action_redirect" <?php echo $pro_feature ?>><input type="radio" name="options[success_action]" id="success_action_redirect" value="redirect" <?php checked($values['success_action'], 'redirect') ?> <?php if(!$frm_vars['pro_is_installed']) echo 'disabled="disabled" '; ?>/> <?php _e('Redirect to URL', 'formidable') ?></label>
                         
                         <p class="frm_indent_opt success_action_redirect_box success_action_box" <?php echo ($values['success_action'] == 'redirect') ? '' : 'style="display:none;"'; ?>>
                             <input type="text" name="options[success_url]" id="success_url" value="<?php if(isset($values['success_url'])) echo esc_attr($values['success_url']); ?>" style="width:98%" placeholder="http://example.com" />
@@ -83,7 +83,7 @@
                             </p>
                         </div>
                         
-                        <?php if($frmpro_is_installed){ ?>
+                        <?php if($frm_vars['pro_is_installed']){ ?>
                         <p class="frm_indent_opt success_action_page_box success_action_box" <?php echo ($values['success_action'] == 'page') ? '' : 'style="display:none;"'; ?>>
                             <label><?php _e('Use Content from Page', 'formidable') ?></label>
                             <?php FrmAppHelper::wp_pages_dropdown( 'options[success_page_id]', $values['success_page_id'] ) ?>
@@ -92,12 +92,12 @@
                     </td>
                 </tr>
                 
-                <tr><td colspan="2"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <label for="ajax_load"><?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><img src="<?php echo FRM_URL ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Recommended for long forms.', 'formidable') ?>" /></td></tr>
+                <tr><td colspan="2"><label for="ajax_load"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Recommended for long forms.', 'formidable') ?>" /></td></tr>
 
 
                 <?php do_action('frm_additional_form_options', $values); ?> 
                 
-                <tr><td colspan="2"><input type="checkbox" name="options[no_save]" id="no_save" value="1" <?php checked($values['no_save'], 1); ?> /> <?php _e('Do not store any entries submitted from this form.', 'formidable') ?> <span class="howto"><?php _e('Warning: There is no way to retrieve unsaved entries.', 'formidable') ?></span></td></tr>
+                <tr><td colspan="2"><label for="no_save"><input type="checkbox" name="options[no_save]" id="no_save" value="1" <?php checked($values['no_save'], 1); ?> /> <?php _e('Do not store any entries submitted from this form.', 'formidable') ?> <span class="howto"><?php _e('Warning: There is no way to retrieve unsaved entries.', 'formidable') ?></span></label></td></tr>
                 
                 <?php if (function_exists( 'akismet_http_post' )){ ?>
                 <tr><td colspan="2"><?php _e('Use Akismet to check entries for spam for', 'formidable') ?>
@@ -115,13 +115,13 @@
         <?php
             $first_email = true;
             foreach($values['notification'] as $email_key => $notification){
-                include(FRM_VIEWS_PATH .'/frm-forms/notification.php');
+                include(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/notification.php');
                 unset($email_key);
                 unset($notification);
                 $first_email = false;
             } 
-        if($frmpro_is_installed){ ?>
-        <div id="frm_email_add_button" class="notification_settings hide_with_tabs" style="display:none;margin-top:10px;margin-left:150px;">
+        if($frm_vars['pro_is_installed']){ ?>
+        <div id="frm_email_add_button" class="notification_settings hide_with_tabs" style="display:<?php echo ($a == 'notification_settings') ? 'block' : 'none'; ?>;margin-top:10px;margin-left:150px;">
             <a href="javascript:frmAddEmailList(<?php echo $values['id'] ?>)" class="button-secondary">+ <?php _e('Add Notification', 'formidable') ?></a></td>
         </div>
         <?php } ?>
@@ -153,7 +153,7 @@
             </div>
         </div>
         <div id="post_settings" class="tabs-panel" style="display:<?php echo ($a == 'post_settings') ? 'block' : 'none'; ?>;">
-            <?php if($frmpro_is_installed)
+            <?php if($frm_vars['pro_is_installed'])
                 FrmProFormsController::post_options($values);
             else
                 FrmAppController::update_message('create and edit posts, pages, and custom post types through your forms');
@@ -190,7 +190,7 @@
     </div>
     <?php
         if(version_compare( $GLOBALS['wp_version'], '3.3.2', '>'))
-            require(FRM_VIEWS_PATH .'/frm-forms/sidebar-settings.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/sidebar-settings.php'); 
     ?>
     </div>
 </div>

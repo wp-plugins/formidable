@@ -3,7 +3,7 @@
     <h2><?php _e('Custom Displays', 'formidable'); ?></h2>
 
     <?php 
-        require(FRM_VIEWS_PATH.'/shared/errors.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
         if($form) FrmAppController::get_form_nav($form);
         FrmAppController::update_message('display collected data in lists, calendars, and other formats'); 
     ?>

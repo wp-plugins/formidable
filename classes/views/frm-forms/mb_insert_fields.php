@@ -1,7 +1,7 @@
 <div id="frm_adv_info" class="postbox">
     <div class="handlediv" title="<?php _e('Click to toggle', 'formidable') ?>"><br/></div><h3 class="hndle"><span><?php _e('Customization', 'formidable') ?></span></h3>
     <div class="inside">
-    <?php if($frmpro_is_installed){
+    <?php if($frm_vars['pro_is_installed']){
         FrmProDisplaysController::mb_tags_box($id);
     }else{ ?>
         <div id="taxonomy-linkcategory" class="categorydiv">
@@ -13,7 +13,7 @@
         	    <br/><br/>
                 <?php FrmAppController::update_message('insert field values into your messages'); ?>
         	</div>
-        	<?php include(FRM_VIEWS_PATH.'/frm-forms/mb_html_tab.php'); ?>
+        	<?php include(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/mb_html_tab.php'); ?>
         </div>
 <?php 
     } ?>

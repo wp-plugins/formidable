@@ -8,9 +8,9 @@ class FrmShowForm extends WP_Widget {
 	}
 
 	function widget( $args, $instance ) {
-        global $frm_form;
         extract($args);
         
+        $frm_form = new FrmForm();
         $form_name = $frm_form->getName( $instance['form'] );
 		$title = apply_filters('widget_title', empty($instance['title']) ? $form_name : $instance['title']);
         $instance['description'] = isset($instance['description']) ? $instance['description'] : false;
@@ -22,12 +22,12 @@ class FrmShowForm extends WP_Widget {
 			echo $before_title . stripslashes($title) . $after_title;
 			
 		if(isset($instance['size']) and is_numeric($instance['size'])){
-            global $frm_sidebar_width;
-            $frm_sidebar_width = $instance['size'];
+            global $frm_vars;
+            $frm_vars['sidebar_width'] = $instance['size'];
         }
         
 		echo FrmEntriesController::show_form($instance['form'], '', false, $instance['description']);
-        $frm_sidebar_width = '';
+        $frm_vars['sidebar_width'] = '';
 		echo '</div>';
 		echo $after_widget;
 	}
@@ -47,11 +47,11 @@ class FrmShowForm extends WP_Widget {
 	    <?php FrmFormsHelper::forms_dropdown( $this->get_field_name('form'), $instance['form'], false, $this->get_field_id('form') )?>
 	</p>
 	
-	<p><input class="checkbox" type="checkbox" <?php checked($instance['description'], true) ?> id="<?php echo $this->get_field_id('description'); ?>" name="<?php echo $this->get_field_name('description'); ?>" value="1" />
-	<label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Show Description', 'formidable') ?></label></p>
+	<p><label for="<?php echo $this->get_field_id('description'); ?>"><input class="checkbox" type="checkbox" <?php checked($instance['description'], true) ?> id="<?php echo $this->get_field_id('description'); ?>" name="<?php echo $this->get_field_name('description'); ?>" value="1" />
+	<?php _e('Show Description', 'formidable') ?></label></p>
 	
-	<p><input class="checkbox" type="checkbox" <?php checked($instance['select_width'], true) ?> id="<?php echo $this->get_field_id('select_width'); ?>" name="<?php echo $this->get_field_name('select_width'); ?>" value="1" />
-	<label for="<?php echo $this->get_field_id('select_width'); ?>"><?php _e('Fit Select Boxes into SideBar', 'formidable') ?></label></p>
+	<p><label for="<?php echo $this->get_field_id('select_width'); ?>"><input class="checkbox" type="checkbox" <?php checked($instance['select_width'], true) ?> id="<?php echo $this->get_field_id('select_width'); ?>" name="<?php echo $this->get_field_name('select_width'); ?>" value="1" />
+	<?php _e('Fit Select Boxes into SideBar', 'formidable') ?></label></p>
 	
 	<p><label class="checkbox" for="<?php echo $this->get_field_id('size'); ?>"><?php _e('Field Size', 'formidable') ?>:</label>
 	

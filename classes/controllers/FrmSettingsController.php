@@ -18,7 +18,7 @@ class FrmSettingsController{
     }
 
     public static function display_form(){
-      global $frm_settings, $frmpro_is_installed;
+      global $frm_settings, $frm_vars;
       
       $frm_update = new FrmUpdatesController();
       $frm_roles = FrmAppHelper::frm_capabilities();
@@ -27,17 +27,16 @@ class FrmSettingsController{
       $target_path = $uploads['basedir'] . "/formidable/css";
       $sections = apply_filters('frm_add_settings_section', array());
       
-      require(FRM_VIEWS_PATH . '/frm-settings/form.php');
+      require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }
 
     public static function process_form($stop_load=false){        
-        global $frm_settings, $frmpro_is_installed;
+        global $frm_settings, $frm_vars;
         
         if(!isset($_POST['process_form']) or !wp_verify_nonce($_POST['process_form'], 'process_form_nonce'))
             wp_die($frm_settings->admin_permission);
         
-        global $frm_settings_routed;
-        if(!$frm_settings_routed){
+        if(!isset($frm_vars['settings_routed']) or !$frm_vars['settings_routed']){
             $frm_update = new FrmUpdatesController();
             //$errors = $frm_settings->validate($_POST,array());
             $errors = array();
@@ -50,14 +49,14 @@ class FrmSettingsController{
         }
         
         if($stop_load == 'stop_load'){
-            $frm_settings_routed = true;
+            $frm_vars['settings_routed'] = true;
             return;
         }
         
         $frm_roles = FrmAppHelper::frm_capabilities();
         $sections = apply_filters('frm_add_settings_section', array());
       
-        require(FRM_VIEWS_PATH . '/frm-settings/form.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }
     
     public static function route($stop_load=false){

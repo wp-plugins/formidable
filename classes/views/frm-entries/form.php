@@ -1,11 +1,11 @@
 <?php 
-global $frm_forms_loaded, $frm_load_css, $frm_css_loaded, $frm_settings;
-$frm_forms_loaded[] = $form; 
-if($values['custom_style']) $frm_load_css = true;
+global $frm_vars, $frm_settings;
+$frm_vars['forms_loaded'][] = $form; 
+if($values['custom_style']) $frm_vars['load_css'] = true;
 
-if(!$frm_css_loaded and $frm_load_css){
+if(!$frm_vars['css_loaded'] and $frm_vars['load_css']){
 echo FrmAppController::footer_js('header');
-$frm_css_loaded = true;
+$frm_vars['css_loaded'] = true;
 }
 
 echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $description); ?>
@@ -46,10 +46,10 @@ if ((is_admin() and !defined('DOING_AJAX')) and !$frm_settings->lock_keys){ ?>
 
 do_action('frm_entry_form', $form, $form_action, $errors);
 
-global $frm_div;
-if($frm_div){
+global $frm_vars;
+if(isset($frm_vars['div']) and $frm_vars['div']){
     echo "</div>\n";
-    $frm_div = false;
+    $frm_vars['div'] = false;
 } ?>
 </div>
 </fieldset>

@@ -68,10 +68,11 @@ class FrmFormsController{
     }
     
     public static function new_form($values=false){
-        global $frm_form, $frmpro_is_installed;
+        global $frm_vars;
         
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = ($values) ? $values[$action] : FrmAppHelper::get_param($action);
+        $frm_form = new FrmForm();
         
         if ($action == 'create'){
             return self::create($values);
@@ -80,15 +81,15 @@ class FrmFormsController{
             $values = FrmFormsHelper::setup_new_vars($values);
             $id = $frm_form->create( $values );
             $values['id'] = $id;
-            require(FRM_VIEWS_PATH.'/frm-forms/new.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
         }else{
             $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
-            require(FRM_VIEWS_PATH.'/frm-forms/new-selection.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-selection.php');
         }
     }
     
     public static function create($values=false){
-        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
+        global $frm_entry, $frm_field, $frm_vars;
         if(!$values)
             $values = $_POST;
         
@@ -99,6 +100,7 @@ class FrmFormsController{
         
         $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
         
+        $frm_form = new FrmForm();
         $errors = $frm_form->validate($values);
         
         if( count($errors) > 0 ){
@@ -107,7 +109,7 @@ class FrmFormsController{
             $record = $frm_form->getOne( $id );
             $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
             $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
-            require(FRM_VIEWS_PATH.'/frm-forms/new.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
         }else{    
             $record = $frm_form->update( $id, $values, true );
             die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&frm_action=settings&id='. $id) .'"</script>');
@@ -128,10 +130,9 @@ class FrmFormsController{
     }
     
     public static function update_settings(){
-        global $frm_form;
-        
         $id = FrmAppHelper::get_param('id');
         
+        $frm_form = new FrmForm();
         $errors = $frm_form->validate($_POST);
         
         if( count($errors) > 0 ){
@@ -144,8 +145,9 @@ class FrmFormsController{
     }
     
     public static function edit_key(){
-        global $frm_form, $wpdb, $frmdb;
+        global $wpdb, $frmdb;
         $values = array('form_key' => trim($_POST['update_value']));
+        $frm_form = new FrmForm();
         $form = $frm_form->update($_POST['form_id'], $values);
         $key = $wpdb->get_var($wpdb->prepare("SELECT form_key FROM $frmdb->forms WHERE id=%d", $_POST['form_id']));
         echo stripslashes($key);  
@@ -153,7 +155,7 @@ class FrmFormsController{
     }
 
     public static function edit_description(){
-        global $frm_form;
+        $frm_form = new FrmForm();
         $form = $frm_form->update($_POST['form_id'], array('description' => $_POST['update_value']));
         $description = stripslashes($_POST['update_value']);
         if(apply_filters('frm_use_wpautop', true))
@@ -163,7 +165,7 @@ class FrmFormsController{
     }
     
     public static function update($values=false){
-        global $frm_form;
+        $frm_form = new FrmForm();
 
         if(!$values)
             $values = $_POST;
@@ -187,7 +189,7 @@ class FrmFormsController{
     }
     
     public static function duplicate(){
-        global $frm_form;
+        $frm_form = new FrmForm();
         
         $params = self::get_params();
         $record = $frm_form->duplicate( $params['id'], $params['template'], true );
@@ -199,9 +201,10 @@ class FrmFormsController{
     }
     
     public static function page_preview(){
-        global $frm_form;
         $params = self::get_params();
         if (!$params['form']) return;
+        
+        $frm_form = new FrmForm();
         $form = $frm_form->getOne($params['form']);
         if(!$form) return;
         return FrmEntriesController::show_form($form->id, '', true, true);
@@ -211,7 +214,8 @@ class FrmFormsController{
         do_action('frm_wp');
         define('FRM_PREVIEW', true);
         
-        global $frm_form, $frm_settings, $frmpro_is_installed;
+        global $frm_settings, $frm_vars;
+        $frm_form = new FrmForm();
         if ( !defined( 'ABSPATH' ) && !defined( 'XMLRPC_REQUEST' )) {
             global $wp;
             $root = dirname(dirname(dirname(dirname(__FILE__))));
@@ -220,7 +224,7 @@ class FrmFormsController{
             $wp->register_globals();
         }
         
-        if($frmpro_is_installed)
+        if($frm_vars['pro_is_installed'])
             FrmProEntriesController::register_scripts();
             
         header("Content-Type: text/html; charset=utf-8");
@@ -231,7 +235,7 @@ class FrmFormsController{
         $form = $frm_form->getAll(array('form_key' => $key), '', 1);
         if (!$form) $form = $frm_form->getAll(array(), '', 1);
         
-        require(FRM_VIEWS_PATH.'/frm-entries/direct.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/direct.php');
         die(); 
     }
     
@@ -241,7 +245,7 @@ class FrmFormsController{
             wp_die($frm_settings->admin_permission);
         }
             
-        global $frm_form;
+        $frm_form = new FrmForm();
         $params = self::get_params();
         $message = '';
         if ($frm_form->destroy( $params['id'] ))
@@ -250,10 +254,12 @@ class FrmFormsController{
     }
     
     public static function destroy_wo_fields(){
-        global $frm_field, $frm_form, $frmdb;
+        global $frm_field, $frmdb;
         $id = $_POST['form_id'];
-        if ($frmdb->get_count($frmdb->fields, array('form_id' => $id)) <= 0)
+        if ($frmdb->get_count($frmdb->fields, array('form_id' => $id)) <= 0){
+            $frm_form = new FrmForm();
             $frm_form->destroy($id);
+        }
         die();
     }
     
@@ -274,7 +280,7 @@ class FrmFormsController{
     public static function show_form_button($id){
         if($id != 'content')
             return;
-        echo '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'. esc_url(FRM_URL .'/images/form_16.png') .'" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
+        echo '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox" title="' . __("Add Formidable Form", 'formidable') . '"><img src="'. esc_url(FrmAppHelper::plugin_url() .'/images/form_16.png') .'" alt="' . __("Add Formidable Form", 'formidable') . '" /></a>';
     }
     
     public static function insert_form_popup(){
@@ -284,24 +290,25 @@ class FrmFormsController{
                 global $frmpro_display;
                 $displays = $frmpro_display->getAll('', 'post_title');
             }
-            require(FRM_VIEWS_PATH.'/frm-forms/insert_form_popup.php');   
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/insert_form_popup.php');   
         }
     }
 
     public static function display_forms_list($params=false, $message='', $page_params_ov = false, $current_page_ov = false, $errors = array()){
-        global $wpdb, $frmdb, $frm_form, $frm_entry, $frm_page_size, $frmpro_is_installed;
+        global $wpdb, $frmdb, $frm_entry, $frm_vars;
         
         if(!$params)
             $params = self::get_params();
         
         $page_params = '&action=0&&frm_action=0&page=formidable';
         
+        $frm_form = new FrmForm();
         if ($params['template']){
             $default_templates = $frm_form->getAll(array('default_template' => 1));
             $all_templates = $frm_form->getAll(array('is_template' => 1), 'name');
         }
         
-        require( FRM_PATH .'/classes/helpers/FrmListHelper.php' );
+        require( FrmAppHelper::plugin_path() .'/classes/helpers/FrmListHelper.php' );
             
         $args = array('table_name' => $frmdb->forms, 'params' => $params);
         $args['page_name'] = $params['template'] ? '-template' : '';
@@ -321,7 +328,7 @@ class FrmFormsController{
         if ( ! empty( $_REQUEST['s'] ) )
             $page_params .= '&s='. urlencode($_REQUEST['s']);
         
-        require(FRM_VIEWS_PATH.'/frm-forms/list.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/list.php');
     }
     
     public static function get_columns($columns){
@@ -383,7 +390,8 @@ class FrmFormsController{
     }
 
     private static function get_edit_vars($id, $errors = '', $message='', $create_link=false){
-        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
+        global $frm_entry, $frm_field, $frm_vars;
+        $frm_form = new FrmForm();
         $record = $frm_form->getOne( $id );
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll(array('fi.form_id' => $record->id), 'field_order');
@@ -398,22 +406,23 @@ class FrmFormsController{
         else if(defined('DOING_AJAX'))
             die();
         else if($create_link)
-            require(FRM_VIEWS_PATH.'/frm-forms/new.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
         else
-            require(FRM_VIEWS_PATH.'/frm-forms/edit.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/edit.php');
     }
     
     public static function get_settings_vars($id, $errors = '', $message=''){
-        global $frm_entry, $frm_form, $frm_field, $frmpro_is_installed;
+        global $frm_entry, $frm_field, $frm_vars;
+        $frm_form = new FrmForm();
         $record = $frm_form->getOne( $id );
         $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
         $sections = apply_filters('frm_add_form_settings_section', array(), $values);
-        $pro_feature = ($frmpro_is_installed) ? '' : ' class="pro_feature"';
+        $pro_feature = $frm_vars['pro_is_installed'] ? '' : ' class="pro_feature"';
         if (isset($values['default_template']) && $values['default_template'])
             wp_die(__('That template cannot be edited', 'formidable'));
         else
-            require(FRM_VIEWS_PATH.'/frm-forms/settings.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/settings.php');
     }
     
     public static function get_params(){
@@ -425,9 +434,10 @@ class FrmFormsController{
     }
     
     public static function add_default_templates($path, $default=true, $template=true){
-        global $frm_form, $frm_field;
+        global $frm_field;
         $templates = glob($path."/*.php");
         
+        $frm_form = new FrmForm();
         for($i = count($templates) - 1; $i >= 0; $i--){
             $filename = str_replace('.php', '', str_replace($path.'/', '', $templates[$i]));
             $template_query = array('form_key' => $filename);

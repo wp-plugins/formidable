@@ -37,6 +37,8 @@ if($('input[name="name"]').val() == '')
 	$('input[name="name"]').focus();
 }
 
+$('#new_fields').on('click', '.frm_req_field', frm_mark_required)
+
 if($('#frm_adv_info').length || $('.frm_field_list').length){
 	$('#frm_adv_info').before('<div id="frm_position_ele"></div>');
 
@@ -103,6 +105,7 @@ url:ajaxurl,params:"action=frm_form_key_in_place_edit&form_id="+form_id,
 show_buttons:"true",value_required:"true",
 save_button: '<a class="inplace_save save button button-small">'+frm_admin_js.ok+'</a>',
 cancel_button:'<a class="inplace_cancel cancel">'+frm_admin_js.cancel+'</a>',
+bg_over:"#fffbcc",bg_out:"#fffbcc"
 });
 
 $('.frm_ipe_form_desc').editInPlace({
@@ -115,6 +118,7 @@ cancel_button:'<a class="inplace_cancel cancel">'+frm_admin_js.cancel+'</a>',
 
 $('#new_fields').on('keypress', '.frm_ipe_field_label, .frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key', frmBlurField);
 $('#new_fields').on('mouseenter', '.frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key', frmSetIPEOpts);
+$('#new_fields').on('mouseenter', '.frm_ipe_field_key', frmSetIPEKey);
 $('#new_fields').on('mouseenter', '.frm_ipe_field_label', frmSetIPELabel);
 $('#new_fields').on('mouseenter', '.frm_ipe_field_desc', frmSetIPEDesc);
 
@@ -142,7 +146,6 @@ if($('#bulkaction').val()=='delete'){return confirm('Are you sure you want to de
 
 if($('#frm_tooltip').length==0){$('#wpfooter,#footer').prepend('<div id="frm_tooltip" class="frm_tooltip">&nbsp;</div>');}
 
-$('#frm_install_link').click(function(){frm_install_now()});
 $("select[name='frm_theme_selector'] option").each(function(){
 $(this).hover(function(){$('#frm_show_cal').removeClass().addClass($(this).attr('id'));},'');
 });
@@ -186,7 +189,7 @@ $('#new_fields').on('mouseenter mouseleave', '.frm_single_option', frmHoverVis);
 $('#new_fields').on('click', 'li.ui-state-default', frmClickVis);
 $('.frm_form_builder').on('keyup', 'input[name^="item_meta"], textarea[name^="item_meta"]', frmTriggerDefaults);
 $('.frm_form_builder').on('change', 'select[name^="item_meta"]', frmTriggerDefaults);
-$(document).on('mouseenter mouseleave', 'img.frm_help, a.frm_help', frmShowTooltip);
+$(document).on('mouseenter mouseleave', '.frm_help', frmShowTooltip);
 
 $('.frm_select_box').click(function(){this.select();});
 $('.frm_select_box').focus(function(){this.select();});
@@ -339,6 +342,16 @@ function frmCheckUniqueOpt(id,html,text){
 	}
 }
 
+function frmSetIPEKey(){
+jQuery(this).editInPlace({
+	show_buttons:"true",value_required:"true",
+	save_button: '<a class="inplace_save save button button-small">'+frm_admin_js.ok+'</a>',
+	cancel_button:'<a class="inplace_cancel cancel">'+frm_admin_js.cancel+'</a>',
+	bg_over:"#fffbcc",bg_out:"#fffbcc",
+	callback:function(x,text){jQuery(this).next('input').val(text);return text;}
+});
+}
+
 function frmSetIPELabel(){
 jQuery(this).editInPlace({
 	url:ajaxurl,params:'action=frm_field_name_in_place_edit',
@@ -397,14 +410,14 @@ if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div
 function frm_select_item_checkbox(checked){if(!checked){jQuery(".select-all-item-action-checkboxes").removeAttr("checked");}}
 
 function frmCheckAll(checked,n){
-if(checked){jQuery("input[name='"+n+"[]']").attr("checked","checked");}
-else{jQuery("input[name='"+n+"[]']").removeAttr("checked");}
+if(checked){jQuery("input[name^='"+n+"']").attr("checked","checked");}
+else{jQuery("input[name^='"+n+"']").removeAttr("checked");}
 }
 
 function frmCheckAllLevel(checked,n,level){
 var $kids=jQuery(".frm_catlevel_"+level).children(".frm_checkbox").children('label');
-if(checked){$kids.children("input[name='"+n+"[]']").attr("checked","checked");}
-else{$kids.children("input[name='"+n+"[]']").removeAttr("checked");}	
+if(checked){$kids.children("input[name^='"+n+"']").attr("checked","checked");}
+else{$kids.children("input[name^='"+n+"']").removeAttr("checked");}	
 }
 
 function frmAddNewForm(form,action){if(form !='') window.location='?page=formidable&frm_action='+action+'&id='+form;}
@@ -457,21 +470,39 @@ if(val=='select') jQuery('#frm_multiple_cont_'+field_id).fadeIn('fast');
 else jQuery('#frm_multiple_cont_'+field_id).fadeOut('fast');
 }
 
-function frm_mark_required(field_id,required){
-    var thisid='req_field_'+field_id;
-    if(required=='0'){var switch_to='1';var atitle='Click to Mark as Not Required';var checked='checked="checked"';
-	jQuery('.frm_required_details'+field_id).fadeIn('fast');}
-	else{var switch_to='0';var atitle='Click to Mark as Required';var checked='';
-	jQuery('.frm_required_details'+field_id).fadeOut('fast');}
-    jQuery('#'+thisid).replaceWith('<a href="javascript:frm_mark_required('+field_id+','+switch_to+')" class="frm_action_icon frm_required_icon alignleft frm_required'+switch_to+'" id="'+thisid+'" title="'+atitle+'"></a>');
-	jQuery('#frm_'+thisid).replaceWith('<input type="checkbox" id="frm_'+thisid+'" name="field_options[required_'+field_id+']" value="1" '+checked+' onclick="frm_mark_required('+field_id+','+switch_to+')" />');
-    jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_mark_required&field="+field_id+"&required="+switch_to});
+function frm_mark_required(){
+	var thisid=jQuery(this).attr('id').replace('frm_', '');
+	var field_id=thisid.replace('req_field_', '');
+	if(jQuery(this).attr('id').indexOf('frm_') >= 0){
+		//checkbox was clicked
+		var checked=jQuery(this).is(':checked');
+	}else{
+		//link was clicked
+		var checked=(jQuery('#frm_'+thisid).is(':checked')) ? false : true;
+	}
+	
+    if(checked){
+		var atitle='Click to Mark as Not Required';
+		jQuery('.frm_required_details'+field_id).fadeIn('fast').closest('.frm_validation_msg').fadeIn('fast');
+	}else{
+		var atitle='Click to Mark as Required';
+		var v=jQuery('.frm_required_details'+field_id).fadeOut('fast').closest('.frm_validation_box').children(':not(.frm_required_details'+field_id+'):visible').length;
+		if(v==0)
+			jQuery('.frm_required_details'+field_id).closest('.frm_validation_msg').fadeOut('fast');
+	}
+    jQuery('#'+thisid).removeClass('frm_required0 frm_required1').addClass('frm_required'+(checked ? 1 : 0)).attr('title', atitle);
+	jQuery('#frm_'+thisid).prop('checked', checked);
 };
 
 function frmMarkUnique(field_id){
     var thisid='uniq_field_'+field_id;
-    if(jQuery('#frm_'+thisid).is(':checked')){jQuery('.frm_unique_details'+field_id).fadeIn('fast');}
-	else{jQuery('.frm_unique_details'+field_id).fadeOut('fast');}
+    if(jQuery('#frm_'+thisid).is(':checked')){
+		jQuery('.frm_unique_details'+field_id).fadeIn('fast').closest('.frm_validation_msg').fadeIn('fast');
+	}else{
+		var v=jQuery('.frm_unique_details'+field_id).fadeOut('fast').closest('.frm_validation_box').children(':not(.frm_unique_details'+field_id+'):visible').length;
+		if(v==0)
+			jQuery('.frm_unique_details'+field_id).closest('.frm_validation_msg').fadeOut('fast');
+	}
 };
 
 function frmSeparateValue(field_id){

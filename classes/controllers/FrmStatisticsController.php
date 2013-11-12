@@ -10,8 +10,8 @@ class FrmStatisticsController{
     }
     
     public static function menu(){
-        global $frmpro_is_installed;
-        if($frmpro_is_installed)
+        global $frm_vars;
+        if($frm_vars['pro_is_installed'])
             return;
             
         add_submenu_page('formidable', 'Formidable | '. __('Custom Displays', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Custom Displays', 'formidable') .'</span>', 'administrator', 'formidable-entry-templates', 'FrmStatisticsController::list_displays');
@@ -21,12 +21,12 @@ class FrmStatisticsController{
     
     public static function list_reports(){
         $form = FrmAppHelper::get_param('form', false);
-        require(FRM_VIEWS_PATH . '/frm-statistics/list.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-statistics/list.php');
     }
     
     public static function list_displays(){
         $form = FrmAppHelper::get_param('form', false);
-        require(FRM_VIEWS_PATH . '/frm-statistics/list_displays.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-statistics/list_displays.php');
     }
 
 }

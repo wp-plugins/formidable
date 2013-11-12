@@ -125,11 +125,11 @@
                     = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
                 <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
                     = <?php _e('default value will pass validation', 'formidable') ?></li>
-                <li><span><img src="<?php echo FRM_URL ?>/images/trash.png" alt="<?php echo esc_attr(__('Delete')) ?>" /></span> 
+                <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></span> 
                     = <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                <li><span><img src="<?php echo FRM_URL ?>/images/duplicate.png" alt="<?php echo esc_attr(__('Move')) ?>" /></span> 
+                <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/duplicate.png" alt="<?php esc_attr_e('Move') ?>" /></span> 
                     = <?php _e('duplicate field', 'formidable') ?></li>
-                <li><span><img src="<?php echo FRM_URL ?>/images/move.png" alt="<?php echo esc_attr(__('Move')) ?>" /></span> 
+                <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/move.png" alt="<?php esc_attr_e('Move') ?>" /></span> 
                     = <?php _e('move field', 'formidable') ?></li>
             </ul>
 

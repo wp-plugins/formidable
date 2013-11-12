@@ -14,7 +14,6 @@ class FrmFieldsController{
         add_action('wp_ajax_frm_insert_field', 'FrmFieldsController::create');
         add_action('wp_ajax_frm_field_name_in_place_edit', 'FrmFieldsController::edit_name');
         add_action('wp_ajax_frm_field_desc_in_place_edit', 'FrmFieldsController::edit_description');
-        add_action('wp_ajax_frm_mark_required', 'FrmFieldsController::mark_required');
         add_action('wp_ajax_frm_update_ajax_option', 'FrmFieldsController::update_ajax_option');
         add_action('wp_ajax_frm_duplicate_field', 'FrmFieldsController::duplicate');
         add_action('wp_ajax_frm_delete_field', 'FrmFieldsController::destroy');
@@ -32,7 +31,7 @@ class FrmFieldsController{
     }
     
     public static function load_field(){
-        global $frm_field, $frm_form;
+        global $frm_field;
         
         $id = $field_id = $_POST['field_id'];
         if(!$field_id or !is_numeric($field_id))
@@ -47,9 +46,11 @@ class FrmFieldsController{
         $field_name = "item_meta[$field_id]";
         
         $values = array();
-            
-        include(FRM_VIEWS_PATH .'/frm-forms/add_field.php'); 
-        include(FRM_VIEWS_PATH .'/frm-forms/new-field-js.php');
+        
+        $path = FrmAppHelper::plugin_path();    
+        include($path .'/classes/views/frm-forms/add_field.php'); 
+        include($path .'/classes/views/frm-forms/new-field-js.php');
+        unset($path);
         
         die();
     }
@@ -70,8 +71,8 @@ class FrmFieldsController{
             $field = FrmFieldsHelper::setup_edit_vars($frm_field->getOne($field_id));
             $field_name = "item_meta[$field_id]";
             $id = $form_id;
-            require(FRM_VIEWS_PATH.'/frm-forms/add_field.php'); 
-            require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-field-js.php'); 
         }
         die();
     }
@@ -91,12 +92,6 @@ class FrmFieldsController{
         $id = str_replace('field_description_', '', $_POST['element_id']);
         $frm_field->update($id, array('description' => $_POST['update_value']));
         echo stripslashes($_POST['update_value']);
-        die();
-    } 
-    
-    public static function mark_required(){
-        global $frm_field;
-        $frm_field->update($_POST['field'], array('required' => $_POST['required']));
         die();
     }
     
@@ -144,8 +139,8 @@ class FrmFieldsController{
             $id = $field['form_id'];
             if($field['type'] == 'html')
                 $field['stop_filter'] = true;
-            require(FRM_VIEWS_PATH.'/frm-forms/add_field.php'); 
-            require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-field-js.php'); 
         }
         die();
     }
@@ -189,7 +184,7 @@ class FrmFieldsController{
         $field['separate_value'] = isset($field_data->field_options['separate_value']) ? $field_data->field_options['separate_value'] : 0;
         $field_name = "item_meta[$id]";
         
-        require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/single-option.php');
         die();
     }
 
@@ -295,7 +290,7 @@ class FrmFieldsController{
         
         $field = $frm_field->getOne($field_id);
         
-        include(FRM_VIEWS_PATH.'/frm-fields/import_choices.php');
+        include(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/import_choices.php');
         die();
     }
     
@@ -334,16 +329,16 @@ class FrmFieldsController{
         $field_name = $field['name'];
         
         if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
-            require(FRM_VIEWS_PATH.'/frm-fields/radio.php');
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/radio.php');
         }else{
             foreach ($field['options'] as $opt_key => $opt){ 
                 $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
                 $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
-                require(FRM_VIEWS_PATH.'/frm-fields/single-option.php');
+                require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/single-option.php');
             }
         }
         
-        require(FRM_VIEWS_PATH.'/frm-forms/new-field-js.php'); 
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-field-js.php'); 
         
         die();
     }
@@ -359,9 +354,9 @@ class FrmFieldsController{
     }
     
     public static function change_type($type){
-        global $frmpro_is_installed;
+        global $frm_vars;
 
-        if ($frmpro_is_installed) return $type;
+        if ($frm_vars['pro_is_installed']) return $type;
         
         if($type == 'scale' || $type == '10radio')
             $type = 'radio';

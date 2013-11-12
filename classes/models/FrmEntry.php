@@ -85,8 +85,8 @@ class FrmEntry{
         if(isset($query_results) and $query_results){
             $entry_id = $wpdb->insert_id;
             
-            global $frm_saved_entries;
-            $frm_saved_entries[] = (int)$entry_id;
+            global $frm_vars;
+            $frm_vars['saved_entries'][] = (int)$entry_id;
             
             if (isset($values['item_meta']))
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
@@ -115,8 +115,8 @@ class FrmEntry{
         if($query_results){
             $entry_id = $wpdb->insert_id;
             
-            global $frm_saved_entries;
-            $frm_saved_entries[] = (int)$entry_id;
+            global $frm_vars;
+            $frm_vars['saved_entries'][] = (int)$entry_id;
             
             $frm_entry_meta->duplicate_entry_metas($id, $entry_id);
             return $entry_id;
@@ -125,8 +125,8 @@ class FrmEntry{
     }
 
     function update( $id, $values ){
-        global $wpdb, $frmdb, $frm_entry_meta, $frm_field, $frm_saved_entries;
-        if(in_array((int)$id, (array)$frm_saved_entries))
+        global $wpdb, $frmdb, $frm_entry_meta, $frm_field, $frm_vars;
+        if(in_array((int)$id, (array)$frm_vars['saved_entries']))
             return;
 
         $new_values = array();
@@ -149,7 +149,7 @@ class FrmEntry{
         $query_results = $wpdb->update( $frmdb->entries, $new_values, compact('id') );
         if($query_results)
             wp_cache_delete( $id, 'frm_entry');
-        $frm_saved_entries[] = (int)$id;
+        $frm_vars['saved_entries'][] = (int)$id;
         
         if (isset($values['item_meta']))
             $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
@@ -381,7 +381,7 @@ class FrmEntry{
                 global $frm_settings;
 
                 if(!function_exists('recaptcha_check_answer'))
-                    require(FRM_PATH.'/classes/recaptchalib.php');
+                    require(FrmAppHelper::plugin_path().'/classes/recaptchalib.php');
 
                 $response = recaptcha_check_answer($frm_settings->privkey,
                                                 $_SERVER['REMOTE_ADDR'],
@@ -401,7 +401,7 @@ class FrmEntry{
         
         global $wpcom_api_key;
         if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
-            global $frm_form;
+            $frm_form = new FrmForm();
             $form = $frm_form->getOne($values['form_id']);
             $form->options = maybe_unserialize($form->options);
             
@@ -414,7 +414,7 @@ class FrmEntry{
     
     //Check entries for spam -- returns true if is spam
     function akismet($values) {
-	    global $akismet_api_host, $akismet_api_port, $frm_siteurl;
+	    global $akismet_api_host, $akismet_api_port;
 
 		$content = '';
 		foreach ( $values['item_meta'] as $val ) {
@@ -429,7 +429,7 @@ class FrmEntry{
 		    return false;
         
         $datas = array();
-		$datas['blog'] = $frm_siteurl;
+		$datas['blog'] = FrmAppHelper::site_url();
 		$datas['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
 		$datas['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 		$datas['referrer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : false;

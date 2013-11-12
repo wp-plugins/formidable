@@ -6,8 +6,7 @@ if(class_exists('FrmFormsHelper'))
 
 class FrmFormsHelper{
     public static function get_direct_link($key, $prli_link_id=false){
-        global $frm_ajax_url;
-        $target_url = esc_url($frm_ajax_url . '?action=frm_forms_preview&form='.$key);
+        $target_url = esc_url(admin_url('admin-ajax.php') . '?action=frm_forms_preview&form='. $key);
         if ($prli_link_id && class_exists('PrliLink')){
             $prli = prli_get_pretty_link_url($prli_link_id);
             if ($prli) $target_url = $prli;
@@ -26,11 +25,11 @@ class FrmFormsHelper{
     }
     
     public static function forms_dropdown( $field_name, $field_value='', $blank=true, $field_id=false, $onchange=false ){
-        global $frm_form;
         if (!$field_id)
             $field_id = $field_name;
         
         $where = apply_filters('frm_forms_dropdown', "is_template=0 AND (status is NULL OR status = '' OR status = 'published')", $field_name);
+        $frm_form = new FrmForm();
         $forms = $frm_form->getAll($where, ' ORDER BY name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
@@ -103,8 +102,6 @@ class FrmFormsHelper{
     }
     
     public static function setup_edit_vars($values, $record, $post_values=array()){
-        global $frm_form;
-        
         if(empty($post_values))
             $post_values = $_POST;
 
@@ -196,7 +193,7 @@ BEFORE_HTML;
         $html = str_replace('[form_key]', $form->form_key, $html);
         
         //replace [frmurl]
-        $html = str_replace('[frmurl]', FRM_URL, $html);
+        $html = str_replace('[frmurl]', FrmAppHelper::plugin_url(), $html);
         
         if(strpos($html, '[button_label]')){
             $replace_with = apply_filters('frm_submit_button', $title, $form);

@@ -5,6 +5,31 @@ if(class_exists('FrmAppHelper'))
     return;
 
 class FrmAppHelper{
+    const DBVERSION = 11; //version of the database we are moving to
+    
+    public static function plugin_version(){
+        $plugin_data = get_file_data( WP_PLUGIN_DIR .'/formidable/formidable.php', array('Version' => 'Version'), 'plugin' );
+        return $plugin_data['Version'];
+    }
+    
+    public static function plugin_path(){
+        return dirname(dirname(dirname(__FILE__)));
+    }
+    
+    public static function plugin_url($url=''){
+        //prevously FRM_URL constant
+        if(empty($url))
+            $url = plugins_url('', 'formidable/formidable.php');
+        if(is_ssl() and !preg_match('/^https:\/\/.*\..*$/', $url))
+            $url = str_replace('http://', 'https://', $url);
+        
+        return $url;
+    }
+    
+    public static function site_url(){
+        $url = self::plugin_url(site_url());
+        return $url;
+    }
     
     public static function get_param($param, $default='', $src='get'){
         if(strpos($param, '[')){
@@ -76,30 +101,33 @@ class FrmAppHelper{
     }
     
     public static function wp_roles_dropdown($field_name, $capability){
-        global $frm_editable_roles;
+        global $frm_vars;
         $field_value = FrmAppHelper::get_param($field_name);
-        if(!$frm_editable_roles)
-    	    $frm_editable_roles = get_editable_roles();
+        if(!isset($frm_vars['editable_roles']) or !$frm_vars['editable_roles'])
+    	    $frm_vars['editable_roles'] = get_editable_roles();
 
     ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
-            <?php foreach($frm_editable_roles as $role => $details){ 
+            <?php foreach($frm_vars['editable_roles'] as $role => $details){ 
                 $name = translate_user_role($details['name'] ); ?>
                 <option value="<?php echo esc_attr($role) ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $role) or (!isset($_POST[$field_name]) and $capability == $role))?' selected="selected"':''); ?>><?php echo $name ?> </option>
-            <?php } ?>
+            <?php 
+                    unset($role);
+                    unset($details);
+                } ?>
         </select>
     <?php
     }
     
     static public function frm_capabilities(){
-        global $frmpro_is_installed;
+        global $frm_vars;
         $cap = array(
             'frm_view_forms' => __('View Forms and Templates', 'formidable'),
             'frm_edit_forms' => __('Add/Edit Forms and Templates', 'formidable'),
             'frm_delete_forms' => __('Delete Forms and Templates', 'formidable'),
             'frm_change_settings' => __('Access this Settings Page', 'formidable')
         );
-        if($frmpro_is_installed){
+        if($frm_vars['pro_is_installed']){
             $cap['frm_view_entries'] = __('View Entries from Admin Area', 'formidable');
             $cap['frm_create_entries'] = __('Add Entries from Admin Area', 'formidable');
             $cap['frm_edit_entries'] = __('Edit Entries from Admin Area', 'formidable');
@@ -243,7 +271,7 @@ class FrmAppHelper{
     //Editing a Form or Entry
     public static function setup_edit_vars($record, $table, $fields='', $default=false, $post_values=array()){
         if(!$record) return false;
-        global $frm_entry_meta, $frm_form, $frm_settings, $frm_sidebar_width;
+        global $frm_entry_meta, $frm_settings, $frm_vars;
         
         if(empty($post_values))
             $post_values = $_POST;
@@ -318,7 +346,7 @@ class FrmAppHelper{
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
                 
                 if ($field_array['size'] == '')
-                    $field_array['size'] = $frm_sidebar_width;
+                    $field_array['size'] = $frm_vars['sidebar_width'];
                 
                 $field_array = apply_filters('frm_setup_edit_fields_vars', $field_array, $field, $values['id']);
                 
@@ -334,10 +362,12 @@ class FrmAppHelper{
                 unset($field);   
             }
       
+        $frm_form = new FrmForm();
         if ($table == 'entries')
             $form = $frm_form->getOne( $record->form_id );
         else if ($table == 'forms')
             $form = $frm_form->getOne( $record->id );
+        unset($frm_form);
 
         if ($form){
             $form->options = maybe_unserialize($form->options);
@@ -374,7 +404,7 @@ class FrmAppHelper{
             unset($opt);
             unset($defaut);
         }
-            
+         
         if (!isset($values['custom_style']))
             $values['custom_style'] = ($post_values and isset($post_values['options']['custom_style'])) ? $_POST['options']['custom_style'] : ($frm_settings->load_style != 'none');
 
@@ -401,9 +431,9 @@ class FrmAppHelper{
             $class .= 'show_frm_not_email_to';
     ?>
 <li>
-    <a class="frmids alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');return false;" href="#">[<?php echo $id ?>]</a>
-    <a class="frmkeys alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $key ?>');return false;" href="#">[<?php echo FrmAppHelper::truncate($key, 10) ?>]</a>
-    <a class="<?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');return false;" href="#"><?php echo FrmAppHelper::truncate($name, 60) ?></a>
+    <a class="frmids alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');" href="javascript:void(0)">[<?php echo $id ?>]</a>
+    <a class="frmkeys alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $key ?>');" href="javascript:void(0)">[<?php echo FrmAppHelper::truncate($key, 10) ?>]</a>
+    <a class="<?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');" href="javascript:void(0)"><?php echo FrmAppHelper::truncate($name, 60) ?></a>
 </li>
     <?php
     }

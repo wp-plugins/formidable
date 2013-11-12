@@ -33,7 +33,7 @@ class FrmListHelper extends WP_List_Table {
 	}
 
 	function prepare_items() {
-	    global $frmdb, $wpdb, $per_page, $frm_settings, $frm_form;
+	    global $frmdb, $wpdb, $per_page, $frm_settings;
 		$paged = $this->get_pagenum();
 		$default_orderby = 'name';
 		$default_order = 'ASC';
@@ -67,6 +67,7 @@ class FrmListHelper extends WP_List_Table {
             }
 	    }
 	    
+	    $frm_form = new FrmForm();
         $this->items = $frm_form->getAll($s_query, " ORDER BY $orderby $order", " LIMIT $start, $per_page", true, false);
         $total_items = FrmAppHelper::getRecordCount($s_query, $this->table_name);
 		
@@ -92,10 +93,10 @@ class FrmListHelper extends WP_List_Table {
 	}
 	
 	function get_bulk_actions(){
-	    global $frmpro_is_installed;
+	    global $frm_vars;
 	    
 	    $actions = array();
-	    if($frmpro_is_installed){
+	    if($frm_vars['pro_is_installed']){
             $actions['bulk_delete'] = __('Delete');
             //$actions['bulk_export'] = __('Export to XML', 'formidable');
         }
@@ -112,7 +113,7 @@ class FrmListHelper extends WP_List_Table {
 	}
 	
 	function single_row( $item, $style='') {
-	    global $frmpro_is_installed, $frm_entry;
+	    global $frm_vars, $frm_entry;
 		$checkbox = '';
 		
 		// Set up the hover actions for this user
@@ -136,7 +137,7 @@ class FrmListHelper extends WP_List_Table {
     		
     		$actions['frm_reports'] = "<a href='" . wp_nonce_url( "?page=formidable-reports&form={$item->id}" ) . "' title='$title ". __('Reports', 'formidable') ."'>". __('Reports', 'formidable') ."</a>";
     		
-    		if($frmpro_is_installed and current_user_can('frm_create_entries')){
+    		if($frm_vars['pro_is_installed'] and current_user_can('frm_create_entries')){
         		$actions['frm_entry'] = "<a href='" . wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) . "' title='". __('New', 'formidable') ." $title ". __('Entry', 'formidable') ."'>". __('New Entry', 'formidable')  ."</a>";
         	}
         	
@@ -145,7 +146,7 @@ class FrmListHelper extends WP_List_Table {
         	$actions['frm_template'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) . "' title='". __('Create Template', 'formidable') ."'>". __('Create Template', 'formidable') ."</a>";
         }
         
-        if($frmpro_is_installed){
+        if($frm_vars['pro_is_installed']){
     	    $actions['export_template'] = "<a href='" . wp_nonce_url( admin_url( 'admin-ajax.php' ) ."?action=frm_forms_export&id={$item->id}" ) . "' title='$title ". __('Export Template', 'formidable') ."'>". __('Export Template', 'formidable') ."</a>";
     	    
     	}
@@ -167,7 +168,7 @@ class FrmListHelper extends WP_List_Table {
             if(isset($actions['frm_settings']))
                 unset($actions['frm_settings']);
                 
-            if(!$frmpro_is_installed)
+            if(!$frm_vars['pro_is_installed'])
                 unset($actions['frm_duplicate']);
         }
         
