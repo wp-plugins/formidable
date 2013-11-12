@@ -246,7 +246,7 @@ if ($display['options']){ ?>
                 <?php do_action('frm_field_options_form', $field, $display, $values); ?>
                 
                 <?php if ($display['required'] or $display['invalid'] or $display['unique']){ ?>
-                    <tr class="frm_validation_msg" <?php echo (!$display['invalid'] or !$field['required'] or !$field['unique']) ? 'style="display:none;"' : ''; ?>><td><?php _e('Validation', 'formidable') ?></td>
+                    <tr class="frm_validation_msg" <?php echo ($display['invalid'] or $field['required'] or $field['unique']) ? '' : 'style="display:none;"'; ?>><td><?php _e('Validation', 'formidable') ?></td>
                     <td class="frm_validation_box">
                         <?php if ($display['required']){ ?>
                         <p class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>><label><?php _e('Required', 'formidable') ?></label>

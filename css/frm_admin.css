@@ -62,6 +62,7 @@ p.search-box {margin-top:10px;}
 	-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;
 	color:#222;background-color:#F7F7F7;border:1px solid #DFDFDF;
 }
+.wp-admin .frm_form_fields input[type="file"]{background:transparent;border:none;}
 .wp-admin .frm_form_fields select{width:auto;}
 .wp-admin .frm_form_fields input[type="radio"], .wp-admin .frm_form_fields input[type="checkbox"]{width:auto;border:none;background:transparent;padding:0;}
 .wp-admin .frm_catlevel_2, .wp-admin .frm_catlevel_3, .wp-admin .frm_catlevel_4, .wp-admin .frm_catlevel_5{margin-left:18px;}
