@@ -382,8 +382,9 @@ function frm_install_now(){
             return $sc .']';
         }
         
-        extract(shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array(), 'exclude_fields' => array()), $atts));
-        do_action('formidable_shortcode_atts', compact('id', 'key', 'title', 'description', 'readonly', 'entry_id', 'fields', 'exclude_fields'));
+        $shortcode_atts = shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array(), 'exclude_fields' => array()), $atts);
+        do_action('formidable_shortcode_atts', $shortcode_atts, $atts);
+        extract($shortcode_atts);
         return FrmEntriesController::show_form($id, $key, $title, $description); 
     }
 
