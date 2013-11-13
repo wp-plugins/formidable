@@ -24,7 +24,6 @@
     		<li class="tabs" ><a href="#frm-insert-fields" id="frm_insert_fields_tab"><?php _e( 'Fields', 'formidable' ); ?></a></li>
     		<li class="hide-if-no-js"><a href="#frm-layout-classes" id="frm_layout_classes_tab"><?php _e( 'Layout', 'formidable' ); ?></a></li>
     		<?php do_action('frm_extra_form_instruction_tabs'); ?>
-    		<li class="hide-if-no-js"><a href="#frm-keys-and-actions"><?php _e( 'Key', 'formidable' ); ?></a></li>
     	</ul>
 
     	<div id="frm-insert-fields" class="tabs-panel" style="max-height:none;overflow:visible;">
@@ -110,30 +109,6 @@
     	    </ul>
     	</div>
     	
-    	<div id="frm-keys-and-actions" class="tabs-panel" style="display:none;max-height:none;">
-		        
-            <ul class="frm_key_icons">
-                <li><span class="frm_action_icon frm_required_icon"></span> 
-                     <?php _e('required field', 'formidable') ?></li>
-                <li><span class="frm_inactive_icon frm_action_icon frm_required_icon"></span> 
-                     <?php _e('not required', 'formidable') ?></li>
-                <li><span class="frm_action_icon frm_reload_icon"></span> 
-                     <?php _e('clear default text on click', 'formidable') ?></li>
-                <li><span class="frm_inactive_icon frm_action_icon frm_reload_icon"></span> 
-                     <?php _e('do not clear default text on click', 'formidable') ?></li>
-                <li><span class="frm_action_icon frm_error_icon"></span> 
-                     <?php _e('default value will NOT pass validation', 'formidable') ?></li>
-                <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
-                     <?php _e('default value will pass validation', 'formidable') ?></li>
-                <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></span> 
-                     <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                <li><span class="frm_hover_change_icon frm_duplicate_form"> </span> 
-                     <?php _e('duplicate field', 'formidable') ?></li>
-                <li><span class="frm_hover_change_icon frm_move_field"> </span> 
-                     <?php _e('move field', 'formidable') ?></li>
-            </ul>
-
-    	</div>
     	<?php 
     	$action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = FrmAppHelper::get_param($action);
