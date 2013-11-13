@@ -403,7 +403,7 @@ function frmToggleLogic(id){
 $ele = jQuery('#'+id);
 $ele.fadeOut('slow'); $ele.next('.frm_logic_rows').fadeIn('slow');
 }
-function frmToggleDiv(div){jQuery(div).fadeToggle('fast');}
+function frmToggleDiv(div){if(jQuery(div).is(':visible')){ jQuery(div).slideUp('fast');}else{jQuery(div).slideDown('fast');} }
 function frm_show_div(div,value,show_if,class_id){
 if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div).fadeOut('slow');
 }

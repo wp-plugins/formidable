@@ -59,7 +59,7 @@ class FrmAppController{
     }
     
     public static function menu_css(){ ?>
-<style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image, .frm-buttons-icon{background:url(<?php echo FrmAppHelper::plugin_url() ?>/images/form_16.png) no-repeat center -26px;}#adminmenu .toplevel_page_formidable:hover .wp-menu-image, #adminmenu .wp-has-current-submenu.toplevel_page_formidable .wp-menu-image{background-position:center 5px;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}.frm-buttons-icon{display:inline-block;height:16px;margin:0 2px;vertical-align: text-top;width:16px;background-position:left -30px;background-size:15px 44px;}</style>    
+<style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image, .frm-buttons-icon{background:url(<?php echo FrmAppHelper::plugin_url() ?>/images/form_16.png) no-repeat center -26px;}#adminmenu .toplevel_page_formidable:hover .wp-menu-image, #adminmenu .wp-has-current-submenu.toplevel_page_formidable .wp-menu-image{background-position:center 5px;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}.frm-buttons-icon{display:inline-block;height:16px;margin:0 2px;vertical-align: text-top;width:16px;background-position:left -30px;background-size:15px 44px;}.wp-media-buttons .frm_insert_form{padding-left:0.4em;}</style>    
 <?php
     }
     

@@ -1,16 +1,19 @@
 <div id="postbox-container-1" class="<?php echo FrmAppController::get_postbox_class(); ?>">
     <?php if(!isset($hide_preview) or !$hide_preview){ 
         if (!$values['is_template']){ ?>
-    <p class="howto" style="margin-top:0;"><?php _e('Insert into a post, page or text widget', 'formidable') ?>
+    <p class="howto" style="margin-top:0;"><?php _e('Add to a post, page or text widget', 'formidable') ?>
         <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a>
-        <a href="#" onclick="frmToggleDiv('.frm_ext_sc')"><?php _e('Show more', 'formidable') ?></a>
+        <a href="javascript:void(0)" onclick="frmToggleDiv('.frm_ext_sc')"><?php _e('Show more', 'formidable') ?></a>
     <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?>]" />
     <span class="frm_ext_sc">
     <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?> title=true description=true]" />
     <input type="text" readonly="true" class="frm_select_box" value="[formidable key=<?php echo $values['form_key']; ?>]" /><br/>
     
     <?php _e('Insert in a template', 'formidable') ?>
-    <input type="text" readonly="true" class="frm_select_box" value="&lt;?php echo FrmAppController::get_form_shortcode(array('id' => <?php echo $id; ?>, 'title' => false, 'description' => false)); ?&gt;" />
+    <input type="text" readonly="true" class="frm_select_box" value="&lt;?php echo FrmAppController::get_form_shortcode(array('id' => <?php echo $id; ?>, 'title' => false, 'description' => false)); ?&gt;" /><br/>
+    
+    <?php _e('Direct Link', 'formidable') ?>
+    <input type="text" readonly="true" class="frm_select_box" value="<?php echo esc_attr(FrmFormsHelper::get_direct_link($values['form_key'], (isset($values['prli_link_id']) ? $values['prli_link_id'] : 0))) ?>" />
     </span>
     </p>
     </tr>

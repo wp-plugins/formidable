@@ -3,7 +3,7 @@
 
 ul.frm_form_nav {
 	/*background:#ececec;*/
-	margin:10px 0 21px;
+	margin:10px 0 20px;
 	width:615px;
 	float:left;
 	*float:right;
@@ -365,6 +365,18 @@ span.howto{display:inline;}
 .widefat .column-id{width:3.2em;}
 .widefat .column-show_count{width:5em;}
 .widefat .column-shortcode{width:9em;}
+.widefat .column-entries{width:10%;text-align:center;}
+.widefat .column-link{width:15%;text-align:center;}
+.frm_hover_change_icon{height:16px;width:16px;display:inline-block;text-indent:-9999px;}
+.frm_download_template{background:url(../images/arrow-down.png) bottom no-repeat;}
+.frm_add_entry_icon{background:url(../images/plus.png) bottom no-repeat;}
+.frm_duplicate_form{background:url(../images/duplicate.png) bottom no-repeat;}
+.frm_move_field{background:url(../images/move.png) bottom no-repeat;}
+.frm_delete_icon{background:url(../images/trash.png) center no-repeat;}
+.frm_new_template_icon{background:url(../images/template.png) bottom no-repeat;}
+.frm_add_entry_icon:hover, .frm_new_template_icon:hover{background-position:top;}
+.frm_duplicate_form:hover, .frm_download_template:hover, .frm_move_field:hover{background-position:top;}
+.frm_hover_change_icon.frm_inactive_icon{opacity:0.6;}
 .view-switch{display:none;}
 select[name="m"]{display:none;}
 
