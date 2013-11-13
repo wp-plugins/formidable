@@ -114,23 +114,23 @@
 		        
             <ul class="frm_key_icons">
                 <li><span class="frm_action_icon frm_required_icon"></span> 
-                    = <?php _e('required field', 'formidable') ?></li>
+                     <?php _e('required field', 'formidable') ?></li>
                 <li><span class="frm_inactive_icon frm_action_icon frm_required_icon"></span> 
-                    = <?php _e('not required', 'formidable') ?></li>
+                     <?php _e('not required', 'formidable') ?></li>
                 <li><span class="frm_action_icon frm_reload_icon"></span> 
-                    = <?php _e('clear default text on click', 'formidable') ?></li>
+                     <?php _e('clear default text on click', 'formidable') ?></li>
                 <li><span class="frm_inactive_icon frm_action_icon frm_reload_icon"></span> 
-                    = <?php _e('do not clear default text on click', 'formidable') ?></li>
+                     <?php _e('do not clear default text on click', 'formidable') ?></li>
                 <li><span class="frm_action_icon frm_error_icon"></span> 
-                    = <?php _e('default value will NOT pass validation', 'formidable') ?></li>
+                     <?php _e('default value will NOT pass validation', 'formidable') ?></li>
                 <li><span class="frm_inactive_icon frm_action_icon frm_error_icon"></span> 
-                    = <?php _e('default value will pass validation', 'formidable') ?></li>
+                     <?php _e('default value will pass validation', 'formidable') ?></li>
                 <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></span> 
-                    = <?php _e('delete field and all inputed data', 'formidable') ?></li>
-                <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/duplicate.png" alt="<?php esc_attr_e('Move') ?>" /></span> 
-                    = <?php _e('duplicate field', 'formidable') ?></li>
-                <li><span><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/move.png" alt="<?php esc_attr_e('Move') ?>" /></span> 
-                    = <?php _e('move field', 'formidable') ?></li>
+                     <?php _e('delete field and all inputed data', 'formidable') ?></li>
+                <li><span class="frm_hover_change_icon frm_duplicate_form"> </span> 
+                     <?php _e('duplicate field', 'formidable') ?></li>
+                <li><span class="frm_hover_change_icon frm_move_field"> </span> 
+                     <?php _e('move field', 'formidable') ?></li>
             </ul>
 
     	</div>
