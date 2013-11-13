@@ -23,9 +23,9 @@ $display = apply_filters('frm_display_field_options', array(
 )); ?>
 
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
-    <a href="javascript:void(0);" class="alignright frm-show-hover frm-move frm-hover-icon frm_hover_change_icon frm_move_field" title="<?php esc_attr_e('Move Field', 'formidable') ?>"> </a>
-    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="frm_help alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_delete_icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php esc_attr_e('Delete Field', 'formidable') ?>"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></a>
-    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="frm_help alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_duplicate_form" title="<?php esc_attr_e('Duplicate Field', 'formidable') ?>"> </a>
+    <a href="javascript:void(0);" class="frm_bstooltip alignright frm-show-hover frm-move frm-hover-icon frm_hover_change_icon frm_move_field" title="<?php esc_attr_e('Move Field', 'formidable') ?>"> </a>
+    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_delete_icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php esc_attr_e('Delete Field', 'formidable') ?>"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></a>
+    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_duplicate_form" title="<?php esc_attr_e('Duplicate Field', 'formidable') ?>"> </a>
     <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>" />
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ($display['required']){ ?>

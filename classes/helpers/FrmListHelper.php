@@ -136,15 +136,19 @@ class FrmListHelper extends WP_List_Table {
 
         	}
         }else{
-            if(current_user_can('frm_edit_forms'))
+            if(current_user_can('frm_edit_forms')){
     		    $actions['frm_settings'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=settings&id={$item->id}" ) . "'>". __('Settings', 'formidable') ."</a>";
+    		    
+    		    if($frm_vars['pro_is_installed'])
+        	        $actions['duplicate'] = '<a href="' . wp_nonce_url( $duplicate_link ) . '">'. __('Duplicate', 'formidable') .'</a>';
+        	}
         }
         
         $delete_link = "?page=formidable&frm_action=destroy&id={$item->id}";
         if(current_user_can('frm_delete_forms'))
 		    $actions['trash'] = "<a class='submitdelete' href='" . wp_nonce_url( $delete_link ) . "' onclick='return confirm(\"". __('Are you sure you want to delete that?', 'formidable') ."\")'>" . __( 'Delete' ) . "</a>";
 		
-		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item->prli_link_id) .'">'. __('View') .'</a>';  
+		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item->prli_link_id) .'" target="_blank">'. __('View') .'</a>';  
         
         $action_links = $this->row_actions( $actions );
         
@@ -203,8 +207,6 @@ class FrmListHelper extends WP_List_Table {
 			        $links = array();
                     if($frm_vars['pro_is_installed'] and current_user_can('frm_create_entries'))
                 		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_add_entry_icon frm_hover_change_icon frm_bstooltip" title="'. __('Add Entry', 'formidable'). '" data-toggle="tooltip"> </a>';
-                	if($frm_vars['pro_is_installed'])
-                	    $links[] = '<a href="' . wp_nonce_url( $duplicate_link ) . '" class="frm_duplicate_form frm_hover_change_icon frm_bstooltip" title="'. __('Duplicate Form', 'formidable') .'" data-toggle="tooltip"> </a>';
                 	
                 	$links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_hover_change_icon frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
                 	

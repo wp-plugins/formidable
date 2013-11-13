@@ -350,8 +350,8 @@ span.howto{display:inline;}
 .widefat .column-id{width:3.2em;}
 .widefat .column-show_count{width:5em;}
 .widefat .column-shortcode{width:9em;}
-.widefat .column-entries{width:10%;text-align:center;}
-.widefat .column-link{width:15%;text-align:center;}
+.widefat .column-entries, .widefat .column-link{width:10%;text-align:center;}
+.widefat .column-form_key, .widefat .column-created_at{width:10%;}
 .frm_hover_change_icon{height:16px;width:16px;display:inline-block;text-indent:-9999px;}
 .frm_download_template{background:url(../images/arrow-down.png) bottom no-repeat;}
 .frm_add_entry_icon{background:url(../images/plus.png) bottom no-repeat;}
