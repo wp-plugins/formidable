@@ -116,19 +116,19 @@ class FrmFieldsController{
     }
     
     public static function duplicate(){
-        global $frmdb, $frm_field;
+        global $wpdb, $frm_field;
         
         $copy_field = $frm_field->getOne($_POST['field_id']);
         if (!$copy_field) return;
             
         $values = array();
-        $values['field_key'] = FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key');
+        $values['field_key'] = FrmAppHelper::get_unique_key('', $wpdb->prefix . 'frm_fields', 'field_key');
         $values['options'] = maybe_serialize($copy_field->options);
         $values['default_value'] = maybe_serialize($copy_field->default_value);
         $values['form_id'] = $copy_field->form_id;
         foreach (array('name', 'description', 'type', 'field_options', 'required') as $col)
             $values[$col] = $copy_field->{$col};
-        $field_count = FrmAppHelper::getRecordCount(array('form_id' => $copy_field->form_id), $frmdb->fields);
+        $field_count = FrmAppHelper::getRecordCount(array('form_id' => $copy_field->form_id), $wpdb->prefix . 'frm_fields');
         $values['field_order'] = $field_count + 1;
         
         $field_id = $frm_field->create($values);

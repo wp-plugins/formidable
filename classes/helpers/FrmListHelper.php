@@ -33,7 +33,7 @@ class FrmListHelper extends WP_List_Table {
 	}
 
 	function prepare_items() {
-	    global $frmdb, $wpdb, $per_page, $frm_settings;
+	    global $wpdb, $per_page, $frm_settings;
 		$paged = $this->get_pagenum();
 		$default_orderby = 'name';
 		$default_order = 'ASC';
@@ -202,15 +202,14 @@ class FrmListHelper extends WP_List_Table {
 			    case 'link':
 			        $links = array();
                     if($frm_vars['pro_is_installed'] and current_user_can('frm_create_entries'))
-                		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_help frm_add_entry_icon frm_hover_change_icon" title="'. __('Add entry', 'formidable'). '"> </a>';
-                	if($frm_vars['pro_is_installed']){
-                	    $links[] = '<a href="' . wp_nonce_url( $duplicate_link ) . '" class="frm_help frm_duplicate_form frm_hover_change_icon" title="'. __('Copy form', 'formidable') .'"> </a>';
-                	}
+                		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_add_entry_icon frm_hover_change_icon frm_bstooltip" title="'. __('Add Entry', 'formidable'). '" data-toggle="tooltip"> </a>';
+                	if($frm_vars['pro_is_installed'])
+                	    $links[] = '<a href="' . wp_nonce_url( $duplicate_link ) . '" class="frm_duplicate_form frm_hover_change_icon frm_bstooltip" title="'. __('Duplicate Form', 'formidable') .'" data-toggle="tooltip"> </a>';
                 	
-                	$links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_hover_change_icon frm_new_template_icon frm_help" title="'. __('Create template from form', 'formidable') .'"> </a>';
+                	$links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_hover_change_icon frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
                 	
                 	if($frm_vars['pro_is_installed'] and current_user_can('frm_edit_forms'))
-            	        $links[] = '<a href="'. wp_nonce_url( admin_url( 'admin-ajax.php' ) .'?action=frm_forms_export&id={$item->id}' ) . '" title="'. esc_attr(__('Export form template', 'formidable')) .'" class="frm_help frm_download_template frm_hover_change_icon"> </a>';
+                	    $links[] = '<a href="'. wp_nonce_url( admin_url( 'admin-ajax.php' ) ."?action=frm_forms_export&id={$item->id}" ) . '" title="'. esc_attr(__('Export form template', 'formidable')) .'" class="frm_download_template frm_hover_change_icon frm_bstooltip" data-toggle="tooltip"> </a>';
                 	
                     $val = implode(' ', $links);
                     break;

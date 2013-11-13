@@ -145,11 +145,11 @@ class FrmFormsController{
     }
     
     public static function edit_key(){
-        global $wpdb, $frmdb;
+        global $wpdb;
         $values = array('form_key' => trim($_POST['update_value']));
         $frm_form = new FrmForm();
         $form = $frm_form->update($_POST['form_id'], $values);
-        $key = $wpdb->get_var($wpdb->prepare("SELECT form_key FROM $frmdb->forms WHERE id=%d", $_POST['form_id']));
+        $key = $wpdb->get_var($wpdb->prepare("SELECT form_key FROM {$wpdb->prefix}frm_forms WHERE id=%d", $_POST['form_id']));
         echo stripslashes($key);  
         die();
     }
@@ -254,9 +254,9 @@ class FrmFormsController{
     }
     
     public static function destroy_wo_fields(){
-        global $frm_field, $frmdb;
+        global $frm_field, $frmdb, $wpdb;
         $id = $_POST['form_id'];
-        if ($frmdb->get_count($frmdb->fields, array('form_id' => $id)) <= 0){
+        if ($frmdb->get_count($wpdb->prefix . 'frm_fields', array('form_id' => $id)) <= 0){
             $frm_form = new FrmForm();
             $frm_form->destroy($id);
         }

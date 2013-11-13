@@ -159,12 +159,12 @@ class FrmFieldsHelper{
         if($limit)
             return $field_options;
         
-        global $frmdb, $frm_settings;
+        global $wpdb, $frm_settings;
         
         $form_id = (is_numeric($field)) ? $field : $field->form_id;
         
-        $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $frmdb->fields, 'field_key') : $field->field_key;
-        $field_count = FrmAppHelper::getRecordCount(array('form_id' => $form_id), $frmdb->fields);
+        $key = is_numeric($field) ? FrmAppHelper::get_unique_key('', $wpdb->prefix .'frm_fields', 'field_key') : $field->field_key;
+        $field_count = FrmAppHelper::getRecordCount(array('form_id' => $form_id), $wpdb->prefix .'frm_fields');
         
         return array(
             'name' => __('Untitled', 'formidable'), 'description' => '', 
