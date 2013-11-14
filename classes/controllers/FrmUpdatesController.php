@@ -134,7 +134,7 @@ class FrmUpdatesController{
             }
             
             if($response['auth']){ ?>
-<div id="message" class="updated fade"><strong>
+<div id="message" class="updated"><strong>
 <?php
             if(!$this->pro_is_installed()){
                 $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $this->plugin_name, 'upgrade-plugin_' . $this->plugin_name);

@@ -10,7 +10,7 @@ if(class_exists('FrmSettingsController'))
  
 class FrmSettingsController{
     function FrmSettingsController(){
-        add_action('admin_menu', 'FrmSettingsController::menu', 26);
+        add_action('admin_menu', 'FrmSettingsController::menu', 45);
     }
 
     public static function menu(){

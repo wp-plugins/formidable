@@ -11,7 +11,7 @@ if(class_exists('FrmEntriesController'))
 class FrmEntriesController{
     
     function FrmEntriesController(){
-        add_action('admin_menu', 'FrmEntriesController::menu', 20);
+        add_action('admin_menu', 'FrmEntriesController::menu', 11);
         add_action('wp', 'FrmEntriesController::process_entry', 10, 0);
         add_action('frm_wp', 'FrmEntriesController::process_entry', 10, 0);
         add_filter('frm_redirect_msg', 'FrmEntriesController::delete_entry_before_redirect', 50, 3);

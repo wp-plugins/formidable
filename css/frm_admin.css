@@ -312,7 +312,7 @@ span.howto{display:inline;}
 .selected .frm_ipe_field_option.frm_with_key{margin-right:10px;}
 .selected .frm_ipe_field_option.frm_with_key .inplace_field,
 .selected .frm_ipe_field_option_key .inplace_field{width:100% !important;}
-.frm_option_val_label{float:left; width:45%; margin-left:30px; margin-right:10px;}
+.frm_option_val_label{float:left; width:45%; margin-left:36px; margin-right:10px;}
 .frm_option_key_label, .frm_option_val_label{font-weight:bold;font-size:11px;}
 .edit_field_type_select .frm_option_val_label{margin-left:12px;}
 
@@ -370,6 +370,7 @@ span.howto{display:inline;}
 .frm_add_entry_icon:hover, .frm_new_template_icon:hover{background-position:top;}
 .frm_duplicate_form:hover, .frm_download_template:hover, .frm_move_field:hover{background-position:top;}
 .frm_hover_change_icon.frm_inactive_icon{opacity:0.6;}
+.frm_single_option .frm_delete_icon{float:left;visibility:hidden;margin-right:3px;}
 .view-switch{display:none;}
 select[name="m"]{display:none;}
 
@@ -414,11 +415,13 @@ iframe#dyncontent_ifr{min-height:150px;}
 
 .wrap .contextual-help-tabs ul{min-height:260px;}
 
+#message.fade:not(.out){opacity:1;}
+
 /*!
  * Bootstrap v3.0.2
  */
 
-.tooltip{position:absolute;z-index:1030;display:block;visibility:visible;font-size:12px;line-height:1.4;opacity:0;filter:alpha(opacity=0);}.tooltip.in{opacity:0.9;filter:alpha(opacity=90);}
+.tooltip{position:absolute;z-index:1030;display:block;visibility:visible;font-size:12px;line-height:1.4;opacity:0;filter:alpha(opacity=0);}.tooltip.in{opacity:0.95;filter:alpha(opacity=95);}
 .tooltip.top{margin-top:-3px;padding:5px 0;}
 .tooltip.right{margin-left:3px;padding:0 5px;}
 .tooltip.bottom{margin-top:3px;padding:5px 0;}
@@ -435,6 +438,16 @@ iframe#dyncontent_ifr{min-height:150px;}
 .tooltip.bottom .tooltip-arrow{top:0;left:50%;margin-left:-5px;border-width:0 5px 5px;border-bottom-color:#6D6D6D;}
 .tooltip.bottom-left .tooltip-arrow{top:0;left:5px;border-width:0 5px 5px;border-bottom-color:#6D6D6D;}
 .tooltip.bottom-right .tooltip-arrow{top:0;right:5px;border-width:0 5px 5px;border-bottom-color:#6D6D6D;}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+          transition: opacity 0.15s linear;
+}
+
+.fade.in {
+  opacity: 1;
+}
 
 /* End Bootstrap */
 

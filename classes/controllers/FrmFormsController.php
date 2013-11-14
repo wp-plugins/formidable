@@ -10,7 +10,8 @@ if(class_exists('FrmFormsController'))
  
 class FrmFormsController{
     function FrmFormsController(){
-        add_action('admin_menu', 'FrmFormsController::menu');
+        add_action('admin_menu', 'FrmFormsController::menu', 10);
+        add_action('admin_menu', 'FrmFormsController::mid_menu', 40);
         add_action('admin_menu', 'FrmFormsController::lower_menu', 90);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head');
         add_action('wp_ajax_frm_form_key_in_place_edit', 'FrmFormsController::edit_key');
@@ -31,7 +32,6 @@ class FrmFormsController{
     public static function menu(){
         global $frm_settings;
         add_submenu_page('formidable', $frm_settings->menu .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', 'formidable', 'FrmFormsController::route');
-        add_submenu_page('formidable', $frm_settings->menu .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', 'formidable-templates', 'FrmFormsController::template_list');
         
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-new', 'FrmFormsController::head');
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-templates', 'FrmFormsController::head');
@@ -44,8 +44,14 @@ class FrmFormsController{
 	    add_filter('get_user_option_manage'. sanitize_title($frm_settings->menu) .'_page_formidable-templatescolumnshidden', 'FrmFormsController::hidden_columns');
     }
     
+    public static function mid_menu(){
+        global $frm_settings;
+        add_submenu_page('formidable', $frm_settings->menu .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', 'formidable-templates', 'FrmFormsController::template_list');
+    }
+    
     public static function lower_menu(){
-        add_submenu_page('formidable', 'Formidable | '. __('Add New Form', 'formidable'), '<span style="display:none;">'. __('Add New Form', 'formidable') .'</span>', 'frm_edit_forms', 'formidable-new', 'FrmFormsController::new_form');
+        global $frm_settings;
+        add_submenu_page('formidable', $frm_settings->menu .' | '. __('Add New Form', 'formidable'), '<span style="display:none;">'. __('Add New Form', 'formidable') .'</span>', 'frm_edit_forms', 'formidable-new', 'FrmFormsController::new_form');
     }
     
     public static function head(){
