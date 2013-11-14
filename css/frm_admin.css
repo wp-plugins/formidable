@@ -99,7 +99,16 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 	box-sizing: border-box;
 }
 .frmcenter{text-align:center;}
-#wpbody-content .frmicon.icon32, .icon32-posts-frm_display{background: url(../images/form_32.png) no-repeat top center !important;}
+#wpbody-content .frmicon.icon32, .icon32-posts-frm_display{background: url(../images/form_32.png) no-repeat top left !important;}
+@media print,
+  (-o-min-device-pixel-ratio: 5/4),
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi)  { 
+			#wpbody-content .frmicon.icon32, .icon32-posts-frm_display{
+				background: url(../images/form_32-2x.png) no-repeat top left !important;
+				background-size: 32px 32px !important;
+		}
+	}
 #wpbody-content .frm_report_icon.icon32{background: url(../images/report_icon.png) no-repeat top center !important;}
 .frm_postbox_icon {margin: -6px 0 0 -10px;}
 
