@@ -235,7 +235,7 @@ span.frm_action_icon{margin:0 4px 0 0;}
 .frm_inactive_icon.frm_action_icon.frm_reload_icon{background-position:-15px -14px;}
 .frm_action_icon.frm_required_icon{background-position:-40px 0;margin:0;}
 .frm_inactive_icon.frm_action_icon.frm_required_icon, .frm_action_icon.frm_required0{background-position:-40px -14px;}
-
+.frm_action_icon:active {outline:none;}
 .frm-hover-icon{padding-left:5px;}
 .frm-move.frm-hover-icon{padding-left:3px;}
 .frm-move{cursor:move;}
@@ -367,6 +367,7 @@ span.howto{display:inline;}
 .frm_move_field{background-position:-60px -28px;}
 .frm_delete_icon{background-position:-15px -28px;}
 .frm_new_template_icon{background:url(../images/template.png) bottom no-repeat;}
+.frm_duplicate_form:active, .frm_move_field:active, .frm_delete_icon:active {outline:none;}
 .frm_add_entry_icon:hover, .frm_new_template_icon:hover{background-position:top;}
 .frm_download_template:hover{background-position:top;}
 .frm_hover_change_icon.frm_inactive_icon{opacity:0.6;}
