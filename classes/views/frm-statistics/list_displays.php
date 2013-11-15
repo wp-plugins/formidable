@@ -1,6 +1,6 @@
 <div class="wrap">
     <div id="icon-themes" class="icon32"><br/></div>
-    <h2><?php _e('Custom Displays', 'formidable'); ?></h2>
+    <h2><?php _e('Views', 'formidable'); ?></h2>
 
     <?php 
         require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');

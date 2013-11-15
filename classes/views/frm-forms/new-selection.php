@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('Add New Form', 'formidable') ?></h2>
+    <h2><?php _e('Build New Form', 'formidable') ?></h2>
     
     <div class="clear"></div>
     <div id="menu-management" class="nav-menus-php" style="margin-top:30px;">

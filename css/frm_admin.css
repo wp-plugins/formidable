@@ -33,16 +33,12 @@ ul.frm_form_nav li.first a{
 	border-top-left-radius:4px;
 	border-bottom-left-radius:4px;
 }
-ul.frm_form_nav li.last {
-}
 ul.frm_form_nav li.last a{
 	border-right:solid 1px #c6c6c6;
 	border-top-right-radius:4px;
 	border-bottom-right-radius:4px;
 }
-ul.frm_form_nav li.last a.current_page{
-	
-}
+
 p.search-box {margin-top:10px;}
 .wp-admin .form-wrap .frm_forms.with_frm_style{max-width:100%;}
 .wp-admin .with_frm_style form label.frm_primary_label{font-size:12px;color:#444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;}

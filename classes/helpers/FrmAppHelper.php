@@ -133,7 +133,7 @@ class FrmAppHelper{
             $cap['frm_edit_entries'] = __('Edit Entries from Admin Area', 'formidable');
             $cap['frm_delete_entries'] = __('Delete Entries from Admin Area', 'formidable');
             $cap['frm_view_reports'] = __('View Reports', 'formidable');
-            $cap['frm_edit_displays'] = __('Add/Edit Custom Displays', 'formidable');
+            $cap['frm_edit_displays'] = __('Add/Edit Views', 'formidable');
         }
         return $cap;
     }

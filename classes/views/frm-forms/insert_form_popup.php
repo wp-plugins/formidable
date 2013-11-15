@@ -10,7 +10,7 @@
     
     function frm_insert_display(){
         var display_id = jQuery("#frm_add_display_id").val();
-        if(display_id==""){alert("<?php _e('Please select a custom display', 'formidable') ?>");return;}
+        if(display_id==""){alert("<?php _e('Please select a view', 'formidable') ?>");return;}
         var filter_qs=jQuery("#frm_filter_content").is(":checked") ? " filter=1" : "";
         var win = window.dialogArguments || opener || parent || top;
         win.send_to_editor("[display-frm-data id="+display_id+filter_qs+"]");
@@ -45,7 +45,7 @@
         
 <?php if(isset($displays) and !empty($displays)){ ?>
     <div class="frm_box_line"></div>
-    <h3><?php _e('Select custom display to insert', 'formidable'); ?></h3>
+    <h3><?php _e('Select a view to insert', 'formidable'); ?></h3>
     
     <p>
         <select name="frm_add_display_id" id="frm_add_display_id" class="frm-dropdown">
@@ -56,7 +56,7 @@
         </select>
     </p>
     
-    <p><label for="frm_filter_content"><input type="checkbox" id="frm_filter_content" /> <?php _e("Filter shortcodes within the custom display content", "formidable"); ?></label>
+    <p><label for="frm_filter_content"><input type="checkbox" id="frm_filter_content" /> <?php _e("Filter shortcodes within the view content", "formidable"); ?></label>
         <span class="howto"><?php _e("Note: In some cases, this option can create an infinite loop", "formidable"); ?></span>
     </p>
     

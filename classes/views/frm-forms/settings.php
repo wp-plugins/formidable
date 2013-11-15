@@ -1,6 +1,6 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('Edit Form', 'formidable') ?>
+    <h2><?php _e('Form Settings', 'formidable') ?>
         <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
     <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');

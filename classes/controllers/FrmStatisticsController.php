@@ -14,7 +14,7 @@ class FrmStatisticsController{
         if($frm_vars['pro_is_installed'])
             return;
             
-        add_submenu_page('formidable', 'Formidable | '. __('Custom Displays', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Custom Displays', 'formidable') .'</span>', 'administrator', 'formidable-entry-templates', 'FrmStatisticsController::list_displays');
+        add_submenu_page('formidable', 'Formidable | '. __('Views', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Views', 'formidable') .'</span>', 'administrator', 'formidable-entry-templates', 'FrmStatisticsController::list_displays');
         
         add_submenu_page('formidable', 'Formidable | '. __('Reports', 'formidable'), '<span style="opacity:.5;filter:alpha(opacity=50);">'. __('Reports', 'formidable') .'</span>', 'administrator', 'formidable-reports', 'FrmStatisticsController::list_reports');
     }

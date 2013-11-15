@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>    
-    <h2><?php _e('Add New Form', 'formidable') ?></h2>
+    <h2><?php _e('Build New Form', 'formidable') ?></h2>
     <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>
     
     <?php if (!$values['is_template']){ ?>
