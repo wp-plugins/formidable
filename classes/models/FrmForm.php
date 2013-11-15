@@ -226,7 +226,7 @@ class FrmForm{
     // Disconnect the fields from this form
     $query_results = $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}frm_fields WHERE form_id=%d", $id));
 
-    $query_results = $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}forms WHERE id=%d", $id));
+    $query_results = $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}frm_forms WHERE id=%d", $id));
     if ($query_results){
         do_action('frm_destroy_form', $id);
         do_action('frm_destroy_form_'. $id);
