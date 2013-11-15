@@ -8,7 +8,7 @@
         <strong><?php _e('Form Key:', 'formidable') ?></strong>
         <div id="editable-post-name" class="frm_ipe_form_key" title="<?php _e('Click to edit.', 'formidable') ?>"><?php echo $values['form_key']; ?></div>
         </div>
-        <div class="frm_ipe_form_desc alignleft" style="width:70%"><?php echo $values['description']; ?></div>
+        <div class="frm_ipe_form_desc alignleft" style="width:70%"><?php echo ($values['description'] == '') ? __('(Click here to add a description or instructions)', 'formidable') : $values['description']; ?></div>
         <div style="clear:both"></div>
     </div>
 </div>

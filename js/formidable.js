@@ -466,8 +466,7 @@ jQuery.fn.frmVisibilityToggle = function() {
 }
 
 function frmScrollMsg(id){
-	var frmPos = jQuery('#frm_form_'+id+'_container').offset(); 
-	var cOff = document.documentElement.scrollTop || document.body.scrollTop;
+	var frmPos = jQuery('#frm_form_'+id+'_container').offset();
 	if(frmPos) 
 		window.scrollTo(frmPos.left, (frmPos.top-28));
 }

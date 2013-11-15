@@ -359,7 +359,7 @@ jQuery(this).editInPlace({
 	show_buttons:"true",value_required:"true",
 	save_button: '<a class="inplace_save save button button-small">'+frm_admin_js.ok+'</a>',
 	cancel_button:'<a class="inplace_cancel cancel">'+frm_admin_js.cancel+'</a>',
-	bg_over:"#fffbcc",bg_out:"#fffbcc",
+	bg_out:"#fffbcc",
 	callback:function(x,text){jQuery(this).next('input').val(text);return text;}
 });
 }

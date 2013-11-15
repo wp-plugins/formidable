@@ -312,15 +312,14 @@ DEFAULT_HTML;
     }
     
     public static function display_recaptcha($field, $error=null){
-    	global $frm_settings;
+    	global $frm_settings, $frm_vars;
     	
     	if(!function_exists('recaptcha_get_html'))
             require(FrmAppHelper::plugin_path().'/classes/recaptchalib.php');
         
         $lang = apply_filters('frm_recaptcha_lang', $frm_settings->re_lang, $field);
         
-        if(defined('DOING_AJAX') and !defined('FRM_PREVIEW')){ 
-            global $frm_vars;
+        if(defined('DOING_AJAX') and (!isset($frm_vars['preview']) or !$frm_vars['preview'])){
             if(!isset($frm_vars['recaptcha_loaded']) or !$frm_vars['recaptcha_loaded'])
                 $frm_vars['recaptcha_loaded'] = '';
             

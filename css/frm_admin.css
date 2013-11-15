@@ -41,7 +41,7 @@ ul.frm_form_nav li.last a{
 
 p.search-box {margin-top:10px;}
 .wp-admin .form-wrap .frm_forms.with_frm_style{max-width:100%;}
-.wp-admin .with_frm_style form label.frm_primary_label{font-size:12px;color:#444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;}
+.wp-admin .with_frm_style form label.frm_primary_label{font-size:12px;color:#444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;max-width:90%;height:20px;}
 .wp-admin .with_frm_style form .form-field{margin-bottom:20px;}
 .wp-admin .with_frm_style form div.description, .wp-admin .frm_error{margin:0;padding:0;font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:11px;color:#666;font-weight:normal;text-align:left;font-style:normal;}
 .wp-admin .frm_error{color:#B94A48;}
@@ -292,6 +292,7 @@ span.howto{display:inline;}
 	text-align:center;
 	margin-bottom:3px;
 }
+.frm_ipe_field_label input.inplace_field{margin-top:0;padding:1px;}
 #new_fields .edit_field_type_break input.inplace_field{
 	text-align:center;width:150px;background-color:transparent;
 	border:none;box-shadow:none;

@@ -243,7 +243,7 @@ function frm_install_now(){
                 'templates_updated' => __('Templates Updated', 'formidable'),
                 'confirm_uninstall' => __('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable'),
                 'get_page' => (isset($_GET) and isset($_GET['page'])) ? $_GET['page'] : '',
-                'desc' => __('(Click here to add form description or instructions)', 'formidable'),
+                'desc' => __('(Click here to add a description or instructions)', 'formidable'),
                 'blank' => __('(Blank)', 'formidable'),
                 'saving' => esc_attr(__('Saving', 'formidable')),
                 'saved' => esc_attr(__('Saved', 'formidable')),

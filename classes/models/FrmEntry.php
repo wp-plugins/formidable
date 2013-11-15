@@ -186,8 +186,8 @@ class FrmEntry{
         if($entry)
             return stripslashes_deep($entry);
 
-        $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM $frmdb->entries it 
-                  LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id WHERE ";
+        $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM {$wpdb->prefix}frm_items it 
+                  LEFT OUTER JOIN {$wpdb->prefix}frm_forms fr ON it.form_id=fr.id WHERE ";
         if(is_numeric($id))
             $query .= $wpdb->prepare('it.id=%d', $id);
         else
@@ -222,12 +222,9 @@ class FrmEntry{
             return $exists;
         }
             
-        if (is_numeric($id))
-            $where = array('id' => $id);
-        else
-            $where = array('item_key' => $id);
+        $where = (is_numeric($id)) ? 'id=%d' : 'item_key=%s';
 
-        $id = $frmdb->get_var($frmdb->entries, $where);
+        $id = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$wpdb->prefix}frm_items WHERE $where", $id));
           
         $exists = ($id && $id > 0) ? true : false;
         return $exists;
@@ -241,11 +238,11 @@ class FrmEntry{
             
         if($inc_form){
             $query = "SELECT it.*, fr.name as form_name,fr.form_key as form_key
-                FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
+                FROM $frmdb->entries it LEFT OUTER JOIN {$wpdb->prefix}frm_forms fr ON it.form_id=fr.id" .
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         }else{
             $query = "SELECT it.id, it.item_key, it.name, it.ip, it.form_id, it.post_id, it.user_id, it.updated_by,
-                it.created_at, it.updated_at, it.is_draft FROM $frmdb->entries it" .
+                it.created_at, it.updated_at, it.is_draft FROM {$wpdb->prefix}frm_items it" .
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         }
         $entries = $wpdb->get_results($query, OBJECT_K);
@@ -310,7 +307,7 @@ class FrmEntry{
         if(is_numeric($where)){
             $query = "SELECT COUNT(*) FROM $frmdb->entries WHERE form_id=". $where;
         }else{
-            $query = "SELECT COUNT(*) FROM $frmdb->entries it LEFT OUTER JOIN $frmdb->forms fr ON it.form_id=fr.id" .
+            $query = "SELECT COUNT(*) FROM $frmdb->entries it LEFT OUTER JOIN {$wpdb->prefix}frm_forms fr ON it.form_id=fr.id" .
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where);
         }
         return $wpdb->get_var($query);

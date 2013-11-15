@@ -159,8 +159,8 @@ class FrmField{
             $table_name = "{$prefix}frm_fields"; 
             $form_table_name = "{$prefix}frm_forms";
         }else{
-            $table_name = $frmdb->fields;
-            $form_table_name = $frmdb->forms;
+            $table_name = $wpdb->prefix .'frm_fields';
+            $form_table_name = $wpdb->prefix .'frm_forms';
         }
         
         if(!empty($order_by) and !preg_match("/ORDER BY/", $order_by))
@@ -225,8 +225,8 @@ class FrmField{
 
     function getIds($where = '', $order_by = '', $limit = ''){
         global $wpdb, $frmdb;
-        $query = "SELECT fi.id  FROM $frmdb->fields fi " .
-                 "LEFT OUTER JOIN $frmdb->forms fr ON fi.form_id=fr.id" . 
+        $query = "SELECT fi.id  FROM {$wpdb->prefix}frm_fields fi " .
+                 "LEFT OUTER JOIN {$wpdb->prefix}frm_forms fr ON fi.form_id=fr.id" . 
                  FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         if ($limit == ' LIMIT 1' or $limit == 1)
             $results = $wpdb->get_row($query);

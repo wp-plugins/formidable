@@ -49,7 +49,7 @@ class FrmFormsHelper{
     }
     
     public static function setup_new_vars($values=array()){
-        global $frmdb, $frm_settings;
+        global $wpdb, $frmdb, $frm_settings;
         
         if(!empty($values)){
             $post_values = $values;
@@ -72,7 +72,7 @@ class FrmFormsHelper{
         }
             
         if(!isset($values['form_key']))
-            $values['form_key'] = ($post_values and isset($post_values['form_key'])) ? $post_values['form_key'] : FrmAppHelper::get_unique_key('', $frmdb->forms, 'form_key');
+            $values['form_key'] = ($post_values and isset($post_values['form_key'])) ? $post_values['form_key'] : FrmAppHelper::get_unique_key('', $wpdb->prefix .'frm_forms', 'form_key');
         
         $defaults = FrmFormsHelper::get_default_opts();
         foreach ($defaults as $var => $default){

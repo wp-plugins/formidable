@@ -218,9 +218,10 @@ class FrmFormsController{
 
     public static function preview(){
         do_action('frm_wp');
-        define('FRM_PREVIEW', true);
         
         global $frm_settings, $frm_vars;
+        $frm_vars['preview'] = true;
+        
         $frm_form = new FrmForm();
         if ( !defined( 'ABSPATH' ) && !defined( 'XMLRPC_REQUEST' )) {
             global $wp;
@@ -316,7 +317,7 @@ class FrmFormsController{
         
         require( FrmAppHelper::plugin_path() .'/classes/helpers/FrmListHelper.php' );
             
-        $args = array('table_name' => $frmdb->forms, 'params' => $params);
+        $args = array('table_name' => $wpdb->prefix .'frm_forms', 'params' => $params);
         $args['page_name'] = $params['template'] ? '-template' : '';
         $wp_list_table = new FrmListHelper($args);
         unset($args);

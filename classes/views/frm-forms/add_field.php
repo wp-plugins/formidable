@@ -144,7 +144,7 @@ if ($display['default_blank'])
 </div>
 <?php
 if ($display['description']){ ?> 
-    <div class="frm_ipe_field_desc description frm-show-click" id="field_description_<?php echo $field['id']; ?>"><?php echo ($field['description'] == '') ? __('(Click here to add form description or instructions)', 'formidable') : $field['description']; ?></div> 
+    <div class="frm_ipe_field_desc description frm-show-click" id="field_description_<?php echo $field['id']; ?>"><?php echo ($field['description'] == '') ? __('(Click here to add a description or instructions)', 'formidable') : $field['description']; ?></div> 
 <?php
 }
 
