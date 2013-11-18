@@ -2,7 +2,7 @@
     <div class="frmicon icon32"><br/></div>
     <h2><?php echo ($params['template'])? __('Form Templates', 'formidable') : __('Forms', 'formidable'); 
         if(!$params['template'] and current_user_can('frm_edit_forms')){ ?>
-        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
+        <a href="?page=formidable-new" class="add-new-h2"><?php _e('Add New'); ?></a>
         <?php } ?>
     </h2>
   

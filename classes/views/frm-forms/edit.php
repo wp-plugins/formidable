@@ -1,7 +1,7 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
     <h2><?php echo __('Form', 'formidable') .' '. (($values['is_template']) ? __('Template', 'formidable') : __('Builder', 'formidable')); ?>
-        <a href="?page=formidable-new" class="button add-new-h2"><?php _e('Add New'); ?></a>
+        <a href="?page=formidable-new" class="add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
     <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>
 
