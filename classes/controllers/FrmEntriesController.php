@@ -29,8 +29,8 @@ class FrmEntriesController{
     
     public static function list_entries(){
         global $frm_entry;
-        $form_select = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')", ' ORDER BY name');
         $frm_form = new FrmForm();
+        $form_select = $frm_form->getAll("is_template=0 AND (status is NULL OR status = '' OR status = 'published')", ' ORDER BY name');
         $form_id = FrmAppHelper::get_param('form', false);
         if($form_id)
             $form = $frm_form->getOne($form_id);
