@@ -116,3 +116,4 @@ if(class_exists('WP_Widget')){
 
 include($frm_path .'/deprecated.php');
 unset($frm_path);
+unset($frm_update);

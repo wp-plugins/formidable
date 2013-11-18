@@ -64,9 +64,10 @@ class FrmAppController{
     }
     
     public static function get_form_nav($id, $show_nav=false){
-        global $pagenow;
+        global $pagenow, $frm_vars;
         
         $show_nav = FrmAppHelper::get_param('show_nav', $show_nav);
+        $current_page = (isset($_GET['page'])) ? $_GET['page'] : (isset($_GET['post_type']) ? $_GET['post_type'] : 'None');
         
         if($show_nav)
             include(FrmAppHelper::plugin_path() .'/classes/views/shared/form-nav.php');

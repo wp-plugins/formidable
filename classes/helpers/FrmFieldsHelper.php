@@ -403,7 +403,7 @@ DEFAULT_HTML;
             'image', 'file', 'date', 'phone', 'hidden', 'time', 
             'user_id', 'tag', 'password'
         );
-        $multiple_input = array('radio', 'checkbox', 'select');
+        $multiple_input = array('radio', 'checkbox', 'select', 'scale');
         $other_type = array('divider', 'html', 'break');
         $frm_pro_field_selection = FrmFieldsHelper::pro_field_selection();
         

@@ -11,9 +11,10 @@ if( isset($errors) && is_array($errors) && !empty($errors) ){
     global $frm_settings;
 ?>
 <div class="<?php echo (is_admin() and !defined('DOING_AJAX')) ? 'error' : 'frm_error_style' ?>"> 
-<?php 
+<?php
+$img = '';
 if(!is_admin() or defined('DOING_AJAX')){ 
-    $img = apply_filters('frm_error_icon', '');
+    $img = apply_filters('frm_error_icon', $img);
     if($img and !empty($img)){
     ?><img src="<?php echo $img ?>" alt="" />
 <?php 
@@ -23,7 +24,7 @@ if(!is_admin() or defined('DOING_AJAX')){
 if(empty($frm_settings->invalid_msg)){
     $show_img = false;
     foreach( $errors as $error ){
-        if($show_img and isset($img) and !empty($img)){ 
+        if($show_img and !empty($img)){ 
             ?><img src="<?php echo $img ?>" alt="" /><?php 
         }else{
             $show_img = true;
@@ -39,7 +40,7 @@ if(empty($frm_settings->invalid_msg)){
             continue;
           
         echo '<br/>'; 
-        if($show_img and $img and !empty($img)){ 
+        if($show_img and !empty($img)){ 
             ?><img src="<?php echo $img ?>" alt="" /><?php 
         }else{
             $show_img = true;
