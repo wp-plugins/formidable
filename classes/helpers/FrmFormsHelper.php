@@ -64,7 +64,7 @@ class FrmFormsHelper{
         }
         
         if(apply_filters('frm_use_wpautop', true))
-            $values['description'] = wpautop($values['description']);
+            $values['description'] = wpautop(str_replace( '<br>', '<br />', $values['description']));
         
         foreach (array('form_id' => '', 'logged_in' => '', 'editable' => '', 'default_template' => 0, 'is_template' => 0) as $var => $default){
             if(!isset($values[$var]))
@@ -173,7 +173,7 @@ BEFORE_HTML;
                 $replace_with = $form->name;
             }else if ($code == 'form_description'){
                 if(apply_filters('frm_use_wpautop', true))
-                    $replace_with = wpautop($form->description);
+                    $replace_with = wpautop(str_replace( '<br>', '<br />', $form->description));
                 else
                     $replace_with = $form->description;
             }else if($code == 'entry_key' and isset($_GET) and isset($_GET['entry'])){

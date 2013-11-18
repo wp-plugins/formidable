@@ -165,7 +165,7 @@ class FrmFormsController{
         $form = $frm_form->update($_POST['form_id'], array('description' => $_POST['update_value']));
         $description = stripslashes($_POST['update_value']);
         if(apply_filters('frm_use_wpautop', true))
-            $description = wpautop($description);
+            $description = wpautop(str_replace( '<br>', '<br />', $description));
         echo $description;
         die();
     }

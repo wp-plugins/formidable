@@ -282,7 +282,7 @@ class FrmAppHelper{
               $values[$var] = FrmAppHelper::get_param($var, $default_val);
               
         if(apply_filters('frm_use_wpautop', true))
-            $values['description'] = wpautop($values['description']);
+            $values['description'] = wpautop(str_replace( '<br>', '<br />', $values['description']));
         
             foreach((array)$fields as $field){
 

@@ -301,6 +301,7 @@ span.howto{display:inline;}
 #new_fields .form-field .widget .frm_validation_msg input{width:71%;}
 .frm_inline_label{padding-left:3px;}
 .frm_left_label{clear:both;float:left;width:170px;}
+#html_settings label{display:block;}
 
 .frm-category-tabs a{outline:none;}
 
