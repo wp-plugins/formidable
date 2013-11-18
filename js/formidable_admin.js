@@ -42,6 +42,12 @@ $('#new_fields').on('click', '.frm_reload_icon', frm_clear_on_focus);
 $('#new_fields').on('click', '.frm_error_icon', frm_default_blank);
 $('#new_fields').on('click', '.frm_single_option .frm_delete_icon', frm_delete_field_option);
 
+$('.inside').on('click', '.frm_insert_code', frmInsertCode);
+$('.frm_insert_val').change(function(){
+	frmInsertFieldCode($(this).data('target'),$(this).val());
+	$(this).val('');	
+});
+
 if($('#frm_adv_info').length || $('.frm_field_list').length){
 	$('#frm_adv_info').before('<div id="frm_position_ele"></div>');
 
@@ -661,7 +667,12 @@ function frmDisplayFormSelected(form_id){
         data:"action=frm_get_date_field_select&form_id="+form_id,
         success:function(html){ jQuery('#date_field_id').html(html);}
     });
-};
+}
+
+function frmInsertCode(){
+	frmInsertFieldCode(jQuery(this),jQuery(this).data('code'));
+	return false;
+}
 
 function frmInsertFieldCode(element,variable){
 	if(typeof(element)=='object'){

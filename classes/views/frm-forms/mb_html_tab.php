@@ -19,7 +19,7 @@
     foreach($entry_shortcodes as $skey => $sname){
     ?>
 	<li class="frm_col_<?php echo $col ?>">
-	    <a class="show_field_custom_html frmbutton button <?php echo is_array($sname) ? 'frm_help' : ''; ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $skey ?>');return false;" href="#" <?php echo is_array($sname) ? 'title="'. $sname['title'] .'"' : ''; ?>><?php echo is_array($sname) ? $sname['label'] : $sname; ?></a>
+	    <a class="show_field_custom_html frmbutton button frm_insert_code <?php echo is_array($sname) ? 'frm_help' : ''; ?>" data-code="<?php echo esc_attr($skey) ?>" href="javascript:void(0)" <?php echo is_array($sname) ? 'title="'. $sname['title'] .'"' : ''; ?>><?php echo is_array($sname) ? $sname['label'] : $sname; ?></a>
 	</li>
     <?php
         $col = ($col == 'one') ? 'two' : 'one';
@@ -36,7 +36,7 @@
             'form_name' => __('Form Name', 'formidable'), 'form_description' => __('Form Description', 'formidable'), 
             'form_key' => __('Form Key', 'formidable'), 'deletelink' => __('Delete Entry Link', 'formidable')) as $skey => $sname){ ?>
         <li class="frm_col_<?php echo $col ?>">
-    	    <a class="show_before_html show_after_html frmbutton button" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $skey ?>');return false;" href="#"><?php echo $sname; ?></a>
+    	    <a class="show_before_html show_after_html frmbutton button frm_insert_code" data-code="<?php echo $skey ?>" href="javascript:void(0)"><?php echo $sname; ?></a>
     	</li>
         <?php
             $col = ($col == 'one') ? 'two' : 'one'; 
@@ -45,7 +45,7 @@
         foreach(array(
             'button_label' => __('Button Label', 'formidable'), 'button_action' => __('Button Hook', 'formidable')) as $skey => $sname){ ?>
         <li class="frm_col_<?php echo $col ?>">
-    	    <a class="show_submit_html frmbutton button" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $skey ?>');return false;" href="#"><?php echo $sname; ?></a>
+    	    <a class="show_submit_html frmbutton button frm_insert_code" data-code="<?php echo $skey ?>" href="javascript:void(0)"><?php echo $sname; ?></a>
     	</li>
         <?php
             $col = ($col == 'one') ? 'two' : 'one'; 

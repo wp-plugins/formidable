@@ -95,6 +95,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switch time field generation from javascript to php
 * PRO: Allow [if created-at less_than="-1 month"]
 * PRO: Added frm_default_field_opts hook
+* PRO: Added frm_send_to_not_email hook for notifications that are triggered on non-emails
 * PRO: Only show "create entry in form" box if user has permission to create entries
 * PRO: Removed icons from error message
 

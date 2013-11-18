@@ -427,13 +427,13 @@ class FrmAppHelper{
         
         $class = '';
         
-        if(in_array($type, array('email', 'user_id', 'hidden', 'select', 'radio', 'checkbox')))
+        if(in_array($type, array('email', 'user_id', 'hidden', 'select', 'radio', 'checkbox', 'phone')))
             $class .= 'show_frm_not_email_to';
     ?>
 <li>
-    <a class="frmids alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');" href="javascript:void(0)">[<?php echo $id ?>]</a>
-    <a class="frmkeys alignright <?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $key ?>');" href="javascript:void(0)">[<?php echo FrmAppHelper::truncate($key, 10) ?>]</a>
-    <a class="<?php echo $class ?>" onclick="frmInsertFieldCode(jQuery(this),'<?php echo $id ?>');" href="javascript:void(0)"><?php echo FrmAppHelper::truncate($name, 60) ?></a>
+    <a class="frmids frm_insert_code alignright <?php echo $class ?>" data-code="<?php echo $id ?>" href="javascript:void(0)">[<?php echo $id ?>]</a>
+    <a class="frmkeys frm_insert_code alignright <?php echo $class ?>" data-code="<?php echo esc_attr($key) ?>" href="javascript:void(0)">[<?php echo FrmAppHelper::truncate($key, 10) ?>]</a>
+    <a class="frm_insert_code <?php echo $class ?>" data-code="<?php echo $id ?>" href="javascript:void(0)"><?php echo FrmAppHelper::truncate($name, 60) ?></a>
 </li>
     <?php
     }

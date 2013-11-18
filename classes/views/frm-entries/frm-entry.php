@@ -13,7 +13,7 @@ $message = $errors = '';
 FrmEntriesHelper::enqueue_scripts($params);
 
 if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and isset($_POST)){
-    $errors = $frm_vars['created_entries'][$form->id]['errors'];
+    $errors = isset($frm_vars['created_entries'][$form->id]) ? $frm_vars['created_entries'][$form->id]['errors'] : array();
 
     if( !empty($errors) ){
         $fields = FrmFieldsHelper::get_form_fields($form->id, true);

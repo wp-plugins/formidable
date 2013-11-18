@@ -300,6 +300,7 @@ span.howto{display:inline;}
 .frm_validation_msg p label{float:left;width:25%;max-width:100px;}
 #new_fields .form-field .widget .frm_validation_msg input{width:71%;}
 .frm_inline_label{padding-left:3px;}
+.frm_left_label{clear:both;float:left;width:170px;}
 
 .frm-category-tabs a{outline:none;}
 
