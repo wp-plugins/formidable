@@ -42,6 +42,22 @@ class FrmFormsHelper{
         </select>
         <?php
     }
+	
+    public static function form_switcher( ){
+        $where = apply_filters('frm_forms_dropdown', "is_template=0 AND (status is NULL OR status = '' OR status = 'published')", '');
+        $frm_form = new FrmForm();
+        $forms = $frm_form->getAll($where, ' ORDER BY name');
+        ?>
+		<li class="dropdown last">
+			<a href="#" id="navbarDrop1" class="dropdown-toggle" data-toggle="dropdown">Switch Form <b class="caret"></b></a>
+		    <ul class="dropdown-menu" role="menu" aria-labelledby="navbarDrop1">
+			<?php foreach($forms as $form){ ?>
+				<li class=""><a href="<?php echo add_query_arg(array('id' => $form->id, 'form' => $form->id)); ?>" tabindex="-1"><?php echo FrmAppHelper::truncate($form->name, 33); ?></a></li>
+			<?php } ?>
+			</ul>
+		</li>
+        <?php
+    }
     
     public static function get_sortable_classes($col, $sort_col, $sort_dir){
         echo ($sort_col == $col) ? 'sorted' : 'sortable'; 

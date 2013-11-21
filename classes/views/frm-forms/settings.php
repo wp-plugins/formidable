@@ -22,9 +22,6 @@
         <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
         <a class="button-secondary cancel" href="<?php echo esc_url(admin_url('admin.php?page=formidable') . '&frm_action=edit&id='. $id) ?>"><?php _e('Cancel', 'formidable') ?></a>
-        <span style="margin-left:8px;">
-        <?php FrmFormsHelper::forms_dropdown('frm_switcher', '', __('Switch Form', 'formidable'), false, "frmAddNewForm(this.value,'settings')"); ?>
-        </span>
         <?php do_action('frm_settings_buttons', $values); ?>
     </p>
     
