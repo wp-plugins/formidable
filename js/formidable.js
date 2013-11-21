@@ -316,12 +316,12 @@ function frmGetFormErrors(object){
 	    	if(errObj=='' || !errObj || errObj=='0' || (typeof(errObj) != 'object' && errObj.indexOf('<!DOCTYPE') === 0)){
 	            if(jQuery('#frm_loading').length){
 					var file_val=jQuery(object).find('input[type=file]').val();
-					if(typeof(file_val)!='undefined' && file_val!=''){window.setTimeout(function(){jQuery('#frm_loading').hide().fadeIn();},2000);}
+					if(typeof(file_val)!='undefined' && file_val!=''){setTimeout(function(){jQuery('#frm_loading').fadeIn('slow');},2000);}
 				}
 				if(jQuery(object).find('#recaptcha_area').length && (jQuery(object).find('.frm_next_page').length < 1 || jQuery(object).find('.frm_next_page').val() < 1))
 					jQuery(object).find('#recaptcha_area').replaceWith('');
 				
-	            object.submit();
+				object.submit();
 			}else if(typeof(errObj) != 'object'){
 				jQuery(object).find('.frm_ajax_loading').css('visibility', 'hidden');
 				var jump=jQuery(object).closest('#frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container');
@@ -431,10 +431,11 @@ function frmRemoveDiv(){
 jQuery(this).parent('.frm_uploaded_files').fadeOut('slow').replaceWith('');	
 }
 
-function frmNextUpload(obj,id,remove){
+function frmNextUpload(obj,id){
 obj.wrap('<div class="frm_file_names frm_uploaded_files">'); 
-obj.after(obj.val()+' <a href="#" onclick="frmClearFile(jQuery(this));return false;">'+remove+'</a>');
-obj.hide(); jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" type="file" onchange="frmNextUpload(jQuery(this),'+id+',\''+remove+'\')"/>');
+obj.after(obj.val()+' <a href="#" onclick="frmClearFile(jQuery(this));return false;">'+frm_js.remove+'</a>');
+obj.hide(); 
+jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" type="file" onchange="frmNextUpload(jQuery(this),'+id+')"/>');
 }
 
 function frmClearFile(file){

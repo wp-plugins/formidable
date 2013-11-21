@@ -25,16 +25,14 @@ class FrmEntriesHelper{
                     $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : ((isset($field->field_options['clear_on_focus']) and $field->field_options['clear_on_focus'] ) ? '' : $default );
                 
                 $is_default = ($new_value == $default) ? true : false;
-                    
-                if (!is_array($new_value))
-                    $new_value = apply_filters('frm_get_default_value', $new_value, $field);
                 
-                $new_value = str_replace('"', '&quot;', $new_value);
-                if($is_default)
-                    $field->default_value = $new_value;
-                else
-                    $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
-                    
+                $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
+                
+                if (!is_array($new_value)){
+                    $new_value = $is_default ? $field->default_value : apply_filters('frm_filter_default_value', $new_value, $field);
+                    $new_value = str_replace('"', '&quot;', $new_value);
+                }
+                
                 $field_array = array(
                     'id' => $field->id,
                     'value' => $new_value,

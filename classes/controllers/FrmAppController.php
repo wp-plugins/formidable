@@ -234,9 +234,10 @@ function frm_install_now(){
     
     public static function localize_script($location){
         wp_localize_script('formidable', 'frm_js', array(
-            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'ajax_url'  => admin_url( 'admin-ajax.php' ),
             'images_url' => FrmAppHelper::plugin_url() .'/images',
-            'loading' => __('Loading&hellip;')
+            'loading'   => __('Loading&hellip;'),
+            'remove'    => __('Remove', 'formidable') 
         ));
         
         if($location == 'admin'){
