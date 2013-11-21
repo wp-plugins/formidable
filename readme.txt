@@ -96,6 +96,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow [if created-at less_than="-1 month"]
 * PRO: Added frm_default_field_opts hook
 * PRO: Added frm_send_to_not_email hook for notifications that are triggered on non-emails
+* PRO: Updated file uploading progress bar with frm_uploading_files hook added to text
 * PRO: Only show "create entry in form" box if user has permission to create entries
 * PRO: Removed icons from error message
 

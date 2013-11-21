@@ -98,7 +98,6 @@ class FrmFieldsController{
     public static function update_ajax_option(){
         global $frm_field;
         $field = $frm_field->getOne($_POST['field']);
-        $field->field_options = maybe_unserialize($field->field_options);
         foreach(array('clear_on_focus', 'separate_value', 'default_blank') as $val){
             if(isset($_POST[$val])){
                 $new_val = $_POST[$val];

@@ -552,7 +552,7 @@ function frm_default_blank(){
 		var switch_to='0';var t=frm_admin_js.valid_default;
 	}
     var field_id=jQuery(this).attr('id').replace('default_blank_','');
-    jQuery(this).toggleClass('frm_inactive_icon').attr('title', t).tooltip('destroy').tooltip('show');
+    jQuery(this).toggleClass('frm_inactive_icon').attr('title', t).tooltip('destroy').next('.tooltip').remove();jQuery(this).tooltip('show');
 	jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_ajax_option&field="+field_id+"&default_blank="+switch_to});
 };
 

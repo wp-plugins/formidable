@@ -166,8 +166,7 @@ if ($display['options']){ ?>
         </div>
     	<div class="widget-inside">
             <table class="form-table" style="clear:none;">
-                <?php if(!isset($field_types))
-                    $field_types = FrmFieldsHelper::get_field_types($field['type']); ?>
+                <?php $field_types = FrmFieldsHelper::get_field_types($field['type']); ?>
                 <tr><td width="150px"><label><?php _e('Field Type', 'formidable') ?></label></td>
                     <td>
                         <div class="hide-if-no-js edit-slug-box frm_help" title="<?php _e('The field key can be used as an alternative to the field ID in many cases.', 'formidable') ?>">
