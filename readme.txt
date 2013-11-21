@@ -80,7 +80,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added phone format option, including an input mask if format is not a regular expression
 * PRO: Added exclude_fields to the form shortcode. Ex [formidable id=2 exclude_fields="25,26"]
 * PRO: Added styling reset button on styling page
-* PRO: Switch "Custom Display" terminoligy to "View"
+* PRO: Switch "Custom Display" terminology to "View"
 * PRO: Allow any values in the form shortcode to set $_GET values. [formidable id=x get="something"]. Then use [get param="get"] in a field
 * PRO: Allow the field value to be used to filter data from entries values in custom displays
 * PRO: Allow for quotation marks in values used to get stats in the frm-stats shortcode

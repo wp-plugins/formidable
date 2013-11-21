@@ -18,16 +18,16 @@ class FrmSettingsController{
     }
 
     public static function display_form(){
-      global $frm_settings, $frm_vars;
+        global $frm_settings, $frm_vars;
       
-      $frm_update = new FrmUpdatesController();
-      $frm_roles = FrmAppHelper::frm_capabilities();
+        $frm_update = new FrmUpdatesController();
+        $frm_roles = FrmAppHelper::frm_capabilities();
       
-      $uploads = wp_upload_dir();
-      $target_path = $uploads['basedir'] . "/formidable/css";
-      $sections = apply_filters('frm_add_settings_section', array());
+        $uploads = wp_upload_dir();
+        $target_path = $uploads['basedir'] . "/formidable/css";
+        $sections = apply_filters('frm_add_settings_section', array());
       
-      require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
+        require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }
 
     public static function process_form($stop_load=false){        
@@ -46,6 +46,8 @@ class FrmSettingsController{
                 $frm_settings->store();
                 $message = __('Settings Saved', 'formidable');
             }
+        }else{
+            $message = __('Settings Saved', 'formidable');
         }
         
         if($stop_load == 'stop_load'){

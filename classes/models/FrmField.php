@@ -54,7 +54,7 @@ class FrmField{
     }
 
     function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
-        global $frm_duplicate_ids;
+        global $frm_duplicate_ids, $wpdb;
         $fields = $this->getAll(array('fi.form_id' => $old_form_id), 'field_order', '', $blog_id);
         foreach ((array)$fields as $field){
             $values = array();

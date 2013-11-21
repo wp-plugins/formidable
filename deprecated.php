@@ -11,7 +11,7 @@ if(is_ssl() and (!preg_match('/^https:\/\/.*\..*$/', $frm_siteurl) or !preg_matc
     define('FRM_URL', WP_PLUGIN_URL.'/formidable');  //deprecated: use FrmAppHelper::plugin_url()
 
 global $frm_version, $frm_ajax_url;
-$frm_version = '1.07.02b1'; //deprecated: use FrmAppHelper::plugin_version()
+$frm_version = FrmAppHelper::plugin_version(); //deprecated: use FrmAppHelper::plugin_version()
 $frm_ajax_url = admin_url('admin-ajax.php');
 
 global $frmpro_is_installed;

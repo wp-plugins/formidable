@@ -136,7 +136,7 @@ $('select[name^="item_meta"], textarea[name^="item_meta"]').css('float','left');
 $('input[name^="item_meta"]').not(':radio, :checkbox').css('float','left');
 
 if($('.frm_field_loading').length){
-var load_field_id=$('.frm_field_loading').first().attr('id').replace('frm_field_id_', '');
+var load_field_id=$('.frm_field_loading').first().data('triggered',1).attr('id').replace('frm_field_id_', '');
 frmLoadField(load_field_id);
 }
 }
@@ -285,8 +285,8 @@ function frmSettingsTab(tab, id){
 }
 
 function frmLoadField(field_id){
-	if(jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').length > 0){
-		var next_id=jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').attr('id').replace('frm_field_id_', '');
+	if(jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').length && jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').data('triggered')!=1){
+		var next_id=jQuery('#frm_field_id_'+field_id).next('.frm_field_loading').data('triggered',1).attr('id').replace('frm_field_id_', '');
 		setTimeout(function(){frmLoadField(next_id);}, 400);
 	}
 	var f=jQuery('#frm_field_id_'+field_id+' .frm_hidden_fdata').html();

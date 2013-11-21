@@ -1,6 +1,6 @@
 <?php
 if(isset($values) and isset($values['ajax_load']) and $values['ajax_load'] and isset($count) and $count > 10){ ?>
-<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading">
+<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading" data-triggered="0">
 <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/ajax_loader.gif" alt="<?php _e('Loading', 'formidable') ?>" />
 <span class="frm_hidden_fdata" style="display:none"><?php echo htmlspecialchars(json_encode($field)) ?></span>
 </li>
@@ -9,10 +9,20 @@ if(isset($values) and isset($values['ajax_load']) and $values['ajax_load'] and i
 }
 
 global $frm_settings;
-if(isset($frm_field_selection) and isset($frm_pro_field_selection))
-    $frm_all_field_selection = array_merge($frm_field_selection, $frm_pro_field_selection);
-else
-    $frm_all_field_selection = array_merge(FrmFieldsHelper::field_selection(), FrmFieldsHelper::pro_field_selection());
+if(!isset($frm_all_field_selection)){
+    if(isset($frm_field_selection) and isset($frm_pro_field_selection)){
+        $frm_all_field_selection = array_merge($frm_field_selection, $frm_pro_field_selection);
+    }else{
+        $frm_pro_field_selection = FrmFieldsHelper::pro_field_selection();
+        $frm_all_field_selection = array_merge(FrmFieldsHelper::field_selection(), $frm_pro_field_selection);
+    }
+}
+
+if(!isset($frm_vars))
+    global $frm_vars;
+    
+$disabled_fields = ($frm_vars['pro_is_installed']) ? array() : $frm_pro_field_selection;
+
  
 $display = apply_filters('frm_display_field_options', array(
     'type' => $field['type'], 'field_data' => $field,
@@ -113,7 +123,7 @@ $display = apply_filters('frm_display_field_options', array(
     </div>
 <?php
 }else if ($field['type'] == 'captcha'){ 
-    global $frm_settings; ?>
+?>
     <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" class="alignleft"/>
     <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
     <div class="clear"></div>
@@ -156,7 +166,8 @@ if ($display['options']){ ?>
         </div>
     	<div class="widget-inside">
             <table class="form-table" style="clear:none;">
-                <?php $field_types = FrmFieldsHelper::get_field_types($field['type']); ?>
+                <?php if(!isset($field_types))
+                    $field_types = FrmFieldsHelper::get_field_types($field['type']); ?>
                 <tr><td width="150px"><label><?php _e('Field Type', 'formidable') ?></label></td>
                     <td>
                         <div class="hide-if-no-js edit-slug-box frm_help" title="<?php _e('The field key can be used as an alternative to the field ID in many cases.', 'formidable') ?>">
@@ -170,7 +181,7 @@ if ($display['options']){ ?>
                 <?php if (!empty($field_types)){ ?>
                     <select name="field_options[type_<?php echo $field['id'] ?>]">
                     <?php foreach ($field_types as $fkey => $ftype){ ?>
-                        <option value="<?php echo $fkey ?>" <?php echo ($fkey == $field['type']) ? ' selected="selected"' : ''; ?>><?php echo $ftype ?></option>
+                        <option value="<?php echo $fkey ?>" <?php echo ($fkey == $field['type']) ? ' selected="selected"' : ''; ?> <?php echo array_key_exists($fkey, $disabled_fields ) ? 'disabled="disabled"' : '';  ?>><?php echo $ftype ?></option>
                     <?php
                             unset($fkey);
                             unset($ftype);

@@ -52,7 +52,9 @@ p.search-box {margin-top:10px;}
 .wp-admin .with_frm_style .wp-editor-container textarea, .wp-admin .postbox .wp-editor-container textarea{border:none;}
 .wp-admin .with_frm_style .mceIframeContainer, .wp-admin .postbox .mceIframeContainer{background-color:#fff;}
 
+
 .wp-admin .frm_scale{margin-right:10px;text-align:center;float:left;}
+.wp-admin .frm_scale input{display:block;margin-bottom:5px;}
 .wp-admin .frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
 	font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:13px;margin-bottom:0;width:400px;max-width:100%;
 	-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;
