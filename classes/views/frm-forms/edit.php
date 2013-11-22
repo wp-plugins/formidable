@@ -3,15 +3,12 @@
     <h2><?php echo __('Form', 'formidable') .' '. (($values['is_template']) ? __('Template', 'formidable') : __('Builder', 'formidable')); ?>
         <a href="?page=formidable-new" class="add-new-h2"><?php _e('Add New'); ?></a>
     </h2>
-    <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>
-
-    <?php if (!$values['is_template']){ ?>
-        <div class="alignleft">
-            <?php FrmAppController::get_form_nav($id, true); ?>
-        </div>
-    <?php } 
+    <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); 
     
-        if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
+    if (!$values['is_template'])
+        FrmAppController::get_form_nav($id, true);
+    
+    if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
     <?php   
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field_links.php'); 

@@ -9,6 +9,12 @@ else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').
 else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
 });
 
+$('.wp-admin').click(function(e){
+var t=$(e.target);
+if($('.dropdown.open').length && !t.hasClass('dropdown') && !t.closest('.dropdown').length)
+	$('.dropdown.open').removeClass('open');
+});
+
 if($('#new_fields').length){
 $('#new_fields').sortable({
     placeholder:'sortable-placeholder',axis:'y',cursor:'move',opacity:0.65,

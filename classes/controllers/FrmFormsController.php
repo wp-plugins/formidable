@@ -421,9 +421,9 @@ class FrmFormsController{
     public static function get_settings_vars($id, $errors = '', $message=''){
         global $frm_entry, $frm_field, $frm_vars;
         $frm_form = new FrmForm();
-        $record = $frm_form->getOne( $id );
+        $form = $frm_form->getOne( $id );
         $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
-        $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
+        $values = FrmAppHelper::setup_edit_vars($form, 'forms', $fields, true);
         $sections = apply_filters('frm_add_form_settings_section', array(), $values);
         $pro_feature = $frm_vars['pro_is_installed'] ? '' : ' class="pro_feature"';
         if (isset($values['default_template']) && $values['default_template'])

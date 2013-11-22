@@ -48,7 +48,7 @@
     <h3><?php _e('Select a view to insert', 'formidable'); ?></h3>
     
     <p>
-        <select name="frm_add_display_id" id="frm_add_display_id" class="frm-dropdown">
+        <select name="frm_add_display_id" id="frm_add_display_id">
             <option value=""></option>
             <?php foreach ($displays as $display){ ?>
             <option value="<?php echo $display->ID ?>"><?php echo $display->post_title ?></option>

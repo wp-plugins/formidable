@@ -129,7 +129,7 @@ class FrmEntriesHelper{
 
         $entries = $frmdb->get_records($frmdb->entries, array('form_id' => $form_id), 'name', 999, 'id,item_key,name');
         ?>
-        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" <?php if ($onchange) echo 'onchange="'. $onchange .'"'; ?>>
             <?php if ($blank){ ?>
             <option value=""><?php echo $blank_label; ?></option>
             <?php } ?>

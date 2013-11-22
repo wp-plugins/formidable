@@ -1,6 +1,8 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('Form Settings', 'formidable') ?></h2>
+    <h2><?php _e('Form Settings', 'formidable') ?>
+        <a href="#" class="add-new-h2" style="visibility:hidden;"></a>
+    </h2>
     <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
     
     if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
@@ -8,14 +10,12 @@
     <?php   
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/sidebar-settings.php'); 
     }else{ ?>
-    <div id="poststuff">
+    <div id="poststuff" style="padding-top:0;">
     <?php } ?>
     
         <div id="post-body" class="metabox-holder columns-2">
         <div id="post-body-content">
-            <div class="alignleft">
             <?php FrmAppController::get_form_nav($id, true); ?>
-            </div>
             
 <form method="post" class="frm_form_settings">     
     <p style="clear:left;">        

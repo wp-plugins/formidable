@@ -91,7 +91,7 @@ class FrmAppHelper{
     public static function wp_pages_dropdown($field_name, $page_id, $truncate=false){
         $pages = FrmAppHelper::get_pages();
     ?>
-        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-pages-dropdown">
             <option value=""></option>
             <?php foreach($pages as $page){ ?>
                 <option value="<?php echo $page->ID; ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $page->ID) or (!isset($_POST[$field_name]) and $page_id == $page->ID))?' selected="selected"':''); ?>><?php echo ($truncate)? FrmAppHelper::truncate($page->post_title, $truncate) : $page->post_title; ?> </option>
@@ -107,7 +107,7 @@ class FrmAppHelper{
     	    $frm_vars['editable_roles'] = get_editable_roles();
 
     ?>
-        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-dropdown frm-pages-dropdown">
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_name; ?>" class="frm-pages-dropdown">
             <?php foreach($frm_vars['editable_roles'] as $role => $details){ 
                 $name = translate_user_role($details['name'] ); ?>
                 <option value="<?php echo esc_attr($role) ?>" <?php echo (((isset($_POST[$field_name]) and $_POST[$field_name] == $role) or (!isset($_POST[$field_name]) and $capability == $role))?' selected="selected"':''); ?>><?php echo $name ?> </option>

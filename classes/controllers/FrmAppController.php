@@ -67,10 +67,19 @@ class FrmAppController{
         global $pagenow, $frm_vars;
         
         $show_nav = FrmAppHelper::get_param('show_nav', $show_nav);
+        if(!$show_nav)
+            return;
+            
         $current_page = (isset($_GET['page'])) ? $_GET['page'] : (isset($_GET['post_type']) ? $_GET['post_type'] : 'None');
+        if($id and is_numeric($id)){
+            $frm_form = new FrmForm();
+            $form = $frm_form->getOne($id);
+            unset($frm_form);
+        }else{
+            $form = false;
+        }
         
-        if($show_nav)
-            include(FrmAppHelper::plugin_path() .'/classes/views/shared/form-nav.php');
+        include(FrmAppHelper::plugin_path() .'/classes/views/shared/form-nav.php');
     }
 
     // Adds a settings link to the plugins page

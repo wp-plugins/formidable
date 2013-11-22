@@ -32,7 +32,7 @@ class FrmFormsHelper{
         $frm_form = new FrmForm();
         $forms = $frm_form->getAll($where, ' ORDER BY name');
         ?>
-        <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" class="frm-dropdown" <?php if ($onchange) echo 'onchange="'.$onchange.'"'; ?>>
+        <select name="<?php echo $field_name; ?>" id="<?php echo $field_id ?>" <?php if ($onchange) echo 'onchange="'. $onchange .'"'; ?>>
             <?php if ($blank){ ?>
             <option value=""><?php echo ($blank == 1) ? '' : '- '. $blank .' -'; ?></option>
             <?php } ?>
@@ -43,17 +43,43 @@ class FrmFormsHelper{
         <?php
     }
 	
-    public static function form_switcher( ){
+    public static function form_switcher(){
         $where = apply_filters('frm_forms_dropdown', "is_template=0 AND (status is NULL OR status = '' OR status = 'published')", '');
+        
         $frm_form = new FrmForm();
         $forms = $frm_form->getAll($where, ' ORDER BY name');
+        unset($frm_form);
+        
+        $args = array('id' => 0, 'form' => 0);
+        if(isset($_GET['id']) and !isset($_GET['form']))
+            unset($args['form']);
+        else if(isset($_GET['form']) and !isset($_GET['id']))
+            unset($args['id']);
+        
+        if(isset($_GET['page']) and $_GET['page'] == 'formidable-entries' and isset($_GET['frm_action']) and in_array($_GET['frm_action'], array('edit', 'show'))){
+            $args['frm_action'] = 'list';
+            $args['form'] = 0;
+        }else if(isset($_GET['page']) and $_GET['page'] == 'formidable' and isset($_GET['frm_action']) and $_GET['frm_action'] == 'new'){
+            $args['frm_action'] = 'edit';
+        }else if(isset($_GET['post'])){
+            $args['form'] = 0;
+            $base = admin_url('edit.php?post_type=frm_display');
+        }
+
         ?>
-		<li class="dropdown last">
-			<a href="#" id="navbarDrop1" class="dropdown-toggle" data-toggle="dropdown">Switch Form <b class="caret"></b></a>
-		    <ul class="dropdown-menu" role="menu" aria-labelledby="navbarDrop1">
-			<?php foreach($forms as $form){ ?>
-				<li class=""><a href="<?php echo add_query_arg(array('id' => $form->id, 'form' => $form->id)); ?>" tabindex="-1"><?php echo FrmAppHelper::truncate($form->name, 33); ?></a></li>
-			<?php } ?>
+		<li class="dropdown last" id="frm_bs_dropdown">
+			<a href="#" id="frm-navbarDrop" class="frm-dropdown-toggle" data-toggle="dropdown"><?php _e('Switch Form', 'formidable') ?> <b class="caret"></b></a>
+		    <ul class="frm-dropdown-menu" role="menu" aria-labelledby="frm-navbarDrop">
+			<?php foreach($forms as $form){
+			    if(isset($args['id']))
+			        $args['id'] = $form->id;
+			    if(isset($args['form']))
+			        $args['form'] = $form->id;
+                ?>
+				<li><a href="<?php echo isset($base) ? add_query_arg($args, $base) : add_query_arg($args); ?>" tabindex="-1"><?php echo empty($form->name) ? __('(no title)') : FrmAppHelper::truncate($form->name, 33); ?></a></li>
+			<?php
+			        unset($form);
+			    } ?>
 			</ul>
 		</li>
         <?php
