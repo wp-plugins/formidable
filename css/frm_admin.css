@@ -261,11 +261,11 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 .frm_action_icon{width:14px; height:14px; background:url(../images/icons.png) no-repeat;display:block;float:left;margin-left:4px;}
 span.frm_action_icon{margin:0 4px 0 0;}
 .frm_error_icon,.frm_reload_icon{margin-top:5px;}
-.frm_inactive_icon.frm_action_icon.frm_error_icon{background-position:0 -14px;}
+.frm_inactive_icon.frm_action_icon.frm_error_icon{background-position:0 -15px;}
 .frm_action_icon.frm_reload_icon{background-position:-15px 0; width:25px;}
 .frm_inactive_icon.frm_action_icon.frm_reload_icon{background-position:-15px -14px;}
-.frm_action_icon.frm_required_icon{background-position:-40px 0;margin:0;}
-.frm_inactive_icon.frm_action_icon.frm_required_icon, .frm_action_icon.frm_required0{background-position:-40px -14px;}
+.frm_action_icon.frm_required_icon{background-position:-42px 0;margin:0;}
+.frm_inactive_icon.frm_action_icon.frm_required_icon, .frm_action_icon.frm_required0{background-position:-42px -14px;}
 .frm_action_icon:active {outline:none;}
 .frm-hover-icon{padding-left:5px;}
 .frm-move.frm-hover-icon{padding-left:3px;}
@@ -397,15 +397,15 @@ span.howto{display:inline;}
 .frm_hover_change_icon{background:url(../images/icons.png) no-repeat;height:16px;width:16px;display:inline-block;text-indent:-9999px;}
 .frm_download_template{background:url(../images/arrow-down.png) bottom no-repeat;}
 .frm_add_entry_icon{background:url(../images/plus.png) bottom no-repeat;}
-.frm_duplicate_form{background-position:-37px -28px;}
-.frm_move_field{background-position:-60px -28px;}
-.frm_delete_icon{background-position:-15px -28px;}
+.frm_duplicate_form{background-position:-37px -30px;}
+.frm_move_field{background-position:-60px -30px;}
+.frm_delete_icon{background-position:-15px -30px;}
 .frm_new_template_icon{background:url(../images/template.png) bottom no-repeat;}
 .frm_duplicate_form:active, .frm_move_field:active, .frm_delete_icon:active {outline:none;}
 .frm_add_entry_icon:hover, .frm_new_template_icon:hover{background-position:top;}
 .frm_download_template:hover{background-position:top;}
 .frm_hover_change_icon.frm_inactive_icon{opacity:0.6;}
-.frm_single_option .frm_delete_icon{float:left;visibility:hidden;margin-right:3px;background-position:-19px -28px;}
+.frm_single_option .frm_delete_icon{float:left;visibility:hidden;margin-right:3px;background-position:-19px -30px;}
 .view-switch{display:none;}
 select[name="m"]{display:none;}
 
