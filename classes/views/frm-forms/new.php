@@ -1,10 +1,10 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>    
     <h2><?php _e('Build New Form', 'formidable') ?></h2>
-    <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
-    
+    <?php 
     if (!$values['is_template'])
         FrmAppController::get_form_nav($id, true);
+	require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
     
     if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">

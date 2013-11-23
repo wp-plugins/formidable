@@ -2,10 +2,9 @@
     <div id="icon-edit-pages" class="icon32"><br/></div>
     <h2><?php _e('Entries', 'formidable'); ?></h2>
 
-    <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>
-
     <?php if($form) FrmAppController::get_form_nav($form->id, true); ?>
-
+	
+	<?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>
     <?php FrmAppController::update_message('view, search, export, and bulk delete your saved entries'); ?>
 
     <?php if(!$form or $entry_count){ ?>

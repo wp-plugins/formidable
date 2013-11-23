@@ -1,10 +1,11 @@
 <div id="form_settings_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('Form Settings', 'formidable') ?>
+    <h2><?php _e('Settings', 'formidable') ?>
         <a href="#" class="add-new-h2" style="visibility:hidden;"></a>
     </h2>
-    <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
-    
+    <?php FrmAppController::get_form_nav($id, true);
+	require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
+	    
     if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
     <div id="poststuff" class="metabox-holder has-right-sidebar">
     <?php   
@@ -15,8 +16,7 @@
     
         <div id="post-body" class="metabox-holder columns-2">
         <div id="post-body-content">
-            <?php FrmAppController::get_form_nav($id, true); ?>
-            
+                 
 <form method="post" class="frm_form_settings">     
     <p style="clear:left;">        
         <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />

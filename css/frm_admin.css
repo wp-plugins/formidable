@@ -8,7 +8,6 @@ ul.frm_form_nav {
 	float:left;
 	*float:right;
 }
-.metabox-holder ul.frm_form_nav{margin-top:0;}
 ul.frm_form_nav li{
 	float:left;
 	display:block;
@@ -67,7 +66,7 @@ p.search-box {margin-top:10px;}
 .wp-admin .form-field label.frm_primary_label{display:block;float:none;width:auto;}
 .wp-admin .with_frm_style .wp-editor-container textarea, .wp-admin .postbox .wp-editor-container textarea{border:none;}
 .wp-admin .with_frm_style .mceIframeContainer, .wp-admin .postbox .mceIframeContainer{background-color:#fff;}
-.wp-admin .frm_error_style{max-width:600px;text-align:center;color:#B94A48;border:1px solid #EBCCD1;background-color:#F2DEDE;padding:15px;font-size:14px;margin:5px 0 15px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;}
+.wp-admin .frm_error_style{color:#B94A48;border:1px solid #EBCCD1;background-color:#F2DEDE;padding:8px 15px;font-size:14px;margin:5px 0 15px;-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;}
 
 
 /*Switch form dropdown*/
@@ -225,6 +224,7 @@ table td{vertical-align:top;}
 .frm_indent_opt, td.frm_indent_opt{padding-left:25px;}
 
 .frm_charts object{background:transparent;}
+.frm_charts h2 {height:34px;}
 
 .frm_single_show_hover, .frm-show-click{display:none;}
 .frm-show-hover, .frm_single_visible_hover{visibility:hidden;}

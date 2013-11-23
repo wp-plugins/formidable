@@ -3,8 +3,8 @@
     <h2><?php _e('Views', 'formidable'); ?></h2>
 
     <?php 
-        require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
         if($form) FrmAppController::get_form_nav($form);
+		require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
         FrmAppController::update_message('display collected data in lists, calendars, and other formats'); 
     ?>
 

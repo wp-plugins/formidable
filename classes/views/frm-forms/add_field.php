@@ -90,13 +90,14 @@ $display = apply_filters('frm_display_field_options', array(
             <option value="<?php echo $field_val ?>"<?php echo $selected ?>><?php echo $opt ?></option>
         <?php } ?>
     </select>
-<?php } 
+<?php }
     if ($display['default_blank']){ ?>
         <span id="frm_clear_on_focus_<?php echo $field['id'] ?>" class="frm-show-click">
         <?php FrmFieldsHelper::show_default_blank_js($field['id'], $field['default_blank']); ?>
         </span>
     <?php } ?>
     <div class="clear"></div>
+	<br/>
     <div class="frm-show-click">
     <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>
         <p class="howto"><?php _e('Please add options from the WordPress "Categories" page', 'formidable') ?></p>

@@ -10,7 +10,7 @@ if (isset($message) && $message != ''){
 if( isset($errors) && is_array($errors) && !empty($errors) ){
     global $frm_settings;
 ?>
-<div class="<?php echo (is_admin() and !defined('DOING_AJAX')) ? 'error' : 'frm_error_style' ?>"> 
+<div class="frm_error_style"> 
 <?php
 $img = '';
 if(!is_admin() or defined('DOING_AJAX')){ 
