@@ -12,7 +12,6 @@ class FrmFormsController{
     function FrmFormsController(){
         add_action('admin_menu', 'FrmFormsController::menu', 10);
         add_action('admin_menu', 'FrmFormsController::mid_menu', 40);
-        add_action('admin_menu', 'FrmFormsController::lower_menu', 90);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head');
         add_action('wp_ajax_frm_form_key_in_place_edit', 'FrmFormsController::edit_key');
         add_action('wp_ajax_frm_form_desc_in_place_edit', 'FrmFormsController::edit_description');
@@ -33,7 +32,6 @@ class FrmFormsController{
         global $frm_settings;
         add_submenu_page('formidable', $frm_settings->menu .' | '. __('Forms', 'formidable'), __('Forms', 'formidable'), 'frm_view_forms', 'formidable', 'FrmFormsController::route');
         
-        add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-new', 'FrmFormsController::head');
         add_action('admin_head-'. sanitize_title($frm_settings->menu) .'_page_formidable-templates', 'FrmFormsController::head');
         
         add_filter('manage_toplevel_page_formidable_columns', 'FrmFormsController::get_columns', 0 );
@@ -47,11 +45,6 @@ class FrmFormsController{
     public static function mid_menu(){
         global $frm_settings;
         add_submenu_page('formidable', $frm_settings->menu .' | '. __('Templates', 'formidable'), __('Templates', 'formidable'), 'frm_view_forms', 'formidable-templates', 'FrmFormsController::template_list');
-    }
-    
-    public static function lower_menu(){
-        global $frm_settings;
-        add_submenu_page('formidable', $frm_settings->menu .' | '. __('Add New Form', 'formidable'), '<span style="display:none;">'. __('Add New Form', 'formidable') .'</span>', 'frm_edit_forms', 'formidable-new', 'FrmFormsController::new_form');
     }
     
     public static function head(){
@@ -486,7 +479,7 @@ class FrmFormsController{
             $action = FrmAppHelper::get_param($action);
         }
         
-        if($action == 'new')
+        if($action == 'new' or $action == 'new-selection')
             return self::new_form($vars);
         else if($action == 'create')
             return self::create($vars);

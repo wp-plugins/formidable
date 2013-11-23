@@ -82,13 +82,13 @@ class FrmListHelper extends WP_List_Table {
 	    if ($this->params['template']){
             _e('No Templates Found', 'formidable') ?>. 
             <br/><br/><?php _e('To add a new template','formidable') ?>:
-            <ol><li style="list-style:decimal;">Create a <a href="?page=formidable-new">new form</a>.</li>
-                <li style="list-style:decimal;">After your form is created, go to Formidable -> <a href="?page=formidable">Forms</a>.</li>
-                <li style="list-style:decimal;"><?php _e('Place your mouse over the name of the form you just created, and click the "Create Template" link.', 'formidable') ?></li>
+            <ol><li><?php printf(__('Create a new %1$sform%2$s.'), '<a href="?page=formidable&amp;frm_action=new-selection">', '</a>') ?></li>
+                <li><?php printf(__('After your form is created, go to Formidable -> %1$sForms%2$s.'), '<a href="?page=formidable">', '</a>') ?></li>
+                <li><?php _e('Place your mouse over the name of the form you just created, and click the "Create Template" link.', 'formidable') ?></li>
             </ol>
 <?php   }else{ 
             _e('No Forms Found', 'formidable') ?>. 
-            <a href="?page=formidable-new"><?php _e('Add New'); ?></a>
+            <a href="?page=formidable&amp;frm_action=new-selection"><?php _e('Add New'); ?></a>
 <?php   }
 	}
 	
