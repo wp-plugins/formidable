@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php echo ($params['template'])? __('Templates', 'formidable') : __('Forms', 'formidable'); 
+    <h2 style="height:34px;"><?php echo ($params['template'])? __('Templates', 'formidable') : __('Forms', 'formidable'); 
         if(!$params['template'] and current_user_can('frm_edit_forms')){ ?>
         <a href="?page=formidable-new" class="add-new-h2"><?php _e('Add New'); ?></a>
         <?php } ?>
