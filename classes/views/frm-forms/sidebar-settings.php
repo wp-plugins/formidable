@@ -3,7 +3,7 @@
         if (!$values['is_template']){ ?>
     <p class="howto" style="margin-top:0;"><?php _e('Add to a post, page or text widget', 'formidable') ?>
         <a href="http://formidablepro.com/knowledgebase/publish-your-forms/" target="_blank"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Key and id are generally synonymous. For more information on using this shortcode, click now.', 'formidable') ?>" /></a>
-        <a href="javascript:void(0)" onclick="frmToggleDiv('.frm_ext_sc')"><?php _e('Show more', 'formidable') ?></a>
+        <a href="javascript:void(0)" data-toggle=".frm_ext_sc"><?php _e('Show more', 'formidable') ?></a>
     <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?>]" />
     <span class="frm_ext_sc">
     <input type="text" readonly="true" class="frm_select_box" value="[formidable id=<?php echo $id; ?> title=true description=true]" />

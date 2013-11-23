@@ -2,7 +2,7 @@
     <div id="icon-edit-pages" class="icon32"><br/></div>
     <h2>
 		<?php _e('Entries', 'formidable'); ?>
-		<a href="?page=formidable-new" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>
+		<a href="#" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>
 	</h2>
 
     <?php if($form) FrmAppController::get_form_nav($form->id, true); ?>

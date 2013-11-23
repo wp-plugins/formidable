@@ -42,7 +42,7 @@ class FrmFieldsController{
             $field['value'] = '';
         
         $field_name = "item_meta[$field_id]";
-        
+        $ajax = true;
         $values = array();
         
         $path = FrmAppHelper::plugin_path();    

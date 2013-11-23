@@ -15,6 +15,8 @@ if($('.dropdown.open').length && !t.hasClass('dropdown') && !t.closest('.dropdow
 	$('.dropdown.open').removeClass('open');
 });
 
+$('a[data-toggle]').click(frmToggleDiv);
+
 if($('#new_fields').length){
 $('#new_fields').sortable({
     placeholder:'sortable-placeholder',axis:'y',cursor:'move',opacity:0.65,
@@ -43,13 +45,15 @@ if($('input[name="name"]').val() == '')
 	$('input[name="name"]').focus();
 }
 
+$('#new_fields').on('hover', '.frm_field_box', frmFieldHover);
+$('#new_fields').on('click', '.use_calc', frmPopCalcFields);
 $('#new_fields').on('click', '.frm_req_field', frm_mark_required);
 $('#new_fields').on('click', '.frm_reload_icon', frm_clear_on_focus);
 $('#new_fields').on('click', '.frm_error_icon', frm_default_blank);
 $('#new_fields').on('click', '.frm_single_option .frm_delete_icon', frm_delete_field_option);
 
 $('.inside').on('click', '.frm_insert_code', frmInsertCode);
-$('.frm_insert_val').change(function(){
+$(document).on('change', '.frm_insert_val', function(){
 	frmInsertFieldCode($(this).data('target'),$(this).val());
 	$(this).val('');	
 });
@@ -109,9 +113,8 @@ $('#single_entry').change(function(){if( $(this).is(':checked')) $('.hide_single
 }
 
 if($('.widget-top').length){
-if($.isFunction($.fn.on)){ $(document).on('click', '.widget-top', frmClickWidget); }
-else{ $('.widget-top').live('click', frmClickWidget); }
-$('.widget-top,a.widget-action').click(function(){ $(this).closest('div.widget').siblings().children('.widget-inside').slideUp('fast');});
+$(document).on('click', '.widget-top', frmClickWidget);
+$('.widget-top,a.widget-action').click(function(){frmPopCalcFields(this);$(this).closest('div.widget').siblings().children('.widget-inside').slideUp('fast');});
 }
 
 if($('.frm_ipe_form_desc').length){
@@ -302,7 +305,8 @@ function frmLoadField(field_id){
 		type:"POST",url:ajaxurl,
 		data:{action:'frm_load_field',field_id:field_id,field:f},
 		success:function(html){
-			jQuery('#frm_field_id_'+field_id).replaceWith(html);
+			var t=jQuery('#frm_field_id_'+field_id).html(html).removeClass('frm_field_loading').addClass('ui-state-default').children('.frm_form_fields').data('ftype');
+			jQuery('#frm_field_id_'+field_id).addClass('edit_field_type_'+t);
 		}
 	});
 }
@@ -429,7 +433,10 @@ function frmToggleLogic(id){
 $ele = jQuery('#'+id);
 $ele.fadeOut('slow'); $ele.next('.frm_logic_rows').fadeIn('slow');
 }
-function frmToggleDiv(div){if(jQuery(div).is(':visible')){ jQuery(div).slideUp('fast');}else{jQuery(div).slideDown('fast');} }
+function frmToggleDiv(){
+	var div=jQuery(this).data('toggle');
+	if(jQuery(div).is(':visible')){ jQuery(div).slideUp('fast');}else{jQuery(div).slideDown('fast');}
+}
 function frm_show_div(div,value,show_if,class_id){
 if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div).fadeOut('slow');
 }
@@ -494,6 +501,26 @@ success:function(msg){jQuery('#new_fields').append(msg);}
 function frmToggleMultSel(val,field_id){
 if(val=='select') jQuery('#frm_multiple_cont_'+field_id).fadeIn('fast');
 else jQuery('#frm_multiple_cont_'+field_id).fadeOut('fast');
+}
+
+function frmPopCalcFields(v){
+	if(!v.type){
+		if(!jQuery(v).closest('div.widget').children('.widget-inside').is(':hidden'))
+			return;
+		var p=jQuery(v).closest('.frm_field_box');
+	}else{
+		var p=jQuery(this).closest('.frm_field_box');
+	}
+
+	if(!p.find('.use_calc').length || !p.find('.use_calc').is(':checked'))
+		return;
+
+	var form_id=jQuery('input[name="id"]').val();
+	var field_id=p.find('input[name="frm_fields_submitted[]"]').val();	
+	jQuery.ajax({
+		type:'POST',url:ajaxurl,data:'action=frm_populate_calc_dropdown&field_id='+field_id+'&form_id='+form_id,
+		success:function(msg){p.find('.frm_shortcode_select').replaceWith(msg);}
+	});	
 }
 
 function frm_mark_required(){
@@ -600,10 +627,9 @@ if(e.type=='mouseenter'){
 }
 }
 
-function frm_field_hover(show, field_id){
-	var html_id = '#frm_field_id_'+field_id;
-	if(show){jQuery(html_id).children('.frm-show-hover').css('visibility','visible');}
-	else{if(!jQuery(html_id).is('.selected')){jQuery(html_id).children('.frm-show-hover').css('visibility','hidden');}}
+function frmFieldHover(e){
+	if(e.type=='mouseenter'){jQuery(this).children('.frm-show-hover').css('visibility','visible');}
+	else{if(!jQuery(this).hasClass('selected')){jQuery(this).children('.frm-show-hover').css('visibility','hidden');}}
 }
 
 function frmClickVis(e){

@@ -386,7 +386,7 @@ class FrmAppHelper{
         
         //set to posted value or default
         foreach ($form_defaults as $opt => $default){
-            if (!isset($values[$opt]) or $values[$opt] == ''){
+            if (!isset($values[$opt]) or $values[$opt] == '' or $opt == 'notification'){
                 if($opt == 'notification'){
                     $values[$opt] = ($post_values and isset($post_values[$opt])) ? $post_values[$opt] : $default;
                     

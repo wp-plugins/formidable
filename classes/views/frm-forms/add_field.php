@@ -1,6 +1,6 @@
 <?php
 if(isset($values) and isset($values['ajax_load']) and $values['ajax_load'] and isset($count) and $count > 10){ ?>
-<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading" data-triggered="0">
+<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading edit_form_item frm_top_container" data-triggered="0">
 <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/ajax_loader.gif" alt="<?php _e('Loading', 'formidable') ?>" />
 <span class="frm_hidden_fdata" style="display:none"><?php echo htmlspecialchars(json_encode($field)) ?></span>
 </li>
@@ -31,8 +31,9 @@ $display = apply_filters('frm_display_field_options', array(
     'invalid' => false, 'size' => false, 'clear_on_focus' => false, 
     'default_blank' => true, 'css' => true
 )); ?>
-
-<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default frm_hide_options<?php echo $display['options'] ?> edit_field_type_<?php echo $display['type'] ?> frm_top_container" onmouseover="frm_field_hover(1,<?php echo $field['id']; ?>)" onmouseout="frm_field_hover(0,<?php echo $field['id']; ?>)">
+<?php if(!isset($ajax)){ ?>
+<li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default edit_field_type_<?php echo $display['type'] ?> frm_top_container">
+<?php } ?>
     <a href="javascript:void(0);" class="frm_bstooltip alignright frm-show-hover frm-move frm-hover-icon frm_hover_change_icon frm_move_field" title="<?php esc_attr_e('Move Field', 'formidable') ?>"> </a>
     <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_delete_icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php esc_attr_e('Delete Field', 'formidable') ?>"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></a>
     <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_duplicate_form" title="<?php esc_attr_e('Duplicate Field', 'formidable') ?>"> </a>
@@ -45,7 +46,7 @@ $display = apply_filters('frm_display_field_options', array(
     <?php } ?>
     <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_label_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
 
-<div class="frm_form_fields"> 
+<div class="frm_form_fields" data-ftype="<?php echo $display['type'] ?>"> 
 <?php if ($display['type'] == 'text'){ ?>
     <input type="text" name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'. $field['size'] .'"' : ''; ?> class="dyn_default_value" /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
@@ -282,6 +283,8 @@ if ($display['options']){ ?>
             </table>
         </div>
     </div>
-<?php } ?>         
+<?php } ?>
+<?php if(!isset($ajax)){ ?>       
 </li>
+<?php } ?>
 <?php unset($display); ?>

@@ -26,7 +26,7 @@
 <?php }else{ ?>
 <div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;display:<?php echo ($a == 'general_settings') ? 'block' : 'none'; ?>;">
     <div class="postbox">
-        <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro Account Information', 'formidable')?></h3>
+        <h3 class="hndle"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro License', 'formidable')?></h3>
         <div class="inside">
             <?php 
             $upd = new FrmUpdatesController();
@@ -209,7 +209,7 @@
                 <tr><td>
                 <div class="frm_update_msg">
                 This plugin version does not give you access to the visual form styler.<br/>
-                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your account information <a href ="<?php echo admin_url('admin.php') ?>?page=formidable-settings">here</a>.
+                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your license number <a href ="<?php echo admin_url('admin.php') ?>?page=formidable-settings">here</a>.
                 </div>
                 <img src="http://fp.strategy11.com/wp-content/themes/formidablepro/images/form_style_thumb.png" alt="Style Forms"/>
                 </td></tr>

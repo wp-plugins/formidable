@@ -70,6 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added nonce fields and checking for increased security
 * Switched to placeholder with IE fallback for those using HTML5
 * Updated duplicate entry checking for more accuracy
+* Improved long form load time and usability
 * Added French translation
 * Removed unnecessary definitions: FRM_IMAGES_URL, IS_WPMU, FRMPRO_IMAGES_URL
 * Dropped support for < jQuery 1.7 (< WP 3.3)
@@ -100,6 +101,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Updated file uploading progress bar with frm_uploading_files hook added to text
 * PRO: Only show "create entry in form" box if user has permission to create entries
 * PRO: Removed icons from error message
+* PRO: Fixed collapsable entry list bullets
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

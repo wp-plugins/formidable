@@ -1,6 +1,7 @@
 jQuery(document).ready(function($){
 $('.frm_ajax_loading').css('visibility', 'hidden');
 var trigger=$('.frm_blank_field').closest('.frm_toggle_container').prev('.frm_trigger');if(trigger)frmToggleSection(trigger);
+$('.frm_trigger').click(function(){frmToggleSection($(this))});
 
 if($.isFunction($.fn.placeholder)){
 	$('.frm-show-form input, .frm-show-form textarea').placeholder();
@@ -39,15 +40,9 @@ function frmSetNextPage(e){
 		f.trigger('submit');
 }
 
-function frmToggleSection($sec){
-$sec.next('.frm_toggle_container').slideToggle(200);
-if($sec.hasClass('active')){
-	$sec.removeClass('active'),$sec.children('.ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e'); 
-	$sec.children('.ui-icon-triangle-1-e').removeClass('ui-icon-triangle-1-s');
-}else{
-	$sec.addClass("active"), $sec.children('.ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
-	$sec.children('.ui-icon-triangle-1-s').removeClass('ui-icon-triangle-1-e');
-}
+function frmToggleSection(sec){
+sec.next('.frm_toggle_container').slideToggle('fast');
+sec.toggleClass('active').children('.ui-icon-triangle-1-e, .ui-icon-triangle-1-s').toggleClass('ui-icon-triangle-1-s ui-icon-triangle-1-e');
 }
 
 function frmClearDefault(default_value,thefield){
