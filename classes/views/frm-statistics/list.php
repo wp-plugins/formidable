@@ -2,7 +2,7 @@
     <div class="frm_report_icon icon32"><br/></div>
     <h2>
 		<?php _e('Reports', 'formidable') ?>
-		<a href="?page=formidable-new" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>
+		<a href="#" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>
 	</h2>
 
     <?php 
