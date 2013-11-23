@@ -11,14 +11,14 @@
     <?php   
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/sidebar-settings.php'); 
     }else{ ?>
-    <div id="poststuff" style="padding-top:0;">
+    <div id="poststuff">
     <?php } ?>
     
         <div id="post-body" class="metabox-holder columns-2">
         <div id="post-body-content">
                  
 <form method="post" class="frm_form_settings">     
-    <p style="clear:left;">        
+    <p style="clear:left; margin-top:0;">        
         <input type="submit" value="<?php _e('Update', 'formidable') ?>" class="button-primary" />
         <?php _e('or', 'formidable') ?>
         <a class="button-secondary cancel" href="<?php echo esc_url(admin_url('admin.php?page=formidable') . '&frm_action=edit&id='. $id) ?>"><?php _e('Cancel', 'formidable') ?></a>

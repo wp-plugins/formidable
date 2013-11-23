@@ -1,6 +1,8 @@
 <div class="wrap">
     <div class="frmicon icon32"><br/></div>    
-    <h2><?php _e('Build New Form', 'formidable') ?></h2>
+    <h2><?php _e('Build New Form', 'formidable') ?>
+		<a href="?page=formidable-new" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>
+	</h2>
     <?php 
     if (!$values['is_template'])
         FrmAppController::get_form_nav($id, true);

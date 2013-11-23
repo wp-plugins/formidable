@@ -51,10 +51,12 @@ ul.frm_form_nav li.last > a{
 	border:none;
 	text-align:left;
 }
+.formidable_page_formidable-entries p.search-box {margin-top:8px;}
 .frm_form_nav .frm-dropdown-menu a:hover {background-color:#eaf2fa;}
-.frm_title_head{color:#747474;font-size:15px !important;margin:0;}
-.wrap > .subsubsub{clear:both;}
-p.search-box {margin-top:10px;}
+.frm_title_head{color:#747474;margin:0;}
+.wrap > .subsubsub{clear:both; margin:0;}
+#poststuff {padding-top:0;}
+.post-new-php.post-type-frm_display #poststuff {padding-top:10px;}
 .wp-admin .frm_forms.with_frm_style{max-width:100%;}
 .wp-admin .with_frm_style form label.frm_primary_label{font-size:12px;color:#444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;max-width:90%;min-height:20px;}
 .wp-admin .with_frm_style form .form-field{margin-bottom:20px;}
