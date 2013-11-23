@@ -92,11 +92,11 @@ p.search-box {margin-top:10px;}
 
 .wp-admin .frm_scale{margin-right:10px;text-align:center;float:left;}
 .wp-admin .frm_scale input{display:block;margin-bottom:5px;}
-.wp-admin .frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
-	font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:13px;margin-bottom:0;width:400px;max-width:100%;
-	-moz-border-radius:0px;-webkit-border-radius:0px;border-radius:0px;
+.wp-admin .frm_form_fields:not(.frm_sample_form) input:not([type=file]):not([type=button]), .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
+	font-size:13px;margin-bottom:0;width:400px;max-width:100%;
 	color:#222;background-color:#F7F7F7;border:1px solid #DFDFDF;
 }
+.wp-admin .frm_form_fields textarea.wp-editor-area{width:100%;border:none;}
 .wp-admin .frm_form_fields input[type="file"]{background:transparent;border:none;}
 .wp-admin .frm_form_fields select{width:auto;}
 .wp-admin .frm_form_fields input[type="radio"], .wp-admin .frm_form_fields input[type="checkbox"]{width:auto;border:none;background:transparent;padding:0;}
@@ -349,6 +349,8 @@ span.howto{display:inline;}
 .frm_ipe_field_option{vertical-align:text-top;}
 .selected .frm_ipe_field_option.frm_with_key,
 .selected .frm_ipe_field_option_key{width:45%; display:inline-block !important;}
+.selected .frm_ipe_field_option{min-width:45%;display:inline-block;}
+.selected .frm_ipe_field_option:hover{background-color:#fffbcc;}
 .selected .frm_ipe_field_option.frm_with_key{margin-right:10px;}
 .selected .frm_ipe_field_option.frm_with_key .inplace_field,
 .selected .frm_ipe_field_option_key .inplace_field{width:100% !important;}

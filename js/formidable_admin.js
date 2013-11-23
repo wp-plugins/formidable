@@ -134,8 +134,8 @@ save_button: '<a class="inplace_save save button button-small">'+frm_admin_js.ok
 cancel_button:'<a class="inplace_cancel cancel">'+frm_admin_js.cancel+'</a>',
 });
 
-$('#new_fields').on('keypress', '.frm_ipe_field_label, .frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key', frmBlurField);
-$('#new_fields').on('mouseenter', '.frm_ipe_field_option, .frm_ipe_field_option_select, .frm_ipe_field_option_key', frmSetIPEOpts);
+$('#new_fields').on('keypress', '.frm_ipe_field_label, .frm_ipe_field_option, .frm_ipe_field_option_key', frmBlurField);
+$('#new_fields').on('mouseenter', '.frm_ipe_field_option, .frm_ipe_field_option_key', frmSetIPEOpts);
 $('#new_fields').on('mouseenter', '.frm_ipe_field_key', frmSetIPEKey);
 $('#new_fields').on('mouseenter', '.frm_ipe_field_label', frmSetIPELabel);
 $('#new_fields').on('mouseenter', '.frm_ipe_field_desc', frmSetIPEDesc);

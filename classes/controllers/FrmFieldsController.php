@@ -217,7 +217,7 @@ class FrmFieldsController{
             $options[$ids[1]] = $_POST['update_value'];
    
         $frm_field->update($id, array('options' => maybe_serialize($options)));
-        echo stripslashes($_POST['update_value']);
+        echo (trim($_POST['update_value']) == '') ? __('(Blank)', 'formidable') : stripslashes($_POST['update_value']);
         die();
     }
 
