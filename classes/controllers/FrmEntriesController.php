@@ -146,8 +146,7 @@ class FrmEntriesController{
     }
     
     public static function &filter_email_value($value, $meta, $entry, $atts=array()){
-        global $frm_field;
-        
+        $frm_field = new FrmField();
         $field = $frm_field->getOne($meta->field_id);
         if(!$field)
             return $value; 

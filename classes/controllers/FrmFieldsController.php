@@ -31,8 +31,6 @@ class FrmFieldsController{
     }
     
     public static function load_field(){
-        global $frm_field;
-        
         $id = $field_id = $_POST['field_id'];
         if(!$field_id or !is_numeric($field_id))
             die();
@@ -56,7 +54,6 @@ class FrmFieldsController{
     }
     
     public static function create(){
-        global $frm_field;
         $field_data = $_POST['field'];
         $form_id = $_POST['form_id'];
         $values = array();
@@ -65,6 +62,7 @@ class FrmFieldsController{
         
         $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars($field_data, $form_id));
         
+        $frm_field = new FrmField();
         $field_id = $frm_field->create( $field_values );
         
         if ($field_id){
@@ -78,9 +76,9 @@ class FrmFieldsController{
     }
     
     public static function edit_name(){
-        global $frm_field;
         $id = str_replace('field_label_', '', $_POST['element_id']);
         $values = array('name' => trim($_POST['update_value']));
+        $frm_field = new FrmField();
         $form = $frm_field->update($id, $values);
         echo stripslashes($_POST['update_value']);  
         die();
@@ -88,7 +86,7 @@ class FrmFieldsController{
     
 
     public static function edit_description(){
-        global $frm_field;
+        $frm_field = new FrmField();
         $id = str_replace('field_description_', '', $_POST['element_id']);
         $frm_field->update($id, array('description' => $_POST['update_value']));
         echo stripslashes($_POST['update_value']);
@@ -96,7 +94,7 @@ class FrmFieldsController{
     }
     
     public static function update_ajax_option(){
-        global $frm_field;
+        $frm_field = new FrmField();
         $field = $frm_field->getOne($_POST['field']);
         foreach(array('clear_on_focus', 'separate_value', 'default_blank') as $val){
             if(isset($_POST[$val])){
@@ -115,8 +113,9 @@ class FrmFieldsController{
     }
     
     public static function duplicate(){
-        global $wpdb, $frm_field;
+        global $wpdb;
         
+        $frm_field = new FrmField();
         $copy_field = $frm_field->getOne($_POST['field_id']);
         if (!$copy_field) return;
             
@@ -145,14 +144,14 @@ class FrmFieldsController{
     }
     
     public static function destroy(){
-        global $frm_field;
+        $frm_field = new FrmField();
         $field_id = $frm_field->destroy($_POST['field_id']);
         die();
     }   
 
     /* Field Options */
     public static function add_option(){
-        global $frm_field;
+        $frm_field = new FrmField();
 
         $id = $_POST['field_id'];
         $field = $frm_field->getOne($id);
@@ -188,7 +187,6 @@ class FrmFieldsController{
     }
 
     public static function edit_option(){
-        global $frm_field;
         $ids = explode('-', $_POST['element_id']);
         $id = str_replace('field_', '', $ids[0]);
         if(strpos($_POST['element_id'], 'key_')){
@@ -197,6 +195,8 @@ class FrmFieldsController{
         }else{
             $new_label = $_POST['update_value'];
         }
+        
+        $frm_field = new FrmField();
         $field = $frm_field->getOne($id);
         $options = maybe_unserialize($field->options);
         $this_opt = (array)$options[$ids[1]];
@@ -222,7 +222,7 @@ class FrmFieldsController{
     }
 
     public static function delete_option(){
-        global $frm_field;
+        $frm_field = new FrmField();
         $field = $frm_field->getOne($_POST['field_id']);
         $options = maybe_unserialize($field->options);
         unset($options[$_POST['opt_key']]);
@@ -236,7 +236,7 @@ class FrmFieldsController{
         
         $field_id = $_REQUEST['field_id'];
         	
-        global $current_screen, $hook_suffix, $frm_field;
+        global $current_screen, $hook_suffix;
 
         // Catch plugins that include admin-header.php before admin.php completes.
         if (empty( $current_screen ) and function_exists('set_current_screen')){
@@ -287,6 +287,7 @@ class FrmFieldsController{
             __('Disagree', 'formidable'), __('Strongly Disagree', 'formidable'), __('N/A', 'formidable')
         );
         
+        $frm_field = new FrmField();
         $field = $frm_field->getOne($field_id);
         
         include(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/import_choices.php');
@@ -297,10 +298,9 @@ class FrmFieldsController{
         if(!is_admin() or !current_user_can('frm_edit_forms'))
             return;
         
-        global $frm_field;
-        
         extract($_POST);
         
+        $frm_field = new FrmField();
         $field = $frm_field->getOne($field_id);
         
         if(!in_array($field->type, array('radio', 'checkbox', 'select')))
@@ -344,7 +344,7 @@ class FrmFieldsController{
 
     public static function update_order(){
         if(isset($_POST) and isset($_POST['frm_field_id'])){
-            global $frm_field;
+            $frm_field = new FrmField();
             
             foreach ($_POST['frm_field_id'] as $position => $item)
                 $frm_field->update($item, array('field_order' => $position));

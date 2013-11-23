@@ -17,7 +17,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
 
     if( !empty($errors) ){
         $fields = FrmFieldsHelper::get_form_fields($form->id, true);
-        $values = FrmEntriesHelper::setup_new_vars($fields, $form);
+        $values = $fields ? FrmEntriesHelper::setup_new_vars($fields, $form) : array();
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/new.php'); 
 ?>
 <script type="text/javascript">jQuery(document).ready(function($){frmScrollMsg(<?php echo $form->id ?>);})</script><?php        

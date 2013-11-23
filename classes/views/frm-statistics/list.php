@@ -1,6 +1,6 @@
 <div class="wrap">
     <div class="frm_report_icon icon32"><br/></div>
-    <h2><?php _e('Form Statistics', 'formidable') ?></h2>
+    <h2><?php _e('Reports', 'formidable') ?></h2>
 
     <?php 
         require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');

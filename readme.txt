@@ -62,6 +62,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.07.02 =
+* Added form switcher to nav and other UI enhancements
 * Remove slashes from a single entry retrieved from cache
 * Remove slashes added by ajax before saving to db
 * Fixed naming so plugin info and change log links are correct on plugins page

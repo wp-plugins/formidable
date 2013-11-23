@@ -87,7 +87,9 @@ if($('#frm_adv_info').length || $('.frm_field_list').length){
 	frm_show_loc($('#insert_loc').val());
 }
 
-if($('.hide_editable').length>0){
+$('#post_settings').on('change', '.frm_tax_selector', frmChangePosttaxRow);
+
+if($('.hide_editable').length){
 $('.hide_editable, .hide_ar, .hide_save_draft').hide();
 
 if( $('#save_draft').is(':checked')) $('.hide_save_draft').show();
@@ -777,12 +779,38 @@ jQuery.ajax({
 
 function frm_add_posttax_row(id){
 var post_type=jQuery('select[name="options[post_type]"]').val();
-var meta_name=frmGetMetaValue('frm_posttax_', jQuery('#frm_posttax_rows > div').size());
+var tax_key=frmGetMetaValue('frm_posttax_', jQuery('#frm_posttax_rows > div').size());
 jQuery.ajax({
     type:"POST",url:ajaxurl,
-    data:"action=frm_add_posttax_row&form_id="+id+"&post_type="+post_type+"&meta_name="+meta_name,
+    data:"action=frm_add_posttax_row&form_id="+id+"&post_type="+post_type+"&tax_key="+tax_key,
     success:function(html){jQuery('#frm_posttax_rows').append(html);}
 });
+}
+
+function frmChangePosttaxRow(){
+	if(!jQuery(this).closest('.frm_posttax_row').find('.frm_posttax_opt_list').length)
+		return;
+	jQuery(this).closest('.frm_posttax_row').find('.frm_posttax_opt_list').html('<img src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
+	var post_type=jQuery('select[name="options[post_type]"]').val();
+	var tax_key=jQuery(this).closest('.frm_posttax_row').attr('id').replace('frm_posttax_', '');
+	var meta_name=jQuery(this).val();
+	var show_exclude=jQuery('#'+tax_key+'_show_exclude').is(':checked') ? 1 : 0;
+	var field_id=jQuery('select[name="options[post_category]['+tax_key+'][field_id]"]').val();
+	var id=jQuery('input[name="id"]').val();
+	jQuery.ajax({
+	    type:"POST",url:ajaxurl,
+	    data:"action=frm_add_posttax_row&form_id="+id+"&post_type="+post_type+"&tax_key="+tax_key+"&meta_name="+meta_name+"&field_id="+field_id+'&show_exclude='+show_exclude,
+	    success:function(html){
+			jQuery('#frm_posttax_'+tax_key).replaceWith(html);
+			if(jQuery('#frm_posttax_'+tax_key).find('.frm_exclude_cat_list').length){
+				var cat = jQuery('#frm_posttax_'+tax_key).find('.frm_exclude_cat_list')
+				var frm_lev=cat.find('.frm_catlevel_2');
+				if(frm_lev.length) cat.find('.check_lev1_label, .check_lev2_label').show();
+				var frm_lev=cat.find('.frm_catlevel_3'); if(frm_lev.length) cat.find('.check_lev3_label').show();
+				var frm_lev=cat.find('.frm_catlevel_4'); if(frm_lev.length) cat.find('.check_lev4_label').show();
+			}
+		}
+	});
 }
 
 function frm_insert_where_options(value,where_key){
