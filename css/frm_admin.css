@@ -94,7 +94,7 @@ ul.frm_form_nav li.last > a{
 
 .wp-admin .frm_scale{margin-right:10px;text-align:center;float:left;}
 .wp-admin .frm_scale input{display:block;margin-bottom:5px;}
-.wp-admin .frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
+.frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
 	font-size:13px;margin-bottom:0;width:400px;max-width:100%;
 	color:#222;background-color:#F7F7F7;border:1px solid #DFDFDF;
 }
