@@ -418,11 +418,11 @@ class FrmUpdatesController{
     }
     
     function queue_addon_update($transient, $plugin, $force=false, $checked=false){
-        if(!$this->pro_is_authorized() or !is_object($transient) or $checked or empty($transient->checked))
+        if(!$this->pro_is_authorized() or !is_object($transient) or $checked or (empty($transient->checked) and !$force))
             return $transient;
         
-        $version_info = $this->get_version($transient->checked[ $plugin->plugin_name ], $force, $plugin);
-        $installed_version = $transient->checked[$plugin->plugin_name];
+        $installed_version = empty($transient->checked) ? '1' : $transient->checked[$plugin->plugin_name];
+        $version_info = $this->get_version($installed_version, $force, $plugin);
 
         if($version_info and isset($version_info['version']) and ($force or version_compare($version_info['version'], $installed_version, '>'))){
             $transient->response[$plugin->plugin_name] = new stdClass();

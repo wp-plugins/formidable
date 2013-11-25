@@ -12,7 +12,6 @@ class FrmAppController{
         add_action('admin_menu', 'FrmAppController::menu', 1);
         add_action('admin_head', 'FrmAppController::menu_css');
         add_filter('plugin_action_links_formidable/formidable.php', 'FrmAppController::settings_link', 10, 2 );
-        add_action('after_plugin_row_formidable/formidable.php', 'FrmAppController::pro_action_needed');
         add_action('admin_notices', 'FrmAppController::pro_get_started_headline');
         add_filter('the_content', 'FrmAppController::page_route', 10);
         add_action('plugins_loaded', 'FrmAppController::load_lang');
@@ -88,19 +87,6 @@ class FrmAppController{
         array_unshift($links, $settings);
         
         return $links;
-    }
-    
-    public static function pro_action_needed( $plugin ){
-        $frm_update = new FrmUpdatesController();
-        if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed() ){
-            if (is_multisite() and $frm_update->pro_wpmu and !is_super_admin())
-                return;
-            $frm_update->manually_queue_update();
-            $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $plugin, 'upgrade-plugin_' . $plugin);
-    ?>
-      <td colspan="3" class="plugin-update"><div class="update-message" style="-moz-border-radius:5px;border:1px solid #CC0000;; margin:5px;background-color:#FFEBE8;padding:3px 5px;"><?php echo apply_filters('frm_pro_update_msg', sprintf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">', '</a>'), $inst_install_url); ?></div></td>
-    <?php
-        }
     }
 
     public static function pro_get_started_headline(){
