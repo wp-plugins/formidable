@@ -34,7 +34,7 @@ class FrmEntry{
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
             
-        if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id'])){
+        if(isset($values['frm_user_id']) and (is_numeric($values['frm_user_id']) or (is_admin() and !defined('DOING_AJAX')))){
             $new_values['user_id'] = $new_values['updated_by'] = $values['frm_user_id'];
         }else{
             global $user_ID;
