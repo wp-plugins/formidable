@@ -1,5 +1,5 @@
-<div class="wrap">
-    <div id="icon-options-general" class="icon32"><br/></div>
+<div id="form_global_settings" class="wrap">
+    <div class="frmicon icon32"><br/></div>
     <h2><?php _e('Global Settings', 'formidable'); ?></h2>
 
     <?php require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php'); ?>

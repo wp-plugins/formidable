@@ -1,5 +1,5 @@
-<div class="wrap">
-    <div id="icon-themes" class="icon32"><br/></div>
+<div id="form_views_page" class="wrap">
+    <div class="frmicon icon32"><br/></div>
     <h2>
         <?php _e('Views', 'formidable'); ?>
         <a href="#" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>

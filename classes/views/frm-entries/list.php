@@ -1,5 +1,5 @@
-<div class="wrap">
-    <div id="icon-edit-pages" class="icon32"><br/></div>
+<div id="form_entries_page" class="wrap">
+    <div class="frmicon icon32"><br/></div>
     <h2>
 		<?php _e('Entries', 'formidable'); ?>
 		<a href="#" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New'); ?></a>
