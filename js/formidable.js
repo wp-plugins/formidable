@@ -249,10 +249,9 @@ function frmGetDataOpts(f,selected,field_id){
 	if(f.DataType=='checkbox' || f.DataType=='radio'){
 		jQuery("input[name^='item_meta["+f.HideField+"]']:checked, input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
 	}else if(f.DataType=='select'){
-		//TODO: get previous value for multi-selects and set it!
-		if(jQuery("select[name='item_meta["+f.HideField+"][]']").length>0) var mult='[]'; else var mult='';
-		prev.push(jQuery("select[name='item_meta["+f.HideField+"]"+mult+"']").val());
-	}else{prev.push(jQuery("input[name='item_meta["+f.HideField+"]']").val());}
+		prev.push(jQuery("select[name^='item_meta["+f.HideField+"]']").val());
+		jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
+	}else{prev.push(jQuery("input[name^='item_meta["+f.HideField+"]']").val());}
 	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
 	if(prev.length==0) prev='';
 
@@ -273,15 +272,17 @@ function frmGetDataOpts(f,selected,field_id){
 			if(html!='' && prev!=''){
 				//select options that were selected previously			
 				jQuery.each(prev, function(ckey,cval){
-					if(f.DataType=='checkbox'){
-						jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');
-					}else if(f.DataType=='select'){
-						if(jQuery("select[name='item_meta["+f.HideField+"]"+mult+"'] option[value="+cval+"]").length>0)
-							jQuery("select[name='item_meta["+f.HideField+"]"+mult+"']").val(cval);
-						else
-							prev.splice(ckey,1); //remove options that no longer exist
-					}else{
-						jQuery("input[name='item_meta["+f.HideField+"]']").val(cval);
+					if(typeof(cval) != 'undefined'){
+						if(f.DataType=='checkbox'){
+							jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');
+						}else if(f.DataType=='select'){
+							if(jQuery("select[name^='item_meta["+f.HideField+"]'] option[value="+cval+"]").length)
+								jQuery("select[name^='item_meta["+f.HideField+"]'] option[value="+cval+"]").attr('selected','selected');
+							else
+								prev.splice(ckey,1); //remove options that no longer exist
+						}else{
+							jQuery("input[name^='item_meta["+f.HideField+"]']").val(cval);
+						}
 					}
 				});
 			}

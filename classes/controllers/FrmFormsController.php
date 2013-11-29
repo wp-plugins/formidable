@@ -435,6 +435,7 @@ class FrmFormsController{
     
     public static function add_default_templates($path, $default=true, $template=true){
         global $frm_field;
+        $path = untrailingslashit(trim($path));
         $templates = glob($path."/*.php");
         
         $frm_form = new FrmForm();
