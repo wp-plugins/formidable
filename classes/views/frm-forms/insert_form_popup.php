@@ -60,7 +60,7 @@
         <span class="howto"><?php _e("Note: In some cases, this option can create an infinite loop", "formidable"); ?></span>
     </p>
     
-    <p><input type="button" class="button-primary" value="Insert Display" onclick="frm_insert_display();" /></p>
+    <p><input type="button" class="button-primary" value="Insert View" onclick="frm_insert_display();" /></p>
     
     <div class="frm_box_line"></div>
     <h3><?php _e("Insert a search box", "formidable"); ?></h3>
