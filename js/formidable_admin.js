@@ -170,6 +170,8 @@ $(this).hover(function(){$('#frm_show_cal').removeClass().addClass($(this).attr(
 });
 
 $('.frm_reset_style').click(function(){
+	if(!confirm(frm_admin_js.confirm))
+		return false;
 	jQuery.ajax({
 		type:'POST',url:ajaxurl,
 	    data:'action=frm_settings_reset',

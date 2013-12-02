@@ -74,7 +74,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added French translation
 * Removed unnecessary definitions: FRM_IMAGES_URL, IS_WPMU, FRMPRO_IMAGES_URL
 * Dropped support for < jQuery 1.7 (< WP 3.3)
-* Added frm_radio_class, frm_checkbox_class, and frm_submit_button_classes hooks
+* Added frm_radio_class, frm_checkbox_class, and frm_submit_button_class hooks
 * Moved radio and checkbox inputs inside the label tags
 * Updated default styling
 * PRO: Switch field IDs in email settings in duplicated form

@@ -338,7 +338,7 @@ function frmGetFormErrors(object){
 				jQuery(object).find('input[type="submit"], input[type="button"]').removeAttr('disabled');
 				jQuery(object).find('.frm_ajax_loading').css('visibility', 'hidden');
 				
-	            //show errors
+				//show errors
 				var cont_submit=true;
 	            jQuery('.form-field').removeClass('frm_blank_field');
 	            jQuery('.form-field .frm_error').replaceWith('');
@@ -361,6 +361,9 @@ function frmGetFormErrors(object){
 						jQuery(object).find('#frm_field_'+key+'_container').addClass('frm_blank_field');
 						if(typeof(frmThemeOverride_frmPlaceError) == 'function'){frmThemeOverride_frmPlaceError(key,errObj);}
 						else{jQuery(object).find('#frm_field_'+key+'_container').append('<div class="frm_error">'+errObj[key]+'</div>');}
+					}else if(key == 'redirect'){
+						window.location=errObj[key];
+						return;
 					}
 				}
 				if(show_captcha!=true) jQuery(object).find('#recaptcha_area').replaceWith('');

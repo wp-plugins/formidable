@@ -250,7 +250,8 @@ function frm_install_now(){
                 'no_clear_default' => __('Do not clear default value when typing', 'formidable'),
                 'valid_default' => __('Default value will pass form validation', 'formidable'),
                 'no_valid_default' => __('Default value will NOT pass form validation', 'formidable'),
-                'deauthorize' => __('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable')
+                'deauthorize' => __('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable'),
+                'confirm' => __('Are you sure?', 'formidable')
             ));
         }
     }

@@ -146,22 +146,22 @@ class FrmListHelper extends WP_List_Table {
         
         $delete_link = "?page=formidable&frm_action=destroy&id={$item->id}";
         if(current_user_can('frm_delete_forms'))
-		    $actions['trash'] = "<a class='submitdelete' href='" . wp_nonce_url( $delete_link ) . "' onclick='return confirm(\"". __('Are you sure you want to delete that?', 'formidable') ."\")'>" . __( 'Delete' ) . "</a>";
+		    $actions['trash'] = '<a class="submitdelete" href="' . wp_nonce_url( $delete_link ) .'" onclick="return confirm(\''. __('Are you sure you want to delete that?', 'formidable') .'\')">' . __( 'Delete' ) . '</a>';
 		
 		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item->prli_link_id) .'" target="_blank">'. __('View') .'</a>';  
         
         $action_links = $this->row_actions( $actions );
         
 		// Set up the checkbox ( because the user is editable, otherwise its empty )
-		$checkbox = "<input type='checkbox' name='item-action[]' id='cb-item-action-{$item->id}' value='{$item->id}' />";
+		$checkbox = '<input type="checkbox" name="item-action[]" id="cb-item-action-'. $item->id .'" value="'. $item->id .'" />';
 
-		$r = "<tr id='item-action-{$item->id}'$style>";
+		$r = '<tr id="item-action-'. $item->id .'"'. $style .'>';
 
 		list( $columns, $hidden ) = $this->get_column_info();
         $action_col = false;
 
 		foreach ( $columns as $column_name => $column_display_name ) {
-			$class = "class=\"$column_name column-$column_name\"";
+			$class = 'class="'. $column_name .' column-'. $column_name .'"';
 
 			$style = '';
 			if ( in_array( $column_name, $hidden ) )
@@ -173,7 +173,7 @@ class FrmListHelper extends WP_List_Table {
 
 			switch ( $column_name ) {
 				case 'cb':
-					$r .= "<th scope='row' class='check-column'>$checkbox</th>";
+					$r .= '<th scope="row" class="check-column">'. $checkbox .'</th>';
 					break;
 				case 'id':
 				case 'form_key':

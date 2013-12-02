@@ -204,7 +204,7 @@ BEFORE_HTML;
             $button_parts = explode('[button_action]', $button);
             echo $button_parts[0];
             //echo ' id="frm_submit_"';
-            $classes = apply_filters('frm_submit_button_classes', array(), $form);
+            $classes = apply_filters('frm_submit_button_class', array(), $form);
             if(!empty($classes))
                 echo ' class="'. implode(' ', $classes) .'"';
             

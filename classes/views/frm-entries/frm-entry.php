@@ -30,7 +30,10 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
             $saved_message = apply_filters('frm_content', $saved_message, $form, $created);
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form->options);
             if (!$created or !is_numeric($created) or $conf_method == 'message'){
-                $message = '<div class="frm_message" id="message">'.(($created and is_numeric($created)) ? wpautop(do_shortcode($saved_message)) : $frm_settings->failed_msg).'</div>';
+                if($created and is_numeric($created))
+                    $message = '<div class="frm_message" id="message">'. wpautop(do_shortcode($saved_message)) .'</div>';
+                else
+                    $message = '<div class="frm_error_style">'. $frm_settings->failed_msg .'</div>';
                 if (!isset($form->options['show_form']) or $form->options['show_form']){
                     require(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/new.php');
                 }else{ 
