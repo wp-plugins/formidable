@@ -104,6 +104,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed collapsable entry list bullets
 * PRO: Fixed dependent multi-select data from entries fields on edit
 * PRO: Added frm_back_button_classes hook
+* PRO: Fixed quotation marks in conditional logic
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields
