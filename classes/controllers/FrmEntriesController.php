@@ -85,7 +85,7 @@ class FrmEntriesController{
         return false;
     }
     
-    public static function process_entry($errors=''){
+    public static function process_entry($errors='', $ajax=false){
         if((is_admin() and !defined('DOING_AJAX')) or !isset($_POST) or !isset($_POST['form_id']) or !is_numeric($_POST['form_id']) or !isset($_POST['item_key']))
             return;
 
@@ -113,7 +113,7 @@ class FrmEntriesController{
                     $frm_vars['created_entries'][$_POST['form_id']]['entry_id'] = $frm_entry->create( $_POST );
             }
             
-            do_action('frm_process_entry', $params, $errors, $form);
+            do_action('frm_process_entry', $params, $errors, $form, array('ajax' => $ajax));
             unset($_POST['frm_skip_cookie']);
         }
     }

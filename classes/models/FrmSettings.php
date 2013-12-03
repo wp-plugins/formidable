@@ -9,7 +9,6 @@ class FrmSettings{
     var $menu;
     var $mu_menu;
     var $preview_page_id;
-    var $preview_page_id_str;
     var $lock_keys;
     var $track;
     
@@ -76,9 +75,7 @@ class FrmSettings{
         );
     }
 
-    function set_default_options(){          
-        $this->preview_page_id_str = 'frm-preview-page-id';
-          
+    function set_default_options(){
         if(!isset($this->pubkey)){
             if(is_multisite())
                $recaptcha_opt = get_site_option('recaptcha'); // get the options from the database
@@ -139,9 +136,7 @@ class FrmSettings{
         }
     }
 
-    function validate($params,$errors){   
-        //if($params[ $this->preview_page_id_str ] == 0)
-        //  $errors[] = "The Preview Page Must Not Be Blank.";
+    function validate($params,$errors){
         $errors = apply_filters( 'frm_validate_settings', $errors, $params );
         return $errors;
     }
@@ -171,7 +166,7 @@ class FrmSettings{
         }
         
         $this->load_style = $params['frm_load_style'];
-        $this->preview_page_id = (int)$params[ $this->preview_page_id_str ];
+        $this->preview_page_id = (int)$params['frm-preview-page-id'];
         $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
         $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
         

@@ -60,7 +60,7 @@
             <tr class="form-field">
               <td><?php _e('Preview Page', 'formidable'); ?> </td>
               <td>
-                <?php FrmAppHelper::wp_pages_dropdown( $frm_settings->preview_page_id_str, $frm_settings->preview_page_id ) ?>
+                <?php FrmAppHelper::wp_pages_dropdown('frm-preview-page-id', $frm_settings->preview_page_id ) ?>
               </td>
             </tr>
             
