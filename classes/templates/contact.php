@@ -1,4 +1,5 @@
 <?php
+if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 $values['name'] = __('Contact Us', 'formidable');
 $values['description'] = __('We would like to hear from you. Please send us a message by filling out the form below and we will get back with you shortly.', 'formidable');

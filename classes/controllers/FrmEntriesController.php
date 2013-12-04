@@ -14,8 +14,7 @@ class FrmEntriesController{
         add_action('admin_menu', 'FrmEntriesController::menu', 11);
         add_action('wp', 'FrmEntriesController::process_entry', 10, 0);
         add_action('frm_wp', 'FrmEntriesController::process_entry', 10, 0);
-        add_filter('frm_redirect_msg', 'FrmEntriesController::delete_entry_before_redirect', 50, 3);
-        add_filter('frm_redirect_url', 'FrmEntriesController::delete_entry_before_wpredirect', 50, 3);
+        add_filter('frm_redirect_url', 'FrmEntriesController::delete_entry_before_redirect', 50, 3);
         add_action('frm_after_entry_processed', 'FrmEntriesController::delete_entry_after_save', 100);
         add_filter('frm_email_value', 'FrmEntriesController::filter_email_value', 10, 3);
     }
@@ -118,13 +117,7 @@ class FrmEntriesController{
         }
     }
     
-    //Delete entry if it shouldn't be saved before redirect
-    public static function delete_entry_before_redirect($redirect_msg, $atts){
-        self::_delete_entry($atts['entry_id'], $atts['form']);
-        return $redirect_msg;
-    }
-    
-    public static function delete_entry_before_wpredirect($url, $form, $atts){
+    public static function delete_entry_before_redirect($url, $form, $atts){
         self::_delete_entry($atts['id'], $form);
         return $url;
     }
