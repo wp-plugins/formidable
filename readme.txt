@@ -77,6 +77,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added frm_radio_class, frm_checkbox_class, and frm_submit_button_class hooks
 * Moved radio and checkbox inputs inside the label tags
 * Updated default styling
+* Added frm_text_block and frm_clearfix styling classes
 * PRO: Switch field IDs in email settings in duplicated form
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
@@ -84,7 +85,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added styling reset button on styling page
 * PRO: Switch "Custom Display" terminology to "View"
 * PRO: Allow any values in the form shortcode to set $_GET values. [formidable id=x get="something"]. Then use [get param="get"] in a field
-* PRO: Allow the field value to be used to filter data from entries values in custom displays
+* PRO: Allow the field value to be used to filter data from entries values in custom displays, statistics, and graphs
 * PRO: Allow for quotation marks in values used to get stats in the frm-stats shortcode
 * PRO: Fixed entry listing widget to get values from stats for more accuracy
 * PRO: Updated template export to include all form settings
@@ -105,6 +106,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed dependent multi-select data from entries fields on edit
 * PRO: Added frm_back_button_class hook
 * PRO: Fixed quotation marks in conditional logic
+* PRO: Allow filtering by a field value in graphs
+* PRO: Make x_axis=created_at work in graphs
+* PRO: Added if statements to Default HTML button in email message
+* PRO: Added show_filename option to file upload fields
+
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields
