@@ -331,12 +331,14 @@ class FrmEntry{
         return $results;
     }
 
-    function validate( $values, $exclude=false ){
+    function validate( $values, $exclude=false, $api=false ){
         global $wpdb, $frm_field, $frm_entry_meta, $frm_settings;
         
         $errors = array();
-        if(!isset($values['form_id']) or !isset($values['item_meta']) or (isset($_POST) and (!isset($_POST['frm_submit_entry']) or !wp_verify_nonce($_POST['frm_submit_entry'], 'frm_submit_entry_nonce')))){
+        if(!isset($values['form_id']) or !isset($values['item_meta']) or (!$api and isset($_POST) and (!isset($_POST['frm_submit_entry']) or !wp_verify_nonce($_POST['frm_submit_entry'], 'frm_submit_entry_nonce')))){
             $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');
+            if(!isset($values['form_id']) or !isset($values['item_meta']))
+                return $errors;
         }
         
         if( !isset($values['item_key']) or $values['item_key'] == '' ){

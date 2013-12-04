@@ -73,7 +73,7 @@
             </tr>
             
             <tr class="form-field">
-                <td><?php _e('Stylesheets', 'formidable'); ?> </td>
+                <td><?php _e('Styling', 'formidable'); ?> </td>
                 <td>
                     
                     <p><?php _e('Load Formidable styling', 'formidable') ?>
@@ -87,10 +87,7 @@
                     <p><label for="frm_use_html"><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?> style="border:none;"> <?php _e('Use HTML5 in forms', 'formidable') ?></label>
                     </p>
                     
-                    <?php if($frm_vars['pro_is_installed']){ ?>
-                    <p><label for="frm_jquery_css"><input type="checkbox" value="1" id="frm_jquery_css" name="frm_jquery_css" <?php checked($frm_settings->jquery_css, 1) ?> style="border:none;" />
-                    <?php _e('Include the jQuery CSS on ALL pages', 'formidable'); ?></label> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The styling for the date field calendar. Some users may be using this css on pages other than just the ones that include a date field.', 'formidable') ?>" /></p>
-                    <?php } ?>
+                    <?php do_action('frm_style_general_settings', $frm_settings); ?>
                 </td>
             </tr>
             

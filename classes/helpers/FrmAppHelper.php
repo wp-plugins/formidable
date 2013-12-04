@@ -5,7 +5,7 @@ if(class_exists('FrmAppHelper'))
     return;
 
 class FrmAppHelper{
-    const DBVERSION = 11; //version of the database we are moving to
+    public static $db_version = 11; //version of the database we are moving to
     
     public static function plugin_version(){
         $plugin_data = get_file_data( WP_PLUGIN_DIR .'/formidable/formidable.php', array('Version' => 'Version'), 'plugin' );
@@ -641,7 +641,7 @@ class FrmAppHelper{
         	
         	$referrerinfo .= "\r\n";
 	    }else{
-	        $referrerinfo = $_SERVER['HTTP_REFERER'];
+	        $referrerinfo = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 	    }
 
     	$i = 1;

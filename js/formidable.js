@@ -200,7 +200,7 @@ function frmOperators(op,a,b){
 	if(typeof(b)=='undefined') var b='';
 	if(jQuery.isArray(b) && jQuery.inArray(a,b) > -1) var b=a;
 	if(String(a).search(/^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/) != -1){var a=parseFloat(a);var b=parseFloat(b);}
-	if(a.indexOf('&quot;') != '-1' && frmOperators(op,a.replace('&quot;', '"'),b))
+	if(String(a).indexOf('&quot;') != '-1' && frmOperators(op,a.replace('&quot;', '"'),b))
 		return true;
 	var operators = {
 	    '==': function(c,d){ return c == d },

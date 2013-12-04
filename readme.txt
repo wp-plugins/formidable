@@ -103,7 +103,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Removed icons from error message
 * PRO: Fixed collapsable entry list bullets
 * PRO: Fixed dependent multi-select data from entries fields on edit
-* PRO: Added frm_back_button_classes hook
+* PRO: Added frm_back_button_class hook
 * PRO: Fixed quotation marks in conditional logic
 
 = 1.07.01 =

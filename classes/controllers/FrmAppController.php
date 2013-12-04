@@ -103,7 +103,7 @@ class FrmAppController{
             global $frm_vars;
             $db_version = get_option('frm_db_version');
             $pro_db_version = ($frm_vars['pro_is_installed']) ? get_option('frmpro_db_version') : false;
-            if(((int)$db_version < (int)FrmAppHelper::DBVERSION) or ($frm_vars['pro_is_installed'] and (int)$pro_db_version < 23)){ //this number should match the db_version in FrmDb.php
+            if(((int)$db_version < (int)FrmAppHelper::$db_version) or ($frm_vars['pro_is_installed'] and (int)$pro_db_version < 23)){ //this number should match the db_version in FrmDb.php
             ?>
 <div class="error" id="frm_install_message" style="padding:7px;"><?php _e('Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or', 'formidable'); ?> <a id="frm_install_link" href="javascript:void(0)"><?php _e('Update Now', 'formidable') ?></a></div>
 <script type="text/javascript">
@@ -197,7 +197,7 @@ function frm_install_now(){
             
             $old_db_version = get_option('frm_db_version');
             $pro_db_version = ($frm_vars['pro_is_installed']) ? get_option('frmpro_db_version') : false;
-            if(((int)$old_db_version < (int)FrmAppHelper::DBVERSION) or ($frm_vars['pro_is_installed'] and (int)$pro_db_version < 23))
+            if(((int)$old_db_version < (int)FrmAppHelper::$db_version) or ($frm_vars['pro_is_installed'] and (int)$pro_db_version < 23))
                 self::install($old_db_version);
         }
         
