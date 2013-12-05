@@ -1,7 +1,7 @@
 <?php global $frm_settings; 
 if (isset($message) && $message != ''){ 
     if(is_admin() and !defined('DOING_AJAX')){ 
-        ?><div id="message" class="frm_message" class="updated" style="padding:5px;"><?php echo $message ?></div><?php 
+        ?><div id="message" class="frm_message updated" style="padding:5px;"><?php echo $message ?></div><?php 
     }else{ 
         echo $message; 
     }

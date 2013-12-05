@@ -221,6 +221,10 @@ class FrmAppHelper{
     	return $ver;
     }
     
+    public static function js_redirect($url){
+        return '<script type="text/javascript">window.location="'. esc_attr($url) .'"</script>';
+    }
+    
     public static function get_file_contents($filename){
         if (is_file($filename)){
             ob_start();

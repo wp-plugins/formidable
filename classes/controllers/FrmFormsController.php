@@ -111,7 +111,7 @@ class FrmFormsController{
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
         }else{    
             $record = $frm_form->update( $id, $values, true );
-            die('<script type="text/javascript">window.location="'. admin_url('admin.php?page=formidable&frm_action=settings&id='. $id) .'"</script>');
+            die(FrmAppHelper::js_redirect(admin_url('admin.php?page=formidable&frm_action=settings&id='. $id)));
             //$message = __('Form was Successfully Created', 'formidable');
             //return self::settings($record, $message);
         }

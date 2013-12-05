@@ -92,17 +92,17 @@ for(i=0; i<len; i++){
 		if(f.Type=='radio' || f.Type=='data-radio')
 			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
 		else if(f.Type=='select' || f.Type=='data-select')
-			selected=jQuery("select[name='item_meta["+f.FieldName+"]'], input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
+			selected=jQuery("select[name^='item_meta["+f.FieldName+"]'], input[type='hidden'][name^='item_meta["+f.FieldName+"]']").val();
 		else if(f.Type !='checkbox' && f.Type !='data-checkbox')
-			selected=jQuery("input[name='item_meta["+f.FieldName+"]']").val();
+			selected=jQuery("input[name^='item_meta["+f.FieldName+"]']").val();
 	}
 
 	if(typeof(selected)=='undefined'){
-		selected=jQuery("input[type=hidden][name='item_meta["+f.FieldName+"]']").val();
+		selected=jQuery("input[type=hidden][name^='item_meta["+f.FieldName+"]']").val();
 		if(typeof(selected)=='undefined') selected='';
 	}
 
-    if(f.Type=='checkbox'){
+    if(f.Type=='checkbox' || (f.Type=='data-checkbox' && typeof(f.LinkedField)=='undefined')){
         show_fields[f.HideField][i]=false;
         jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name^='item_meta["+f.FieldName+"]']").each(function(){
 			var match=frmOperators(f.Condition,f.Value,jQuery(this).val());
@@ -123,7 +123,7 @@ for(i=0; i<len; i++){
 			if(selected==''){show_fields[f.HideField][i]=false;}
             else{show_fields[f.HideField][i]={'funcName':'frmGetDataOpts','f':f,'sel':selected};}
 		}
-    }else if(f.Type=='data-checkbox'){
+    }else if(f.Type=='data-checkbox' && typeof(f.LinkedField)!='undefined'){
 		var checked_vals=new Array();
 		jQuery("input[name='item_meta["+f.FieldName+"][]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"][]']").each(function(){checked_vals.push(jQuery(this).val());});
 		if(typeof(f.DataType)=='undefined' || f.DataType=='' || f.DataType=='data'){
