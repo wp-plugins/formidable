@@ -29,18 +29,21 @@ class FrmEntry{
             $new_values['is_draft'] = 1;
         
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
-        $new_values['created_at'] = $new_values['updated_at'] = isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1);
+        $new_values['created_at'] = isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1);
+        $new_values['updated_at'] = isset($values['updated_at']) ? $values['updated_at'] : $new_values['created_at'];
         
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
             
         if(isset($values['frm_user_id']) and (is_numeric($values['frm_user_id']) or (is_admin() and !defined('DOING_AJAX')))){
-            $new_values['user_id'] = $new_values['updated_by'] = $values['frm_user_id'];
+            $new_values['user_id'] = $values['frm_user_id'];
         }else{
             global $user_ID;
             if($user_ID)
                 $new_values['user_id'] = $new_values['updated_by'] = $user_ID;
         }
+        
+        $new_values['updated_by'] = isset($values['updated_by']) ? $values['updated_by'] : $new_values['user_id'];
         
         //check for duplicate entries created in the last 5 minutes
         $create_entry = true;

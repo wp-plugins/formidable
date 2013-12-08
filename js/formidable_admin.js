@@ -252,6 +252,12 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 	$('#frm_shortcodediv').siblings('a.edit-frm_shortcode').show();
 	return false;
 });
+
+//is export page
+if($('#frm_export_xml').length){
+$('input[name="frm_import_file"]').change(frmCheckCSVExtension);
+}
+
 });
 
 function frmClickTab(t, link){
@@ -1003,4 +1009,13 @@ jQuery('#frm_deauthorize_link').replaceWith('<img src="'+ frm_js.images_url +'/w
 jQuery.ajax({type:'POST',url:ajaxurl,data:'action=frm_deauthorize',
 success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_auth_form();}
 });
-};
+}
+
+function frmCheckCSVExtension(){
+var f=jQuery(this).val();
+var re = /\..+$/;
+if (f.match(re) == '.csv')
+	jQuery('.show_csv').fadeIn();
+else
+	jQuery('.show_csv').fadeOut();
+}
