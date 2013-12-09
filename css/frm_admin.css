@@ -23,6 +23,7 @@ ul.frm_form_nav li{
 	border-right:0;
 	background-color:#EEE;
 }
+.frm_38_trigger .frm_form_nav a { background-color:#fff; }
 .frm_form_nav a:active, .frm_form_nav a:focus  {outline:none;}
 .frm_form_nav li a.current_page {
  	color:#333;

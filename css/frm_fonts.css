@@ -12,7 +12,7 @@
 }
 .frm_38_trigger #toplevel_page_formidable .wp-menu-image:before {
 	font-family: 's11-fp' !important; /* this assumes you've loaded Genericons in your admin */
-	content: '\e613'; /* replace this with your icon */
+	content: '\e601'; /* replace this with your icon */
 	text-shadow: none;
 }
 
