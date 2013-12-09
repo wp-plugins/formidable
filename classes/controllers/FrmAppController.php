@@ -10,7 +10,7 @@ if(class_exists('FrmAppController'))
 class FrmAppController{
     function FrmAppController(){
         add_action('admin_menu', 'FrmAppController::menu', 1);
-        add_action('admin_head', 'FrmAppController::menu_css');
+        add_action( 'admin_enqueue_scripts', 'FrmAppController::load_wp_admin_style' );
         add_filter('plugin_action_links_formidable/formidable.php', 'FrmAppController::settings_link', 10, 2 );
         add_action('admin_notices', 'FrmAppController::pro_get_started_headline');
         add_filter('the_content', 'FrmAppController::page_route', 10);
@@ -51,15 +51,14 @@ class FrmAppController{
         $pos = apply_filters('frm_menu_position', $pos);
         
         if(current_user_can('frm_view_forms')){
-            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', 'FrmFormsController::route', 'div', $pos);
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_forms', 'formidable', 'FrmFormsController::route', FrmAppHelper::plugin_url() .'/images/form_16.png', $pos);
         }else if(current_user_can('frm_view_entries') and $frm_vars['pro_is_installed']){
-            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', 'FrmProEntriesController::route', 'div', $pos);
+            add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', 'FrmProEntriesController::route', FrmAppHelper::plugin_url() .'/images/form_16.png', $pos);
         }
     }
     
-    public static function menu_css(){ ?>
-<style type="text/css">#adminmenu .toplevel_page_formidable div.wp-menu-image, .frm-buttons-icon{background:url(<?php echo FrmAppHelper::plugin_url() ?>/images/form_16.png) no-repeat center -26px;}#adminmenu .toplevel_page_formidable:hover .wp-menu-image, #adminmenu .wp-has-current-submenu.toplevel_page_formidable .wp-menu-image{background-position:center 5px;}.menu-icon-frmdisplay .wp-menu-image img{display:none;}.frm-buttons-icon{display:inline-block;height:16px;margin:0 2px;vertical-align: text-top;width:16px;background-position:left -30px;background-size:15px 44px;}.wp-media-buttons .frm_insert_form{padding-left:0.4em;}</style>    
-<?php
+    public static function load_wp_admin_style(){
+        wp_enqueue_style( 'custom_wp_admin_css',  FrmAppHelper::plugin_url() .'/css/frm_fonts.css', array(), FrmAppHelper::plugin_version());
     }
     
     public static function get_form_nav($id, $show_nav=false){

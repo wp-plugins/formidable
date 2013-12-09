@@ -86,6 +86,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Switch "Custom Display" terminology to "View"
 * PRO: Allow any values in the form shortcode to set $_GET values. [formidable id=x get="something"]. Then use [get param="get"] in a field
 * PRO: Allow the field value to be used to filter data from entries values in custom displays, statistics, and graphs
+* PRO: Increased CSV export efficiency
 * PRO: Allow for quotation marks in values used to get stats in the frm-stats shortcode
 * PRO: Fixed entry listing widget to get values from stats for more accuracy
 * PRO: Updated template export to include all form settings

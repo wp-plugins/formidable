@@ -1,53 +1,3 @@
-@font-face {
-	font-family: 's11-fp';
-	src: url('../fonts/s11-fp.eot');
-	src: local('☺'), url('../fonts/s11-fp.woff') format('woff'), url('../fonts/s11-fp.ttf') format('truetype'), url('../fonts/s11-fp.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-/* dashboard icon */
-#toplevel_page_formidable .wp-menu-image {
-  background-image: none!important;
-}
-#toplevel_page_formidable .wp-menu-image:before {
-	font-family: 's11-fp'!important; /* this assumes you've loaded Genericons in your admin */
-	content: '\e61c'; /* replace this with your icon */
-	font-size: 20px;
-	position: relative;
-	left: 5px; /* positions the icon */
-	top: 4px; /* positions the icon */
-	color: #aaa;
-}
-.branch-3-8 #toplevel_page_formidable .wp-menu-image:before {
-	left: 0; /* positions the icon */
-	top: 0; /* positions the icon */
-}
-#toplevel_page_formidable:hover .wp-menu-image:before, .wp-has-current-submenu#toplevel_page_formidable .wp-menu-image:before {
-	color: #21759b;
-}
-div#icon-edit.icon32-posts-book-review {
-	background-image: none;
-}
-div#icon-edit.icon32-posts-book-review:after {
-	font-family: 's11-fp'!important;
-	content: '\e61c'; /* replace this with your icon */
-	color: #555;
-	font-size: 32px;
-	position: relative;
-	top: -5px; /* positions the icon */
-	left: 5px; /* positions the icon */
-}
-
-/* this adds support for MP6 & future WP (3.7/8, whichever gets the dashboard css update) */
-/* this is largely thanks to: https://github.com/Gizburdt/Wordpress-Cuztom-Helper/issues/152#issuecomment-17490472 */
-.mp6 #adminmenu #toplevel_page_formidable div.wp-menu-image:before {
-	font-family: 's11-fp'!important;
-	content: '\e61c'; /* replace this with your icon */
-	left: 0; /* resets the positioning for MP6/future WP */
-	top: 0; /* resets the positioning for MP6/future WP */
-	text-shadow: none;
-}
 a, .widget .widget-top, .postbox h3, .stuffbox h3{cursor: pointer;}
 .postbox h3.hndle{cursor:default;}
 
@@ -145,7 +95,6 @@ ul.frm_form_nav li.last > a{
 .wp-admin .frm_scale input{display:block;margin-bottom:5px;}
 .frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
 	font-size:13px;margin-bottom:0;width:400px;max-width:100%;
-	color:#222;background-color:#F7F7F7;border:1px solid #DFDFDF;
 }
 .wp-admin .frm_form_fields textarea.wp-editor-area{width:100%;border:none;}
 .wp-admin .frm_form_fields input[type="file"]{background:transparent;border:none;}
@@ -268,6 +217,7 @@ table td, .form-table tr td{vertical-align:top;}
 
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
+.frm_38_trigger .frm_rte .howto{margin-bottom:39px;}
 .button-secondary.frm_html_field{
 	background-color:#ededed;padding:10px 20px;line-height:inherit;width:auto;height:auto !important;
 	-moz-border-radius:0;-webkit-border-radius:0;border-radius:0;
@@ -277,7 +227,10 @@ table td, .form-table tr td{vertical-align:top;}
 	width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
 	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
 	float:none !important;
+	box-shadow-top:none;
 }
+.frm_38_trigger #new_fields .frm_rte textarea{margin-bottom:0;}
+
 .wp-admin .frm_full_rte textarea{width:98%; padding:0;}
 .frm_field_box{padding:5px;min-height:20px;}
 
@@ -406,7 +359,7 @@ span.howto{display:inline;}
 .frm_left_label.frm_alignright{padding-right:10px;text-align:right;}
 #html_settings label{display:block;}
 
-.frm-category-tabs a{outline:none;}
+.frm-category-tabs > li a, .frm-category-tabs > li a:active{outline:none;}
 
 .frm_ipe_field_option{vertical-align:text-top;}
 .selected .frm_ipe_field_option.frm_with_key,
@@ -422,6 +375,7 @@ span.howto{display:inline;}
 
 #form_reports_page #menu-management{}
 #menu-management select{max-width:100%;}
+.postbox .manage-menus{border-top:none;border-left:none;border-right:none;}
 .postbox .frm-help-tabs.inside, #poststuff .frm-help-tabs.inside{padding-left:0;margin-top:0;}
 .frm-help-tabs form > .submit{margin-left:154px;}
 .frm_38_trigger .frm-help-tabs form > .submit{padding-left:0.9em;}
@@ -441,8 +395,14 @@ span.howto{display:inline;}
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#f7fcfe), to(#eff8ff)); /* old Webkit */
 	background-image: -webkit-linear-gradient(top, #f7fcfe, #eff8ff); /* new Webkit */
 	background-image: linear-gradient(top, #f7fcfe, #eff8ff); /* proposed W3C Markup */
-	border:1px dashed #d1e5ee;
+	border:1px dashed #d1e5ee;;
 }
+.frm_38_trigger #new_fields li.ui-state-default:hover, .frm_38_trigger #new_fields li.ui-state-default.selected, .frm_38_trigger .frm_update_msg{
+	background:#fbfbfb;
+	border:1px solid #ddd;
+	box-shadow:0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
 #new_fields li.ui-state-default.selected{
 	border-style:solid;
 	background-color: #e8eff4; /* Fallback */
@@ -452,6 +412,9 @@ span.howto{display:inline;}
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#eff8ff), to(#e8eff4)); /* old Webkit */
 	background-image: -webkit-linear-gradient(top, #eff8ff, #e8eff4); /* new Webkit */
 	background-image: linear-gradient(top, #eff8ff, #e8eff4); /* proposed W3C Markup */
+}
+.frm_38_trigger #new_fields li.ui-state-default.selected{
+	background:#fff;
 }
 
 .frm_email_actions.feature-filter{
