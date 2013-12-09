@@ -1,0 +1,32 @@
+@font-face {
+	font-family: 's11-fp';
+	src: url('../fonts/s11-fp.eot');
+	src: local('☺'), url('../fonts/s11-fp.woff') format('woff'), url('../fonts/s11-fp.ttf') format('truetype'), url('../fonts/s11-fp.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* dashboard icon */
+.frm_38_trigger #toplevel_page_formidable .wp-menu-image img{
+	display: none !important;
+}
+.frm_38_trigger #toplevel_page_formidable .wp-menu-image:before {
+	font-family: 's11-fp' !important; /* this assumes you've loaded Genericons in your admin */
+	content: '\e613'; /* replace this with your icon */
+	text-shadow: none;
+}
+
+/* media box button */
+.frm-buttons-icon{
+	display:inline-block;
+	height:16px;
+	margin:0 2px;
+	vertical-align:text-top;
+	width:16px;
+	background-position:left -30px;
+	background-size:15px 44px;
+}
+	
+.wp-media-buttons .frm_insert_form{padding-left:0.4em;}
+	
+	

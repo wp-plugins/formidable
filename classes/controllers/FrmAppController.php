@@ -55,6 +55,8 @@ class FrmAppController{
         }else if(current_user_can('frm_view_entries') and $frm_vars['pro_is_installed']){
             add_menu_page('Formidable', $frm_settings->menu, 'frm_view_entries', 'formidable', 'FrmProEntriesController::route', FrmAppHelper::plugin_url() .'/images/form_16.png', $pos);
         }
+        
+        add_filter('admin_body_class', 'FrmAppController::wp_admin_body_class');
     }
     
     public static function load_wp_admin_style(){
@@ -178,9 +180,17 @@ function frm_install_now(){
     
     public static function admin_body_class($classes){
         global $wp_version;
+        
+        //we only need this class on Formidable pages
         if(version_compare( $wp_version, '3.4.9', '>'))
             $classes .= ' frm_35_trigger';
-            
+        
+        return $classes;
+    }
+    
+    public static function wp_admin_body_class($classes){
+        global $wp_version;
+        //we need this class everywhere in the admin for the menu
         if(version_compare( $wp_version, '3.7.2', '>'))
             $classes .= ' frm_38_trigger';
         
