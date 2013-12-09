@@ -308,6 +308,9 @@ span.howto{display:inline;}
 	font-size:inherit;
 }
 
+.tagchecklist .frm_exclude_cat_list span{display:inline;}
+.frm_38_trigger .tagchecklist span a:before{line-height:23px;text-align:start;}
+
 .frm_scale{margin-right:10px; text-align:center; float:left;}
 .frm_form_fields div.rating-cancel, .frm_form_fields div.star-rating{
 	float:left;width:17px;height:15px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden;
@@ -373,12 +376,13 @@ span.howto{display:inline;}
 .frm_option_key_label, .frm_option_val_label{font-weight:bold;font-size:11px;}
 .edit_field_type_select .frm_option_val_label{margin-left:12px;}
 
-#form_reports_page #menu-management{}
+#menu-management.frm-menu-boxes{margin-top:30px;width:300px;float:left;margin-right:30px;}
+#menu-management.frm-menu-boxes .menu-edit{margin-bottom:0;}
 #menu-management select{max-width:100%;}
 .postbox .manage-menus{border-top:none;border-left:none;border-right:none;}
-.postbox .frm-help-tabs.inside, #poststuff .frm-help-tabs.inside{padding-left:0;margin-top:0;}
-.frm-help-tabs form > .submit{margin-left:154px;}
-.frm_38_trigger .frm-help-tabs form > .submit{padding-left:0.9em;}
+.postbox .frm-help-tabs.inside, #poststuff .frm-help-tabs.inside{padding-left:0;padding-right:0;margin-top:0;}
+.frm-help-tabs form > .submit, #contextual-help-columns > .submit{margin-left:154px;}
+.frm_38_trigger .frm-help-tabs form > .submit, .frm_38_trigger #contextual-help-columns > .submit{padding-left:0.9em;}
 #poststuff .contextual-help-tabs .active, #poststuff .contextual-help-tabs .active a, #poststuff .contextual-help-tabs .active a:hover{background:#fff;}
 .wrap .contextual-help-tabs ul{min-height:260px;}
 .postbox .menu-settings h3{border-bottom:none;}

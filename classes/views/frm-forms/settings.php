@@ -35,6 +35,8 @@
         <div class="categorydiv postbox">
         <h3 class="hndle"><span><?php echo FrmAppHelper::truncate($values['name'], 40) .' '. __('Settings', 'formidable') ?></span></h3>
         <div class="inside frm-help-tabs">
+        <div id="contextual-help-back"></div>
+        <div id="contextual-help-columns">
         <div class="contextual-help-tabs">
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?> frm-form-setting-tabs">
             <?php $a = isset($_GET['t']) ? $_GET['t'] : 'advanced_settings'; ?>
@@ -116,7 +118,7 @@
                 $first_email = false;
             } 
         if($frm_vars['pro_is_installed']){ ?>
-        <div id="frm_email_add_button" class="notification_settings hide_with_tabs" style="display:<?php echo ($a == 'notification_settings') ? 'block' : 'none'; ?>;margin-top:10px;margin-left:150px;">
+        <div id="frm_email_add_button" class="notification_settings hide_with_tabs submit" style="display:<?php echo ($a == 'notification_settings') ? 'block' : 'none'; ?>;">
             <a href="javascript:frmAddEmailList(<?php echo $values['id'] ?>)" class="button-secondary">+ <?php _e('Add Notification', 'formidable') ?></a></td>
         </div>
         <?php } ?>
@@ -167,6 +169,7 @@
     
         <?php do_action('frm_add_form_option_section', $values); ?>
         <div class="clear"></div>
+        </div>
         </div>
         </div>
         </div>

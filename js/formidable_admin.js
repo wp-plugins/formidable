@@ -253,6 +253,8 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 	return false;
 });
 
+$('#wpbody').on('click', '.frm_remove_tag', frm_remove_this_tag);
+
 //is export page
 if($('#frm_export_xml').length){
 $('input[name="frm_import_file"]').change(frmCheckCSVExtension);
@@ -428,6 +430,10 @@ function frmUpdateOpts(field_id,opts){
 		}
 		}
 	});	
+}
+
+function frm_remove_this_tag(){
+	jQuery('#'+jQuery(this).data('removeid')).remove();
 }
 
 function frm_remove_tag(html_tag){jQuery(html_tag).remove();}

@@ -3,8 +3,8 @@
     <h2><?php _e('Build New Form', 'formidable') ?></h2>
     
     <div class="clear"></div>
-    <div id="menu-management" class="nav-menus-php" style="margin-top:30px;">
-        <div class="menu-edit" style="width:300px;float:left;margin-right:30px;">
+    <div id="menu-management" class="nav-menus-php frm-menu-boxes">
+        <div class="menu-edit">
         <div id="nav-menu-header"><div class="major-publishing-actions" style="padding:8px 0;">
             <div style="font-size:15px;background:transparent;" class="search"><?php _e('Pre-Built Form', 'formidable') ?></div>
         </div></div>
@@ -27,8 +27,10 @@
             </div>
         </form>
         </div>
-        
-        <div class="menu-edit" style="width:300px;float:left;">
+    </div>
+    
+    <div id="menu-management" class="nav-menus-php frm-menu-boxes">
+        <div class="menu-edit">
         <div id="nav-menu-header"><div class="major-publishing-actions" style="padding:8px 0;">
             <div style="font-size:15px;background:transparent;" class="search"><?php _e('Blank Form', 'formidable') ?></div>
         </div></div>
@@ -49,4 +51,6 @@
         
         <div class="clear"></div>
     </div>
+    
+    <div class="clear"></div>
 </div>
