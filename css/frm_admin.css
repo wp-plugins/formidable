@@ -214,7 +214,7 @@ textarea.inplace_field{width:98% !important;}
 .frm_field_key{background-color:#F7F7F7;}
 .edit-slug-box{width:13em;max-width:30%;float:right;}
 .edit-slug-box{color:#777;}
-table td{vertical-align:top;}
+table td, .form-table tr td{vertical-align:top;}
 
 .frm_rte{background:url(../images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
@@ -324,10 +324,11 @@ span.howto{display:inline;}
 #frm_form_editor_container .ui-state-default{color:#333;}
 #frm_form_editor_container .ui-state-default a.frm_orange, #postbox-container-1 a.frm_orange{color:#D54E21;}
 
+
 #new_fields .widget, .frm_settings_page .widget{background:#fff;}
 #new_fields .widget-title h4{font-weight:normal;}
 #new_fields .widget, #postbox-container-1 .widget, .frm_settings_page .widget{margin-bottom:0;}
-.frm_settings_page .widget-inside{padding-top:0;padding-bottom:10px;}
+.frm_settings_page .widget-inside{padding:0 10px 10px;}
 #new_fields .widget, .widget-inside{display: none;}
 #new_fields li.ui-state-default.selected .widget{display:block;}
 #new_fields .form-field .widget{ display:none;}
@@ -351,7 +352,8 @@ span.howto{display:inline;}
 .frm_validation_msg p label{float:left;width:25%;max-width:100px;}
 #new_fields .form-field .widget .frm_validation_msg input{width:71%;}
 .frm_inline_label{padding-left:3px;}
-.frm_left_label{clear:both;float:left;width:170px;}
+.frm_left_label{clear:both;float:left;width:23%;min-width:170px;}
+.frm_left_label.frm_alignright{padding-right:10px;text-align:right;}
 #html_settings label{display:block;}
 
 .frm-category-tabs a{outline:none;}
@@ -368,8 +370,17 @@ span.howto{display:inline;}
 .frm_option_key_label, .frm_option_val_label{font-weight:bold;font-size:11px;}
 .edit_field_type_select .frm_option_val_label{margin-left:12px;}
 
-.postbox .frm-help-tabs{padding-left:0;margin-left:-4px !important;}
+#form_reports_page #menu-management{}
+#menu-management select{max-width:100%;}
+.postbox .frm-help-tabs.inside, #poststuff .frm-help-tabs.inside{padding-left:0;margin-top:0;}
 .frm-help-tabs form > .submit{margin-left:154px;}
+.frm_38_trigger .frm-help-tabs form > .submit{padding-left:0.9em;}
+#poststuff .contextual-help-tabs .active, #poststuff .contextual-help-tabs .active a, #poststuff .contextual-help-tabs .active a:hover{background:#fff;}
+.wrap .contextual-help-tabs ul{min-height:260px;}
+.postbox .menu-settings h3{border-bottom:none;}
+.postbox #contextual-help-back{border-right:none;right:0;background:#fff;}
+#contextual-help-columns div.tabs-panel{background:transparent;border:none;}
+
 #postbox-container-1 .ui-state-default{color:#000;}
 #new_fields li.ui-state-default:hover, #new_fields li.ui-state-default.selected, .frm_update_msg{
 	padding:5px;
@@ -409,7 +420,7 @@ span.howto{display:inline;}
 #frm-insert-fields-box .frm_update_msg{margin-right:0.9em;}
 .frm_update_msg a{font-weight:bold;}
 .widefat td{width:auto;}
-.widefat .column-id{width:3.2em;}
+.widefat .column-id{width:3.7em;}
 .widefat .column-show_count{width:5em;}
 .widefat .column-shortcode{width:9em;}
 .widefat .column-entries, .widefat .column-link{width:10%;text-align:center;}
@@ -467,8 +478,6 @@ ul .frm_col_two{float:right;}
 .frm_code_list a.button{display:block;text-align:center;}
 iframe#dyncontent_ifr{min-height:150px;}
 #frm-insert-fields-box ul.frm_code_list, #frm-conditionals ul.frm_code_list{padding-right:0.9em;}
-
-.wrap .contextual-help-tabs ul{min-height:260px;}
 
 #message.fade:not(.out){opacity:1;}
 
@@ -562,7 +571,7 @@ iframe#dyncontent_ifr{min-height:150px;}
 
 /*form inputs/selects */
 .widget input.hex, .field-group input[type="text"]{
-	width: 95%;
+	width: 97%;
 	outline: 0;
 }
 .global-font .field-group input[type="text"]{width:auto;}

@@ -10,6 +10,8 @@
         <div class="categorydiv postbox">
         <h3 class="hndle"><span><?php _e('Global Settings', 'formidable') ?></span></h3>
         <div class="inside frm-help-tabs">
+        <div id="contextual-help-back"></div>
+        <div id="contextual-help-columns">
         <div class="contextual-help-tabs">
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs id="category-tabs'; ?>">
             <?php $a = isset($_GET['t']) ? $_GET['t'] : 'general_settings'; ?>
@@ -106,36 +108,29 @@
                 <td><?php _e('reCAPTCHA', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" />
                 </td>
             	<td>
-        			reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create">free reCAPTCHA key</a>.
-        			<br/>
+        			<p class="howto">reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create">free reCAPTCHA key</a>.</p>
         			
-        				<!-- reCAPTCHA public key -->
-        				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Public Key', 'formidable') ?></label>
-        				<input type="text" name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" />
-        				<br/>
-        				<!-- reCAPTCHA private key -->
-        				<label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('Private Key', 'formidable') ?></label>
-        				<input type="text" name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" />
-        			
-            	</td>
-            </tr>
+        			<!-- reCAPTCHA public key -->
+        			<p><label class="frm_left_label frm_alignright"><?php _e('Public Key', 'formidable') ?></label>
+        			<input type="text" name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" /></p>
+        				
+        			<!-- reCAPTCHA private key -->
+        			<p><label class="frm_left_label frm_alignright"><?php _e('Private Key', 'formidable') ?></label>
+        			<input type="text" name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" /></p>
 
-            <tr class="form-field">
-            	<td></td>
-            	<td>
-        		    <label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
+        		    <p><label class="frm_left_label frm_alignright"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
         			<select name="frm_re_theme" id="frm_re_theme">
         			<?php foreach(array('red' => __('Red', 'formidable'), 'white' => __('White', 'formidable'), 'blackglass' => __('Black Glass', 'formidable'), 'clean' => __('Clean', 'formidable')) as $theme_value => $theme_name){ ?>
         			<option value="<?php echo esc_attr($theme_value) ?>" <?php selected($frm_settings->re_theme, $theme_value) ?>><?php echo $theme_name ?></option>
         			<?php } ?>
-        			</select><br/>
+        			</select></p>
             		
-    			    <label style="width:135px;float:left;text-align:right;padding-right:10px;"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
+    			    <p><label class="frm_left_label frm_alignright"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
     				<select name="frm_re_lang" id="frm_re_lang">
     				    <?php foreach(array('en' => __('English', 'formidable'), 'nl' => __('Dutch', 'formidable'), 'fr' => __('French', 'formidable'), 'de' => __('German', 'formidable'), 'pt' => __('Portuguese', 'formidable'), 'ru' => __('Russian', 'formidable'), 'es' => __('Spanish', 'formidable'), 'tr' => __('Turkish', 'formidable')) as $lang => $lang_name){ ?>
         				<option value="<?php echo esc_attr($lang) ?>" <?php selected($frm_settings->re_lang, $lang) ?>><?php echo $lang_name ?></option>
                         <?php } ?>
-                    </select>
+                    </select></p>
                 </td>
             </tr>    
             
@@ -235,6 +230,7 @@
         </p>
 
     </form>
+    </div>
     </div>
     </div>
     </div>

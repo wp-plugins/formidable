@@ -181,6 +181,9 @@ function frm_install_now(){
         global $wp_version;
         if(version_compare( $wp_version, '3.4.9', '>'))
             $classes .= ' frm_35_trigger';
+            
+        if(version_compare( $wp_version, '3.7.2', '>'))
+            $classes .= ' frm_38_trigger';
         
         return $classes;
     }
