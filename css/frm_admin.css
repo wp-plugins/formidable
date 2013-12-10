@@ -59,6 +59,7 @@ ul.frm_form_nav li.last > a{
 .post-new-php.post-type-frm_display #poststuff {padding-top:10px;}
 .wp-admin .frm_forms.with_frm_style{max-width:100%;}
 .wp-admin .with_frm_style form label.frm_primary_label{font-size:12px;color:#444;font-weight:bold;text-align:left;margin:0;padding:0;width:auto;display:block;max-width:90%;min-height:20px;}
+form label.frm_primary_label input{font-size:12px;}
 .wp-admin .with_frm_style form .form-field{margin-bottom:20px;}
 .wp-admin .with_frm_style form div.description, .wp-admin .frm_error{margin:0;padding:0;font-family:"Lucida Grande","Lucida Sans Unicode",Tahoma,sans-serif;font-size:11px;color:#666;font-weight:normal;text-align:left;font-style:normal;}
 .wp-admin .frm_error{color:#B94A48;}
@@ -104,8 +105,6 @@ ul.frm_form_nav li.last > a{
 .wp-admin .frm_catlevel_2, .wp-admin .frm_catlevel_3, .wp-admin .frm_catlevel_4, .wp-admin .frm_catlevel_5{margin-left:18px;}
 .wp-admin .frm_form_fields input.auto_width, .wp-admin .frm_form_fields select.auto_width, .wp-admin .frm_form_fields textarea.auto_width{width:auto;}
 .frm_set_select select, .frm_set_select select.auto_width{width:100%;}
-.wp-admin .frm_form_fields input:focus, .wp-admin .frm_form_fields select:focus, 
-.wp-admin .frm_form_fields textarea:focus, .wp-admin .frm_focus_field input{background-color:#fff;border-color:#ddd;}
 
 .wp-admin .frm_radio, .wp-admin .frm_checkbox{display:block;}
 .wp-admin .frm_radio label, .wp-admin .frm_checkbox label{font-family:Verdana,Arial,sans-serif;font-size:12px;color:#302c3f;font-weight:normal;display:inline;}
@@ -145,15 +144,7 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 #wpbody-content #form_views_page .icon32, #wpbody-content .icon32-posts-frm_display {background-position: -173px 0 !important;}
 #wpbody-content #form_reports_page .icon32 {background-position: -230px 0 !important;}
 #wpbody-content #form_global_settings .frmicon.icon32 {background-position: -290px 0 !important;}
-@media print,
-  (-o-min-device-pixel-ratio: 5/4),
-  (-webkit-min-device-pixel-ratio: 1.25),
-  (min-resolution: 120dpi)  { 
-			#wpbody-content .frmicon.icon32, .icon32-posts-frm_display {
-				background: url(../images/form_32_sprite-2x.png) no-repeat !important;
-				background-size: 325px 33px !important;
-		}
-		}
+
 .frm_postbox_icon {
 	margin: -6px 0 0 -10px; 
 
@@ -375,6 +366,7 @@ span.howto{display:inline;}
 }
 .frm_validation_msg p label{float:left;width:25%;max-width:100px;}
 #new_fields .form-field .widget .frm_validation_msg input{width:71%;}
+#new_fields.frm_no_fields{background:url(../images/new_build_bg.png) no-repeat 92% center;}
 .frm_38_trigger #new_fields .widget-inside .form-table td,
 .frm_38_trigger #new_fields .widget-inside .form-table td p,
 .frm_38_trigger #new_fields .widget-inside .form-wrap label{font-size:12px;padding:10px}
@@ -421,10 +413,6 @@ span.howto{display:inline;}
 	background-image: -webkit-linear-gradient(top, #f7fcfe, #eff8ff); /* new Webkit */
 	background-image: linear-gradient(top, #f7fcfe, #eff8ff); /* proposed W3C Markup */
 	border:1px dashed #d1e5ee;
-}
-.frm_38_trigger #new_fields li.ui-state-default:hover, .frm_38_trigger .frm_update_msg{
-	background:#fbfbfb;
-	border:1px solid #ddd;
 }
 
 .frm_38_trigger #new_fields li.ui-state-default:hover, .frm_38_trigger #new_fields li.ui-state-default.selected, .frm_38_trigger .frm_update_msg{
@@ -751,6 +739,18 @@ Clearfix
 #postbox-container-1 .frm_field_list{position:static; width:100%;}
 .frm_col_one{clear:none;}
 .field_type_list li{margin-right:4px;}
+}
+
+@media print,
+  (-o-min-device-pixel-ratio: 5/4),
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi)  { 
+		#wpbody-content .frmicon.icon32, .icon32-posts-frm_display {
+			background: url(../images/form_32_sprite-2x.png) no-repeat !important;
+			background-size: 325px 33px !important;
+		}
+		
+		#new_fields.frm_no_fields{background-image:url(../images/new_build_bg-2x.png);}
 }
 
 /* PRINT */

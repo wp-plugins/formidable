@@ -27,7 +27,6 @@
     	</ul>
 
     	<div id="frm-insert-fields" class="tabs-panel" style="max-height:none;overflow:visible;">
-    	    <p class="howto"><?php _e('Click or drag to add a field into your form', 'formidable') ?></p>
 			<ul class="field_type_list">
             <?php 
             $col_class = 'frm_col_one';

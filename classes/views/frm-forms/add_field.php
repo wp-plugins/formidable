@@ -44,13 +44,13 @@ $display = apply_filters('frm_display_field_options', array(
         <a class="frm_req_field frm_action_icon frm_required_icon alignleft frm_required<?php echo (int)$field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
-    <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_label_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>
+    <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_label_<?php echo $field['id']; ?>"><?php echo force_balance_tags($field['name']) ?></label>
 
 <div class="frm_form_fields" data-ftype="<?php echo $display['type'] ?>"> 
 <?php if ($display['type'] == 'text'){ ?>
     <input type="text" name="<?php echo $field_name ?>" id="field_<?php echo $field['field_key'] ?>" value="<?php echo esc_attr($field['default_value']); ?>" <?php echo (isset($field['size']) && $field['size']) ? 'style="width:auto" size="'. $field['size'] .'"' : ''; ?> class="dyn_default_value" /> 
 <?php }else if ($field['type'] == 'textarea'){ ?>
-    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'. $field['size'] .'"' ?> rows="<?php echo $field['max']; ?>" id="field_<?php echo $field['field_key'] ?>" class="dyn_default_value"><?php echo FrmAppHelper::esc_textarea($field['default_value']); ?></textarea> 
+    <textarea name="<?php echo $field_name ?>"<?php if ($field['size']) echo ' style="width:auto" cols="'. $field['size'] .'"' ?> rows="<?php echo $field['max']; ?>" id="field_<?php echo $field['field_key'] ?>" class="dyn_default_value"><?php echo FrmAppHelper::esc_textarea(force_balance_tags($field['default_value'])); ?></textarea> 
   
 <?php 
 
@@ -155,7 +155,7 @@ if ($display['default_blank'])
 </div>
 <?php
 if ($display['description']){ ?> 
-    <div class="frm_ipe_field_desc description frm-show-click" id="field_description_<?php echo $field['id']; ?>"><?php echo ($field['description'] == '') ? __('(Click here to add a description or instructions)', 'formidable') : $field['description']; ?></div> 
+    <div class="frm_ipe_field_desc description frm-show-click" id="field_description_<?php echo $field['id']; ?>"><?php echo ($field['description'] == '') ? __('(Click here to add a description or instructions)', 'formidable') : force_balance_tags($field['description']); ?></div> 
 <?php
 }
 

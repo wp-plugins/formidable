@@ -28,6 +28,7 @@ $('#new_fields').sortable({
         jQuery.ajax({
             type:"POST",url:ajaxurl,data:"action=frm_insert_field&form_id="+$('input[name="id"]').val()+"&field="+new_id,
             success:function(msg){ 
+				$('#new_fields').removeClass('frm_no_fields');
                 $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);
                 var regex = /id="(\S+)"/; match=regex.exec(msg);
                 $('#'+match[1]+' .frm_ipe_field_label').mouseover().click();
@@ -266,7 +267,7 @@ function frmClickTab(t, link){
 	var c = t.replace('#', '.');
 	var pro=jQuery('#taxonomy-linkcategory .frm-category-tabs li').length > 2;
 	link.closest('li').addClass('tabs active').siblings('li').removeClass('tabs active');
-	if(link.closest('div').find('.tabs-panel').length>0) link.closest('div').children('.tabs-panel').hide();
+	if(link.closest('div').find('.tabs-panel').length) link.closest('div').children('.tabs-panel').hide();
 	else{link.closest('div.inside').find('.tabs-panel, .hide_with_tabs').hide();
 	if(link.closest('ul').hasClass('frm-form-setting-tabs')){
 		if(t=='#html_settings'){
@@ -390,7 +391,7 @@ jQuery(this).editInPlace({
 function frmSetIPELabel(){
 jQuery(this).editInPlace({
 	url:ajaxurl,params:'action=frm_field_name_in_place_edit',
-	value_required:"true"
+	value_required:'true'
 });
 }
 
@@ -497,7 +498,7 @@ if(f){
 
 function add_frm_field_link(form_id,field_type){
 jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
-success:function(msg){jQuery('#new_fields').append(msg); jQuery('#new_fields li:last .frm_ipe_field_label').mouseover().click();}
+success:function(msg){jQuery('#new_fields').removeClass('frm_no_fields').append(msg); jQuery('#new_fields li:last .frm_ipe_field_label').mouseover().click();}
 });
 };
 
@@ -626,7 +627,12 @@ function frm_delete_field(field_id){
 	jQuery.ajax({
         type:"POST",url:ajaxurl,
         data:"action=frm_delete_field&field_id="+field_id,
-        success:function(msg){jQuery("#frm_field_id_"+field_id).fadeOut("slow");}
+        success:function(msg){
+			jQuery('#frm_field_id_'+field_id).fadeOut('slow', function(){
+				jQuery('#frm_field_id_'+field_id).remove();
+				if(jQuery('#new_fields li').length === 0) jQuery('#new_fields').addClass('frm_no_fields');
+			});
+		}
     });
     }
 };

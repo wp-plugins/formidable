@@ -8,19 +8,19 @@
         <strong><?php _e('Form Key:', 'formidable') ?></strong>
         <div id="editable-post-name" class="frm_ipe_form_key" title="<?php _e('Click to edit.', 'formidable') ?>"><?php echo $values['form_key']; ?></div>
         </div>
-        <div class="frm_ipe_form_desc alignleft" style="width:70%"><?php echo ($values['description'] == '') ? __('(Click here to add a description or instructions)', 'formidable') : $values['description']; ?></div>
+        <div class="frm_ipe_form_desc alignleft" style="width:70%"><?php echo ($values['description'] == '') ? __('(Click here to add a description or instructions)', 'formidable') : force_balance_tags($values['description']); ?></div>
         <div style="clear:both"></div>
     </div>
 </div>
 
 <div <?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'class="postbox"' : ''; ?>>
-<ul id="new_fields" <?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'class="inside"' : ''; ?>>
+<ul id="new_fields" class="<?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'inside' : ''; echo ( isset($values['fields']) and !empty($values['fields'])) ? '' : ' frm_no_fields'; ?>">
 <?php
-if (isset($values['fields']) && !empty($values['fields'])){
+if (isset($values['fields']) and !empty($values['fields'])){
     $count = 0;
     foreach($values['fields'] as $field){
         $count++;
-        $field_name = "item_meta[". $field['id'] ."]";
+        $field_name = 'item_meta['. $field['id'] .']';
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php');
         unset($field);
         unset($field_name);
