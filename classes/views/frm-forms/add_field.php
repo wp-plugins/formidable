@@ -41,7 +41,7 @@ $display = apply_filters('frm_display_field_options', array(
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a href="javascript:void(0)" class="frm_req_field frm_action_icon frm_required_icon alignleft frm_required<?php echo (int)$field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
+        <a class="frm_req_field frm_action_icon frm_required_icon alignleft frm_required<?php echo (int)$field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_label_<?php echo $field['id']; ?>"><?php echo $field['name'] ?></label>

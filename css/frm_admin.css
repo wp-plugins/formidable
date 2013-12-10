@@ -123,6 +123,7 @@ img.frm_help{margin-left:2px;vertical-align:middle;padding-bottom:2px;}
 .frm-loading-img{background:url(../images/ajax_loader.gif) no-repeat center center;padding:6px 12px;visibility:hidden;}
 
 label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;}
+.frm_38_trigger label input[type="checkbox"], .frm_38_trigger label input[type="radio"] {vertical-align:inherit;}
 
 #editorcontainer #dyncontent{
 	margin:0; width:100%;
@@ -280,15 +281,28 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 .frm_email_reply_container select{width:150px;}
 .frm_email_reply_container input{width:150px;}
 
-.frm_action_icon{width:14px; height:14px; background:url(../images/icons.png) no-repeat;display:block;float:left;margin-left:4px;}
+.frm_action_icon{
+	font-family: 's11-fp' !important;
+	text-decoration:none;
+	text-shadow: none;
+	float:left;
+	margin-left:4px;
+	color:#a7a7a7;
+}
 span.frm_action_icon{margin:0 4px 0 0;}
-.frm_error_icon,.frm_reload_icon{margin-top:5px;}
-.frm_inactive_icon.frm_action_icon.frm_error_icon{background-position:0 -15px;}
-.frm_action_icon.frm_reload_icon{background-position:-15px 0; width:25px;}
-.frm_inactive_icon.frm_action_icon.frm_reload_icon{background-position:-15px -14px;}
-.frm_action_icon.frm_required_icon{background-position:-42px 0;margin:0;}
-.frm_inactive_icon.frm_action_icon.frm_required_icon, .frm_action_icon.frm_required0{background-position:-42px -14px;}
 .frm_action_icon:active {outline:none;}
+a.frm_action_icon:hover {text-decoration:none;}
+.frm_error_icon:hover,.frm_reload_icon:hover {color:#b7b7b7;}
+.frm_error_icon,.frm_reload_icon{margin-top:5px;}
+.frm_action_icon.frm_error_icon:before{content: '\e60f';}
+.frm_inactive_icon.frm_action_icon.frm_error_icon:before{content: '\e60e';}
+.frm_action_icon.frm_reload_icon:before{content: '\e616';}
+.frm_inactive_icon.frm_action_icon.frm_reload_icon:before{content: '\e615';}
+
+.frm_action_icon.frm_required_icon:before{content: '\e612'; font-size:8px; vertical-align:top; line-height: 2.1em; margin-right:3px;}
+.frm_action_icon.frm_required_icon {color:#000;}
+.frm_inactive_icon.frm_action_icon.frm_required_icon, .frm_action_icon.frm_required0{color:#ababab;}
+
 .frm-hover-icon{padding-left:5px;}
 .frm-move.frm-hover-icon{padding-left:3px;}
 .frm-move{cursor:move;}
