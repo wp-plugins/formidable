@@ -91,12 +91,14 @@ form label.frm_primary_label input{font-size:12px;}
 .pull-right>.frm-dropdown-menu{right:0;left:auto;}
 .navbar-fixed-bottom .dropdown .caret{border-top:0 dotted;border-bottom:4px solid #000000;content:"";}
 .navbar-fixed-bottom .dropdown .frm-dropdown-menu{top:auto;bottom:100%;margin-bottom:1px;}
-@media (min-width:768px){.navbar-right .frm-dropdown-menu{right:0;left:auto;}}
 
 .wp-admin .frm_scale{margin-right:10px;text-align:center;float:left;}
 .wp-admin .frm_scale input{display:block;margin-bottom:5px;}
 .frm_form_fields:not(.frm_sample_form) input, .wp-admin .frm_form_fields:not(.frm_sample_form) select, .wp-admin .frm_form_fields:not(.frm_sample_form) textarea{
 	font-size:13px;margin-bottom:0;width:400px;max-width:100%;
+	color:#222;
+	background-color:#fafafa;
+	border:solid 1px #dfdfdf;
 }
 .wp-admin .frm_form_fields textarea.wp-editor-area{width:100%;border:none;}
 .wp-admin .frm_form_fields input[type="file"]{background:transparent;border:none;}
@@ -105,12 +107,13 @@ form label.frm_primary_label input{font-size:12px;}
 .wp-admin .frm_catlevel_2, .wp-admin .frm_catlevel_3, .wp-admin .frm_catlevel_4, .wp-admin .frm_catlevel_5{margin-left:18px;}
 .wp-admin .frm_form_fields input.auto_width, .wp-admin .frm_form_fields select.auto_width, .wp-admin .frm_form_fields textarea.auto_width{width:auto;}
 .frm_set_select select, .frm_set_select select.auto_width{width:100%;}
+.wp-admin .frm_form_fields input:focus, .wp-admin .frm_form_fields select:focus, 
+.wp-admin .frm_form_fields textarea:focus, .wp-admin .frm_focus_field input{background-color:#fff;border-color:#ddd;}	
 
 .wp-admin .frm_radio, .wp-admin .frm_checkbox{display:block;}
 .wp-admin .frm_radio label, .wp-admin .frm_checkbox label{font-family:Verdana,Arial,sans-serif;font-size:12px;color:#302c3f;font-weight:normal;display:inline;}
 .wp-admin .frm_radio input[type="radio"], .wp-admin .frm_checkbox input[type="checkbox"]{margin-right:5px;width:auto;}
 .wp-admin input[type="radio"], .wp-admin input[type="checkbox"]{width:auto;}
-.with_frm_style input.required, .with_frm_style textarea.required, .with_frm_style select.required{color:inherit;}
 
 .frm_form_fields div.star{height:auto;left:auto;top:auto;letter-spacing:auto;position:static;}
 .frm_form_fields div.star a, .frm_form_fields div.star a:hover, .frm_form_fields div.star a:visited{position:static;right:auto;}
@@ -178,6 +181,7 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 }
 
 .frm_white_bg{background-color:#fff;}
+.frm_border_light{border:solid 1px #ddd;}
 
 .form-table .form-field input, .form-table .form-field .quicktags-toolbar input,
 .form-field input, .form-field textarea, .form-field .quicktags-toolbar input{width:auto;}
@@ -396,10 +400,10 @@ span.howto{display:inline;}
 .postbox .frm-help-tabs.inside, #poststuff .frm-help-tabs.inside{padding-left:0;padding-right:0;margin-top:0;}
 .frm-help-tabs form > .submit, #contextual-help-columns > .submit{margin-left:154px;}
 .frm_38_trigger .frm-help-tabs form > .submit, .frm_38_trigger #contextual-help-columns > .submit{padding-left:0.9em;}
-#poststuff .contextual-help-tabs .active, #poststuff .contextual-help-tabs .active a, #poststuff .contextual-help-tabs .active a:hover{background:#fff;}
+#poststuff .contextual-help-tabs .active, #poststuff .contextual-help-tabs .active a, #poststuff .contextual-help-tabs .active a:hover{background:#fafafa;}
 .wrap .contextual-help-tabs ul{min-height:260px;}
 .postbox .menu-settings h3{border-bottom:none;}
-.postbox #contextual-help-back{border-right:none;right:0;background:#fff;}
+.postbox #contextual-help-back{border-right:none;right:0;background:#fafafa;}
 #contextual-help-columns div.tabs-panel{background:transparent;border:none;}
 
 #postbox-container-1 .ui-state-default{color:#000;}
@@ -734,13 +738,12 @@ Clearfix
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
-
+@media (min-width:768px){.navbar-right .frm-dropdown-menu{right:0;left:auto;}}
 @media only screen and (max-width: 850px) {
 #postbox-container-1 .frm_field_list{position:static; width:100%;}
 .frm_col_one{clear:none;}
 .field_type_list li{margin-right:4px;}
 }
-
 @media print,
   (-o-min-device-pixel-ratio: 5/4),
   (-webkit-min-device-pixel-ratio: 1.25),
@@ -750,7 +753,7 @@ Clearfix
 			background-size: 325px 33px !important;
 		}
 		
-		#new_fields.frm_no_fields{background-image:url(../images/new_build_bg-2x.png);}
+		#new_fields.frm_no_fields{background-image:url(../images/new_build_bg-2x.png); background-size:617px 412px;}
 }
 
 /* PRINT */
