@@ -16,9 +16,8 @@
         <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs id="category-tabs'; ?>">
             <?php $a = isset($_GET['t']) ? $_GET['t'] : 'general_settings'; ?>
         	<li <?php echo ($a == 'general_settings') ? 'class="tabs active"' : '' ?>><a href="#general_settings" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
-            <li <?php echo ($a == 'styling_settings') ? 'class="tabs active"' : '' ?>><a href="#styling_settings" style="cursor:pointer"><?php _e('Form Styling', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>
-                <li <?php echo ($a == $sec_name .'_settings') ? 'class="tabs active"' : '' ?>><a href="#<?php echo $sec_name ?>_settings"><?php echo ucfirst($sec_name) ?></a></li>
+                <li <?php echo ($a == $sec_name .'_settings') ? 'class="tabs active"' : '' ?>><a href="#<?php echo $sec_name ?>_settings"><?php echo isset($section['name']) ? $section['name'] : ucfirst($sec_name) ?></a></li>
             <?php } ?>
         </ul>
         </div>
@@ -48,22 +47,9 @@
             <input class="button-primary" type="submit" value="<?php _e('Update Options', 'formidable') ?>" />
             </p>
             
-            <p><label class="frm_left_label"><?php _e('Admin menu label', 'formidable'); ?></label>
-                <input type="text" name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
-                <?php if (is_multisite() and is_super_admin()){ ?>
-                <label for="frm_mu_menu"><input type="checkbox" name="frm_mu_menu" id="frm_mu_menu" value="1" <?php checked($frm_settings->mu_menu, 1) ?> /> <?php _e('Use this menu name site-wide', 'formidable'); ?></label>
-                <?php } ?>
-            </p>
             
-            <p><label class="frm_left_label"><?php _e('Preview Page', 'formidable'); ?></label>
-            <?php FrmAppHelper::wp_pages_dropdown('frm-preview-page-id', $frm_settings->preview_page_id ) ?>
-            </p>
-            
-            <p><label class="frm_left_label"><?php _e('Tracking', 'formidable'); ?></label>
-                <label for="frm_track"><input type="checkbox" id="frm_track" name="frm_track" value="1" <?php checked($frm_settings->track, 1) ?>> <?php _e('Track referrer information and pages visited', 'formidable') ?></label>
-            </p>
-            
-            <h3><?php _e('Styling', 'formidable'); ?></h3>
+            <div class="menu-settings">
+            <h3 class="frm_no_bg"><?php _e('Styling & Scripts', 'formidable'); ?></h3>
                 
             <p><?php _e('Load Formidable styling', 'formidable') ?>
                 <select id="frm_load_style" name="frm_load_style">
@@ -77,84 +63,101 @@
             </p>
             
             <?php do_action('frm_style_general_settings', $frm_settings); ?>
-            
+            </div>
         
-            <h3><?php _e('User Permissions', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Select users that are allowed access to Formidable. Without access to View Forms, users will be unable to see the Formidable menu.', 'formidable') ?>" /></h3>
-            <?php foreach($frm_roles as $frm_role => $frm_role_description){ ?>
-                <label class="frm_left_label frm_alignright"><?php echo $frm_role_description ?></label> <?php FrmAppHelper::wp_roles_dropdown( $frm_role, $frm_settings->$frm_role ) ?>
-                <div class="clear"></div>
-            <?php } ?>
+            <div class="menu-settings">
+            <h3 class="frm_no_bg"><?php _e('User Permissions', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Select users that are allowed access to Formidable. Without access to View Forms, users will be unable to see the Formidable menu.', 'formidable') ?>" /></h3>
+            <p><?php foreach($frm_roles as $frm_role => $frm_role_description){ ?>
+                <label class="frm_left_label"><?php echo $frm_role_description ?></label> <?php FrmAppHelper::wp_roles_dropdown( $frm_role, $frm_settings->$frm_role ) ?>
+                <span class="clear"></span>
+            <?php } ?></p>
+            </div>
             
-            <h3><?php _e('reCAPTCHA', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" /></h3>
+            <div class="menu-settings">
+            <h3 class="frm_no_bg"><?php _e('reCAPTCHA', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" /></h3>
             
             <p class="howto">reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create">free reCAPTCHA key</a>.</p>
 			
 			<!-- reCAPTCHA public key -->
-			<p><label class="frm_left_label frm_alignright"><?php _e('Public Key', 'formidable') ?></label>
+			<p><label class="frm_left_label"><?php _e('Public Key', 'formidable') ?></label>
 			<input type="text" name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" /></p>
 				
 			<!-- reCAPTCHA private key -->
-			<p><label class="frm_left_label frm_alignright"><?php _e('Private Key', 'formidable') ?></label>
+			<p><label class="frm_left_label"><?php _e('Private Key', 'formidable') ?></label>
 			<input type="text" name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" /></p>
 
-		    <p><label class="frm_left_label frm_alignright"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
+		    <p><label class="frm_left_label"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
 			<select name="frm_re_theme" id="frm_re_theme">
 			<?php foreach(array('red' => __('Red', 'formidable'), 'white' => __('White', 'formidable'), 'blackglass' => __('Black Glass', 'formidable'), 'clean' => __('Clean', 'formidable')) as $theme_value => $theme_name){ ?>
 			<option value="<?php echo esc_attr($theme_value) ?>" <?php selected($frm_settings->re_theme, $theme_value) ?>><?php echo $theme_name ?></option>
 			<?php } ?>
 			</select></p>
     		
-		    <p><label class="frm_left_label frm_alignright"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
+		    <p><label class="frm_left_label"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
 			<select name="frm_re_lang" id="frm_re_lang">
 			    <?php foreach(array('en' => __('English', 'formidable'), 'nl' => __('Dutch', 'formidable'), 'fr' => __('French', 'formidable'), 'de' => __('German', 'formidable'), 'pt' => __('Portuguese', 'formidable'), 'ru' => __('Russian', 'formidable'), 'es' => __('Spanish', 'formidable'), 'tr' => __('Turkish', 'formidable')) as $lang => $lang_name){ ?>
 				<option value="<?php echo esc_attr($lang) ?>" <?php selected($frm_settings->re_lang, $lang) ?>><?php echo $lang_name ?></option>
                 <?php } ?>
             </select></p>
+            </div>
             
-            <h3><?php _e('Default Messages', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></h3>
+            <div class="menu-settings">
+            <h3 class="frm_no_bg"><?php _e('Default Messages', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" /></h3>
             
-            <p><label><?php _e('Blank Field', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a required field is left blank.', 'formidable') ?>" /></label><br/>
-            <input type="text" id="frm_blank_msg" name="frm_blank_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->blank_msg) ?>" /></p>
+            <p><label class="frm_left_label"><?php _e('Blank Field', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a required field is left blank.', 'formidable') ?>" /></label>
+            <input type="text" id="frm_blank_msg" name="frm_blank_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->blank_msg) ?>" /></p>
 
-            <p><label><?php _e('Incorrect Field', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a field response is either incorrect or missing.', 'formidable') ?>" /></label><br/>
-            <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->invalid_msg) ?>" /></p>
+            <p><label class="frm_left_label"><?php _e('Incorrect Field', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a field response is either incorrect or missing.', 'formidable') ?>" /></label><br/>
+            <input type="text" id="frm_invalid_msg" name="frm_invalid_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->invalid_msg) ?>" /></p>
 
 <?php if($frm_vars['pro_is_installed']){ ?>       
-            <p><label><?php _e('Unique Value', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user selects a value in a unique field that has already been used.', 'formidable') ?>" /></label><br/>
-            <input type="text" id="frm_unique_msg" name="frm_unique_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" /></p>
+            <p><label class="frm_left_label"><?php _e('Unique Value', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user selects a value in a unique field that has already been used.', 'formidable') ?>" /></label><br/>
+            <input type="text" id="frm_unique_msg" name="frm_unique_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" /></p>
 <?php }else{ ?>
     <input type="hidden" id="frm_unique_msg" name="frm_unique_msg" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" />    
 <?php } ?>    
 
-            <p><label><?php _e('Success Message', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" /></label><br/>
-            <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->success_msg) ?>" /></p>
+            <p><label class="frm_left_label"><?php _e('Success Message', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" /></label><br/>
+            <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->success_msg) ?>" /></p>
 
-            <p><label><?php _e('Failed or Duplicate Entry Message', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong.', 'formidable') ?>" /></label><br/>
-            <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->failed_msg) ?>" /></p>
+            <p><label class="frm_left_label"><?php _e('Failed or Duplicate Entry Message', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong.', 'formidable') ?>" /></label><br/>
+            <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->failed_msg) ?>" /></p>
 
-        <p><label><?php _e('Login Message', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', 'formidable') ?>" /></label><br/>
-            <input type="text" id="frm_login_msg" name="frm_login_msg" class="frm_long_input" value="<?php echo esc_attr($frm_settings->login_msg) ?>" /></p>
+        <p><label class="frm_left_label"><?php _e('Login Message', 'formidable'); ?> <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', 'formidable') ?>" /></label><br/>
+            <input type="text" id="frm_login_msg" name="frm_login_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->login_msg) ?>" /></p>
 
-        <p><label><?php _e('Default Submit Button', 'formidable'); ?></label><br/>
-            <input type="text" value="<?php echo esc_attr($frm_settings->submit_value) ?>" id="frm_submit_value" name="frm_submit_value" class="frm_long_input" /></p>
+        <p><label class="frm_left_label"><?php _e('Default Submit Button', 'formidable'); ?></label><br/>
+            <input type="text" value="<?php echo esc_attr($frm_settings->submit_value) ?>" id="frm_submit_value" name="frm_submit_value" class="frm_with_left_label" /></p>
+        </div>
         
         <?php do_action('frm_settings_form', $frm_settings); ?>
-    </div>  
-    
+        
         <?php if(!$frm_vars['pro_is_installed']){ ?>
-            <div class="styling_settings tabs-panel" style="display:<?php echo ($a == 'styling_settings') ? 'block' : 'none'; ?>;">
-                <div class="frm_update_msg">
-                This plugin version does not give you access to the visual form styler.<br/>
-                <a href="http://formidablepro.com/pricing/" target="_blank">Compare</a> our plans to see about upgrading to Pro. Or enter your license number <a href ="<?php echo admin_url('admin.php') ?>?page=formidable-settings">here</a>.
-                </div>
-                <img src="http://fp.strategy11.com/wp-content/themes/formidablepro/images/form_style_thumb.png" alt="Style Forms"/>
-            </div>
+        <div class="clear"></div>
+        <div class="menu-settings">
+            <h3 class="frm_no_bg"><?php _e('Miscellaneous', 'formidable') ?></h3>
+        </div>
         <?php } ?>
+        <p><label class="frm_left_label"><?php _e('Admin menu label', 'formidable'); ?></label>
+            <input type="text" name="frm_menu" id="frm_menu" value="<?php echo esc_attr($frm_settings->menu) ?>" />
+            <?php if (is_multisite() and is_super_admin()){ ?>
+            <label for="frm_mu_menu"><input type="checkbox" name="frm_mu_menu" id="frm_mu_menu" value="1" <?php checked($frm_settings->mu_menu, 1) ?> /> <?php _e('Use this menu name site-wide', 'formidable'); ?></label>
+            <?php } ?>
+        </p>
+        
+        <p><label class="frm_left_label"><?php _e('Preview Page', 'formidable'); ?></label>
+        <?php FrmAppHelper::wp_pages_dropdown('frm-preview-page-id', $frm_settings->preview_page_id ) ?>
+        </p>
+        
+        <p><label class="frm_left_label"><?php _e('Tracking', 'formidable'); ?></label>
+            <label for="frm_track"><input type="checkbox" id="frm_track" name="frm_track" value="1" <?php checked($frm_settings->track, 1) ?>> <?php _e('Track referrer information and pages visited', 'formidable') ?></label>
+        </p>
+    </div>
            
         <?php foreach($sections as $sec_name => $section){ 
             if($a == $sec_name .'_settings'){ ?>
 <style type="text/css">.<?php echo $sec_name ?>_settings{display:block !important;}</style><?php }?>
-            <div id="<?php echo $sec_name ?>_settings" class="tabs-panel" style="display:<?php echo ($a == $sec_name .'_settings') ? 'block' : 'none'; ?>;"><?php
+            <div id="<?php echo $sec_name ?>_settings" class="<?php echo $sec_name ?>_settings tabs-panel" style="display:<?php echo ($a == $sec_name .'_settings') ? 'block' : 'none'; ?>;"><?php
                 if(isset($section['class'])){
                     call_user_func(array($section['class'], $section['function'])); 
                 }else{

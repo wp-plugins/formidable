@@ -185,7 +185,6 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 
 .form-table .form-field input, .form-table .form-field .quicktags-toolbar input,
 .form-field input, .form-field textarea, .form-field .quicktags-toolbar input{width:auto;}
-.form-table.frm_lics_form td{padding:0;}
 .frm_pro_installed{margin-top:0.5em;}
 .frm_aff_link{float:right;}
 .frm_select_box{text-align:center;font-weight:bold;width:100%;}
@@ -214,7 +213,7 @@ textarea.inplace_field{width:98% !important;}
 .edit-slug-box{color:#777;}
 table td, .form-table tr td{vertical-align:top;}
 
-.frm_rte{background:url(../images/rte.gif) no-repeat; }
+.frm_rte{background:url(../pro/images/rte.gif) no-repeat; }
 .frm_rte .howto{margin:10px 0 45px 0;}
 .frm_38_trigger .frm_rte .howto{margin-bottom:39px;}
 .button-secondary.frm_html_field{
@@ -226,7 +225,6 @@ table td, .form-table tr td{vertical-align:top;}
 	width:653px;background:#fff; margin:1px 0; border:1px solid #dfdfdf; border-top:none; 
 	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
 	float:none !important;
-	box-shadow-top:none;
 }
 .frm_38_trigger #new_fields .frm_rte textarea{margin-bottom:0;}
 
@@ -244,6 +242,8 @@ li.ui-state-default.selected .frm-show-click{display:inline;}
 li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 #new_fields span.ui-icon{width:16px;}
 #form_settings_page .tabs-panel, .frm_settings_form .tabs-panel{max-height:none !important; min-height:260px !important;}
+.categorydiv div.tabs-panel.general_settings{max-height:none;}
+.frm_38_trigger .categorydiv div.tabs-panel.general_settings .postbox{margin-bottom:0;}
 .tabs-panel{height:auto !important; min-height:260px;}
 .tabs-panel.panel_secondary{min-height:20px;margin-top:10px;margin-left:150px;}
 
@@ -377,6 +377,7 @@ span.howto{display:inline;}
 .frm_inline_label{padding-left:3px;}
 .frm_left_label{clear:both;float:left;width:23%;min-width:170px;}
 .frm_left_label.frm_alignright{padding-right:10px;text-align:right;}
+.frm_with_left_label{width:75%;float:left;}
 #html_settings label{display:block;}
 
 .frm-category-tabs > li a, .frm-category-tabs > li a:active{outline:none;}
@@ -402,7 +403,8 @@ span.howto{display:inline;}
 .frm_38_trigger .frm-help-tabs form > .submit, .frm_38_trigger #contextual-help-columns > .submit{padding-left:0.9em;}
 #poststuff .contextual-help-tabs .active, #poststuff .contextual-help-tabs .active a, #poststuff .contextual-help-tabs .active a:hover{background:#fafafa;}
 .wrap .contextual-help-tabs ul{min-height:260px;}
-.postbox .menu-settings h3{border-bottom:none;}
+.frm_38_trigger .postbox .menu-settings h3{border-bottom:none;}
+#poststuff h3.frm_no_bg{background:none;}
 .postbox #contextual-help-back{border-right:none;right:0;background:#fafafa;}
 #contextual-help-columns div.tabs-panel{background:transparent;border:none;}
 
@@ -560,7 +562,7 @@ iframe#dyncontent_ifr{min-height:150px;}
 	min-height:40px !important;
 	text-align:left;
 	-moz-box-shadow:1px 1px 2px rgba(0,0,0,0.4);
-	-webkit-box-shadow:5px 5px 25px rgba(0,0,0 0.5);
+	-webkit-box-shadow:5px 5px 25px rgba(0,0,0,0.5);
 	box-shadow:5px 5px 25px rgba(0,0,0,0.5);
 	padding:10px 40px;
 	border-top-color:#ccc;
@@ -701,19 +703,19 @@ iframe#dyncontent_ifr{min-height:150px;}
   height: 101px;
 }
 .farbtastic .wheel {
-  background: url(../images/wheel.png) no-repeat;
+  background: url(../pro/images/styler/wheel.png) no-repeat;
   width: 195px;
   height: 195px;
 }
 .farbtastic .overlay {
-  background: url(../images/mask.png) no-repeat;
+  background: url(../pro/images/styler/mask.png) no-repeat;
 }
 .farbtastic .marker {
   width: 17px;
   height: 17px;
   margin: -8px 0 0 -8px;
   overflow: hidden; 
-  background: url(../images/marker.png) no-repeat;
+  background: url(../pro/images/styler/marker.png) no-repeat;
 } 
 
 
@@ -724,6 +726,7 @@ ul#icons span.ui-icon {float: left; margin: 0 4px;}
 /* ---------------------------------------------------------------
 Clearfix
 --------------------------------------------------------------- */
+span.clear{display:block;}
 .clearfix:after {
     content: "."; 
     display: block; 

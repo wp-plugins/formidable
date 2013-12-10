@@ -17,7 +17,7 @@ class FrmSettingsController{
         add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', 'FrmSettingsController::route');
     }
 
-    public static function display_form(){
+    public static function display_form($errors=array(), $message=''){
         global $frm_settings, $frm_vars;
       
         $frm_update = new FrmUpdatesController();
@@ -25,7 +25,9 @@ class FrmSettingsController{
       
         $uploads = wp_upload_dir();
         $target_path = $uploads['basedir'] . "/formidable/css";
-        $sections = apply_filters('frm_add_settings_section', array());
+        $sections = apply_filters('frm_add_settings_section', array(
+            'styling' => array('name' => __('Form Styling', 'formidable'), 'class' => 'FrmSettingsController', 'function' => 'styling_tab')
+        ));
       
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }
@@ -55,10 +57,11 @@ class FrmSettingsController{
             return;
         }
         
-        $frm_roles = FrmAppHelper::frm_capabilities();
-        $sections = apply_filters('frm_add_settings_section', array());
-      
-        require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
+        self::display_form($errors, $message);
+    }
+    
+    public static function styling_tab(){
+        include(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/styling_tab.php');
     }
     
     public static function route($stop_load=false){

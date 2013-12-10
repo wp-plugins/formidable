@@ -16,8 +16,7 @@ class FrmUpdatesController{
     var $pro_cred_store;
     var $pro_auth_store;
     var $pro_wpmu_store;
-
-    var $pro_license_label;
+    
     var $pro_license_str;
 
     var $pro_error_message_str;
@@ -42,7 +41,6 @@ class FrmUpdatesController{
         $this->pro_auth_store       = 'frmpro-authorized';
         $this->pro_wpmu_store       = 'frmpro-wpmu-sitewide';
         $this->pro_last_checked_store = 'frm_autoupdate';
-        $this->pro_license_label    = __('Formidable Pro License', 'formidable');
         $this->pro_error_message_str = __('Your Formidable Pro License was Invalid', 'formidable');
         $this->pro_check_interval = 60*60*24; // Checking every 24 hours
         $this->timeout = 10;
@@ -196,33 +194,19 @@ class FrmUpdatesController{
     <input type="hidden" name="process_cred_form" value="Y" />
     <?php wp_nonce_field('frm_cred_nonce', 'frm_cred'); ?>
 
-    <table class="form-table frm_lics_form">
-        <tr class="form-field">
-            <td width="150px"><?php echo $this->pro_license_label; ?></td>
-            <td><input type="text" name="<?php echo $this->pro_license_str; ?>" value="" style="width:97%;"/></td>
-        </tr>
+    <p><input type="text" name="<?php echo $this->pro_license_str; ?>" value="" style="width:97%;" placeholder="<?php esc_attr_e('Enter your license number here', 'formidable') ?>"/>
         
-        <?php if (is_multisite()){ ?>
-        <tr>
-            <td><?php _e('WordPress MU', 'formidable'); ?></td>
-            <td>
-                <label for="proplug-wpmu"><input type="checkbox" value="1" name="proplug-wpmu" id="proplug-wpmu" <?php checked($wpmu, 1) ?> />
-                <?php _e('Use this license to enable Formidable Pro site-wide', 'formidable'); ?></label>
-            </td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <td></td>
-            <td>    
-                <input class="button-secondary" type="submit" value="<?php _e('Save License', 'formidable'); ?>" />
-                <?php if($frm_vars['pro_is_installed']){ 
-                    _e('or', 'formidable'); 
-                ?>
-                <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Cancel', 'formidable'); ?></a>
-                <?php } ?>
-            </td>
-        </tr>
-      </table>
+    <?php if (is_multisite()){ ?>
+        <br/><label for="proplug-wpmu"><input type="checkbox" value="1" name="proplug-wpmu" id="proplug-wpmu" <?php checked($wpmu, 1) ?> />
+        <?php _e('Use this license to enable Formidable Pro site-wide', 'formidable'); ?></label>
+    <?php } ?>
+    </p>
+    <input class="button-secondary" type="submit" value="<?php _e('Save License', 'formidable'); ?>" />
+    <?php if($frm_vars['pro_is_installed']){ 
+        _e('or', 'formidable'); 
+    ?>
+        <a href="javascript:frm_show_auth_form()" class="button-secondary"><?php _e('Cancel', 'formidable'); ?></a>
+    <?php } ?>
     </form>
 </div>
 <?php

@@ -78,6 +78,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Moved radio and checkbox inputs inside the label tags
 * Updated default styling
 * Added frm_text_block and frm_clearfix styling classes
+* Added force_balance_tags on the in-place-editing fields on the form builder page to prevent issues with adding bad HTML
 * PRO: Switch field IDs in email settings in duplicated form
 * PRO: Added option to save drafts
 * PRO: Added phone format option, including an input mask if format is not a regular expression
