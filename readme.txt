@@ -112,6 +112,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Make x_axis=created_at work in graphs
 * PRO: Added if statements to Default HTML button in email message
 * PRO: Added show_filename option to file upload fields
+* PRO: Allow dropdown data from entries fields to be set as read only
 
 
 = 1.07.01 =

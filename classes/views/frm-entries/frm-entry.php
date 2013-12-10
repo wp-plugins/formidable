@@ -26,7 +26,7 @@ if($params['action'] == 'create' and $params['posted_form_id'] == $form->id and 
         do_action('frm_validate_form_creation', $params, $fields, $form, $title, $description);
         if (apply_filters('frm_continue_to_create', true, $form->id)){
             $values = FrmEntriesHelper::setup_new_vars($fields, $form, true);
-            $created = $frm_vars['created_entries'][$form->id]['entry_id'];
+            $created = (isset($frm_vars['created_entries']) and isset($frm_vars['created_entries'][$form->id])) ? $frm_vars['created_entries'][$form->id]['entry_id'] : 0;
             $saved_message = apply_filters('frm_content', $saved_message, $form, $created);
             $conf_method = apply_filters('frm_success_filter', 'message', $form, $form->options);
             if (!$created or !is_numeric($created) or $conf_method == 'message'){

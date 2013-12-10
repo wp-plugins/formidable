@@ -227,7 +227,7 @@ class FrmFormsController{
         if($frm_vars['pro_is_installed'])
             FrmProEntriesController::register_scripts();
             
-        header("Content-Type: text/html; charset=utf-8");
+        header("Content-Type: text/html; charset=". get_option( 'blog_charset' ));
 
         $plugin     = FrmAppHelper::get_param('plugin');
         $controller = FrmAppHelper::get_param('controller');
