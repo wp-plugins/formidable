@@ -10,7 +10,8 @@
 .frm_38_trigger #toplevel_page_formidable .wp-menu-image img{
 	display: none !important;
 }
-.frm_38_trigger #toplevel_page_formidable .wp-menu-image:before {
+.frm_38_trigger #toplevel_page_formidable .wp-menu-image:before,
+.frm_38_trigger .wp-media-buttons .add_media span.wp-media-buttons-icon.frm-buttons-icon:before {
 	font-family: 's11-fp' !important; /* this assumes you've loaded Genericons in your admin */
 	content: '\e601'; /* replace this with your icon */
 	text-shadow: none;
@@ -26,10 +27,18 @@
 	width:16px;
 }
 
+.wp-media-buttons .frm_insert_form{padding-left:0.4em;}
+
 .frm_38_trigger .frm-buttons-icon{
-	vertical-align:text-bottom;
+	background:none;
+}
+.frm_38_trigger .frm-buttons-icon:before{
+	font: normal 18px/1 'dashicons';
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 	
-.wp-media-buttons .frm_insert_form{padding-left:0.4em;}
+
 	
 	

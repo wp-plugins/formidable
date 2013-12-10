@@ -273,7 +273,7 @@ class FrmFormsController{
     
     public static function insert_form_button($content){
         if(current_user_can('frm_view_forms'))
-            $content .= '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox button add_media frm_insert_form" title="' . __("Add Formidable Form", 'formidable') . '"><span class="frm-buttons-icon"></span> '. __('Add Form', 'formidable') . '</a>';
+            $content .= '<a href="#TB_inline?width=450&height=550&inlineId=frm_insert_form" class="thickbox button add_media frm_insert_form" title="' . __("Add Formidable Form", 'formidable') . '"><span class="frm-buttons-icon wp-media-buttons-icon"></span> '. __('Add Form', 'formidable') . '</a>';
         return $content;
     }
     
@@ -454,6 +454,7 @@ class FrmFormsController{
             
             include($templates[$i]);
             
+            //get updated form
             if($form)
                 $form = $frm_form->getOne($form->id);
             else
