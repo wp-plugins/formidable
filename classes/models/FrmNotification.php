@@ -12,7 +12,7 @@ class FrmNotification{
     function entry_created($entry_id, $form_id){
         if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
         global $frm_entry, $frm_entry_meta;
-
+        
         $frm_blogname = wp_specialchars_decode( get_option('blogname'), ENT_QUOTES );
         $entry = $frm_entry->getOne($entry_id);
         $frm_form = new FrmForm();
@@ -90,7 +90,7 @@ class FrmNotification{
         $content_type   = ($plain_text) ? 'text/plain' : 'text/html';
         $reply_to_name  = ($reply_to_name == '') ? wp_specialchars_decode( get_option('blogname'), ENT_QUOTES ) : $reply_to_name; //senders name
         $reply_to       = ($reply_to == '' or $reply_to == '[admin_email]') ? get_option('admin_email') : $reply_to; //senders e-mail address
-        error_log('email sent to '. $to_email);
+        
         if($to_email == '[admin_email]')
             $to_email = get_option('admin_email');
             
