@@ -100,7 +100,7 @@ ul.frm_form_nav li.last > a{
 .wp-admin .frm_form_fields textarea.wp-editor-area{width:100%;border:none;}
 .wp-admin .frm_form_fields input[type="file"]{background:transparent;border:none;}
 .wp-admin .frm_form_fields select{width:auto;}
-.wp-admin .frm_form_fields input[type="radio"], .wp-admin .frm_form_fields input[type="checkbox"]{width:auto;border:none;background:transparent;padding:0;}
+.wp-admin .frm_form_fields input[type="radio"], .wp-admin .frm_form_fields input[type="checkbox"]{width:auto;padding:0;}
 .wp-admin .frm_catlevel_2, .wp-admin .frm_catlevel_3, .wp-admin .frm_catlevel_4, .wp-admin .frm_catlevel_5{margin-left:18px;}
 .wp-admin .frm_form_fields input.auto_width, .wp-admin .frm_form_fields select.auto_width, .wp-admin .frm_form_fields textarea.auto_width{width:auto;}
 .frm_set_select select, .frm_set_select select.auto_width{width:100%;}
@@ -110,7 +110,6 @@ ul.frm_form_nav li.last > a{
 .wp-admin .frm_radio, .wp-admin .frm_checkbox{display:block;}
 .wp-admin .frm_radio label, .wp-admin .frm_checkbox label{font-family:Verdana,Arial,sans-serif;font-size:12px;color:#302c3f;font-weight:normal;display:inline;}
 .wp-admin .frm_radio input[type="radio"], .wp-admin .frm_checkbox input[type="checkbox"]{margin-right:5px;width:auto;}
-.wp-admin input[type="radio"], .wp-admin input[type="checkbox"]{width:auto;}
 
 .frm_form_fields div.star{height:auto;left:auto;top:auto;letter-spacing:auto;position:static;}
 .frm_form_fields div.star a, .frm_form_fields div.star a:hover, .frm_form_fields div.star a:visited{position:static;right:auto;}
@@ -194,7 +193,6 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 .frm_select_box{text-align:center;font-weight:bold;width:100%;}
 .wp-list-table .frm_select_box{text-align:left;font-weight:normal;font-size:10px;}
 .wp-list-table .frm_no_items.frm_select_box{text-align:center;font-weight:bold;width:500px;max-width:100%;font-size:inherit;}
-.form-field input[type="checkbox"], .form-field input[type="radio"]{border:none !important;}
 textarea.inplace_field{width:98% !important;}
 .inplace_field{width:70% !important;}
 .frm_ipe_form_key .inplace_field, .frm_ipe_field_key .inplace_field{width:7.5em !important;}
