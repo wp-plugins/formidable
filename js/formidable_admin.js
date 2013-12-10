@@ -576,6 +576,7 @@ function frmSeparateValue(field_id){
 function frmShowDefaults(n,fval){
 	if(fval){jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeIn('slow');}
 	else{jQuery('#frm_clear_on_focus_'+n+',#frm_clear_on_focus_'+n+' a').css('visibility','visible').fadeOut('slow');}
+	return false;
 }
 
 function frm_clear_on_focus(){
@@ -587,7 +588,8 @@ function frm_clear_on_focus(){
 	var field_id=jQuery(this).attr('id').replace('clear_field_', '');
 	jQuery(this).toggleClass('frm_inactive_icon').attr('title', t).tooltip('destroy').tooltip('show');
     jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_ajax_option&field="+field_id+"&clear_on_focus="+switch_to});
-};
+	return false;
+}
 
 function frm_default_blank(){
 	if(jQuery(this).hasClass('frm_inactive_icon')){
@@ -598,7 +600,8 @@ function frm_default_blank(){
     var field_id=jQuery(this).attr('id').replace('default_blank_','');
     jQuery(this).toggleClass('frm_inactive_icon').attr('title', t).tooltip('destroy').next('.tooltip').remove();jQuery(this).tooltip('show');
 	jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_update_ajax_option&field="+field_id+"&default_blank="+switch_to});
-};
+	return false;
+}
 
 function frm_add_field_option(field_id,table){
 	var data = {action:'frm_add_field_option',field_id:field_id,t:table};
