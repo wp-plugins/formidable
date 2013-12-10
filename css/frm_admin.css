@@ -154,7 +154,8 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 }
 
 .frm_form_builder a:hover{text-decoration:underline;}
-
+.frm_38_trigger .widget-title h4 {padding:10px 15px;}
+.frm_38_trigger .widget-top a.widget-action:after {padding: 7px 12px 0;}
 #postbox-container-1{width:270px;}
 #postbox-container-1 .nodrag a{cursor:pointer;}
 #postbox-container-1 .frm_field_list #frm-insert-fields .button{
