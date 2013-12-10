@@ -375,6 +375,9 @@ span.howto{display:inline;}
 }
 .frm_validation_msg p label{float:left;width:25%;max-width:100px;}
 #new_fields .form-field .widget .frm_validation_msg input{width:71%;}
+.frm_38_trigger #new_fields .widget-inside .form-table td,
+.frm_38_trigger #new_fields .widget-inside .form-table td p,
+.frm_38_trigger #new_fields .widget-inside .form-wrap label{font-size:12px;padding:10px}
 .frm_inline_label{padding-left:3px;}
 .frm_left_label{clear:both;float:left;width:23%;min-width:170px;}
 .frm_left_label.frm_alignright{padding-right:10px;text-align:right;}
@@ -417,16 +420,19 @@ span.howto{display:inline;}
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#f7fcfe), to(#eff8ff)); /* old Webkit */
 	background-image: -webkit-linear-gradient(top, #f7fcfe, #eff8ff); /* new Webkit */
 	background-image: linear-gradient(top, #f7fcfe, #eff8ff); /* proposed W3C Markup */
-	border:1px dashed #d1e5ee;;
+	border:1px dashed #d1e5ee;
 }
-.frm_38_trigger #new_fields li.ui-state-default:hover, .frm_38_trigger #new_fields li.ui-state-default.selected, .frm_38_trigger .frm_update_msg{
+.frm_38_trigger #new_fields li.ui-state-default:hover, .frm_38_trigger .frm_update_msg{
 	background:#fbfbfb;
 	border:1px solid #ddd;
+}
+
+.frm_38_trigger #new_fields li.ui-state-default:hover, .frm_38_trigger #new_fields li.ui-state-default.selected, .frm_38_trigger .frm_update_msg{
 	box-shadow:0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-#new_fields li.ui-state-default.selected{
-	border-style:solid;
+#new_fields li.ui-state-default.selected, .frm_38_trigger #new_fields li.ui-state-default.selected:hover{
+	border:1px solid #d1e5ee;;
 	background-color: #e8eff4; /* Fallback */
 	background-image: -ms-linear-gradient(top, #eff8ff, #e8eff4); /* IE10 */
 	background-image: -moz-linear-gradient(top, #eff8ff, #e8eff4); /* Firefox */
@@ -435,9 +441,7 @@ span.howto{display:inline;}
 	background-image: -webkit-linear-gradient(top, #eff8ff, #e8eff4); /* new Webkit */
 	background-image: linear-gradient(top, #eff8ff, #e8eff4); /* proposed W3C Markup */
 }
-.frm_38_trigger #new_fields li.ui-state-default.selected{
-	background:#fff;
-}
+
 
 .frm_email_actions.feature-filter{
 	font-weight:bold;

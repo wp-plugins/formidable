@@ -13,7 +13,8 @@
     </div>
 </div>
 
-<ul id="new_fields">
+<div <?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'class="postbox"' : ''; ?>>
+<ul id="new_fields" <?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'class="inside"' : ''; ?>>
 <?php
 if (isset($values['fields']) && !empty($values['fields'])){
     $count = 0;
@@ -27,5 +28,6 @@ if (isset($values['fields']) && !empty($values['fields'])){
     unset($count);
 } ?>
 </ul>
+</div>
 
 </div>

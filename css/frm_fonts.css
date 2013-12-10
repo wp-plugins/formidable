@@ -18,27 +18,14 @@
 }
 
 /* media box button */
-.frm-buttons-icon{
+.wp-media-buttons .add_media span.wp-media-buttons-icon.frm-buttons-icon{
 	background:url(../images/form_16.png) no-repeat center;
-	display:inline-block;
-	height:16px;
-	margin:0 2px;
-	vertical-align:text-top;
-	width:16px;
 }
 
-.wp-media-buttons .frm_insert_form{padding-left:0.4em;}
+.wp-media-buttons .button.frm_insert_form{padding-left:0.4em;}
+.frm_38_trigger .wp-media-buttons .button.frm_insert_form{padding-left:5px;}
 
-.frm_38_trigger .frm-buttons-icon{
+.frm_38_trigger .wp-media-buttons .add_media span.wp-media-buttons-icon.frm-buttons-icon{
 	background:none;
 }
-.frm_38_trigger .frm-buttons-icon:before{
-	font: normal 18px/1 'dashicons';
-	speak: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-	
-
-	
 	
