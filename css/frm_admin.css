@@ -184,6 +184,8 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 	box-sizing: border-box;
 }
 
+.frm_white_bg{background-color:#fff;}
+
 .form-table .form-field input, .form-table .form-field .quicktags-toolbar input,
 .form-field input, .form-field textarea, .form-field .quicktags-toolbar input{width:auto;}
 .form-table.frm_lics_form td{padding:0;}
