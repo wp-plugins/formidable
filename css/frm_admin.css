@@ -243,6 +243,7 @@ li.ui-state-default.selected .frm-show-click{display:inline;}
 li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 #new_fields span.ui-icon{width:16px;}
 #form_settings_page .tabs-panel, .frm_settings_form .tabs-panel{max-height:none !important; min-height:260px !important;}
+#form_settings_page select{max-width:400px;}
 .categorydiv div.tabs-panel.general_settings{max-height:none;}
 .frm_38_trigger .categorydiv div.tabs-panel.general_settings .postbox{margin-bottom:0;}
 .tabs-panel{height:auto !important; min-height:260px;}
