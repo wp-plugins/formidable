@@ -248,6 +248,7 @@ function frm_install_now(){
         ));
         
         if($location == 'admin'){
+            global $frm_settings;
             wp_localize_script('formidable_admin', 'frm_admin_js', array(
                 'templates_updated' => __('Templates Updated', 'formidable'),
                 'confirm_uninstall' => __('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable'),
@@ -263,7 +264,8 @@ function frm_install_now(){
                 'valid_default' => __('Default value will pass form validation', 'formidable'),
                 'no_valid_default' => __('Default value will NOT pass form validation', 'formidable'),
                 'deauthorize' => __('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable'),
-                'confirm' => __('Are you sure?', 'formidable')
+                'confirm' => __('Are you sure?', 'formidable'),
+                'default_unique' => $frm_settings->unique_msg
             ));
         }
     }

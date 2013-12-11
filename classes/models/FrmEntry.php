@@ -39,8 +39,7 @@ class FrmEntry{
             $new_values['user_id'] = $values['frm_user_id'];
         }else{
             global $user_ID;
-            if($user_ID)
-                $new_values['user_id'] = $new_values['updated_by'] = $user_ID;
+            $new_values['user_id'] = $user_ID ? $user_ID : 0;
         }
         
         $new_values['updated_by'] = isset($values['updated_by']) ? $values['updated_by'] : $new_values['user_id'];

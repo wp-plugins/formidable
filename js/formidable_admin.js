@@ -561,6 +561,8 @@ function frmMarkUnique(field_id){
     var thisid='uniq_field_'+field_id;
     if(jQuery('#frm_'+thisid).is(':checked')){
 		jQuery('.frm_unique_details'+field_id).fadeIn('fast').closest('.frm_validation_msg').fadeIn('fast');
+		if(jQuery('.frm_unique_details'+field_id+' input').val() == '')
+			jQuery('.frm_unique_details'+field_id+' input').val(frm_admin_js.default_unique);
 	}else{
 		var v=jQuery('.frm_unique_details'+field_id).fadeOut('fast').closest('.frm_validation_box').children(':not(.frm_unique_details'+field_id+'):visible').length;
 		if(v==0)

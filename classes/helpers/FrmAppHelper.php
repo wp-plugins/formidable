@@ -340,7 +340,7 @@ class FrmAppHelper{
                         if($field_type == 'captcha')
                             $field_array[$opt] = $frm_settings->re_msg;
                         else
-                            $field_array[$opt] = $field_array['name'] . ' ' . __('is invalid', 'formidable');
+                            $field_array[$opt] = sprintf(__('%s is invalid', 'formidable'), $field_array['name']);
                     }
                 }
                 
@@ -353,6 +353,9 @@ class FrmAppHelper{
                     $field_array['size'] = $frm_vars['sidebar_width'];
                 
                 $field_array = apply_filters('frm_setup_edit_fields_vars', $field_array, $field, $values['id']);
+                
+                if(!isset($field_array['unique']) or !$field_array['unique'])
+                    $field_array['unique_msg'] = '';
                 
                 foreach((array)$field->field_options as $k => $v){
                     if(!isset($field_array[$k]))
@@ -550,6 +553,9 @@ class FrmAppHelper{
     }
     
     public static function truncate($str, $length, $minword = 3, $continue = '...'){
+        if(is_array($str))
+            return;
+        
         $length = (int)$length;
         $str = strip_tags($str);
         $original_len = (function_exists('mb_strlen')) ? mb_strlen($str) : strlen($str);
