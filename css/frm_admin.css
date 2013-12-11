@@ -315,6 +315,7 @@ span.howto{display:inline;}
 	width:auto;font-size:11px;
 }
 
+#styling_settings input[type=checkbox], #styling_settings input[type=radio] {border:solid 1px #bbb;}
 .tagchecklist span.no_taglist {
     display: inline;
     float: none;
@@ -353,7 +354,7 @@ span.howto{display:inline;}
 #new_fields .widget, .widget-inside{display: none;}
 #new_fields li.ui-state-default.selected .widget{display:block;}
 #new_fields .form-field .widget{ display:none;}
-#new_fields{min-height:440px; padding-bottom:60px; margin-bottom:0;}
+#new_fields{min-height:440px; margin-bottom:0;}
 #postbox-container-1 .ui-state-default, #new_fields li.ui-state-default{
 	border:none;font-weight:normal;background-color:transparent; background-image:none;padding:6px; margin:20px 0;
 }

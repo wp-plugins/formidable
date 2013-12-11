@@ -59,7 +59,7 @@
                 </select>
             </p>
             
-            <p><label for="frm_use_html"><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?> style="border:none;"> <?php _e('Use HTML5 in forms', 'formidable') ?></label>
+            <p><label for="frm_use_html"><input type="checkbox" id="frm_use_html" name="frm_use_html" value="1" <?php checked($frm_settings->use_html, 1) ?>	> <?php _e('Use HTML5 in forms', 'formidable') ?></label>
             </p>
             
             <?php do_action('frm_style_general_settings', $frm_settings); ?>
