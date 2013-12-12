@@ -589,7 +589,7 @@ iframe#dyncontent_ifr{min-height:150px;}
 	box-shadow:5px 5px 25px rgba(0,0,0,0.5);
 	padding:10px 40px;
 	border-top-color:#ccc;
-	background:#777 url(../images/tooltip_white.png) no-repeat 20px 11px;
+	background:#777;
 }
 
 /*form field groups*/

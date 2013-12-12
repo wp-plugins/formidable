@@ -79,6 +79,8 @@ class FrmEntriesController{
             include $filename;
             $contents = ob_get_contents();
             ob_end_clean();
+            // TODO: check if minimizing is turned on
+            //$contents = preg_replace('(\r|\n|\t)', '', $contents);
             return $contents;
         }
         return false;
