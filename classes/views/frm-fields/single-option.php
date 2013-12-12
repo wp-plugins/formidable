@@ -1,5 +1,5 @@
 <div id="frm_delete_field_<?php echo $field['id']; ?>-<?php echo $opt_key ?>_container" class="frm_single_option">
-<a href="javascript:void(0)" class="frm_single_visible_hover frm_hover_change_icon frm_delete_icon"> </a>
+<a href="javascript:void(0)" class="frm_single_visible_hover frm_icon_font frm_delete_icon"> </a>
 <?php if ($field['type'] != 'select'){ ?>
 <input type="<?php echo $field['type'] ?>" name="<?php echo $field_name ?><?php echo ($field['type'] == 'checkbox')?'[]':''; ?>" value="<?php echo esc_attr($field_val) ?>"<?php echo isset($checked)? $checked : ''; ?>/> 
 <?php } ?>

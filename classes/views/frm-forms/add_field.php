@@ -34,14 +34,14 @@ $display = apply_filters('frm_display_field_options', array(
 <?php if(!isset($ajax)){ ?>
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field edit_form_item frm_field_box ui-state-default edit_field_type_<?php echo $display['type'] ?> frm_top_container">
 <?php } ?>
-    <a href="javascript:void(0);" class="frm_bstooltip alignright frm-show-hover frm-move frm-hover-icon frm_hover_change_icon frm_move_field" title="<?php esc_attr_e('Move Field', 'formidable') ?>"> </a>
-    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_delete_icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php esc_attr_e('Delete Field', 'formidable') ?>"><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/trash.png" alt="<?php esc_attr_e('Delete') ?>" /></a>
-    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_hover_change_icon frm_duplicate_form" title="<?php esc_attr_e('Duplicate Field', 'formidable') ?>"> </a>
+    <a href="javascript:void(0);" class="frm_bstooltip alignright frm-show-hover frm-move frm-hover-icon frm_icon_font frm_move_field" title="<?php esc_attr_e('Move Field', 'formidable') ?>"> </a>
+    <a href="javascript:frm_delete_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_icon_font frm_delete_icon" id="frm_delete_field<?php echo $field['id']; ?>" title="<?php esc_attr_e('Delete Field', 'formidable') ?>"> </a>
+    <a href="javascript:frm_duplicate_field(<?php echo $field['id']; ?>)" class="frm_bstooltip alignright frm-show-hover frm-hover-icon frm_icon_font frm_duplicate_form" title="<?php esc_attr_e('Duplicate Field', 'formidable') ?>"> </a>
     <input type="hidden" name="frm_fields_submitted[]" value="<?php echo esc_attr($field['id']) ?>" />
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ($display['required']){ ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a class="frm_req_field frm_action_icon frm_required_icon alignleft frm_required<?php echo (int)$field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
+        <a class="frm_req_field frm_action_icon frm_required_icon frm_icon_font alignleft frm_required<?php echo (int)$field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php } ?>
     <label class="frm_ipe_field_label frm_primary_label <?php echo ($field['type'] == 'break') ? 'button': ''; ?>" id="field_label_<?php echo $field['id']; ?>"><?php echo force_balance_tags($field['name']) ?></label>
@@ -218,8 +218,9 @@ if ($display['options']){ ?>
                 </tr>
                 
                 <?php if ($display['css']){ ?>
-                <tr><td><label><?php _e('CSS layout classes', 'formidable') ?></label> 
-                    <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" /></td>
+                <tr><td><label><?php _e('CSS layout classes', 'formidable') ?></label>
+                    <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row.', 'formidable') ?>" ></span>
+                    </td>
                     <td><input type="text" name="field_options[classes_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['classes']) ?>" id="frm_classes_<?php echo $field['id'] ?>" class="frm_classes frm_long_input" />
                     </td>  
                 </tr>

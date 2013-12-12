@@ -61,7 +61,7 @@
                 
                 <tr><td colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
                     <?php if(!$frm_vars['pro_is_installed']){ ?>
-                    <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" />
+                    <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" ></span>
                     <?php } ?>
 
                         <label for="success_action_message"><input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <?php _e('Display a Message', 'formidable') ?></label>
@@ -89,7 +89,7 @@
                     </td>
                 </tr>
                 
-                <tr><td colspan="2"><label for="ajax_load"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><img src="<?php echo FrmAppHelper::plugin_url() ?>/images/tooltip.png" alt="?" class="frm_help" title="<?php _e('Recommended for long forms.', 'formidable') ?>" /></td></tr>
+                <tr><td colspan="2"><label for="ajax_load"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('Recommended for long forms.', 'formidable') ?>" ></span></td></tr>
 
 
                 <?php do_action('frm_additional_form_options', $values); ?> 

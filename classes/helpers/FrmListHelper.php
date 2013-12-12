@@ -204,12 +204,12 @@ class FrmListHelper extends WP_List_Table {
 			    case 'link':
 			        $links = array();
                     if($frm_vars['pro_is_installed'] and current_user_can('frm_create_entries'))
-                		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_add_entry_icon frm_hover_change_icon frm_bstooltip" title="'. __('Add Entry', 'formidable'). '" data-toggle="tooltip"> </a>';
+                		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_add_entry_icon frm_icon_font frm_bstooltip" title="'. __('Add Entry', 'formidable'). '" data-toggle="tooltip"> </a>';
                 	
-                	$links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_hover_change_icon frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
+                	$links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_icon_font frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
                 	
                 	if($frm_vars['pro_is_installed'] and current_user_can('frm_edit_forms'))
-                	    $links[] = '<a href="'. wp_nonce_url( admin_url( 'admin-ajax.php' ) ."?action=frm_forms_export&id={$item->id}" ) . '" title="'. esc_attr(__('Export form template', 'formidable')) .'" class="frm_download_template frm_hover_change_icon frm_bstooltip" data-toggle="tooltip"> </a>';
+                	    $links[] = '<a href="'. wp_nonce_url( admin_url( 'admin-ajax.php' ) ."?action=frm_forms_export&id={$item->id}" ) . '" title="'. esc_attr(__('Export form template', 'formidable')) .'" class="frm_download_template frm_icon_font frm_bstooltip" data-toggle="tooltip"> </a>';
                 	
                     $val = implode(' ', $links);
                     break;
