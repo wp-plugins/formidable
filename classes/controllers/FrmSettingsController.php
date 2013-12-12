@@ -38,10 +38,12 @@ class FrmSettingsController{
         if(!isset($_POST['process_form']) or !wp_verify_nonce($_POST['process_form'], 'process_form_nonce'))
             wp_die($frm_settings->admin_permission);
         
+        $errors = array();
+        $message = '';
+        
         if(!isset($frm_vars['settings_routed']) or !$frm_vars['settings_routed']){
             $frm_update = new FrmUpdatesController();
             //$errors = $frm_settings->validate($_POST,array());
-            $errors = array();
             $frm_settings->update($_POST);
 
             if( empty($errors) ){
