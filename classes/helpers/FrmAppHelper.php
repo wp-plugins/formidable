@@ -718,9 +718,11 @@ class FrmAppHelper{
         return $vars;
     }
     
-    public static function is_json($string){
-        json_decode($string);
-        return (json_last_error() == JSON_ERROR_NONE);
+    public static function maybe_json_decode($string){
+        $new_string = json_decode($string, true);
+        if(json_last_error() == JSON_ERROR_NONE)
+            $string = $new_string;
+        return $string;
     }
     
 }

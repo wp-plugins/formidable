@@ -547,6 +547,8 @@ function frm_mark_required(){
     if(checked){
 		var atitle='Click to Mark as Not Required';
 		jQuery('.frm_required_details'+field_id).fadeIn('fast').closest('.frm_validation_msg').fadeIn('fast');
+		if(jQuery('input[name="field_options[required_indicator_'+field_id+']"]').val() == '')
+			jQuery('input[name="field_options[required_indicator_'+field_id+']"]').val('*');
 	}else{
 		var atitle='Click to Mark as Required';
 		var v=jQuery('.frm_required_details'+field_id).fadeOut('fast').closest('.frm_validation_box').children(':not(.frm_required_details'+field_id+'):visible').length;

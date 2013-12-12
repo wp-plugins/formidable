@@ -96,10 +96,8 @@ class FrmListHelper extends WP_List_Table {
 	    global $frm_vars;
 	    
 	    $actions = array();
-	    if($frm_vars['pro_is_installed']){
+	    if($frm_vars['pro_is_installed'])
             $actions['bulk_delete'] = __('Delete');
-            //$actions['bulk_export'] = __('Export to XML', 'formidable');
-        }
             
         return $actions;
     }
@@ -148,7 +146,7 @@ class FrmListHelper extends WP_List_Table {
         if(current_user_can('frm_delete_forms'))
 		    $actions['trash'] = '<a class="submitdelete" href="' . wp_nonce_url( $delete_link ) .'" onclick="return confirm(\''. __('Are you sure you want to delete that?', 'formidable') .'\')">' . __( 'Delete' ) . '</a>';
 		
-		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item->prli_link_id) .'" target="_blank">'. __('View') .'</a>';  
+		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item->prli_link_id) .'" target="_blank">'. __('Preview') .'</a>';  
         
         $action_links = $this->row_actions( $actions );
         
