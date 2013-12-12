@@ -98,8 +98,7 @@ $display = apply_filters('frm_display_field_options', array(
         </span>
     <?php } ?>
     <div class="clear"></div>
-	<br/>
-    <div class="frm-show-click">
+    <div class="frm-show-click" style="margin-top:5px;">
     <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>
         <p class="howto"><?php _e('Please add options from the WordPress "Categories" page', 'formidable') ?></p>
     <?php }else if(!isset($field['post_field']) or $field['post_field'] != 'post_status'){ ?>
