@@ -279,13 +279,23 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 .frm_email_reply_container input{width:150px;}
 
 .frm_icon_font{
-	font-family: 's11-fp' !important;
 	text-decoration:none;
-	color:#A0A0A0;
 	text-shadow: none;
-	font-size:16px;
 	font-weight:normal;
+	color:#A0A0A0;
 }
+
+.frm_icon_font:before{
+	font-family: 's11-fp' !important;
+	font-size:16px;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-transition: all .1s ease-in-out;
+	-webkit-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+
 .frm_icon_font:hover, a.frm_icon_font:hover{
 	color:#b7b7b7;
 	text-decoration:none;
