@@ -301,13 +301,13 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 	text-decoration:none;
 }
 
-.frm_download_template:before{content: '\e630';}
+.frm_download_template:before{content: '\e615';}
 .frm_add_entry_icon:before{content: '\e602';}
 .frm_duplicate_form:before{content: '\e61b';}
 .frm_move_field:before{content: '\e61a';}
 .frm_delete_icon:before{content: '\e610';}
-.frm_new_template_icon:before{content: '\e611';}
-.frm_tooltip_icon:before{content: '\e624';font-size:13px;vertical-align:text-top;}
+.frm_new_template_icon:before{content: '\e614';}
+.frm_tooltip_icon:before{content: '\e611';font-size:13px;vertical-align:text-top;}
 .frm_duplicate_form:active, .frm_move_field:active, .frm_delete_icon:active {outline:none;}
 .frm_single_option .frm_delete_icon{float:left;visibility:hidden;margin-right:3px;}
 
