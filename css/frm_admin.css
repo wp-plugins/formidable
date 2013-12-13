@@ -375,7 +375,7 @@ span.howto{display:inline;}
 #frm_form_editor_container .ui-state-default a.frm_orange, #postbox-container-1 a.frm_orange{color:#D54E21;}
 
 #styling_settings input[type=checkbox], #styling_settings input[type=radio] {border:solid 1px #bbb;}
-#styling_settings .widget .widget-top {cursor:pointer;}
+#styling_settings .widget .widget-top, #frm_form_editor_container .widget .widget-top {cursor:pointer;}
 #new_fields .widget, .frm_settings_page .widget{background:#fff;}
 #new_fields .widget-title h4{font-weight:normal;}
 #new_fields .widget, #postbox-container-1 .widget, .frm_settings_page .widget{margin-bottom:0;}
