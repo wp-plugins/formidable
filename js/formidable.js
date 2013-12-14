@@ -74,7 +74,8 @@ for(var i=0;i<rules.length;i++){
         }
     }
 }
-var show_fields=new Array();var hide_later=new Array();	
+var show_fields=new Array();
+var hide_later=new Array();	
 var len=this_opts.length;
 for(i=0; i<len; i++){
   (function(i){
@@ -87,12 +88,18 @@ for(i=0; i<len; i++){
 		return;
 	}*/
 
-	if(f.FieldName!=field_id || typeof(selected)=='undefined'){
+	if(f.FieldName!=field_id || typeof(selected)=='undefined' || selected=='und'){
 		var prevSel=selected;
 		if(f.Type=='radio' || f.Type=='data-radio')
 			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
 		else if(f.Type=='select' || f.Type=='data-select')
 			selected=jQuery("select[name^='item_meta["+f.FieldName+"]'], input[type='hidden'][name^='item_meta["+f.FieldName+"]']").val();
+			if(jQuery("input[type='hidden'][name^='item_meta["+f.FieldName+"]']").length){
+				selected = new Array();
+				jQuery("input[type='hidden'][name^='item_meta["+f.FieldName+"]']").each(function(){
+					selected.push(jQuery(this).val());
+				});
+			}
 		else if(f.Type !='checkbox' && f.Type !='data-checkbox')
 			selected=jQuery("input[name^='item_meta["+f.FieldName+"]']").val();
 	}
@@ -143,15 +150,21 @@ for(i=0; i<len; i++){
         }
     }else if(f.Type=='data-select' && typeof(f.LinkedField)!='undefined'){
 		if(f.DataType=='' || f.DataType=='data'){
-            if(selected==''){show_fields[f.HideField][i]=false; jQuery('#frm_data_field_'+f.HideField+'_container').html('');}
-			else if(selected && jQuery.isArray(selected)){
+            if(selected==''){
+				show_fields[f.HideField][i]=false; jQuery('#frm_data_field_'+f.HideField+'_container').html('');
+			}else if(selected && jQuery.isArray(selected)){
 				show_fields[f.HideField][i]=true;
 				jQuery('#frm_data_field_'+f.HideField+'_container').html('');
 				frmGetData(f,selected,1);
-			}else{show_fields[f.HideField][i]={'funcName':'frmGetData','f':f,'sel':selected};}
+			}else{
+				show_fields[f.HideField][i]={'funcName':'frmGetData','f':f,'sel':selected};
+			}
         }else{
-            if(selected==''){show_fields[f.HideField][i]=false;}
-            else{show_fields[f.HideField][i]={'funcName':'frmGetDataOpts','f':f,'sel':selected};}
+            if(selected==''){
+				show_fields[f.HideField][i]=false;
+			}else{
+				show_fields[f.HideField][i]={'funcName':'frmGetDataOpts','f':f,'sel':selected};
+			}
         }
     }else{
 		if(typeof(f.Value)=='undefined' && f.Type.indexOf('data') === 0){
@@ -163,13 +176,21 @@ for(i=0; i<len; i++){
 			show_fields[f.HideField][i]=frmOperators(f.Condition,f.Value,selected);
 		}
     }
-	if(f.FieldName!=field_id) selected=prevSel;
+
+	if(f.FieldName!=field_id){
+		selected = prevSel;
+	}
 	if(f.MatchType=='any'){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
-				if(show_fields[f.HideField][i]!=true){frmShowField(show_fields[f.HideField][i],f.FieldName);}
-				else{jQuery('#frm_field_'+f.HideField+'_container').show();}
-			}else{jQuery('#frm_field_'+f.HideField+'_container').hide();}
+				if(show_fields[f.HideField][i]!=true){
+					frmShowField(show_fields[f.HideField][i],f.FieldName);
+				}else{
+					jQuery('#frm_field_'+f.HideField+'_container').show();
+				}
+			}else{
+				jQuery('#frm_field_'+f.HideField+'_container').hide();
+			}
 		}else{
 			hide_later.push({'result':show_fields[f.HideField][i],'show':f.Show,'match':'any','fname':f.FieldName,'fkey':f.HideField});
 		}
@@ -181,11 +202,19 @@ for(i=0; i<len; i++){
 		jQuery.each(hide_later, function(hkey,hvalue){ 
 			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
 				if((hvalue.match=='any' && !frmInArray(true, show_fields[hvalue.fkey])) || (hvalue.match=='all' && frmInArray(false, show_fields[hvalue.fkey]))){
-					if(hvalue.show=='show'){jQuery('#frm_field_'+hvalue.fkey+'_container:hidden').hide(); jQuery('#frm_field_'+hvalue.fkey+'_container').hide();}
-					else{ jQuery('#frm_field_'+hvalue.fkey+'_container').show();}
+					if(hvalue.show=='show'){
+						jQuery('#frm_field_'+hvalue.fkey+'_container:hidden').hide();
+						jQuery('#frm_field_'+hvalue.fkey+'_container').hide();
+					}else{
+						jQuery('#frm_field_'+hvalue.fkey+'_container').show();
+					}
 				}else{
-					if(hvalue.show=='show'){ jQuery('#frm_field_'+hvalue.fkey+'_container').show();}
-					else{jQuery('#frm_field_'+hvalue.fkey+'_container:hidden').hide(); jQuery('#frm_field_'+hvalue.fkey+'_container').hide();}
+					if(hvalue.show=='show'){
+						jQuery('#frm_field_'+hvalue.fkey+'_container').show();
+					}else{
+						jQuery('#frm_field_'+hvalue.fkey+'_container:hidden').hide();
+						jQuery('#frm_field_'+hvalue.fkey+'_container').hide();
+					}
 				}
 				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,hvalue.fname);
 				delete hide_later[hkey];
@@ -246,16 +275,37 @@ function frmGetData(f,selected,append){
 	});
 }
 
-function frmGetDataOpts(f,selected,field_id){
+function frmGetDataOpts(f,selected,field_id){	
 	var prev=new Array();
 	if(f.DataType=='checkbox' || f.DataType=='radio'){
 		jQuery("input[name^='item_meta["+f.HideField+"]']:checked, input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
 	}else if(f.DataType=='select'){
 		prev.push(jQuery("select[name^='item_meta["+f.HideField+"]']").val());
 		jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
-	}else{prev.push(jQuery("input[name^='item_meta["+f.HideField+"]']").val());}
-	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img"></span>');
-	if(prev.length==0) prev='';
+	}else{
+		prev.push(jQuery("input[name^='item_meta["+f.HideField+"]']").val());
+	}
+	if(prev.length == 0) prev = '';
+	
+	if(typeof(frm_checked_dep) == 'undefined'){
+		frm_checked_dep = new Array();
+	}
+	
+	//don't check the same field twice when more than a 2-level dependency, and parent is not on this page
+	if(frmInArray(f.HideField, frm_checked_dep) &&
+		!jQuery('#frm_data_field_'+field_id+'_container').length && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length
+		){
+		return;
+	}
+	
+	//don't get values for fields that are to remain hidden on the page
+	if(!jQuery('#frm_data_field_'+f.HideField+'_container').length && jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").length){
+		frm_checked_dep.push(f.HideField);
+		frmCheckDependent(prev,f.HideField);
+		return false;
+	}
+	
+	jQuery('#frm_data_field_'+f.HideField+'_container').html('<span class="frm-loading-img" style="visibility:visible;display:inline;"></span>');
 
 	jQuery.ajax({
 		type:"POST",url:frm_js.ajax_url,
@@ -267,27 +317,31 @@ function frmGetDataOpts(f,selected,field_id){
 			}else if(f.MatchType!='all'){
 				jQuery('#frm_field_'+f.HideField+'_container').show();
 			}
+			
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
-			if(jQuery(html).hasClass('frm_chzn'))
+			if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen)
 				jQuery('.frm_chzn').chosen();
 			
 			if(html!='' && prev!=''){
 				//select options that were selected previously			
 				jQuery.each(prev, function(ckey,cval){
 					if(typeof(cval) != 'undefined'){
-						if(f.DataType=='checkbox'){
+						if(f.DataType == 'checkbox' || f.DataType == 'radio'){
 							jQuery("#field_"+f.HideField+"-"+cval).attr('checked','checked');
-						}else if(f.DataType=='select'){
-							if(jQuery("select[name^='item_meta["+f.HideField+"]'] option[value="+cval+"]").length)
-								jQuery("select[name^='item_meta["+f.HideField+"]'] option[value="+cval+"]").attr('selected','selected');
-							else
+						}else if(f.DataType == 'select'){
+							if(jQuery("select[name^='item_meta["+f.HideField+"]'] option[value="+cval+"]").length){
+								jQuery("select[name^='item_meta["+f.HideField+"]'] option[value="+cval+"]").prop('selected', true);
+							}else{
 								prev.splice(ckey,1); //remove options that no longer exist
+							}
 						}else{
 							jQuery("input[name^='item_meta["+f.HideField+"]']").val(cval);
 						}
 					}
 				});
 			}
+			
+			frm_checked_dep.push(f.HideField);
 			frmCheckDependent(prev,f.HideField);
 		}
 	});

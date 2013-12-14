@@ -249,6 +249,9 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 .tabs-panel{height:auto !important; min-height:260px;}
 .tabs-panel.panel_secondary{min-height:20px;margin-top:10px;margin-left:150px;}
 
+#frm_where_options select{max-width:200px;}
+#frm_where_options{min-height:31px;}
+
 .tabs-panel.active .tabs-panel, .frm_settings_form .tabs-panel .tabs-panel{border:none;padding:0;} /*for add-on reverse compatability */
 /*@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
@@ -307,7 +310,7 @@ li.ui-state-default.selected .frm-show-hover{visibility:visible;}
 .frm_move_field:before{content: '\e61a';}
 .frm_delete_icon:before{content: '\e610';}
 .frm_new_template_icon:before{content: '\e614';}
-.frm_tooltip_icon:before{content: '\e611';font-size:13px;vertical-align:text-top;}
+.frm_tooltip_icon:before{content: '\e611';font-size:13px;vertical-align:top;}
 .frm_duplicate_form:active, .frm_move_field:active, .frm_delete_icon:active {outline:none;}
 .frm_single_option .frm_delete_icon{float:left;visibility:hidden;margin-right:3px;}
 
@@ -332,6 +335,11 @@ a.frm_action_icon:hover {text-decoration:none;}
 .frm-hover-icon{padding-left:5px;}
 .frm-move.frm-hover-icon{padding-left:3px;}
 .frm-move{cursor:move;}
+
+
+.frm_remove_tag:before{content:'\e600';}
+.frm_add_tag:before{content:'\e602';}
+
 .howto{font-weight:normal;}
 span.howto{display:inline;}
 #frm_form_editor_container .themeRoller span.howto{display:inline;}
@@ -407,7 +415,8 @@ span.howto{display:inline;}
 .frm_38_trigger #new_fields .widget-inside .form-table td p,
 .frm_38_trigger #new_fields .widget-inside .form-wrap label{font-size:12px;padding:10px}
 .frm_inline_label{padding-left:3px;}
-.frm_left_label{clear:both;float:left;width:23%;min-width:170px;}
+.frm_left_label{clear:both;float:left;width:23%;min-width:170px;line-height:2em;}
+td.frm_left_label{float:none;line-height:inherit;}
 .frm_left_label.frm_alignright{padding-right:10px;text-align:right;}
 .frm_with_left_label{width:75%;float:left;}
 #html_settings label{display:block;}

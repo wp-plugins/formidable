@@ -255,6 +255,9 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 });
 
 $('#wpbody').on('click', '.frm_remove_tag', frm_remove_this_tag);
+$('.frm_add_remove').on('click', '.frm_add_where_row', frm_add_where_row);
+$('#new_fields').on('click', '.frm_add_logic_row', frmAddFieldLogicRow);
+$('.notification_settings').on('click', '.frm_add_form_logic', frmAddFormLogicRow);
 
 //is export page
 if($('#frm_export_xml').length){
@@ -434,18 +437,34 @@ function frmUpdateOpts(field_id,opts){
 }
 
 function frm_remove_this_tag(){
-	jQuery('#'+jQuery(this).data('removeid')).remove();
+	var id=jQuery(this).data('removeid');
+
+	if(id.indexOf('frm_where_field_') === 0 && jQuery('#frm_where_options .frm_where_row').length<2){
+		var show='#frm_where_options .frm_add_where_row';
+	}else if(id.indexOf('frm_logic_') === 0 && jQuery(this).closest('.frm_logic_rows').find('.frm_logic_row').length<2){
+		var show='#'+jQuery(this).closest('td').children('.frm_add_logic_link').attr('id');
+	}else{
+		var show='';
+	}
+
+	jQuery('#'+id).fadeOut('slow', function(){
+		jQuery('#'+id).remove();
+		if(show!='')
+			jQuery(show).fadeIn('slow');
+	});
+	if(show!='')
+		jQuery(this).closest('.frm_logic_rows').fadeOut('slow');
 }
 
 function frm_remove_tag(html_tag){jQuery(html_tag).remove();}
 
 function frmToggleLogic(id){
 $ele = jQuery('#'+id);
-$ele.fadeOut('slow'); $ele.next('.frm_logic_rows').fadeIn('slow');
+$ele.fadeOut('slow');$ele.next('.frm_logic_rows').fadeIn('slow');
 }
 function frmToggleDiv(){
-	var div=jQuery(this).data('toggle');
-	if(jQuery(div).is(':visible')){ jQuery(div).slideUp('fast');}else{jQuery(div).slideDown('fast');}
+var div=jQuery(this).data('toggle');
+if(jQuery(div).is(':visible')){ jQuery(div).slideUp('fast');}else{jQuery(div).slideDown('fast');}
 }
 function frm_show_div(div,value,show_if,class_id){
 if(value==show_if) jQuery(class_id+div).fadeIn('slow'); else jQuery(class_id+div).fadeOut('slow');
@@ -467,6 +486,24 @@ function frmAddNewForm(form,action){if(form !='') window.location='?page=formida
 function frmRedirectToForm(form,action){if(form !='') window.location='?page=formidable-entries&frm_action='+action+'&form='+form;}
 function frmRedirectToDisplay(form,action){if(form !='') window.location='?page=formidable-entry-templates&frm_action='+action+'&form='+form;}
 
+function frmAddFieldLogicRow(){
+var id=jQuery(this).closest('td').children('.frm_add_logic_row').attr('id').replace('logic_', '');
+var form_id=jQuery('input[name="id"]').val();
+if(jQuery('#frm_logic_row_'+id+' .frm_logic_row').length>0)
+	var meta_name=1+parseInt(jQuery('#frm_logic_row_'+id+' .frm_logic_row:last').attr('id').replace('frm_logic_'+id+'_', ''));
+else var meta_name=0;
+jQuery.ajax({
+	type:"POST",url:ajaxurl,
+	data:"action=frm_add_logic_row&form_id="+form_id+"&field_id="+id+"&meta_name="+meta_name,
+	success:function(html){
+		jQuery('#logic_'+id).fadeOut('slow', function(){
+			jQuery('#frm_logic_row_'+id).append(html);
+			jQuery('#frm_logic_row_'+id).parent('.frm_logic_rows').fadeIn('slow');
+		});
+	}
+});
+}
+
 function frm_add_logic_row(id,form_id){
 jQuery.ajax({
     type:"POST",url:ajaxurl,
@@ -475,14 +512,22 @@ jQuery.ajax({
 });
 }
 
-function frmAddFormLogicRow(id,form_id){
-if(jQuery('#frm_notification_'+id+' .frm_logic_row').length>0)
+function frmAddFormLogicRow(){
+var id=jQuery(this).data('emailkey');
+var form_id=jQuery('input[name="id"]').val();
+if(jQuery('#frm_notification_'+id+' .frm_logic_row').length)
 	var meta_name=1+parseInt(jQuery('#frm_notification_'+id+' .frm_logic_row:last').attr('id').replace('frm_logic_'+id+'_', ''));
-else var meta_name=0;
+else 
+	var meta_name=0;
 jQuery.ajax({
     type:"POST",url:ajaxurl,
     data:"action=frm_add_form_logic_row&form_id="+form_id+"&email_id="+id+"&meta_name="+meta_name,
-    success:function(html){jQuery('#frm_logic_row_'+id).append(html);}
+    success:function(html){
+		jQuery('#logic_link_'+id).fadeOut('slow', function(){
+			jQuery('#frm_logic_row_'+id).append(html);
+			jQuery('#frm_logic_row_'+id).parent('.frm_logic_rows').fadeIn('slow');
+		});
+	}
 });
 }
 
@@ -877,13 +922,13 @@ function frm_insert_where_options(value,where_key){
 
 function frm_add_where_row(){
 	var form_id=jQuery('#form_id').val();
-	if(jQuery('#frm_where_options div:last').length>0)
+	if(jQuery('#frm_where_options div:last').length)
     	var l=jQuery('#frm_where_options div:last').attr('id').replace('frm_where_field_', '');
 	else
     	var l=0;
 	jQuery.ajax({type:"POST",url:ajaxurl,
 		data:"action=frm_add_where_row&form_id="+form_id+"&where_key="+(parseInt(l)+1),
-		success:function(html){jQuery('#frm_where_options').append(html);}
+		success:function(html){jQuery('#frm_where_options').append(html).children('.frm_add_where_row').hide();}
 	});
 }
 
