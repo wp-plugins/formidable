@@ -35,8 +35,8 @@ There are dozens of form-building plugins out there to create forms, but most ar
 
 == Screenshots ==
 1. Form creation page
-2. Field Options
-3. Field Options for checkbox field.
+2. Field Options and CSS Layout Classes
+3. Field Options for checkbox fields
 4. Entry Management page
 5. Form Widget
 
