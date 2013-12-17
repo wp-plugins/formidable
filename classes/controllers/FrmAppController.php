@@ -123,7 +123,7 @@ function frm_install_now(){
             // user is authorized, but running free version
             $inst_install_url = 'http://formidablepro.com/manual_downloads/';
         ?>
-    <div class="error" style="padding:7px;"><?php echo apply_filters('frm_pro_update_msg', sprintf(__('This site has been previously authorized to run Formidable Pro.<br/>%1$sDownload the pro version%2$s or %3$sdeauthorize%4$s now.', 'formidable'), '<a href="'. $inst_install_url .'">', '</a>', '<a href="javascript:void(0)" onclick="frm_deauthorize_now()" class="frm_deauthorize_link">', '</a>'), $inst_install_url); ?></div>
+    <div class="error" style="padding:7px;"><?php echo apply_filters('frm_pro_update_msg', sprintf(__('This site has been previously authorized to run Formidable Pro.<br/>%1$sDownload the pro version%2$s or %3$sdeauthorize%4$s now.', 'formidable'), '<a href="'. $inst_install_url .'" target="_blank">', '</a>', '<a href="javascript:void(0)" onclick="frm_deauthorize_now()" class="frm_deauthorize_link">', '</a>'), $inst_install_url); ?></div>
 <script type="text/javascript">
 function frm_deauthorize_now(){
 if(!confirm("<?php esc_attr_e('Are you sure you want to deauthorize Formidable Pro on this site?', 'formidable') ?>"))
