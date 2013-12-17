@@ -7,7 +7,7 @@
             
             <div style="float:left;width:50%;">      
             <p><?php _e('Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports.', 'formidable') ?></p>
-            <a href="http://formidablepro.com"><?php _e('Learn More', 'formidable') ?> &#187;</a>
+            <?php printf(__('%1$sClick here%2$s to get it now', 'formidable'), '<a href="http://formidablepro.com">', '</a>') ?> &#187;
             </div>
             
             <div class="clear"></div>

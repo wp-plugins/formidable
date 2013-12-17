@@ -21,6 +21,7 @@ class FrmAppController{
         register_activation_hook(FrmAppHelper::plugin_path().'/formidable.php', 'FrmAppController::install');
         add_action('wp_ajax_frm_install', 'FrmAppController::install');
         add_action('wp_ajax_frm_uninstall', 'FrmAppController::uninstall');
+        add_action('wp_ajax_frm_deauthorize', 'FrmAppController::deauthorize');
 
         // Used to process standalone requests
         add_action('init', 'FrmAppController::parse_standalone_request', 40);
@@ -119,10 +120,21 @@ function frm_install_now(){
         }
             
         if( self::pro_is_authorized() and !self::pro_is_installed()){
-            //TODO: What to do if user is authorized, but running free version?
-            $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $frm_update->plugin_name, 'upgrade-plugin_' . $frm_update->plugin_name);
+            // user is authorized, but running free version
+            $inst_install_url = 'http://formidablepro.com/manual_downloads/';
         ?>
-    <div class="error" style="padding:7px;"><?php echo apply_filters('frm_pro_update_msg', sprintf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">', '</a>'), $inst_install_url); ?></div>  
+    <div class="error" style="padding:7px;"><?php echo apply_filters('frm_pro_update_msg', sprintf(__('This site has been previously authorized to run Formidable Pro.<br/>%1$sDownload the pro version%2$s or %3$sdeauthorize%4$s now.', 'formidable'), '<a href="'. $inst_install_url .'">', '</a>', '<a href="javascript:void(0)" onclick="frm_deauthorize_now()" class="frm_deauthorize_link">', '</a>'), $inst_install_url); ?></div>
+<script type="text/javascript">
+function frm_deauthorize_now(){
+if(!confirm("<?php esc_attr_e('Are you sure you want to deauthorize Formidable Pro on this site?', 'formidable') ?>"))
+	return false;
+jQuery('.frm_deauthorize_link').html('<span class="spinner" style="display:inline-block;margin-top:0;float:none;"></span>');
+jQuery.ajax({type:'POST',url:ajaxurl,data:'action=frm_deauthorize',
+success:function(msg){jQuery('.error').fadeOut('slow');}
+});
+return false;
+}
+</script>
         <?php 
         }
     }
@@ -422,6 +434,13 @@ function frm_install_now(){
     
     public static function pro_is_authorized(){
         return get_site_option('frmpro-authorized');
+    }
+    
+    function deauthorize(){
+        delete_option('frmpro-credentials');
+        delete_option('frmpro-authorized');
+        delete_site_option('frmpro-credentials');
+        delete_site_option('frmpro-authorized');
     }
 
 }
