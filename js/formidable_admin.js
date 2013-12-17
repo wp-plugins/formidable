@@ -256,6 +256,9 @@ $('.cancel-frm_shortcode', '#frm_shortcodediv').click(function() {
 
 $('#wpbody').on('click', '.frm_remove_tag', frm_remove_this_tag);
 $('.frm_add_remove').on('click', '.frm_add_where_row', frm_add_where_row);
+//Jamie's changes
+$('.frm_add_remove').on('click', '.frm_add_order_row', frm_add_order_row);
+//End of changes
 $('#new_fields').on('click', '.frm_add_logic_row', frmAddFieldLogicRow);
 $('.notification_settings').on('click', '.frm_add_form_logic', frmAddFormLogicRow);
 $('#post_settings').on('click', '.frm_add_postmeta_row', frm_add_postmeta_row);
@@ -934,6 +937,20 @@ function frm_toggle_cf_opts(){
 	jQuery(this).closest('.frm_postmeta_row').find('.frm_enternew, .frm_cancelnew').toggle();
 	return false;
 }
+
+//Jamie's changes
+function frm_add_order_row(){
+	var form_id=jQuery('#form_id').val();
+	if(jQuery('#frm_order_options div:last').length>0)
+    	var l=jQuery('#frm_order_options div:last').attr('id').replace('frm_order_field_', '');
+	else
+    	var l=0;
+	jQuery.ajax({type:"POST",url:ajaxurl,
+		data:"action=frm_add_order_row&form_id="+form_id+"&order_key="+(parseInt(l)+1),
+		success:function(html){jQuery('#frm_order_options').append(html);}
+	});
+}
+//End of changes
 
 function frm_insert_where_options(value,where_key){
 	jQuery.ajax({
