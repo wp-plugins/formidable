@@ -176,7 +176,13 @@ label input[type="checkbox"], label input[type="radio"]{vertical-align:baseline;
 	border:none;
 }
 
-.frm_posttax_opt_list{border:1px solid #DFDFDF; padding:5px; overflow:auto; max-height:200px;}
+.frm_posttax_opt_list{
+	border:1px solid #DFDFDF;
+	padding:10px;
+	overflow:auto;
+	max-height:200px;
+	background-color:#fff;
+}
 .frm_field_opts_list{
 	height:105px; margin-top:10px;
 	border:1px solid #ddd;

@@ -444,13 +444,22 @@ function frmUpdateOpts(field_id,opts){
 
 function frm_remove_this_tag(){
 	var id=jQuery(this).data('removeid');
-
+	var show='';
+	
 	if(id.indexOf('frm_where_field_') === 0 && jQuery('#frm_where_options .frm_where_row').length<2){
-		var show='#frm_where_options .frm_add_where_row';
+		show='#frm_where_options .frm_add_where_row';
+	}else if(id.indexOf('frm_order_field_') == 0 && jQuery('#frm_order_options .frm_order_row').length<2){
+		show='#frm_order_options .frm_add_order_row';
 	}else if(id.indexOf('frm_logic_') === 0 && jQuery(this).closest('.frm_logic_rows').find('.frm_logic_row').length<2){
-		var show='#'+jQuery(this).closest('td').children('.frm_add_logic_link').attr('id');
-	}else{
-		var show='';
+		show='#'+jQuery(this).closest('td').children('.frm_add_logic_link').attr('id');
+	}else if(id.indexOf('frm_postmeta_') === 0){
+		if(jQuery('#frm_postmeta_rows .frm_postmeta_row').length<2)
+			show='.frm_add_postmeta_row.button';
+		if(jQuery('.frm_toggle_cf_opts').length && jQuery('#frm_postmeta_rows .frm_postmeta_row').not('#'+id).last().length){
+			if(show!='')
+				show += ','
+			show += '#'+jQuery('#frm_postmeta_rows .frm_postmeta_row').not('#'+id).last().attr('id')+' .frm_toggle_cf_opts';
+		}
 	}
 
 	jQuery('#'+id).fadeOut('slow', function(){
@@ -886,7 +895,11 @@ if(jQuery('.frm_postmeta_row').length){
 jQuery.ajax({
     type:"POST",url:ajaxurl,
     data:"action=frm_add_postmeta_row&form_id="+id+"&meta_name="+meta_name,
-    success:function(html){jQuery('#frm_postmeta_rows').append(html);jQuery('.frm_toggle_cf_opts').not(':last').hide();}
+    success:function(html){
+		jQuery('#frm_postmeta_rows').append(html);
+		jQuery('.frm_toggle_cf_opts').not(':last').hide();
+		jQuery('.frm_add_postmeta_row.button').hide();
+	}
 });
 }
 
@@ -947,7 +960,7 @@ function frm_add_order_row(){
     	var l=0;
 	jQuery.ajax({type:"POST",url:ajaxurl,
 		data:"action=frm_add_order_row&form_id="+form_id+"&order_key="+(parseInt(l)+1),
-		success:function(html){jQuery('#frm_order_options').append(html);}
+		success:function(html){jQuery('#frm_order_options').append(html).children('.frm_add_order_row').hide();}
 	});
 }
 //End of changes
