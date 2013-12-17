@@ -305,13 +305,7 @@ DEFAULT_HTML;
         $wpdb->query('DROP TABLE IF EXISTS '. $this->entry_metas);
         
         delete_option('frm_options');
-        delete_option('frm_db_version');
-        
-        $frm_update = new FrmUpdatesController();
-        delete_option($frm_update->pro_last_checked_store);
-        delete_option($frm_update->pro_auth_store);
-        delete_option($frm_update->pro_cred_store);
-        
+        delete_option('frm_db_version');        
         
         //delete roles
         $frm_roles = FrmAppHelper::frm_capabilities();

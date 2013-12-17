@@ -15,5 +15,5 @@ $frm_version = FrmAppHelper::plugin_version(); //deprecated: use FrmAppHelper::p
 $frm_ajax_url = admin_url('admin-ajax.php');
 
 global $frmpro_is_installed;
-$frmpro_is_installed = $frm_update->pro_is_installed_and_authorized();
+$frmpro_is_installed = FrmAppController::pro_is_installed();
 

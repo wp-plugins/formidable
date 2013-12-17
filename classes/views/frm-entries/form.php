@@ -3,7 +3,7 @@ global $frm_vars, $frm_settings;
 $frm_vars['forms_loaded'][] = $form; 
 if($values['custom_style']) $frm_vars['load_css'] = true;
 
-if(!$frm_vars['css_loaded'] and $frm_vars['load_css']){
+if((!isset($frm_vars['css_loaded']) || !$frm_vars['css_loaded']) && $frm_vars['load_css']){
 echo FrmAppController::footer_js('header');
 $frm_vars['css_loaded'] = true;
 }

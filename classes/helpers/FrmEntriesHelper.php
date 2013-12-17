@@ -59,7 +59,7 @@ class FrmEntriesHelper{
                 unset($opt_defaults);
                 
                 if ($field_array['size'] == '')
-                    $field_array['size'] = $frm_vars['sidebar_width'];
+                    $field_array['size'] = isset($frm_vars['sidebar_width']) ? $frm_vars['sidebar_width'] : '';
             
                 
                 if ($field_array['custom_html'] == '')

@@ -21,21 +21,8 @@
             <?php } ?>
         </ul>
         </div>
-        
-<?php if (is_multisite() and !is_super_admin() and get_site_option($frm_update->pro_wpmu_store)){ ?>
-<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;padding:0;display:<?php echo ($a == 'general_settings') ? 'block' : 'none'; ?>;">
-<?php }else{ ?>
-<div class="general_settings metabox-holder tabs-panel" style="min-height:0px;border-bottom:none;display:<?php echo ($a == 'general_settings') ? 'block' : 'none'; ?>;">
-    <div class="postbox">
-        <h3 class="hndle manage-menus"><div id="icon-ms-admin" class="icon32 frm_postbox_icon"><br/></div> <?php _e('Formidable Pro License', 'formidable')?></h3>
-        <div class="inside">
-            <?php 
-            $upd = new FrmUpdatesController();
-            $upd->pro_cred_form(); ?>
-        </div>
-    </div>
-<?php } ?>
-</div>
+
+    <?php do_action('frm_before_settings'); ?>
     
     <form name="frm_settings_form" method="post" class="frm_settings_form" action="?page=formidable-settings<?php echo (isset($_GET['t'])) ? '&amp;t='. $_GET['t'] : ''; ?>">
         <input type="hidden" name="frm_action" value="process-form" />

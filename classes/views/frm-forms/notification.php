@@ -2,7 +2,7 @@
 <div id="frm_notification_<?php echo $email_key ?>" class="tabs-panel notification_settings <?php if(!$first_email) echo 'panel_secondary' ?>" style="display:<?php echo ($a == 'notification_settings') ? 'block' : 'none'; ?>;">
 <table class="form-table <?php if(!$first_email) echo 'menu-settings'; ?>">
 <tr>
-    <td width="150px"><label><?php _e('From/Reply to', 'formidable') ?></label> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>"></span>
+    <td><label><?php _e('From/Reply to', 'formidable') ?></label> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('Usually the name and email of the person filling out the form. Select from Text, Email, User ID, or hidden fields for the name. &lt;br/&gt;Defaults to your site name and admin email found on the WordPress General Settings page.', 'formidable') ?>"></span>
     </td>
     <td class="frm_email_reply_container">
         <div class="alignright frm_email_actions feature-filter">

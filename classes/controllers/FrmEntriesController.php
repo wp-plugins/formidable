@@ -98,6 +98,9 @@ class FrmEntriesController{
             return;
         
         $params = FrmEntriesController::get_params($form);
+        
+        if(!isset($frm_vars['form_params']))
+            $frm_vars['form_params'] = array();
         $frm_vars['form_params'][$form->id] = $params;
         
         if(isset($frm_vars['created_entries'][$_POST['form_id']]))
@@ -200,7 +203,7 @@ class FrmEntriesController{
         else if(!is_object($form))
             $form = $frm_form->getOne($form);
         
-        if($frm_vars['form_params'] and isset($frm_vars['form_params'][$form->id]))
+        if(isset($frm_vars['form_params']) && is_array($frm_vars['form_params']) && isset($frm_vars['form_params'][$form->id]))
             return $frm_vars['form_params'][$form->id];
            
         $action_var = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';

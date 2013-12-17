@@ -350,7 +350,7 @@ class FrmAppHelper{
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field_type);
                 
                 if ($field_array['size'] == '')
-                    $field_array['size'] = $frm_vars['sidebar_width'];
+                    $field_array['size'] = isset($frm_vars['sidebar_width']) ? $frm_vars['sidebar_width'] : '';
                 
                 $field_array = apply_filters('frm_setup_edit_fields_vars', $field_array, $field, $values['id']);
                 

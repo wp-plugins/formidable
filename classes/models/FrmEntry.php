@@ -91,6 +91,8 @@ class FrmEntry{
             $entry_id = $wpdb->insert_id;
             
             global $frm_vars;
+            if(!isset($frm_vars['saved_entries']))
+                $frm_vars['saved_entries'] = array();
             $frm_vars['saved_entries'][] = (int)$entry_id;
             
             if (isset($values['item_meta']))
@@ -121,6 +123,8 @@ class FrmEntry{
             $entry_id = $wpdb->insert_id;
             
             global $frm_vars;
+            if(!isset($frm_vars['saved_entries']))
+                $frm_vars['saved_entries'] = array();
             $frm_vars['saved_entries'][] = (int)$entry_id;
             
             $frm_entry_meta->duplicate_entry_metas($id, $entry_id);
@@ -131,7 +135,7 @@ class FrmEntry{
 
     function update( $id, $values ){
         global $wpdb, $frm_entry_meta, $frm_field, $frm_vars;
-        if(in_array((int)$id, (array)$frm_vars['saved_entries']))
+        if(isset($frm_vars['saved_entries']) && is_array($frm_vars['saved_entries']) && in_array((int)$id, (array)$frm_vars['saved_entries']))
             return;
 
         $new_values = array();
@@ -154,6 +158,10 @@ class FrmEntry{
         $query_results = $wpdb->update( $wpdb->prefix .'frm_items', $new_values, compact('id') );
         if($query_results)
             wp_cache_delete( $id, 'frm_entry');
+        
+        if(!isset($frm_vars['saved_entries']))
+            $frm_vars['saved_entries'] = array();
+        
         $frm_vars['saved_entries'][] = (int)$id;
         
         if (isset($values['item_meta']))

@@ -11,20 +11,25 @@ if(class_exists('FrmSettingsController'))
 class FrmSettingsController{
     function FrmSettingsController(){
         add_action('admin_menu', 'FrmSettingsController::menu', 45);
+        add_action('frm_before_settings', 'FrmSettingsController::license_box');
     }
 
     public static function menu(){
         add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', 'FrmSettingsController::route');
     }
+    
+    public static function license_box(){
+        $a = isset($_GET['t']) ? $_GET['t'] : 'general_settings';
+        include(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/license_box.php');
+    }
 
     public static function display_form($errors=array(), $message=''){
         global $frm_settings, $frm_vars;
-      
-        $frm_update = new FrmUpdatesController();
+        
         $frm_roles = FrmAppHelper::frm_capabilities();
       
         $uploads = wp_upload_dir();
-        $target_path = $uploads['basedir'] . "/formidable/css";
+        $target_path = $uploads['basedir'] . '/formidable/css';
         $sections = apply_filters('frm_add_settings_section', array(
             'styling' => array('name' => __('Form Styling', 'formidable'), 'class' => 'FrmSettingsController', 'function' => 'styling_tab')
         ));
@@ -42,7 +47,6 @@ class FrmSettingsController{
         $message = '';
         
         if(!isset($frm_vars['settings_routed']) or !$frm_vars['settings_routed']){
-            $frm_update = new FrmUpdatesController();
             //$errors = $frm_settings->validate($_POST,array());
             $frm_settings->update($_POST);
 

@@ -25,11 +25,8 @@ require(dirname( __FILE__ ) .'/classes/models/FrmSettings.php');
 
 global $frm_vars;
 $frm_vars = array(
-    'load_css' => false, 'forms_loaded' => array(), 'css_loaded' => false,
-    'saved_entries' => array(), 'created_entries' => array(), 'editing_entry' => false,
-    'sidebar_width' => '', 'readonly' => false,
-    'form_params' => array(), 'pro_is_installed' => false,
-    'media_id' => array(), 'rte_loaded' => array()
+    'load_css' => false, 'forms_loaded' => array(),
+    'created_entries' => array(), 'pro_is_installed' => false
 );
 
 require(dirname( __FILE__ ) .'/classes/helpers/FrmAppHelper.php');
@@ -90,7 +87,6 @@ require($frm_path .'/classes/controllers/FrmFormsController.php');
 require($frm_path .'/classes/controllers/FrmEntriesController.php');
 require($frm_path .'/classes/controllers/FrmSettingsController.php');
 require($frm_path .'/classes/controllers/FrmStatisticsController.php');
-require($frm_path .'/classes/controllers/FrmUpdatesController.php');
 
 $obj = new FrmAppController();
 $obj = new FrmEntriesController();
@@ -98,14 +94,13 @@ $obj = new FrmFieldsController();
 $obj = new FrmFormsController();
 $obj = new FrmSettingsController();
 $obj = new FrmStatisticsController();
-$frm_update  = new FrmUpdatesController();
 
 // Instansiate Helpers
 require($frm_path .'/classes/helpers/FrmEntriesHelper.php');
 require($frm_path .'/classes/helpers/FrmFieldsHelper.php');
 require($frm_path .'/classes/helpers/FrmFormsHelper.php');
 
-if($frm_update->pro_is_installed_and_authorized())
+if(FrmAppController::pro_is_installed())
   require($frm_path .'/pro/formidable-pro.php');
 
 // Register Widgets
@@ -116,4 +111,3 @@ if(class_exists('WP_Widget')){
 
 include($frm_path .'/deprecated.php');
 unset($frm_path);
-unset($frm_update);

@@ -21,7 +21,6 @@ class FrmAppController{
         register_activation_hook(FrmAppHelper::plugin_path().'/formidable.php', 'FrmAppController::install');
         add_action('wp_ajax_frm_install', 'FrmAppController::install');
         add_action('wp_ajax_frm_uninstall', 'FrmAppController::uninstall');
-        add_action('wp_ajax_frm_deauthorize', 'FrmAppController::deauthorize');
 
         // Used to process standalone requests
         add_action('init', 'FrmAppController::parse_standalone_request', 40);
@@ -91,8 +90,6 @@ class FrmAppController{
     }
 
     public static function pro_get_started_headline(){
-        $frm_update = new FrmUpdatesController();
-
         // Don't display this error as we're upgrading the thing... cmon
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
             return;
@@ -121,8 +118,8 @@ function frm_install_now(){
             }
         }
             
-        if( $frm_update->pro_is_authorized() and !$frm_update->pro_is_installed()){
-            $frm_update->manually_queue_update();
+        if( self::pro_is_authorized() and !self::pro_is_installed()){
+            //TODO: What to do if user is authorized, but running free version?
             $inst_install_url = wp_nonce_url('update.php?action=upgrade-plugin&plugin=' . $frm_update->plugin_name, 'upgrade-plugin_' . $frm_update->plugin_name);
         ?>
     <div class="error" style="padding:7px;"><?php echo apply_filters('frm_pro_update_msg', sprintf(__('Your Formidable Pro installation isn\'t quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Formidable Pro%2$s', 'formidable'), '<a href="'.$inst_install_url.'">', '</a>'), $inst_install_url); ?></div>  
@@ -274,7 +271,7 @@ function frm_install_now(){
         global $frm_settings, $frm_vars;
 
         if($frm_vars['load_css'] and (!is_admin() or defined('DOING_AJAX')) and ($frm_settings->load_style != 'none')){
-            if($frm_vars['css_loaded'])
+            if(isset($frm_vars['css_loaded']) && $frm_vars['css_loaded'])
                 $css = apply_filters('get_frm_stylesheet', array());
             else
                 $css = apply_filters('get_frm_stylesheet', array('frm-forms' => FrmAppHelper::plugin_url() .'/css/frm_display.css'));
@@ -282,7 +279,7 @@ function frm_install_now(){
             if(!empty($css)){
                 echo "\n".'<script type="text/javascript">';
                 foreach((array)$css as $css_key => $file){
-                    echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\''. ($css_key + $frm_vars['css_loaded']) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
+                    echo 'jQuery("head").append(unescape("%3Clink rel=\'stylesheet\' id=\''. ($css_key + (isset($frm_vars['css_loaded']) ? $frm_vars['css_loaded'] : false)) .'-css\' href=\''. $file. '\' type=\'text/css\' media=\'all\' /%3E"));';
                     //wp_enqueue_style($css_key);
                     unset($css_key);
                     unset($file);
@@ -312,13 +309,6 @@ function frm_install_now(){
             wp_die($frm_settings->admin_permission);
         }
         die();
-    }
-    
-    public static function deauthorize(){
-        delete_option('frmpro-credentials');
-        delete_option('frmpro-authorized');
-        delete_site_option('frmpro-credentials');
-        delete_site_option('frmpro-authorized');
     }
     
     // Routes for wordpress pages -- we're just replacing content here folks.
@@ -424,6 +414,14 @@ function frm_install_now(){
             return 'postbox-container';
         else
             return 'inner-sidebar';
+    }
+    
+    public static function pro_is_installed(){
+        return file_exists(FrmAppHelper::plugin_path() . '/pro/formidable-pro.php');
+    }
+    
+    public static function pro_is_authorized(){
+        return get_site_option('frmpro-authorized');
     }
 
 }
