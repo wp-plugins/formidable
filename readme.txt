@@ -64,13 +64,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.07.03 =
-//TODO updated-by
 * Removed auto updating from free version
 * PRO: Allow newly added custom fields on the "Create posts" tab to be selected from existing options
 * PRO: Fixed ordering in a view set to show a single entry
 * PRO: Fixed adding new filters to views
 * PRO: Allow a low-level user to edit entries submitted by another user when the setting is turned on, even if they have not submitted an entry themselves
 * PRO: Fixed data from entries fields across multiple pages
+* PRO: Added [updated-by] shortcode for use in views
+* PRO: Send the detail page of a view through any set filters
+* PRO: In a view, use limit over page size if limit is lower
 
 = 1.07.02 =
 * Added form switcher to nav and other UI enhancements
