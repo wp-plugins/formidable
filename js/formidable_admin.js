@@ -948,6 +948,7 @@ function frmShowLevCheck(cat){
 
 function frm_toggle_cf_opts(){
 	jQuery(this).closest('.frm_postmeta_row').find('.frm_enternew, .frm_cancelnew').toggle();
+	jQuery(this).closest('.frm_postmeta_row').find('input.frm_enternew, select.frm_cancelnew').val('');
 	return false;
 }
 

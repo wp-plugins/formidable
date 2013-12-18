@@ -67,6 +67,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.07.03 =
 * Removed auto updating from free version
 * PRO: Allow newly added custom fields on the "Create posts" tab to be selected from existing options
+* PRO: Allow html=1 and show_filename=1 to be used together for showing a filename linking to the file
+* PRO: If not using show_filename=1, default to show the file type icon or non-image file types
 * PRO: Fixed ordering in a view set to show a single entry
 * PRO: Fixed adding new filters to views
 * PRO: Allow a low-level user to edit entries submitted by another user when the setting is turned on, even if they have not submitted an entry themselves
