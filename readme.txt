@@ -34,11 +34,12 @@ There are dozens of form-building plugins out there to create forms, but most ar
 4. Use shortcode [formidable id=x] in pages, posts, or text widgets.
 
 == Screenshots ==
-1. Form creation page
-2. Field Options and CSS Layout Classes
-3. Field Options for checkbox fields
-4. Entry Management page
-5. Form Widget
+1. Create beautiful forms without any code.
+2. Form creation page
+3. Field Options and CSS Layout Classes
+4. Field Options for checkbox fields
+5. Entry Management page
+6. Form Widget
 
 == Frequently Asked Questions ==
 = Q. Why aren't I getting any emails? =
