@@ -66,6 +66,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 == Changelog ==
 = 1.07.03 =
 * Removed auto updating from free version
+* PRO: Added secondary ordering options in Views
 * PRO: Allow newly added custom fields on the "Create posts" tab to be selected from existing options
 * PRO: Allow html=1 and show_filename=1 to be used together for showing a filename linking to the file
 * PRO: If not using show_filename=1, default to show the file type icon or non-image file types
@@ -76,6 +77,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added [updated-by] shortcode for use in views
 * PRO: Send the detail page of a view through any set filters
 * PRO: In a view, use limit over page size if limit is lower
+* PRO: Fixed going backwards in a multi-paged form, when 2 or more pages are skipped at a time
 
 = 1.07.02 =
 * Added form switcher to nav and other UI enhancements

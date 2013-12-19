@@ -76,7 +76,30 @@ form label.frm_primary_label input{font-size:12px;}
 .caret{display:inline-block;width:0;height:0;margin-left:2px;vertical-align:middle;border-top:4px solid #000000;border-right:4px solid transparent;border-left:4px solid transparent;border-bottom:0 dotted;}
 .dropdown{position:relative;}
 .dropdown-toggle:focus{outline:0;}
-.frm-dropdown-menu{max-height:200px;overflow:scroll;position:absolute;top:100%;left:0;z-index:1000;display:none;float:left;min-width:160px;padding:5px 0;margin:2px 0 0;list-style:none;font-size:14px;background-color:#ffffff;border:1px solid #cccccc;border:1px solid rgba(0, 0, 0, 0.15);border-radius:4px;-webkit-box-shadow:0 6px 12px rgba(0, 0, 0, 0.175);box-shadow:0 6px 12px rgba(0, 0, 0, 0.175);background-clip:padding-box;}
+.frm-dropdown-menu{
+	max-height:200px;
+	overflow:scroll;
+	overflow-x: hidden;
+	position:absolute;
+	top:100%;
+	left:0;
+	z-index:1000;
+	display:none;
+	float:left;
+	min-width:160px;
+	width:auto;
+	padding:5px 0;
+	margin:2px 0 0;
+	list-style:none;
+	font-size:14px;
+	background-color:#ffffff;
+	border:1px solid #cccccc;
+	border:1px solid rgba(0, 0, 0, 0.15);
+	border-radius:4px;
+	-webkit-box-shadow:0 6px 12px rgba(0, 0, 0, 0.175);
+	box-shadow:0 6px 12px rgba(0, 0, 0, 0.175);
+	background-clip:padding-box;
+}
 .frm-dropdown-menu.pull-right{right:0;left:auto;}
 .frm-dropdown-menu .divider{height:1px;margin:9px 0;overflow:hidden;background-color:#e5e5e5;}
 .frm-dropdown-menu>li>a{display:block;padding:3px 20px;clear:both;font-weight:normal;line-height:1.428571429;color:#333333;white-space:nowrap;}
@@ -431,7 +454,7 @@ span.howto{display:inline;}
 .frm_38_trigger #new_fields .widget-inside .form-wrap label{font-size:12px;padding:10px}
 .frm_inline_label{padding-left:3px;}
 .frm_left_label{clear:both;float:left;width:23%;min-width:170px;line-height:2em;}
-td.frm_left_label{float:none;line-height:inherit;}
+table td.frm_left_label{float:none;line-height:inherit;padding-right:0;}
 .frm_left_label.frm_alignright{padding-right:10px;text-align:right;}
 .frm_with_left_label{width:75%;float:left;}
 #html_settings label{display:block;}
