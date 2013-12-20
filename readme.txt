@@ -74,6 +74,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Make sure entries aren't deleted in another form if using the form switcher right after deleting all entries in a form
 * PRO: Fixed error when saving a field with conditional logic with no field selected
 * PRO: Allow subscribers and below to add custom taxonomies to posts
+* PRO: Fixed conditional data from entries fields across multiple pages in an ajax form
 
 = 1.07.03 =
 * Removed auto updating from free version
