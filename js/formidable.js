@@ -196,7 +196,7 @@ for(i=0; i<len; i++){
 	if(i==(len-1)){
 		jQuery.each(hide_later, function(hkey,hvalue){ 
 			if(typeof(hvalue)!='undefined' && typeof(hvalue.result)!='undefined'){
-				if((hvalue.match=='any' && !jQuery.inArray(true, show_fields[hvalue.fkey])) || (hvalue.match=='all' && jQuery.inArray(false, show_fields[hvalue.fkey]))){
+				if((hvalue.match=='any' && !jQuery.inArray(true, show_fields[hvalue.fkey]) > -1) || (hvalue.match=='all' && jQuery.inArray(false, show_fields[hvalue.fkey]) > -1)){
 					if(hvalue.show=='show'){
 						jQuery('#frm_field_'+hvalue.fkey+'_container:hidden').hide();
 						jQuery('#frm_field_'+hvalue.fkey+'_container').hide();
@@ -268,7 +268,7 @@ function frmGetDataOpts(f,selected,field_id){
 	}
 	
 	//don't check the same field twice when more than a 2-level dependency, and parent is not on this page
-	if(jQuery.inArray(f.HideField, frm_checked_dep) && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length){
+	if(jQuery.inArray(f.HideField, frm_checked_dep) > -1 && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length){
 		return;
 	}
 		
@@ -282,7 +282,7 @@ function frmGetDataOpts(f,selected,field_id){
 			});
 		}else if(jQuery("select[name^='item_meta["+f.HideField+"]']").length){
 			prev = jQuery("select[name^='item_meta["+f.HideField+"]']").val();
-		}else if(jQuery.inArray(f.HideField, frm_checked_dep)){
+		}else if(jQuery.inArray(f.HideField, frm_checked_dep) > -1){
 			return;
 		}
 	}else{
