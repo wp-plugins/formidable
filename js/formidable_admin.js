@@ -28,7 +28,7 @@ $('#new_fields').sortable({
         jQuery.ajax({
             type:"POST",url:ajaxurl,data:"action=frm_insert_field&form_id="+$('input[name="id"]').val()+"&field="+new_id,
             success:function(msg){ 
-				$('#new_fields').removeClass('frm_no_fields');
+				$('.frm_no_fields').hide();
                 $('.frmbutton_loadingnow#'+new_id).replaceWith(msg);
                 var regex = /id="(\S+)"/; match=regex.exec(msg);
                 $('#'+match[1]+' .frm_ipe_field_label').mouseover().click();
@@ -563,7 +563,7 @@ if(f){
 
 function add_frm_field_link(form_id,field_type){
 jQuery.ajax({type:"POST",url:ajaxurl,data:"action=frm_insert_field&form_id="+form_id+"&field="+field_type,
-success:function(msg){jQuery('#new_fields').removeClass('frm_no_fields').append(msg); jQuery('#new_fields li:last .frm_ipe_field_label').mouseover().click();}
+success:function(msg){jQuery('.frm_no_fields').hide(); jQuery('#new_fields').append(msg); jQuery('#new_fields li:last .frm_ipe_field_label').mouseover().click();}
 });
 };
 
@@ -699,7 +699,7 @@ function frm_delete_field(field_id){
         success:function(msg){
 			jQuery('#frm_field_id_'+field_id).fadeOut('slow', function(){
 				jQuery('#frm_field_id_'+field_id).remove();
-				if(jQuery('#new_fields li').length === 0) jQuery('#new_fields').addClass('frm_no_fields');
+				if(jQuery('#new_fields li').length === 0) jQuery('.frm_no_fields').show();
 			});
 		}
     });

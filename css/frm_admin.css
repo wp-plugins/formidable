@@ -379,6 +379,11 @@ a.frm_action_icon:hover {text-decoration:none;}
 .frm_remove_tag:before{content:'\e600';vertical-align: middle;}
 .frm_add_tag:before{content:'\e602';vertical-align: middle;}
 
+.frm_invalid_icon:before{content: '\e608';padding-right:10px;}
+.frm_invalid_icon{color:#B94A48;}
+.frm_valid_icon:before{content: '\e606';padding-right:10px;}
+.frm_valid_icon{color:#468847;}
+
 .howto{font-weight:normal;}
 span.howto{display:inline;}
 #frm_form_editor_container .themeRoller span.howto{display:inline;}
@@ -448,10 +453,39 @@ span.howto{display:inline;}
 }
 .frm_validation_msg p label{float:left;width:25%;max-width:100px;}
 #new_fields .form-field .widget .frm_validation_msg input{width:71%;}
-#new_fields.frm_no_fields{background:url(../images/new_build_bg.png) no-repeat 92% center;}
+
 .frm_38_trigger #new_fields .widget-inside .form-table td,
 .frm_38_trigger #new_fields .widget-inside .form-table td p,
-.frm_38_trigger #new_fields .widget-inside .form-wrap label{font-size:12px;padding:10px}
+.frm_38_trigger #new_fields .widget-inside .form-wrap label{
+	font-size:12px;
+	padding:10px;
+}
+
+.frm_no_fields div{
+	float:right;
+}
+.frm_no_fields .frm_brace{
+	font-size:500px;
+	color:#2f8db2;
+	font-weight:300;
+}
+.frm_no_fields .frm_all_field_inst{
+	font-family:'Comic Sans MS', cursive, sans-serif;
+	font-size: 58px;
+	font-weight: 600;
+	margin-top:180px;
+	letter-spacing:2px;
+	margin-right: 20px;
+}
+.frm_no_fields .frm_drag_inst{
+	font-family:'Comic Sans MS', cursive, sans-serif;
+	font-size: 43px;
+	font-weight: 300;
+	margin-top: 38px;
+	margin-right: 225px;
+	color: #808080;
+}
+
 .frm_inline_label{padding-left:3px;}
 .frm_left_label{clear:both;float:left;width:23%;min-width:170px;line-height:2em;}
 table td.frm_left_label{float:none;line-height:inherit;padding-right:0;}
@@ -825,8 +859,6 @@ span.clear{display:block;}
 			background: url(../images/form_32_sprite-2x.png) no-repeat !important;
 			background-size: 325px 33px !important;
 		}
-		
-		#new_fields.frm_no_fields{background-image:url(../images/new_build_bg-2x.png); background-size:617px 412px;}
 }
 @media only screen and (max-width: 600px) {
 	.frm_form_nav a {

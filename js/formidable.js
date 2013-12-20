@@ -90,9 +90,9 @@ for(i=0; i<len; i++){
 
 	if(f.FieldName!=field_id || typeof(selected)=='undefined' || selected=='und'){
 		var prevSel=selected;
-		if(f.Type=='radio' || f.Type=='data-radio')
+		if(f.Type=='radio' || f.Type=='data-radio'){
 			selected=jQuery("input[name='item_meta["+f.FieldName+"]']:checked, input[type='hidden'][name='item_meta["+f.FieldName+"]']").val();
-		else if(f.Type=='select' || f.Type=='data-select')
+		}else if(f.Type=='select' || f.Type=='data-select'){
 			selected=jQuery("select[name^='item_meta["+f.FieldName+"]'], input[type='hidden'][name^='item_meta["+f.FieldName+"]']").val();
 			if(jQuery("input[type='hidden'][name^='item_meta["+f.FieldName+"]']").length){
 				selected = new Array();
@@ -100,8 +100,9 @@ for(i=0; i<len; i++){
 					selected.push(jQuery(this).val());
 				});
 			}
-		else if(f.Type !='checkbox' && f.Type !='data-checkbox')
+		}else if(f.Type !='checkbox' && f.Type !='data-checkbox'){
 			selected=jQuery("input[name^='item_meta["+f.FieldName+"]']").val();
+		}
 	}
 
 	if(typeof(selected)=='undefined'){

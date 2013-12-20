@@ -56,7 +56,7 @@ class FrmFormsHelper{
         else if(isset($_GET['form']) and !isset($_GET['id']))
             unset($args['id']);
         
-        if(isset($_GET['page']) and $_GET['page'] == 'formidable-entries' and isset($_GET['frm_action']) and in_array($_GET['frm_action'], array('edit', 'show'))){
+        if(isset($_GET['page']) and $_GET['page'] == 'formidable-entries' and isset($_GET['frm_action']) and in_array($_GET['frm_action'], array('edit', 'show', 'destroy_all'))){
             $args['frm_action'] = 'list';
             $args['form'] = 0;
         }else if(isset($_GET['page']) and $_GET['page'] == 'formidable' and isset($_GET['frm_action']) and $_GET['frm_action'] == 'new'){

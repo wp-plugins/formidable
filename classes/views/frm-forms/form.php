@@ -14,7 +14,12 @@
 </div>
 
 <div <?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'class="postbox"' : ''; ?>>
-<ul id="new_fields" class="<?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'inside' : ''; echo ( isset($values['fields']) and !empty($values['fields'])) ? '' : ' frm_no_fields'; ?>">
+<div class="frm_no_fields" <?php echo ( isset($values['fields']) && !empty($values['fields']) ) ? 'style="display:none;"' : ''; ?>>
+    <div class="frm_brace">{</div>
+    <div class="frm_all_field_inst"><?php _e('Add fields here', 'formidable') ?></div>
+    <div class="frm_drag_inst"><?php _e('(Just click or drag)') ?></div>
+</div>
+<ul id="new_fields" class="<?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'inside' : ''; ?>">
 <?php
 if (isset($values['fields']) and !empty($values['fields'])){
     $count = 0;
