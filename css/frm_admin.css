@@ -462,28 +462,30 @@ span.howto{display:inline;}
 }
 
 .frm_no_fields div{
-	float:right;
+	
 }
 .frm_no_fields .frm_brace{
 	font-size:500px;
 	color:#2f8db2;
 	font-weight:300;
+	line-height: 350px;
+	margin-left:3%;
+	float:right;
 }
 .frm_no_fields .frm_all_field_inst{
 	font-family:'Comic Sans MS', cursive, sans-serif;
 	font-size: 58px;
 	font-weight: 600;
-	margin-top:180px;
-	letter-spacing:2px;
-	margin-right: 20px;
+	margin-top:160px;
+	letter-spacing:2px;	
 }
 .frm_no_fields .frm_drag_inst{
 	font-family:'Comic Sans MS', cursive, sans-serif;
 	font-size: 43px;
 	font-weight: 300;
-	margin-top: 38px;
-	margin-right: 225px;
 	color: #808080;
+	margin-top:5px;
+	margin-right:8px;
 }
 
 .frm_inline_label{padding-left:3px;}
@@ -845,11 +847,23 @@ span.clear{display:block;}
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
 /* End hide from IE-mac */
+@media only screen and (max-width: 1200px) {
+	.frm_no_fields .frm_all_field_inst{ font-size: 40px;}
+	.frm_no_fields .frm_drag_inst{font-size: 30px;}
+}
+@media only screen and (max-width: 1050px) {
+	.frm_no_fields .frm_all_field_inst{ font-size: 30px;}
+	.frm_no_fields .frm_drag_inst{font-size: 20px;}
+}
 @media (min-width:768px){.navbar-right .frm-dropdown-menu{right:0;left:auto;}}
 @media only screen and (max-width: 850px) {
-#postbox-container-1 .frm_field_list{position:static; width:100%;}
-.frm_col_one{clear:none;}
-.field_type_list li{margin-right:4px;}
+	#postbox-container-1 .frm_field_list{position:static; width:100%;}
+	.frm_col_one{clear:none;}
+	.field_type_list li{margin-right:4px;}
+	.frm_no_fields .frm_brace {display:none;}
+	.frm_nofields_text {width:100%;}
+	.frm_no_fields .frm_all_field_inst{ font-size: 50px;text-align:center;}
+		.frm_no_fields .frm_drag_inst{font-size: 40px;text-align:center;}
 }
 @media print,
   (-o-min-device-pixel-ratio: 5/4),
@@ -865,6 +879,10 @@ span.clear{display:block;}
 	font-size: 12px;
 	padding: 5px 15px;
 	}
+}
+@media only screen and (max-width: 475px) {
+	.frm_no_fields .frm_all_field_inst{ font-size: 20px;}
+	.frm_no_fields .frm_drag_inst{font-size: 13px;}
 }
 @media only screen and (max-width: 450px) {
 	ul.frm_form_nav li{float:none;}
