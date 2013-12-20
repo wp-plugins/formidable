@@ -276,32 +276,38 @@ function frmGetData(f,selected,append){
 	});
 }
 
-function frmGetDataOpts(f,selected,field_id){	
-	var prev=new Array();
-	if(f.DataType=='checkbox' || f.DataType=='radio'){
-		jQuery("input[name^='item_meta["+f.HideField+"]']:checked, input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
-	}else if(f.DataType=='select'){
-		prev.push(jQuery("select[name^='item_meta["+f.HideField+"]']").val());
-		jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
-	}else{
-		prev.push(jQuery("input[name^='item_meta["+f.HideField+"]']").val());
-	}
-	if(prev.length == 0) prev = '';
-	
+function frmGetDataOpts(f,selected,field_id){
 	if(typeof(frm_checked_dep) == 'undefined'){
 		frm_checked_dep = new Array();
 	}
 	
 	//don't check the same field twice when more than a 2-level dependency, and parent is not on this page
-	if(frmInArray(f.HideField, frm_checked_dep) &&
-		!jQuery('#frm_data_field_'+field_id+'_container').length && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length
-		){
+	if(frmInArray(f.HideField, frm_checked_dep) && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length){
 		return;
 	}
+		
+	var prev=new Array();
+	if(f.DataType=='checkbox' || f.DataType=='radio'){
+		jQuery("input[name^='item_meta["+f.HideField+"]']:checked, input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){prev.push(jQuery(this).val());});
+	}else if(f.DataType=='select'){
+		if(jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").length){
+			jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").each(function(){
+				prev.push(jQuery(this).val());
+			});
+		}else if(jQuery("select[name^='item_meta["+f.HideField+"]']").length){
+			prev = jQuery("select[name^='item_meta["+f.HideField+"]']").val();
+		}else if(frmInArray(f.HideField, frm_checked_dep)){
+			return;
+		}
+	}else{
+		prev.push(jQuery("input[name^='item_meta["+f.HideField+"]']").val());
+	}
+	if(prev == null || prev.length == 0) prev = '';
+	
+	frm_checked_dep.push(f.HideField);
 	
 	//don't get values for fields that are to remain hidden on the page
 	if(!jQuery('#frm_data_field_'+f.HideField+'_container').length && jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").length){
-		frm_checked_dep.push(f.HideField);
 		frmCheckDependent(prev,f.HideField);
 		return false;
 	}
@@ -318,7 +324,6 @@ function frmGetDataOpts(f,selected,field_id){
 			}else if(f.MatchType!='all'){
 				jQuery('#frm_field_'+f.HideField+'_container').show();
 			}
-			
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
 			if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen)
 				jQuery('.frm_chzn').chosen();
@@ -359,6 +364,7 @@ function frmOnSubmit(e){
 function frmGetFormErrors(object){
 	jQuery(object).find('input[type="submit"], input[type="button"]').attr('disabled','disabled');
 	jQuery(object).find('.frm_ajax_loading').css('visibility', 'visible');
+	frm_checked_dep = new Array();
 	jQuery.ajax({
 		type:"POST",url:frm_js.ajax_url,
 	    data:jQuery(object).serialize()+"&action=frm_entries_"+jQuery(object).find('input[name="frm_action"]').val()+"&_ajax_nonce=1",

@@ -65,12 +65,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.07.04 =
-* PRO: Added frm_show_delete_all hook to hide the "delete all entries" button
+* Minor back-end styling fixes
+* PRO: Added frm_show_delete_all hook to hide the "delete all entries" button, and show by default for those with back-end entry editing capabilities
 * PRO: Fixed inserting conditional examples from the sidebar box
 * PRO: Fixed viewing single post with some view configurations
 * PRO: Fixed detailed view for calendar displays when entries are not posts
 * PRO: Fixed conditional logic on page load for radio buttons
 * PRO: Make sure entries aren't deleted in another form if using the form switcher right after deleting all entries in a form
+* PRO: Fixed error when saving a field with conditional logic with no field selected
+* PRO: Allow subscribers and below to add custom taxonomies to posts
 
 = 1.07.03 =
 * Removed auto updating from free version

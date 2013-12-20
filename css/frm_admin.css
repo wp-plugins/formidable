@@ -461,6 +461,11 @@ span.howto{display:inline;}
 	padding:10px;
 }
 
+.frm_38_trigger #new_fields .widget-inside .form-table td p,
+.frm_38_trigger #new_fields .widget-inside .form-wrap label{
+	padding:10px 0;
+}
+
 .frm_no_fields div{
 	
 }
