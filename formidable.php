@@ -80,7 +80,6 @@ $obj = new FrmNotification();
 
 
 // Instansiate Controllers
-require($frm_path .'/classes/controllers/FrmApiController.php');
 require($frm_path .'/classes/controllers/FrmAppController.php');
 require($frm_path .'/classes/controllers/FrmFieldsController.php');
 require($frm_path .'/classes/controllers/FrmFormsController.php');
