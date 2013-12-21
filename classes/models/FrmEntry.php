@@ -38,7 +38,7 @@ class FrmEntry{
         if(isset($values['frm_user_id']) and (is_numeric($values['frm_user_id']) or (is_admin() and !defined('DOING_AJAX')))){
             $new_values['user_id'] = $values['frm_user_id'];
         }else{
-            global $user_ID;
+            $user_ID = get_current_user_id();
             $new_values['user_id'] = $user_ID ? $user_ID : 0;
         }
         
@@ -151,7 +151,7 @@ class FrmEntry{
             
         $new_values['is_draft'] = (isset($values['frm_saving_draft']) and $values['frm_saving_draft'] == 1) ? 1 : 0;
 
-        global $user_ID;
+        $user_ID = get_current_user_id();
         $new_values['updated_by'] = $user_ID;
 
         $new_values = apply_filters('frm_update_entry', $new_values, $id);

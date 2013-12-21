@@ -43,7 +43,7 @@ class FrmEntriesController{
     }
     
     public static function show_form($id='', $key='', $title=false, $description=false){
-        global $user_ID, $frm_settings, $post;
+        global $frm_settings, $post;
         
         $frm_form = new FrmForm();
         if ($id) $form = $frm_form->getOne((int)$id);
@@ -51,6 +51,7 @@ class FrmEntriesController{
         else $form = false;
 
         $form = apply_filters('frm_pre_display_form', $form);
+        $user_ID = get_current_user_id();
         
         if(!$form or 
             (($form->is_template or $form->status == 'draft') and !isset($_GET) and !isset($_GET['form']) and 
