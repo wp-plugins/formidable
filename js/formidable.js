@@ -54,12 +54,17 @@ var default_value=default_value.replace(/(\n|\r\n)/g, '\r');
 if(thefield.value==''){thefield.value=default_value;jQuery(thefield).addClass('frm_default');}
 }
 
-function frmCheckDependent(selected,field_id){
+function frmCheckDependent(selected,field_id,rec){
 if(typeof(__FRMRULES)!='undefined') var rules=__FRMRULES;
 if(typeof(rules)=='undefined') return;
 			
 rules=rules[field_id];
 if(typeof(rules)=='undefined') return;
+
+if (typeof(rec) == 'undefined' || rec === null) {
+	//stop recursion?
+	rec = 'go';
+}
 	
 var this_opts=new Array();
 for(var i=0;i<rules.length;i++){
@@ -179,7 +184,7 @@ for(i=0; i<len; i++){
 		if(show_fields[f.HideField][i]!=false){
 			if(f.Show=='show'){
 				if(show_fields[f.HideField][i]!=true){
-					frmShowField(show_fields[f.HideField][i],f.FieldName);
+					frmShowField(show_fields[f.HideField][i],f.FieldName,rec);
 				}else{
 					jQuery('#frm_field_'+f.HideField+'_container').show();
 				}
@@ -211,7 +216,7 @@ for(i=0; i<len; i++){
 						jQuery('#frm_field_'+hvalue.fkey+'_container').hide();
 					}
 				}
-				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,hvalue.fname);
+				if(typeof(hvalue.result)!=false && typeof(hvalue.result)!=true) frmShowField(hvalue.result,hvalue.fname,rec);
 				delete hide_later[hkey];
 			}
 		});
@@ -237,8 +242,8 @@ function frmOperators(op,a,b){
 	return operators[op](a,b);
 }
 
-function frmShowField(funcInfo,field_id){
-if(funcInfo.funcName=='frmGetDataOpts'){frmGetDataOpts(funcInfo.f,funcInfo.sel,field_id);}
+function frmShowField(funcInfo,field_id,rec){
+if(funcInfo.funcName=='frmGetDataOpts'){frmGetDataOpts(funcInfo.f,funcInfo.sel,field_id,rec);}
 else if(funcInfo.funcName=='frmGetData'){frmGetData(funcInfo.f,funcInfo.sel,0);}
 }
 
@@ -262,13 +267,13 @@ function frmGetData(f,selected,append){
 	});
 }
 
-function frmGetDataOpts(f,selected,field_id){
+function frmGetDataOpts(f,selected,field_id,rec){
 	if(typeof(frm_checked_dep) == 'undefined'){
 		frm_checked_dep = new Array();
 	}
 	
 	//don't check the same field twice when more than a 2-level dependency, and parent is not on this page
-	if(jQuery.inArray(f.HideField, frm_checked_dep) > -1 && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length){
+	if(rec == 'stop' && jQuery.inArray(f.HideField, frm_checked_dep) > -1 && jQuery("input[type='hidden'][name^='item_meta["+field_id+"]']").length){
 		return;
 	}
 		
@@ -282,7 +287,7 @@ function frmGetDataOpts(f,selected,field_id){
 			});
 		}else if(jQuery("select[name^='item_meta["+f.HideField+"]']").length){
 			prev = jQuery("select[name^='item_meta["+f.HideField+"]']").val();
-		}else if(jQuery.inArray(f.HideField, frm_checked_dep) > -1){
+		}else if((rec == 'stop' || jQuery('#frm_data_field_'+f.HideField+'_container .frm-loading-img').length) && jQuery.inArray(f.HideField, frm_checked_dep) > -1){
 			return;
 		}
 	}else{
@@ -294,7 +299,7 @@ function frmGetDataOpts(f,selected,field_id){
 	
 	//don't get values for fields that are to remain hidden on the page
 	if(!jQuery('#frm_data_field_'+f.HideField+'_container').length && jQuery("input[type='hidden'][name^='item_meta["+f.HideField+"]']").length){
-		frmCheckDependent(prev,f.HideField);
+		frmCheckDependent(prev,f.HideField,'stop');
 		return false;
 	}
 	
@@ -338,7 +343,7 @@ function frmGetDataOpts(f,selected,field_id){
 					}
 				});
 			}
-			frmCheckDependent(prev,f.HideField);
+			frmCheckDependent(prev,f.HideField,'stop');
 		}
 	});
 }
