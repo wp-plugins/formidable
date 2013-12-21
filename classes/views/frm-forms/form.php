@@ -18,7 +18,7 @@
     <div class="frm_brace">{</div>
 	<div class="alignright frm_nofields_text">	
     	<div class="frm_all_field_inst"><?php _e('Add fields here', 'formidable') ?></div>
-    	<div class="frm_drag_inst"><?php _e('(Just click or drag)') ?></div>
+    	<div class="frm_drag_inst"><?php _e('(Just click or drag)', 'formidable') ?></div>
 	</div>
 </div>
 <ul id="new_fields" class="<?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'inside' : ''; ?>">
