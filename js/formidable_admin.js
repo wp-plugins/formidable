@@ -258,7 +258,7 @@ $('#wpbody').on('click', '.frm_remove_tag', frm_remove_this_tag);
 $('.frm_add_remove').on('click', '.frm_add_where_row', frm_add_where_row);
 $('.frm_add_remove').on('click', '.frm_add_order_row', frm_add_order_row);
 $('#new_fields').on('click', '.frm_add_logic_row', frmAddFieldLogicRow);
-$('.notification_settings').on('click', '.frm_add_form_logic', frmAddFormLogicRow);
+$('.frm_form_settings').on('click', '.frm_add_form_logic', frmAddFormLogicRow);
 $('#post_settings').on('click', '.frm_add_postmeta_row', frm_add_postmeta_row);
 $('#post_settings').on('click', '.frm_add_posttax_row', frm_add_posttax_row);
 $('#post_settings').on('click', '.frm_toggle_cf_opts', frm_toggle_cf_opts);

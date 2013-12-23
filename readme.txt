@@ -64,6 +64,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.05 =
+* PRO: Expanded conditional logic for email notifications
+* PRO: Added 'action' parameter back to the frm_redirect_url hook
+* PRO: Fixed adding new conditional logic to newly added notifications
+
 = 1.07.04 =
 * Minor back-end styling fixes
 * PRO: Added frm_show_delete_all hook to hide the "delete all entries" button, and show by default for those with back-end entry editing capabilities
