@@ -9,7 +9,7 @@
             <?php echo $email_key; ?>
             <?php if($email_key > 0){ ?>
             <span class="frm_email_icons">
-                <a href="javascript:frmRemoveEmailList(<?php echo $email_key ?>)" class="frm_icon_font frm_delete_icon"> </a>
+                <a data-removeid="frm_notification_<?php echo $email_key ?>" class="frm_icon_font frm_delete_icon frm_remove_email"> </a>
             </span>
             <?php } ?>
         </div>

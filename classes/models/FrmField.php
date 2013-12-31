@@ -19,7 +19,7 @@ class FrmField{
         $new_values['options'] = $values['options'];
 
         $new_values['field_order'] = isset($values['field_order']) ? (int)$values['field_order'] : NULL;
-        $new_values['required'] = isset($values['required']) ? (int)$values['required'] : NULL;
+        $new_values['required'] = isset($values['required']) ? (int)$values['required'] : 0;
         $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id'] : NULL;
         $new_values['field_options'] = $values['field_options'];
         $new_values['created_at'] = current_time('mysql', 1);
@@ -111,6 +111,10 @@ class FrmField{
       
       wp_cache_delete( $id, 'frm_field' );
       $field = $this->getOne($id);
+      if ( !$field ) {
+          return false;
+      }
+      
       delete_transient('frm_all_form_fields_'. $field->form_id);
       
       $wpdb->query("DELETE FROM {$wpdb->prefix}frm_item_metas WHERE field_id='$id'");

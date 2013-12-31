@@ -2,7 +2,7 @@
 if(isset($values) and isset($values['ajax_load']) and $values['ajax_load'] and isset($count) and $count > 10){ ?>
 <li id="frm_field_id_<?php echo $field['id']; ?>" class="form-field frm_field_box frm_field_loading edit_form_item frm_top_container" data-triggered="0">
 <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/ajax_loader.gif" alt="<?php _e('Loading', 'formidable') ?>" />
-<span class="frm_hidden_fdata" style="display:none"><?php echo htmlspecialchars(json_encode($field)) ?></span>
+<span class="frm_hidden_fdata frm_hidden"><?php echo htmlspecialchars(json_encode($field)) ?></span>
 </li>
 <?php
    return;
@@ -208,7 +208,7 @@ if ($display['options']){ ?>
                 <?php } ?>
                 
                 <?php if ($display['required']){ ?>
-                <div class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>>
+                <div class="frm_required_details<?php echo $field['id'] . ( $field['required'] ? '' : ' frm_hidden'); ?>">
                     <span class="howto"><?php _e('Indicate required field with', 'formidable') ?></span>
                     <input type="text" name="field_options[required_indicator_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['required_indicator']); ?>" />
                 </div>
@@ -256,10 +256,10 @@ if ($display['options']){ ?>
                 <?php do_action('frm_field_options_form', $field, $display, $values); ?>
                 
                 <?php if ($display['required'] or $display['invalid'] or $display['unique']){ ?>
-                    <tr class="frm_validation_msg" <?php echo ($display['invalid'] || $field['required'] || (isset($field['unique']) && $field['unique'])) ? '' : 'style="display:none;"'; ?>><td><?php _e('Validation', 'formidable') ?></td>
+                    <tr class="frm_validation_msg <?php echo ($display['invalid'] || $field['required'] || (isset($field['unique']) && $field['unique'])) ? '' : 'frm_hidden'; ?>"><td><?php _e('Validation', 'formidable') ?></td>
                     <td class="frm_validation_box">
                         <?php if ($display['required']){ ?>
-                        <p class="frm_required_details<?php echo $field['id'] ?>" <?php if(!$field['required']) echo 'style="display:none;"'?>><label><?php _e('Required', 'formidable') ?></label>
+                        <p class="frm_required_details<?php echo $field['id'] . ($field['required'] ? '' : ' frm_hidden'); ?>"><label><?php _e('Required', 'formidable') ?></label>
                             <input type="text" name="field_options[blank_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['blank']); ?>" />
                         </p>
                         <?php } ?>
@@ -269,7 +269,7 @@ if ($display['options']){ ?>
                             </p>
                         <?php } ?>
                         <?php if($display['unique']){ ?>
-                        <p class="frm_unique_details<?php echo $field['id'] ?>" <?php if(!$field['unique']) echo 'style="display:none;"'?>>
+                        <p class="frm_unique_details<?php echo $field['id'] . ($field['unique'] ? '' : ' frm_hidden'); ?>">
                             <label><?php _e('Unique', 'formidable') ?></label>
                             <input type="text" name="field_options[unique_msg_<?php echo $field['id'] ?>]" value="<?php echo esc_attr($field['unique_msg']); ?>" />
                         </p>

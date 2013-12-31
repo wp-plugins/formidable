@@ -14,7 +14,7 @@
 </div>
 
 <div <?php echo version_compare( $GLOBALS['wp_version'], '3.7.2', '>') ? 'class="postbox"' : ''; ?>>
-<div class="frm_no_fields" <?php echo ( isset($values['fields']) && !empty($values['fields']) ) ? 'style="display:none;"' : ''; ?>>
+<div class="frm_no_fields <?php echo ( isset($values['fields']) && !empty($values['fields']) ) ? 'frm_hidden' : ''; ?>">
     <div class="frm_brace">{</div>
 	<div class="alignright frm_nofields_text">	
     	<div class="frm_all_field_inst"><?php _e('Add fields here', 'formidable') ?></div>
