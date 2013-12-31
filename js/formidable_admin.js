@@ -1071,7 +1071,7 @@ function frmImportCsv(formID){
     success:function(count){
         if(parseInt(count) > 0){
 			jQuery("#frm_import_message .frm_message").html('The next 250 of the remaining '+count+' entries are importing.<br/> If your browser doesn&#8217;t start loading the next set automatically, click this button: <a id="frm_import_link"  class="button-secondary" href="javascript:frmImportCsv('+formID+')">Import Now</a>');
-            location.href = "?page="+frm_admin_js.get_page+"&frm_action=import&step=import"+urlVars;
+            location.href = "?page=formidable-import&frm_action=import_csv"+urlVars;
         }else{ 
             jQuery("#frm_import_message").fadeOut("slow");
             location.href = "?page=formidable-entries&frm_action=list&form="+formID;
