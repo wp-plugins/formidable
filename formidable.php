@@ -84,15 +84,22 @@ require($frm_path .'/classes/controllers/FrmAppController.php');
 require($frm_path .'/classes/controllers/FrmFieldsController.php');
 require($frm_path .'/classes/controllers/FrmFormsController.php');
 require($frm_path .'/classes/controllers/FrmEntriesController.php');
-require($frm_path .'/classes/controllers/FrmSettingsController.php');
-require($frm_path .'/classes/controllers/FrmStatisticsController.php');
 
-$obj = new FrmAppController();
-$obj = new FrmEntriesController();
-$obj = new FrmFieldsController();
-$obj = new FrmFormsController();
-$obj = new FrmSettingsController();
-$obj = new FrmStatisticsController();
+FrmAppController::load_hooks();
+FrmEntriesController::load_hooks();
+FrmFieldsController::load_hooks();
+FrmFormsController::load_hooks();
+
+if(is_admin()){
+    require($frm_path .'/classes/controllers/FrmSettingsController.php');
+    FrmSettingsController::load_hooks();
+    
+    require($frm_path .'/classes/controllers/FrmStatisticsController.php');
+    FrmStatisticsController::load_hooks();
+    
+    require($frm_path .'/classes/controllers/FrmXMLController.php');
+    FrmXMLController::load_hooks();
+}
 
 // Instansiate Helpers
 require($frm_path .'/classes/helpers/FrmEntriesHelper.php');

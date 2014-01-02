@@ -9,7 +9,7 @@ if(class_exists('FrmFieldsController'))
     return;
  
 class FrmFieldsController{
-    function FrmFieldsController(){
+    public static function load_hooks(){
         add_action('wp_ajax_frm_load_field', 'FrmFieldsController::load_field');
         add_action('wp_ajax_frm_insert_field', 'FrmFieldsController::create');
         add_action('wp_ajax_frm_field_name_in_place_edit', 'FrmFieldsController::edit_name');
@@ -239,20 +239,19 @@ class FrmFieldsController{
         global $current_screen, $hook_suffix;
 
         // Catch plugins that include admin-header.php before admin.php completes.
-        if (empty( $current_screen ) and function_exists('set_current_screen')){
+        if ( empty( $current_screen ) ) {
             $hook_suffix = '';
         	set_current_screen();
         }
         
-        if(function_exists('register_admin_color_schemes'))
-            register_admin_color_schemes();
+        register_admin_color_schemes();
         
         $hook_suffix = $admin_body_class = '';
         
         if ( get_user_setting('mfold') == 'f' )
         	$admin_body_class .= ' folded';
 
-        if ( function_exists('is_admin_bar_showing') and is_admin_bar_showing() )
+        if ( is_admin_bar_showing() )
         	$admin_body_class .= ' admin-bar';
 
         if ( is_rtl() )

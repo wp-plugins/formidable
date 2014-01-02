@@ -9,7 +9,7 @@ if(class_exists('FrmFormsController'))
     return;
  
 class FrmFormsController{
-    function FrmFormsController(){
+    public static function load_hooks(){
         add_action('admin_menu', 'FrmFormsController::menu', 10);
         add_action('admin_menu', 'FrmFormsController::mid_menu', 40);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head');

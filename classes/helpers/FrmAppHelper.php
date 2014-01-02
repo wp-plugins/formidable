@@ -242,10 +242,7 @@ class FrmAppHelper{
         $key = '';
         
         if (!empty($name)){
-            if(function_exists('sanitize_key'))
-                $key = sanitize_key($name);
-            else
-                $key = sanitize_title_with_dashes($name);
+            $key = sanitize_key($name);
         }
         
         if(empty($key)){

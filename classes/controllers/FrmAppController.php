@@ -8,7 +8,7 @@ if(class_exists('FrmAppController'))
     return;
 
 class FrmAppController{
-    function FrmAppController(){
+    public static function load_hooks(){
         add_action('admin_menu', 'FrmAppController::menu', 1);
         add_action( 'admin_enqueue_scripts', 'FrmAppController::load_wp_admin_style' );
         add_filter('plugin_action_links_formidable/formidable.php', 'FrmAppController::settings_link', 10, 2 );

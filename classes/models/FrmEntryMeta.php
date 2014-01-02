@@ -185,12 +185,21 @@ class FrmEntryMeta{
         $query .= ($unique) ? "DISTINCT(it.item_id)" : "it.item_id";
         $query .= " FROM {$wpdb->prefix}frm_item_metas it LEFT OUTER JOIN {$wpdb->prefix}frm_fields fi ON it.field_id=fi.id ";
     
-        if(!$drafts){
+        if ( !$drafts ) {
             $query .= "INNER JOIN {$wpdb->prefix}frm_items e ON (e.id=it.item_id) ";
-            if(is_array($where))
+            if ( is_array($where) ) {
                 $where['e.is_draft'] = 0;
-            else
-                $where .= ' AND e.is_draft=0';
+            } else {
+                if ( strpos($where, ' GROUP BY ') ) {
+                    // don't inject WHERE filtering after GROUP BY
+                    $parts = explode(' GROUP BY ', $where);
+                    $where = $parts[0];
+                    $where .= ' AND e.is_draft=0';
+                    $where .= ' GROUP BY '. $parts[1];
+                } else {
+                    $where .= ' AND e.is_draft=0';
+                }
+            }
         }
 
         $query .= FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;

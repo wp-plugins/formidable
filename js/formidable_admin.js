@@ -1049,17 +1049,6 @@ function frmUpdateCSS(locStr){
 	}
 }
 
-function frm_import_templates(thisid){
-    jQuery('#'+thisid).replaceWith('<img id="' + thisid + '" src="'+ frm_js.images_url +'/wpspin_light.gif" alt="'+ frm_js.loading +'" />');
-    jQuery.ajax({
-		type:"POST",url:ajaxurl,
-		data:{'action':'frm_forms_import','path':jQuery('#frm_template_path').val()},
-        success:function(msg){ 
-			jQuery('#'+thisid).replaceWith(frm_admin_js.templates_updated);
-		}
-    });
-}
-
 function frmImportCsv(formID){
 	if(typeof(__FRMURLVARS)!='undefined') var urlVars=__FRMURLVARS;
 	else urlVars='';

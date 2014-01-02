@@ -364,10 +364,9 @@ DEFAULT_HTML;
         
         if(class_exists('FrmProForm')){
             $post_type = FrmProForm::post_type($field['form_id']);
-            if(function_exists('get_object_taxonomies')){
-                $args['taxonomy'] = FrmProAppHelper::get_custom_taxonomy($post_type, $field);
-                if(!$args['taxonomy'])
-                    return;
+            $args['taxonomy'] = FrmProAppHelper::get_custom_taxonomy($post_type, $field);
+            if ( !$args['taxonomy'] ) {
+                return;
             }
         }
         
@@ -443,4 +442,34 @@ DEFAULT_HTML;
     <?php
     }
     
+    public static function switch_field_ids($val){
+        global $frm_duplicate_ids;
+        $replace = array();
+        $replace_with = array();
+        foreach((array)$frm_duplicate_ids as $old => $new){
+            $replace[] = '[if '. $old .']';
+            $replace_with[] = '[if '. $new .']';
+            $replace[] = '[if '. $old .' ';
+            $replace_with[] = '[if '. $new .' ';
+            $replace[] = '[/if '. $old .']';
+            $replace_with[] = '[/if '. $new .']';
+            $replace[] = '['. $old .']';
+            $replace_with[] = '['. $new .']';
+            $replace[] = '['. $old .' ';
+            $replace_with[] = '['. $new .' ';
+            unset($old);
+            unset($new);
+        }
+        if(is_array($val)){
+            foreach($val as $k => $v){
+                $val[$k] = str_replace($replace, $replace_with, $v);
+                unset($k);
+                unset($v);
+            }
+        }else{
+            $val = str_replace($replace, $replace_with, $val);
+        }
+        
+        return $val;
+    }
 }

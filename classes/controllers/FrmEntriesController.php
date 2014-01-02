@@ -10,7 +10,7 @@ if(class_exists('FrmEntriesController'))
 
 class FrmEntriesController{
     
-    function FrmEntriesController(){
+    public static function load_hooks(){
         add_action('admin_menu', 'FrmEntriesController::menu', 11);
         add_action('wp', 'FrmEntriesController::process_entry', 10, 0);
         add_action('frm_wp', 'FrmEntriesController::process_entry', 10, 0);

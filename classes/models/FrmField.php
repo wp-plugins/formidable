@@ -82,6 +82,9 @@ class FrmField{
 
         if (isset($values['field_options']) and is_array($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
+            
+        if (isset($values['options']) and is_array($values['options']))
+            $values['options'] = serialize($values['options']);
         
         $query_results = $wpdb->update( $wpdb->prefix .'frm_fields', $values, array( 'id' => $id ) );
         

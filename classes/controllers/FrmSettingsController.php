@@ -7,9 +7,9 @@ if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.'
 
 if(class_exists('FrmSettingsController'))
     return;
- 
+
 class FrmSettingsController{
-    function FrmSettingsController(){
+    public static function load_hooks(){
         add_action('admin_menu', 'FrmSettingsController::menu', 45);
         add_action('frm_before_settings', 'FrmSettingsController::license_box');
     }
