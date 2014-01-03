@@ -259,7 +259,6 @@ return false;
         if($location == 'admin'){
             global $frm_settings;
             wp_localize_script('formidable_admin', 'frm_admin_js', array(
-                'templates_updated' => __('Templates Updated', 'formidable'),
                 'confirm_uninstall' => __('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable'),
                 'get_page' => (isset($_GET) and isset($_GET['page'])) ? $_GET['page'] : '',
                 'desc' => __('(Click here to add a description or instructions)', 'formidable'),
@@ -436,11 +435,10 @@ return false;
         return get_site_option('frmpro-authorized');
     }
     
-    function deauthorize(){
+    public static function deauthorize(){
         delete_option('frmpro-credentials');
         delete_option('frmpro-authorized');
         delete_site_option('frmpro-credentials');
         delete_site_option('frmpro-authorized');
     }
-
 }

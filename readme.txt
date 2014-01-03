@@ -65,10 +65,13 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 1.07.05 =
+* Added XML import/export
+* Moved more email settings and bulk form delete to free version
 * PRO: Expanded conditional logic for email notifications
 * PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL 
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
 * PRO: Fixed adding new conditional logic to newly added notifications
+* PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL
 
 = 1.07.04 =
 * Minor back-end styling fixes
@@ -149,7 +152,6 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added if statements to Default HTML button in email message
 * PRO: Added show_filename option to file upload fields
 * PRO: Allow dropdown data from entries fields to be set as read only
-
 
 = 1.07.01 =
 * Added for attribute to labels for newly created fields

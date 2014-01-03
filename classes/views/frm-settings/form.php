@@ -13,7 +13,7 @@
         <div id="contextual-help-back"></div>
         <div id="contextual-help-columns">
         <div class="contextual-help-tabs">
-        <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs id="category-tabs'; ?>">
+        <ul class="frm-category-tabs">
             <?php $a = isset($_GET['t']) ? $_GET['t'] : 'general_settings'; ?>
         	<li <?php echo ($a == 'general_settings') ? 'class="tabs active"' : '' ?>><a href="#general_settings" style="cursor:pointer"><?php _e('General', 'formidable') ?></a></li>
             <?php foreach($sections as $sec_name => $section){ ?>

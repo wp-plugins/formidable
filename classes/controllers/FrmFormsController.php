@@ -26,6 +26,8 @@ class FrmFormsController{
         
         add_action('wp_ajax_frm_forms_preview', 'FrmFormsController::preview');
         add_action('wp_ajax_nopriv_frm_forms_preview', 'FrmFormsController::preview');
+        
+        add_filter('frm_admin_list_form_action', 'FrmFormsController::process_bulk_form_actions');
     }
     
     public static function menu(){
@@ -433,36 +435,57 @@ class FrmFormsController{
         return $values;
     }
     
-    public static function add_default_templates($path, $default=true, $template=true){
-        global $frm_field;
-        $path = untrailingslashit(trim($path));
-        $templates = glob($path."/*.php");
+    public static function process_bulk_form_actions($errors) {
+        if ( !isset($_POST) ) return;
         
-        $frm_form = new FrmForm();
-        for($i = count($templates) - 1; $i >= 0; $i--){
-            $filename = str_replace('.php', '', str_replace($path.'/', '', $templates[$i]));
-            $template_query = array('form_key' => $filename);
-            if($template) $template_query['is_template'] = 1;
-            if($default) $template_query['default_template'] = 1;
-            $form = $frm_form->getAll($template_query, '', 1);
-            
-            $values = FrmFormsHelper::setup_new_vars();
-            $values['form_key'] = $filename;
-            $values['is_template'] = $template;
-            $values['status'] = 'published';
-            if($default) $values['default_template'] = 1;
-            
-            include($templates[$i]);
-            
-            //get updated form
-            if($form)
-                $form = $frm_form->getOne($form->id);
-            else
-                $form = $frm_form->getAll($template_query, '', 1);
-            
-            if($form)
-                do_action('frm_after_duplicate_form', $form->id, (array)$form);
+        $bulkaction = FrmAppHelper::get_param('action');
+        if ( $bulkaction == -1 ) {
+            $bulkaction = FrmAppHelper::get_param('action2');
         }
+
+        if ( !empty($bulkaction) && strpos($bulkaction, 'bulk_') === 0 ) {
+            if ( isset($_GET) && isset($_GET['action']) ) {
+                $_SERVER['REQUEST_URI'] = str_replace('&action=' .$_GET['action'], '', $_SERVER['REQUEST_URI']);
+            }
+            if ( isset($_GET) && isset($_GET['action2']) ) {
+                $_SERVER['REQUEST_URI'] = str_replace('&action=' .$_GET['action2'], '', $_SERVER['REQUEST_URI']);
+            }
+            
+            $bulkaction = str_replace('bulk_', '', $bulkaction);
+        } else {
+            $bulkaction = '-1';
+            if(isset($_POST['bulkaction']) && $_POST['bulkaction'] != '-1') {
+                $bulkaction = $_POST['bulkaction'];
+            } else if(isset($_POST['bulkaction2']) && $_POST['bulkaction2'] != '-1') {
+                $bulkaction = $_POST['bulkaction2'];
+            }
+        }
+
+        $ids = FrmAppHelper::get_param('item-action', '');
+        if ( empty($ids) ) {
+            $errors[] = __('No forms were specified', 'formidable');
+        } else {                
+            if ( $bulkaction == 'delete' ) {
+                if ( !current_user_can('frm_delete_forms') ) {
+                    global $frm_settings;
+                    $errors[] = $frm_settings->admin_permission;
+                } else {
+                    if ( !is_array($ids) ) {
+                        $ids = explode(',', $ids);
+                    }
+                        
+                    if ( is_array($ids) ) {
+                        if ( $bulkaction == 'delete' ) {
+                            $frm_form = new FrmForm();
+                            foreach ( $ids as $form_id ) {
+                                $frm_form->destroy($form_id);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $errors;
     }
 
     public static function route(){

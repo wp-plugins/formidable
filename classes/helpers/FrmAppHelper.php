@@ -63,24 +63,14 @@ class FrmAppHelper{
     }
     
     public static function load_scripts($scripts){
-        global $wp_version;
-        if(version_compare( $wp_version, '3.3', '<')){
-            global $wp_scripts;
-            $wp_scripts->do_items( (array)$scripts );
-        }else{
-            foreach((array)$scripts as $s)
-                wp_enqueue_script($s);
+        foreach ( (array) $scripts as $s ) {
+            wp_enqueue_script($s);
         }
     }
     
     public static function load_styles($styles){
-        global $wp_version;
-        if(version_compare( $wp_version, '3.3', '<')){
-            global $wp_styles;
-            $wp_styles->do_items( (array)$styles );
-        }else{
-            foreach((array)$styles as $s)
-                wp_enqueue_style($s);
+        foreach ( (array) $styles as $s ) {
+            wp_enqueue_style($s);
         }
     }
     

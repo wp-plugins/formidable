@@ -38,7 +38,7 @@
         <div id="contextual-help-back"></div>
         <div id="contextual-help-columns">
         <div class="contextual-help-tabs">
-        <ul class="frm-category-tabs <?php if(version_compare( $GLOBALS['wp_version'], '3.3.0', '<')) echo 'category-tabs" id="category-tabs'; ?> frm-form-setting-tabs">
+        <ul class="frm-category-tabs frm-form-setting-tabs">
             <?php $a = isset($_GET['t']) ? $_GET['t'] : 'advanced_settings'; ?>
         	<li <?php echo ($a == 'advanced_settings') ? 'class="tabs active"' : '' ?>><a href="#advanced_settings"><?php _e('General', 'formidable') ?></a></li>
         	<li <?php echo ($a == 'notification_settings') ? 'class="tabs active"' : '' ?>><a href="#notification_settings"><?php _e('Emails', 'formidable') ?></a></li>
@@ -55,14 +55,14 @@
                     <?php _e('Use Formidable styling for this form', 'formidable') ?></label></td>
                 </tr>
 
-                <tr><td colspan="2"><label><?php _e('Submit Button Text', 'formidable') ?></label>
+                <tr><td colspan="2"><label class="frm_left_label"><?php _e('Submit Button Text', 'formidable') ?></label>
                     <input type="text" name="options[submit_value]" value="<?php echo esc_attr($values['submit_value']); ?>" /></td>
                 </tr>
                 
-                <tr><td colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label><br/>
+                <tr><td colspan="2"><label><?php _e('Action After Form Submission', 'formidable') ?></label>
                     <?php if(!$frm_vars['pro_is_installed']){ ?>
                     <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('You must upgrade to Formidable Pro to get access to the second two options.', 'formidable') ?>" ></span>
-                    <?php } ?>
+                    <?php } ?><br/>
 
                         <label for="success_action_message"><input type="radio" name="options[success_action]" id="success_action_message" value="message" <?php checked($values['success_action'], 'message') ?> /> <?php _e('Display a Message', 'formidable') ?></label>
                         <label for="success_action_page" <?php echo $pro_feature ?>><input type="radio" name="options[success_action]" id="success_action_page" value="page" <?php checked($values['success_action'], 'page') ?> <?php if(!$frm_vars['pro_is_installed']) echo 'disabled="disabled" '; ?>/> <?php _e('Display content from another page', 'formidable') ?></label>
@@ -89,7 +89,7 @@
                     </td>
                 </tr>
                 
-                <tr><td colspan="2"><label for="ajax_load"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <?php _e('Load and save form builder page with AJAX', 'formidable') ?></label><span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('Recommended for long forms.', 'formidable') ?>" ></span></td></tr>
+                <tr><td colspan="2"><label for="ajax_load"><input type="checkbox" name="options[ajax_load]" id="ajax_load" value="1"<?php echo ($values['ajax_load']) ? ' checked="checked"' : ''; ?> /> <?php _e('Load and save form builder page with AJAX', 'formidable') ?></label> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('Recommended for long forms.', 'formidable') ?>" ></span></td></tr>
 
 
                 <?php do_action('frm_additional_form_options', $values); ?> 

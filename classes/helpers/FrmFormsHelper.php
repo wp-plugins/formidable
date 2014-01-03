@@ -116,24 +116,7 @@ class FrmFormsHelper{
         if(!isset($values['form_key']))
             $values['form_key'] = ($post_values and isset($post_values['form_key'])) ? $post_values['form_key'] : FrmAppHelper::get_unique_key('', $wpdb->prefix .'frm_forms', 'form_key');
         
-        $defaults = FrmFormsHelper::get_default_opts();
-        foreach ($defaults as $var => $default){
-            if($var == 'notification'){
-                if(!isset($values[$var]))
-                    $values[$var] = array();
-                
-                foreach($default as $k => $v){
-                    $values[$var][$k] = ($post_values and isset($post_values['notification'][$var])) ? $post_values['notification'][$var] : $v;
-                    unset($k);
-                    unset($v);
-                }
-            }else{
-                $values[$var] = ($post_values and isset($post_values['options'][$var])) ? $post_values['options'][$var] : $default;
-            }
-            
-            unset($var);
-            unset($default);
-        }
+        $values = self::fill_default_opts($values, false, $post_values);
             
         $values['custom_style'] = ($post_values and isset($post_values['options']['custom_style'])) ? $post_values['options']['custom_style'] : ($frm_settings->load_style != 'none');
         $values['before_html'] = FrmFormsHelper::get_default_html('before');
@@ -150,8 +133,44 @@ class FrmFormsHelper{
         $values['form_key'] = isset($post_values['form_key']) ? stripslashes_deep($post_values['form_key']) : $record->form_key;
         $values['default_template'] = isset($post_values['default_template']) ? $post_values['default_template'] : $record->default_template;
         $values['is_template'] = isset($post_values['is_template']) ? $post_values['is_template'] : $record->is_template;
+        
+        $values = self::fill_default_opts($values, $record, $post_values);
 
         return apply_filters('frm_setup_edit_form_vars', $values);
+    }
+    
+    public static function fill_default_opts($values, $record, $post_values) {
+        
+        $defaults = FrmFormsHelper::get_default_opts();
+        foreach ($defaults as $var => $default){
+            if ( is_array($default) ) {
+                if(!isset($values[$var]))
+                    $values[$var] = ($record && isset($record->options[$var])) ? $record->options[$var] : array();
+                
+                foreach($default as $k => $v){
+                    $values[$var][$k] = ($post_values && isset($post_values[$var][$k])) ? $post_values[$var][$k] : (($record && isset($record->options[$var]) && isset($record->options[$var][$k])) ? $record->options[$var][$k] : $v);
+                    
+                    if ( is_array($v) ) {
+                        foreach ( $v as $k1 => $v1 ) {
+                            $values[$var][$k][$k1] = ($post_values && isset($post_values[$var][$k][$k1])) ? $post_values[$var][$k][$k1] : (($record && isset($record->options[$var]) && isset($record->options[$var][$k]) && isset($record->options[$var][$k][$k1])) ? $record->options[$var][$k][$k1] : $v1);
+                            unset($k1);
+                            unset($v1);
+                        }
+                    }
+                    
+                    unset($k);
+                    unset($v);
+                }
+                
+            }else{
+                $values[$var] = ($post_values && isset($post_values['options'][$var])) ? $post_values['options'][$var] : (($record && isset($record->options[$var])) ? $record->options[$var] : $default);
+            }
+            
+            unset($var);
+            unset($default);
+        }
+        
+        return $values;
     }
     
     public static function get_default_opts(){
@@ -159,8 +178,12 @@ class FrmFormsHelper{
         
         return array(
             'notification' => array(
-                array('email_to' => $frm_settings->email_to, 'reply_to' => '', 'reply_to_name' => '',
-                'cust_reply_to' => '', 'cust_reply_to_name' => '')
+                array(
+                    'email_to' => $frm_settings->email_to, 'reply_to' => '', 'reply_to_name' => '',
+                    'cust_reply_to' => '', 'cust_reply_to_name' => '',
+                    'email_subject' => '', 'email_message' => '[default-message]', 
+                    'inc_user_info' => 0, 'plain_text' => 0,
+                )
             ),
             'submit_value' => $frm_settings->submit_value, 'success_action' => 'message',
             'success_msg' => $frm_settings->success_msg, 'show_form' => 0, 'akismet' => '',

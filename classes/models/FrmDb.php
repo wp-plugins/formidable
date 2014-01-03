@@ -205,7 +205,7 @@ DEFAULT_HTML;
         
 
         /**** ADD/UPDATE DEFAULT TEMPLATES ****/
-        FrmFormsController::add_default_templates(FrmAppHelper::plugin_path().'/classes/templates');
+        FrmXMLController::add_default_templates();
 
       
         /***** SAVE DB VERSION *****/

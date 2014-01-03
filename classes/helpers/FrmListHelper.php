@@ -93,11 +93,7 @@ class FrmListHelper extends WP_List_Table {
 	}
 	
 	function get_bulk_actions(){
-	    global $frm_vars;
-	    
-	    $actions = array();
-	    if($frm_vars['pro_is_installed'])
-            $actions['bulk_delete'] = __('Delete');
+	    $actions = array('bulk_delete' => __('Delete'));
             
         return $actions;
     }

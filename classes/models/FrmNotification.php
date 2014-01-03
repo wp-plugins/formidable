@@ -1,8 +1,5 @@
 <?php
-if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
-
-if(class_exists('FrmNotification'))
-    return;
+if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 class FrmNotification{
     function FrmNotification(){
@@ -13,11 +10,9 @@ class FrmNotification{
         if (apply_filters('frm_stop_standard_email', false, $entry_id)) return;
         global $frm_entry, $frm_entry_meta;
         
-        $frm_blogname = wp_specialchars_decode( get_option('blogname'), ENT_QUOTES );
-        $entry = $frm_entry->getOne($entry_id);
+        $entry = $frm_entry->getOne($entry_id, true);
         $frm_form = new FrmForm();
         $form = $frm_form->getOne($form_id);
-        $form->options = maybe_unserialize($form->options);
         $values = $frm_entry_meta->getAll("it.item_id = $entry_id", " ORDER BY fi.field_order");
         
         
@@ -26,28 +21,20 @@ class FrmNotification{
         else
             $notification = $form->options;
         
+        // Set the from and to email names and addresses
         $to_email = $notification['email_to']; 
-        if($to_email == '')
-            $to_email = get_option('admin_email');
+        if ( empty($to_email) ) {
+            $to_email = '[admin_email]';
+        }
 
         $to_emails = explode(',', $to_email);
         
         $reply_to = $reply_to_name = '';
-
-        $opener = sprintf(__('%1$s form has been submitted on %2$s.', 'formidable'), $form->name, $frm_blogname) ."\r\n\r\n";
-
-        $entry_data = '';
-        foreach ($values as $value){
+        
+        foreach ($values as $value) {
             $val = apply_filters('frm_email_value', maybe_unserialize($value->meta_value), $value, $entry);
             if (is_array($val))
                 $val = implode(', ', $val);
-
-            if($value->field_type == 'textarea'){
-                //$val = str_replace(array("\r\n", "\r", "\n"), "\r\n", $val);
-                $val = "\r\n". $val;
-            }
-
-            $entry_data .= $value->field_name . ': ' . $val . "\r\n\r\n";
 
             if(isset($notification['reply_to']) and (int)$notification['reply_to'] == $value->field_id and is_email($val))
                 $reply_to = $val;
@@ -57,33 +44,43 @@ class FrmNotification{
         }
         
             
-        if(empty($reply_to)){
-            if($notification['reply_to'] == 'custom')
-                $reply_to = $notification['cust_reply_to'];
-            
-            if(empty($reply_to))  
-                $reply_to = get_option('admin_email');
+        if ( empty($reply_to) && $notification['reply_to'] == 'custom' ) {
+            $reply_to = $notification['cust_reply_to'];
         }
         
-        if(empty($reply_to_name)){
-            if($notification['reply_to_name'] == 'custom')
-                $reply_to_name = $notification['cust_reply_to_name'];
+        if ( empty($reply_to_name) && $notification['reply_to_name'] == 'custom' ){
+            $reply_to_name = $notification['cust_reply_to_name'];
         }
-          
-        $data = maybe_unserialize($entry->description);  
-        $user_data = __('User Information', 'formidable') ."\r\n";
-        $user_data .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
-        $user_data .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
-        $user_data .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
-
-        $mail_body = stripslashes($opener . $entry_data ."\r\n". $user_data);
-        $subject = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, $frm_blogname); //subject
-
-        if(is_array($to_emails)){
-            foreach($to_emails as $to_email)
-                $this->send_notification_email(trim($to_email), $subject, $mail_body, $reply_to, $reply_to_name);
-        }else
-            $this->send_notification_email($to_email, $subject, $mail_body, $reply_to, $reply_to_name);
+        
+        // Set the email message
+        $plain_text = (isset($notification['plain_text']) && $notification['plain_text']) ? true : false;
+        $default = FrmEntriesController::show_entry_shortcode(array(
+            'id' => $entry->id, 'entry' => $entry, 'plain_text' => $plain_text,
+            'user_info' => (isset($notification['inc_user_info']) ? $notification['inc_user_info'] : false)
+        ));
+        
+        $mail_body = isset($notification['email_message']) ? $notification['email_message'] : '';
+        
+        // Add the default message
+        if ( strpos($mail_body, '[default-message]') !== false ) {
+            $mail_body = str_replace('[default-message]', $default, $mail_body);
+        } else {
+            $mail_body = $default;
+        }
+                
+        unset($default);
+        
+        // Set the subject
+        $subject = isset($notification['email_subject']) ? $notification['email_subject'] : '';
+        if ( empty($subject) ) {
+            $frm_blogname = wp_specialchars_decode( get_option('blogname'), ENT_QUOTES );
+            $subject = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, $frm_blogname);
+        }
+        
+        // Send the emails now
+        foreach ( (array) $to_emails as $to_email) {
+            $this->send_notification_email(trim($to_email), $subject, $mail_body, $reply_to, $reply_to_name, $plain_text);
+        }
     }
   
     function send_notification_email($to_email, $subject, $message, $reply_to='', $reply_to_name='', $plain_text=true, $attachments=array()){
@@ -110,7 +107,7 @@ class FrmNotification{
         
         remove_filter('wp_mail_from', 'bp_core_email_from_address_filter' );
         remove_filter('wp_mail_from_name', 'bp_core_email_from_name_filter');
-          
+        
         if (!wp_mail($recipient, $subject, $message, $header, $attachments)){
             $header = 'From: "'. $reply_to_name .'" <'. $reply_to .'>'. "\r\n";
             mail($recipient, $subject, $message, $header);

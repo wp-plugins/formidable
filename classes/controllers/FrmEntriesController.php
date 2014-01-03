@@ -144,6 +144,123 @@ class FrmEntriesController{
         }
     }
     
+    public static function show_entry_shortcode($atts){
+        extract(shortcode_atts(array(
+            'id' => false, 'entry' => false, 'fields' => false, 'plain_text' => false,
+            'user_info' => false, 'include_blank' => false, 'default_email' => false,
+            'form_id' => false
+        ), $atts));
+        
+        global $frm_entry;
+        
+        if ( !$entry || !is_object($entry) ) {
+            if ( !$id && !$default_email ) {
+                return '';
+            }
+            
+            if($id)
+                $entry = $frm_entry->getOne($id, true);
+        }
+        
+        if ( $entry ) {
+            $form_id = $entry->form_id;
+            $id = $entry->id;
+        }
+        
+        if ( !$fields || !is_array($fields) ) {
+            global $frm_field;
+            $fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
+        }
+        
+        $content = '';
+        $odd = true;
+            
+        if ( !$plain_text ) {
+            global $frmpro_settings;
+            if ( !$frmpro_settings ) {
+                $frmpro_settings = array(
+                    'field_border_width' => '1px',
+                    'border_color' => 'dddddd',
+                    'bg_color' => 'f7f7f7',
+                    'bg_color_active' => 'ffffff',
+                    'text_color' => '444444',
+                );
+                $frmpro_settings = (object) $frmpro_settings;
+            }
+            $content .= "<table cellspacing='0' style='font-size:12px;line-height:135%; border-bottom:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color};'><tbody>\r\n";
+            $bg_color = " style='background-color:#{$frmpro_settings->bg_color};'";
+            $bg_color_alt = " style='background-color:#{$frmpro_settings->bg_color_active};'";
+        }
+        
+        foreach ( $fields as $f ) {
+            if ( in_array($f->type, array('divider', 'captcha', 'break', 'html')) )
+                continue;
+                
+            if ( !isset($entry->metas[$f->id]) ) {
+                if ( !$include_blank && !$default_email ) {
+                    continue;
+                }
+                    
+                $entry->metas[$f->id] = $default_email ? '['. $f->id .']' : '';
+            }
+            
+            $prev_val = maybe_unserialize($entry->metas[$f->id]);
+            $meta = array('item_id' => $id, 'field_id' => $f->id, 'meta_value' => $prev_val, 'field_type' => $f->type);
+            
+            if ( $default_email ) {
+                $val = $prev_val;
+            } else{
+                $val = apply_filters('frm_email_value', $prev_val, (object)$meta, $entry);
+            }
+
+            if ( $f->type == 'textarea' and !$plain_text ) {
+                $val = str_replace(array("\r\n", "\r", "\n"), ' <br/>', $val);
+            }
+            
+            if ( is_array($val) ) {
+                $val = implode(', ', $val);
+            }
+             
+            $fname = $default_email ? '['. $f->id .' show=field_label]' : $f->name;   
+            if ( $plain_text ) {
+                $content .= $fname . ': ' . $val . "\r\n\r\n";
+            } else {
+                $row_style = "style='text-align:left;color:#{$frmpro_settings->text_color};padding:7px 9px;border-top:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color}'";
+             	if (!$default_email){
+             		$content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>" . $fname ."</th><td $row_style>$val</td></tr>\r\n";
+					$odd = ($odd) ? false : true;
+             	}else{
+					$content .= "[if $f->id]<tr style=\"[frm-alt-color]\"><th $row_style>" . $fname ."</th><td $row_style>$val</td></tr>\r\n[/if $f->id]";
+				}
+                
+            }
+            
+            unset($fname);
+            unset($f);
+        }
+        
+        if ( $user_info ) {
+            $data = maybe_unserialize($entry->description);
+            if ( $plain_text ) {
+                $content .= "\r\n\r\n" . __('User Information', 'formidable') ."\r\n";
+                $content .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
+                $content .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
+                $content .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
+            } else {
+                $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>". __('IP Address', 'formidable') . "</th><td $row_style>". $entry->ip ."</td></tr>\r\n";
+                $odd = ($odd) ? false : true;
+                $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>".__('User-Agent (Browser/OS)', 'formidable') . "</th><td $row_style>". $data['browser']."</td></tr>\r\n";
+                $odd = ($odd) ? false : true;
+                $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>".__('Referrer', 'formidable') . "</th><td $row_style>". str_replace("\r\n", '<br/>', $data['referrer']) ."</td></tr>\r\n";
+            }
+        }
+
+        if(!$plain_text)
+            $content .= "</tbody></table>";
+        
+        return $content;
+    }
+    
     public static function &filter_email_value($value, $meta, $entry, $atts=array()){
         $frm_field = new FrmField();
         $field = $frm_field->getOne($meta->field_id);
