@@ -148,8 +148,13 @@ class FrmEntriesController{
         extract(shortcode_atts(array(
             'id' => false, 'entry' => false, 'fields' => false, 'plain_text' => false,
             'user_info' => false, 'include_blank' => false, 'default_email' => false,
-            'form_id' => false
+            'form_id' => false, 'format' => 'text'
         ), $atts));
+        
+        if ( $format != 'text' ) {
+            //format options are text, array, or json
+            $plain_text = true;
+        }
         
         global $frm_entry;
         
@@ -172,7 +177,7 @@ class FrmEntriesController{
             $fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
         }
         
-        $content = '';
+        $content = ( $format != 'text' ) ? array() : '';
         $odd = true;
             
         if ( !$plain_text ) {
@@ -200,7 +205,7 @@ class FrmEntriesController{
                 if ( !$include_blank && !$default_email ) {
                     continue;
                 }
-                    
+                
                 $entry->metas[$f->id] = $default_email ? '['. $f->id .']' : '';
             }
             
@@ -209,7 +214,7 @@ class FrmEntriesController{
             
             if ( $default_email ) {
                 $val = $prev_val;
-            } else{
+            } else {
                 $val = apply_filters('frm_email_value', $prev_val, (object)$meta, $entry);
             }
 
@@ -217,12 +222,15 @@ class FrmEntriesController{
                 $val = str_replace(array("\r\n", "\r", "\n"), ' <br/>', $val);
             }
             
-            if ( is_array($val) ) {
+            if ( is_array($val) && $format == 'text' ) {
                 $val = implode(', ', $val);
             }
              
-            $fname = $default_email ? '['. $f->id .' show=field_label]' : $f->name;   
-            if ( $plain_text ) {
+            $fname = $default_email ? '['. $f->id .' show=field_label]' : $f->name;
+            
+            if ( $format != 'text' ){
+                $content[$f->field_key] = $val;
+            } else if ( $plain_text ) {
                 $content .= $fname . ': ' . $val . "\r\n\r\n";
             } else {
                 $row_style = "style='text-align:left;color:#{$frmpro_settings->text_color};padding:7px 9px;border-top:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color}'";
@@ -241,7 +249,11 @@ class FrmEntriesController{
         
         if ( $user_info ) {
             $data = maybe_unserialize($entry->description);
-            if ( $plain_text ) {
+            if ( $format != 'text' ) {
+                $content['ip'] = $entry->ip;
+                $content['browser'] = $data['browser'];
+                $content['referrer'] = $data['referrer'];
+            } else if ( $plain_text ) {
                 $content .= "\r\n\r\n" . __('User Information', 'formidable') ."\r\n";
                 $content .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
                 $content .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
@@ -257,6 +269,9 @@ class FrmEntriesController{
 
         if(!$plain_text)
             $content .= "</tbody></table>";
+        
+        if ( $format == 'json' )
+            $content = json_encode($content);
         
         return $content;
     }

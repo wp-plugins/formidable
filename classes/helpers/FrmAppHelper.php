@@ -265,7 +265,7 @@ class FrmAppHelper{
         global $frm_entry_meta, $frm_settings, $frm_vars;
         
         if(empty($post_values))
-            $post_values = $_POST;
+            $post_values = stripslashes_deep($_POST);
         
         $values = array('id' => $record->id, 'fields' => array());
 
