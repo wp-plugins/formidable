@@ -70,6 +70,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Expanded conditional logic for email notifications
 * PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL 
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
+* PRO: Allow field keys in the exlude_fields shortcode option
 * PRO: Fixed adding new conditional logic to newly added notifications
 * PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL
 

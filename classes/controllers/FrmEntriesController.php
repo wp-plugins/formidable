@@ -148,7 +148,7 @@ class FrmEntriesController{
         extract(shortcode_atts(array(
             'id' => false, 'entry' => false, 'fields' => false, 'plain_text' => false,
             'user_info' => false, 'include_blank' => false, 'default_email' => false,
-            'form_id' => false, 'format' => 'text'
+            'form_id' => false, 'format' => 'text',
         ), $atts));
         
         if ( $format != 'text' ) {
@@ -200,7 +200,7 @@ class FrmEntriesController{
         foreach ( $fields as $f ) {
             if ( in_array($f->type, array('divider', 'captcha', 'break', 'html')) )
                 continue;
-                
+            
             if ( !isset($entry->metas[$f->id]) ) {
                 if ( !$include_blank && !$default_email ) {
                     continue;
@@ -248,7 +248,15 @@ class FrmEntriesController{
         }
         
         if ( $user_info ) {
-            $data = maybe_unserialize($entry->description);
+            if ( isset($entry->description) ) {
+                $data = maybe_unserialize($entry->description);
+            } else if ( $default_email ) {
+                $entry->ip = '[ip]';
+                $data = array(
+                    'browser' => '[browser]',
+                    'referrer' => '[referrer]',
+                );
+            }
             if ( $format != 'text' ) {
                 $content['ip'] = $entry->ip;
                 $content['browser'] = $data['browser'];

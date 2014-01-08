@@ -447,8 +447,9 @@ function frm_remove_this_tag(){
 		show = '';
 	}
 	
-	if(show != '' && jQuery(this).closest('.frm_add_remove').find('.frm_remove_tag').length > 1){
-		show = '';
+	if(show != ''){
+		if ( jQuery(this).closest('.frm_add_remove').find('.frm_remove_tag').length > 1 )
+			show = '';
 	}else if(id.indexOf('frm_logic_') === 0 && jQuery(this).closest('.frm_logic_rows').find('.frm_logic_row').length<2){
 		show='#'+jQuery(this).closest('td').children('.frm_add_logic_link').attr('id');
 	}else if(id.indexOf('frm_postmeta_') === 0){
@@ -463,10 +464,10 @@ function frm_remove_this_tag(){
 
 	jQuery('#'+id).fadeOut('slow', function(){
 		jQuery('#'+id).remove();
-		if(show!='')
+		if(show != '')
 			jQuery(show).fadeIn('slow');
 	});
-	if(show!='')
+	if(show != '')
 		jQuery(this).closest('.frm_logic_rows').fadeOut('slow');
 		
 	return false;

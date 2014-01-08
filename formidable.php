@@ -106,8 +106,9 @@ require($frm_path .'/classes/helpers/FrmEntriesHelper.php');
 require($frm_path .'/classes/helpers/FrmFieldsHelper.php');
 require($frm_path .'/classes/helpers/FrmFormsHelper.php');
 
-if(FrmAppController::pro_is_installed())
-  require($frm_path .'/pro/formidable-pro.php');
+if ( file_exists($frm_path . '/pro/formidable-pro.php') ) {
+    require($frm_path .'/pro/formidable-pro.php');
+}
 
 // Register Widgets
 if(class_exists('WP_Widget')){

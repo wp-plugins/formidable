@@ -80,6 +80,10 @@ class FrmField{
         if (isset($values['field_key']))
             $values['field_key'] = FrmAppHelper::get_unique_key($values['field_key'], $wpdb->prefix .'frm_fields', 'field_key', $id);
 
+        if ( isset($values['required']) ) {
+            $values['required'] = (int) $values['required'];
+        }
+        
         if (isset($values['field_options']) and is_array($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
             
