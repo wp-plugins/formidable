@@ -43,6 +43,6 @@ if(isset($form->options['no_save']) and $form->options['no_save']){ ?>
         </p>
         
         <p><?php _e('Insert into a theme template file:', 'formidable') ?><br/>
-            <input type="text" readonly="true" class="frm_select_box frm_no_items" value="echo FrmEntriesController::show_form(<?php echo $form->id; ?>, $key='', $title=true, $description=true);" />
+            <input type="text" readonly="true" class="frm_select_box frm_no_items" value="echo FrmFormsController::show_form(<?php echo $form->id; ?>, $key='', $title=true, $description=true);" />
         </p>
 <?php } ?>

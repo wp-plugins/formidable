@@ -2,12 +2,7 @@ jQuery(document).ready(function($){
 
 window.onscroll=document.documentElement.onscroll=frmSetMenuOffset;
 frmSetMenuOffset();
-$("input[name='options[success_action]']").change(function(){
-$('.success_action_box').hide();
-if($(this).val()=='redirect'){$('.success_action_redirect_box.success_action_box').fadeIn('slow');}
-else if($(this).val()=='page'){$('.success_action_page_box.success_action_box').fadeIn('slow');}
-else{$('.frm_show_form_opt').show();$('.success_action_message_box.success_action_box').fadeIn('slow');}
-});
+$("input[name='options[success_action]'], input[name='options[edit_action]']").change(frm_show_success_opt);
 
 $('.wp-admin').click(function(e){
 var t=$(e.target);
@@ -558,6 +553,24 @@ if(f){
         data:"action=frm_get_field_values&current_field="+cur+"&field_id="+f+'&name='+n+'&t='+t,
         success:function(msg){jQuery("#frm_show_selected_values_"+cur+'_'+r).html(msg);} 
     });
+}
+}
+
+function frm_show_success_opt(){
+if(jQuery(this).attr('name') == 'options[edit_action]'){
+	var c='edit';
+}else{
+	var c='success';
+}
+var v = jQuery(this).val();
+jQuery('.'+c+'_action_box').hide();
+if(v=='redirect'){
+	jQuery('.'+c+'_action_redirect_box.'+c+'_action_box').fadeIn('slow');
+}else if(v=='page'){
+	jQuery('.'+c+'_action_page_box.'+c+'_action_box').fadeIn('slow');
+}else{
+	jQuery('.'+c+'_action_message_box.frm_show_form_opt').show();
+	jQuery('.'+c+'_action_message_box.'+c+'_action_box').fadeIn('slow');
 }
 }
 

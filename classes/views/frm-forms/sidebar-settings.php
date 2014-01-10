@@ -10,7 +10,7 @@
     <input type="text" readonly="true" class="frm_select_box" value="[formidable key=<?php echo $values['form_key']; ?>]" /><br/>
     
     <?php _e('Insert in a template', 'formidable') ?>
-    <input type="text" readonly="true" class="frm_select_box" value="&lt;?php echo FrmAppController::get_form_shortcode(array('id' => <?php echo $id; ?>, 'title' => false, 'description' => false)); ?&gt;" /><br/>
+    <input type="text" readonly="true" class="frm_select_box" value="&lt;?php echo FrmFormsController::get_form_shortcode(array('id' => <?php echo $id; ?>, 'title' => false, 'description' => false)); ?&gt;" /><br/>
     
     <?php _e('Direct Link', 'formidable') ?>
     <input type="text" readonly="true" class="frm_select_box" value="<?php echo esc_attr(FrmFormsHelper::get_direct_link($values['form_key'], (isset($values['prli_link_id']) ? $values['prli_link_id'] : 0))) ?>" />

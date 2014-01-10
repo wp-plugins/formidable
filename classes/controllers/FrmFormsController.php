@@ -28,6 +28,10 @@ class FrmFormsController{
         add_action('wp_ajax_nopriv_frm_forms_preview', 'FrmFormsController::preview');
         
         add_filter('frm_admin_list_form_action', 'FrmFormsController::process_bulk_form_actions');
+        
+        //Shortcodes
+        add_shortcode('formidable', 'FrmFormsController::get_form_shortcode');
+        add_filter( 'widget_text', 'FrmFormsController::widget_text_filter', 9 );
     }
     
     public static function menu(){
@@ -208,7 +212,7 @@ class FrmFormsController{
         $frm_form = new FrmForm();
         $form = $frm_form->getOne($params['form']);
         if(!$form) return;
-        return FrmEntriesController::show_form($form->id, '', true, true);
+        return self::show_form($form->id, '', true, true);
     }
 
     public static function preview(){
@@ -542,6 +546,101 @@ class FrmFormsController{
                 return self::display_forms_list();
             }
         }
+    }
+    
+    
+    /* FRONT-END FORMS */
+    //formidable shortcode
+    public static function get_form_shortcode($atts) {
+        global $frm_vars;
+        if ( isset($frm_vars['skip_shortcode']) && $frm_vars['skip_shortcode'] ) {
+            $sc = '[formidable';
+            foreach ( $atts as $k => $v ) {
+                $sc .= ' '. $k .'="'. $v .'"';
+            }
+            return $sc .']';
+        }
+        
+        $shortcode_atts = shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array(), 'exclude_fields' => array()), $atts);
+        do_action('formidable_shortcode_atts', $shortcode_atts, $atts);
+        extract($shortcode_atts);
+        return self::show_form($id, $key, $title, $description); 
+    }
+    
+    //filter form shortcode in text widgets
+    public static function widget_text_filter( $content ) {
+    	$regex = '/\[\s*formidable\s+.*\]/';
+    	return preg_replace_callback( $regex, 'FrmAppController::widget_text_filter_callback', $content );
+    }
+    
+    public static function show_form($id = '', $key = '', $title = false, $description = false) {
+        global $frm_settings, $post;
+        
+        $frm_form = new FrmForm();
+        if ( empty($id) ) {
+            $id = $key;
+        }
+        
+        // no form id or key set
+        if ( empty($id) ) {
+            return __('Please select a valid form', 'formidable');
+        }
+        
+        $form = $frm_form->getOne($id);
+        $form = apply_filters('frm_pre_display_form', $form);
+        
+        // don't show a draft form on a page
+        if ( $form->status == 'draft' && (!$post || $post->ID != $frm_settings->preview_page_id) ) {
+            return __('Please select a valid form', 'formidable');
+        }
+        
+        // don't show the form if user should be logged in
+        if ( $form->logged_in && !is_user_logged_in() ) {
+            return do_shortcode($frm_settings->login_msg);
+        }
+        
+        // don't show the form if user doesn't have permission
+        if ( $form->logged_in && $user_ID && isset($form->options['logged_in_role']) && $form->options['logged_in_role'] != '' && !FrmAppHelper::user_has_permission($form->options['logged_in_role']) ) {
+            return do_shortcode($frm_settings->login_msg);
+        }
+        
+        return self::get_form($form, $title, $description);
+    }
+    
+    public static function get_form($form, $title, $description) {
+        global $frm_field, $frm_entry, $frm_entry_meta, $frm_settings, $frm_vars;
+        $form_name = $form->name;
+
+        $frm_form = new FrmForm();
+        $submit = isset($form->options['submit_value']) ? $form->options['submit_value'] : $frm_settings->submit_value;
+        $saved_message = isset($form->options['success_msg']) ? $form->options['success_msg'] : $frm_settings->success_msg;
+        
+        $user_ID = get_current_user_id();
+        
+        $params = FrmEntriesController::get_params($form);
+
+        $message = $errors = '';
+
+        FrmEntriesHelper::enqueue_scripts($params);
+        
+        if ( $params['posted_form_id'] == $form->id && $_POST ) {
+            $errors = isset($frm_vars['created_entries'][$form->id]) ? $frm_vars['created_entries'][$form->id]['errors'] : array();
+        }
+
+        $fields = FrmFieldsHelper::get_form_fields($form->id, (isset($errors) && !empty($errors)));
+        
+        $filename = FrmAppHelper::plugin_path() .'/classes/views/frm-entries/frm-entry.php';
+        
+        if ( is_file($filename) ) {
+            ob_start();
+            include $filename;
+            $contents = ob_get_contents();
+            ob_end_clean();
+            // TODO: check if minimizing is turned on
+            //$contents = preg_replace('(\r|\n|\t)', '', $contents);
+            return $contents;
+        }
+        return false;
     }
 
 }

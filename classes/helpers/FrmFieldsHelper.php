@@ -308,7 +308,13 @@ DEFAULT_HTML;
         }
         $html .= "\n";
         
-        return apply_filters('frm_replace_shortcodes', $html, $field, array('errors' => $errors, 'form' => $form));
+        $html = apply_filters('frm_replace_shortcodes', $html, $field, array('errors' => $errors, 'form' => $form));
+        
+        // remove [collapse_this] when running the free version
+        if (preg_match('/\[(collapse_this)\]/s', $html))
+            $html = str_replace('[collapse_this]', '', $html);
+        
+        return $html;
     }
     
     public static function display_recaptcha($field, $error=null){

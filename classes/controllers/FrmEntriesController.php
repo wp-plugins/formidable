@@ -43,48 +43,13 @@ class FrmEntriesController{
     }
     
     public static function show_form($id='', $key='', $title=false, $description=false){
-        global $frm_settings, $post;
-        
-        $frm_form = new FrmForm();
-        if ($id) $form = $frm_form->getOne((int)$id);
-        else if ($key) $form = $frm_form->getOne($key);
-        else $form = false;
-
-        $form = apply_filters('frm_pre_display_form', $form);
-        $user_ID = get_current_user_id();
-        
-        if(!$form or 
-            (($form->is_template or $form->status == 'draft') and !isset($_GET) and !isset($_GET['form']) and 
-                (!isset($_GET['preview']) or $post and $post->ID != $frm_settings->preview_page_id))
-            ){
-            return __('Please select a valid form', 'formidable');
-        }else if ($form->logged_in and !$user_ID){
-            global $frm_settings;
-            return do_shortcode($frm_settings->login_msg);
-        }
-
-        if($form->logged_in and $user_ID and isset($form->options['logged_in_role']) and $form->options['logged_in_role'] != ''){
-            if(FrmAppHelper::user_has_permission($form->options['logged_in_role'])){
-                return FrmEntriesController::get_form(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/frm-entry.php', $form, $title, $description);
-            }else{
-                global $frm_settings;
-                return do_shortcode($frm_settings->login_msg);
-            }
-        }else    
-            return FrmEntriesController::get_form(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/frm-entry.php', $form, $title, $description);
+        _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::show_form()' );
+        FrmFormsController::show_form($id, $key, $title, $description);
     }
     
     public static function get_form($filename, $form, $title, $description) {
-        if (is_file($filename)) {
-            ob_start();
-            include $filename;
-            $contents = ob_get_contents();
-            ob_end_clean();
-            // TODO: check if minimizing is turned on
-            //$contents = preg_replace('(\r|\n|\t)', '', $contents);
-            return $contents;
-        }
-        return false;
+        _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::get_form()' );
+        FrmFormsController::get_form($form, $title, $description);
     }
     
     public static function process_entry($errors='', $ajax=false){

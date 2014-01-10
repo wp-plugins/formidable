@@ -10,7 +10,7 @@ if(!$frm_vars['pro_is_installed']){ ?>
 </head>
 <body>
 <div style="padding:25px;">
-<?php echo FrmEntriesController::show_form($form->id, '', true, true) ?>
+<?php echo FrmFormsController::show_form($form->id, '', true, true) ?>
 </div>
 <?php wp_footer(); ?>
 </body>

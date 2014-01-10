@@ -18,7 +18,7 @@ There are dozens of form-building plugins out there to create forms, but most ar
 * Save all responses to the database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
 * Integrate with reCAPTCHA and Akismet for Spam control (and a math captcha plugin in Pro)
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets
-* Alternatively use `<?php echo FrmEntriesController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
+* Alternatively use `<?php echo FrmFormsController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 * Most of the form HTML is customizable on the form settings pages
 * Create forms from existing templates or add your own. A contact form template is included.
 * Direct links available for previews and emailing surveys with and without integration with your current theme.
@@ -68,7 +68,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added XML import/export
 * Moved more email settings and bulk form delete to free version
 * PRO: Expanded conditional logic for email notifications
-* PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL 
+* PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL
+* PRO: Added separate set of confirmation options for editing
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
 * PRO: Allow field keys in the exlude_fields shortcode option
 * PRO: Fixed adding new conditional logic to newly added notifications
@@ -941,7 +942,7 @@ $[25 decimal=2 dec_point='.' thousands_sep=',']
 * Hide captcha field if WP reCAPTCHA is not installed
 
 = 1.0.3 =
-* Allow `<?php echo FrmEntriesController::show_form(id, key, title, description);?>` to be used in a template
+* Allow `<?php echo FrmFormsController::show_form(id, key, title, description);?>` to be used in a template
 
 = 1.0.2 =
 * Fixed error on submission from direct link

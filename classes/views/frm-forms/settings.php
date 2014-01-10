@@ -73,10 +73,9 @@
                         </p>
                         
                         <div class="frm_indent_opt success_action_message_box success_action_box" <?php echo ($values['success_action'] == 'message') ? '' : 'style="display:none;"'; ?>>
-                            <p><label for="success_msg"><?php _e('Confirmation Message', 'formidable') ?></label>
-                            <textarea id="success_msg" name="options[success_msg]" cols="50" rows="2" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea></p>
+                            <p><textarea id="success_msg" name="options[success_msg]" cols="50" rows="2" class="frm_long_input"><?php echo FrmAppHelper::esc_textarea($values['success_msg']); ?></textarea></p>
                             <p class="frm_show_form_opt">
-                            <label for="show_form"><input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <?php _e('Show the form with the success message.', 'formidable')?></label>
+                            <label for="show_form"><input type="checkbox" name="options[show_form]" id="show_form" value="1" <?php checked($values['show_form'], 1) ?> /> <?php _e('Show the form with the confirmation message', 'formidable')?></label>
                             </p>
                         </div>
                         

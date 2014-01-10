@@ -27,10 +27,6 @@ class FrmAppController{
         add_action('init', 'FrmAppController::parse_standalone_request', 40);
         // Update the session data
         add_action('init', 'FrmAppController::referer_session', 1);
-        
-        //Shortcodes
-        add_shortcode('formidable', 'FrmAppController::get_form_shortcode');
-        add_filter( 'widget_text', 'FrmAppController::widget_text_filter', 9 );
     }
     
     public static function menu(){
@@ -338,6 +334,9 @@ return false;
     	
     	if(!isset($frm_settings->track) or !$frm_settings->track or defined('WP_IMPORTING'))
     	    return;
+    	
+    	// keep the page history below 100
+    	$max = 100;
     	    
     	if ( !isset($_SESSION) )
     		session_start();
@@ -361,10 +360,10 @@ return false;
     	if ($_SESSION['frm_http_pages'] and !empty($_SESSION['frm_http_pages']) and (end($_SESSION['frm_http_pages']) != "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI']))
     		$_SESSION['frm_http_pages'][] = "http://". $_SERVER['SERVER_NAME']. $_SERVER['REQUEST_URI'];
     		
-    	//keep the page history below 100
-    	if(count($_SESSION['frm_http_pages']) > 100){
+    	//keep the page history below the max
+    	if(count($_SESSION['frm_http_pages']) > $max){
     	    foreach($_SESSION['frm_http_pages'] as $pkey => $ppage){
-    	        if(count($_SESSION['frm_http_pages']) <= 100)
+    	        if(count($_SESSION['frm_http_pages']) <= $max)
     	            break;
     	            
     		    unset($_SESSION['frm_http_pages'][$pkey]);
@@ -391,24 +390,14 @@ return false;
     
     //formidable shortcode
     public static function get_form_shortcode($atts){
-        global $frm_vars;
-        if(isset($frm_vars['skip_shortcode']) and $frm_vars['skip_shortcode']){
-            $sc = '[formidable';
-            foreach($atts as $k => $v)
-                $sc .= ' '. $k .'="'. $v .'"';
-            return $sc .']';
-        }
-        
-        $shortcode_atts = shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array(), 'exclude_fields' => array()), $atts);
-        do_action('formidable_shortcode_atts', $shortcode_atts, $atts);
-        extract($shortcode_atts);
-        return FrmEntriesController::show_form($id, $key, $title, $description); 
+        _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::get_form_shortcode()' );
+        return FrmFormsController::get_form_shortcode($atts); 
     }
 
     //filter form shortcode in text widgets
     public static function widget_text_filter( $content ){
-    	$regex = '/\[\s*formidable\s+.*\]/';
-    	return preg_replace_callback( $regex, 'FrmAppController::widget_text_filter_callback', $content );
+        _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::widget_text_filter()' );
+    	return FrmFormsController::widget_text_filter( $content );
     }
 
 
