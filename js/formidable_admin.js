@@ -320,9 +320,9 @@ function frmLoadField(field_id){
 }
 
 function frmSubmitBuild(b){
+	frmPreFormSave(b);
+	
 	var p=jQuery(b).val();
-	jQuery(b).val(frm_admin_js.saving);
-	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
 	var form=jQuery('#frm_build_form');
 	var v=JSON.stringify(form.serializeArray());
 	jQuery('#frm_compact_fields').val(v);
@@ -332,19 +332,32 @@ function frmSubmitBuild(b){
 	    success:function(errObj){
 			jQuery(b).val(frm_admin_js.saved);
 			jQuery(b).nextAll('.frm-loading-img').css('visibility', 'hidden');
-			setTimeout(function(){jQuery(b).fadeOut('slow', function(){jQuery(b).val(p);jQuery(b).show();});}, 2000);
+			setTimeout(function(){
+				jQuery(b).fadeOut('slow', function(){
+					jQuery(b).val(p);
+					jQuery(b).show();
+				});
+			}, 2000);
 		},
 		error:function(html){jQuery('#frm_js_build_form').submit();}
 	});
 }
 
 function frmSubmitNoAjax(b){
-	var p=jQuery(b).val();
-	jQuery(b).val(frm_admin_js.saving);
-	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
+	frmPreFormSave(b);
+	
 	var form=jQuery('#frm_build_form');
 	jQuery('#frm_compact_fields').val(JSON.stringify(form.serializeArray()));
 	jQuery('#frm_js_build_form').submit();
+}
+
+function frmPreFormSave(b){
+	if(jQuery('form.inplace_form').length){
+		jQuery('.inplace_save').click();
+	}
+	
+	jQuery(b).val(frm_admin_js.saving);
+	jQuery(b).nextAll('.frm-loading-img').css('visibility', 'visible');
 }
 
 function frmClickWidget(){

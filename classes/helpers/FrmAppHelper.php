@@ -5,7 +5,8 @@ if(class_exists('FrmAppHelper'))
     return;
 
 class FrmAppHelper{
-    public static $db_version = 11; //version of the database we are moving to
+    public static $db_version = 11; //version of the database we are moving to (skip 12)
+    public static $pro_db_version = 23;
     
     public static function plugin_version(){
         $plugin_data = get_file_data( WP_PLUGIN_DIR .'/formidable/formidable.php', array('Version' => 'Version'), 'plugin' );

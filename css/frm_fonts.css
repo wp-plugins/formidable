@@ -28,4 +28,7 @@
 .frm_38_trigger .wp-media-buttons .add_media span.wp-media-buttons-icon.frm-buttons-icon{
 	background:none;
 }
+
+/* Admin Bar */
+#wpadminbar #wp-admin-bar-frm-forms > .ab-item:before{font-family:'s11-fp' !important;content:'\e601';top:2px;}
 	

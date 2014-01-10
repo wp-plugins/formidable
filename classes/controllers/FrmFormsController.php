@@ -29,6 +29,9 @@ class FrmFormsController{
         
         add_filter('frm_admin_list_form_action', 'FrmFormsController::process_bulk_form_actions');
         
+        add_action( 'admin_bar_init', 'FrmFormsController::admin_bar_css' );
+        add_action( 'wp_before_admin_bar_render', 'FrmFormsController::admin_bar_configure' );
+        
         //Shortcodes
         add_shortcode('formidable', 'FrmFormsController::get_form_shortcode');
         add_filter( 'widget_text', 'FrmFormsController::widget_text_filter', 9 );
@@ -550,6 +553,62 @@ class FrmFormsController{
     
     
     /* FRONT-END FORMS */
+    public static function admin_bar_css() {
+        FrmAppController::load_wp_admin_style();
+    }
+    
+    public static function admin_bar_configure() {
+        global $frm_vars;
+        if ( is_admin() || empty($frm_vars['forms_loaded']) ) {
+            return;
+        }
+        
+        $actions = array();
+        foreach ($frm_vars['forms_loaded'] as $form ) {
+            if ( is_object($form) ) {
+                $actions[$form->id] = $form->name;
+            }
+            unset($form);
+        }
+        
+        if ( empty($actions) ) {
+            return;
+        }
+        
+        asort($actions);
+        
+        global $wp_admin_bar;
+        
+        if ( count($actions) == 1 ) {
+            $wp_admin_bar->add_menu( array(
+                'title' => 'Edit Form',
+                'href'  => admin_url('admin.php?page=formidable&frm_action=edit&id='. current( array_keys( $actions ) )),
+                'id'    => 'frm-forms'
+            ) );
+        } else {            
+            $wp_admin_bar->add_menu( array(
+        		'id'    => 'frm-forms',
+        		'title' => '<span class="ab-icon"></span><span class="ab-label">' . __( 'Edit Forms', 'formidable' ) . '</span>',
+        		'href'  => admin_url( 'admin.php?page=formidable&frm_action=edit&id='. current( array_keys( $actions ) ) ),
+        		'meta'  => array(
+        			'title' => __( 'Edit Forms', 'formidable' ),
+        		),
+        	) );
+        	
+        	foreach ( $actions as $form_id => $name ) {
+
+        		$wp_admin_bar->add_menu( array(
+        			'parent'    => 'frm-forms',
+        			'id'        => 'edit_form_'. $form_id,
+        			'title'     => empty($name) ? __('(no title)') : $name,
+        			'href'      => admin_url( 'admin.php?page=formidable&frm_action=edit&id='. $form_id )
+        		) );
+        	}
+        }  
+    }
+    
+    
+    
     //formidable shortcode
     public static function get_form_shortcode($atts) {
         global $frm_vars;
