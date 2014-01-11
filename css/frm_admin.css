@@ -409,16 +409,17 @@ span.howto{display:inline;}
 
 .frm_scale{margin-right:10px; text-align:center; float:left;}
 .frm_form_fields div.rating-cancel, .frm_form_fields div.star-rating{
-	float:left;width:17px;height:15px;text-indent:-999em;cursor:pointer;display:block;background:transparent;overflow:hidden;
+	float:left;width:17px;height:17px;cursor:pointer;display:block;background:transparent;overflow:hidden;
 }
-.frm_form_fields div.rating-cancel a{background:url(../pro/images/delete.png) no-repeat 0 -16px}
-.frm_form_fields div.star-rating, .frm_form_fields div.star-rating a{background:url(../pro/images/star.png) no-repeat 0 0px}
-.frm_form_fields div.rating-cancel a, .frm_form_fields div.star-rating a{display:block;width:16px;height:100%;background-position:0 0px;border:0}
-.frm_form_fields div.star-rating-on a{background-position:0 -16px!important}
-.frm_form_fields div.star-rating-hover a{background-position:0 -32px}
-.frm_form_fields div.rating-cancel.star-rating-hover a{background-position:0 -16px}
+.frm_form_fields div.rating-cancel{display:none !important;}
+.frm_form_fields div.rating-cancel a:before{font:16px/1 'dashicons';content:'\f460';color:#CDCDCD;}
+.frm_form_fields div.star-rating:before, .frm_form_fields div.star-rating a:before{font:16px/1 'dashicons';content:'\f154';color:#F0AD4E;}
+.frm_form_fields div.rating-cancel a, .frm_form_fields div.star-rating a{display:block;width:16px;height:100%;border:0}
+.frm_form_fields div.star-rating-on:before, .frm_form_fields div.star-rating-on a:before{content:'\f155';}
+.frm_form_fields div.star-rating-hover:before, .frm_form_fields div.star-rating-hover a:before{content:'\f155';}
+.frm_form_fields div.rating-cancel.star-rating-hover a:before{color:#B63E3F;}
 .frm_form_fields div.star-rating-readonly a{cursor:default !important}
-.frm_form_fields div.star-rating{background:transparent!important;overflow:hidden!important}
+.frm_form_fields div.star-rating{overflow:hidden !important}
 
 #frm_form_editor_container .ui-widget-content{display:none; padding:15px;}
 #frm_form_editor_container .ui-widget-content label{float:left; width:170px; text-align:right; padding-right:5px; clear:both;}

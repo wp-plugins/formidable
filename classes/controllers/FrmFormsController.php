@@ -659,7 +659,7 @@ class FrmFormsController{
         }
         
         // don't show the form if user doesn't have permission
-        if ( $form->logged_in && $user_ID && isset($form->options['logged_in_role']) && $form->options['logged_in_role'] != '' && !FrmAppHelper::user_has_permission($form->options['logged_in_role']) ) {
+        if ( $form->logged_in && get_current_user_id() && isset($form->options['logged_in_role']) && $form->options['logged_in_role'] != '' && !FrmAppHelper::user_has_permission($form->options['logged_in_role']) ) {
             return do_shortcode($frm_settings->login_msg);
         }
         
