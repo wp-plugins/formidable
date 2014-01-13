@@ -399,13 +399,6 @@ return false;
         return FrmFormsController::get_form_shortcode($atts); 
     }
 
-    //filter form shortcode in text widgets
-    public static function widget_text_filter( $content ){
-        _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::widget_text_filter()' );
-    	return FrmFormsController::widget_text_filter( $content );
-    }
-
-
     public static function widget_text_filter_callback( $matches ) {
         return do_shortcode( $matches[0] );
     }

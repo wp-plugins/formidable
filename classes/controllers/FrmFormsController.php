@@ -646,6 +646,9 @@ class FrmFormsController{
         }
         
         $form = $frm_form->getOne($id);
+        if ( !$form ) {
+            return __('Please select a valid form', 'formidable');
+        }
         $form = apply_filters('frm_pre_display_form', $form);
         
         // don't show a draft form on a page

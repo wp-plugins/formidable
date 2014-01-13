@@ -74,6 +74,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
 * PRO: Switched star ratings to icon font
 * PRO: Allow field keys in the exlude_fields shortcode option
+* PRO: Added frm_csv_line_break filter for changing line breaks in csv export
 * PRO: Fixed adding new conditional logic to newly added notifications
 * PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL
 * PRO: Fixed showing only file name in views
