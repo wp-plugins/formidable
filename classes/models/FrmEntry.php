@@ -17,7 +17,7 @@ class FrmEntry{
         $new_values['ip'] = $_SERVER['REMOTE_ADDR'];
         
         if(isset($values['description']) and !empty($values['description'])){
-            $new_values['description'] = $values['description'];
+            $new_values['description'] = maybe_serialize($values['description']);
         }else{
             $referrerinfo = FrmAppHelper::get_referer_info();
         	
@@ -56,8 +56,7 @@ class FrmEntry{
             unset($check_val['item_key']);
             if($new_values['item_key'] == $new_values['name'])
                 unset($check_val['name']);
-
-
+            
             global $frmdb;
             $entry_exists = $frmdb->get_records($wpdb->prefix .'frm_items', $check_val, 'created_at DESC', '', 'id');
             unset($frmdb);

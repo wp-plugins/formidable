@@ -160,6 +160,7 @@ class FrmEntriesController{
             $content .= "<table cellspacing='0' style='font-size:12px;line-height:135%; border-bottom:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color};'><tbody>\r\n";
             $bg_color = " style='background-color:#{$frmpro_settings->bg_color};'";
             $bg_color_alt = " style='background-color:#{$frmpro_settings->bg_color_active};'";
+            $row_style = "style='text-align:left;color:#{$frmpro_settings->text_color};padding:7px 9px;border-top:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color}'";
         }
         
         foreach ( $fields as $f ) {
@@ -198,7 +199,6 @@ class FrmEntriesController{
             } else if ( $plain_text ) {
                 $content .= $fname . ': ' . $val . "\r\n\r\n";
             } else {
-                $row_style = "style='text-align:left;color:#{$frmpro_settings->text_color};padding:7px 9px;border-top:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color}'";
              	if (!$default_email){
              		$content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>" . $fname ."</th><td $row_style>$val</td></tr>\r\n";
 					$odd = ($odd) ? false : true;

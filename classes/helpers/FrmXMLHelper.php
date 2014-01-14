@@ -24,17 +24,23 @@ class FrmXMLHelper{
             'views' => 0, 'posts' => 0, 'terms' => 0,
         );
         
+        if ( !defined('WP_IMPORTING') ) {
+            define('WP_IMPORTING', true);
+        }
+        
         $dom = new DOMDocument;
 		$success = $dom->loadXML( file_get_contents( $file ) );
-		if ( !$success )
+		if ( !$success ) {
 			return new WP_Error( 'SimpleXML_parse_error', __( 'There was an error when reading this XML file', 'formidable' ), libxml_get_errors() );
+		}
 		
 		$xml = simplexml_import_dom( $dom );
 		unset( $dom );
 
 		// halt if loading produces an error
-		if ( !$xml )
+		if ( !$xml ) {
 			return new WP_Error( 'SimpleXML_parse_error', __( 'There was an error when reading this XML file', 'formidable' ), libxml_get_errors() );
+		}
         
         // add terms, forms (form and field ids), posts (post ids), and entries to db, in that order
         
@@ -305,7 +311,7 @@ class FrmXMLHelper{
 		        'name'          => (string) $item->name,
 		        'description'   => FrmAppHelper::maybe_json_decode((string) $item->description),
 		        'ip'            => (string) $item->ip,
-		        'form_id'       => (isset($forms[(int) $item->form_id]) ? $posts[(int) $item->form_id] : (int) $item->form_id),
+		        'form_id'       => (isset($forms[(int) $item->form_id]) ? $forms[(int) $item->form_id] : (int) $item->form_id),
 		        'post_id'       => (isset($posts[(int) $item->post_id]) ? $posts[(int) $item->post_id] : (int) $item->post_id),
 		        'user_id'       => (string) $item->user_id,
 		        'parent_item_id' => (int) $item->parent_item_id,
@@ -343,13 +349,15 @@ class FrmXMLHelper{
 	
 	public static function cdata( $str ) {
 	    $str = maybe_unserialize($str);
-	    if(is_array($str))
+	    if ( is_array($str) ) {
 	        $str = json_encode($str);
-	    else if (seems_utf8( $str ) == false )
+	    } else if (seems_utf8( $str ) == false ) {
 			$str = utf8_encode( $str );
+		}
         
-        if(is_numeric($str))
+        if ( is_numeric($str) ) {
             return $str;
+        }
         
 		// $str = ent2ncr(esc_html($str));
 		$str = '<![CDATA[' . str_replace( ']]>', ']]]]><![CDATA[>', $str ) . ']]>';
