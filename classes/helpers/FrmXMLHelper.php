@@ -317,17 +317,13 @@ class FrmXMLHelper{
 	        
 	        $metas = array();
     		foreach($item->item_meta as $meta){
-    		    $m = array(
-    		        'field_id'      => (int) $meta->field_id,
-    		        'meta_value'    => FrmAppHelper::maybe_json_decode((string) $meta->meta_value)
-    		    );
-    		    $metas[] = $m;
+    		    $metas[(int) $meta->field_id] = FrmAppHelper::maybe_json_decode((string) $meta->meta_value);
     		    unset($meta);
     		}
     		
     		unset($item);
     		
-            $entry['item_metas'] = $metas;
+            $entry['item_meta'] = $metas;
             
             $editing = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$wpdb->prefix}frm_items WHERE id=%d AND item_key=%s", $entry['id'], $entry['item_key']));
             
