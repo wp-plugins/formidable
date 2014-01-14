@@ -107,26 +107,34 @@ class FrmXMLController{
                 $errors[] = $result->get_error_message();
             } else if ( $result ) {
                 if ( is_array($result) ) {
-                    $message = '<ul>';
-                    foreach ( $result['imported'] as $k => $m ) {
-                        if ( $m ) {
-                            $message .= '<li>'. __('Imported', 'formidable') .' '. $m .' '. $k .'</li>';
-                        }
-                        unset($k);
-                        unset($m);
-                    }
+                    $t_strings = array(
+                        'imported'  => __('Imported', 'formidable'),
+                        'updated'   => __('Updated', 'formidable'),
+                    );
                     
-                    foreach ( $result['updated'] as $k => $m ) {
-                        if ( $m ) {
-                            $message .= '<li>'. __('Updated', 'formidable') .' '. $m .' '. $k .'</li>';
+                    $message = '<ul>';
+                    foreach ( $result as $type => $results ) {
+                        foreach ( $results as $k => $m ) {
+                            if ( $m ) {
+                                $strings = array(
+                                    'forms'     => sprintf( _n( '%1$s %2$s Form', '%1$s %2$s Forms', $m, 'formidable' ), $t_strings[$type], $m ),
+                                    'fields'    => sprintf(_n( '%1$s %2$s Field', '%1$s %2$s Fields', $m, 'formidable' ), $t_strings[$type], $m),
+                                    'items'     => sprintf(_n( '%1$s %2$s Entry', '%1$s %2$s Entries', $m, 'formidable' ), $t_strings[$type], $m),
+                                    'views'     => sprintf(_n( '%1$s %2$s View', '%1$s %2$s Views', $m, 'formidable' ), $t_strings[$type], $m),
+                                    'posts'     => sprintf(_n( '%1$s %2$s Post', '%1$s %2$s Posts', $m, 'formidable' ), $t_strings[$type], $m),
+                                    'terms'     => sprintf(_n( '%1$s %2$s Term', '%1$s %2$s Terms', $m, 'formidable' ), $t_strings[$type], $m),
+                                );
+                                
+                                $message .= '<li>'. $strings[$k] .'</li>';
+                            }
+                            unset($k);
+                            unset($m);
                         }
-                        unset($k);
-                        unset($m);
                     }
                     
                     if ( $message == '<ul>' ) {
                         $message = '';
-                        $errors[] = __('No data was imported or updated', 'formidable');
+                        $errors[] = __('Nothing was imported or updated', 'formidable');
                     } else {
                         $message .= '</ul>';
                     }
