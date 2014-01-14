@@ -70,19 +70,19 @@ class FrmXMLController{
         $message = '';
         if ( !isset($_FILES) || !isset($_FILES['frm_import_file']) || empty($_FILES['frm_import_file']['name']) || (int)$_FILES['frm_import_file']['size'] < 1) {
             $errors[] = __( 'Oops, you didn\'t select a file.', 'formidable' );
-            self::form($errors, $message);
+            self::form($errors);
             return;
         }
         
         $file = $_FILES['frm_import_file']['tmp_name'];
-            
+        
         if ( !is_uploaded_file($file) ) {
             unset($file);
             $errors[] = __( 'The file does not exist, please try again.', 'formidable' );
-            self::form($errors, $message);
+            self::form($errors);
             return;
         }
-            
+        
         //$media_id = FrmProAppHelper::upload_file('frm_import_file');
         //if(is_numeric($media_id)){
             if ( preg_match( '!\.(csv)$!i', $_FILES['frm_import_file']['name'], $ext_matches ) ) {
@@ -90,27 +90,53 @@ class FrmXMLController{
                 self::map_csv_fields();
                 return;
             }
-                
+            
             if ( !function_exists( 'libxml_disable_entity_loader' ) ) {
         		$errors[] = __('XML import is not enabled on your server.', 'formidable');
         		self::form($errors);
         		return;
         	}
-        		
+        	
             include_once(FrmAppHelper::plugin_path() .'/classes/helpers/FrmXMLHelper.php');
-                
+            
             $set_err = libxml_use_internal_errors(true);
             $loader = libxml_disable_entity_loader( true );
-                
+            
             $result = FrmXMLHelper::import_xml($file);
             if ( is_wp_error($result) ) {
                 $errors[] = $result->get_error_message();
             } else if ( $result ) {
-                $message = $result;
+                if ( is_array($result) ) {
+                    $message = '<ul>';
+                    foreach ( $result['imported'] as $k => $m ) {
+                        if ( $m ) {
+                            $message .= '<li>'. __('Imported', 'formidable') .' '. $m .' '. $k .'</li>';
+                        }
+                        unset($k);
+                        unset($m);
+                    }
+                    
+                    foreach ( $result['updated'] as $k => $m ) {
+                        if ( $m ) {
+                            $message .= '<li>'. __('Updated', 'formidable') .' '. $m .' '. $k .'</li>';
+                        }
+                        unset($k);
+                        unset($m);
+                    }
+                    
+                    if ( $message == '<ul>' ) {
+                        $message = '';
+                        $errors[] = __('No data was imported or updated', 'formidable');
+                    } else {
+                        $message .= '</ul>';
+                    }
+                } else {
+                    $message = $result;
+                }
             }
-                
+            
             unset($file);
-                
+            
             libxml_use_internal_errors( $set_err );
         	libxml_disable_entity_loader( $loader );
         //}else{

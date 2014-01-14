@@ -19,7 +19,10 @@ class FrmXMLHelper{
     
     public static function import_xml($file){
         $terms = $forms = array();
-        $imported = array('forms' => 0, 'items' => 0, 'views' => 0, 'posts' => 0);
+        $imported = $updated = array(
+            'forms' => 0, 'fields' => 0, 'items' => 0,
+            'views' => 0, 'posts' => 0, 'terms' => 0,
+        );
         
         $dom = new DOMDocument;
 		$success = $dom->loadXML( file_get_contents( $file ) );
@@ -44,10 +47,10 @@ class FrmXMLHelper{
 			    continue;
 			}
             $term_id = wp_insert_term( (string) $t->term_name, (string) $t->term_taxonomy, array(
-                'slug' => (string) $t->term_slug,
-                'description' => (string) $t->term_description,
-                'term_parent' => (string) $t->term_parent,
-                'slug' => (string) $t->term_slug,
+                'slug'          => (string) $t->term_slug,
+                'description'   => (string) $t->term_description,
+                'term_parent'   => (string) $t->term_parent,
+                'slug'          => (string) $t->term_slug,
             ));
             
             $terms[(int) $t->term_id] = $term_id;
@@ -55,6 +58,7 @@ class FrmXMLHelper{
             unset($t);
 		}
 		unset($xml->term);
+		$imported['terms'] = count($terms);
 	    }
 		
 		if(isset($xml->form)){
@@ -62,31 +66,34 @@ class FrmXMLHelper{
 		$frm_field = new FrmField();
 		foreach ( $xml->form as $item ) {
 		    $form = array(
-		        'id' => (int) $item->id,
-		        'form_key' => (string) $item->form_key,
-		        'name' => (string) $item->name,
-		        'description' => (string) $item->description,
-		        'options' => (string) $item->options,
-		        'logged_in' => (int) $item->logged_in,
-		        'is_template' => (int) $item->is_template,
+		        'id'            => (int) $item->id,
+		        'form_key'      => (string) $item->form_key,
+		        'name'          => (string) $item->name,
+		        'description'   => (string) $item->description,
+		        'options'       => (string) $item->options,
+		        'logged_in'     => (int) $item->logged_in,
+		        'is_template'   => (int) $item->is_template,
 		        'default_template' => (int) $item->default_template,
-		        'editable' => (int) $item->editable,
-		        'status' => (string) $item->status
+		        'editable'      => (int) $item->editable,
+		        'status'        => (string) $item->status
 		    );
 		    
 		    $form['options'] = FrmAppHelper::maybe_json_decode($form['options']);
 		    
 		    //if template, allow to edit if form keys match, otherwise, form ids must also match
 		    $template_query = array('form_key' => $form['form_key'], 'is_template' => $form['is_template']);
-		    if(!$form['is_template'])
+		    if ( !$form['is_template'] ) {
 		        $template_query['id'] = $form['id'];
+		    }
 		    
             $this_form = $frm_form->getAll($template_query, '', 1);
             
             if (!empty($this_form)){
                 $form_id = $this_form->id;
-                
-                $frm_form->update($form_id, $form );
+                $u = $frm_form->update($form_id, $form );
+                if ( $u ) {
+                    $updated['forms']++;
+                }
                 $form_fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
                 $old_fields = array();
                 foreach($form_fields as $f){
@@ -100,28 +107,33 @@ class FrmXMLHelper{
                 unset($old_fields);
             }else{
                 //form does not exist, so create it
-                $form_id = $frm_form->create( $form );
+                if ( $form_id = $frm_form->create( $form ) ) {
+                    $imported['forms']++;
+                }
             }
     		
     		foreach($item->field as $field){
     		    $f = array(
-    		        'id' => (int) $field->id,
-    		        'field_key' => (string) $field->field_key,
-    		        'name' => (string) $field->name,
-    		        'description' => (string) $field->description,
-    		        'type' => (string) $field->type,
+    		        'id'            => (int) $field->id,
+    		        'field_key'     => (string) $field->field_key,
+    		        'name'          => (string) $field->name,
+    		        'description'   => (string) $field->description,
+    		        'type'          => (string) $field->type,
     		        'default_value' => FrmAppHelper::maybe_json_decode( (string) $field->default_value),
-    		        'field_order' => (int) $field->field_order,
-    		        'form_id' => (int) $form_id,
-    		        'required' => (int) $field->required,
-    		        'options' => FrmAppHelper::maybe_json_decode( (string) $field->options),
+    		        'field_order'   => (int) $field->field_order,
+    		        'form_id'       => (int) $form_id,
+    		        'required'      => (int) $field->required,
+    		        'options'       => FrmAppHelper::maybe_json_decode( (string) $field->options),
     		        'field_options' => FrmAppHelper::maybe_json_decode( (string) $field->field_options)
     		    );
     		    
     		    if ($this_form){
     		        // check for field to edit
     		        if(isset($form_fields[$f['id']])){
-    		            $frm_field->update( $f['id'], $f );
+    		            $u = $frm_field->update( $f['id'], $f );
+    		            if ( $u ) {
+    		                $updated['fields']++;
+    		            }
     		            unset($form_fields[$f['id']]);
     		            
     		            //unset old field key
@@ -129,14 +141,21 @@ class FrmXMLHelper{
     		                unset($form_fields[$f['field_key']]);
     		        }else if(isset($form_fields[$f['field_key']])){
     		            unset($f['id']);
-    		            $frm_field->update( $form_fields[$f['field_key']], $f );
+    		            $u = $frm_field->update( $form_fields[$f['field_key']], $f );
+    		            if ( $u ) {
+    		                $updated['fields']++;
+    		            }
     		            unset($form_fields[$form_fields[$f['field_key']]]); //unset old field id
     		            unset($form_fields[$f['field_key']]); //unset old field key
     		        }else{
-    		            $frm_field->create( $f );
+    		            if ( $frm_field->create( $f ) ) {
+    		                $imported['fields']++;
+    		            }
     		        }
     		    }else{
-    		        $frm_field->create( $f );
+    		        if ( $frm_field->create( $f ) ) {
+		                $imported['fields']++;
+		            }
     		    }
     		    
     		    unset($field);
@@ -191,7 +210,7 @@ class FrmXMLHelper{
 
 			foreach ( $item->postmeta as $meta ) {
 			    $m = array(
-					'key' => (string) $meta->meta_key,
+					'key'   => (string) $meta->meta_key,
 					'value' => (string) $meta->meta_value
 				);
 				
@@ -251,16 +270,24 @@ class FrmXMLHelper{
 			unset($item);
 			
 			$old_id = $post['post_id'];
-			$editing = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE ID=%d AND post_type=%s AND post_name=%s", $post['post_id'], $post['post_type'], $post['post_name']));
+			$editing = get_post( $post['post_id'] );
             
-            if($editing)
+            if( $editing && $editing->post_type == $post['post_type'] && $editing->post_name == $post['post_name'] ) {
                 $post['ID'] = $editing;
-                
+            }
             
             unset($editing);
             
             //create post
             $post_id = wp_insert_post( $post );
+            
+            if ( is_numeric($post_id) && isset($post['ID']) ) {
+                $updated[ ($post['post_type'] == 'frm_display' ? 'views' : 'posts') ]++;
+            } else if ( is_numeric($post_id) ) {
+                $imported[ ($post['post_type'] == 'frm_display' ? 'views' : 'posts') ]++;
+            }
+            
+            
             unset($post);
             
 			$posts[(int) $old_id] = $post_id;
@@ -273,26 +300,26 @@ class FrmXMLHelper{
 	    $frm_entry = new FrmEntry();
 	    foreach($xml->item as $item){
 	        $entry = array(
-	            'id' => (int) $item->id,
-		        'item_key' => (string) $item->item_key,
-		        'name' => (string) $item->name,
-		        'description' => FrmAppHelper::maybe_json_decode((string) $item->description),
-		        'ip' => (string) $item->ip,
-		        'form_id' => (isset($forms[(int) $item->form_id]) ? $posts[(int) $item->form_id] : (int) $item->form_id),
-		        'post_id' => (isset($posts[(int) $item->post_id]) ? $posts[(int) $item->post_id] : (int) $item->post_id),
-		        'user_id' => (string) $item->user_id,
+	            'id'            => (int) $item->id,
+		        'item_key'      => (string) $item->item_key,
+		        'name'          => (string) $item->name,
+		        'description'   => FrmAppHelper::maybe_json_decode((string) $item->description),
+		        'ip'            => (string) $item->ip,
+		        'form_id'       => (isset($forms[(int) $item->form_id]) ? $posts[(int) $item->form_id] : (int) $item->form_id),
+		        'post_id'       => (isset($posts[(int) $item->post_id]) ? $posts[(int) $item->post_id] : (int) $item->post_id),
+		        'user_id'       => (string) $item->user_id,
 		        'parent_item_id' => (int) $item->parent_item_id,
-		        'is_draft' => (int) $item->is_draft,
-		        'updated_by' => (string) $item->updated_by,
-		        'created_at' => (string) $item->created_at,
-		        'updated_at' => (string) $item->updated_at,
+		        'is_draft'      => (int) $item->is_draft,
+		        'updated_by'    => (string) $item->updated_by,
+		        'created_at'    => (string) $item->created_at,
+		        'updated_at'    => (string) $item->updated_at,
 	        );
 	        
 	        $metas = array();
     		foreach($item->item_meta as $meta){
     		    $m = array(
-    		        'field_id' => (int) $meta->field_id,
-    		        'meta_value' => FrmAppHelper::maybe_json_decode((string) $meta->meta_value)
+    		        'field_id'      => (int) $meta->field_id,
+    		        'meta_value'    => FrmAppHelper::maybe_json_decode((string) $meta->meta_value)
     		    );
     		    $metas[] = $m;
     		    unset($meta);
@@ -304,15 +331,18 @@ class FrmXMLHelper{
             
             $editing = $wpdb->get_var($wpdb->prepare("SELECT id FROM {$wpdb->prefix}frm_items WHERE id=%d AND item_key=%s", $entry['id'], $entry['item_key']));
             
-            if($editing)
-                $frm_entry->update($entry['id'], $entry);
-            else
-                $frm_entry->create($entry);
+            if ( $editing && $frm_entry->update($entry['id'], $entry) ) {
+                $updated['items']++;
+            } else if ( !$editing && $frm_entry->create($entry) ) {
+                $imported['items']++;
+            }
 		    
 		    unset($entry);
 	    }
 	    unset($xml->item);
 	    }
+	    
+	    return compact('imported', 'updated');
     }
 	
 	public static function cdata( $str ) {

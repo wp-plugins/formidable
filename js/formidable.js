@@ -316,8 +316,6 @@ function frmGetDataOpts(f,selected,field_id,rec){
 				jQuery('#frm_field_'+f.HideField+'_container').show();
 			}
 			jQuery('#frm_data_field_'+f.HideField+'_container').html(html);
-			if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen)
-				jQuery('.frm_chzn').chosen();
 			
 			if(html!='' && prev!=''){
 				if(!jQuery.isArray(prev)){
@@ -343,6 +341,9 @@ function frmGetDataOpts(f,selected,field_id,rec){
 					}
 				});
 			}
+			if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen)
+				jQuery('.frm_chzn').chosen();
+			
 			frmCheckDependent(prev,f.HideField,'stop');
 		}
 	});
