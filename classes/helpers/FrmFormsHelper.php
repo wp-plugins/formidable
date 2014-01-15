@@ -5,12 +5,10 @@ if(class_exists('FrmFormsHelper'))
     return;
 
 class FrmFormsHelper{
-    public static function get_direct_link($key, $prli_link_id=false){
+    public static function get_direct_link($key, $form = false ) {
         $target_url = esc_url(admin_url('admin-ajax.php') . '?action=frm_forms_preview&form='. $key);
-        if ($prli_link_id && class_exists('PrliLink')){
-            $prli = prli_get_pretty_link_url($prli_link_id);
-            if ($prli) $target_url = $prli;
-        }
+        $target_url = apply_filters('frm_direct_link', $target_url, $key, $form);
+
         return $target_url;
     }
     

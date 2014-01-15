@@ -18,7 +18,7 @@
     ?>
     <tr class="<?php echo $alternate ?>">
         <td class="post-title">
-            <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key); ?>" title="<?php _e('View', 'formidable')?> <?php echo esc_attr($form->name) ?>" target="blank"><?php echo $form->name; ?></a><br/>
+            <a class="row-title" href="<?php echo $url = FrmFormsHelper::get_direct_link($form->form_key, $form); ?>" title="<?php _e('View', 'formidable')?> <?php echo esc_attr($form->name) ?>" target="blank"><?php echo $form->name; ?></a><br/>
             <div class="row-actions">
                 <?php if(current_user_can('frm_edit_forms')){ ?>
                 <span><a href="?page=formidable&amp;frm_action=duplicate&amp;id=<?php echo $form->id; ?>"><?php _e('Create Form from Template', 'formidable') ?></a></span> |

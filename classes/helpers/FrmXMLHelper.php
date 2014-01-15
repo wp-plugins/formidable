@@ -181,9 +181,8 @@ class FrmXMLHelper{
 		    
 		    
 		    // Update field ids/keys to new ones
-		    if($this_form)
-                do_action('frm_after_duplicate_form', $form_id, $form);
-                
+		    do_action('frm_after_duplicate_form', $form_id, $form);
+            
             $forms[(int) $item->id] = $form_id;
 		    
 		    unset($form);
