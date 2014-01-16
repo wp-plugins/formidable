@@ -196,7 +196,7 @@ class FrmXMLController{
             die();
         }
         
-        if ( $type == 'xml' ) {
+        if ( $format == 'xml' ) {
             self::generate_xml($type, compact('ids'));
         } else {
             do_action('frm_export_format_'. $format, compact('ids'));
