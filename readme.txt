@@ -80,6 +80,8 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed showing only file name in views
 * PRO: Removed Pretty Link plugin integration to be placed in an add-on
 * PRO: Added frm_csv_line_break hook
+* PRO: Added delete_link and confirm parameter to formresults shortcode
+* PRO: Added entry_id, x_title, and y_title to graph shortcode options
 
 = 1.07.04 =
 * Minor back-end styling fixes
