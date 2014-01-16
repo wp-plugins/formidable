@@ -79,6 +79,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL
 * PRO: Fixed showing only file name in views
 * PRO: Removed Pretty Link plugin integration to be placed in an add-on
+* PRO: Added frm_csv_line_break hook
 
 = 1.07.04 =
 * Minor back-end styling fixes

@@ -9,12 +9,19 @@ class FrmEntry{
     function create( $values ){
         global $wpdb, $frm_entry_meta;
         
-        $new_values = array();
-        $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $wpdb->prefix .'frm_items', 'item_key');
-        $new_values['name'] = isset($values['name']) ? $values['name'] : $values['item_key'];
+        $new_values = array(
+            'item_key'  => FrmAppHelper::get_unique_key($values['item_key'], $wpdb->prefix .'frm_items', 'item_key'),
+            'name'      => isset($values['name']) ? $values['name'] : $values['item_key'],
+            'ip'        => $_SERVER['REMOTE_ADDR'],
+            'is_draft'  => ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ? 1 : 0,
+            'form_id'   => isset($values['form_id']) ? (int) $values['form_id']: null,
+            'post_id'   => isset($values['post_id']) ? (int) $values['post_id']: null,
+            'created_at' => isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1),
+            'updated_at' => isset($values['updated_at']) ? $values['updated_at'] : ( isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1) ),
+        );
+        
         if(is_array($new_values['name']))
             $new_values['name'] = reset($new_values['name']);
-        $new_values['ip'] = $_SERVER['REMOTE_ADDR'];
         
         if(isset($values['description']) and !empty($values['description'])){
             $new_values['description'] = maybe_serialize($values['description']);
@@ -24,13 +31,6 @@ class FrmEntry{
             $new_values['description'] = serialize(array('browser' => $_SERVER['HTTP_USER_AGENT'], 
                                                         'referrer' => $referrerinfo));
         }
-        
-        if(isset($values['frm_saving_draft']) and $values['frm_saving_draft'] == 1)
-            $new_values['is_draft'] = 1;
-        
-        $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id']: null;
-        $new_values['created_at'] = isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1);
-        $new_values['updated_at'] = isset($values['updated_at']) ? $values['updated_at'] : $new_values['created_at'];
         
         //if(isset($values['id']) and is_numeric($values['id']))
         //    $new_values['id'] = $values['id'];
@@ -45,8 +45,9 @@ class FrmEntry{
         $new_values['updated_by'] = isset($values['updated_by']) ? $values['updated_by'] : $new_values['user_id'];
         
         //check for duplicate entries created in the last 5 minutes
-        $create_entry = true;
         if(!defined('WP_IMPORTING')){
+            $create_entry = true;
+            
             $check_val = $new_values;
             $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*5))); 
             unset($check_val['created_at']);
@@ -81,12 +82,15 @@ class FrmEntry{
                     }
                 }
             }
+            
+            if ( !$create_entry ) {
+                return false;
+            }
         }
         
-        if($create_entry)
-            $query_results = $wpdb->insert( $wpdb->prefix .'frm_items', $new_values );
+        $query_results = $wpdb->insert( $wpdb->prefix .'frm_items', $new_values );
 
-        if(isset($query_results) and $query_results){
+        if ( $query_results ) {
             $entry_id = $wpdb->insert_id;
             
             global $frm_vars;
@@ -94,14 +98,16 @@ class FrmEntry{
                 $frm_vars['saved_entries'] = array();
             $frm_vars['saved_entries'][] = (int)$entry_id;
             
-            if (isset($values['item_meta']))
+            if ( isset($values['item_meta']) ) {
                 $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
+            }
                 
             do_action('frm_after_create_entry', $entry_id, $new_values['form_id']);
             do_action('frm_after_create_entry_'. $new_values['form_id'], $entry_id);
             return $entry_id;
-        }else
+        } else {
             return false;
+        }
     }
     
     function duplicate( $id ){
@@ -137,21 +143,22 @@ class FrmEntry{
         if(isset($frm_vars['saved_entries']) && is_array($frm_vars['saved_entries']) && in_array((int)$id, (array)$frm_vars['saved_entries']))
             return;
 
-        $new_values = array();
+        $user_ID = get_current_user_id();
+        
+        $new_values = array(
+            'name'      => isset($values['name']) ? $values['name'] : '',
+            'form_id'   => isset($values['form_id']) ? (int) $values['form_id'] : null,
+            'post_id'   => isset($values['post_id']) ? (int) $values['post_id'] : null,
+            'is_draft'  => ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ? 1 : 0,
+            'updated_at' => current_time('mysql', 1),
+            'updated_by' => isset($values['updated_by']) ? $values['updated_by'] : $user_ID,
+        );
 
         if (isset($values['item_key']))
             $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $wpdb->prefix .'frm_items', 'item_key', $id);
-
-        $new_values['name'] = isset($values['name']) ? $values['name'] : '';
-        $new_values['form_id'] = isset($values['form_id']) ? (int)$values['form_id'] : null;
-        $new_values['updated_at'] = current_time('mysql', 1);
+        
         if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
             $new_values['user_id'] = $values['frm_user_id'];
-            
-        $new_values['is_draft'] = (isset($values['frm_saving_draft']) and $values['frm_saving_draft'] == 1) ? 1 : 0;
-
-        $user_ID = get_current_user_id();
-        $new_values['updated_by'] = $user_ID;
 
         $new_values = apply_filters('frm_update_entry', $new_values, $id);
         $query_results = $wpdb->update( $wpdb->prefix .'frm_items', $new_values, compact('id') );

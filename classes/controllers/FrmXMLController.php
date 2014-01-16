@@ -114,22 +114,35 @@ class FrmXMLController{
                     
                     $message = '<ul>';
                     foreach ( $result as $type => $results ) {
+                        if ( !isset($t_strings[$type]) ) {
+                            // only print imported and updated
+                            continue;
+                        }
+                        
+                        $s_message = array();
                         foreach ( $results as $k => $m ) {
                             if ( $m ) {
                                 $strings = array(
-                                    'forms'     => sprintf( _n( '%1$s %2$s Form', '%1$s %2$s Forms', $m, 'formidable' ), $t_strings[$type], $m ),
-                                    'fields'    => sprintf(_n( '%1$s %2$s Field', '%1$s %2$s Fields', $m, 'formidable' ), $t_strings[$type], $m),
-                                    'items'     => sprintf(_n( '%1$s %2$s Entry', '%1$s %2$s Entries', $m, 'formidable' ), $t_strings[$type], $m),
-                                    'views'     => sprintf(_n( '%1$s %2$s View', '%1$s %2$s Views', $m, 'formidable' ), $t_strings[$type], $m),
-                                    'posts'     => sprintf(_n( '%1$s %2$s Post', '%1$s %2$s Posts', $m, 'formidable' ), $t_strings[$type], $m),
-                                    'terms'     => sprintf(_n( '%1$s %2$s Term', '%1$s %2$s Terms', $m, 'formidable' ), $t_strings[$type], $m),
+                                    'forms'     => sprintf(_n( '%1$s Form', '%1$s Forms', $m, 'formidable' ), $m ),
+                                    'fields'    => sprintf(_n( '%1$s Field', '%1$s Fields', $m, 'formidable' ), $m),
+                                    'items'     => sprintf(_n( '%1$s Entry', '%1$s Entries', $m, 'formidable' ), $m),
+                                    'views'     => sprintf(_n( '%1$s View', '%1$s Views', $m, 'formidable' ), $m),
+                                    'posts'     => sprintf(_n( '%1$s Post', '%1$s Posts', $m, 'formidable' ), $m),
+                                    'terms'     => sprintf(_n( '%1$s Term', '%1$s Terms', $m, 'formidable' ), $m),
                                 );
                                 
-                                $message .= '<li>'. $strings[$k] .'</li>';
+                                $s_message[] = isset($strings[$k]) ? $strings[$k] : $t_strings[$type] .' '. $m .' '. ucfirst($k);
                             }
                             unset($k);
                             unset($m);
                         }
+                        
+                        if ( !empty($s_message) ) {
+                            $message .= '<li><strong>'. $t_strings[$type] .':</strong> ';
+                            $message .= implode(', ', $s_message);
+                            $message .= '</li>';
+                        }
+                        
                     }
                     
                     if ( $message == '<ul>' ) {

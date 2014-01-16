@@ -6,35 +6,70 @@ if(class_exists('FrmEntryMeta'))
 
 class FrmEntryMeta{
 
-    function add_entry_meta($entry_id, $field_id, $meta_key='', $meta_value){
+    function add_entry_meta($entry_id, $field_id, $meta_key = null, $meta_value) {
         global $wpdb;
-
-        $new_values = array();
-        $new_values['meta_value'] = trim($meta_value);
-        $new_values['item_id'] = $entry_id;
-        $new_values['field_id'] = $field_id;
-        $new_values['created_at'] = current_time('mysql', 1);
+        
+        if ( (is_array($meta_value) && empty($meta_value) ) || ( !is_array($meta_value) && trim($meta_value) == '' ) ) {
+            // don't save blank fields
+            return;
+        }
+        
+        $new_values = array(
+            'meta_value'    => is_array($meta_value) ? serialize($meta_value) : trim($meta_value),
+            'item_id'       => $entry_id,
+            'field_id'      => $field_id,
+            'created_at'    => current_time('mysql', 1),
+        );
+        
         $new_values = apply_filters('frm_add_entry_meta', $new_values);
 
-        $wpdb->insert( $wpdb->prefix .'frm_item_metas', $new_values );
+        $query_results = $wpdb->insert( $wpdb->prefix .'frm_item_metas', $new_values );
+        
+        $id = $query_results ? $wpdb->insert_id : 0;
+        
+        return $id;
     }
 
-    function update_entry_meta($entry_id, $field_id, $meta_key='', $meta_value){
-        //$this->delete_entry_meta($entry_id, $field_id);
-        if (!empty($meta_value) or $meta_value == '0')
-            $this->add_entry_meta($entry_id, $field_id, $meta_key, $meta_value);
+    function update_entry_meta($entry_id, $field_id, $meta_key = null, $meta_value){
+        global $wpdb;
+        
+        $where_values = array( 'item_id' => $entry_id, 'field_id' => $field_id );
+        $meta_value = apply_filters('frm_update_entry_meta', $meta_value, $where_values);
+        $meta_value = maybe_serialize($meta_value);
+        
+        return $wpdb->update( $wpdb->prefix .'frm_item_metas', array( 'meta_value' => $meta_value ), $where_values );
     }
   
     function update_entry_metas($entry_id, $values){
-        global $frm_field;
-        $this->delete_entry_metas($entry_id, " AND field_id != '0'");
-        foreach($values as $field_id => $meta_value){
-            if(is_array($values[$field_id]))
-                $values[$field_id] = (empty($values[$field_id])) ? false : maybe_serialize($values[$field_id]);
-            else
-                $values[$field_id] = stripslashes_deep($values[$field_id]);
-            $this->update_entry_meta($entry_id, $field_id, '', $values[$field_id]);
+        global $frm_field, $wpdb;
+        
+        $prev_values = $wpdb->get_col($wpdb->prepare("SELECT field_id FROM {$wpdb->prefix}frm_item_metas WHERE item_id=%d", $entry_id));
+        
+        foreach ( $values as $field_id => $meta_value ) {
+            $values[$field_id] = stripslashes_deep($values[$field_id]);
+            
+            if ( $prev_values && in_array($field_id, $prev_values) ) {
+                // if value exists, then update it
+                $this->update_entry_meta($entry_id, $field_id, '', $values[$field_id]);
+            } else {
+                // if value does not exist, then create it
+                $this->add_entry_meta($entry_id, $field_id, '', $values[$field_id]);
+            }
+            
         }
+        
+        if ( empty($prev_values) ) {
+            return;
+        }
+        
+        $prev_values = array_diff($prev_values, array_keys($values));
+        
+        if ( empty($prev_values) ) {
+            return;
+        }
+        
+        // Delete any leftovers
+        $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}frm_item_metas WHERE item_id=%d AND field_id in", $entry_id) ."  (". implode(',', $prev_values) .")");
     }
   
     function duplicate_entry_metas($old_id, $new_id){
@@ -45,17 +80,11 @@ class FrmEntryMeta{
 
     function delete_entry_meta($entry_id, $field_id){
         global $wpdb;
-        $entry_id = (int)$entry_id;
-        $field_id = (int)$field_id;
         return $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}frm_item_metas WHERE field_id=%d AND item_id=%d", $field_id, $entry_id));
     }
   
     function delete_entry_metas($entry_id, $where=''){
-        global $wpdb;
-        $entry_id = (int)$entry_id;
-        $where = "item_id='$entry_id'". $where;
-
-        return $wpdb->query("DELETE FROM {$wpdb->prefix}frm_item_metas WHERE $where");
+        _deprecated_function( __FUNCTION__, '1.07.05' );
     }
   
     function get_entry_meta_by_field($entry_id, $field_id, $return_var=true){
