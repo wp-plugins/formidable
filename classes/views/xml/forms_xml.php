@@ -19,7 +19,7 @@ foreach ( $forms as $form ) {
 		<form_key><?php echo FrmXMLHelper::cdata($form->form_key) ?></form_key>
 		<name><?php echo FrmXMLHelper::cdata($form->name) ?></name>
 		<description><?php echo FrmXMLHelper::cdata($form->description) ?></description>
-		<created_at><?php echo date('D, d M Y H:i:s +0000', strtotime($form->created_at)) ?></created_at>
+		<created_at><?php echo $form->created_at ?></created_at>
 		<logged_in><?php echo $form->logged_in ?></logged_in>
 		<is_template><?php echo $form->is_template ?></is_template>
 		<default_template><?php echo $form->default_template ?></default_template>

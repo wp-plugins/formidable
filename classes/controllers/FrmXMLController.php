@@ -62,6 +62,10 @@ class FrmXMLController{
             array('forms' => __('Forms', 'formidable'))
         );
         
+        $export_format = apply_filters('frm_export_formats', array( 
+            'xml' => array( 'name' => 'XML', 'support' => 'forms', 'count' => 'multiple'),
+        ));
+        
         include(FrmAppHelper::plugin_path() .'/classes/views/xml/import_form.php');
     }
     
@@ -184,13 +188,20 @@ class FrmXMLController{
         if ( isset($_POST['type']) ){
             $type = $_POST['type'];
         }
+        
+        $format = isset($_POST['format']) ? $_POST['format'] : 'xml';
             
         if ( !headers_sent() && (!isset($type) || !$type) ) {
             wp_redirect(admin_url('admin.php?page=formidable-import'));
             die();
         }
-
-        self::generate_xml($type, compact('ids'));
+        
+        if ( $type == 'xml' ) {
+            self::generate_xml($type, compact('ids'));
+        } else {
+            do_action('frm_export_format_'. $format, compact('ids'));
+        }
+        
         die();
     }
     

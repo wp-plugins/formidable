@@ -3,7 +3,6 @@
 <channel>
 	<title><?php bloginfo_rss( 'name' ); ?></title>
 	<pubDate><?php echo date( 'D, d M Y H:i:s +0000' ); ?></pubDate>
-	<language><?php bloginfo_rss( 'language' ); ?></language>
 	<base_blog_url><?php bloginfo_rss( 'url' ); ?></base_blog_url>
 
 <?php

@@ -36,6 +36,22 @@
             <input type="hidden" name="action" value="frm_export_xml" />
             <?php //wp_nonce_field('export-xml'); ?>
             <table class="form-table">
+                <?php if (count($export_format) == 1) { 
+                    reset($export_format); ?>
+                <tr><td colspan="2"><input type="hidden" name="format" value="<?php echo key($export_format) ?>" /></td></tr>
+                <?php } else { ?>
+                <tr class="form-field">
+                    <th scope="row"><?php _e('Export Format', 'formidable'); ?>:</th>
+                    <td>
+                        <select name="format">
+                        <?php foreach ( $export_format as $t => $type ){ ?>
+                            <option value="<?php echo $t ?>" data-support="<?php echo esc_attr($type['support']) ?>" <?php echo isset($type['count']) ? 'data-count="'. esc_attr($type['count']) .'"' : ''; ?>><?php echo isset($type['name']) ? $type['name'] : $t ?></option>
+                        <?php } ?>
+                        </select>
+                    </td>
+                </tr>
+                <?php } ?>
+                
                 <?php if (count($export_types) == 1) { 
                     reset($export_types); ?>
                 <tr><td colspan="2"><input type="hidden" name="type[]" value="<?php echo key($export_types) ?>" /></td></tr>
@@ -54,19 +70,22 @@
                 <tr class="form-field">
                     <th scope="row"><?php _e('Select forms (optional)', 'formidable'); ?>:</th>
                     <td>
-                        <?php _e('If you would like to include ONLY specific forms and the entries and custom displays related to those forms, select those forms here', 'formidable'); ?>:<br/>
-                        <div class="postbox" style="padding:0 10px;max-height:300px;overflow:auto;">
+                        <?php _e('If you would like to include ONLY specific forms and the entries and views related to those forms, select those forms here', 'formidable'); ?>:<br/>
+                        <!-- <div class="postbox" style="padding:0 10px;max-height:300px;overflow:auto;"> -->
+                        <select name="frm_export_forms[]" multiple="multiple">
                         <?php foreach($forms as $form){ ?>
-                        <p><label><input type="checkbox" name="frm_export_forms[]" value="<?php echo $form->id ?>"/> <?php 
-                        echo ($form->name == '') ? '(no title)' : $form->name; 
+                            <option value="<?php echo $form->id ?>"><?php 
+                        echo ($form->name == '') ? '(no title)' : $form->name;
+                        echo ' &mdash; '. $form->form_key;
                         if ( $form->is_template && $form->default_template ) {
                             echo ' '. __('(default template)', 'formidable');
                         } else if ( $form->is_template ) { 
                             echo ' '. __('(template)', 'formidable');
                         }
-                        ?></label></p>
+                        ?></option>
                         <?php } ?>
-                        </div>
+                        </select>
+                        <!-- </div> -->
                     </td>
                 </tr>
             </table>

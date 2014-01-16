@@ -494,6 +494,40 @@ class FrmFormsController{
         }
         return $errors;
     }
+    
+    public static function add_default_templates($path, $default=true, $template=true){
+        _deprecated_function( __FUNCTION__, '1.07.05', 'FrmXMLController::add_default_templates()' );
+        
+        global $frm_field;
+        $path = untrailingslashit(trim($path));
+        $templates = glob($path."/*.php");
+        
+        $frm_form = new FrmForm();
+        for($i = count($templates) - 1; $i >= 0; $i--){
+            $filename = str_replace('.php', '', str_replace($path.'/', '', $templates[$i]));
+            $template_query = array('form_key' => $filename);
+            if($template) $template_query['is_template'] = 1;
+            if($default) $template_query['default_template'] = 1;
+            $form = $frm_form->getAll($template_query, '', 1);
+            
+            $values = FrmFormsHelper::setup_new_vars();
+            $values['form_key'] = $filename;
+            $values['is_template'] = $template;
+            $values['status'] = 'published';
+            if($default) $values['default_template'] = 1;
+            
+            include($templates[$i]);
+            
+            //get updated form
+            if($form)
+                $form = $frm_form->getOne($form->id);
+            else
+                $form = $frm_form->getAll($template_query, '', 1);
+            
+            if($form)
+                do_action('frm_after_duplicate_form', $form->id, (array)$form);
+        }
+    }
 
     public static function route(){
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';

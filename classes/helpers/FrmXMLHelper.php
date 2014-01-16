@@ -105,18 +105,22 @@ class FrmXMLHelper{
 		        'is_template'   => (int) $item->is_template,
 		        'default_template' => (int) $item->default_template,
 		        'editable'      => (int) $item->editable,
-		        'status'        => (string) $item->status
+		        'status'        => (string) $item->status,
+		        'created_at'    => date('Y-m-d H:i:s', strtotime((string) $item->created_at)),
 		    );
 		    
 		    $form['options'] = FrmAppHelper::maybe_json_decode($form['options']);
 		    
-		    //if template, allow to edit if form keys match, otherwise, form ids must also match
-		    $template_query = array('form_key' => $form['form_key'], 'is_template' => $form['is_template']);
-		    if ( !$form['is_template'] ) {
-		        $template_query['id'] = $form['id'];
-		    }
+		    // if template, allow to edit if form keys match, otherwise, creation date must also match
+		    $edit_query = array('form_key' => $form['form_key'], 'is_template' => $form['is_template']);
+            if ( !$form['is_template'] ) {
+                $edit_query['created_at'] = $form['created_at'];
+            }
 		    
-            $this_form = $frm_form->getAll($template_query, '', 1);
+		    $edit_query = apply_filters('frm_match_xml_form', $edit_query, $form);
+		    
+            $this_form = $frm_form->getAll($edit_query, '', 1);
+            unset($edit_query);
             
             if ( !empty($this_form) ) {
                 $form_id = $this_form->id;

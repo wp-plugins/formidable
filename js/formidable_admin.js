@@ -261,6 +261,7 @@ $('#post_settings').on('click', '.frm_toggle_cf_opts', frm_toggle_cf_opts);
 //is export page
 if($('#frm_export_xml').length){
 $('input[name="frm_import_file"]').change(frmCheckCSVExtension);
+$('select[name="format"]').change(frmCheckExportTypes);
 }
 
 });
@@ -1147,3 +1148,21 @@ else
 	jQuery('.show_csv').fadeOut();
 }
 
+function frmCheckExportTypes(){
+var s=jQuery(this).find(':selected').data('support');
+jQuery('input[name="type[]"]').each(function(){
+	if(s.indexOf(jQuery(this).val()) >= 0){
+		jQuery(this).prop('disabled', false);
+	}else{
+		jQuery(this).prop('disabled', true);
+	}
+});
+
+var c=jQuery(this).find(':selected').data('count');
+if(c == 'single'){
+	jQuery('select[name="frm_export_forms[]"]').prop('multiple', false);
+}else{
+	jQuery('select[name="frm_export_forms[]"]').prop('multiple', true);
+}
+
+}
