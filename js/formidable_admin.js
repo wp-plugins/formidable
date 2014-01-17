@@ -985,7 +985,7 @@ function frm_add_order_row(){
     	var l=0;
 	jQuery.ajax({type:"POST",url:ajaxurl,
 		data:"action=frm_add_order_row&form_id="+form_id+"&order_key="+(parseInt(l)+1),
-		success:function(html){jQuery('#frm_order_options').append(html).children('.frm_add_order_row').hide();}
+		success:function(html){jQuery('#frm_order_options .frm_logic_rows').append(html).prev('.frm_add_order_row').hide();}
 	});
 }
 
@@ -1005,7 +1005,7 @@ function frm_add_where_row(){
     	var l=0;
 	jQuery.ajax({type:"POST",url:ajaxurl,
 		data:"action=frm_add_where_row&form_id="+form_id+"&where_key="+(parseInt(l)+1),
-		success:function(html){jQuery('#frm_where_options').append(html).children('.frm_add_where_row').hide();}
+		success:function(html){jQuery('#frm_where_options .frm_logic_rows').append(html).prev('.frm_add_where_row').hide();}
 	});
 }
 
