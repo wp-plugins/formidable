@@ -12,6 +12,7 @@ class FrmAppController{
         add_action('admin_menu', 'FrmAppController::menu', 1);
         add_action( 'admin_enqueue_scripts', 'FrmAppController::load_wp_admin_style' );
         add_filter('plugin_action_links_formidable/formidable.php', 'FrmAppController::settings_link', 10, 2 );
+        add_filter('update_plugin_complete_actions', 'FrmAppController::update_action_links', 10, 2 );
         add_action('admin_notices', 'FrmAppController::pro_get_started_headline');
         add_filter('the_content', 'FrmAppController::page_route', 10);
         add_action('plugins_loaded', 'FrmAppController::load_lang');
@@ -85,15 +86,42 @@ class FrmAppController{
         
         return $links;
     }
+    
+    function update_action_links( $actions, $plugin ) {
+        
+    	if ( 'formidable' != $plugin )
+    		return $actions;
+        
+        global $frm_vars;
+        
+        $db_version = get_option('frm_db_version');
+        $pro_db_version = $frm_vars['pro_is_installed'] ? get_option('frmpro_db_version') : false;
+        
+        if ( ( (int) $db_version < (int) FrmAppHelper::$db_version ) ||
+            ( $frm_vars['pro_is_installed'] && (int) $pro_db_version < (int) FrmAppHelper::$pro_db_version ) ) {
+        
+    	        return sprintf( '<a href="%s">%s</a>', menu_page_url( 'formidable', 0 ), __( 'Click here to complete the upgrade', 'formidable' ) );
+    	} else {
+    	    return $actions;
+    	}
+    }
 
     public static function pro_get_started_headline(){
+        if ( isset($_GET['page']) && 'formidable' == $_GET['page'] && isset( $_REQUEST['upgraded'] ) && 'true' == $_REQUEST['upgraded'] ) {
+            self::install();
+            ?>
+<div id="message" class="frm_message updated"><?php _e('Congratulations! Formidable is ready to roll.', 'formidable') ?></div>
+<?php
+            return;
+        }
+        
         // Don't display this error as we're upgrading the thing... cmon
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
             return;
     
         if (is_multisite() and !is_super_admin())
             return;
-         
+        
         if(!isset($_GET['activate'])){  
             global $frm_vars;
             $db_version = get_option('frm_db_version');

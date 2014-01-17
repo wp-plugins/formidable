@@ -161,8 +161,10 @@ class FrmXMLHelper{
     		        'field_options' => FrmAppHelper::maybe_json_decode( (string) $field->field_options)
     		    );
     		    
+    		    $f = apply_filters('frm_duplicated_field', $f);
+    		    
     		    if ( $this_form ) {
-    		        // check for field to edit
+    		        // check for field to edit by field id
     		        if ( isset($form_fields[$f['id']]) ) {
     		            $u = $frm_field->update( $f['id'], $f );
     		            if ( $u ) {
@@ -175,6 +177,7 @@ class FrmXMLHelper{
     		                unset($form_fields[$f['field_key']]);
     		            }
     		        } else if ( isset($form_fields[$f['field_key']]) ) {
+    		            // check for field to edit by field key
     		            unset($f['id']);
     		            $u = $frm_field->update( $form_fields[$f['field_key']], $f );
     		            if ( $u ) {
@@ -183,6 +186,7 @@ class FrmXMLHelper{
     		            unset($form_fields[$form_fields[$f['field_key']]]); //unset old field id
     		            unset($form_fields[$f['field_key']]); //unset old field key
     		        } else {
+    		            // if no matching field id or key in this form, create the field
     		            if ( $frm_field->create( $f ) ) {
     		                $imported['imported']['fields']++;
     		            }

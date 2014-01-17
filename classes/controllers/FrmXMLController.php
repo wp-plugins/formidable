@@ -255,13 +255,20 @@ class FrmXMLController{
                 if ( $args['ids'] )
             	    $where .= " AND $table.id IN (". $args['ids'] .")";
 
-            }else if($tb_type == 'items' && $args['ids']){
-                //$join = "INNER JOIN {$wpdb->prefix}frm_item_metas im ON ($table.id = im.item_id)"; 
-                $where = "$table.form_id IN (". $args['ids'] .")";
-            }else{
+            } else if($tb_type == 'items') {
+                //$join = "INNER JOIN {$wpdb->prefix}frm_item_metas im ON ($table.id = im.item_id)";
+                if ( $args['ids'] ) {
+                    $where = "$table.form_id IN (". $args['ids'] .")";
+                }
+            } else {
                 $select = "$table.ID";
                 $join = "INNER JOIN $wpdb->postmeta pm ON (pm.post_id=$table.ID)";
-                $where = "pm.meta_key='frm_form_id' AND pm.meta_value IN (". $args['ids'] .")";
+                $where = "pm.meta_key='frm_form_id' AND pm.meta_value ";
+                if ( empty($args['ids']) ) {
+                    $where .= "> 0";
+                } else {
+                    $where .= "IN (". $args['ids'] .")";
+                }
             }
 
             if(!empty($where))
