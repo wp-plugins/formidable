@@ -412,7 +412,7 @@ class FrmFieldsController{
             $add_html .= ' maxlength="'. $field['max'] .'"';
         
         if(!is_admin() or defined('DOING_AJAX') or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable-entries'){
-            if(isset($field['required']) and $field['required']){
+            /*if(isset($field['required']) and $field['required']){
                 $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
                 $action = FrmAppHelper::get_param($action);
                 
@@ -425,7 +425,7 @@ class FrmFieldsController{
                     $class .= " required";
                 }
                 unset($action);
-            }
+            }*/
             
             if(isset($field['clear_on_focus']) and $field['clear_on_focus'] and !empty($field['default_value'])){
                 

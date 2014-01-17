@@ -1215,8 +1215,8 @@ function frmCheckExportTypes(){
 
 	var c=jQuery(this).find(':selected').data('count');
 	if(c == 'single'){
-		jQuery('select[name="frm_export_forms[]"]').prop('multiple', false);
+		jQuery('select[name="frm_export_forms[]"]').prop('multiple', false).next('.howto').hide();
 	}else{
-		jQuery('select[name="frm_export_forms[]"]').prop('multiple', true);
+		jQuery('select[name="frm_export_forms[]"]').prop('multiple', true).next('.howto').show();
 	}
 }

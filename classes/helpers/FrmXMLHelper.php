@@ -124,10 +124,9 @@ class FrmXMLHelper{
             
             if ( !empty($this_form) ) {
                 $form_id = $this_form->id;
-                $u = $frm_form->update($form_id, $form );
-                if ( $u ) {
-                    $imported['updated']['forms']++;
-                }
+                $frm_form->update($form_id, $form );
+                $imported['updated']['forms']++;
+                
                 $form_fields = $frm_field->getAll(array('fi.form_id' => $form_id), 'field_order');
                 $old_fields = array();
                 foreach ( $form_fields as $f ) {
@@ -166,10 +165,9 @@ class FrmXMLHelper{
     		    if ( $this_form ) {
     		        // check for field to edit by field id
     		        if ( isset($form_fields[$f['id']]) ) {
-    		            $u = $frm_field->update( $f['id'], $f );
-    		            if ( $u ) {
-    		                $imported['updated']['fields']++;
-    		            }
+    		            $frm_field->update( $f['id'], $f );
+    		            $imported['updated']['fields']++;
+    		            
     		            unset($form_fields[$f['id']]);
     		            
     		            //unset old field key
@@ -179,22 +177,18 @@ class FrmXMLHelper{
     		        } else if ( isset($form_fields[$f['field_key']]) ) {
     		            // check for field to edit by field key
     		            unset($f['id']);
-    		            $u = $frm_field->update( $form_fields[$f['field_key']], $f );
-    		            if ( $u ) {
-    		                $imported['updated']['fields']++;
-    		            }
+    		            
+    		            $frm_field->update( $form_fields[$f['field_key']], $f );
+    		            $imported['updated']['fields']++;
+    		            
     		            unset($form_fields[$form_fields[$f['field_key']]]); //unset old field id
     		            unset($form_fields[$f['field_key']]); //unset old field key
-    		        } else {
+    		        } else if ( $frm_field->create( $f ) ) {
     		            // if no matching field id or key in this form, create the field
-    		            if ( $frm_field->create( $f ) ) {
-    		                $imported['imported']['fields']++;
-    		            }
+    		            $imported['imported']['fields']++;
     		        }
-    		    } else {
-    		        if ( $frm_field->create( $f ) ) {
-		                $imported['imported']['fields']++;
-		            }
+    		    } else if ( $frm_field->create( $f ) ) {
+		            $imported['imported']['fields']++;
     		    }
     		    
     		    unset($field);

@@ -41,7 +41,7 @@
                 <tr><td colspan="2"><input type="hidden" name="format" value="<?php echo key($export_format) ?>" /></td></tr>
                 <?php } else { ?>
                 <tr class="form-field">
-                    <th scope="row"><label><?php _e('Export Format', 'formidable'); ?>:</label></th>
+                    <th scope="row"><label><?php _e('Export Format', 'formidable'); ?></label></th>
                     <td>
                         <select name="format">
                         <?php foreach ( $export_format as $t => $type ){ ?>
@@ -57,9 +57,9 @@
                 <tr><td colspan="2"><input type="hidden" name="type[]" value="<?php echo key($export_types) ?>" /></td></tr>
                 <?php } else { ?>
                 <tr class="form-field">
-                    <th scope="row"><label><?php _e('Data Types to Export', 'formidable'); ?>:</label></th>
+                    <th scope="row"><label><?php _e('Data to Export', 'formidable'); ?></label></th>
                     <td>
-                        <?php _e('Include the following data types in your export file', 'formidable'); ?><br/>
+                        <?php _e('Include the following in the export file', 'formidable'); ?>:<br/>
                         <?php foreach ( $export_types as $t => $type ){ ?>
                         <label><input type="checkbox" name="type[]" value="<?php echo $t ?>"/> <?php echo $type ?></label> &nbsp;
                         <?php } ?>
@@ -68,9 +68,9 @@
                 <?php } ?>
 
                 <tr class="form-field">
-                    <th scope="row"><label><?php _e('Select form(s)', 'formidable'); ?>:</label></th>
+                    <th scope="row"><label><?php _e('Select Form(s)', 'formidable'); ?></label></th>
                     <td>
-                        <select name="frm_export_forms[]" multiple="multiple">
+                        <select name="frm_export_forms[]" multiple="multiple" class="frm_chzn">
                         <?php foreach($forms as $form){ ?>
                             <option value="<?php echo $form->id ?>"><?php 
                         echo ($form->name == '') ? '(no title)' : $form->name;
@@ -83,6 +83,7 @@
                         ?></option>
                         <?php } ?>
                         </select>
+                        <p class="howto"><?php _e('Hold down the CTRL/Command button to select multiple forms', 'formidable'); ?></p>
                     </td>
                 </tr>
             </table>

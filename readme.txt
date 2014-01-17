@@ -68,6 +68,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added XML import/export
 * Moved more email settings and bulk form delete to free version
 * Added form edit links to admin bar
+* Removed .required class from required form inputs to minimize conflicts
 * PRO: Allow entries to be edited via csv import when entry ID is included
 * PRO: Expanded conditional logic for email notifications
 * PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL

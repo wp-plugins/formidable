@@ -11,7 +11,6 @@
 .with_frm_style .frm_blank_field label, .with_frm_style .frm_error{color:#be2e17;}
 .with_frm_style .frm_blank_field input, .with_frm_style .frm_blank_field textarea, .with_frm_style .frm_blank_field select, .with_frm_style .frm_blank_field #recaptcha_area{border:1px solid #be2e17;}
 .with_frm_style .frm_required{color:#B94A48;font-weight:bold;}
-.with_frm_style input.required, .with_frm_style textarea.required, .with_frm_style select.required{color:inherit;}
 .with_frm_style .frm_checkbox, .with_frm_style .frm_radio{display:block;margin:0;}
 .with_frm_style .frm_left_container .frm_checkbox, .with_frm_style .frm_left_container .frm_radio{margin-left:160px;}
 .with_frm_style fieldset{border:none;margin:0;padding:0;}
