@@ -31,7 +31,7 @@
     
     <div class="postbox">
     <h3 class="hndle"><span><?php _e('Export', 'formidable') ?></span></h3>
-    <div class="inside">
+    <div class="inside with_frm_style">
         <form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" id="frm_export_xml">
             <input type="hidden" name="action" value="frm_export_xml" />
             <?php //wp_nonce_field('export-xml'); ?>
@@ -41,7 +41,7 @@
                 <tr><td colspan="2"><input type="hidden" name="format" value="<?php echo key($export_format) ?>" /></td></tr>
                 <?php } else { ?>
                 <tr class="form-field">
-                    <th scope="row"><?php _e('Export Format', 'formidable'); ?>:</th>
+                    <th scope="row"><label><?php _e('Export Format', 'formidable'); ?>:</label></th>
                     <td>
                         <select name="format">
                         <?php foreach ( $export_format as $t => $type ){ ?>
@@ -57,7 +57,7 @@
                 <tr><td colspan="2"><input type="hidden" name="type[]" value="<?php echo key($export_types) ?>" /></td></tr>
                 <?php } else { ?>
                 <tr class="form-field">
-                    <th scope="row"><?php _e('Data Types to Export', 'formidable'); ?>:</th>
+                    <th scope="row"><label><?php _e('Data Types to Export', 'formidable'); ?>:</label></th>
                     <td>
                         <?php _e('Include the following data types in your export file', 'formidable'); ?><br/>
                         <?php foreach ( $export_types as $t => $type ){ ?>
@@ -68,10 +68,8 @@
                 <?php } ?>
 
                 <tr class="form-field">
-                    <th scope="row"><?php _e('Select forms (optional)', 'formidable'); ?>:</th>
+                    <th scope="row"><label><?php _e('Select form(s)', 'formidable'); ?>:</label></th>
                     <td>
-                        <?php _e('If you would like to include ONLY specific forms and the entries and views related to those forms, select those forms here', 'formidable'); ?>:<br/>
-                        <!-- <div class="postbox" style="padding:0 10px;max-height:300px;overflow:auto;"> -->
                         <select name="frm_export_forms[]" multiple="multiple">
                         <?php foreach($forms as $form){ ?>
                             <option value="<?php echo $form->id ?>"><?php 
@@ -85,7 +83,6 @@
                         ?></option>
                         <?php } ?>
                         </select>
-                        <!-- </div> -->
                     </td>
                 </tr>
             </table>

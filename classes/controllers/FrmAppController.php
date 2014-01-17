@@ -87,9 +87,9 @@ class FrmAppController{
         return $links;
     }
     
-    function update_action_links( $actions, $plugin ) {
+    public static function update_action_links( $actions, $plugin ) {
         
-    	if ( 'formidable' != $plugin )
+    	if ( 'formidable/formidable.php' != $plugin )
     		return $actions;
         
         global $frm_vars;
@@ -99,8 +99,9 @@ class FrmAppController{
         
         if ( ( (int) $db_version < (int) FrmAppHelper::$db_version ) ||
             ( $frm_vars['pro_is_installed'] && (int) $pro_db_version < (int) FrmAppHelper::$pro_db_version ) ) {
-        
-    	        return sprintf( '<a href="%s">%s</a>', menu_page_url( 'formidable', 0 ), __( 'Click here to complete the upgrade', 'formidable' ) );
+                
+            return sprintf( '<a href="%s">%s</a>', add_query_arg(array('upgraded' => 'true'), menu_page_url( 'formidable', 0 )), __( 'Click here to complete the upgrade', 'formidable' ) );
+                
     	} else {
     	    return $actions;
     	}

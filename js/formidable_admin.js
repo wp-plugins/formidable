@@ -260,6 +260,8 @@ $('#post_settings').on('click', '.frm_toggle_cf_opts', frm_toggle_cf_opts);
 
 //is export page
 if($('#frm_export_xml').length){
+$('#frm_export_xml').submit(frmValidateExport);
+$('#frm_export_xml input, #frm_export_xml select').change(frmRemoveExportError);
 $('input[name="frm_import_file"]').change(frmCheckCSVExtension);
 $('select[name="format"]').change(frmCheckExportTypes);
 }
@@ -1139,30 +1141,82 @@ success:function(msg){jQuery('#frm_deauthorize_link').fadeOut('slow'); frm_show_
 });
 }
 
+function frmValidateExport(e){
+	e.preventDefault();
+	
+	if (!jQuery('select[name="frm_export_forms[]"]').val()){
+		jQuery('select[name="frm_export_forms[]"]').closest('.form-field').addClass('frm_blank_field');
+		var s = 'stop';
+	}
+	
+	if (!jQuery('input[name="type[]"]:checked').val()){
+		jQuery('input[name="type[]"]').closest('.form-field').addClass('frm_blank_field');
+		var s = 'stop';
+	}
+
+	if ( s == 'stop' ){
+		return false;
+	}
+
+	e.stopPropagation();
+	this.submit();
+}
+
+function frmRemoveExportError(){
+	var t = jQuery(this).closest('.frm_blank_field');
+	if (typeof(t) == 'undefined'){
+		return;
+	}
+	
+	if(jQuery(this).attr('name') == 'type[]' && jQuery('input[name="type[]"]:checked').val()){
+		t.removeClass('frm_blank_field');
+	}else if(jQuery(this).attr('name') == 'frm_export_forms[]' && jQuery(this).val()){
+		t.removeClass('frm_blank_field');
+	}
+	
+}
+
+function frmAddRemoveExportError(){
+	if (jQuery('select[name="frm_export_forms[]"]').val()){
+		jQuery('select[name="frm_export_forms[]"]').closest('.form-field').removeClass('frm_blank_field');
+	}else{
+		jQuery('select[name="frm_export_forms[]"]').closest('.form-field').addClass('frm_blank_field');
+		var s = 'stop';
+	}
+	
+	if (jQuery('input[name="type[]"]:checked').val()){
+		jQuery('input[name="type[]"]').closest('.form-field').removeClass('frm_blank_field');
+	}else{
+		jQuery('input[name="type[]"]').closest('.form-field').addClass('frm_blank_field');
+		var s = 'stop';
+	}
+	
+	return s;
+}
+
 function frmCheckCSVExtension(){
-var f=jQuery(this).val();
-var re = /\..+$/;
-if (f.match(re) == '.csv')
-	jQuery('.show_csv').fadeIn();
-else
-	jQuery('.show_csv').fadeOut();
+	var f=jQuery(this).val();
+	var re = /\..+$/;
+	if (f.match(re) == '.csv')
+		jQuery('.show_csv').fadeIn();
+	else
+		jQuery('.show_csv').fadeOut();
 }
 
 function frmCheckExportTypes(){
-var s=jQuery(this).find(':selected').data('support');
-jQuery('input[name="type[]"]').each(function(){
-	if(s.indexOf(jQuery(this).val()) >= 0){
-		jQuery(this).prop('disabled', false);
+	var s=jQuery(this).find(':selected').data('support');
+	jQuery('input[name="type[]"]').each(function(){
+		if(s.indexOf(jQuery(this).val()) >= 0){
+			jQuery(this).prop('disabled', false);
+		}else{
+			jQuery(this).prop('disabled', true);
+		}
+	});
+
+	var c=jQuery(this).find(':selected').data('count');
+	if(c == 'single'){
+		jQuery('select[name="frm_export_forms[]"]').prop('multiple', false);
 	}else{
-		jQuery(this).prop('disabled', true);
+		jQuery('select[name="frm_export_forms[]"]').prop('multiple', true);
 	}
-});
-
-var c=jQuery(this).find(':selected').data('count');
-if(c == 'single'){
-	jQuery('select[name="frm_export_forms[]"]').prop('multiple', false);
-}else{
-	jQuery('select[name="frm_export_forms[]"]').prop('multiple', true);
-}
-
 }
