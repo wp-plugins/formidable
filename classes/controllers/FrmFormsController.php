@@ -592,8 +592,12 @@ class FrmFormsController{
     }
     
     public static function admin_bar_configure() {
+        if ( is_admin() || !current_user_can('frm_edit_forms') ) {
+            return;
+        }
+        
         global $frm_vars;
-        if ( is_admin() || empty($frm_vars['forms_loaded']) ) {
+        if ( empty($frm_vars['forms_loaded']) ) {
             return;
         }
         

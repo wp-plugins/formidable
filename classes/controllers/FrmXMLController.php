@@ -54,6 +54,9 @@ class FrmXMLController{
     }
     
     public static function form($errors = array(), $message = '') {
+        //wp_enqueue_script('jquery-chosen');
+        //wp_enqueue_style('formidable');
+        
         $frm_form = new FrmForm();
         $forms = $frm_form->getAll("status is NULL OR status = '' OR status = 'published'", ' ORDER BY name');
         unset($frm_form);
@@ -87,13 +90,31 @@ class FrmXMLController{
             return;
         }
         
+        //add_filter('upload_mimes', 'FrmXMLController::allow_mime');
+        
+        $export_format = apply_filters('frm_export_formats', array( 
+            'xml' => array( 'name' => 'XML', 'support' => 'forms', 'count' => 'multiple'),
+        ));
+        
+        if ( $_FILES['frm_import_file']['type'] != 'text/xml' ) {
+            
+            // allow other file types to be imported
+            foreach ( $export_format as $format => $format_opts ) {
+                if ( $format == 'xml' ) {
+                    continue;
+                }
+                
+                do_action('frm_before_import_'. $format );
+                
+                unset($format);
+                unset($format_opts);
+            }
+            
+            return;
+        }
+        
         //$media_id = FrmProAppHelper::upload_file('frm_import_file');
         //if(is_numeric($media_id)){
-            if ( preg_match( '!\.(csv)$!i', $_FILES['frm_import_file']['name'], $ext_matches ) ) {
-                //map fields from csv
-                self::map_csv_fields();
-                return;
-            }
             
             if ( !function_exists( 'libxml_disable_entity_loader' ) ) {
         		$errors[] = __('XML import is not enabled on your server.', 'formidable');
