@@ -293,7 +293,7 @@ class FrmAppHelper{
                 }
                 
                 $field_type = isset($post_values['field_options']['type_'.$field->id]) ? $post_values['field_options']['type_'.$field->id] : $field->type;
-                $new_value = (isset($post_values['item_meta'][$field->id])) ? stripslashes_deep(maybe_unserialize($post_values['item_meta'][$field->id])) : $meta_value;
+                $new_value = isset($post_values['item_meta'][$field->id]) ? maybe_unserialize($post_values['item_meta'][$field->id]) : $meta_value;
 
                 $field_array = array(
                     'id' => $field->id,
@@ -321,7 +321,7 @@ class FrmAppHelper{
                 $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field, true);
                 
                 foreach ($opt_defaults as $opt => $default_opt){
-                    $field_array[$opt] = ($post_values and isset($post_values['field_options'][$opt.'_'.$field->id]) ) ? stripslashes_deep(maybe_unserialize($post_values['field_options'][$opt.'_'.$field->id])) : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
+                    $field_array[$opt] = ($post_values && isset($post_values['field_options'][$opt.'_'.$field->id]) ) ? maybe_unserialize($post_values['field_options'][$opt.'_'.$field->id]) : (isset($field->field_options[$opt]) ? $field->field_options[$opt] : $default_opt);
                     if($opt == 'blank' and $field_array[$opt] == ''){
                         $field_array[$opt] = $frm_settings->blank_msg;
                     }else if($opt == 'invalid' and $field_array[$opt] == ''){
@@ -370,9 +370,9 @@ class FrmAppHelper{
             if (is_array($form->options)){
                 foreach ($form->options as $opt => $value){
                     if(in_array($opt, array('email_to', 'reply_to', 'reply_to_name')))
-                        $values['notification'][0][$opt] = isset($post_values["notification[0][$opt]"]) ? stripslashes_deep(maybe_unserialize($post_values["notification[0][$opt]"])) : $value;
+                        $values['notification'][0][$opt] = isset($post_values["notification[0][$opt]"]) ? maybe_unserialize($post_values["notification[0][$opt]"]) : $value;
                     
-                    $values[$opt] = isset($post_values[$opt]) ? stripslashes_deep(maybe_unserialize($post_values[$opt])) : $value;
+                    $values[$opt] = isset($post_values[$opt]) ? maybe_unserialize($post_values[$opt]) : $value;
                 }
             }
         }

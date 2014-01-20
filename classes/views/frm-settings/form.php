@@ -91,6 +91,9 @@
             <div class="menu-settings">
             <h3 class="frm_no_bg"><?php _e('Default Messages', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('You can override the success message and submit button settings on individual forms.', 'formidable') ?>" ></span></h3>
             
+            <p><label class="frm_left_label"><?php _e('Failed/Duplicate Entry', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong.', 'formidable') ?>" ></span></label>
+                <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->failed_msg) ?>" /></p>
+            
             <p><label class="frm_left_label"><?php _e('Blank Field', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The message seen when a required field is left blank.', 'formidable') ?>" ></span></label>
             <input type="text" id="frm_blank_msg" name="frm_blank_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->blank_msg) ?>" /></p>
 
@@ -103,15 +106,10 @@
 <?php }else{ ?>
     <input type="hidden" id="frm_unique_msg" name="frm_unique_msg" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" />    
 <?php } ?>    
-
-            <p><label class="frm_left_label"><?php _e('Success Message', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" ></span></label>
+        <input type="hidden" id="frm_login_msg" name="frm_login_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->login_msg) ?>" />
+        
+        <p><label class="frm_left_label"><?php _e('Success Message', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" ></span></label>
             <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->success_msg) ?>" /></p>
-
-            <p><label class="frm_left_label"><?php _e('Failed/Duplicate Entry', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The message seen when a form is submitted and passes validation, but something goes wrong.', 'formidable') ?>" ></span></label>
-            <input type="text" id="frm_failed_msg" name="frm_failed_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->failed_msg) ?>" /></p>
-
-        <p><label class="frm_left_label"><?php _e('Login Message', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The message seen when a user who is not logged-in views a form only logged-in users can submit.', 'formidable') ?>" ></span></label>
-            <input type="text" id="frm_login_msg" name="frm_login_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->login_msg) ?>" /></p>
 
         <p><label class="frm_left_label"><?php _e('Default Submit Button', 'formidable'); ?></label>
             <input type="text" value="<?php echo esc_attr($frm_settings->submit_value) ?>" id="frm_submit_value" name="frm_submit_value" class="frm_with_left_label" /></p>
