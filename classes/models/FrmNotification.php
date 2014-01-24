@@ -2,7 +2,7 @@
 if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 class FrmNotification{
-    function FrmNotification(){
+    function __construct(){
         add_action('frm_after_create_entry', array(&$this, 'entry_created'), 10, 2);
     }
     
@@ -90,12 +90,13 @@ class FrmNotification{
         
         if($to_email == '[admin_email]')
             $to_email = get_option('admin_email');
-            
+        
+        $charset        = get_option('blog_charset');
         $recipient      = $to_email; //recipient
         $header         = array();
         $header[]       = 'From: "'. $reply_to_name .'" <'. $reply_to .'>';
         $header[]       = 'Reply-To: '. $reply_to;
-        $header[]       = 'Content-Type: '. $content_type .'; charset="'. get_option('blog_charset') . '"';
+        $header[]       = 'Content-Type: '. $content_type .'; charset="'. $charset . '"';
         $subject        = wp_specialchars_decode(strip_tags(stripslashes($subject)), ENT_QUOTES );
         
         $message        = do_shortcode($message);
@@ -104,6 +105,9 @@ class FrmNotification{
             $message    = wp_specialchars_decode(strip_tags($message), ENT_QUOTES );
 
         $header         = apply_filters('frm_email_header', $header, compact('to_email', 'subject'));
+        
+        $subject        = '=?'. $charset .'?B?'. base64_encode($subject) .'?=';
+        $message        = '=?'. $charset .'?B?'. base64_encode($message) .'?=';
         
         remove_filter('wp_mail_from', 'bp_core_email_from_address_filter' );
         remove_filter('wp_mail_from_name', 'bp_core_email_from_name_filter');

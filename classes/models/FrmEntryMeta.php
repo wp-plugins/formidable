@@ -46,7 +46,6 @@ class FrmEntryMeta{
         $prev_values = $wpdb->get_col($wpdb->prepare("SELECT field_id FROM {$wpdb->prefix}frm_item_metas WHERE item_id=%d", $entry_id));
         
         foreach ( $values as $field_id => $meta_value ) {
-            $values[$field_id] = stripslashes_deep($values[$field_id]);
             
             if ( $prev_values && in_array($field_id, $prev_values) ) {
                 // if value exists, then update it
@@ -199,7 +198,7 @@ class FrmEntryMeta{
     
         if($results and $stripslashes){
             foreach($results as $k => $result){
-                $results[$k]->meta_value = maybe_unserialize($result->meta_value);
+                $results[$k]->meta_value = stripslashes_deep(maybe_unserialize($result->meta_value));
                 unset($k);
                 unset($result);
             }

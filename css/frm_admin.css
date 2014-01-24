@@ -527,7 +527,7 @@ table td.frm_left_label{float:none;line-height:inherit;padding-right:0;}
 .frm_38_trigger #poststuff .contextual-help-tabs .active, .frm_38_trigger #poststuff .contextual-help-tabs .active a, .frm_38_trigger #poststuff .contextual-help-tabs .active a:hover{background:#fafafa;}
 .wrap .contextual-help-tabs ul{min-height:260px;}
 .frm_38_trigger .postbox .menu-settings h3{border-bottom:none;}
-#poststuff h3.frm_no_bg{background:none;}
+#poststuff h3.frm_no_bg{background:none;cursor:default;}
 .postbox #contextual-help-back{border-right:none;right:0;}
 .frm_38_trigger .postbox #contextual-help-back{background:#fafafa;}
 #contextual-help-columns div.tabs-panel{

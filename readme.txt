@@ -69,13 +69,17 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Moved more email settings and bulk form delete to free version
 * Added form edit links to admin bar
 * Removed .required class from required form inputs to minimize conflicts
+* Revert to random entry keys now that data from entries values can be used in filtering views
+* Encode email subject and message
 * PRO: Allow entries to be edited via csv import when entry ID is included
 * PRO: Expanded conditional logic for email notifications
 * PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL
 * PRO: Added separate set of confirmation options for editing
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
+* PRO: Added drafts parameter to view shortcode to show draft entries. [display-frm-data id=40 drafts=1]
 * PRO: Switched star ratings to icon font
 * PRO: Allow field keys in the exlude_fields shortcode option
+* PRO: Allow updated-at, created-at, updated-by to by used in conditional statements
 * PRO: Added update message and button to global default messages
 * PRO: Added frm_csv_line_break filter for changing line breaks in csv export
 * PRO: Fixed adding new conditional logic to newly added notifications

@@ -48,7 +48,7 @@ class FrmSettingsController{
         
         if(!isset($frm_vars['settings_routed']) or !$frm_vars['settings_routed']){
             //$errors = $frm_settings->validate($_POST,array());
-            $frm_settings->update($_POST);
+            $frm_settings->update(stripslashes_deep($_POST));
 
             if( empty($errors) ){
                 $frm_settings->store();

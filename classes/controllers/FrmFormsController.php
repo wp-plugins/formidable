@@ -13,9 +13,11 @@ class FrmFormsController{
         add_action('admin_menu', 'FrmFormsController::menu', 10);
         add_action('admin_menu', 'FrmFormsController::mid_menu', 40);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head');
+        add_action('widgets_init', 'FrmFormsController::register_widgets');
         add_action('wp_ajax_frm_form_key_in_place_edit', 'FrmFormsController::edit_key');
         add_action('wp_ajax_frm_form_desc_in_place_edit', 'FrmFormsController::edit_description');
         add_action('wp_ajax_frm_delete_form_wo_fields', 'FrmFormsController::destroy_wo_fields');
+        add_action('frm_after_duplicate_form', 'FrmFormsController::after_duplicate', 10, 2);
         add_action('wp_ajax_frm_save_form', 'FrmFormsController::route');
         add_filter('frm_submit_button', 'FrmFormsController::submit_button_label');
         add_filter('media_buttons_context', 'FrmFormsController::insert_form_button');
@@ -61,6 +63,11 @@ class FrmFormsController{
 
         wp_enqueue_script('formidable-editinplace');
         wp_enqueue_script('jquery-frm-themepicker');
+    }
+    
+    public static function register_widgets(){
+        require(FrmAppHelper::plugin_path() . '/classes/widgets/FrmShowForm.php');
+        register_widget('FrmShowForm');
     }
     
     public static function list_form(){
@@ -206,6 +213,12 @@ class FrmFormsController{
             return self::get_edit_vars($record, '', $message, true);
         else
             return self::display_forms_list($params, __('There was a problem creating new template.', 'formidable'));
+    }
+    
+    
+    public static function after_duplicate($form_id, $values) {
+        $frm_form = new FrmForm();
+        $frm_form->after_duplicate($form_id, $values);
     }
     
     public static function page_preview(){
@@ -704,7 +717,12 @@ class FrmFormsController{
             return do_shortcode($frm_settings->login_msg);
         }
         
-        return self::get_form($form, $title, $description);
+        $form = self::get_form($form, $title, $description);
+        
+        // check for external shortcodes
+        $form = do_shortcode($form);
+        
+        return $form;
     }
     
     public static function get_form($form, $title, $description) {

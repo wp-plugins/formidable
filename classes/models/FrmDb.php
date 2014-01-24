@@ -5,12 +5,8 @@ if(class_exists('FrmDb'))
     return;
 
 class FrmDb{
-    var $fields;
-    var $forms;
-    var $entries;
-    var $entry_metas;
     
-    function FrmDb(){
+    function __construct(){
         global $wpdb;
         $this->fields         = $wpdb->prefix . "frm_fields";
         $this->forms          = $wpdb->prefix . "frm_forms";
@@ -158,7 +154,7 @@ DEFAULT_HTML;
             $new_default_html = FrmFieldsHelper::get_default_html('text');
             foreach($fields as $field){
                 $field->field_options = maybe_unserialize($field->field_options);
-                if(!isset($field->field_options['custom_html']) or empty($field->field_options['custom_html']) or (stripslashes($field->field_options['custom_html']) == $default_html) or (stripslashes($field->field_options['custom_html']) == $old_default_html)){
+                if ( !isset($field->field_options['custom_html']) || empty($field->field_options['custom_html']) || $field->field_options['custom_html'] == $default_html || $field->field_options['custom_html'] == $old_default_html ) {
                     $field->field_options['custom_html'] = $new_default_html;
                     $wpdb->update($this->fields, array('field_options' => maybe_serialize($field->field_options)), array( 'id' => $field->id ));
                 }
@@ -190,7 +186,7 @@ DEFAULT_HTML;
                 if(!isset($form->options['submit_html']) or empty($form->options['submit_html']))
                     continue;
                 
-                if((stripslashes($form->options['submit_html']) != $new_default_html) and (stripslashes($form->options['submit_html']) == $old_default_html)){
+                if ( $form->options['submit_html'] != $new_default_html && $form->options['submit_html'] == $old_default_html ) {
                     $form->options['submit_html'] = $new_default_html;
                     $wpdb->update($this->forms, array('options' => serialize($form->options)), array( 'id' => $form->id ));
                 }else if(!strpos($form->options['submit_html'], 'save_draft')){

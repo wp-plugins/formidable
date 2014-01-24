@@ -110,13 +110,13 @@ class FrmAppHelper{
     <?php
     }
     
-    static public function frm_capabilities(){
+    public static function frm_capabilities(){
         global $frm_vars;
         $cap = array(
-            'frm_view_forms' => __('View Forms and Templates', 'formidable'),
-            'frm_edit_forms' => __('Add/Edit Forms and Templates', 'formidable'),
-            'frm_delete_forms' => __('Delete Forms and Templates', 'formidable'),
-            'frm_change_settings' => __('Access this Settings Page', 'formidable')
+            'frm_view_forms'        => __('View Forms and Templates', 'formidable'),
+            'frm_edit_forms'        => __('Add/Edit Forms and Templates', 'formidable'),
+            'frm_delete_forms'      => __('Delete Forms and Templates', 'formidable'),
+            'frm_change_settings'   => __('Access this Settings Page', 'formidable')
         );
         if($frm_vars['pro_is_installed']){
             $cap['frm_view_entries'] = __('View Entries from Admin Area', 'formidable');
@@ -358,10 +358,7 @@ class FrmAppHelper{
             }
       
         $frm_form = new FrmForm();
-        if ($table == 'entries')
-            $form = $frm_form->getOne( $record->form_id );
-        else if ($table == 'forms')
-            $form = $frm_form->getOne( $record->id );
+        $form = $frm_form->getOne( $table == 'entries' ? $record->form_id : $record->id );
         unset($frm_form);
 
         if ($form){
@@ -420,7 +417,7 @@ class FrmAppHelper{
                 $values[$h .'_html'] = (isset($post_values['options'][$h .'_html']) ? $post_values['options'][$h .'_html'] : FrmFormsHelper::get_default_html($h));
             unset($h);
         }
-
+        
         if ($table == 'entries')
             $values = FrmEntriesHelper::setup_edit_vars( $values, $record );
         else if ($table == 'forms')
@@ -708,8 +705,13 @@ class FrmAppHelper{
     
     public static function maybe_json_decode($string){
         $new_string = json_decode($string, true);
-        if(json_last_error() == JSON_ERROR_NONE)
+        if ( function_exists('json_last_error') ) { // php 5.3+
+            if ( json_last_error() == JSON_ERROR_NONE ) {
+                $string = $new_string;
+            }
+        } else if ( isset($new_string) ) { // php < 5.3 fallback
             $string = $new_string;
+        }
         return $string;
     }
     

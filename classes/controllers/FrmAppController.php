@@ -171,7 +171,7 @@ return false;
         wp_enqueue_script('jquery-ui-core');
         wp_register_script('bootstrap_tooltip', FrmAppHelper::plugin_url() .'/js/bootstrap.min.js', array('jquery'), '3.0.2');
         
-        if(isset($_GET) and (isset($_GET['page']) and preg_match('/formidable*/', $_GET['page'])) or ($pagenow == 'edit.php' and isset($_GET) and isset($_GET['post_type']) and $_GET['post_type'] == 'frm_display')){
+        if ( isset($_GET) && (isset($_GET['page']) && preg_match('/formidable*/', $_GET['page'])) || ($pagenow == 'edit.php' && isset($_GET) && isset($_GET['post_type']) && $_GET['post_type'] == 'frm_display') ) {
             $version = FrmAppHelper::plugin_version();
             add_filter('admin_body_class', 'FrmAppController::admin_body_class');
             

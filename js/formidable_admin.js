@@ -67,7 +67,7 @@ if($('#frm_adv_info').length || $('.frm_field_list').length){
 
 	if(typeof(tinymce)=='object'){  
 		DOM=tinymce.DOM; 
-		if(typeof(DOM.events) !='undefined'){
+		if(typeof(DOM.events) !='undefined' && typeof(DOM.events.add) !='undefined'){
 			DOM.events.add( DOM.select('.wp-editor-wrap'), 'mouseover', function(e){
 				if($('*:focus').length>0)return;
 				if(this.id)frmToggleAllowedShortcodes(this.id.slice(3,-5),'focusin');});

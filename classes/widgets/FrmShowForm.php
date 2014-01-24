@@ -2,7 +2,7 @@
 
 class FrmShowForm extends WP_Widget {
 
-	function FrmShowForm() {
+	function __construct() {
 		$widget_ops = array( 'description' => __( "Display a Formidable Form", 'formidable') );
 		$this->WP_Widget('frm_show_form', __('Formidable Form', 'formidable'), $widget_ops);
 	}

@@ -5,49 +5,8 @@ if(class_exists('FrmSettings'))
     return;
 
 class FrmSettings{
-    // Page Setup Variables
-    var $menu;
-    var $mu_menu;
-    var $preview_page_id;
-    var $lock_keys;
-    var $track;
-    
-    var $pubkey;
-    var $privkey;
-    var $re_theme;
-    var $re_lang;
-    var $re_msg;
-    
-    var $use_html;
-    var $custom_style;
-    var $load_style;
-    var $custom_stylesheet;
-    var $jquery_css;
-    var $accordion_js;
-    
-    var $success_msg;
-    var $failed_msg;
-    var $blank_msg;
-    var $unique_msg;
-    var $invalid_msg;
-    var $submit_value;
-    var $login_msg;
-    var $admin_permission;
-    var $email_to;
-    
-    var $frm_view_forms;
-    var $frm_edit_forms;
-    var $frm_delete_forms;
-    var $frm_change_settings;
-    var $frm_view_entries;
-    var $frm_create_entries;
-    var $frm_edit_entries;
-    var $frm_delete_entries;
-    var $frm_view_reports;
-    var $frm_edit_displays;
 
-
-    function FrmSettings(){
+    function __construct(){
         $this->set_default_options();
     }
     
@@ -77,12 +36,9 @@ class FrmSettings{
 
     function set_default_options(){
         if(!isset($this->pubkey)){
-            if(is_multisite())
-               $recaptcha_opt = get_site_option('recaptcha'); // get the options from the database
-            else
-               $recaptcha_opt = get_option('recaptcha');
+            $recaptcha_opt = is_multisite() ? get_site_option('recaptcha') : get_option('recaptcha'); // get the options from the database
 
-            $this->pubkey = (isset($recaptcha_opt['pubkey'])) ? $recaptcha_opt['pubkey'] : ''; 
+            $this->pubkey = isset($recaptcha_opt['pubkey']) ? $recaptcha_opt['pubkey'] : ''; 
         } 
         
         if(!isset($this->privkey))
@@ -127,12 +83,6 @@ class FrmSettings{
         foreach($frm_roles as $frm_role => $frm_role_description){
             if(!isset($this->$frm_role))
                 $this->$frm_role = 'administrator';
-        }
-        
-        foreach($this as $k => $v){
-            //$this->{$k} = stripslashes_deep($v);
-            unset($k);
-            unset($v);
         }
     }
 
@@ -191,12 +141,6 @@ class FrmSettings{
 		}
         
         do_action( 'frm_update_settings', $params );
-        
-        foreach($this as $k => $v){
-            $this->{$k} = stripslashes_deep($v);
-            unset($k);
-            unset($v);
-        }
     }
 
     function store(){

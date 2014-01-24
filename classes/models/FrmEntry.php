@@ -207,16 +207,14 @@ class FrmEntry{
 
         $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM {$wpdb->prefix}frm_items it 
                   LEFT OUTER JOIN {$wpdb->prefix}frm_forms fr ON it.form_id=fr.id WHERE ";
-        if(is_numeric($id))
-            $query .= $wpdb->prepare('it.id=%d', $id);
-        else
-            $query .= $wpdb->prepare('it.item_key=%s', $id);
+        
+        $query .= $wpdb->prepare( is_numeric($id) ? 'it.id=%d' : 'it.item_key=%s', $id);
 
         $entry = $wpdb->get_row($query);
 
         if($meta and $entry){
-            global $frm_entry_meta;
-            $metas = $frm_entry_meta->getAll("item_id=$entry->id and field_id != 0");
+            $metas = $wpdb->get_results($wpdb->prepare("SELECT field_id, meta_value, field_key FROM {$wpdb->prefix}frm_item_metas m LEFT JOIN {$wpdb->prefix}frm_fields f ON m.field_id=f.id WHERE item_id=%d and field_id != %d", $entry->id, 0));
+                    
             $entry_metas = array();
             
             foreach($metas as $meta_val){
@@ -269,16 +267,15 @@ class FrmEntry{
         
         if($meta and $entries){
             if($limit == '' and !is_array($where) and preg_match('/^it\.form_id=\d+$/', $where)){
-                $meta_where = 'fi.form_id='. substr($where, 11);
+                $meta_where = $wpdb->prepare('fi.form_id=%d', substr($where, 11));
             }else if($limit == '' and is_array($where) and count($where) == 1 and isset($where['it.form_id'])){
-                $meta_where = 'fi.form_id='. $where['it.form_id'];
+                $meta_where = $wpdb->prepare('fi.form_id=%d', $where['it.form_id']);
             }else{
-                $meta_where = "item_id in (". implode(',', array_keys($entries)) .")";
+                $meta_where = "item_id in (". implode(',', array_filter(array_keys($entries), 'is_numeric')) .")";
             }
-            $query = $wpdb->prepare("SELECT item_id, meta_value, field_id, 
-                fi.field_key as field_key FROM {$wpdb->prefix}frm_item_metas it 
+            $query = "SELECT item_id, meta_value, field_id, field_key FROM {$wpdb->prefix}frm_item_metas it 
                 LEFT OUTER JOIN {$wpdb->prefix}frm_fields fi ON it.field_id=fi.id 
-                WHERE $meta_where and field_id != %d", 0);
+                WHERE $meta_where and field_id != 0";
             
             $metas = $wpdb->get_results($query);
             unset($query);
@@ -298,22 +295,6 @@ class FrmEntry{
                     wp_cache_set( $entry->id, $entry, 'frm_entry');
                     unset($entry);
                 }
-                
-                /*
-                foreach($entries as $key => $entry){
-
-                    $entry_metas = array();
-                    foreach($metas as $meta_val){
-                        if($meta_val->item_id == $entry->id)
-                            $entry_metas[$meta_val->field_id] = $entry_metas[$meta_val->field_key] = $meta_val->meta_value;
-                    }
-
-                    $entries[$key]->metas = $entry_metas;
-                    
-                    unset($entry);
-                    unset($key);
-                }
-                */
             }
         }
         
@@ -363,7 +344,6 @@ class FrmEntry{
         
         if( !isset($values['item_key']) or $values['item_key'] == '' ){
             $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key('', $wpdb->prefix .'frm_items', 'item_key');
-            $gen_key = true;
         }
         
         $where = apply_filters('frm_posted_field_ids', 'fi.form_id='. (int)$values['form_id']);
@@ -391,10 +371,6 @@ class FrmEntry{
                 $errors['field'. $posted_field->id] = (!isset($posted_field->field_options['blank']) or $posted_field->field_options['blank'] == '' or $posted_field->field_options['blank'] == 'Untitled cannot be blank') ? $frm_settings->blank_msg : $posted_field->field_options['blank'];  
             }else if ($posted_field->type == 'text' and !isset($_POST['name'])){
                 $_POST['name'] = $value;
-                if(isset($gen_key) and $gen_key){
-                    $_POST['item_key'] = $values['item_key'] = FrmAppHelper::get_unique_key($value, $wpdb->prefix .'frm_items', 'item_key');
-                    $gen_key = false;
-                }
             }
             
             $_POST['item_meta'][$posted_field->id] = $value;
@@ -425,7 +401,6 @@ class FrmEntry{
         if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
             $frm_form = new FrmForm();
             $form = $frm_form->getOne($values['form_id']);
-            $form->options = maybe_unserialize($form->options);
             
             if (isset($form->options['akismet']) && !empty($form->options['akismet']) && ($form->options['akismet'] != 'logged' or !is_user_logged_in()))
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');

@@ -58,7 +58,7 @@ class FrmFieldsController{
         $form_id = $_POST['form_id'];
         $values = array();
         if(class_exists('FrmProForm'))
-            $values['post_type'] = FrmProForm::post_type($form_id);
+            $values['post_type'] = FrmProFormsHelper::post_type($form_id);
         
         $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars($field_data, $form_id));
         
@@ -297,7 +297,7 @@ class FrmFieldsController{
         if(!is_admin() or !current_user_can('frm_edit_forms'))
             return;
         
-        extract($_POST);
+        extract(stripslashes_deep($_POST));
         
         $frm_field = new FrmField();
         $field = $frm_field->getOne($field_id);
@@ -306,7 +306,6 @@ class FrmFieldsController{
             return;
         
         $field = FrmFieldsHelper::setup_edit_vars($field);
-        $opts = stripslashes($opts);    
         $opts = explode("\n", rtrim($opts, "\n"));
         if($field['separate_value']){
             foreach($opts as $opt_key => $opt){
@@ -323,7 +322,7 @@ class FrmFieldsController{
         
         $frm_field->update($field_id, array('options' => maybe_serialize($opts)));
         
-        $field['options'] = stripslashes_deep($opts);
+        $field['options'] = $opts;
         $field_name = $field['name'];
         
         if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){

@@ -86,11 +86,25 @@ class FrmForm{
             global $frm_field;
             $form_id = $wpdb->insert_id;
             $frm_field->duplicate($id, $form_id, $copy_keys, $blog_id);
-       
+            
+            // update form settings after fields are created
             do_action('frm_after_duplicate_form', $form_id, $new_values);
             return $form_id;
         } else {
             return false;
+        }
+    }
+    
+    function after_duplicate($form_id, $values) {
+        $new_opts = $values['options'] = maybe_unserialize($values['options']);
+        
+        $new_opts['success_msg'] = FrmFieldsHelper::switch_field_ids($new_opts['success_msg']);
+        
+        $new_opts = apply_filters('frm_after_duplicate_form_values', $new_opts, $form_id);
+        
+        if ( $new_opts != $values['options'] ) {
+            global $wpdb;
+            $wpdb->update($wpdb->prefix .'frm_forms', array('options' => maybe_serialize($new_opts)), array('id' => $id));
         }
     }
 
@@ -269,13 +283,9 @@ class FrmForm{
             }
         }
       
-        if ( is_numeric($id) ) {
-            $where = array( 'id' => $id );
-        } else {
-            $where = array( 'form_key' => $id );
-        }
-          
-        $results = $frmdb->get_one_record($table_name, $where);
+        $where = $wpdb->prepare( is_numeric($id) ? 'id=%d' : 'form_key=%s', $id );
+         
+        $results = $wpdb->get_row("SELECT * FROM $table_name WHERE $where");
       
         if ( isset($results->options) ) {
             wp_cache_set($results->id, $results, 'frm_form');

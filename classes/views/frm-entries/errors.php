@@ -32,7 +32,7 @@ if(empty($frm_settings->invalid_msg)){
         }else{
             $show_img = true;
         }
-        echo stripslashes($error) . '<br/>';
+        echo $error . '<br/>';
     }
 }else{
     echo $frm_settings->invalid_msg;
@@ -48,7 +48,7 @@ if(empty($frm_settings->invalid_msg)){
         }else{
             $show_img = true;
         }
-        echo stripslashes($error);
+        echo $error;
     }
 } ?>
 </div>

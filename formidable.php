@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 1.07.05b1
+Version: 1.07.05b2
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -108,12 +108,6 @@ require($frm_path .'/classes/helpers/FrmFormsHelper.php');
 
 if ( file_exists($frm_path . '/pro/formidable-pro.php') ) {
     require($frm_path .'/pro/formidable-pro.php');
-}
-
-// Register Widgets
-if(class_exists('WP_Widget')){
-    require($frm_path . '/classes/widgets/FrmShowForm.php');
-    add_action('widgets_init', create_function('', 'return register_widget("FrmShowForm");'));
 }
 
 include($frm_path .'/deprecated.php');

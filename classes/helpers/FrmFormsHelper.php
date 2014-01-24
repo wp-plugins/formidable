@@ -128,7 +128,7 @@ class FrmFormsHelper{
         if(empty($post_values))
             $post_values = stripslashes_deep($_POST);
 
-        $values['form_key'] = isset($post_values['form_key']) ? stripslashes_deep($post_values['form_key']) : $record->form_key;
+        $values['form_key'] = isset($post_values['form_key']) ? $post_values['form_key'] : $record->form_key;
         $values['default_template'] = isset($post_values['default_template']) ? $post_values['default_template'] : $record->default_template;
         $values['is_template'] = isset($post_values['is_template']) ? $post_values['is_template'] : $record->is_template;
         
@@ -267,7 +267,7 @@ BEFORE_HTML;
             $html = str_replace('[button_label]', $replace_with, $html);
         }
         
-        $html = apply_filters('frm_form_replace_shortcodes', stripslashes($html), $form, $values);
+        $html = apply_filters('frm_form_replace_shortcodes', $html, $form, $values);
         
         if(strpos($html, '[if back_button]'))
             $html = preg_replace('/(\[if\s+back_button\])(.*?)(\[\/if\s+back_button\])/mis', '', $html);

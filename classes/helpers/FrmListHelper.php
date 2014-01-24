@@ -1,16 +1,13 @@
 <?php
 
-if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+if ( !defined('ABSPATH') ) die('You are not allowed to call this page directly.');
 
 if(class_exists('FrmListHelper'))
     return;
 
 class FrmListHelper extends WP_List_Table {
-    var $table_name;
-    var $page_name;
-    var $params;
     
-	function FrmListHelper($args) {
+	function __construct($args) {
 	    global $frm_settings;
 	    
 	    $args = wp_parse_args( $args, array(
@@ -46,10 +43,9 @@ class FrmListHelper extends WP_List_Table {
 		$per_page = $this->get_items_per_page( 'formidable_page_formidable'. str_replace('-', '_', $this->page_name) .'_per_page', $default_count);
 
 		$start = ( isset( $_REQUEST['start'] ) ) ? $_REQUEST['start'] : (( $page - 1 ) * $per_page);
-		$s = isset( $_REQUEST['s'] ) ? $_REQUEST['s'] : '';
+		$s = isset( $_REQUEST['s'] ) ? stripslashes($_REQUEST['s']) : '';
 		$fid = isset( $_REQUEST['fid'] ) ? $_REQUEST['fid'] : '';
 		if($s != ''){
-		    $s = stripslashes($s);
 		    preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $s, $matches);
 		    $search_terms = array_map('trim', $matches[0]);
 		}

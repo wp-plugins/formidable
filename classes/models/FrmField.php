@@ -13,8 +13,9 @@ class FrmField{
         $key = isset($values['field_key']) ? $values['field_key'] : $values['name'];
         $new_values['field_key'] = FrmAppHelper::get_unique_key($key, $wpdb->prefix .'frm_fields', 'field_key');
 
-        foreach (array('name', 'description', 'type', 'default_value') as $col)
-            $new_values[$col] = stripslashes_deep($values[$col]);
+        foreach ( array('name', 'description', 'type', 'default_value') as $col ) {
+            $new_values[$col] = $values[$col];
+        }
         
         $new_values['options'] = $values['options'];
 
