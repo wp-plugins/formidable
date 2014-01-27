@@ -262,8 +262,8 @@ class FrmFieldsController{
         $prepop[__('Countries', 'formidable')] = FrmAppHelper::get_countries();
         
         $states = FrmAppHelper::get_us_states();
-        $prepop[__('U.S. States', 'formidable')] = array_values($states);
-        $prepop[__('U.S. State Abbreviations', 'formidable')] = array_keys($states);
+        $prepop[__('U.S. States', 'formidable')] = sort(array_values($states));
+        $prepop[__('U.S. State Abbreviations', 'formidable')] = sort(array_keys($states));
         
         $prepop[__('Age', 'formidable')] = array(
             __('Under 18', 'formidable'), __('18-24', 'formidable'), __('25-34', 'formidable'), 

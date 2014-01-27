@@ -468,14 +468,14 @@ span.howto{display:inline;}
 	padding:10px 0;
 }
 
-.frm_no_fields div{
-	
+.frm_no_fields{
+	line-height:auto !important;
 }
 .frm_no_fields .frm_brace{
 	font-size:500px;
 	color:#2f8db2;
 	font-weight:300;
-	line-height: 350px;
+	line-height: 350px !important;
 	margin-left:3%;
 	float:right;
 }

@@ -107,7 +107,6 @@ class FrmNotification{
         $header         = apply_filters('frm_email_header', $header, compact('to_email', 'subject'));
         
         $subject        = '=?'. $charset .'?B?'. base64_encode($subject) .'?=';
-        $message        = '=?'. $charset .'?B?'. base64_encode($message) .'?=';
         
         remove_filter('wp_mail_from', 'bp_core_email_from_address_filter' );
         remove_filter('wp_mail_from_name', 'bp_core_email_from_name_filter');
