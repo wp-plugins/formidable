@@ -128,13 +128,13 @@ class FrmForm{
 
             $defaults = FrmFormsHelper::get_default_opts();
             foreach ($defaults as $var => $default) {
-                if ( $var == 'notification' ) {
+                if ( $var == 'notification' && !defined('WP_IMPORTING')) {
                     $options[$var] = isset($values[$var]) ? $values[$var] : $default;
                 } else {
                     $options[$var] = isset($values['options'][$var]) ? $values['options'][$var] : $default;
                 }
             }
-
+            
             $options['custom_style'] = isset($values['options']['custom_style']) ? $values['options']['custom_style'] : 0;
             $options['before_html'] = isset($values['options']['before_html']) ? $values['options']['before_html'] : FrmFormsHelper::get_default_html('before');
             $options['after_html'] = isset($values['options']['after_html']) ? $values['options']['after_html'] : FrmFormsHelper::get_default_html('after');
@@ -190,9 +190,10 @@ class FrmForm{
                             $frm_field->update($field_id, array('field_options' => $field_options));
                         unset($prev_opts);
                     }
-                } else {
+                }
+                
+                if ( (!isset($values['options']) && !isset($values['field_options']['custom_html_'. $field_id])) || defined('WP_IMPORTING') ) {
                     //updating the form
-
                     foreach ( array('size', 'max', 'label', 'invalid', 'blank', 'classes') as $opt ) {
                         $field_options[$opt] = isset($values['field_options'][$opt.'_'.$field_id]) ? trim($values['field_options'][$opt.'_'.$field_id]) : '';
                     }

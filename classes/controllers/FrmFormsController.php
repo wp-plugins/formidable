@@ -415,6 +415,10 @@ class FrmFormsController{
         global $frm_entry, $frm_field, $frm_vars;
         $frm_form = new FrmForm();
         $record = $frm_form->getOne( $id );
+        if ( !$record ) {
+            wp_die( __('You are trying to edit a form that does not exist.', 'formidable') );
+        }
+        
         $frm_field_selection = FrmFieldsHelper::field_selection();
         $fields = $frm_field->getAll(array('fi.form_id' => $record->id), 'field_order');
         $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);

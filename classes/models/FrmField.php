@@ -85,6 +85,9 @@ class FrmField{
             $values['required'] = (int) $values['required'];
         }
         
+        if (isset($values['default_value']) and is_array($values['default_value']))
+            $values['default_value'] = serialize($values['default_value']);
+        
         if (isset($values['field_options']) and is_array($values['field_options']))
             $values['field_options'] = serialize($values['field_options']);
             
