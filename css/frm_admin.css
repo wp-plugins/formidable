@@ -469,7 +469,7 @@ span.howto{display:inline;}
 }
 
 .frm_no_fields{
-	line-height:normal !important;
+	line-height:46px !important;
 }
 .frm_no_fields .frm_brace{
 	font-size:500px;
