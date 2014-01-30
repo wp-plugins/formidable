@@ -81,9 +81,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow field keys in the exlude_fields shortcode option
 * PRO: Allow updated-at, created-at, updated-by to by used in conditional statements
 * PRO: Added update message and button to global default messages
+* PRO: Added progress bar to csv import
 * PRO: Added frm_csv_line_break filter for changing line breaks in csv export
 * PRO: Fixed adding new conditional logic to newly added notifications
 * PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL
+* PRO: Don't apply custom display filters to single post page
 * PRO: Fixed showing only file name in views
 * PRO: Removed Pretty Link plugin integration to be placed in an add-on
 * PRO: Added delete_link and confirm parameter to formresults shortcode

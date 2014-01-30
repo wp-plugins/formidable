@@ -57,7 +57,7 @@ class FrmAppController{
     }
     
     public static function load_wp_admin_style(){
-        wp_enqueue_style( 'custom_wp_admin_css',  FrmAppHelper::plugin_url() .'/css/frm_fonts.css', array(), FrmAppHelper::plugin_version());
+        wp_enqueue_style( 'frm_fonts',  FrmAppHelper::plugin_url() .'/css/frm_fonts.css', array(), FrmAppHelper::plugin_version());
     }
     
     public static function get_form_nav($id, $show_nav=false){

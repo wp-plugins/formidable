@@ -1088,12 +1088,15 @@ function frmImportCsv(formID){
 		type:"POST",url:ajaxurl,
 		data:"action=frm_import_csv&frm_skip_cookie=1"+urlVars,
     success:function(count){
+		jQuery('.frm_csv_remaining').html(count);
         if(parseInt(count) > 0){
-			jQuery("#frm_import_message .frm_message").html('The next 250 of the remaining '+count+' entries are importing.<br/> If your browser doesn&#8217;t start loading the next set automatically, click this button: <a id="frm_import_link"  class="button-secondary" href="javascript:frmImportCsv('+formID+')">Import Now</a>');
-            location.href = "?page=formidable-import&frm_action=import_csv"+urlVars;
-        }else{ 
-            jQuery("#frm_import_message").fadeOut("slow");
-            location.href = "?page=formidable-entries&frm_action=list&form="+formID;
+			var max = jQuery('.frm_progress_bar').attr('aria-valuemax');
+			var imported = max - count;
+			var percent = (imported / max) * 100;
+			jQuery('.frm_progress_bar').css('width', percent +'%').attr('aria-valuenow', imported);
+			frmImportCsv(formID);
+		}else{
+            location.href = '?page=formidable-entries&frm_action=list&form='+formID+'&import-message=1';
         }
     }
     });
