@@ -73,8 +73,10 @@ class FrmEntryMeta{
   
     function duplicate_entry_metas($old_id, $new_id){
         $metas = $this->get_entry_meta_info($old_id);
-        foreach ($metas as $meta)
-            $this->update_entry_meta($new_id, $meta->field_id, '', $meta->meta_value);
+        foreach ( $metas as $meta ) {
+            $this->add_entry_meta($new_id, $meta->field_id, null, $meta->meta_value);
+            unset($meta);
+        }
     }
 
     function delete_entry_meta($entry_id, $field_id){
@@ -83,7 +85,7 @@ class FrmEntryMeta{
     }
   
     function delete_entry_metas($entry_id, $where=''){
-        _deprecated_function( __FUNCTION__, '1.07.05' );
+        _deprecated_function( __FUNCTION__, '1.07.05', '$frm_entry_meta->delete_entry_meta()' );
     }
   
     function get_entry_meta_by_field($entry_id, $field_id, $return_var=true){

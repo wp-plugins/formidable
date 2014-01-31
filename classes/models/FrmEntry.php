@@ -148,14 +148,18 @@ class FrmEntry{
         $new_values = array(
             'name'      => isset($values['name']) ? $values['name'] : '',
             'form_id'   => isset($values['form_id']) ? (int) $values['form_id'] : null,
-            'post_id'   => isset($values['post_id']) ? (int) $values['post_id'] : null,
             'is_draft'  => ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ? 1 : 0,
             'updated_at' => current_time('mysql', 1),
             'updated_by' => isset($values['updated_by']) ? $values['updated_by'] : $user_ID,
         );
+        
+        if ( isset($values['post_id']) ) {
+            $new_values['post_id'] = (int) $values['post_id'];
+        }
 
-        if (isset($values['item_key']))
+        if ( isset($values['item_key']) ) {
             $new_values['item_key'] = FrmAppHelper::get_unique_key($values['item_key'], $wpdb->prefix .'frm_items', 'item_key', $id);
+        }
         
         if(isset($values['frm_user_id']) and is_numeric($values['frm_user_id']))
             $new_values['user_id'] = $values['frm_user_id'];
@@ -180,8 +184,13 @@ class FrmEntry{
     function &destroy( $id ){
         global $wpdb;
         $id = (int)$id;
-      
-        do_action('frm_before_destroy_entry', $id);
+        
+        $entry = $this->getOne($id);
+        if ( !$entry ) {
+            return false;
+        }
+        
+        do_action('frm_before_destroy_entry', $id, $entry);
       
         wp_cache_delete( $id, 'frm_entry');
         $wpdb->query('DELETE FROM ' . $wpdb->prefix .'frm_item_metas WHERE item_id=' . $id);
