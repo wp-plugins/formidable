@@ -1097,7 +1097,7 @@ function frmImportCsv(formID){
 			jQuery('.frm_csv_remaining').html(count);
 			frmImportCsv(formID);
 		}else{
-			jQuery('.frm_import_message').html(frm_admin_js.import_complete);
+			jQuery('#frm_import_message').html(frm_admin_js.import_complete);
             location.href = '?page=formidable-entries&frm_action=list&form='+formID+'&import-message=1';
         }
     }
