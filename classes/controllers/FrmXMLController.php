@@ -69,6 +69,9 @@ class FrmXMLController{
             'xml' => array( 'name' => 'XML', 'support' => 'forms', 'count' => 'multiple'),
         ));
         
+        global $frmpro_settings;
+        $csv_format = $frmpro_settings ? $frmpro_settings->csv_format : 'UTF-8';
+        
         include(FrmAppHelper::plugin_path() .'/classes/views/xml/import_form.php');
     }
     

@@ -288,20 +288,21 @@ return false;
             global $frm_settings;
             wp_localize_script('formidable_admin', 'frm_admin_js', array(
                 'confirm_uninstall' => __('Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo.', 'formidable'),
-                'get_page' => (isset($_GET) and isset($_GET['page'])) ? $_GET['page'] : '',
-                'desc' => __('(Click here to add a description or instructions)', 'formidable'),
-                'blank' => __('(Blank)', 'formidable'),
-                'saving' => esc_attr(__('Saving', 'formidable')),
-                'saved' => esc_attr(__('Saved', 'formidable')),
-                'ok'    => __('OK'),
-                'cancel' => __('Cancel'),
-                'clear_default' => __('Clear default value when typing', 'formidable'),
-                'no_clear_default' => __('Do not clear default value when typing', 'formidable'),
-                'valid_default' => __('Default value will pass form validation', 'formidable'),
-                'no_valid_default' => __('Default value will NOT pass form validation', 'formidable'),
-                'deauthorize' => __('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable'),
-                'confirm' => __('Are you sure?', 'formidable'),
-                'default_unique' => $frm_settings->unique_msg
+                'get_page'          => (isset($_GET) && isset($_GET['page'])) ? $_GET['page'] : '',
+                'desc'              => __('(Click here to add a description or instructions)', 'formidable'),
+                'blank'             => __('(Blank)', 'formidable'),
+                'saving'            => esc_attr(__('Saving', 'formidable')),
+                'saved'             => esc_attr(__('Saved', 'formidable')),
+                'ok'                => __('OK'),
+                'cancel'            => __('Cancel'),
+                'clear_default'     => __('Clear default value when typing', 'formidable'),
+                'no_clear_default'  => __('Do not clear default value when typing', 'formidable'),
+                'valid_default'     => __('Default value will pass form validation', 'formidable'),
+                'no_valid_default'  => __('Default value will NOT pass form validation', 'formidable'),
+                'deauthorize'       => __('Are you sure you want to deactivate Formidable Pro on this site?', 'formidable'),
+                'confirm'           => __('Are you sure?', 'formidable'),
+                'default_unique'    => $frm_settings->unique_msg,
+                'import_complete'   => __('Import Complete', 'formidable'),
             ));
         }
     }

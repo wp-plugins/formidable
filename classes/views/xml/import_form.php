@@ -48,6 +48,15 @@
                             <option value="<?php echo $t ?>" data-support="<?php echo esc_attr($type['support']) ?>" <?php echo isset($type['count']) ? 'data-count="'. esc_attr($type['count']) .'"' : ''; ?>><?php echo isset($type['name']) ? $type['name'] : $t ?></option>
                         <?php } ?>
                         </select>
+                        
+                        <select name="csv_format" class="frm_hidden">
+                            <option value="UTF-8" <?php selected($csv_format, 'UTF-8') ?>>UTF-8</option>
+                            <option value="ISO-8859-1" <?php selected($csv_format, 'ISO-8859-1'); ?>>ISO-8859-1</option>
+                            <option value="windows-1256" <?php selected($csv_format, 'windows-1256'); ?>>windows-1256</option>
+                            <option value="windows-1251" <?php selected($csv_format, 'windows-1251'); ?>>windows-1251</option>
+                            <option value="macintosh" <?php selected($csv_format, 'macintosh'); ?>><?php _e('Macintosh', 'formidable') ?></option>
+                        </select>
+                        <span class="frm_help frm_icon_font frm_tooltip_icon frm_hidden" title="<?php _e('If your CSV special characters are not working correctly, try a different formatting option.', 'formidable') ?>"></span>
                     </td>
                 </tr>
                 <?php } ?>

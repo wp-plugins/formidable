@@ -1088,14 +1088,16 @@ function frmImportCsv(formID){
 		type:"POST",url:ajaxurl,
 		data:"action=frm_import_csv&frm_skip_cookie=1"+urlVars,
     success:function(count){
-		jQuery('.frm_csv_remaining').html(count);
+		var max = jQuery('.frm_progress_bar').attr('aria-valuemax');
+		var imported = max - count;
+		var percent = (imported / max) * 100;
+		jQuery('.frm_progress_bar').css('width', percent +'%').attr('aria-valuenow', imported);
+		
         if(parseInt(count) > 0){
-			var max = jQuery('.frm_progress_bar').attr('aria-valuemax');
-			var imported = max - count;
-			var percent = (imported / max) * 100;
-			jQuery('.frm_progress_bar').css('width', percent +'%').attr('aria-valuenow', imported);
+			jQuery('.frm_csv_remaining').html(count);
 			frmImportCsv(formID);
 		}else{
+			jQuery('.frm_import_message').html(frm_admin_js.import_complete);
             location.href = '?page=formidable-entries&frm_action=list&form='+formID+'&import-message=1';
         }
     }
@@ -1215,6 +1217,12 @@ function frmCheckExportTypes(){
 			jQuery(this).prop('disabled', true);
 		}
 	});
+	
+	if(jQuery(this).val() == 'csv'){
+		jQuery('select[name="csv_format"], .frm_help.frm_hidden').show();
+	}else{
+		jQuery('select[name="csv_format"], .frm_help.frm_hidden').hide();
+	}
 
 	var c=jQuery(this).find(':selected').data('count');
 	if(c == 'single'){
