@@ -52,11 +52,7 @@ class FrmXMLHelper{
         
         // grab cats, tags and terms
         if ( isset($xml->term) ) {
-            $pro_xml_helper = FrmAppHelper::plugin_path() .'/pro/classes/helpers/FrmProXMLHelper.php';
-            if ( file_exists($pro_xml_helper) ) {
-                include_once($pro_xml_helper);
-                $imported = FrmProXMLHelper::import_xml_terms($xml->term, $imported);
-            }
+            $imported = self::import_xml_terms($xml->term, $imported);
 		    unset($xml->term);
         }
 		
@@ -70,7 +66,7 @@ class FrmXMLHelper{
 	    return $return;
     }
     
-    public static function import_xml_term($terms, $imported) {
+    public static function import_xml_terms($terms, $imported) {
         foreach ( $terms as $t ) {
 			if ( term_exists((string) $t->term_slug, (string) $t->term_taxonomy) ) {
 			    continue;
