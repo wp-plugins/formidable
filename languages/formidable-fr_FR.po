@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Formidable v1.07.04\n"
+"Project-Id-Version: Formidable v1.07.05\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-20\n"
-"PO-Revision-Date: 2013-12-21 15:59:42+0000\n"
+"PO-Revision-Date: 2014-02-01 03:50:14+0000\n"
 "Last-Translator: Daniel Sallin <info@daniel-stp.fr>\n"
 "Language-Team: Francais <info@daniel-stp.fr>\n"
 "MIME-Version: 1.0\n"
@@ -20,24 +20,24 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: classes/controllers/FrmFormsController.php:33
-#: classes/controllers/FrmFormsController.php:347
+#: classes/controllers/FrmFormsController.php:44
+#: classes/controllers/FrmFormsController.php:369
+#: classes/controllers/FrmXMLController.php:65
 #: classes/views/frm-forms/list.php:3
-#: pro/classes/views/xml/import_form.php:56
 #@ formidable
 msgid "Forms"
 msgstr "Formulaires"
 
-#: classes/controllers/FrmFormsController.php:47
-#: classes/controllers/FrmFormsController.php:342
+#: classes/controllers/FrmFormsController.php:58
+#: classes/controllers/FrmFormsController.php:364
 #: classes/views/frm-forms/edit.php:3
 #: classes/views/frm-forms/list.php:3
 #@ formidable
 msgid "Templates"
 msgstr "Modèles"
 
-#: classes/controllers/FrmAppController.php:87
-#: classes/helpers/FrmListHelper.php:138
+#: classes/controllers/FrmAppController.php:84
+#: classes/helpers/FrmListHelper.php:125
 #: classes/views/frm-forms/settings.php:3
 #: classes/views/frm-forms/settings.php:36
 #: classes/views/shared/form-nav.php:4
@@ -45,45 +45,47 @@ msgstr "Modèles"
 msgid "Settings"
 msgstr "Paramètres"
 
-#: classes/controllers/FrmEntriesController.php:60
+#: classes/controllers/FrmFormsController.php:700
+#: classes/controllers/FrmFormsController.php:705
+#: classes/controllers/FrmFormsController.php:711
 #@ formidable
 msgid "Please select a valid form"
 msgstr "S'il vous plaît sélectionner un formulaire valide"
 
-#: classes/controllers/FrmFormsController.php:185
-#: classes/controllers/FrmFormsController.php:400
+#: classes/controllers/FrmFormsController.php:201
+#: classes/controllers/FrmFormsController.php:426
 #@ formidable
 msgid "Form was Successfully Updated"
 msgstr "Formulaire à été correctement mis à jour"
 
-#: classes/controllers/FrmFormsController.php:195
+#: classes/controllers/FrmFormsController.php:211
 #@ formidable
 msgid "Form template was Successfully Created"
 msgstr "Modèle de formulaire a été créé avec succès"
 
-#: classes/controllers/FrmFormsController.php:195
+#: classes/controllers/FrmFormsController.php:211
 #@ formidable
 msgid "Form was Successfully Copied"
 msgstr "Formulaire a été copié avec succès"
 
-#: classes/controllers/FrmFormsController.php:199
+#: classes/controllers/FrmFormsController.php:215
 #@ formidable
 msgid "There was a problem creating new template."
 msgstr "Il y avait un problème de création du nouveau modèle."
 
-#: classes/controllers/FrmFormsController.php:252
+#: classes/controllers/FrmFormsController.php:274
 #@ formidable
 msgid "Form was Successfully Deleted"
 msgstr "Le formulaire à été supprimer avec succès"
 
-#: classes/controllers/FrmFormsController.php:276
-#: classes/controllers/FrmFormsController.php:283
+#: classes/controllers/FrmFormsController.php:298
+#: classes/controllers/FrmFormsController.php:305
 #@ formidable
 msgid "Add Formidable Form"
 msgstr "Ajouter un formulaire Formidable"
 
-#: classes/controllers/FrmFormsController.php:405
-#: classes/controllers/FrmFormsController.php:423
+#: classes/controllers/FrmFormsController.php:431
+#: classes/controllers/FrmFormsController.php:449
 #@ formidable
 msgid "That template cannot be edited"
 msgstr "Ce modèle ne peut pas être modifié"
@@ -94,37 +96,37 @@ msgstr "Ce modèle ne peut pas être modifié"
 msgid "Settings Saved"
 msgstr "Paramètres enregistrés"
 
-#: classes/helpers/FrmAppHelper.php:125
+#: classes/helpers/FrmAppHelper.php:116
 #@ formidable
 msgid "View Forms and Templates"
 msgstr "Voir Formulaires et modèles"
 
-#: classes/helpers/FrmAppHelper.php:127
+#: classes/helpers/FrmAppHelper.php:118
 #@ formidable
 msgid "Delete Forms and Templates"
 msgstr "Supprimer les formulaires et modèles"
 
-#: classes/helpers/FrmAppHelper.php:128
+#: classes/helpers/FrmAppHelper.php:119
 #@ formidable
 msgid "Access this Settings Page"
 msgstr "Accédez à cette page de configuration"
 
-#: classes/helpers/FrmAppHelper.php:131
+#: classes/helpers/FrmAppHelper.php:122
 #@ formidable
 msgid "View Entries from Admin Area"
 msgstr "Voir les entrées de la Zone d'administration"
 
-#: classes/helpers/FrmAppHelper.php:133
+#: classes/helpers/FrmAppHelper.php:124
 #@ formidable
 msgid "Edit Entries from Admin Area"
 msgstr "Modifier les entrées de la Zone d'administration"
 
-#: classes/helpers/FrmAppHelper.php:134
+#: classes/helpers/FrmAppHelper.php:125
 #@ formidable
 msgid "Delete Entries from Admin Area"
 msgstr "Supprimer les entrées de la Zone d'administration"
 
-#: classes/helpers/FrmAppHelper.php:135
+#: classes/helpers/FrmAppHelper.php:126
 #@ formidable
 msgid "View Reports"
 msgstr "Voir les rapports"
@@ -161,7 +163,7 @@ msgstr "Numéro de téléphone"
 msgid "Email Address"
 msgstr "Adresse e-mail"
 
-#: classes/controllers/FrmFormsController.php:350
+#: classes/controllers/FrmFormsController.php:372
 #: classes/helpers/FrmFieldsHelper.php:33
 #: pro/classes/controllers/FrmProDisplaysController.php:205
 #@ formidable
@@ -208,38 +210,29 @@ msgstr "Mots-clés"
 msgid "Untitled"
 msgstr "Sans titre"
 
-#: classes/helpers/FrmFormsHelper.php:19
-#: classes/helpers/FrmListHelper.php:130
+#: classes/helpers/FrmFormsHelper.php:17
+#: classes/helpers/FrmListHelper.php:122
 #: classes/views/frm-forms/default-templates.php:24
 #@ formidable
 msgid "Create Form from Template"
 msgstr "Créer un formulaire à partir du modèle"
 
-#: classes/models/FrmEntry.php:421
+#: classes/models/FrmEntry.php:415
 #@ formidable
 msgid "Your entry appears to be spam!"
 msgstr "Votre entrée apparaît comme étant du spam!"
 
-#: classes/models/FrmNotification.php:37
-#, php-format
-#@ formidable
-msgid "%1$s form has been submitted on %2$s."
-msgstr "%1$s formulaire a été soumis le %2$s."
-
-#: classes/models/FrmNotification.php:74
-#: pro/classes/controllers/FrmProEntriesController.php:2116
-#: pro/classes/models/FrmProNotification.php:257
+#: classes/controllers/FrmEntriesController.php:230
+#: pro/classes/models/FrmProNotification.php:260
 #: pro/classes/views/frmpro-entries/show.php:92
 #@ formidable
 msgid "User Information"
 msgstr "Informations sur l'utilisateur"
 
-#: classes/models/FrmNotification.php:75
-#: pro/classes/controllers/FrmProEntriesController.php:2117
-#: pro/classes/controllers/FrmProEntriesController.php:2121
-#: pro/classes/controllers/FrmProFormsController.php:212
-#: pro/classes/models/FrmProNotification.php:258
-#: pro/classes/views/frmpro-entries/import.php:99
+#: classes/controllers/FrmEntriesController.php:231
+#: classes/controllers/FrmEntriesController.php:235
+#: pro/classes/controllers/FrmProFormsController.php:178
+#: pro/classes/models/FrmProNotification.php:261
 #: pro/classes/views/frmpro-entries/show.php:97
 #: pro/classes/views/frmpro-forms/add_form_options.php:39
 #: pro/classes/views/xml/map_csv_fields.php:51
@@ -247,55 +240,54 @@ msgstr "Informations sur l'utilisateur"
 msgid "IP Address"
 msgstr "Addresse IP"
 
-#: classes/models/FrmNotification.php:76
-#: pro/classes/controllers/FrmProEntriesController.php:2118
-#: pro/classes/controllers/FrmProEntriesController.php:2123
-#: pro/classes/models/FrmProNotification.php:259
+#: classes/controllers/FrmEntriesController.php:232
+#: classes/controllers/FrmEntriesController.php:237
+#: pro/classes/models/FrmProNotification.php:262
 #: pro/classes/views/frmpro-entries/show.php:102
 #@ formidable
 msgid "User-Agent (Browser/OS)"
 msgstr "Agent-Utilisateur(Navigateur/OS)"
 
-#: classes/models/FrmNotification.php:77
-#: pro/classes/controllers/FrmProEntriesController.php:2119
-#: pro/classes/controllers/FrmProEntriesController.php:2125
-#: pro/classes/models/FrmProNotification.php:260
+#: classes/controllers/FrmEntriesController.php:233
+#: classes/controllers/FrmEntriesController.php:239
+#: pro/classes/models/FrmProNotification.php:263
 #: pro/classes/views/frmpro-entries/show.php:108
 #@ formidable
 msgid "Referrer"
 msgstr "Référent"
 
-#: classes/models/FrmNotification.php:80
-#: pro/classes/models/FrmProNotification.php:272
-#: pro/classes/models/FrmProNotification.php:438
+#: classes/models/FrmNotification.php:77
+#: pro/classes/models/FrmProNotification.php:275
+#: pro/classes/models/FrmProNotification.php:445
 #, php-format
 #@ formidable
 msgid "%1$s Form submitted on %2$s"
 msgstr "%1$s Formulaire présenté le %2$s"
 
-#: classes/models/FrmSettings.php:65
+#: classes/models/FrmSettings.php:24
 #@ formidable
 msgid "Your responses were successfully submitted. Thank you!"
 msgstr "Vos réponses ont été soumis avec succès. Merci!"
 
-#: classes/models/FrmSettings.php:70
+#: classes/models/FrmSettings.php:29
 #: pro/classes/views/frmpro-entries/show.php:160
 #: pro/classes/views/settings/styling_tab.php:71
 #@ formidable
 msgid "Submit"
 msgstr "Soumettre"
 
-#: classes/models/FrmSettings.php:71
+#: classes/models/FrmSettings.php:30
 #@ formidable
 msgid "You do not have permission to view this form."
 msgstr "Vous n'avez pas la permission de voir ce formulaire."
 
-#: classes/models/FrmSettings.php:72
+#: classes/models/FrmEntry.php:346
+#: classes/models/FrmSettings.php:31
 #@ formidable
 msgid "You do not have permission to do that"
 msgstr "Vous n'avez pas la permission de faire ça"
 
-#: pro/classes/controllers/FrmUpdatesController.php:140
+#: pro/classes/controllers/FrmUpdatesController.php:123
 #@ formidable
 msgid "ERROR"
 msgstr "Erreur"
@@ -305,17 +297,7 @@ msgstr "Erreur"
 msgid "Ready to take your forms to the next level?<br/>Formidable Pro will help you style forms, manage data, and get reports."
 msgstr "Prêt à amélioré vos formulaires au niveau suivant ? <br/> 'Formidable Pro' vous aidera pour les formulaires de style, gérer vos données, et crée des rapports."
 
-#: classes/templates/contact.php:4
-#@ formidable
-msgid "Contact Us"
-msgstr "Contactez-nous"
-
-#: classes/templates/contact.php:5
-#@ formidable
-msgid "We would like to hear from you. Please send us a message by filling out the form below and we will get back with you shortly."
-msgstr "Nous aimerions entendre parler de vous. S'il vous plaît envoyez-nous un message en remplissant le formulaire ci-dessous et nous reviendrons vers vous très prochainement."
-
-#: classes/controllers/FrmFormsController.php:337
+#: classes/controllers/FrmFormsController.php:359
 #: classes/views/frm-forms/default-templates.php:7
 #: classes/views/frm-forms/default-templates.php:41
 #: classes/views/frm-forms/notification.php:16
@@ -327,56 +309,41 @@ msgstr "Nous aimerions entendre parler de vous. S'il vous plaît envoyez-nous un
 msgid "Name"
 msgstr "Nom"
 
-#: pro/classes/models/FrmProDisplay.php:260
+#: pro/classes/models/FrmProDisplay.php:243
 #@ formidable
 msgid "Name cannot be blank"
 msgstr "Le nom ne peut pas être vide"
 
-#: classes/templates/contact.php:38
 #: classes/views/frm-forms/notification.php:41
 #: classes/views/frm-forms/notification.php:67
 #: pro/classes/controllers/FrmProDisplaysController.php:494
-#: pro/classes/controllers/FrmProFormsController.php:201
+#: pro/classes/controllers/FrmProFormsController.php:167
 #@ formidable
 msgid "Email"
 msgstr "E-Mail"
 
-#: classes/templates/contact.php:40
-#@ formidable
-msgid "Please enter a valid email address"
-msgstr "S'il vous plaît entrer une adresse email valide"
-
-#: classes/templates/contact.php:47
-#: pro/classes/models/FrmProField.php:48
+#: pro/classes/models/FrmProField.php:42
 #@ formidable
 msgid "Website"
 msgstr "Site Web"
 
-#: classes/templates/contact.php:55
-#: pro/classes/views/frmpro-forms/notifications.php:2
+#: classes/views/frm-forms/notification.php:77
 #@ formidable
 msgid "Subject"
 msgstr "Sujet"
 
-#: classes/templates/contact.php:63
-#: pro/classes/views/frmpro-forms/notifications.php:5
+#: classes/views/frm-forms/notification.php:80
 #@ formidable
 msgid "Message"
 msgstr "Message"
 
-#: classes/templates/contact.php:71
-#@ formidable
-msgid "Captcha"
-msgstr "Captcha"
-
 #: classes/views/frm-entries/form.php:40
-#: pro/classes/controllers/FrmProEntriesController.php:1138
-#: pro/classes/helpers/FrmProFieldsHelper.php:1762
+#: pro/classes/controllers/FrmProEntriesController.php:1129
+#: pro/classes/helpers/FrmProFieldsHelper.php:1751
 #: pro/classes/views/displays/where_row.php:7
-#: pro/classes/views/frmpro-entries/import.php:100
 #: pro/classes/views/frmpro-entries/show.php:85
 #: pro/classes/views/shared/mb_adv_info.php:64
-#: pro/classes/views/xml/map_csv_fields.php:52
+#: pro/classes/views/xml/map_csv_fields.php:53
 #@ formidable
 msgid "Entry Key"
 msgstr "Entrez la Clé"
@@ -462,10 +429,10 @@ msgstr "Prévisualiser dans le thème courant"
 msgid "Pro Fields"
 msgstr "Champs Pro"
 
-#: classes/controllers/FrmFormsController.php:339
+#: classes/controllers/FrmFormsController.php:361
 #: pro/classes/controllers/FrmProDisplaysController.php:206
-#: pro/classes/helpers/FrmProFieldsHelper.php:1778
-#: pro/classes/helpers/FrmProFieldsHelper.php:1792
+#: pro/classes/helpers/FrmProFieldsHelper.php:1767
+#: pro/classes/helpers/FrmProFieldsHelper.php:1781
 #: pro/classes/views/displays/mb_form_disp_type.php:48
 #: pro/classes/views/displays/mb_form_disp_type.php:58
 #@ formidable
@@ -477,7 +444,7 @@ msgstr "Clé"
 msgid "Default Templates"
 msgstr "Modèles par défaut"
 
-#: classes/controllers/FrmFormsController.php:338
+#: classes/controllers/FrmFormsController.php:360
 #: classes/views/frm-forms/default-templates.php:8
 #: classes/views/frm-forms/default-templates.php:42
 #: pro/classes/controllers/FrmProDisplaysController.php:199
@@ -486,18 +453,18 @@ msgstr "Modèles par défaut"
 msgid "Description"
 msgstr "Description"
 
-#: classes/helpers/FrmListHelper.php:83
+#: classes/helpers/FrmListHelper.php:79
 #: classes/views/frm-forms/default-templates.php:12
 #@ formidable
 msgid "No Templates Found"
 msgstr "Pas de modèles par défaut"
 
-#: classes/helpers/FrmListHelper.php:149
+#: classes/helpers/FrmListHelper.php:136
 #@ default
 msgid "Preview"
 msgstr "Prévisualier"
 
-#: pro/classes/views/displays/mb_advanced.php:94
+#: pro/classes/views/displays/mb_advanced.php:98
 #@ formidable
 msgid "Copy"
 msgstr "Copie"
@@ -506,7 +473,7 @@ msgstr "Copie"
 #: classes/views/frm-forms/default-templates.php:30
 #: pro/classes/controllers/FrmProDisplaysController.php:62
 #: pro/classes/controllers/FrmProDisplaysController.php:63
-#: pro/classes/helpers/FrmProListHelper.php:188
+#: pro/classes/helpers/FrmProListHelper.php:182
 #: pro/classes/views/displays/submitbox_actions.php:2
 #: pro/classes/views/frmpro-entries/sidebar-edit.php:15
 #@ formidable
@@ -523,9 +490,9 @@ msgstr "Modèles personnalisés"
 #: classes/views/frm-forms/edit.php:24
 #: classes/views/frm-forms/edit.php:38
 #: classes/views/frm-forms/settings.php:22
-#: classes/views/frm-forms/settings.php:181
-#: pro/classes/helpers/FrmProEntriesHelper.php:81
-#: pro/classes/models/FrmProSettings.php:200
+#: classes/views/frm-forms/settings.php:180
+#: pro/classes/helpers/FrmProEntriesHelper.php:165
+#: pro/classes/models/FrmProSettings.php:11
 #@ formidable
 msgid "Update"
 msgstr "Mise à jour"
@@ -538,27 +505,26 @@ msgstr "Mise à jour"
 #: classes/views/frm-forms/new.php:25
 #: classes/views/frm-forms/new.php:39
 #: classes/views/frm-forms/settings.php:23
-#: classes/views/frm-forms/settings.php:182
+#: classes/views/frm-forms/settings.php:181
 #: classes/views/frm-forms/sidebar-settings.php:25
-#: pro/classes/controllers/FrmUpdatesController.php:190
-#: pro/classes/views/frmpro-entries/edit.php:30
-#: pro/classes/views/frmpro-entries/import.php:38
+#: pro/classes/controllers/FrmUpdatesController.php:173
+#: pro/classes/views/frmpro-entries/edit.php:32
 #: pro/classes/views/frmpro-entries/new.php:45
 #@ formidable
 msgid "or"
 msgstr "ou"
 
-#: classes/controllers/FrmAppController.php:270
+#: classes/controllers/FrmAppController.php:297
 #: classes/views/frm-fields/import_choices.php:74
 #: classes/views/frm-forms/edit.php:26
 #: classes/views/frm-forms/edit.php:40
 #: classes/views/frm-forms/new.php:26
 #: classes/views/frm-forms/new.php:40
 #: classes/views/frm-forms/settings.php:24
-#: classes/views/frm-forms/settings.php:183
-#: pro/classes/controllers/FrmProEntriesController.php:1829
-#: pro/classes/controllers/FrmUpdatesController.php:192
-#: pro/classes/views/frmpro-entries/edit.php:31
+#: classes/views/frm-forms/settings.php:182
+#: pro/classes/controllers/FrmProEntriesController.php:1852
+#: pro/classes/controllers/FrmUpdatesController.php:175
+#: pro/classes/views/frmpro-entries/edit.php:33
 #: pro/classes/views/frmpro-entries/new.php:46
 #: pro/classes/views/frmpro-entries/sidebar-new.php:11
 #: pro/classes/views/frmpro-forms/_custom_field_row.php:51
@@ -593,31 +559,23 @@ msgid "Action After Form Submission"
 msgstr "Action après soumission du formulaire"
 
 #: classes/views/frm-forms/settings.php:67
+#: pro/classes/views/frmpro-forms/add_form_options.php:86
 #@ formidable
 msgid "Display a Message"
 msgstr "Affiche un message"
 
 #: classes/views/frm-forms/settings.php:68
+#: pro/classes/views/frmpro-forms/add_form_options.php:88
 #@ formidable
 msgid "Display content from another page"
 msgstr "Afficher le contenu sur une autre page"
 
-#: classes/views/frm-forms/settings.php:76
-#@ formidable
-msgid "Confirmation Message"
-msgstr "Message de confirmation"
-
-#: classes/views/frm-forms/settings.php:79
-#@ formidable
-msgid "Show the form with the success message."
-msgstr "Voir le formulaire avec le message de réussite."
-
-#: classes/views/frm-forms/settings.php:129
+#: classes/views/frm-forms/settings.php:128
 #@ formidable
 msgid "Before Fields"
 msgstr "Champs précédent"
 
-#: classes/views/frm-forms/settings.php:145
+#: classes/views/frm-forms/settings.php:144
 #@ formidable
 msgid "After Fields"
 msgstr "Champs suivant"
@@ -669,6 +627,7 @@ msgid "Add class name if field has an error on form submit"
 msgstr "Ajoutez le nom de la classe si le champ comporte une erreur sur le formulaire présenter"
 
 #: classes/views/frm-forms/insert_form_popup.php:4
+#: pro/classes/controllers/FrmProXMLController.php:95
 #@ formidable
 msgid "Please select a form"
 msgstr "S'il vous plaît sélectionner un formulaire"
@@ -683,8 +642,8 @@ msgstr "Afficher le titre de formulaire"
 msgid "Display form description"
 msgstr "Afficher la description du formulaire"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1777
-#: pro/classes/helpers/FrmProFieldsHelper.php:1791
+#: pro/classes/helpers/FrmProFieldsHelper.php:1766
+#: pro/classes/helpers/FrmProFieldsHelper.php:1780
 #: pro/classes/views/displays/mb_form_disp_type.php:47
 #: pro/classes/views/displays/mb_form_disp_type.php:57
 #: pro/classes/views/frmpro-entries/google_table.php:8
@@ -694,14 +653,14 @@ msgid "ID"
 msgstr "ID"
 
 #: classes/controllers/FrmEntriesController.php:25
-#: classes/controllers/FrmFormsController.php:344
+#: classes/controllers/FrmFormsController.php:366
 #: classes/views/frm-entries/list.php:4
 #: classes/views/shared/form-nav.php:5
-#: pro/classes/controllers/FrmProEntriesController.php:75
-#: pro/classes/controllers/FrmProEntriesController.php:1160
+#: pro/classes/controllers/FrmProEntriesController.php:98
+#: pro/classes/controllers/FrmProEntriesController.php:1151
+#: pro/classes/controllers/FrmProXMLController.php:79
 #: pro/classes/views/frmpro-entries/list.php:3
 #: pro/classes/views/frmpro-fields/dynamic-options.php:31
-#: pro/classes/views/xml/import_form.php:57
 #@ formidable
 msgid "Entries"
 msgstr "Entrées"
@@ -716,33 +675,36 @@ msgstr "Lien direct"
 msgid "Shortcode"
 msgstr "Code Court"
 
-#: classes/helpers/FrmListHelper.php:90
+#: classes/helpers/FrmListHelper.php:86
 #@ formidable
 msgid "No Forms Found"
 msgstr "Pas de formulaire valide"
 
-#: classes/helpers/FrmListHelper.php:122
+#: classes/helpers/FrmListHelper.php:114
 #: pro/classes/controllers/FrmProDisplaysController.php:64
-#: pro/classes/controllers/FrmProEntriesController.php:1590
-#: pro/classes/controllers/FrmProEntriesController.php:1829
-#: pro/classes/helpers/FrmProAppHelper.php:195
-#: pro/classes/helpers/FrmProFieldsHelper.php:1985
-#: pro/classes/helpers/FrmProListHelper.php:178
+#: pro/classes/controllers/FrmProEntriesController.php:1600
+#: pro/classes/controllers/FrmProEntriesController.php:1852
+#: pro/classes/helpers/FrmProAppHelper.php:192
+#: pro/classes/helpers/FrmProFieldsHelper.php:1970
+#: pro/classes/helpers/FrmProListHelper.php:172
 #: pro/classes/views/frmpro-entries/sidebar-show.php:24
 #@ default
+#@ formidable
 msgid "Edit"
 msgstr "Modifier"
 
-#: classes/helpers/FrmListHelper.php:100
-#: classes/helpers/FrmListHelper.php:147
-#: pro/classes/controllers/FrmProEntriesController.php:1659
-#: pro/classes/controllers/FrmProEntriesController.php:1935
-#: pro/classes/helpers/FrmProAppHelper.php:240
-#: pro/classes/helpers/FrmProListHelper.php:144
-#: pro/classes/helpers/FrmProListHelper.php:192
+#: classes/helpers/FrmListHelper.php:92
+#: classes/helpers/FrmListHelper.php:134
+#: pro/classes/controllers/FrmProEntriesController.php:1607
+#: pro/classes/controllers/FrmProEntriesController.php:1678
+#: pro/classes/controllers/FrmProEntriesController.php:1960
+#: pro/classes/helpers/FrmProAppHelper.php:237
+#: pro/classes/helpers/FrmProListHelper.php:138
+#: pro/classes/helpers/FrmProListHelper.php:186
 #: pro/classes/views/frmpro-entries/sidebar-edit.php:28
 #: pro/classes/views/frmpro-entries/sidebar-show.php:17
 #@ default
+#@ formidable
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -761,9 +723,9 @@ msgstr "Entrée"
 msgid "Reports"
 msgstr "Rapports"
 
-#: classes/helpers/FrmListHelper.php:141
+#: classes/helpers/FrmListHelper.php:128
 #: pro/classes/controllers/FrmProDisplaysController.php:140
-#: pro/classes/helpers/FrmProListHelper.php:191
+#: pro/classes/helpers/FrmProListHelper.php:185
 #: pro/classes/views/frmpro-entries/sidebar-edit.php:16
 #: pro/classes/views/frmpro-entries/sidebar-show.php:8
 #@ formidable
@@ -779,7 +741,7 @@ msgstr "Dupliquer"
 msgid "Create"
 msgstr "Crée"
 
-#: classes/controllers/FrmAppController.php:266
+#: classes/controllers/FrmAppController.php:293
 #: classes/controllers/FrmFieldsController.php:220
 #: classes/views/frm-fields/single-option.php:6
 #: classes/views/frm-fields/single-option.php:8
@@ -788,13 +750,13 @@ msgid "(Blank)"
 msgstr "(Vide)"
 
 #: classes/views/frm-settings/form.php:34
-#: classes/views/frm-settings/form.php:158
+#: classes/views/frm-settings/form.php:156
 #: pro/classes/views/settings/formroller.php:2
 #@ formidable
 msgid "Update Options"
 msgstr "Mettre à jour les options"
 
-#: classes/views/frm-settings/form.php:135
+#: classes/views/frm-settings/form.php:133
 #@ formidable
 msgid "Preview Page"
 msgstr "Page d'aperçu"
@@ -829,38 +791,38 @@ msgstr "Messages par défaut"
 msgid "You can override the success message and submit button settings on individual forms."
 msgstr "Vous pouvez remplacer le message de réussite et de soumettre les paramètres des boutons sur les formulaires individuels."
 
-#: classes/views/frm-settings/form.php:107
+#: classes/views/frm-settings/form.php:111
 #@ formidable
 msgid "Success Message"
 msgstr "Message de réussite"
 
-#: classes/views/frm-settings/form.php:107
+#: classes/views/frm-settings/form.php:111
 #@ formidable
 msgid "The default message seen after a form is submitted."
 msgstr "Le message par défaut vu après un formulaire soumis."
 
-#: classes/views/frm-settings/form.php:113
+#: pro/classes/views/settings/form.php:10
 #@ formidable
 msgid "Login Message"
 msgstr "Message d'identifiant"
 
-#: classes/views/frm-settings/form.php:113
+#: pro/classes/views/settings/form.php:10
 #@ formidable
 msgid "The message seen when a user who is not logged-in views a form only logged-in users can submit."
 msgstr "Le message vu quand un utilisateur qui n'est pas connecté alors qu'il le faut pour sopumettre ce formulaire."
 
-#: classes/views/frm-forms/settings.php:148
-#: pro/classes/views/settings/formroller.php:363
+#: classes/views/frm-forms/settings.php:147
+#: pro/classes/views/settings/formroller.php:368
 #@ formidable
 msgid "Submit Button"
 msgstr "Bouton envoyer"
 
-#: classes/controllers/FrmAppController.php:263
+#: classes/controllers/FrmAppController.php:290
 #@ formidable
 msgid "Are you sure you want to do this? Clicking OK will delete all forms, form data, and all other Formidable data. There is no Undo."
 msgstr "Etes-vous sûr de vouloir faire cela? Cliquez sur OK pour supprimer toutes les formulaire, les données de formulaire, et toutes les autres données formidables. Il n'y a pas d'annulation."
 
-#: classes/views/frm-settings/form.php:156
+#: classes/views/frm-settings/form.php:154
 #@ formidable
 msgid "Uninstall Formidable"
 msgstr "Désinstaler Formidable"
@@ -875,45 +837,45 @@ msgstr "Balises Formidable"
 msgid "Formidable Tag"
 msgstr "Balise Formidable"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1538
-#: pro/classes/helpers/FrmProDisplaysHelper.php:56
-#: pro/classes/helpers/FrmProListHelper.php:82
+#: pro/classes/controllers/FrmProEntriesController.php:1539
+#: pro/classes/helpers/FrmProDisplaysHelper.php:57
+#: pro/classes/helpers/FrmProListHelper.php:76
 #@ formidable
 msgid "No Entries Found"
 msgstr "Aucune entrée trouvé"
 
-#: pro/classes/controllers/FrmProEntriesController.php:361
+#: pro/classes/controllers/FrmProEntriesController.php:376
 #@ formidable
 msgid "Entry was Successfully Created"
 msgstr "Entrée crée"
 
-#: pro/classes/controllers/FrmProEntriesController.php:391
+#: pro/classes/controllers/FrmProEntriesController.php:406
 #@ formidable
 msgid "Entry was Successfully Updated"
 msgstr "Entrée mise a jour"
 
-#: pro/classes/controllers/FrmProEntriesController.php:393
+#: pro/classes/controllers/FrmProEntriesController.php:408
 #@ formidable
 msgid "Back to Entries"
 msgstr "Revenir aux entrées"
 
-#: pro/classes/controllers/FrmProEntriesController.php:518
+#: pro/classes/controllers/FrmProEntriesController.php:428
 #@ formidable
 msgid "Entry was Successfully Duplicated"
 msgstr "Entrée dupliquée"
 
-#: pro/classes/controllers/FrmProEntriesController.php:520
+#: pro/classes/controllers/FrmProEntriesController.php:430
 #@ formidable
 msgid "There was a problem duplicating that entry"
 msgstr "Il y avait un problème à dupliquer cette entrée"
 
-#: pro/classes/controllers/FrmProEntriesController.php:549
+#: pro/classes/controllers/FrmProEntriesController.php:459
 #@ formidable
 msgid "Entry was Successfully Destroyed"
 msgstr "Entrée surpimée"
 
-#: pro/classes/controllers/FrmProEntriesController.php:578
-#: pro/classes/controllers/FrmProEntriesController.php:600
+#: pro/classes/controllers/FrmProEntriesController.php:488
+#: pro/classes/controllers/FrmProEntriesController.php:510
 #@ formidable
 msgid "No entries were specified"
 msgstr "Pas d'entrée spécifiée"
@@ -923,274 +885,274 @@ msgstr "Pas d'entrée spécifiée"
 msgid "Duplicate Field"
 msgstr "Dupliquer le champ"
 
-#: pro/classes/controllers/FrmProFieldsController.php:320
+#: pro/classes/controllers/FrmProFieldsController.php:326
 #@ formidable
 msgid "English/Western"
 msgstr "Englais/USA"
 
-#: pro/classes/controllers/FrmProFieldsController.php:320
+#: pro/classes/controllers/FrmProFieldsController.php:326
 #@ formidable
 msgid "Afrikaans"
 msgstr "Afganistan"
 
-#: pro/classes/controllers/FrmProFieldsController.php:321
+#: pro/classes/controllers/FrmProFieldsController.php:327
 #@ formidable
 msgid "Albanian"
 msgstr "Albanais"
 
-#: pro/classes/controllers/FrmProFieldsController.php:321
+#: pro/classes/controllers/FrmProFieldsController.php:327
 #@ formidable
 msgid "Arabic"
 msgstr "Arabe"
 
-#: pro/classes/controllers/FrmProFieldsController.php:322
+#: pro/classes/controllers/FrmProFieldsController.php:328
 #@ formidable
 msgid "Armenian"
 msgstr "Arménien"
 
-#: pro/classes/controllers/FrmProFieldsController.php:322
+#: pro/classes/controllers/FrmProFieldsController.php:328
 #@ formidable
 msgid "Azerbaijani"
 msgstr "Azerbaidjan"
 
-#: pro/classes/controllers/FrmProFieldsController.php:323
+#: pro/classes/controllers/FrmProFieldsController.php:329
 #@ formidable
 msgid "Basque"
 msgstr "Basque"
 
-#: pro/classes/controllers/FrmProFieldsController.php:323
+#: pro/classes/controllers/FrmProFieldsController.php:329
 #@ formidable
 msgid "Bosnian"
 msgstr "Bosnie"
 
-#: pro/classes/controllers/FrmProFieldsController.php:324
+#: pro/classes/controllers/FrmProFieldsController.php:330
 #@ formidable
 msgid "Bulgarian"
 msgstr "Bulgare"
 
-#: pro/classes/controllers/FrmProFieldsController.php:324
+#: pro/classes/controllers/FrmProFieldsController.php:330
 #@ formidable
 msgid "Catalan"
 msgstr "Catalan"
 
-#: pro/classes/controllers/FrmProFieldsController.php:325
+#: pro/classes/controllers/FrmProFieldsController.php:331
 #@ formidable
 msgid "Chinese Hong Kong"
 msgstr "Chinois Hong Kong"
 
-#: pro/classes/controllers/FrmProFieldsController.php:325
+#: pro/classes/controllers/FrmProFieldsController.php:331
 #@ formidable
 msgid "Chinese Simplified"
 msgstr "Chinois simplifilé"
 
-#: pro/classes/controllers/FrmProFieldsController.php:326
+#: pro/classes/controllers/FrmProFieldsController.php:332
 #@ formidable
 msgid "Chinese Traditional"
 msgstr "Chinous traditionel"
 
-#: pro/classes/controllers/FrmProFieldsController.php:326
+#: pro/classes/controllers/FrmProFieldsController.php:332
 #@ formidable
 msgid "Croatian"
 msgstr "Coate"
 
-#: pro/classes/controllers/FrmProFieldsController.php:327
+#: pro/classes/controllers/FrmProFieldsController.php:333
 #@ formidable
 msgid "Czech"
 msgstr "Tchèque"
 
-#: pro/classes/controllers/FrmProFieldsController.php:327
+#: pro/classes/controllers/FrmProFieldsController.php:333
 #@ formidable
 msgid "Danish"
 msgstr "Danois"
 
 #: classes/views/frm-settings/form.php:85
-#: pro/classes/controllers/FrmProFieldsController.php:328
+#: pro/classes/controllers/FrmProFieldsController.php:334
 #@ formidable
 msgid "Dutch"
 msgstr "Neérlandais"
 
-#: pro/classes/controllers/FrmProFieldsController.php:328
+#: pro/classes/controllers/FrmProFieldsController.php:334
 #@ formidable
 msgid "English/UK"
 msgstr "Englais/UK"
 
-#: pro/classes/controllers/FrmProFieldsController.php:329
+#: pro/classes/controllers/FrmProFieldsController.php:335
 #@ formidable
 msgid "Esperanto"
 msgstr "Esperanto"
 
-#: pro/classes/controllers/FrmProFieldsController.php:329
+#: pro/classes/controllers/FrmProFieldsController.php:335
 #@ formidable
 msgid "Estonian"
 msgstr "Estonie"
 
-#: pro/classes/controllers/FrmProFieldsController.php:330
+#: pro/classes/controllers/FrmProFieldsController.php:336
 #@ formidable
 msgid "Faroese"
 msgstr "Iles de Féroé"
 
-#: pro/classes/controllers/FrmProFieldsController.php:330
+#: pro/classes/controllers/FrmProFieldsController.php:336
 #@ formidable
 msgid "Farsi/Persian"
 msgstr "Farsi / persan"
 
-#: pro/classes/controllers/FrmProFieldsController.php:331
+#: pro/classes/controllers/FrmProFieldsController.php:337
 #@ formidable
 msgid "Finnish"
 msgstr "Finlandais"
 
 #: classes/views/frm-settings/form.php:85
-#: pro/classes/controllers/FrmProFieldsController.php:331
+#: pro/classes/controllers/FrmProFieldsController.php:337
 #@ formidable
 msgid "French"
 msgstr "Français"
 
-#: pro/classes/controllers/FrmProFieldsController.php:332
+#: pro/classes/controllers/FrmProFieldsController.php:338
 #@ formidable
 msgid "French/Swiss"
 msgstr "Français/Suisse"
 
 #: classes/views/frm-settings/form.php:85
-#: pro/classes/controllers/FrmProFieldsController.php:332
+#: pro/classes/controllers/FrmProFieldsController.php:338
 #@ formidable
 msgid "German"
 msgstr "Allemand"
 
-#: pro/classes/controllers/FrmProFieldsController.php:333
+#: pro/classes/controllers/FrmProFieldsController.php:339
 #@ formidable
 msgid "Greek"
 msgstr "Grèque"
 
-#: pro/classes/controllers/FrmProFieldsController.php:333
+#: pro/classes/controllers/FrmProFieldsController.php:339
 #@ formidable
 msgid "Hebrew"
 msgstr "Hebreur"
 
-#: pro/classes/controllers/FrmProFieldsController.php:334
+#: pro/classes/controllers/FrmProFieldsController.php:340
 #@ formidable
 msgid "Hungarian"
 msgstr "Hongrois"
 
-#: pro/classes/controllers/FrmProFieldsController.php:334
+#: pro/classes/controllers/FrmProFieldsController.php:340
 #@ formidable
 msgid "Icelandic"
 msgstr "Islandais"
 
-#: pro/classes/controllers/FrmProFieldsController.php:335
+#: pro/classes/controllers/FrmProFieldsController.php:341
 #@ formidable
 msgid "Italian"
 msgstr "Italien"
 
-#: pro/classes/controllers/FrmProFieldsController.php:335
+#: pro/classes/controllers/FrmProFieldsController.php:341
 #@ formidable
 msgid "Japanese"
 msgstr "Japonais"
 
-#: pro/classes/controllers/FrmProFieldsController.php:336
+#: pro/classes/controllers/FrmProFieldsController.php:342
 #@ formidable
 msgid "Korean"
 msgstr "Koréen"
 
-#: pro/classes/controllers/FrmProFieldsController.php:336
+#: pro/classes/controllers/FrmProFieldsController.php:342
 #@ formidable
 msgid "Latvian"
 msgstr "Letton"
 
-#: pro/classes/controllers/FrmProFieldsController.php:337
+#: pro/classes/controllers/FrmProFieldsController.php:343
 #@ formidable
 msgid "Lithuanian"
 msgstr "Lituanien"
 
-#: pro/classes/controllers/FrmProFieldsController.php:337
+#: pro/classes/controllers/FrmProFieldsController.php:343
 #@ formidable
 msgid "Malaysian"
 msgstr "Malaisie"
 
-#: pro/classes/controllers/FrmProFieldsController.php:338
+#: pro/classes/controllers/FrmProFieldsController.php:344
 #@ formidable
 msgid "Norwegian"
 msgstr "Norvegien"
 
-#: pro/classes/controllers/FrmProFieldsController.php:338
+#: pro/classes/controllers/FrmProFieldsController.php:344
 #@ formidable
 msgid "Polish"
 msgstr "Polonais§"
 
-#: pro/classes/controllers/FrmProFieldsController.php:339
+#: pro/classes/controllers/FrmProFieldsController.php:345
 #@ formidable
 msgid "Portuguese/Brazilian"
 msgstr "Portugais/Bresil"
 
-#: pro/classes/controllers/FrmProFieldsController.php:339
+#: pro/classes/controllers/FrmProFieldsController.php:345
 #@ formidable
 msgid "Romanian"
 msgstr "Roumain"
 
 #: classes/views/frm-settings/form.php:85
-#: pro/classes/controllers/FrmProFieldsController.php:340
+#: pro/classes/controllers/FrmProFieldsController.php:346
 #@ formidable
 msgid "Russian"
 msgstr "Russe"
 
-#: pro/classes/controllers/FrmProFieldsController.php:340
-#: pro/classes/controllers/FrmProFieldsController.php:341
+#: pro/classes/controllers/FrmProFieldsController.php:346
+#: pro/classes/controllers/FrmProFieldsController.php:347
 #@ formidable
 msgid "Serbian"
 msgstr "Serbe"
 
-#: pro/classes/controllers/FrmProFieldsController.php:341
+#: pro/classes/controllers/FrmProFieldsController.php:347
 #@ formidable
 msgid "Slovak"
 msgstr "Slovaque"
 
-#: pro/classes/controllers/FrmProFieldsController.php:342
+#: pro/classes/controllers/FrmProFieldsController.php:348
 #@ formidable
 msgid "Slovenian"
 msgstr "Slovène"
 
 #: classes/views/frm-settings/form.php:85
-#: pro/classes/controllers/FrmProFieldsController.php:342
+#: pro/classes/controllers/FrmProFieldsController.php:348
 #@ formidable
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: pro/classes/controllers/FrmProFieldsController.php:343
+#: pro/classes/controllers/FrmProFieldsController.php:349
 #@ formidable
 msgid "Swedish"
 msgstr "Suedois"
 
-#: pro/classes/controllers/FrmProFieldsController.php:343
+#: pro/classes/controllers/FrmProFieldsController.php:349
 #@ formidable
 msgid "Tamil"
 msgstr "Tamil"
 
-#: pro/classes/controllers/FrmProFieldsController.php:344
+#: pro/classes/controllers/FrmProFieldsController.php:350
 #@ formidable
 msgid "Thai"
 msgstr "Thaï"
 
 #: classes/views/frm-settings/form.php:85
-#: pro/classes/controllers/FrmProFieldsController.php:344
+#: pro/classes/controllers/FrmProFieldsController.php:350
 #@ formidable
 msgid "Turkish"
 msgstr "Turque"
 
-#: pro/classes/controllers/FrmProFieldsController.php:345
+#: pro/classes/controllers/FrmProFieldsController.php:351
 #@ formidable
 msgid "Ukranian"
 msgstr "Ukrénien"
 
-#: pro/classes/controllers/FrmProFieldsController.php:345
+#: pro/classes/controllers/FrmProFieldsController.php:351
 #@ formidable
 msgid "Vietnamese"
 msgstr "Vietnamien"
 
-#: pro/classes/controllers/FrmProFormsController.php:199
+#: pro/classes/controllers/FrmProFormsController.php:165
 #@ formidable
 msgid "Current Date"
 msgstr "Date courante"
 
-#: pro/classes/controllers/FrmProFormsController.php:200
+#: pro/classes/controllers/FrmProFormsController.php:166
 #@ formidable
 msgid "Current Time"
 msgstr "Heure courante"
@@ -1200,150 +1162,144 @@ msgstr "Heure courante"
 msgid "User Login"
 msgstr "Identifiant utilisateur"
 
-#: pro/classes/controllers/FrmProFormsController.php:207
+#: pro/classes/controllers/FrmProFormsController.php:173
 #@ formidable
 msgid "User Meta"
 msgstr "Meta utilisateur"
 
-#: pro/classes/controllers/FrmProFormsController.php:208
-#: pro/classes/helpers/FrmProFieldsHelper.php:1763
-#: pro/classes/views/frmpro-entries/import.php:94
+#: pro/classes/controllers/FrmProFormsController.php:174
+#: pro/classes/helpers/FrmProFieldsHelper.php:1752
 #: pro/classes/views/shared/mb_adv_info.php:65
 #: pro/classes/views/xml/map_csv_fields.php:46
 #@ formidable
 msgid "Post ID"
 msgstr "Post ID"
 
-#: classes/helpers/FrmListHelper.php:133
-#: pro/classes/controllers/FrmProFormsController.php:241
-#@ formidable
-msgid "Export Template"
-msgstr "Modèle d'export"
-
-#: pro/classes/controllers/FrmProStatisticsController.php:629
+#: pro/classes/controllers/FrmProStatisticsController.php:652
 #@ formidable
 msgid "Completed"
 msgstr "Terminé"
 
-#: pro/classes/controllers/FrmProStatisticsController.php:629
+#: pro/classes/controllers/FrmProStatisticsController.php:652
 #@ formidable
 msgid "Not Completed"
 msgstr "Pas terminé"
 
-#: pro/classes/helpers/FrmProAppHelper.php:239
+#: pro/classes/helpers/FrmProAppHelper.php:236
 #@ formidable
 msgid "Bulk Actions"
 msgstr "Actions de masse"
 
-#: pro/classes/helpers/FrmProAppHelper.php:245
+#: pro/classes/helpers/FrmProAppHelper.php:242
 #@ formidable
 msgid "Apply"
 msgstr "Appliquer"
 
-#: pro/classes/helpers/FrmProListHelper.php:126
+#: pro/classes/helpers/FrmProListHelper.php:120
 #@ formidable
 msgid "All Fields"
 msgstr "Ajouter des champs"
 
 #: classes/views/frm-forms/list.php:14
 #: pro/classes/controllers/FrmProDisplaysController.php:65
-#: pro/classes/controllers/FrmProEntriesController.php:1627
-#: pro/classes/views/frmpro-entries/list.php:18
+#: pro/classes/controllers/FrmProEntriesController.php:1646
+#: pro/classes/views/frmpro-entries/list.php:17
 #@ formidable
 msgid "Search"
 msgstr "Recherche"
 
-#: pro/classes/helpers/FrmProListHelper.php:137
+#: pro/classes/helpers/FrmProListHelper.php:131
 #@ formidable
 msgid "Reset"
 msgstr "Mise à zéro"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1266
+#: pro/classes/helpers/FrmProFieldsHelper.php:1254
 #@ formidable
 msgid "Edit Uploaded File"
 msgstr "Modifier les fichiers téléchargées"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1759
-#: pro/classes/views/frmpro-fields/options-form.php:239
+#: pro/classes/helpers/FrmProFieldsHelper.php:1748
+#: pro/classes/views/frmpro-fields/options-form.php:240
 #@ formidable
 msgid "Select a value to insert into the box below"
 msgstr "Sélectionnez une valeur à insérer dans la case ci-dessous"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1761
-#: pro/classes/helpers/FrmProListHelper.php:128
+#: pro/classes/helpers/FrmProFieldsHelper.php:1750
+#: pro/classes/helpers/FrmProListHelper.php:122
 #: pro/classes/views/displays/where_row.php:6
 #: pro/classes/views/frmpro-entries/show.php:84
 #: pro/classes/views/shared/mb_adv_info.php:63
+#: pro/classes/views/xml/map_csv_fields.php:52
 #@ formidable
 msgid "Entry ID"
 msgstr "Entrez votre identifiant"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1768
+#: pro/classes/helpers/FrmProFieldsHelper.php:1757
 #@ formidable
 msgid "Form Fields"
 msgstr "Champs de formulaire"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1780
+#: pro/classes/helpers/FrmProFieldsHelper.php:1769
 #@ formidable
 msgid "Thumbnail"
 msgstr "Vignette"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1781
+#: pro/classes/helpers/FrmProFieldsHelper.php:1770
 #@ formidable
 msgid "Medium"
 msgstr "Moyen"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1782
+#: pro/classes/helpers/FrmProFieldsHelper.php:1771
 #@ formidable
 msgid "Large"
 msgstr "Large"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1783
+#: pro/classes/helpers/FrmProFieldsHelper.php:1772
 #@ formidable
 msgid "Full Size"
 msgstr "Plein écran"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1803
+#: pro/classes/helpers/FrmProFieldsHelper.php:1792
 #: pro/classes/views/shared/mb_adv_info.php:59
 #@ formidable
 msgid "Helpers"
 msgstr "Aides"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1804
+#: pro/classes/helpers/FrmProFieldsHelper.php:1793
 #@ formidable
 msgid "Admin link to edit the entry"
 msgstr "Lien d'administration pour modifier"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1806
+#: pro/classes/helpers/FrmProFieldsHelper.php:1795
 #@ formidable
 msgid "Link to view single page if showing dynamic entries"
 msgstr "Lien pour voir une seule page si montrant les entrées dynamiques"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1810
+#: pro/classes/helpers/FrmProFieldsHelper.php:1799
 #@ formidable
 msgid "Add a rotating 'even' or 'odd' class"
 msgstr "ajouter une classe alternante 'pair ou 'impair'"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1814
+#: pro/classes/helpers/FrmProFieldsHelper.php:1803
 #: pro/classes/views/shared/mb_adv_info.php:70
 #@ formidable
 msgid "Site URL"
 msgstr "Site URL"
 
-#: pro/classes/models/FrmProDisplay.php:272
+#: pro/classes/models/FrmProDisplay.php:255
 #@ formidable
 msgid "Limit must be a number"
 msgstr "Limiter avec un nombre"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:883
+#: pro/classes/helpers/FrmProFieldsHelper.php:877
 #@ formidable
 msgid "must be unique"
 msgstr "Doit être unique"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:492
-#: pro/classes/controllers/FrmProFormsController.php:206
-#: pro/classes/models/FrmProField.php:44
-#: pro/classes/models/FrmProForm.php:263
+#: pro/classes/controllers/FrmProFormsController.php:172
+#: pro/classes/models/FrmProField.php:38
+#: pro/classes/models/FrmProForm.php:256
 #@ formidable
 msgid "User ID"
 msgstr "Utilisateur ID"
@@ -1353,17 +1309,17 @@ msgstr "Utilisateur ID"
 msgid "Page"
 msgstr "Page"
 
-#: pro/classes/models/FrmProForm.php:270
+#: pro/classes/models/FrmProForm.php:263
 #@ formidable
 msgid "Please insert a message for your auto responder."
 msgstr "S'il vous plaît insérer un message pour votre réponse automatique."
 
-#: pro/classes/models/FrmProForm.php:272
+#: pro/classes/models/FrmProForm.php:265
 #@ formidable
 msgid "That is not a valid reply-to email address for your auto responder."
 msgstr "Ce n'est pas une réponse valable à cette adresse email de réponse automatique."
 
-#: pro/classes/models/FrmProSettings.php:109
+#: pro/classes/models/FrmProSettings.php:12
 #@ formidable
 msgid "You have already submitted that form"
 msgstr "Vous avez déjà rempli ce formulaire"
@@ -1373,7 +1329,7 @@ msgstr "Vous avez déjà rempli ce formulaire"
 msgid "Save to get ID"
 msgstr "Enregistrement pour optenir un ID"
 
-#: pro/classes/views/settings/formroller.php:340
+#: pro/classes/views/settings/formroller.php:345
 #@ formidable
 msgid "Calendar"
 msgstr "Calendrier"
@@ -1384,9 +1340,9 @@ msgid "Date Field"
 msgstr "Champ de date"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:813
-#: pro/classes/controllers/FrmProEntriesController.php:1150
-#: pro/classes/helpers/FrmProFieldsHelper.php:1765
-#: pro/classes/helpers/FrmProListHelper.php:127
+#: pro/classes/controllers/FrmProEntriesController.php:1141
+#: pro/classes/helpers/FrmProFieldsHelper.php:1754
+#: pro/classes/helpers/FrmProListHelper.php:121
 #: pro/classes/views/displays/mb_form_disp_type.php:26
 #: pro/classes/views/displays/mb_form_disp_type.php:35
 #: pro/classes/views/displays/order_row.php:3
@@ -1423,44 +1379,44 @@ msgstr "Ce contenu ne sera pas répétée. Ce serait un bon endroit pour mettre 
 #: pro/classes/controllers/FrmProDisplaysController.php:203
 #: pro/classes/controllers/FrmProDisplaysController.php:349
 #: pro/classes/views/displays/mb_dyncontent.php:9
-#: pro/classes/views/frmpro-fields/options-form.php:177
+#: pro/classes/views/frmpro-fields/options-form.php:178
 #@ formidable
 msgid "Content"
 msgstr "Contenu"
 
-#: pro/classes/views/displays/mb_dyncontent.php:24
+#: pro/classes/views/displays/mb_dyncontent.php:19
 #@ formidable
 msgid "After Content"
 msgstr "Contenu suivant"
 
-#: pro/classes/views/displays/mb_dyncontent.php:24
+#: pro/classes/views/displays/mb_dyncontent.php:19
 #@ formidable
 msgid "This content will not be repeated. This would be a good place to close any HTML tags from the Before Content field."
 msgstr "Ce contenu ne sera pas répétée. Ce serait un bon endroit pour fermer toutes les balises HTML à partir du champ avant le champ."
 
 #: pro/classes/controllers/FrmProDisplaysController.php:204
-#: pro/classes/views/displays/mb_dyncontent.php:31
+#: pro/classes/views/displays/mb_dyncontent.php:26
 #@ formidable
 msgid "Dynamic Content"
 msgstr "Contenu dinamique"
 
-#: pro/classes/views/displays/mb_dyncontent.php:31
+#: pro/classes/views/displays/mb_dyncontent.php:26
 #, php-format
 #@ formidable
 msgid "The HTML for the entry on the dynamic page. This content will NOT be repeated, and will only show when the %1$s is clicked."
 msgstr "Le code HTML pour l'entrée sur la page dynamique. Ce contenu ne sera pas répétée, et vu uniquement quant  %1$s est cliquer."
 
-#: pro/classes/views/displays/mb_advanced.php:71
+#: pro/classes/views/displays/mb_advanced.php:75
 #@ formidable
 msgid "After page content"
 msgstr "Après le contenu de la page"
 
-#: pro/classes/views/displays/mb_advanced.php:72
+#: pro/classes/views/displays/mb_advanced.php:76
 #@ formidable
 msgid "Before page content"
 msgstr "Avant le contenu de la page"
 
-#: pro/classes/views/displays/mb_advanced.php:79
+#: pro/classes/views/displays/mb_advanced.php:83
 #@ formidable
 msgid "If you would like the content to be inserted automatically, you must then select the page in which to insert it."
 msgstr "Si vous voulez que le contenu doit être inséré automatiquement, vous devez alors sélectionner la page dans laquelle l'insérer."
@@ -1507,17 +1463,17 @@ msgstr "Ascendant"
 msgid "Descending"
 msgstr "Descendant"
 
-#: pro/classes/views/displays/mb_advanced.php:23
+#: pro/classes/views/displays/mb_advanced.php:25
 #@ formidable
 msgid "Narrow down which entries will be used."
 msgstr "Affinez les entrées qui seront utilisées."
 
-#: pro/classes/views/displays/mb_advanced.php:41
+#: pro/classes/views/displays/mb_advanced.php:45
 #@ formidable
 msgid "If you don’t want all your entries displayed, you can insert the number limit here. Leave blank if you’d like all entries shown."
 msgstr "Si vous ne voulez pas affichées toutes les entrées , vous pouvez insérer le nombre limite ici. Laissez vide si vous souhaitez afficher toutes les entrées."
 
-#: pro/classes/views/displays/mb_advanced.php:51
+#: pro/classes/views/displays/mb_advanced.php:55
 #@ formidable
 msgid "The number of entries to show per page. Leave blank to not use pagination."
 msgstr "Le nombre d'entrées à afficher par page. Laissez vide pour ne pas utiliser la pagination."
@@ -1529,18 +1485,13 @@ msgid "Form"
 msgstr "Formulaire"
 
 #: pro/classes/views/displays/mb_advanced.php:9
-#: pro/classes/views/displays/mb_advanced.php:27
+#: pro/classes/views/displays/mb_advanced.php:29
 #: pro/classes/views/frmpro-forms/post_options.php:147
 #: pro/classes/views/frmpro-forms/post_options.php:161
 #@ formidable
 #@ default
 msgid "Add"
 msgstr "Ajouter"
-
-#: pro/classes/views/settings/form.php:33
-#@ formidable
-msgid "Example"
-msgstr "Exemple"
 
 #: classes/views/frm-forms/mb_html_tab.php:6
 #@ formidable
@@ -1569,41 +1520,42 @@ msgstr "Option de date : 'Maintenant' ou la date au format aaaa-mm-jj."
 
 #: pro/classes/views/displays/where_row.php:10
 #: pro/classes/views/frmpro-fields/_logic_row.php:23
-#: pro/classes/views/frmpro-forms/_logic_row.php:12
+#: pro/classes/views/frmpro-forms/_logic_row.php:20
 #@ formidable
 msgid "is"
 msgstr "est"
 
 #: pro/classes/views/displays/where_row.php:12
 #: pro/classes/views/frmpro-fields/_logic_row.php:27
-#: pro/classes/views/frmpro-forms/_logic_row.php:15
+#: pro/classes/views/frmpro-forms/_logic_row.php:23
 #@ formidable
 msgid "equal to"
 msgstr "égale à"
 
 #: pro/classes/views/displays/where_row.php:13
 #: pro/classes/views/frmpro-fields/_logic_row.php:28
-#: pro/classes/views/frmpro-forms/_logic_row.php:16
+#: pro/classes/views/frmpro-forms/_logic_row.php:24
 #@ formidable
 msgid "NOT equal to"
 msgstr "pas égale à"
 
 #: pro/classes/views/displays/where_row.php:14
 #: pro/classes/views/frmpro-fields/_logic_row.php:29
-#: pro/classes/views/frmpro-forms/_logic_row.php:17
+#: pro/classes/views/frmpro-forms/_logic_row.php:25
 #@ formidable
 msgid "greater than"
 msgstr "supérieur à"
 
 #: pro/classes/views/displays/where_row.php:15
 #: pro/classes/views/frmpro-fields/_logic_row.php:30
-#: pro/classes/views/frmpro-forms/_logic_row.php:18
+#: pro/classes/views/frmpro-forms/_logic_row.php:26
 #@ formidable
 msgid "less than"
 msgstr "inférieur à"
 
 #: pro/classes/views/displays/where_row.php:18
 #: pro/classes/views/frmpro-fields/_logic_row.php:31
+#: pro/classes/views/frmpro-forms/_logic_row.php:27
 #@ formidable
 msgid "like"
 msgstr "aimer"
@@ -1613,8 +1565,9 @@ msgstr "aimer"
 msgid "Edit Entry"
 msgstr "Modifier l'entrée"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1653
-#: pro/classes/controllers/FrmProEntriesController.php:1936
+#: pro/classes/controllers/FrmProEntriesController.php:1540
+#: pro/classes/controllers/FrmProEntriesController.php:1672
+#: pro/classes/controllers/FrmProEntriesController.php:1961
 #: pro/classes/views/frmpro-entries/sidebar-show.php:17
 #@ formidable
 msgid "Are you sure you want to delete that entry?"
@@ -1650,27 +1603,27 @@ msgstr "Juste voir"
 msgid "Calendar Localization"
 msgstr "Localisation de calendrier"
 
-#: pro/classes/views/frmpro-fields/options-form.php:71
+#: pro/classes/views/frmpro-fields/options-form.php:72
 #@ formidable
 msgid "Start Year"
 msgstr "Démarer ici"
 
-#: pro/classes/views/frmpro-fields/options-form.php:74
+#: pro/classes/views/frmpro-fields/options-form.php:75
 #@ formidable
 msgid "End Year"
 msgstr "RFinir ici"
 
-#: pro/classes/views/frmpro-fields/options-form.php:79
+#: pro/classes/views/frmpro-fields/options-form.php:80
 #@ formidable
 msgid "Clock Settings"
 msgstr "Paramètre de temps"
 
-#: pro/classes/views/frmpro-fields/options-form.php:84
+#: pro/classes/views/frmpro-fields/options-form.php:85
 #@ formidable
 msgid "hour clock"
 msgstr "Heure"
 
-#: pro/classes/views/frmpro-fields/options-form.php:87
+#: pro/classes/views/frmpro-fields/options-form.php:88
 #@ formidable
 msgid "minute step"
 msgstr "pas de minute"
@@ -1680,47 +1633,47 @@ msgstr "pas de minute"
 msgid "automatic width"
 msgstr "automatiquement avec"
 
-#: pro/classes/views/frmpro-fields/options-form.php:101
+#: pro/classes/views/frmpro-fields/options-form.php:102
 #@ formidable
 msgid "Email Attachment"
 msgstr "e-Mail d'attachement"
 
-#: pro/classes/views/frmpro-fields/options-form.php:102
+#: pro/classes/views/frmpro-fields/options-form.php:103
 #@ formidable
 msgid "attach this file to the email notification"
 msgstr "joignez ce fichier à l'email de notification"
 
-#: pro/classes/views/frmpro-fields/options-form.php:140
+#: pro/classes/views/frmpro-fields/options-form.php:141
 #@ formidable
 msgid "Number Range"
 msgstr "Limite"
 
-#: pro/classes/views/frmpro-fields/options-form.php:140
+#: pro/classes/views/frmpro-fields/options-form.php:141
 #@ formidable
 msgid "Browsers that support the HTML5 number field require a number range to determine the numbers seen when clicking the arrows next to the field."
 msgstr "Les navigateurs qui supportent le HTML5 nécessite une plage de numéros afin de déterminer les numéros de vues en cliquant sur les flèches à côté du champ."
 
-#: pro/classes/views/frmpro-fields/options-form.php:141
+#: pro/classes/views/frmpro-fields/options-form.php:142
 #@ formidable
 msgid "minimum"
 msgstr "minimum"
 
-#: pro/classes/views/frmpro-fields/options-form.php:142
+#: pro/classes/views/frmpro-fields/options-form.php:143
 #@ formidable
 msgid "maximum"
 msgstr "maximum"
 
-#: pro/classes/views/frmpro-fields/options-form.php:143
+#: pro/classes/views/frmpro-fields/options-form.php:144
 #@ formidable
 msgid "step"
 msgstr "pas"
 
-#: pro/classes/views/frmpro-fields/options-form.php:146
+#: pro/classes/views/frmpro-fields/options-form.php:147
 #@ formidable
 msgid "Range"
 msgstr "Tolérance"
 
-#: pro/classes/views/frmpro-fields/options-form.php:153
+#: pro/classes/views/frmpro-fields/options-form.php:154
 #@ formidable
 msgid "to"
 msgstr "à"
@@ -1754,15 +1707,11 @@ msgstr "La clé de champ peut être utilisé comme une alternative à l'ID de ch
 msgid "These buttons are for illustrative purposes only. They will be functional in your form."
 msgstr "Ces boutons sont à des fins d'illustration seulement. Ils seront fonctionnels dans votre formulaire."
 
-#: classes/views/frm-forms/settings.php:85
+#: classes/views/frm-forms/settings.php:84
+#: pro/classes/views/frmpro-forms/add_form_options.php:101
 #@ formidable
 msgid "Use Content from Page"
 msgstr "Utiliser le contenu de la page"
-
-#: pro/classes/views/frmpro-forms/add_form_options.php:84
-#@ formidable
-msgid "Update Confirmation Message"
-msgstr "Message de confirmation mis à jour"
 
 #: pro/classes/views/frmpro-forms/add_form_options.php:38
 #@ formidable
@@ -1774,27 +1723,27 @@ msgstr "Utilisateur declaré"
 msgid "Saved Cookie"
 msgstr "Cookie sauvé"
 
-#: pro/classes/views/frmpro-forms/add_form_options.php:93
+#: pro/classes/views/frmpro-forms/add_form_options.php:111
 #@ formidable
 msgid "Copy this form to other blogs when Formidable Pro is activated"
 msgstr "Copier de formulaire dans un autre Blog quand 'Formidable Pro' est activé"
 
-#: pro/classes/controllers/FrmProFormsController.php:214
+#: pro/classes/controllers/FrmProFormsController.php:180
 #@ formidable
 msgid "A variable from the URL or value posted from previous page."
 msgstr "Une variable de l'URL ou la valeur affichée de la page précédente."
 
-#: pro/classes/views/frmpro-forms/notifications.php:9
+#: classes/views/frm-forms/notification.php:84
 #@ formidable
 msgid "Append IP Address, Browser, and Referring URL to message"
 msgstr "Ajoutez l'adresse IP, navigateur, et l'URL se référant à un message"
 
-#: pro/classes/views/settings/form.php:1
+#: pro/classes/views/settings/form.php:13
 #@ formidable
 msgid "Previously Submitted Message"
 msgstr "Message soumis précédement"
 
-#: pro/classes/views/settings/form.php:1
+#: pro/classes/views/settings/form.php:13
 #@ formidable
 msgid "The message seen when a user attempts to submit a form for a second time if submissions are limited."
 msgstr "Le message vu quand un utilisateur tente d'envoyer un formulaire pour une deuxième fois si les soumissions sont limitées."
@@ -1809,51 +1758,35 @@ msgstr "Inclure les scripts Java accordéon"
 msgid "If you have manually created an accordion form, be sure to include the javascript for it."
 msgstr "Si vous avez créé manuellement un formulaire en accordéon, n'oubliez pas d'inclure le script java."
 
-#: pro/classes/views/settings/form.php:9
+#: pro/classes/views/settings/form.php:21
 #: pro/classes/views/shared/mb_adv_info.php:14
 #: pro/classes/views/shared/mb_adv_info.php:113
 #@ formidable
 msgid "Keys"
 msgstr "Clefs"
 
-#: pro/classes/views/settings/form.php:21
-#@ formidable
-msgid "Path to Extra Templates"
-msgstr "Chemin des modèles suplémentaire"
-
-#: pro/classes/views/settings/form.php:21
-#, php-format
-#@ formidable
-msgid "If you would like to use any extra templates that are not included in Formidable, define the absolute path here. For example, the absolute path to the Formidable template folder is %1$s."
-msgstr "Si vous souhaitez utiliser des modèles supplémentaires qui ne sont pas inclus dans 'Formidable', définir le chemin absolu ici. Par exemple, le chemin absolu vers le dossier des modèles 'Formidable' est %1$s."
-
-#: pro/classes/views/settings/form.php:27
-#@ formidable
-msgid "Update Imported Templates Now"
-msgstr "Mettre à jour les modèles importer maintenant"
-
 #: pro/classes/controllers/FrmProDisplaysController.php:480
-#: pro/classes/views/settings/form.php:36
+#: pro/classes/views/settings/form.php:34
 #@ formidable
 msgid "Date Format"
 msgstr "Format de date"
 
-#: pro/classes/views/settings/form.php:56
+#: pro/classes/views/settings/form.php:54
 #@ formidable
 msgid "Pretty Permalinks"
 msgstr "Permalien décoré"
 
-#: pro/classes/views/settings/form.php:59
+#: pro/classes/views/settings/form.php:57
 #@ formidable
 msgid "Use pretty permalinks for entry detail links"
 msgstr "Utilise les permalien décoré pour le detail de lien"
 
 #: pro/classes/views/settings/formroller.php:26
-#: pro/classes/views/settings/formroller.php:215
-#: pro/classes/views/settings/formroller.php:247
-#: pro/classes/views/settings/formroller.php:417
-#: pro/classes/views/settings/formroller.php:454
-#: pro/classes/views/settings/formroller.php:484
+#: pro/classes/views/settings/formroller.php:220
+#: pro/classes/views/settings/formroller.php:252
+#: pro/classes/views/settings/formroller.php:422
+#: pro/classes/views/settings/formroller.php:459
+#: pro/classes/views/settings/formroller.php:489
 #@ formidable
 msgid "Border"
 msgstr "Bord"
@@ -1862,70 +1795,65 @@ msgstr "Bord"
 #: pro/classes/views/settings/formroller.php:54
 #: pro/classes/views/settings/formroller.php:93
 #: pro/classes/views/settings/formroller.php:118
-#: pro/classes/views/settings/formroller.php:319
+#: pro/classes/views/settings/formroller.php:324
 #@ formidable
 msgid "Color"
 msgstr "Couleur"
 
 #: pro/classes/views/settings/formroller.php:36
-#: pro/classes/views/settings/formroller.php:187
-#: pro/classes/views/settings/formroller.php:434
+#: pro/classes/views/settings/formroller.php:192
+#: pro/classes/views/settings/formroller.php:439
 #@ formidable
 msgid "Padding"
 msgstr "Détourage"
 
 #: pro/classes/views/settings/formroller.php:129
-#: pro/classes/views/settings/formroller.php:223
-#: pro/classes/views/settings/formroller.php:278
+#: pro/classes/views/settings/formroller.php:228
+#: pro/classes/views/settings/formroller.php:283
 #@ formidable
 msgid "Style"
 msgstr "Style"
 
-#: pro/classes/views/settings/formroller.php:225
-#: pro/classes/views/settings/formroller.php:280
+#: pro/classes/views/settings/formroller.php:230
+#: pro/classes/views/settings/formroller.php:285
 #@ formidable
 msgid "solid"
 msgstr "Solide"
 
-#: pro/classes/views/settings/formroller.php:226
-#: pro/classes/views/settings/formroller.php:281
+#: pro/classes/views/settings/formroller.php:231
+#: pro/classes/views/settings/formroller.php:286
 #@ formidable
 msgid "dotted"
 msgstr "pointillé"
 
-#: pro/classes/views/settings/formroller.php:227
-#: pro/classes/views/settings/formroller.php:282
+#: pro/classes/views/settings/formroller.php:232
+#: pro/classes/views/settings/formroller.php:287
 #@ formidable
 msgid "dashed"
 msgstr "en pointillés"
 
-#: pro/classes/views/settings/formroller.php:228
-#: pro/classes/views/settings/formroller.php:283
+#: pro/classes/views/settings/formroller.php:233
+#: pro/classes/views/settings/formroller.php:288
 #@ formidable
 msgid "double"
 msgstr "double"
 
-#: pro/classes/views/settings/formroller.php:219
-#: pro/classes/views/settings/formroller.php:274
-#: pro/classes/views/settings/formroller.php:421
+#: pro/classes/views/settings/formroller.php:224
+#: pro/classes/views/settings/formroller.php:279
+#: pro/classes/views/settings/formroller.php:426
 #@ formidable
 msgid "Thickness"
 msgstr "Epaisseur"
 
-#: pro/classes/views/settings/formroller.php:367
+#: pro/classes/views/settings/formroller.php:372
 #@ formidable
 msgid "Disable submit button styling"
 msgstr "Style de bouton d'envoi désactivé"
 
-#: pro/classes/views/settings/formroller.php:367
+#: pro/classes/views/settings/formroller.php:372
 #@ formidable
 msgid "Note: If disabled, you may not see the change take effect until you make 2 more styling changes or click \"Update Options\"."
 msgstr "Remarque: Si désactivée, vous ne pouvez pas voir les changements que vous faites, jusqu'au changements de style ou cliquez sur \"Mettre à jour les options \"."
-
-#: classes/controllers/FrmAppController.php:262
-#@ formidable
-msgid "Templates Updated"
-msgstr "Modèle mis à jour"
 
 #: pro/classes/widgets/FrmListEntries.php:6
 #@ formidable
@@ -1938,52 +1866,42 @@ msgid "Formidable Entries List"
 msgstr "Entrée de liste 'Formidable'"
 
 #: classes/widgets/FrmShowForm.php:43
-#: pro/classes/widgets/FrmListEntries.php:154
+#: pro/classes/widgets/FrmListEntries.php:173
 #@ formidable
 msgid "Title"
 msgstr "Titre"
 
-#: pro/classes/widgets/FrmListEntries.php:157
-#@ formidable
-msgid "Use Settings from Display"
-msgstr "Utiliser les parametres d'affichage"
-
-#: pro/classes/widgets/FrmListEntries.php:167
-#@ formidable
-msgid "Page if not specified in display settings"
-msgstr "Pasge si non specifier dans les parametres d'affichage"
-
-#: pro/classes/widgets/FrmListEntries.php:176
+#: pro/classes/widgets/FrmListEntries.php:195
 #@ formidable
 msgid "Title Field"
 msgstr "Champ titre"
 
-#: pro/classes/widgets/FrmListEntries.php:190
+#: pro/classes/widgets/FrmListEntries.php:209
 #@ formidable
 msgid "List Entries by Category"
 msgstr "Lister les entrée par catégorie"
 
-#: pro/classes/widgets/FrmListEntries.php:193
+#: pro/classes/widgets/FrmListEntries.php:212
 #@ formidable
 msgid "Category Field"
 msgstr "Champ catégorie"
 
-#: pro/classes/widgets/FrmListEntries.php:208
+#: pro/classes/widgets/FrmListEntries.php:227
 #@ formidable
 msgid "Show Entry Counts"
 msgstr "Afficher les chiffres d'entrée"
 
-#: pro/classes/widgets/FrmListEntries.php:211
+#: pro/classes/widgets/FrmListEntries.php:230
 #@ formidable
 msgid "Show Only Category Name"
 msgstr "Afficher uniquement les nom de catégories"
 
-#: pro/classes/widgets/FrmListEntries.php:214
+#: pro/classes/widgets/FrmListEntries.php:233
 #@ formidable
 msgid "Show Entries Beneath Categories"
 msgstr "Afficher les entrées de sous catégories"
 
-#: pro/classes/widgets/FrmListEntries.php:217
+#: pro/classes/widgets/FrmListEntries.php:236
 #@ formidable
 msgid "Entry Limit (leave blank to list all)"
 msgstr "Entrez les limites (laisser blanc pour les voirs tous)"
@@ -2023,7 +1941,7 @@ msgstr "Remarque: Dans certains cas, cette option permet de créer une boucle in
 msgid "Insert a search box"
 msgstr "Inserez un champs de recherche"
 
-#: pro/classes/views/xml/import_form.php:46
+#: classes/views/xml/import_form.php:33
 #@ formidable
 msgid "Export"
 msgstr "exporter"
@@ -2073,7 +1991,7 @@ msgstr "Paramètres d'affichage"
 
 #: pro/classes/views/settings/formroller.php:50
 #: pro/classes/views/settings/formroller.php:114
-#: pro/classes/views/settings/formroller.php:315
+#: pro/classes/views/settings/formroller.php:320
 #@ formidable
 msgid "Family"
 msgstr "Famille"
@@ -2081,8 +1999,8 @@ msgstr "Famille"
 #: pro/classes/views/settings/formroller.php:58
 #: pro/classes/views/settings/formroller.php:97
 #: pro/classes/views/settings/formroller.php:122
-#: pro/classes/views/settings/formroller.php:323
-#: pro/classes/views/settings/formroller.php:371
+#: pro/classes/views/settings/formroller.php:328
+#: pro/classes/views/settings/formroller.php:376
 #@ formidable
 msgid "Weight"
 msgstr "Style"
@@ -2090,10 +2008,10 @@ msgstr "Style"
 #: pro/classes/views/settings/formroller.php:65
 #: pro/classes/views/settings/formroller.php:136
 #: pro/classes/views/settings/formroller.php:171
-#: pro/classes/views/settings/formroller.php:330
-#: pro/classes/views/settings/formroller.php:384
-#: pro/classes/views/settings/formroller.php:464
-#: pro/classes/views/settings/formroller.php:492
+#: pro/classes/views/settings/formroller.php:335
+#: pro/classes/views/settings/formroller.php:389
+#: pro/classes/views/settings/formroller.php:469
+#: pro/classes/views/settings/formroller.php:497
 #@ formidable
 msgid "Size"
 msgstr "Taille"
@@ -2104,8 +2022,8 @@ msgid "Position"
 msgstr "Postition"
 
 #: pro/classes/views/settings/formroller.php:87
-#: pro/classes/views/settings/formroller.php:176
-#: pro/classes/views/settings/formroller.php:389
+#: pro/classes/views/settings/formroller.php:181
+#: pro/classes/views/settings/formroller.php:394
 #@ formidable
 msgid "Width"
 msgstr "Largeur"
@@ -2113,16 +2031,16 @@ msgstr "Largeur"
 #: pro/classes/views/settings/formroller.php:99
 #: pro/classes/views/settings/formroller.php:124
 #: pro/classes/views/settings/formroller.php:131
-#: pro/classes/views/settings/formroller.php:325
-#: pro/classes/views/settings/formroller.php:373
+#: pro/classes/views/settings/formroller.php:330
+#: pro/classes/views/settings/formroller.php:378
 #@ formidable
 msgid "normal"
 msgstr "nrmal"
 
 #: pro/classes/views/settings/formroller.php:100
 #: pro/classes/views/settings/formroller.php:125
-#: pro/classes/views/settings/formroller.php:326
-#: pro/classes/views/settings/formroller.php:374
+#: pro/classes/views/settings/formroller.php:331
+#: pro/classes/views/settings/formroller.php:379
 #@ formidable
 msgid "bold"
 msgstr "gras"
@@ -2138,7 +2056,7 @@ msgid "Corner Radius"
 msgstr "Rayon des coins"
 
 #: pro/classes/views/settings/formroller.php:158
-#: pro/classes/views/settings/formroller.php:379
+#: pro/classes/views/settings/formroller.php:384
 #@ formidable
 msgid "Corners"
 msgstr "Coins"
@@ -2153,91 +2071,92 @@ msgstr "'Formidable' utilise CSS3 'border-radius' pour arrondir les coins, ceci 
 msgid "Field Settings"
 msgstr "Configuration de champ"
 
-#: pro/classes/views/settings/formroller.php:202
+#: pro/classes/views/settings/formroller.php:207
 #@ formidable
 msgid "Field Colors"
 msgstr "Couleur de champ"
 
-#: pro/classes/views/settings/formroller.php:206
-#: pro/classes/views/settings/formroller.php:243
-#: pro/classes/views/settings/formroller.php:261
+#: pro/classes/views/settings/formroller.php:211
+#: pro/classes/views/settings/formroller.php:248
+#: pro/classes/views/settings/formroller.php:266
 #@ formidable
 msgid "BG color"
 msgstr "Couleur de fond"
 
-#: pro/classes/views/settings/formroller.php:210
-#: pro/classes/views/settings/formroller.php:265
-#: pro/classes/views/settings/formroller.php:407
-#: pro/classes/views/settings/formroller.php:459
-#: pro/classes/views/settings/formroller.php:488
+#: pro/classes/views/settings/formroller.php:215
+#: pro/classes/views/settings/formroller.php:270
+#: pro/classes/views/settings/formroller.php:412
+#: pro/classes/views/settings/formroller.php:464
+#: pro/classes/views/settings/formroller.php:493
 #@ formidable
 msgid "Text"
 msgstr "texte"
 
-#: pro/classes/views/settings/formroller.php:239
+#: pro/classes/views/settings/formroller.php:244
 #@ formidable
 msgid "Field Colors: active state"
 msgstr "Couleur de champ : Actif"
 
-#: pro/classes/views/settings/formroller.php:257
+#: pro/classes/views/settings/formroller.php:262
 #@ formidable
 msgid "Field Colors: error state"
 msgstr "Couleur de champ : En erreur"
 
-#: pro/classes/views/settings/formroller.php:297
+#: pro/classes/views/settings/formroller.php:302
 #@ formidable
 msgid "Radio"
 msgstr "Radio"
 
-#: pro/classes/views/settings/formroller.php:306
+#: pro/classes/views/settings/formroller.php:311
 #@ formidable
 msgid "Check Box"
 msgstr "Case à cocher"
 
-#: pro/classes/views/settings/formroller.php:344
+#: pro/classes/views/settings/formroller.php:349
 #@ formidable
 msgid "Theme"
 msgstr "Thème"
 
-#: pro/classes/views/settings/formroller.php:394
+#: pro/classes/views/settings/formroller.php:176
+#: pro/classes/views/settings/formroller.php:399
 #@ formidable
 msgid "Height"
 msgstr "Hauteur"
 
-#: pro/classes/views/settings/formroller.php:399
-#: pro/classes/views/settings/formroller.php:403
-#: pro/classes/views/settings/formroller.php:449
-#: pro/classes/views/settings/formroller.php:479
+#: pro/classes/views/settings/formroller.php:404
+#: pro/classes/views/settings/formroller.php:408
+#: pro/classes/views/settings/formroller.php:454
+#: pro/classes/views/settings/formroller.php:484
 #@ formidable
 msgid "BG Color"
 msgstr "Couleur de fond"
 
-#: pro/classes/views/settings/formroller.php:412
+#: pro/classes/views/settings/formroller.php:417
 #@ formidable
 msgid "BG Image"
 msgstr "Image de fond"
 
-#: pro/classes/views/settings/formroller.php:425
+#: pro/classes/views/settings/formroller.php:430
 #@ formidable
 msgid "Shadow"
 msgstr "Opacité"
 
-#: pro/classes/views/settings/formroller.php:430
+#: pro/classes/views/settings/formroller.php:435
 #@ formidable
 msgid "Margin"
 msgstr "Marge"
 
-#: pro/classes/views/settings/formroller.php:444
+#: pro/classes/views/settings/formroller.php:449
 #@ formidable
 msgid "Error"
 msgstr "Erreur"
 
-#: pro/classes/views/settings/formroller.php:474
+#: pro/classes/views/settings/formroller.php:479
 #@ formidable
 msgid "Success"
 msgstr "Succès"
 
-#: pro/classes/controllers/FrmProFormsController.php:209
+#: pro/classes/controllers/FrmProFormsController.php:175
 #: pro/classes/views/frmpro-forms/comment_options.php:15
 #: pro/classes/views/frmpro-forms/post_options.php:46
 #@ formidable
@@ -2316,7 +2235,7 @@ msgstr "Anglais"
 msgid "Portuguese"
 msgstr "Portugais"
 
-#: classes/models/FrmSettings.php:98
+#: classes/models/FrmSettings.php:54
 #@ formidable
 msgid "The reCAPTCHA was not entered correctly"
 msgstr "Le reCAPTCHA n'est pas entré correctement"
@@ -2348,69 +2267,64 @@ msgstr "HTML"
 msgid "Required"
 msgstr "Requis"
 
-#: classes/controllers/FrmFormsController.php:346
+#: classes/controllers/FrmFormsController.php:368
 #: pro/classes/views/displays/submitbox_actions.php:2
 #@ formidable
 msgid "Shortcodes"
 msgstr "Codes Court"
 
-#: classes/views/frm-settings/form.php:116
+#: classes/views/frm-settings/form.php:114
 #@ formidable
 msgid "Default Submit Button"
 msgstr "Bouton d'envoi par défaut"
 
-#: pro/classes/models/FrmProDisplay.php:262
+#: pro/classes/models/FrmProDisplay.php:245
 #: pro/classes/views/displays/mb_excerpt.php:2
 #@ formidable
 msgid "This is not displayed anywhere, but is just for your reference. (optional)"
 msgstr "Ce n'est pas affichée partout, mais c'est juste pour votre référence. (facultatif)"
 
-#: pro/classes/models/FrmProDisplay.php:266
+#: pro/classes/models/FrmProDisplay.php:249
 #@ formidable
 msgid "Content cannot be blank"
 msgstr "Le contenu ne peut pas être vide"
 
-#: pro/classes/models/FrmProDisplay.php:269
+#: pro/classes/models/FrmProDisplay.php:252
 #@ formidable
 msgid "Page cannot be blank if you want the content inserted automatically"
 msgstr "La page ne peut pas être vide si vous voulez que le contenu soit inséré automatiquement"
 
-#: pro/classes/models/FrmProDisplay.php:276
+#: pro/classes/models/FrmProDisplay.php:259
 #@ formidable
 msgid "Dynamic Content cannot be blank"
 msgstr "Le contenu dynamique ne peut pas être vide"
 
-#: pro/classes/models/FrmProDisplay.php:280
+#: pro/classes/models/FrmProDisplay.php:263
 #@ formidable
 msgid "Parameter Name cannot be blank if content is dynamic"
 msgstr "Le parametre de nom ne peut pas être vide pour un contenu dynamique"
 
-#: pro/classes/models/FrmProDisplay.php:283
+#: pro/classes/models/FrmProDisplay.php:266
 #@ formidable
 msgid "Parameter Value cannot be blank if content is dynamic"
 msgstr "Le parametre de valeur ne peut pas être vide pour un contenu dynamique"
 
-#: pro/classes/models/FrmProDisplay.php:286
+#: pro/classes/models/FrmProDisplay.php:269
 #@ formidable
 msgid "Detail Link cannot be blank if content is dynamic"
 msgstr "Le detail de lien ne peut pas être vide pour un contenu dynamique"
 
-#: pro/classes/views/displays/mb_advanced.php:66
-#@ formidable
-msgid "Insert display"
-msgstr "Inserez un affichage"
-
-#: pro/classes/views/displays/mb_advanced.php:73
+#: pro/classes/views/displays/mb_advanced.php:77
 #@ formidable
 msgid "Replace page content"
 msgstr "Replacer le contenu de la page"
 
-#: pro/classes/views/displays/mb_advanced.php:70
+#: pro/classes/views/displays/mb_advanced.php:74
 #@ formidable
 msgid "Don't insert automatically"
 msgstr "Pas d'insertion automatiqueement"
 
-#: pro/classes/views/displays/mb_advanced.php:77
+#: pro/classes/views/displays/mb_advanced.php:81
 #@ formidable
 msgid "on page"
 msgstr "sur la page"
@@ -2447,7 +2361,7 @@ msgid "Calendar &mdash; insert entries into a calendar"
 msgstr "Calendrier &mdash; inserez dans le calendrier"
 
 #: pro/classes/views/displays/mb_dyncontent.php:2
-#: pro/classes/views/displays/mb_dyncontent.php:24
+#: pro/classes/views/displays/mb_dyncontent.php:19
 #: pro/classes/views/frmpro-forms/comment_options.php:23
 #@ formidable
 msgid "optional"
@@ -2463,22 +2377,22 @@ msgstr "Avancé"
 msgid "Order"
 msgstr "Ordre"
 
-#: pro/classes/views/displays/mb_advanced.php:40
+#: pro/classes/views/displays/mb_advanced.php:44
 #@ formidable
 msgid "Limit"
 msgstr "Limite"
 
-#: pro/classes/views/displays/mb_advanced.php:50
+#: pro/classes/views/displays/mb_advanced.php:54
 #@ formidable
 msgid "Page Size"
 msgstr "Taille de page"
 
-#: pro/classes/views/frmpro-fields/options-form.php:234
+#: pro/classes/views/frmpro-fields/options-form.php:235
 #@ formidable
 msgid "Calculations"
 msgstr "Calcul"
 
-#: pro/classes/views/frmpro-fields/options-form.php:236
+#: pro/classes/views/frmpro-fields/options-form.php:237
 #@ formidable
 msgid "Calculate the default value for this field"
 msgstr "Calcul les valeurs par défaut pour ce champ"
@@ -2533,11 +2447,6 @@ msgstr "Pas d'utilisateur"
 #@ formidable
 msgid "View Profile"
 msgstr "Voir le profile"
-
-#: pro/classes/views/settings/form.php:25
-#@ formidable
-msgid "The format of that path is incorrect. Please try again."
-msgstr "Le format de ce chemin est incorrect. S'il vous plaît ré-essayez."
 
 #: pro/classes/views/settings/styling_tab.php:18
 #@ formidable
@@ -2611,10 +2520,8 @@ msgstr "Zone de texte"
 msgid "Another field with a description"
 msgstr "Un autre champ texte avec description"
 
-#: pro/classes/controllers/FrmProEntriesController.php:471
-#: pro/classes/views/frmpro-entries/list.php:7
-#: pro/classes/views/xml/import_form.php:11
-#: pro/classes/views/xml/map_csv_fields.php:59
+#: classes/views/xml/import_form.php:11
+#: pro/classes/views/xml/map_csv_fields.php:60
 #@ formidable
 msgid "Import"
 msgstr "Importer"
@@ -2639,17 +2546,17 @@ msgstr "uniquement sur les pages appliquables"
 msgid "Don't use Formidable styling on any page"
 msgstr "Ne pas utiliser les style 'Formidable' sur toutes les pages"
 
-#: classes/controllers/FrmAppController.php:107
+#: classes/controllers/FrmAppController.php:133
 #@ formidable
 msgid "Your Formidable database needs to be updated.<br/>Please deactivate and reactivate the plugin to fix this or"
 msgstr "Votre base de données 'Formidable' doit être mis à jour.<br/>Veuillez désactiver et réactiver le plugin pour résoudre ce problème ou"
 
-#: classes/controllers/FrmAppController.php:107
+#: classes/controllers/FrmAppController.php:133
 #@ formidable
 msgid "Update Now"
 msgstr "Mise à jour maintenant"
 
-#: classes/models/FrmSettings.php:69
+#: classes/models/FrmSettings.php:28
 #@ formidable
 msgid "We're sorry. It looks like you've  already submitted that."
 msgstr "Nous sommes désolé. Il semple que vous avez déjà envoyer cela"
@@ -2662,12 +2569,12 @@ msgstr "S'il vous plaît ajouter des options à partir de la pagedes \"Catégori
 #: classes/views/frm-forms/add_field.php:235
 #: pro/classes/views/frmpro-forms/post_options.php:81
 #: pro/classes/views/frmpro-forms/post_options.php:90
-#: pro/classes/views/settings/formroller.php:350
+#: pro/classes/views/settings/formroller.php:355
 #@ formidable
 msgid "None"
 msgstr "aucun"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:638
+#: pro/classes/helpers/FrmProFieldsHelper.php:633
 #@ formidable
 msgid "No Categories"
 msgstr "Pas de catégorie"
@@ -2682,12 +2589,12 @@ msgstr "Téléchargement de fichier. Patientez."
 msgid "Import Data from"
 msgstr "Importer des données de formulaire"
 
-#: pro/classes/views/frmpro-fields/options-form.php:90
+#: pro/classes/views/frmpro-fields/options-form.php:91
 #@ formidable
 msgid "start time"
 msgstr "Heure de depart"
 
-#: pro/classes/views/frmpro-fields/options-form.php:93
+#: pro/classes/views/frmpro-fields/options-form.php:94
 #@ formidable
 msgid "end time"
 msgstr "Echéance"
@@ -2702,40 +2609,35 @@ msgstr "Type d'envoi"
 msgid "If your text fields are too big for your sidebar insert a size here."
 msgstr "Si vos champs de texte sont trop long pour votre sidebar insérer une taille ici."
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:884
-#: pro/classes/models/FrmProEntryMeta.php:258
+#: pro/classes/helpers/FrmProFieldsHelper.php:878
+#: pro/classes/models/FrmProEntryMeta.php:266
 #@ formidable
 msgid "is invalid"
 msgstr "pas valide"
 
 #: classes/helpers/FrmFieldsHelper.php:174
-#: pro/classes/helpers/FrmProFieldsHelper.php:884
-#: pro/classes/models/FrmProEntryMeta.php:258
+#: pro/classes/helpers/FrmProFieldsHelper.php:878
+#: pro/classes/models/FrmProEntryMeta.php:266
 #@ formidable
 msgid "This field is invalid"
 msgstr "Ce champ n'est pas valide"
 
-#: classes/models/FrmSettings.php:68
+#: classes/models/FrmSettings.php:27
 #@ formidable
 msgid "There was a problem with your submission. Errors are marked below."
 msgstr "Il y a un problème avec votre soumission. Les erreurs sont signalées ci-dessous."
 
-#: classes/templates/contact.php:48
-#@ formidable
-msgid "Please enter a valid website"
-msgstr "Veuillez entrer un site Web valide"
-
-#: classes/views/frm-settings/form.php:97
+#: classes/views/frm-settings/form.php:100
 #@ formidable
 msgid "Incorrect Field"
 msgstr "Champ incorrect"
 
-#: classes/views/frm-settings/form.php:97
+#: classes/views/frm-settings/form.php:100
 #@ formidable
 msgid "The message seen when a field response is either incorrect or missing."
 msgstr "Le message vu quand une réponse de champ est incorrect ou manquant."
 
-#: pro/classes/models/FrmProSettings.php:199
+#: pro/classes/models/FrmProSettings.php:10
 #@ formidable
 msgid "Your submission was successfully saved."
 msgstr "Votre soumission a été correctement enregistré."
@@ -2746,24 +2648,24 @@ msgstr "Votre soumission a été correctement enregistré."
 msgid "Form Styling"
 msgstr "Style de formulaire"
 
-#: classes/helpers/FrmAppHelper.php:126
+#: classes/helpers/FrmAppHelper.php:117
 #@ formidable
 msgid "Add/Edit Forms and Templates"
 msgstr "Ajout/Edition de formulaires et Modèles"
 
-#: classes/helpers/FrmAppHelper.php:132
+#: classes/helpers/FrmAppHelper.php:123
 #@ formidable
 msgid "Add Entries from Admin Area"
 msgstr "Ajouter des donnée de la zone d'administration:"
 
-#: classes/helpers/FrmListHelper.php:91
+#: classes/helpers/FrmListHelper.php:87
 #: classes/views/frm-entries/list.php:5
 #: classes/views/frm-forms/edit.php:4
 #: classes/views/frm-forms/list.php:5
 #: classes/views/frm-forms/new.php:4
 #: classes/views/frm-statistics/list.php:5
 #: classes/views/frm-statistics/list_displays.php:5
-#: pro/classes/views/frmpro-entries/edit.php:4
+#: pro/classes/views/frmpro-entries/edit.php:5
 #: pro/classes/views/frmpro-entries/list.php:5
 #: pro/classes/views/frmpro-entries/show.php:4
 #@ default
@@ -2783,6 +2685,7 @@ msgid "Entry Actions"
 msgstr "Actions d'entrée"
 
 #: pro/classes/views/frmpro-entries/show.php:69
+#: pro/classes/views/xml/map_csv_fields.php:47
 #@ formidable
 msgid "Created at"
 msgstr "Crée à"
@@ -2799,32 +2702,32 @@ msgstr "par"
 msgid "Last Updated"
 msgstr "Dernière mise à jour"
 
-#: pro/classes/views/settings/form.php:11
+#: pro/classes/views/settings/form.php:23
 #@ formidable
 msgid "Hide field and entry keys to prevent them from being edited. Uncheck this box to edit the saved keys for use in your template."
 msgstr "Masquer les champs d'entrées pour les empêcher les modifications. Décochez cette case pour modifier les touches pour une utilisation dans votre modèle."
 
-#: pro/classes/controllers/FrmProFormsController.php:211
+#: pro/classes/controllers/FrmProFormsController.php:177
 #@ formidable
 msgid "Post Meta"
 msgstr "Message Meta"
 
-#: pro/classes/helpers/FrmProAppHelper.php:114
+#: pro/classes/helpers/FrmProAppHelper.php:111
 #@ formidable
 msgid "at"
 msgstr "à"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1812
+#: pro/classes/helpers/FrmProFieldsHelper.php:1801
 #@ formidable
 msgid "Default Email Message"
 msgstr "E-Mail des messages par défaut"
 
-#: pro/classes/views/displays/mb_advanced.php:59
+#: pro/classes/views/displays/mb_advanced.php:63
 #@ formidable
 msgid "Message if nothing to display"
 msgstr "Message si rien n'est affiché"
 
-#: pro/classes/views/displays/mb_advanced.php:97
+#: pro/classes/views/displays/mb_advanced.php:101
 #@ formidable
 msgid "Copy these display settings to other blogs when Formidable Pro is activated. <br/>Note: Use only field keys in the content box(es) above."
 msgstr "Copiez ces paramètres d'affichage pour d'autres blogs où 'Formidable Pro' est activé. <br/> Remarque: Utilisez uniquement les touches dans la zone de contenu ci-dessus."
@@ -2882,7 +2785,7 @@ msgstr "de"
 msgid "Exclude options"
 msgstr "Exclure l'option"
 
-#: pro/classes/views/frmpro-fields/options-form.php:225
+#: pro/classes/views/frmpro-fields/options-form.php:226
 #: pro/classes/views/frmpro-forms/add_form_options.php:13
 #: pro/classes/views/frmpro-forms/add_form_options.php:24
 #: pro/classes/views/frmpro-forms/add_form_options.php:55
@@ -2897,7 +2800,7 @@ msgstr "Utilisateur identifié"
 msgid "Post Content"
 msgstr "Publier le contenu"
 
-#: pro/classes/controllers/FrmProFormsController.php:210
+#: pro/classes/controllers/FrmProFormsController.php:176
 #: pro/classes/views/frmpro-forms/comment_options.php:18
 #@ formidable
 msgid "Author Email"
@@ -2926,1217 +2829,1217 @@ msgstr "Publier"
 msgid "Are you sure you want to delete this entry?"
 msgstr "Etes vous sur de vouloir supprimer cette entrée?"
 
-#: pro/classes/controllers/FrmProFormsController.php:214
+#: pro/classes/controllers/FrmProFormsController.php:180
 #@ formidable
 msgid "Replace 'whatever' with the parameter name. In url.com?product=form, the variable is 'product'. You would use [get param=product] in your field."
 msgstr "Remplacer \"quel que soit\" avec le nom du paramètre. En url.com?product=form, la variable est 'produite'. Vous devriez utiliser [get param=product] de votre domaine."
 
-#: pro/classes/views/settings/formroller.php:192
+#: pro/classes/views/settings/formroller.php:197
 #@ formidable
 msgid "Bottom Margin"
 msgstr "Marge du bas"
 
-#: classes/controllers/FrmFieldsController.php:263
+#: classes/controllers/FrmFieldsController.php:262
 #@ formidable
 msgid "Countries"
 msgstr "Pays"
 
-#: classes/controllers/FrmFieldsController.php:266
+#: classes/controllers/FrmFieldsController.php:265
 #@ formidable
 msgid "U.S. States"
 msgstr "Etats Unis"
 
-#: classes/controllers/FrmFieldsController.php:267
+#: classes/controllers/FrmFieldsController.php:266
 #@ formidable
 msgid "U.S. State Abbreviations"
 msgstr "Etats Unis Racourci"
 
-#: classes/controllers/FrmFieldsController.php:269
+#: classes/controllers/FrmFieldsController.php:268
 #@ formidable
 msgid "Age"
 msgstr "Age"
 
-#: classes/controllers/FrmFieldsController.php:270
+#: classes/controllers/FrmFieldsController.php:269
 #@ formidable
 msgid "Under 18"
 msgstr "mois de 18"
 
-#: classes/controllers/FrmFieldsController.php:270
+#: classes/controllers/FrmFieldsController.php:269
 #@ formidable
 msgid "18-24"
 msgstr "18-24"
 
-#: classes/controllers/FrmFieldsController.php:270
+#: classes/controllers/FrmFieldsController.php:269
 #@ formidable
 msgid "25-34"
 msgstr "25-34"
 
-#: classes/controllers/FrmFieldsController.php:271
+#: classes/controllers/FrmFieldsController.php:270
 #@ formidable
 msgid "35-44"
 msgstr "35-44"
 
-#: classes/controllers/FrmFieldsController.php:271
+#: classes/controllers/FrmFieldsController.php:270
 #@ formidable
 msgid "45-54"
 msgstr "45-54"
 
-#: classes/controllers/FrmFieldsController.php:271
+#: classes/controllers/FrmFieldsController.php:270
 #@ formidable
 msgid "55-64"
 msgstr "55-64"
 
-#: classes/controllers/FrmFieldsController.php:272
+#: classes/controllers/FrmFieldsController.php:271
 #@ formidable
 msgid "65 or Above"
 msgstr "Plus de 65"
 
-#: classes/controllers/FrmFieldsController.php:272
+#: classes/controllers/FrmFieldsController.php:271
 #@ formidable
 msgid "Prefer Not to Answer"
 msgstr "Je préfère ne pas répondre"
 
-#: classes/controllers/FrmFieldsController.php:275
+#: classes/controllers/FrmFieldsController.php:274
 #@ formidable
 msgid "Satisfaction"
 msgstr "Satifaction"
 
-#: classes/controllers/FrmFieldsController.php:276
+#: classes/controllers/FrmFieldsController.php:275
 #@ formidable
 msgid "Very Satisfied"
 msgstr "Très satifait"
 
-#: classes/controllers/FrmFieldsController.php:276
+#: classes/controllers/FrmFieldsController.php:275
 #@ formidable
 msgid "Satisfied"
 msgstr "Satisfait"
 
-#: classes/controllers/FrmFieldsController.php:276
-#: classes/controllers/FrmFieldsController.php:281
-#: classes/controllers/FrmFieldsController.php:286
+#: classes/controllers/FrmFieldsController.php:275
+#: classes/controllers/FrmFieldsController.php:280
+#: classes/controllers/FrmFieldsController.php:285
 #@ formidable
 msgid "Neutral"
 msgstr "Neutre"
 
-#: classes/controllers/FrmFieldsController.php:277
+#: classes/controllers/FrmFieldsController.php:276
 #@ formidable
 msgid "Unsatisfied"
 msgstr "Insatisfait"
 
-#: classes/controllers/FrmFieldsController.php:277
+#: classes/controllers/FrmFieldsController.php:276
 #@ formidable
 msgid "Very Unsatisfied"
 msgstr "Très insatisfait"
 
-#: classes/controllers/FrmFieldsController.php:277
-#: classes/controllers/FrmFieldsController.php:282
-#: classes/controllers/FrmFieldsController.php:287
+#: classes/controllers/FrmFieldsController.php:276
+#: classes/controllers/FrmFieldsController.php:281
+#: classes/controllers/FrmFieldsController.php:286
 #: pro/classes/controllers/FrmProDisplaysController.php:254
 #@ formidable
 msgid "N/A"
 msgstr "N/A"
 
-#: classes/controllers/FrmFieldsController.php:280
+#: classes/controllers/FrmFieldsController.php:279
 #@ formidable
 msgid "Importance"
 msgstr "Importance"
 
-#: classes/controllers/FrmFieldsController.php:281
+#: classes/controllers/FrmFieldsController.php:280
 #@ formidable
 msgid "Very Important"
 msgstr "Très important"
 
-#: classes/controllers/FrmFieldsController.php:281
+#: classes/controllers/FrmFieldsController.php:280
 #@ formidable
 msgid "Important"
 msgstr "Important"
 
-#: classes/controllers/FrmFieldsController.php:282
+#: classes/controllers/FrmFieldsController.php:281
 #@ formidable
 msgid "Somewhat Important"
 msgstr "Assez important"
 
-#: classes/controllers/FrmFieldsController.php:282
+#: classes/controllers/FrmFieldsController.php:281
 #@ formidable
 msgid "Not at all Important"
 msgstr "Pas du tout important"
 
-#: classes/controllers/FrmFieldsController.php:285
+#: classes/controllers/FrmFieldsController.php:284
 #@ formidable
 msgid "Agreement"
 msgstr "Accord"
 
-#: classes/controllers/FrmFieldsController.php:286
+#: classes/controllers/FrmFieldsController.php:285
 #@ formidable
 msgid "Strongly Agree"
 msgstr "Entièrement d'accord"
 
-#: classes/controllers/FrmFieldsController.php:286
+#: classes/controllers/FrmFieldsController.php:285
 #@ formidable
 msgid "Agree"
 msgstr "D'accord"
 
-#: classes/controllers/FrmFieldsController.php:287
+#: classes/controllers/FrmFieldsController.php:286
 #@ formidable
 msgid "Disagree"
 msgstr "Pas d'accord"
 
-#: classes/controllers/FrmFieldsController.php:287
+#: classes/controllers/FrmFieldsController.php:286
 #@ formidable
 msgid "Strongly Disagree"
 msgstr "Entièrement pas d'accord"
 
-#: classes/helpers/FrmAppHelper.php:480
+#: classes/helpers/FrmAppHelper.php:466
 #@ formidable
 msgid "Afghanistan"
 msgstr "Afghanistan"
 
-#: classes/helpers/FrmAppHelper.php:480
+#: classes/helpers/FrmAppHelper.php:466
 #@ formidable
 msgid "Albania"
 msgstr "Albanie"
 
-#: classes/helpers/FrmAppHelper.php:480
+#: classes/helpers/FrmAppHelper.php:466
 #@ formidable
 msgid "Algeria"
 msgstr "Algerie"
 
-#: classes/helpers/FrmAppHelper.php:481
+#: classes/helpers/FrmAppHelper.php:467
 #@ formidable
 msgid "American Samoa"
 msgstr "les Samoa américaines"
 
-#: classes/helpers/FrmAppHelper.php:481
+#: classes/helpers/FrmAppHelper.php:467
 #@ formidable
 msgid "Andorra"
 msgstr "Andore"
 
-#: classes/helpers/FrmAppHelper.php:481
+#: classes/helpers/FrmAppHelper.php:467
 #@ formidable
 msgid "Angola"
 msgstr "Angolie"
 
-#: classes/helpers/FrmAppHelper.php:482
+#: classes/helpers/FrmAppHelper.php:468
 #@ formidable
 msgid "Anguilla"
 msgstr "Anguilla"
 
-#: classes/helpers/FrmAppHelper.php:482
+#: classes/helpers/FrmAppHelper.php:468
 #@ formidable
 msgid "Antarctica"
 msgstr "Antartique"
 
-#: classes/helpers/FrmAppHelper.php:482
+#: classes/helpers/FrmAppHelper.php:468
 #@ formidable
 msgid "Antigua and Barbuda"
 msgstr "Antigua and Barbuda"
 
-#: classes/helpers/FrmAppHelper.php:483
+#: classes/helpers/FrmAppHelper.php:469
 #@ formidable
 msgid "Argentina"
 msgstr "Argentine"
 
-#: classes/helpers/FrmAppHelper.php:483
+#: classes/helpers/FrmAppHelper.php:469
 #@ formidable
 msgid "Armenia"
 msgstr "Armenie"
 
-#: classes/helpers/FrmAppHelper.php:483
+#: classes/helpers/FrmAppHelper.php:469
 #@ formidable
 msgid "Aruba"
 msgstr "Aruba"
 
-#: classes/helpers/FrmAppHelper.php:484
+#: classes/helpers/FrmAppHelper.php:470
 #@ formidable
 msgid "Australia"
 msgstr "Australier"
 
-#: classes/helpers/FrmAppHelper.php:484
+#: classes/helpers/FrmAppHelper.php:470
 #@ formidable
 msgid "Austria"
 msgstr "Australie"
 
-#: classes/helpers/FrmAppHelper.php:484
+#: classes/helpers/FrmAppHelper.php:470
 #@ formidable
 msgid "Azerbaijan"
 msgstr "Azerbaijan"
 
-#: classes/helpers/FrmAppHelper.php:485
+#: classes/helpers/FrmAppHelper.php:471
 #@ formidable
 msgid "Bahamas"
 msgstr "Bahamas"
 
-#: classes/helpers/FrmAppHelper.php:485
+#: classes/helpers/FrmAppHelper.php:471
 #@ formidable
 msgid "Bahrain"
 msgstr "Bahreïn"
 
-#: classes/helpers/FrmAppHelper.php:485
+#: classes/helpers/FrmAppHelper.php:471
 #@ formidable
 msgid "Bangladesh"
 msgstr "Bengladesh"
 
-#: classes/helpers/FrmAppHelper.php:486
+#: classes/helpers/FrmAppHelper.php:472
 #@ formidable
 msgid "Barbados"
 msgstr "Barbade la"
 
-#: classes/helpers/FrmAppHelper.php:486
+#: classes/helpers/FrmAppHelper.php:472
 #@ formidable
 msgid "Belarus"
 msgstr "Belarus"
 
-#: classes/helpers/FrmAppHelper.php:486
+#: classes/helpers/FrmAppHelper.php:472
 #@ formidable
 msgid "Belgium"
 msgstr "Belgique"
 
-#: classes/helpers/FrmAppHelper.php:487
+#: classes/helpers/FrmAppHelper.php:473
 #@ formidable
 msgid "Belize"
 msgstr "Belize"
 
-#: classes/helpers/FrmAppHelper.php:487
+#: classes/helpers/FrmAppHelper.php:473
 #@ formidable
 msgid "Benin"
 msgstr "Benin"
 
-#: classes/helpers/FrmAppHelper.php:487
+#: classes/helpers/FrmAppHelper.php:473
 #@ formidable
 msgid "Bermuda"
 msgstr "Bermude"
 
-#: classes/helpers/FrmAppHelper.php:488
+#: classes/helpers/FrmAppHelper.php:474
 #@ formidable
 msgid "Bhutan"
 msgstr "Bhoutan"
 
-#: classes/helpers/FrmAppHelper.php:488
+#: classes/helpers/FrmAppHelper.php:474
 #@ formidable
 msgid "Bolivia"
 msgstr "Bolivie"
 
-#: classes/helpers/FrmAppHelper.php:488
+#: classes/helpers/FrmAppHelper.php:474
 #@ formidable
 msgid "Bosnia and Herzegovina"
 msgstr "Bosnie et Herzegovie"
 
-#: classes/helpers/FrmAppHelper.php:489
+#: classes/helpers/FrmAppHelper.php:475
 #@ formidable
 msgid "Botswana"
 msgstr "Botswana"
 
-#: classes/helpers/FrmAppHelper.php:489
+#: classes/helpers/FrmAppHelper.php:475
 #@ formidable
 msgid "Brazil"
 msgstr "Bresil"
 
-#: classes/helpers/FrmAppHelper.php:489
+#: classes/helpers/FrmAppHelper.php:475
 #@ formidable
 msgid "Brunei"
 msgstr "Brunei"
 
-#: classes/helpers/FrmAppHelper.php:490
+#: classes/helpers/FrmAppHelper.php:476
 #@ formidable
 msgid "Bulgaria"
 msgstr "Bulgarie"
 
-#: classes/helpers/FrmAppHelper.php:490
+#: classes/helpers/FrmAppHelper.php:476
 #@ formidable
 msgid "Burkina Faso"
 msgstr "Burkina Faso"
 
-#: classes/helpers/FrmAppHelper.php:490
+#: classes/helpers/FrmAppHelper.php:476
 #@ formidable
 msgid "Burundi"
 msgstr "Burundi"
 
-#: classes/helpers/FrmAppHelper.php:491
+#: classes/helpers/FrmAppHelper.php:477
 #@ formidable
 msgid "Cambodia"
 msgstr "Cambodge"
 
-#: classes/helpers/FrmAppHelper.php:491
+#: classes/helpers/FrmAppHelper.php:477
 #@ formidable
 msgid "Cameroon"
 msgstr "Cameroun"
 
-#: classes/helpers/FrmAppHelper.php:491
+#: classes/helpers/FrmAppHelper.php:477
 #@ formidable
 msgid "Canada"
 msgstr "Canada"
 
-#: classes/helpers/FrmAppHelper.php:492
+#: classes/helpers/FrmAppHelper.php:478
 #@ formidable
 msgid "Cape Verde"
 msgstr "Cap vert"
 
-#: classes/helpers/FrmAppHelper.php:492
+#: classes/helpers/FrmAppHelper.php:478
 #@ formidable
 msgid "Cayman Islands"
 msgstr "Iles Caïmans"
 
-#: classes/helpers/FrmAppHelper.php:492
+#: classes/helpers/FrmAppHelper.php:478
 #@ formidable
 msgid "Central African Republic"
 msgstr "République centrafricaine"
 
-#: classes/helpers/FrmAppHelper.php:493
+#: classes/helpers/FrmAppHelper.php:479
 #@ formidable
 msgid "Chad"
 msgstr "Tchad"
 
-#: classes/helpers/FrmAppHelper.php:493
+#: classes/helpers/FrmAppHelper.php:479
 #@ formidable
 msgid "Chile"
 msgstr "Chile"
 
-#: classes/helpers/FrmAppHelper.php:493
+#: classes/helpers/FrmAppHelper.php:479
 #@ formidable
 msgid "China"
 msgstr "Chine"
 
-#: classes/helpers/FrmAppHelper.php:494
+#: classes/helpers/FrmAppHelper.php:480
 #@ formidable
 msgid "Colombia"
 msgstr "Colombie"
 
-#: classes/helpers/FrmAppHelper.php:494
+#: classes/helpers/FrmAppHelper.php:480
 #@ formidable
 msgid "Comoros"
 msgstr "Comores"
 
-#: classes/helpers/FrmAppHelper.php:494
+#: classes/helpers/FrmAppHelper.php:480
 #@ formidable
 msgid "Congo"
 msgstr "Congo"
 
-#: classes/helpers/FrmAppHelper.php:495
+#: classes/helpers/FrmAppHelper.php:481
 #@ formidable
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: classes/helpers/FrmAppHelper.php:495
+#: classes/helpers/FrmAppHelper.php:481
 #@ formidable
 msgid "C&ocirc;te d'Ivoire"
 msgstr "C&ocirc;te d'Ivoire"
 
-#: classes/helpers/FrmAppHelper.php:495
+#: classes/helpers/FrmAppHelper.php:481
 #@ formidable
 msgid "Croatia"
 msgstr "Croatie"
 
-#: classes/helpers/FrmAppHelper.php:496
+#: classes/helpers/FrmAppHelper.php:482
 #@ formidable
 msgid "Cuba"
 msgstr "Cuba"
 
-#: classes/helpers/FrmAppHelper.php:496
+#: classes/helpers/FrmAppHelper.php:482
 #@ formidable
 msgid "Cyprus"
 msgstr "Chypre"
 
-#: classes/helpers/FrmAppHelper.php:496
+#: classes/helpers/FrmAppHelper.php:482
 #@ formidable
 msgid "Czech Republic"
 msgstr "Republique Tcheque"
 
-#: classes/helpers/FrmAppHelper.php:497
+#: classes/helpers/FrmAppHelper.php:483
 #@ formidable
 msgid "Denmark"
 msgstr "Danemarque"
 
-#: classes/helpers/FrmAppHelper.php:497
+#: classes/helpers/FrmAppHelper.php:483
 #@ formidable
 msgid "Djibouti"
 msgstr "Djibouti"
 
-#: classes/helpers/FrmAppHelper.php:497
+#: classes/helpers/FrmAppHelper.php:483
 #@ formidable
 msgid "Dominica"
 msgstr "Dominique"
 
-#: classes/helpers/FrmAppHelper.php:498
+#: classes/helpers/FrmAppHelper.php:484
 #@ formidable
 msgid "Dominican Republic"
 msgstr "Republique dominicaine"
 
-#: classes/helpers/FrmAppHelper.php:498
+#: classes/helpers/FrmAppHelper.php:484
 #@ formidable
 msgid "East Timor"
 msgstr "Timor-Oriental"
 
-#: classes/helpers/FrmAppHelper.php:498
+#: classes/helpers/FrmAppHelper.php:484
 #@ formidable
 msgid "Ecuador"
 msgstr "Equateur"
 
-#: classes/helpers/FrmAppHelper.php:499
+#: classes/helpers/FrmAppHelper.php:485
 #@ formidable
 msgid "Egypt"
 msgstr "Egypte"
 
-#: classes/helpers/FrmAppHelper.php:499
+#: classes/helpers/FrmAppHelper.php:485
 #@ formidable
 msgid "El Salvador"
 msgstr "Salvador (le)"
 
-#: classes/helpers/FrmAppHelper.php:499
+#: classes/helpers/FrmAppHelper.php:485
 #@ formidable
 msgid "Equatorial Guinea"
 msgstr "Guinee Equatoriale"
 
-#: classes/helpers/FrmAppHelper.php:500
+#: classes/helpers/FrmAppHelper.php:486
 #@ formidable
 msgid "Eritrea"
 msgstr "Erythrée (l')"
 
-#: classes/helpers/FrmAppHelper.php:500
+#: classes/helpers/FrmAppHelper.php:486
 #@ formidable
 msgid "Estonia"
 msgstr "Estonie"
 
-#: classes/helpers/FrmAppHelper.php:500
+#: classes/helpers/FrmAppHelper.php:486
 #@ formidable
 msgid "Ethiopia"
 msgstr "Ethiopie"
 
-#: classes/helpers/FrmAppHelper.php:501
+#: classes/helpers/FrmAppHelper.php:487
 #@ formidable
 msgid "Fiji"
 msgstr "Fidji"
 
-#: classes/helpers/FrmAppHelper.php:501
+#: classes/helpers/FrmAppHelper.php:487
 #@ formidable
 msgid "Finland"
 msgstr "Finlande"
 
-#: classes/helpers/FrmAppHelper.php:501
+#: classes/helpers/FrmAppHelper.php:487
 #@ formidable
 msgid "France"
 msgstr "France"
 
-#: classes/helpers/FrmAppHelper.php:502
+#: classes/helpers/FrmAppHelper.php:488
 #@ formidable
 msgid "French Guiana"
 msgstr "Guillane Francaise"
 
-#: classes/helpers/FrmAppHelper.php:502
+#: classes/helpers/FrmAppHelper.php:488
 #@ formidable
 msgid "French Polynesia"
 msgstr "Polinesie Francaise"
 
-#: classes/helpers/FrmAppHelper.php:502
+#: classes/helpers/FrmAppHelper.php:488
 #@ formidable
 msgid "Gabon"
 msgstr "Gabon"
 
-#: classes/helpers/FrmAppHelper.php:503
+#: classes/helpers/FrmAppHelper.php:489
 #@ formidable
 msgid "Gambia"
 msgstr "Gambie"
 
-#: classes/helpers/FrmAppHelper.php:503
+#: classes/helpers/FrmAppHelper.php:489
 #@ formidable
 msgid "Georgia"
 msgstr "Géorgie"
 
-#: classes/helpers/FrmAppHelper.php:503
+#: classes/helpers/FrmAppHelper.php:489
 #@ formidable
 msgid "Germany"
 msgstr "Allemagne"
 
-#: classes/helpers/FrmAppHelper.php:504
+#: classes/helpers/FrmAppHelper.php:490
 #@ formidable
 msgid "Ghana"
 msgstr "Gana"
 
-#: classes/helpers/FrmAppHelper.php:504
+#: classes/helpers/FrmAppHelper.php:490
 #@ formidable
 msgid "Gibraltar"
 msgstr "Gibraltar"
 
-#: classes/helpers/FrmAppHelper.php:504
+#: classes/helpers/FrmAppHelper.php:490
 #@ formidable
 msgid "Greece"
 msgstr "Grece"
 
-#: classes/helpers/FrmAppHelper.php:505
+#: classes/helpers/FrmAppHelper.php:491
 #@ formidable
 msgid "Greenland"
 msgstr "Groenland"
 
-#: classes/helpers/FrmAppHelper.php:505
+#: classes/helpers/FrmAppHelper.php:491
 #@ formidable
 msgid "Grenada"
 msgstr "Grenade"
 
-#: classes/helpers/FrmAppHelper.php:505
+#: classes/helpers/FrmAppHelper.php:491
 #@ formidable
 msgid "Guam"
 msgstr "Guam"
 
-#: classes/helpers/FrmAppHelper.php:506
+#: classes/helpers/FrmAppHelper.php:492
 #@ formidable
 msgid "Guatemala"
 msgstr "Guatemala"
 
-#: classes/helpers/FrmAppHelper.php:506
+#: classes/helpers/FrmAppHelper.php:492
 #@ formidable
 msgid "Guinea"
 msgstr "Guinee"
 
-#: classes/helpers/FrmAppHelper.php:506
+#: classes/helpers/FrmAppHelper.php:492
 #@ formidable
 msgid "Guinea-Bissau"
 msgstr "Guinée Bissau"
 
-#: classes/helpers/FrmAppHelper.php:507
+#: classes/helpers/FrmAppHelper.php:493
 #@ formidable
 msgid "Guyana"
 msgstr "Guyane"
 
-#: classes/helpers/FrmAppHelper.php:507
+#: classes/helpers/FrmAppHelper.php:493
 #@ formidable
 msgid "Haiti"
 msgstr "Haiti"
 
-#: classes/helpers/FrmAppHelper.php:507
+#: classes/helpers/FrmAppHelper.php:493
 #@ formidable
 msgid "Honduras"
 msgstr "Honduras"
 
-#: classes/helpers/FrmAppHelper.php:508
+#: classes/helpers/FrmAppHelper.php:494
 #@ formidable
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
-#: classes/helpers/FrmAppHelper.php:508
+#: classes/helpers/FrmAppHelper.php:494
 #@ formidable
 msgid "Hungary"
 msgstr "Hongrie"
 
-#: classes/helpers/FrmAppHelper.php:508
+#: classes/helpers/FrmAppHelper.php:494
 #@ formidable
 msgid "Iceland"
 msgstr "Icelande"
 
-#: classes/helpers/FrmAppHelper.php:509
+#: classes/helpers/FrmAppHelper.php:495
 #@ formidable
 msgid "India"
 msgstr "Inde"
 
-#: classes/helpers/FrmAppHelper.php:509
+#: classes/helpers/FrmAppHelper.php:495
 #@ formidable
 msgid "Indonesia"
 msgstr "Indonesie"
 
-#: classes/helpers/FrmAppHelper.php:509
+#: classes/helpers/FrmAppHelper.php:495
 #@ formidable
 msgid "Iran"
 msgstr "Iran"
 
-#: classes/helpers/FrmAppHelper.php:510
+#: classes/helpers/FrmAppHelper.php:496
 #@ formidable
 msgid "Iraq"
 msgstr "Iraq"
 
-#: classes/helpers/FrmAppHelper.php:510
+#: classes/helpers/FrmAppHelper.php:496
 #@ formidable
 msgid "Ireland"
 msgstr "Irelande"
 
-#: classes/helpers/FrmAppHelper.php:510
+#: classes/helpers/FrmAppHelper.php:496
 #@ formidable
 msgid "Israel"
 msgstr "Israel"
 
-#: classes/helpers/FrmAppHelper.php:511
+#: classes/helpers/FrmAppHelper.php:497
 #@ formidable
 msgid "Italy"
 msgstr "Italie"
 
-#: classes/helpers/FrmAppHelper.php:511
+#: classes/helpers/FrmAppHelper.php:497
 #@ formidable
 msgid "Jamaica"
 msgstr "Jamaique"
 
-#: classes/helpers/FrmAppHelper.php:511
+#: classes/helpers/FrmAppHelper.php:497
 #@ formidable
 msgid "Japan"
 msgstr "Japon"
 
-#: classes/helpers/FrmAppHelper.php:512
+#: classes/helpers/FrmAppHelper.php:498
 #@ formidable
 msgid "Jordan"
 msgstr "Jordanie"
 
-#: classes/helpers/FrmAppHelper.php:512
+#: classes/helpers/FrmAppHelper.php:498
 #@ formidable
 msgid "Kazakhstan"
 msgstr "Kazakhstan"
 
-#: classes/helpers/FrmAppHelper.php:512
+#: classes/helpers/FrmAppHelper.php:498
 #@ formidable
 msgid "Kenya"
 msgstr "Kenia"
 
-#: classes/helpers/FrmAppHelper.php:513
+#: classes/helpers/FrmAppHelper.php:499
 #@ formidable
 msgid "Kiribati"
 msgstr "Kiribati"
 
-#: classes/helpers/FrmAppHelper.php:513
+#: classes/helpers/FrmAppHelper.php:499
 #@ formidable
 msgid "North Korea"
 msgstr "Koree du Nord"
 
-#: classes/helpers/FrmAppHelper.php:513
+#: classes/helpers/FrmAppHelper.php:499
 #@ formidable
 msgid "South Korea"
 msgstr "Koree du sud"
 
-#: classes/helpers/FrmAppHelper.php:514
+#: classes/helpers/FrmAppHelper.php:500
 #@ formidable
 msgid "Kuwait"
 msgstr "Koweit"
 
-#: classes/helpers/FrmAppHelper.php:514
+#: classes/helpers/FrmAppHelper.php:500
 #@ formidable
 msgid "Kyrgyzstan"
 msgstr "Kirghizistan"
 
-#: classes/helpers/FrmAppHelper.php:514
+#: classes/helpers/FrmAppHelper.php:500
 #@ formidable
 msgid "Laos"
 msgstr "Laos"
 
-#: classes/helpers/FrmAppHelper.php:515
+#: classes/helpers/FrmAppHelper.php:501
 #@ formidable
 msgid "Latvia"
 msgstr "Lettonie"
 
-#: classes/helpers/FrmAppHelper.php:515
+#: classes/helpers/FrmAppHelper.php:501
 #@ formidable
 msgid "Lebanon"
 msgstr "Liban"
 
-#: classes/helpers/FrmAppHelper.php:515
+#: classes/helpers/FrmAppHelper.php:501
 #@ formidable
 msgid "Lesotho"
 msgstr "Lesotho"
 
-#: classes/helpers/FrmAppHelper.php:516
+#: classes/helpers/FrmAppHelper.php:502
 #@ formidable
 msgid "Liberia"
 msgstr "Libéria"
 
-#: classes/helpers/FrmAppHelper.php:516
+#: classes/helpers/FrmAppHelper.php:502
 #@ formidable
 msgid "Libya"
 msgstr "Lybie"
 
-#: classes/helpers/FrmAppHelper.php:516
+#: classes/helpers/FrmAppHelper.php:502
 #@ formidable
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
-#: classes/helpers/FrmAppHelper.php:517
+#: classes/helpers/FrmAppHelper.php:503
 #@ formidable
 msgid "Lithuania"
 msgstr "Lituanie"
 
-#: classes/helpers/FrmAppHelper.php:517
+#: classes/helpers/FrmAppHelper.php:503
 #@ formidable
 msgid "Luxembourg"
 msgstr "Luxembourg"
 
-#: classes/helpers/FrmAppHelper.php:517
+#: classes/helpers/FrmAppHelper.php:503
 #@ formidable
 msgid "Macedonia"
 msgstr "Macedoine"
 
-#: classes/helpers/FrmAppHelper.php:518
+#: classes/helpers/FrmAppHelper.php:504
 #@ formidable
 msgid "Madagascar"
 msgstr "Madagascar"
 
-#: classes/helpers/FrmAppHelper.php:518
+#: classes/helpers/FrmAppHelper.php:504
 #@ formidable
 msgid "Malawi"
 msgstr "Malawi"
 
-#: classes/helpers/FrmAppHelper.php:518
+#: classes/helpers/FrmAppHelper.php:504
 #@ formidable
 msgid "Malaysia"
 msgstr "Malaisie"
 
-#: classes/helpers/FrmAppHelper.php:519
+#: classes/helpers/FrmAppHelper.php:505
 #@ formidable
 msgid "Maldives"
 msgstr "Maldives"
 
-#: classes/helpers/FrmAppHelper.php:519
+#: classes/helpers/FrmAppHelper.php:505
 #@ formidable
 msgid "Mali"
 msgstr "Mali"
 
-#: classes/helpers/FrmAppHelper.php:519
+#: classes/helpers/FrmAppHelper.php:505
 #@ formidable
 msgid "Malta"
 msgstr "Malte"
 
-#: classes/helpers/FrmAppHelper.php:520
+#: classes/helpers/FrmAppHelper.php:506
 #@ formidable
 msgid "Marshall Islands"
 msgstr "Iles Marshall"
 
-#: classes/helpers/FrmAppHelper.php:520
+#: classes/helpers/FrmAppHelper.php:506
 #@ formidable
 msgid "Mauritania"
 msgstr "Mauritanie"
 
-#: classes/helpers/FrmAppHelper.php:520
+#: classes/helpers/FrmAppHelper.php:506
 #@ formidable
 msgid "Mauritius"
 msgstr "Ile Maurice"
 
-#: classes/helpers/FrmAppHelper.php:521
+#: classes/helpers/FrmAppHelper.php:507
 #@ formidable
 msgid "Mexico"
 msgstr "Mexique"
 
-#: classes/helpers/FrmAppHelper.php:521
+#: classes/helpers/FrmAppHelper.php:507
 #@ formidable
 msgid "Micronesia"
 msgstr "Micronésie"
 
-#: classes/helpers/FrmAppHelper.php:521
+#: classes/helpers/FrmAppHelper.php:507
 #@ formidable
 msgid "Moldova"
 msgstr "Moldavie"
 
-#: classes/helpers/FrmAppHelper.php:522
+#: classes/helpers/FrmAppHelper.php:508
 #@ formidable
 msgid "Monaco"
 msgstr "Monaco"
 
-#: classes/helpers/FrmAppHelper.php:522
+#: classes/helpers/FrmAppHelper.php:508
 #@ formidable
 msgid "Mongolia"
 msgstr "Mongolie"
 
-#: classes/helpers/FrmAppHelper.php:522
+#: classes/helpers/FrmAppHelper.php:508
 #@ formidable
 msgid "Montenegro"
 msgstr "Montenegro"
 
-#: classes/helpers/FrmAppHelper.php:523
+#: classes/helpers/FrmAppHelper.php:509
 #@ formidable
 msgid "Montserrat"
 msgstr "Montserrat"
 
-#: classes/helpers/FrmAppHelper.php:523
+#: classes/helpers/FrmAppHelper.php:509
 #@ formidable
 msgid "Morocco"
 msgstr "Maroc"
 
-#: classes/helpers/FrmAppHelper.php:523
+#: classes/helpers/FrmAppHelper.php:509
 #@ formidable
 msgid "Mozambique"
 msgstr "Mozambique"
 
-#: classes/helpers/FrmAppHelper.php:524
+#: classes/helpers/FrmAppHelper.php:510
 #@ formidable
 msgid "Myanmar"
 msgstr "Myanmar"
 
-#: classes/helpers/FrmAppHelper.php:524
+#: classes/helpers/FrmAppHelper.php:510
 #@ formidable
 msgid "Namibia"
 msgstr "Namibie"
 
-#: classes/helpers/FrmAppHelper.php:524
+#: classes/helpers/FrmAppHelper.php:510
 #@ formidable
 msgid "Nauru"
 msgstr "Nauru"
 
-#: classes/helpers/FrmAppHelper.php:525
+#: classes/helpers/FrmAppHelper.php:511
 #@ formidable
 msgid "Nepal"
 msgstr "Nepal"
 
-#: classes/helpers/FrmAppHelper.php:525
+#: classes/helpers/FrmAppHelper.php:511
 #@ formidable
 msgid "Netherlands"
 msgstr "Pays-bas"
 
-#: classes/helpers/FrmAppHelper.php:525
+#: classes/helpers/FrmAppHelper.php:511
 #@ formidable
 msgid "New Zealand"
 msgstr "Nouvelle zelande"
 
-#: classes/helpers/FrmAppHelper.php:526
+#: classes/helpers/FrmAppHelper.php:512
 #@ formidable
 msgid "Nicaragua"
 msgstr "Nicaragua"
 
-#: classes/helpers/FrmAppHelper.php:526
+#: classes/helpers/FrmAppHelper.php:512
 #@ formidable
 msgid "Niger"
 msgstr "Niger"
 
-#: classes/helpers/FrmAppHelper.php:526
+#: classes/helpers/FrmAppHelper.php:512
 #@ formidable
 msgid "Nigeria"
 msgstr "Nigere"
 
-#: classes/helpers/FrmAppHelper.php:527
+#: classes/helpers/FrmAppHelper.php:513
 #@ formidable
 msgid "Norway"
 msgstr "Norvège"
 
-#: classes/helpers/FrmAppHelper.php:527
+#: classes/helpers/FrmAppHelper.php:513
 #@ formidable
 msgid "Northern Mariana Islands"
 msgstr "Northern Mariana Islands"
 
-#: classes/helpers/FrmAppHelper.php:527
+#: classes/helpers/FrmAppHelper.php:513
 #@ formidable
 msgid "Oman"
 msgstr "Oman"
 
-#: classes/helpers/FrmAppHelper.php:528
+#: classes/helpers/FrmAppHelper.php:514
 #@ formidable
 msgid "Pakistan"
 msgstr "Pakistan"
 
-#: classes/helpers/FrmAppHelper.php:528
+#: classes/helpers/FrmAppHelper.php:514
 #@ formidable
 msgid "Palau"
 msgstr "Palau"
 
-#: classes/helpers/FrmAppHelper.php:528
+#: classes/helpers/FrmAppHelper.php:514
 #@ formidable
 msgid "Palestine"
 msgstr "Palestine"
 
-#: classes/helpers/FrmAppHelper.php:529
+#: classes/helpers/FrmAppHelper.php:515
 #@ formidable
 msgid "Panama"
 msgstr "Panama"
 
-#: classes/helpers/FrmAppHelper.php:529
+#: classes/helpers/FrmAppHelper.php:515
 #@ formidable
 msgid "Papua New Guinea"
 msgstr "Papouasie-Nouvelle-Guinée"
 
-#: classes/helpers/FrmAppHelper.php:529
+#: classes/helpers/FrmAppHelper.php:515
 #@ formidable
 msgid "Paraguay"
 msgstr "Paraguay"
 
-#: classes/helpers/FrmAppHelper.php:530
+#: classes/helpers/FrmAppHelper.php:516
 #@ formidable
 msgid "Peru"
 msgstr "Perou"
 
-#: classes/helpers/FrmAppHelper.php:530
+#: classes/helpers/FrmAppHelper.php:516
 #@ formidable
 msgid "Philippines"
 msgstr "Philippines"
 
-#: classes/helpers/FrmAppHelper.php:530
+#: classes/helpers/FrmAppHelper.php:516
 #@ formidable
 msgid "Poland"
 msgstr "Pologne"
 
-#: classes/helpers/FrmAppHelper.php:531
+#: classes/helpers/FrmAppHelper.php:517
 #@ formidable
 msgid "Portugal"
 msgstr "Portugal"
 
-#: classes/helpers/FrmAppHelper.php:531
+#: classes/helpers/FrmAppHelper.php:517
 #@ formidable
 msgid "Puerto Rico"
 msgstr "Puerto Rico"
 
-#: classes/helpers/FrmAppHelper.php:531
+#: classes/helpers/FrmAppHelper.php:517
 #@ formidable
 msgid "Qatar"
 msgstr "Qatar"
 
-#: classes/helpers/FrmAppHelper.php:532
+#: classes/helpers/FrmAppHelper.php:518
 #@ formidable
 msgid "Romania"
 msgstr "Roumanie"
 
-#: classes/helpers/FrmAppHelper.php:532
+#: classes/helpers/FrmAppHelper.php:518
 #@ formidable
 msgid "Russia"
 msgstr "Russie"
 
-#: classes/helpers/FrmAppHelper.php:532
+#: classes/helpers/FrmAppHelper.php:518
 #@ formidable
 msgid "Rwanda"
 msgstr "Rouwanda"
 
-#: classes/helpers/FrmAppHelper.php:533
+#: classes/helpers/FrmAppHelper.php:519
 #@ formidable
 msgid "Saint Kitts and Nevis"
 msgstr "Saint Kitts and Nevis"
 
-#: classes/helpers/FrmAppHelper.php:533
+#: classes/helpers/FrmAppHelper.php:519
 #@ formidable
 msgid "Saint Lucia"
 msgstr "Sante Lucie"
 
-#: classes/helpers/FrmAppHelper.php:534
+#: classes/helpers/FrmAppHelper.php:520
 #@ formidable
 msgid "Saint Vincent and the Grenadines"
 msgstr "Saint Vincent et les Grenadines"
 
-#: classes/helpers/FrmAppHelper.php:534
+#: classes/helpers/FrmAppHelper.php:520
 #@ formidable
 msgid "Samoa"
 msgstr "Samoa"
 
-#: classes/helpers/FrmAppHelper.php:535
+#: classes/helpers/FrmAppHelper.php:521
 #@ formidable
 msgid "San Marino"
 msgstr "San Marino"
 
-#: classes/helpers/FrmAppHelper.php:535
+#: classes/helpers/FrmAppHelper.php:521
 #@ formidable
 msgid "Sao Tome and Principe"
 msgstr "Sao Tome and Principe"
 
-#: classes/helpers/FrmAppHelper.php:535
+#: classes/helpers/FrmAppHelper.php:521
 #@ formidable
 msgid "Saudi Arabia"
 msgstr "Arabie Saoudite"
 
-#: classes/helpers/FrmAppHelper.php:536
+#: classes/helpers/FrmAppHelper.php:522
 #@ formidable
 msgid "Senegal"
 msgstr "Senegal"
 
-#: classes/helpers/FrmAppHelper.php:536
+#: classes/helpers/FrmAppHelper.php:522
 #@ formidable
 msgid "Serbia and Montenegro"
 msgstr "Serbie et Monténégro"
 
-#: classes/helpers/FrmAppHelper.php:536
+#: classes/helpers/FrmAppHelper.php:522
 #@ formidable
 msgid "Seychelles"
 msgstr "Seychelles"
 
-#: classes/helpers/FrmAppHelper.php:537
+#: classes/helpers/FrmAppHelper.php:523
 #@ formidable
 msgid "Sierra Leone"
 msgstr "Sierra Leone"
 
-#: classes/helpers/FrmAppHelper.php:537
+#: classes/helpers/FrmAppHelper.php:523
 #@ formidable
 msgid "Singapore"
 msgstr "Singapoure"
 
-#: classes/helpers/FrmAppHelper.php:537
+#: classes/helpers/FrmAppHelper.php:523
 #@ formidable
 msgid "Slovakia"
 msgstr "Slovaquie"
 
-#: classes/helpers/FrmAppHelper.php:538
+#: classes/helpers/FrmAppHelper.php:524
 #@ formidable
 msgid "Slovenia"
 msgstr "Slovenie"
 
-#: classes/helpers/FrmAppHelper.php:538
+#: classes/helpers/FrmAppHelper.php:524
 #@ formidable
 msgid "Solomon Islands"
 msgstr "Iles Salomon"
 
-#: classes/helpers/FrmAppHelper.php:538
+#: classes/helpers/FrmAppHelper.php:524
 #@ formidable
 msgid "Somalia"
 msgstr "Somalie"
 
-#: classes/helpers/FrmAppHelper.php:539
+#: classes/helpers/FrmAppHelper.php:525
 #@ formidable
 msgid "South Africa"
 msgstr "Afrique du sud"
 
-#: classes/helpers/FrmAppHelper.php:539
+#: classes/helpers/FrmAppHelper.php:525
 #@ formidable
 msgid "Spain"
 msgstr "Espagne"
 
-#: classes/helpers/FrmAppHelper.php:539
+#: classes/helpers/FrmAppHelper.php:525
 #@ formidable
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
 
-#: classes/helpers/FrmAppHelper.php:540
+#: classes/helpers/FrmAppHelper.php:526
 #@ formidable
 msgid "Sudan"
 msgstr "Soudan"
 
-#: classes/helpers/FrmAppHelper.php:540
+#: classes/helpers/FrmAppHelper.php:526
 #@ formidable
 msgid "Suriname"
 msgstr "Suriname"
 
-#: classes/helpers/FrmAppHelper.php:540
+#: classes/helpers/FrmAppHelper.php:526
 #@ formidable
 msgid "Swaziland"
 msgstr "Swaziland"
 
-#: classes/helpers/FrmAppHelper.php:541
+#: classes/helpers/FrmAppHelper.php:527
 #@ formidable
 msgid "Sweden"
 msgstr "Suède"
 
-#: classes/helpers/FrmAppHelper.php:541
+#: classes/helpers/FrmAppHelper.php:527
 #@ formidable
 msgid "Switzerland"
 msgstr "Suisse"
 
-#: classes/helpers/FrmAppHelper.php:541
+#: classes/helpers/FrmAppHelper.php:527
 #@ formidable
 msgid "Syria"
 msgstr "Syrie"
 
-#: classes/helpers/FrmAppHelper.php:542
+#: classes/helpers/FrmAppHelper.php:528
 #@ formidable
 msgid "Taiwan"
 msgstr "Taiwan"
 
-#: classes/helpers/FrmAppHelper.php:542
+#: classes/helpers/FrmAppHelper.php:528
 #@ formidable
 msgid "Tajikistan"
 msgstr "Tadjikistan"
 
-#: classes/helpers/FrmAppHelper.php:542
+#: classes/helpers/FrmAppHelper.php:528
 #@ formidable
 msgid "Tanzania"
 msgstr "Tanzanie"
 
-#: classes/helpers/FrmAppHelper.php:543
+#: classes/helpers/FrmAppHelper.php:529
 #@ formidable
 msgid "Thailand"
 msgstr "Thailande"
 
-#: classes/helpers/FrmAppHelper.php:543
+#: classes/helpers/FrmAppHelper.php:529
 #@ formidable
 msgid "Togo"
 msgstr "Togo"
 
-#: classes/helpers/FrmAppHelper.php:543
+#: classes/helpers/FrmAppHelper.php:529
 #@ formidable
 msgid "Tonga"
 msgstr "Tonga"
 
-#: classes/helpers/FrmAppHelper.php:544
+#: classes/helpers/FrmAppHelper.php:530
 #@ formidable
 msgid "Trinidad and Tobago"
 msgstr "Trinité et Tobago"
 
-#: classes/helpers/FrmAppHelper.php:544
+#: classes/helpers/FrmAppHelper.php:530
 #@ formidable
 msgid "Tunisia"
 msgstr "Tunisie"
 
-#: classes/helpers/FrmAppHelper.php:544
+#: classes/helpers/FrmAppHelper.php:530
 #@ formidable
 msgid "Turkey"
 msgstr "Turquie"
 
-#: classes/helpers/FrmAppHelper.php:545
+#: classes/helpers/FrmAppHelper.php:531
 #@ formidable
 msgid "Turkmenistan"
 msgstr "Turkménistan"
 
-#: classes/helpers/FrmAppHelper.php:545
+#: classes/helpers/FrmAppHelper.php:531
 #@ formidable
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
-#: classes/helpers/FrmAppHelper.php:545
+#: classes/helpers/FrmAppHelper.php:531
 #@ formidable
 msgid "Uganda"
 msgstr "Ouganda"
 
-#: classes/helpers/FrmAppHelper.php:546
+#: classes/helpers/FrmAppHelper.php:532
 #@ formidable
 msgid "Ukraine"
 msgstr "Ukraine"
 
-#: classes/helpers/FrmAppHelper.php:546
+#: classes/helpers/FrmAppHelper.php:532
 #@ formidable
 msgid "United Arab Emirates"
 msgstr "Emire arabe reunis"
 
-#: classes/helpers/FrmAppHelper.php:546
+#: classes/helpers/FrmAppHelper.php:532
 #@ formidable
 msgid "United Kingdom"
 msgstr "Royaume-Uni"
 
-#: classes/helpers/FrmAppHelper.php:547
+#: classes/helpers/FrmAppHelper.php:533
 #@ formidable
 msgid "United States"
 msgstr "Etas unis"
 
-#: classes/helpers/FrmAppHelper.php:547
+#: classes/helpers/FrmAppHelper.php:533
 #@ formidable
 msgid "Uruguay"
 msgstr "Uruguay"
 
-#: classes/helpers/FrmAppHelper.php:547
+#: classes/helpers/FrmAppHelper.php:533
 #@ formidable
 msgid "Uzbekistan"
 msgstr "Ouzbékistan"
 
-#: classes/helpers/FrmAppHelper.php:548
+#: classes/helpers/FrmAppHelper.php:534
 #@ formidable
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
-#: classes/helpers/FrmAppHelper.php:548
+#: classes/helpers/FrmAppHelper.php:534
 #@ formidable
 msgid "Vatican City"
 msgstr "Cite du Vatican"
 
-#: classes/helpers/FrmAppHelper.php:548
+#: classes/helpers/FrmAppHelper.php:534
 #@ formidable
 msgid "Venezuela"
 msgstr "Venezuela"
 
-#: classes/helpers/FrmAppHelper.php:549
+#: classes/helpers/FrmAppHelper.php:535
 #@ formidable
 msgid "Vietnam"
 msgstr "Vietnam"
 
-#: classes/helpers/FrmAppHelper.php:549
+#: classes/helpers/FrmAppHelper.php:535
 #@ formidable
 msgid "Virgin Islands, British"
 msgstr "Îles Vierges britanniques"
 
-#: classes/helpers/FrmAppHelper.php:550
+#: classes/helpers/FrmAppHelper.php:536
 #@ formidable
 msgid "Virgin Islands, U.S."
 msgstr "Îles Vierges U.S."
 
-#: classes/helpers/FrmAppHelper.php:550
+#: classes/helpers/FrmAppHelper.php:536
 #@ formidable
 msgid "Yemen"
 msgstr "Yemen"
 
-#: classes/helpers/FrmAppHelper.php:550
+#: classes/helpers/FrmAppHelper.php:536
 #@ formidable
 msgid "Zambia"
 msgstr "Zambie"
 
-#: classes/helpers/FrmAppHelper.php:551
+#: classes/helpers/FrmAppHelper.php:537
 #@ formidable
 msgid "Zimbabwe"
 msgstr "Zimbabwe"
@@ -4162,129 +4065,100 @@ msgstr "Choix de modèle de champ"
 msgid "Use HTML5 in forms"
 msgstr "Utilisation de HTML5 dans les formulaires"
 
-#: classes/views/frm-settings/form.php:110
+#: classes/views/frm-settings/form.php:94
 #@ formidable
 msgid "The message seen when a form is submitted and passes validation, but something goes wrong."
 msgstr "Le message affiché quand un formulaire est soumis et passe la validation, mais quelque chose se passe mal."
 
-#: pro/classes/helpers/FrmProEntryMetaHelper.php:282
-#: pro/classes/helpers/FrmProEntryMetaHelper.php:311
+#: pro/classes/helpers/FrmProEntryMetaHelper.php:277
+#: pro/classes/helpers/FrmProEntryMetaHelper.php:306
 #, php-format
 #@ formidable
 msgid "View all posts filed under %s"
 msgstr "Voir tous les messages déposés sous %s"
 
-#: pro/classes/views/frmpro-entries/import.php:3
-#@ formidable
-msgid "Import Entries"
-msgstr "Importer les entrées"
-
-#: pro/classes/views/frmpro-entries/import.php:9
-#, php-format
-#@ formidable
-msgid "The next 250 of the remaining %1$s entries are importing."
-msgstr "Les 250 prochaines entrées restante %1$ sont importées."
-
-#: pro/classes/views/frmpro-entries/import.php:9
-#: pro/classes/views/xml/import_csv.php:13
+#: classes/views/xml/importing_xml.php:13
 #@ formidable
 msgid "Import Now"
 msgstr "Importer maintenant"
 
-#: pro/classes/views/frmpro-entries/import.php:27
-#@ formidable
-msgid "Step"
-msgstr "Pas"
-
-#: pro/classes/views/frmpro-entries/import.php:34
-#@ formidable
-msgid "Select CSV"
-msgstr "Selection CSV"
-
-#: pro/classes/views/frmpro-entries/import.php:50
-#: pro/classes/views/xml/import_form.php:23
+#: pro/classes/views/xml/csv_opts.php:2
 #@ formidable
 msgid "CSV Delimiter"
 msgstr "Separateur CSV"
 
-#: pro/classes/views/frmpro-entries/import.php:57
-#: pro/classes/views/xml/import_form.php:27
+#: pro/classes/views/xml/csv_opts.php:6
 #@ formidable
 msgid "Import Into Form"
 msgstr "Importer dans le formulaire"
 
-#: pro/classes/views/frmpro-entries/import.php:71
 #: pro/classes/views/xml/map_csv_fields.php:23
 #@ formidable
 msgid "CSV header"
 msgstr "En tete CSV"
 
-#: pro/classes/views/frmpro-entries/import.php:72
 #: pro/classes/views/xml/map_csv_fields.php:24
 #@ formidable
 msgid "Sample data"
 msgstr "Donnee d'exemple"
 
-#: pro/classes/views/frmpro-entries/import.php:73
 #: pro/classes/views/xml/map_csv_fields.php:25
 #@ formidable
 msgid "Corresponding Field"
 msgstr "Champ correspondant"
 
-#: pro/classes/views/frmpro-entries/import.php:96
 #: pro/classes/views/xml/map_csv_fields.php:48
 #@ formidable
 msgid "Created by"
 msgstr "Cree par"
 
-#: pro/classes/views/frmpro-entries/import.php:97
 #: pro/classes/views/xml/map_csv_fields.php:49
 #@ formidable
 msgid "Updated at"
 msgstr "Mis à jour à"
 
-#: pro/classes/views/frmpro-entries/import.php:98
 #: pro/classes/views/xml/map_csv_fields.php:50
 #@ formidable
 msgid "Updated by"
 msgstr "Mis à jour par"
 
-#: pro/classes/views/settings/formroller.php:182
+#: pro/classes/views/settings/formroller.php:187
 #@ formidable
 msgid "Automatic Width for drop-down fields"
 msgstr "Largeur automatique pour les champs de liste de séléction"
 
-#: classes/views/frm-settings/form.php:139
+#: classes/views/frm-settings/form.php:137
 #@ formidable
 msgid "Tracking"
 msgstr "Poursuivre"
 
-#: classes/views/frm-settings/form.php:140
+#: classes/views/frm-settings/form.php:138
 #@ formidable
 msgid "Track referrer information and pages visited"
 msgstr "Suivez les informations de provenance et les pages visitées"
 
-#: pro/classes/controllers/FrmProStatisticsController.php:636
+#: pro/classes/controllers/FrmProStatisticsController.php:659
 #@ formidable
 msgid "Deleted User"
 msgstr "Utilisateur supprimer"
 
-#: pro/classes/views/displays/mb_advanced.php:86
+#: pro/classes/views/displays/mb_advanced.php:90
 #@ formidable
 msgid "Insert position"
 msgstr "position d'insertion"
 
-#: pro/classes/views/settings/form.php:45
+#: pro/classes/views/settings/form.php:43
 #@ formidable
 msgid "CSV Export Format"
 msgstr "Format d'export CSV"
 
-#: pro/classes/views/settings/form.php:51
+#: classes/views/xml/import_form.php:57
+#: pro/classes/views/settings/form.php:49
 #@ formidable
 msgid "Macintosh"
 msgstr "Macintosh"
 
-#: classes/controllers/FrmFormsController.php:141
+#: classes/controllers/FrmFormsController.php:157
 #@ formidable
 msgid "Settings Successfully Updated"
 msgstr "Parametres soumis avec succès"
@@ -4309,12 +4183,12 @@ msgstr "Case à cocher"
 msgid "Dropdown"
 msgstr "Liste de séléction"
 
-#: classes/models/FrmEntry.php:349
+#: classes/models/FrmEntry.php:350
 #@ formidable
 msgid "There was a problem with your submission. Please try again."
 msgstr "Il y as un problème avec votre soumission. S'il vous plaît ré-essayez."
 
-#: pro/classes/controllers/FrmUpdatesController.php:137
+#: pro/classes/controllers/FrmUpdatesController.php:120
 #@ formidable
 msgid "Your Pro installation is now active. Enjoy!"
 msgstr "Votre installation pro est active. Amusez vous !!!"
@@ -4342,15 +4216,15 @@ msgstr "HTML personnalisé"
 msgid "Build"
 msgstr "Construire"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1764
+#: pro/classes/helpers/FrmProFieldsHelper.php:1753
 #: pro/classes/views/shared/mb_adv_info.php:66
 #@ formidable
 msgid "User IP"
 msgstr "IP Utilisateur"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:814
-#: pro/classes/controllers/FrmProEntriesController.php:1151
-#: pro/classes/helpers/FrmProFieldsHelper.php:1766
+#: pro/classes/controllers/FrmProEntriesController.php:1142
+#: pro/classes/helpers/FrmProFieldsHelper.php:1755
 #: pro/classes/views/displays/mb_form_disp_type.php:27
 #: pro/classes/views/displays/mb_form_disp_type.php:36
 #: pro/classes/views/displays/order_row.php:4
@@ -4358,7 +4232,7 @@ msgstr "IP Utilisateur"
 msgid "Entry update date"
 msgstr "entrez la nouvelle date"
 
-#: pro/classes/models/FrmProEntryMeta.php:258
+#: pro/classes/models/FrmProEntryMeta.php:266
 #@ formidable
 msgid "Sorry, this file type is not permitted for security reasons."
 msgstr "Désolé, ce type de fichier n'est pas autorisée pour des raisons de sécurité."
@@ -4373,7 +4247,7 @@ msgstr "plus grand ou égale"
 msgid "less than or equal to"
 msgstr "Plus petit ou égal"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1149
+#: pro/classes/controllers/FrmProEntriesController.php:1140
 #: pro/classes/views/frmpro-entries/show.php:62
 #@ formidable
 msgid "Post"
@@ -4394,57 +4268,58 @@ msgstr "Utiliser une catégorie/"
 msgid "Year Range"
 msgstr "Gamme d'année"
 
-#: pro/classes/views/frmpro-fields/options-form.php:187
+#: pro/classes/views/frmpro-fields/options-form.php:188
 #@ formidable
 msgid "Insert Form"
 msgstr "Inserer un formulaire"
 
-#: pro/classes/views/frmpro-fields/options-form.php:190
+#: pro/classes/views/frmpro-fields/options-form.php:191
 #@ formidable
 msgid "Maximum Duplication"
 msgstr "Nombre de repetition max"
 
-#: pro/classes/views/frmpro-fields/options-form.php:191
+#: pro/classes/views/frmpro-fields/options-form.php:192
 #@ formidable
 msgid "The number of times the end user is allowed to duplicate this section of fields in one entry"
 msgstr "Nombre de fois où l'utilisateur final est autorisé à reproduire cette partie de champs dans une entrée"
 
-#: pro/classes/views/frmpro-fields/options-form.php:249
+#: pro/classes/views/frmpro-fields/options-form.php:250
+#: pro/classes/views/frmpro-forms/notifications.php:20
 #@ formidable
 msgid "Conditional Logic"
 msgstr "Logique conditionelle"
 
-#: pro/classes/views/frmpro-fields/options-form.php:251
-#: pro/classes/views/frmpro-forms/notifications.php:34
+#: pro/classes/views/frmpro-fields/options-form.php:252
+#: pro/classes/views/frmpro-forms/notifications.php:17
 #@ formidable
 msgid "Use Conditional Logic"
 msgstr "Utiliser la logique conditionelle"
 
 #: pro/classes/views/displays/submitbox_actions.php:3
-#: pro/classes/views/frmpro-fields/options-form.php:255
+#: pro/classes/views/frmpro-fields/options-form.php:256
 #@ formidable
 msgid "Show"
 msgstr "Voir"
 
 #: pro/classes/views/displays/submitbox_actions.php:15
-#: pro/classes/views/frmpro-fields/options-form.php:256
+#: pro/classes/views/frmpro-fields/options-form.php:257
 #@ formidable
 msgid "Hide"
 msgstr "Masquer"
 
-#: pro/classes/views/frmpro-fields/options-form.php:261
-#: pro/classes/views/frmpro-forms/notifications.php:46
+#: pro/classes/views/frmpro-fields/options-form.php:262
+#: pro/classes/views/frmpro-forms/notifications.php:28
 #@ formidable
 msgid "any"
 msgstr "tout"
 
-#: pro/classes/views/frmpro-fields/options-form.php:262
-#: pro/classes/views/frmpro-forms/notifications.php:47
+#: pro/classes/views/frmpro-fields/options-form.php:263
+#: pro/classes/views/frmpro-forms/notifications.php:29
 #@ formidable
 msgid "all"
 msgstr "tous"
 
-#: pro/classes/views/frmpro-forms/notifications.php:49
+#: pro/classes/views/frmpro-forms/notifications.php:31
 #@ formidable
 msgid "of the following match"
 msgstr "de la partie suivante"
@@ -4454,7 +4329,7 @@ msgstr "de la partie suivante"
 msgid "NOTE: if the parent is excluded, child categories will be automatically excluded."
 msgstr "Remarque: si le parent est exclu, les catégories enfants seront automatiquement exclues."
 
-#: pro/classes/views/frmpro-fields/options-form.php:109
+#: pro/classes/views/frmpro-fields/options-form.php:110
 #: pro/classes/views/frmpro-forms/_post_taxonomy_row.php:61
 #@ formidable
 msgid "Check All"
@@ -4477,27 +4352,28 @@ msgstr "Remarque: Ce champ ne sera pas affiché dans le formulaire, mais permett
 msgid "This data is dynamic on change"
 msgstr "Cette données est dynamique sur changement"
 
-#: pro/classes/views/settings/form.php:15
+#: pro/classes/views/settings/form.php:27
 #@ formidable
 msgid "Visual Text Editor"
 msgstr "Editeur de texte visuel"
 
-#: pro/classes/views/settings/form.php:36
+#: pro/classes/views/settings/form.php:34
 #@ formidable
 msgid "Change the format of the date used in the date field."
 msgstr "Changer le format de la date utilisée dans le champ de date."
 
-#: pro/classes/views/settings/form.php:45
+#: classes/views/xml/import_form.php:59
+#: pro/classes/views/settings/form.php:43
 #@ formidable
 msgid "If your CSV special characters are not working correctly, try a different formatting option."
 msgstr "Si vos caractères CSV spéciaux ne sont fonctionne pas correctement, essayez une option de formatage différent."
 
-#: classes/controllers/FrmFormsController.php:402
+#: classes/controllers/FrmFormsController.php:428
 #@ formidable
 msgid "Template was Successfully Updated"
 msgstr "Modèle mis à jour avec succès"
 
-#: classes/helpers/FrmListHelper.php:84
+#: classes/helpers/FrmListHelper.php:80
 #@ formidable
 msgid "To add a new template"
 msgstr "Pour ajouter un nouveau Modèle"
@@ -4532,12 +4408,12 @@ msgstr "Rangée multiple"
 msgid "Single Row"
 msgstr "Rangée simple"
 
-#: pro/classes/views/frmpro-fields/options-form.php:162
+#: pro/classes/views/frmpro-fields/options-form.php:163
 #@ formidable
 msgid "Stars"
 msgstr "Etoiles"
 
-#: pro/classes/views/frmpro-fields/options-form.php:164
+#: pro/classes/views/frmpro-fields/options-form.php:165
 #@ formidable
 msgid "Show options as stars"
 msgstr "Voir les options d'étoiles"
@@ -4552,7 +4428,7 @@ msgstr "Unique: Ne laissez pas la même réponse à plusieurs reprises. Par exem
 msgid "Read Only: Show this field but do not allow the field value to be edited from the front-end."
 msgstr "Voir uniquement: Montrer ce champ, mais ne pas permettent d'editer la valeur du champ depuis l'extrmité."
 
-#: pro/classes/views/frmpro-forms/notifications.php:11
+#: classes/views/frm-forms/notification.php:86
 #@ formidable
 msgid "Send Emails in Plain Text"
 msgstr "Envoyer les E-Mail au format texte"
@@ -4639,6 +4515,7 @@ msgid "You must upgrade to Formidable Pro to get access to the second two option
 msgstr "Vous devez mettre à niveau vers 'Formidable Pro' pour obtenir l'accès aux deuxièmes options."
 
 #: classes/views/frm-forms/settings.php:69
+#: pro/classes/views/frmpro-forms/add_form_options.php:90
 #@ formidable
 msgid "Redirect to URL"
 msgstr "URL de redirrection"
@@ -4653,38 +4530,32 @@ msgstr "Habituellement, le nom et l'email de la personne remplissant le formulai
 msgid "To send to multiple addresses, separate each address with a comma. You can use [admin_email] to dynamically use the address on your WordPress General Settings page. &lt;br/&gt;PRO only: Leave blank if you do not want email notifications for this form."
 msgstr "Pour envoyer à des adresses multiple, séparez les adresse avec des virgules. Vous pouvez utiliser [admin_email] comme adresse dynamique de votre page de parametres général de WordPress. &lt;br/&gt;PRO uniquement : Laissez vide si vous ne voulez pas de notification par mail pour ce formulaire."
 
-#: pro/classes/controllers/FrmProEntriesController.php:414
-#: pro/classes/controllers/FrmProXMLController.php:130
+#: pro/classes/controllers/FrmProXMLController.php:118
 #@ formidable
 msgid "All Fields are required"
 msgstr "Tout les champs sont requis"
 
-#: pro/classes/controllers/FrmProEntriesController.php:576
+#: pro/classes/controllers/FrmProEntriesController.php:486
 #@ formidable
 msgid "Entries were Successfully Destroyed"
 msgstr "Entées détruite avec succès"
 
-#: pro/classes/controllers/FrmProEntriesController.php:917
+#: pro/classes/controllers/FrmProEntriesController.php:895
 #@ formidable
 msgid "Please wait while you are redirected."
 msgstr "Merci de patienter vous allez être redirié"
 
-#: pro/classes/controllers/FrmProFormsController.php:53
+#: classes/controllers/FrmFormsController.php:490
 #@ formidable
 msgid "No forms were specified"
 msgstr "Pas de formulaire spécifié"
 
-#: pro/classes/views/frmpro-entries/import.php:40
-#@ formidable
-msgid "Select previously uploaded CSV"
-msgstr "Séléctionner le fichier CSV précédent"
-
-#: pro/classes/helpers/FrmProEntriesHelper.php:115
+#: pro/classes/helpers/FrmProEntriesHelper.php:199
 #@ formidable
 msgid "Are you sure you want to permanently delete ALL the entries in this form?"
 msgstr "Etes vous sur de supprimer définitivement TOUTES les entrées de ce formulaire ?"
 
-#: pro/classes/helpers/FrmProEntriesHelper.php:115
+#: pro/classes/helpers/FrmProEntriesHelper.php:199
 #@ formidable
 msgid "Delete ALL Entries"
 msgstr "Supprimer tout les entrées"
@@ -4705,44 +4576,44 @@ msgstr "Aller"
 msgid "Select a report to view."
 msgstr "Séléctionner un rapport pour la visualisation"
 
-#: pro/classes/controllers/FrmProEntriesController.php:632
+#: pro/classes/controllers/FrmProEntriesController.php:542
 #@ formidable
 msgid "No form was found"
 msgstr "Pas de formulaire trouvé"
 
-#: pro/classes/helpers/FrmProAppHelper.php:242
-#: pro/classes/helpers/FrmProListHelper.php:152
+#: pro/classes/helpers/FrmProAppHelper.php:239
+#: pro/classes/helpers/FrmProListHelper.php:146
 #@ formidable
 msgid "Export to CSV"
 msgstr "Exporter vers CSV"
 
-#: pro/classes/views/frmpro-fields/options-form.php:168
+#: pro/classes/views/frmpro-fields/options-form.php:169
 #@ formidable
 msgid "Rich Text Editor"
 msgstr "Editeur de tete enrichi"
 
-#: classes/controllers/FrmAppController.php:354
+#: classes/controllers/FrmAppController.php:385
 #@ formidable
 msgid "Type-in or bookmark"
 msgstr "Ajouter ou signet"
 
-#: classes/helpers/FrmFormsHelper.php:71
+#: classes/helpers/FrmFormsHelper.php:69
 #@ formidable
 msgid "Switch Form"
 msgstr "Basuler le formulaire"
 
-#: classes/views/frm-settings/form.php:128
+#: classes/views/frm-settings/form.php:126
 #@ formidable
 msgid "Admin menu label"
 msgstr "Etiquette de menu administrateur"
 
-#: classes/views/frm-settings/form.php:131
+#: classes/views/frm-settings/form.php:129
 #@ formidable
 msgid "Use this menu name site-wide"
 msgstr "Utilisez ce nom de menu sur l'ensemble du site"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1975
-#: pro/classes/controllers/FrmProEntriesController.php:2283
+#: pro/classes/controllers/FrmProEntriesController.php:1998
+#: pro/classes/controllers/FrmProEntriesController.php:2237
 #@ formidable
 msgid "Your entry was successfully deleted"
 msgstr "Votre entrée est suprimée avec succès"
@@ -4757,33 +4628,33 @@ msgstr "Date de fin ou nombre de jours"
 msgid "No multi-day events"
 msgstr "Pas d'evenement multi-jour"
 
-#: pro/classes/views/frmpro-fields/options-form.php:105
+#: pro/classes/views/frmpro-fields/options-form.php:106
 #@ formidable
 msgid "Allowed file types"
 msgstr "Types de fichiers autorisés"
 
-#: pro/classes/views/frmpro-fields/options-form.php:107
+#: pro/classes/views/frmpro-fields/options-form.php:108
 #@ formidable
 msgid "All types"
 msgstr "Tout les types"
 
-#: pro/classes/views/frmpro-fields/options-form.php:108
+#: pro/classes/views/frmpro-fields/options-form.php:109
 #@ formidable
 msgid "Specify allowed types"
 msgstr "Spécifier les types autorisé"
 
-#: pro/classes/controllers/FrmProStatisticsController.php:1004
+#: pro/classes/controllers/FrmProStatisticsController.php:1028
 #@ formidable
 msgid "Daily Entries"
 msgstr "Entrée journalière"
 
-#: pro/classes/helpers/FrmProFieldsHelper.php:1815
+#: pro/classes/helpers/FrmProFieldsHelper.php:1804
 #: pro/classes/views/shared/mb_adv_info.php:71
 #@ formidable
 msgid "Site Name"
 msgstr "Nom du site"
 
-#: pro/classes/controllers/FrmProEntriesController.php:920
+#: pro/classes/controllers/FrmProEntriesController.php:898
 #, php-format
 #@ formidable
 msgid "%1$sClick here%2$s if you are not automatically redirected."
@@ -4800,25 +4671,25 @@ msgstr "EXEMPLE:"
 msgid "Required Indicator"
 msgstr "Indicateur requis"
 
-#: pro/classes/views/displays/mb_advanced.php:82
+#: pro/classes/views/displays/mb_advanced.php:86
 #: pro/classes/views/frmpro-entries/show.php:63
 #: pro/classes/views/frmpro-entries/sidebar-edit.php:13
 #@ formidable
 msgid "View Post"
 msgstr "Voir le message"
 
-#: classes/helpers/FrmListHelper.php:87
+#: classes/helpers/FrmListHelper.php:83
 #@ formidable
 msgid "Place your mouse over the name of the form you just created, and click the \"Create Template\" link."
 msgstr "Placer votre souris sur le nom du formulaire que vous venez de crée, et cliquez le \"Create Template\" liens."
 
-#: classes/helpers/FrmListHelper.php:147
-#: pro/classes/helpers/FrmProListHelper.php:192
+#: classes/helpers/FrmListHelper.php:134
+#: pro/classes/helpers/FrmProListHelper.php:186
 #@ formidable
 msgid "Are you sure you want to delete that?"
 msgstr "Etes vous sur de vouloir supprimer cela"
 
-#: pro/classes/controllers/FrmUpdatesController.php:162
+#: pro/classes/controllers/FrmUpdatesController.php:145
 #@ formidable
 msgid "Account"
 msgstr "Compte"
@@ -4903,59 +4774,58 @@ msgstr "Voir le formulaire avec le titre et la description"
 msgid "Insert into a theme template file:"
 msgstr "Inserer un fichier modèle dans le thème :"
 
-#: classes/views/frm-forms/settings.php:97
+#: classes/views/frm-forms/settings.php:96
 #@ formidable
 msgid "Do not store any entries submitted from this form."
 msgstr "Ne pas stocker toutes les entrées soumises par ce formulaire."
 
-#: classes/views/frm-forms/settings.php:100
+#: classes/views/frm-forms/settings.php:99
 #@ formidable
 msgid "Use Akismet to check entries for spam for"
 msgstr "Utilisez Akismet pour vérifier les entrées de spam pour"
 
-#: classes/views/frm-forms/settings.php:102
+#: classes/views/frm-forms/settings.php:101
 #@ formidable
 msgid "no one"
 msgstr "personne"
 
-#: classes/views/frm-forms/settings.php:103
+#: classes/views/frm-forms/settings.php:102
 #@ formidable
 msgid "everyone"
 msgstr "tous"
 
-#: classes/views/frm-forms/settings.php:104
+#: classes/views/frm-forms/settings.php:103
 #@ formidable
 msgid "visitors who are not logged in"
 msgstr "visiteurs qui ne sont pas enregistré"
 
-#: pro/classes/controllers/FrmProFieldsController.php:304
+#: pro/classes/controllers/FrmProFieldsController.php:310
 #@ formidable
 msgid "Option Label"
 msgstr "option d'étiquette"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:483
-#: pro/classes/controllers/FrmProFieldsController.php:305
+#: pro/classes/controllers/FrmProFieldsController.php:311
 #@ formidable
 msgid "Saved Value"
 msgstr "sauver valeur"
 
-#: pro/classes/controllers/FrmProStatisticsController.php:998
+#: pro/classes/controllers/FrmProStatisticsController.php:1022
 #@ formidable
 msgid "Monthly Entries"
 msgstr "entrée par mois"
 
-#: pro/classes/controllers/FrmProStatisticsController.php:1001
+#: pro/classes/controllers/FrmProStatisticsController.php:1025
 #@ formidable
 msgid "Yearly Entries"
 msgstr "entrée par ans"
 
-#: pro/classes/controllers/FrmProStatisticsController.php:995
+#: pro/classes/controllers/FrmProStatisticsController.php:1019
 #@ formidable
 msgid "Hourly Entries"
 msgstr "entrée par heure"
 
 #: pro/classes/views/frmpro-entries/csv.php:30
-#: pro/classes/views/frmpro-entries/import.php:95
 #: pro/classes/views/xml/map_csv_fields.php:47
 #@ formidable
 msgid "Timestamp"
@@ -4976,7 +4846,7 @@ msgstr "Ajouter une valeur distincte à utiliser pour les calculs, le routage d'
 msgid "If your radio, checkbox, dropdown, or user ID field needs a dynamic default value like [get param=whatever], insert it in the field options. If using a GET or POST value, it must match one of the options in the field in order for that option to be selected. Data from entries fields require the ID of the linked entry."
 msgstr "Si votre case radio, case à cocher, liste déroulante, ou un champ ID utilisateur a besoin d'une valeur par défaut dynamique comme [get param=whatever], insérez-la dans les options du champ. Si vous utilisez une valeur GET ou POST, elle doit correspondre à l'une des options dans le champ pour que cette option soit sélectionnée. Les données des champs et d'entrées nécessitent l'ID de l'entrée liées."
 
-#: pro/classes/views/settings/formroller.php:270
+#: pro/classes/views/settings/formroller.php:275
 #@ formidable
 msgid "Border/Label"
 msgstr "Bord/Etiquette"
@@ -5006,120 +4876,120 @@ msgstr "Classes de mise en forme CSS"
 msgid "Add a CSS class to the field container. Use our predefined classes to align multiple fields in single row."
 msgstr "Ajouter une classe CSS pour le champ. Utilisez vos classes prédéfinies pour aligner plusieurs champs dans une ligne."
 
-#: pro/classes/controllers/FrmProEntriesController.php:2264
+#: pro/classes/controllers/FrmProEntriesController.php:2218
 #@ formidable
 msgid "There was an error deleting that entry"
 msgstr "Il y a une erreur pour supprimer cette entrée"
 
-#: classes/controllers/FrmAppController.php:275
+#: classes/controllers/FrmAppController.php:302
 #@ formidable
 msgid "Are you sure you want to deactivate Formidable Pro on this site?"
 msgstr "Etes vous sur de vouloir désactiver Formidable PRO de ce site?"
 
-#: pro/classes/controllers/FrmUpdatesController.php:158
+#: pro/classes/controllers/FrmUpdatesController.php:141
 #@ formidable
 msgid "Deauthorize this site"
 msgstr "Retirer l'autorisation de ce site"
 
-#: pro/classes/controllers/FrmProEntriesController.php:991
+#: pro/classes/controllers/FrmProEntriesController.php:981
 #@ formidable
 msgid "Create Entry in Form"
 msgstr "Crée une entrée dans le formulaire"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1034
+#: pro/classes/controllers/FrmProEntriesController.php:1024
 #@ formidable
 msgid "Copied from Post"
 msgstr "Message copié à partir"
 
-#: pro/classes/helpers/FrmProAppHelper.php:126
+#: pro/classes/helpers/FrmProAppHelper.php:123
 #@ formidable
 msgid "year"
 msgstr "ans"
 
-#: pro/classes/helpers/FrmProAppHelper.php:126
+#: pro/classes/helpers/FrmProAppHelper.php:123
 #@ formidable
 msgid "years"
 msgstr "annéés"
 
-#: pro/classes/helpers/FrmProAppHelper.php:127
+#: pro/classes/helpers/FrmProAppHelper.php:124
 #@ formidable
 msgid "month"
 msgstr "mois"
 
-#: pro/classes/helpers/FrmProAppHelper.php:127
+#: pro/classes/helpers/FrmProAppHelper.php:124
 #@ formidable
 msgid "months"
 msgstr "mois"
 
-#: pro/classes/helpers/FrmProAppHelper.php:128
+#: pro/classes/helpers/FrmProAppHelper.php:125
 #@ formidable
 msgid "week"
 msgstr "semaine"
 
-#: pro/classes/helpers/FrmProAppHelper.php:128
+#: pro/classes/helpers/FrmProAppHelper.php:125
 #@ formidable
 msgid "weeks"
 msgstr "semaines"
 
-#: pro/classes/helpers/FrmProAppHelper.php:129
+#: pro/classes/helpers/FrmProAppHelper.php:126
 #@ formidable
 msgid "day"
 msgstr "jour"
 
-#: pro/classes/helpers/FrmProAppHelper.php:129
+#: pro/classes/helpers/FrmProAppHelper.php:126
 #@ formidable
 msgid "days"
 msgstr "jours"
 
-#: pro/classes/helpers/FrmProAppHelper.php:130
+#: pro/classes/helpers/FrmProAppHelper.php:127
 #@ formidable
 msgid "hour"
 msgstr "heure"
 
-#: pro/classes/helpers/FrmProAppHelper.php:130
+#: pro/classes/helpers/FrmProAppHelper.php:127
 #: pro/classes/views/frmpro-forms/add_form_options.php:45
 #@ formidable
 msgid "hours"
 msgstr "heures"
 
-#: pro/classes/helpers/FrmProAppHelper.php:131
+#: pro/classes/helpers/FrmProAppHelper.php:128
 #@ formidable
 msgid "minute"
 msgstr "minute"
 
-#: pro/classes/helpers/FrmProAppHelper.php:131
+#: pro/classes/helpers/FrmProAppHelper.php:128
 #@ formidable
 msgid "minutes"
 msgstr "minutes"
 
-#: pro/classes/helpers/FrmProAppHelper.php:132
+#: pro/classes/helpers/FrmProAppHelper.php:129
 #@ formidable
 msgid "second"
 msgstr "seconde"
 
-#: pro/classes/helpers/FrmProAppHelper.php:132
-#: pro/classes/helpers/FrmProAppHelper.php:140
-#: pro/classes/helpers/FrmProAppHelper.php:163
+#: pro/classes/helpers/FrmProAppHelper.php:129
+#: pro/classes/helpers/FrmProAppHelper.php:137
+#: pro/classes/helpers/FrmProAppHelper.php:160
 #@ formidable
 msgid "seconds"
 msgstr "secondes"
 
-#: pro/classes/models/FrmProForm.php:135
+#: pro/classes/models/FrmProForm.php:127
 #@ formidable
 msgid "Status"
 msgstr "Status"
 
-#: pro/classes/models/FrmProForm.php:153
+#: pro/classes/models/FrmProForm.php:145
 #@ formidable
 msgid "Single"
 msgstr "Simple"
 
-#: pro/classes/models/FrmProForm.php:154
+#: pro/classes/models/FrmProForm.php:146
 #@ formidable
 msgid "Used for the single post page"
 msgstr "Utilisé pour la page de message unique"
 
-#: pro/classes/models/FrmProForm.php:155
+#: pro/classes/models/FrmProForm.php:147
 #@ formidable
 msgid "Add content here if you would like to use this as a listing page."
 msgstr "Ajouter le contenu ici si vous souhaitez l'utiliser comme une page de liste."
@@ -5181,7 +5051,7 @@ msgstr "Correspond à la valeur sauvegardée pour des champs ayant des valeurs d
 msgid "Global Settings"
 msgstr "Paramètres globaux"
 
-#: classes/models/FrmSettings.php:66
+#: classes/models/FrmSettings.php:25
 #@ formidable
 msgid "This field cannot be blank."
 msgstr "Ce champ ne peut pas être vide"
@@ -5245,17 +5115,17 @@ msgstr "Nom personalisé"
 msgid "Custom Address"
 msgstr "Adresse personalisée"
 
-#: classes/views/frm-forms/settings.php:122
+#: classes/views/frm-forms/settings.php:121
 #@ formidable
 msgid "Add Notification"
 msgstr "Ajouter une notification"
 
-#: classes/views/frm-settings/form.php:94
+#: classes/views/frm-settings/form.php:97
 #@ formidable
 msgid "Blank Field"
 msgstr "Champ vide"
 
-#: classes/views/frm-settings/form.php:94
+#: classes/views/frm-settings/form.php:97
 #@ formidable
 msgid "The message seen when a required field is left blank."
 msgstr "Le message vu quand une réponse de champ est incorrect ou manquante."
@@ -5368,19 +5238,19 @@ msgid "No Auto P"
 msgstr "Pas automatiquement P"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:492
-#: pro/classes/controllers/FrmProFormsController.php:204
+#: pro/classes/controllers/FrmProFormsController.php:170
 #@ formidable
 msgid "First Name"
 msgstr "Prénom"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:493
-#: pro/classes/controllers/FrmProFormsController.php:205
+#: pro/classes/controllers/FrmProFormsController.php:171
 #@ formidable
 msgid "Last Name"
 msgstr "Nom"
 
 #: pro/classes/controllers/FrmProDisplaysController.php:493
-#: pro/classes/controllers/FrmProFormsController.php:203
+#: pro/classes/controllers/FrmProFormsController.php:169
 #@ formidable
 msgid "Display Name"
 msgstr "Nom d'affichage"
@@ -5390,12 +5260,12 @@ msgstr "Nom d'affichage"
 msgid "Avatar"
 msgstr "Avatar"
 
-#: pro/classes/controllers/FrmProEntriesController.php:1997
+#: pro/classes/controllers/FrmProEntriesController.php:2020
 #@ formidable
 msgid "You are missing options in your shortcode. field_id and either user_id, entry_id, or ip are required."
 msgstr "Il vous manque des options dans votre shortcode.Soit id_zone et user_id, entry_id, ou ip sont nécessaires."
 
-#: pro/classes/helpers/FrmProEntriesHelper.php:89
+#: pro/classes/helpers/FrmProEntriesHelper.php:173
 #@ formidable
 msgid "Resend Email Notifications"
 msgstr "Renvoyer une notification par E-Mail"
@@ -5440,7 +5310,7 @@ msgstr "Date de création"
 msgid "Field From Entry"
 msgstr "Champ de l'entrée"
 
-#: pro/classes/views/displays/mb_advanced.php:22
+#: pro/classes/views/displays/mb_advanced.php:24
 #@ formidable
 msgid "Filter Entries"
 msgstr "Filtre d'entrées"
@@ -5456,63 +5326,58 @@ msgstr "Entrez la nouvelle date"
 msgid "Anything"
 msgstr "rien"
 
-#: classes/controllers/FrmAppController.php:256
-#: pro/classes/views/frmpro-fields/form-fields.php:137
+#: classes/controllers/FrmAppController.php:284
+#: pro/classes/views/frmpro-fields/form-fields.php:133
 #@ formidable
 msgid "Remove"
 msgstr "Supprimer"
 
-#: pro/classes/views/frmpro-fields/options-form.php:97
+#: pro/classes/views/frmpro-fields/options-form.php:98
 #@ formidable
 msgid "Multiple files"
 msgstr "Fichiers multiples"
 
-#: pro/classes/views/frmpro-fields/options-form.php:99
+#: pro/classes/views/frmpro-fields/options-form.php:100
 #@ formidable
 msgid "allow multiple files to be uploaded to this field"
 msgstr "permettre de télécharger plusieurs fichiers"
 
-#: pro/classes/views/frmpro-forms/notifications.php:8
+#: classes/views/frm-forms/notification.php:83
 #@ formidable
 msgid "Options"
 msgstr "Option"
 
-#: pro/classes/views/frmpro-forms/notifications.php:13
+#: pro/classes/views/frmpro-forms/notifications.php:3
 #@ formidable
 msgid "Send this notification when entries are"
 msgstr "Renvoyer ce message quand les entrées sont mise à jour"
 
-#: pro/classes/views/frmpro-forms/notifications.php:15
+#: pro/classes/views/frmpro-forms/notifications.php:5
 #@ formidable
 msgid "created"
 msgstr "Crée"
 
-#: pro/classes/views/frmpro-forms/notifications.php:16
+#: pro/classes/views/frmpro-forms/notifications.php:6
 #@ formidable
 msgid "updated"
 msgstr "Mise à jour"
 
-#: pro/classes/views/frmpro-forms/notifications.php:17
+#: pro/classes/views/frmpro-forms/notifications.php:7
 #@ formidable
 msgid "created or updated"
 msgstr "Crée ou mis à jour"
 
-#: pro/classes/views/frmpro-forms/notifications.php:36
-#@ formidable
-msgid "Add a radio, dropdown, or checkbox field to your form to enable conditional logic."
-msgstr "Ajouter un champ radio, liste déroulante ou case à cocher à votre formulaire pour permettre à la logique conditionnelle."
-
-#: pro/classes/views/frmpro-forms/notifications.php:41
+#: pro/classes/views/frmpro-forms/notifications.php:23
 #@ formidable
 msgid "Send"
 msgstr "Envoi"
 
-#: pro/classes/views/frmpro-forms/notifications.php:42
+#: pro/classes/views/frmpro-forms/notifications.php:24
 #@ formidable
 msgid "Stop"
 msgstr "Arrêt"
 
-#: pro/classes/views/frmpro-forms/notifications.php:44
+#: pro/classes/views/frmpro-forms/notifications.php:26
 #@ formidable
 msgid "this notification if"
 msgstr "ce message si"
@@ -5562,7 +5427,7 @@ msgstr "Garder JS"
 msgid "Javascript from your form entries are automatically removed. Add this option only if you trust those submitting entries."
 msgstr "Javascript de vos entrées de formulaire sont automatiquement supprimés. Ajoutez cette option que si vous faites confiance à ces entrées soumises."
 
-#: pro/classes/controllers/FrmProStatisticsController.php:1082
+#: pro/classes/controllers/FrmProStatisticsController.php:1107
 #@ formidable
 msgid "Count"
 msgstr "Compter"
@@ -5620,59 +5485,40 @@ msgstr "Créer un commentaire WordPress avec ce formulaire"
 msgid "Comment Meta"
 msgstr "Commentaire Méta"
 
-#: pro/classes/views/settings/formroller.php:502
+#: pro/classes/views/settings/formroller.php:507
 #@ formidable
 msgid "Custom CSS"
 msgstr "CSS personnalisé"
 
-#: pro/classes/views/settings/formroller.php:506
+#: pro/classes/views/settings/formroller.php:511
 #@ formidable
 msgid "You can add custom css here or in your theme style.css"
 msgstr "Vous pouvez ajouter vos personnalisation CSS ici ou dans votre thème style.css"
 
+#: classes/views/xml/import_form.php:3
+#: classes/views/xml/importing_xml.php:3
 #: pro/classes/views/xml/import_csv.php:3
-#: pro/classes/views/xml/import_form.php:3
 #: pro/classes/views/xml/map_csv_fields.php:3
 #@ formidable
 msgid "Import/Export"
 msgstr "Importation/Exportation"
 
-#: pro/classes/views/xml/import_form.php:18
+#: classes/views/xml/import_form.php:18
 #@ formidable
 msgid "Choose a file from your computer"
 msgstr "Choisissez un fichier à partir de votre ordinateur"
 
-#: pro/classes/views/xml/import_form.php:38
+#: classes/views/xml/import_form.php:25
 #@ formidable
 msgid "Upload file and import"
 msgstr "Télécharger un fichier et l'importer"
 
-#: pro/classes/views/xml/import_form.php:53
-#@ formidable
-msgid "Data Types to Export"
-msgstr "Types de données à exporter"
-
-#: pro/classes/views/xml/import_form.php:55
-#@ formidable
-msgid "Include the following data types in your export file"
-msgstr "Inclure les types de données suivants dans votre fichier d'exportation"
-
-#: pro/classes/views/xml/import_form.php:63
-#@ formidable
-msgid "Select forms (optional)"
-msgstr "Séléctionner un formulaire (Option)"
-
-#: pro/classes/views/xml/import_form.php:65
-#@ formidable
-msgid "If you would like to include ONLY specific forms and the entries and custom displays related to those forms, select those forms here"
-msgstr "Si vous souhaitez inclure SEULEMENT des formulaires spécifiques et les entrées et les affichages personnalisés liés à ces formulaire, sélectionnez les formulaire ici"
-
-#: pro/classes/views/xml/import_form.php:82
+#: classes/views/xml/import_form.php:100
 #@ formidable
 msgid "Export Selection"
 msgstr "Exporter la séléction"
 
-#: classes/models/FrmSettings.php:67
+#: classes/models/FrmSettings.php:26
 #@ formidable
 msgid "This value must be unique."
 msgstr "Ce champ doit être unique"
@@ -5682,17 +5528,18 @@ msgstr "Ce champ doit être unique"
 msgid "Show more"
 msgstr "Voir plus"
 
-#: classes/views/frm-settings/form.php:101
+#: classes/views/frm-settings/form.php:104
 #@ formidable
 msgid "Unique Value"
 msgstr "Valeur unique"
 
-#: classes/views/frm-settings/form.php:101
+#: classes/views/frm-settings/form.php:104
 #@ formidable
 msgid "The message seen when a user selects a value in a unique field that has already been used."
 msgstr "Le message visible lorsqu'un utilisateur sélectionne une valeur dans un champ unique qui a déjà été utilisé."
 
 #: pro/classes/views/frmpro-fields/_logic_row.php:32
+#: pro/classes/views/frmpro-forms/_logic_row.php:28
 #@ formidable
 msgid "not like"
 msgstr "Pas aimer"
@@ -5747,12 +5594,12 @@ msgstr "permettre la sélection multiple"
 msgid "enable autocomplete"
 msgstr "permettre l'autocompletition"
 
-#: pro/classes/views/frmpro-fields/options-form.php:218
+#: pro/classes/views/frmpro-fields/options-form.php:219
 #@ formidable
 msgid "Everyone"
 msgstr "tous"
 
-#: pro/classes/views/frmpro-fields/options-form.php:226
+#: pro/classes/views/frmpro-fields/options-form.php:227
 #@ formidable
 msgid "Logged-out Users"
 msgstr "Déconnecté les utilisateurs"
@@ -5763,72 +5610,72 @@ msgstr "Déconnecté les utilisateurs"
 msgid "Formidable Pro License"
 msgstr "'Formidable Pro' Licence"
 
-#: pro/classes/controllers/FrmUpdatesController.php:42
+#: pro/classes/controllers/FrmUpdatesController.php:25
 #@ formidable
 msgid "Your Formidable Pro License was Invalid"
 msgstr "Votre licence 'Formidable Pro' est invalide"
 
 #: classes/views/frm-settings/license_box.php:6
-#: pro/classes/controllers/FrmUpdatesController.php:150
+#: pro/classes/controllers/FrmUpdatesController.php:133
 #@ formidable
 msgid "Click here"
 msgstr "Cliquez ici"
 
-#: pro/classes/controllers/FrmUpdatesController.php:156
+#: pro/classes/controllers/FrmUpdatesController.php:139
 #@ formidable
 msgid "Formidable Pro is Installed"
 msgstr "'Formidable Pro' est installé"
 
-#: pro/classes/controllers/FrmUpdatesController.php:157
+#: pro/classes/controllers/FrmUpdatesController.php:140
 #@ formidable
 msgid "Enter new license"
 msgstr "Entrez de nouveau les informations de licence"
 
-#: pro/classes/controllers/FrmUpdatesController.php:185
+#: pro/classes/controllers/FrmUpdatesController.php:168
 #@ formidable
 msgid "Use this license to enable Formidable Pro site-wide"
 msgstr "Utiliser cette licence pour l'utilisation de 'Formidable Pro' sur l'ensemble du site"
 
-#: pro/classes/controllers/FrmUpdatesController.php:188
+#: pro/classes/controllers/FrmUpdatesController.php:171
 #@ formidable
 msgid "Save License"
 msgstr "Sauver la licence"
 
-#: pro/classes/controllers/FrmUpdatesController.php:243
-#: pro/classes/controllers/FrmUpdatesController.php:279
-#: pro/classes/controllers/FrmUpdatesController.php:315
+#: pro/classes/controllers/FrmUpdatesController.php:226
+#: pro/classes/controllers/FrmUpdatesController.php:262
+#: pro/classes/controllers/FrmUpdatesController.php:298
 #@ formidable
 msgid "Please enter a license number"
 msgstr "Veuillez entrer un numéro de licence"
 
-#: pro/classes/controllers/FrmUpdatesController.php:408
+#: pro/classes/controllers/FrmUpdatesController.php:391
 #@ formidable
 msgid "expired"
 msgstr "expiré"
 
-#: pro/classes/controllers/FrmUpdatesController.php:408
+#: pro/classes/controllers/FrmUpdatesController.php:391
 #@ formidable
 msgid "invalid"
 msgstr "non valable"
 
-#: pro/classes/controllers/FrmUpdatesController.php:409
+#: pro/classes/controllers/FrmUpdatesController.php:392
 #, php-format
 #@ formidable
 msgid "An update is available, but your license is %s."
 msgstr "Une  mise à jour existe, mais votre licence est %s"
 
-#: pro/classes/controllers/FrmUpdatesController.php:486
+#: pro/classes/controllers/FrmUpdatesController.php:469
 #@ formidable
 msgid "Check for Update"
 msgstr "Controler les mise à jour"
 
-#: pro/classes/controllers/FrmUpdatesController.php:520
+#: pro/classes/controllers/FrmUpdatesController.php:503
 #@ formidable
 msgid "Your License Key was invalid"
 msgstr "Votre clé de licence n'est pas valide"
 
-#: classes/helpers/FrmFormsHelper.php:173
-#: classes/models/FrmDb.php:174
+#: classes/helpers/FrmFormsHelper.php:194
+#: classes/models/FrmDb.php:170
 #@ formidable
 msgid "Sending"
 msgstr "Envoi"
@@ -6018,12 +5865,12 @@ msgstr "Zone de défilement"
 msgid "If you have many checkbox or radio button options, you may add this class to allow your user to easily scroll through the options."
 msgstr "Si vous avez beaucoup d'options de case à cocher ou des boutons radio, vous pouvez ajouter cette classe pour permettre à votre utilisateur de faire défiler facilement les options."
 
-#: classes/controllers/FrmAppController.php:267
+#: classes/controllers/FrmAppController.php:294
 #@ formidable
 msgid "Saving"
 msgstr "Enregistrer"
 
-#: classes/controllers/FrmAppController.php:268
+#: classes/controllers/FrmAppController.php:295
 #@ formidable
 msgid "Saved"
 msgstr "Enregistrer"
@@ -6038,52 +5885,52 @@ msgstr "Etiquette de bouton"
 msgid "Button Hook"
 msgstr "Hook bouton"
 
-#: classes/views/frm-forms/settings.php:92
+#: classes/views/frm-forms/settings.php:91
 #@ formidable
 msgid "Load and save form builder page with AJAX"
 msgstr "Charger et sauvegarder la page de Création de Formulaire avec AJAX"
 
-#: classes/views/frm-forms/settings.php:92
+#: classes/views/frm-forms/settings.php:91
 #@ formidable
 msgid "Recommended for long forms."
 msgstr "Recommandé pour les long formulaires."
 
-#: classes/views/frm-forms/settings.php:97
+#: classes/views/frm-forms/settings.php:96
 #@ formidable
 msgid "Warning: There is no way to retrieve unsaved entries."
 msgstr "Attention: Il n'est pas possible de récupérer les entrées non enregistrées."
 
-#: pro/classes/controllers/FrmProEntriesController.php:96
+#: pro/classes/controllers/FrmProEntriesController.php:119
 #@ formidable
 msgid "Overview"
 msgstr "Prévisualier"
 
-#: pro/classes/controllers/FrmProEntriesController.php:97
+#: pro/classes/controllers/FrmProEntriesController.php:120
 #@ formidable
 msgid "This screen provides access to all of your posts. You can customize the display of this screen to suit your workflow."
 msgstr "Cet écran permet d'accéder à tous vos messages. Vous pouvez personnaliser l'affichage de cet écran en fonction de votre flux de travail."
 
-#: pro/classes/controllers/FrmProEntriesController.php:102
+#: pro/classes/controllers/FrmProEntriesController.php:125
 #@ formidable
 msgid "For more information:"
 msgstr "Pour plus d'information:"
 
-#: pro/classes/controllers/FrmProEntriesController.php:103
+#: pro/classes/controllers/FrmProEntriesController.php:126
 #@ formidable
 msgid "Documentation on Entries"
 msgstr "Documentation sur les entrées"
 
-#: pro/classes/controllers/FrmProEntriesController.php:104
+#: pro/classes/controllers/FrmProEntriesController.php:127
 #@ formidable
 msgid "Support"
 msgstr "Support"
 
-#: pro/classes/controllers/FrmProFormsController.php:202
+#: pro/classes/controllers/FrmProFormsController.php:168
 #@ formidable
 msgid "Login"
 msgstr "Identifiant utilisateur"
 
-#: pro/classes/controllers/FrmProFormsController.php:214
+#: pro/classes/controllers/FrmProFormsController.php:180
 #@ formidable
 msgid "GET/POST"
 msgstr "GET/POST"
@@ -6113,12 +5960,12 @@ msgstr "Date commentaire"
 msgid "Print"
 msgstr "Imprimer"
 
-#: pro/classes/views/frmpro-fields/options-form.php:255
+#: pro/classes/views/frmpro-fields/options-form.php:256
 #@ formidable
 msgid "Do not skip"
 msgstr "ne pas sauter"
 
-#: pro/classes/views/frmpro-fields/options-form.php:256
+#: pro/classes/views/frmpro-fields/options-form.php:257
 #@ formidable
 msgid "Skip"
 msgstr "Passer"
@@ -6138,43 +5985,41 @@ msgstr "Valeurs par défaut"
 msgid "Add dynamic default values as default text to fields in your form"
 msgstr "Ajouter les valeurs par défaut dynamiques sous forme de texte par défaut aux champs de votre formulaire"
 
-#: classes/controllers/FrmAppController.php:111
-#: classes/controllers/FrmAppController.php:255
-#: pro/classes/controllers/FrmProEntriesController.php:1013
+#: classes/controllers/FrmAppController.php:137
+#: classes/controllers/FrmAppController.php:283
+#: pro/classes/controllers/FrmProEntriesController.php:1003
 #@ default
 msgid "Loading&hellip;"
 msgstr ""
 
-#: pro/classes/controllers/FrmUpdatesController.php:505
+#: pro/classes/controllers/FrmUpdatesController.php:488
 #, php-format
 #@ formidable
 msgid "You had an error communicating with Strategy11's API. %1$sClick here%2$s for more information."
 msgstr ""
 
-#: pro/classes/controllers/FrmUpdatesController.php:510
+#: pro/classes/controllers/FrmUpdatesController.php:493
 #@ formidable
 msgid "You had an HTTP error connecting to Strategy11's API"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:2399
+#: pro/classes/controllers/FrmProEntriesController.php:2354
 #, php-format
 #@ formidable
 msgid "Email Resent to %s"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:2401
+#: pro/classes/controllers/FrmProEntriesController.php:2356
 #@ formidable
 msgid "Email Resent to No one! You do not have permission"
 msgstr ""
 
-#: pro/classes/controllers/FrmProFormsController.php:386
+#: pro/classes/controllers/FrmProFormsController.php:317
 #@ formidable
 msgid "Previous"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:471
-#: pro/classes/models/FrmProField.php:58
-#@ formidable
+#: pro/classes/models/FrmProField.php:52
 #@ default
 msgid "Next"
 msgstr ""
@@ -6189,25 +6034,23 @@ msgstr ""
 #: classes/helpers/FrmEntriesHelper.php:3
 #: classes/helpers/FrmFieldsHelper.php:3
 #: classes/helpers/FrmFormsHelper.php:2
-#: classes/helpers/FrmListHelper.php:3
 #: classes/models/FrmDb.php:2
 #: classes/models/FrmEntry.php:2
 #: classes/models/FrmEntryMeta.php:2
 #: classes/models/FrmField.php:2
 #: classes/models/FrmForm.php:2
-#: classes/models/FrmNotification.php:2
 #: classes/models/FrmSettings.php:2
 #: pro/classes/controllers/FrmUpdatesController.php:2
 #@ formidable
 msgid "You are not allowed to call this page directly."
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:269
+#: classes/controllers/FrmAppController.php:296
 #@ default
 msgid "OK"
 msgstr ""
 
-#: classes/controllers/FrmFormsController.php:276
+#: classes/controllers/FrmFormsController.php:298
 #@ formidable
 msgid "Add Form"
 msgstr ""
@@ -6228,12 +6071,12 @@ msgstr ""
 msgid "Click to edit."
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:1153
+#: pro/classes/controllers/FrmProEntriesController.php:1144
 #@ formidable
 msgid "Draft"
 msgstr ""
 
-#: pro/classes/controllers/FrmProFormsController.php:403
+#: pro/classes/controllers/FrmProFormsController.php:334
 #@ formidable
 msgid "Save Draft"
 msgstr ""
@@ -6243,22 +6086,22 @@ msgstr ""
 msgid "Your draft has been saved."
 msgstr ""
 
-#: pro/classes/helpers/FrmProListHelper.php:249
+#: pro/classes/helpers/FrmProListHelper.php:243
 #@ default
 msgid "No"
 msgstr ""
 
-#: pro/classes/helpers/FrmProListHelper.php:249
+#: pro/classes/helpers/FrmProListHelper.php:243
 #@ default
 msgid "Yes"
 msgstr ""
 
-#: pro/classes/views/frmpro-fields/options-form.php:195
+#: pro/classes/views/frmpro-fields/options-form.php:196
 #@ formidable
 msgid "Format"
 msgstr ""
 
-#: pro/classes/views/frmpro-fields/options-form.php:196
+#: pro/classes/views/frmpro-fields/options-form.php:197
 #@ formidable
 msgid "Insert the format you would like to accept. Use a regular expression starting with ^ or an exact format like (999)999-9999."
 msgstr ""
@@ -6311,38 +6154,38 @@ msgstr ""
 msgid "Update Button Text"
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:274
-#: classes/helpers/FrmFieldsHelper.php:442
+#: classes/controllers/FrmAppController.php:301
+#: classes/helpers/FrmFieldsHelper.php:446
 #@ formidable
 msgid "Default value will NOT pass form validation"
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:273
-#: classes/helpers/FrmFieldsHelper.php:442
+#: classes/controllers/FrmAppController.php:300
+#: classes/helpers/FrmFieldsHelper.php:446
 #@ formidable
 msgid "Default value will pass form validation"
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:265
+#: classes/controllers/FrmAppController.php:292
 #: classes/views/frm-forms/add_field.php:157
 #: classes/views/frm-forms/form.php:11
 #@ formidable
 msgid "(Click here to add a description or instructions)"
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:271
-#: classes/helpers/FrmFieldsHelper.php:437
+#: classes/controllers/FrmAppController.php:298
+#: classes/helpers/FrmFieldsHelper.php:441
 #@ formidable
 msgid "Clear default value when typing"
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:272
-#: classes/helpers/FrmFieldsHelper.php:437
+#: classes/controllers/FrmAppController.php:299
+#: classes/helpers/FrmFieldsHelper.php:441
 #@ formidable
 msgid "Do not clear default value when typing"
 msgstr ""
 
-#: classes/controllers/FrmFormsController.php:345
+#: classes/controllers/FrmFormsController.php:367
 #@ formidable
 msgid "Actions"
 msgstr ""
@@ -6353,59 +6196,55 @@ msgstr ""
 #: pro/classes/controllers/FrmProDisplaysController.php:47
 #: pro/classes/controllers/FrmProDisplaysController.php:61
 #: pro/classes/controllers/FrmProDisplaysController.php:76
-#: pro/classes/views/xml/import_form.php:58
+#: pro/classes/controllers/FrmProXMLController.php:80
 #@ formidable
 msgid "Views"
 msgstr ""
 
-#: pro/classes/controllers/FrmUpdatesController.php:518
+#: pro/classes/controllers/FrmUpdatesController.php:501
 #, php-format
 #@ formidable
 msgid "There was a %1$s error: %2$s"
 msgstr ""
 
-#: pro/classes/controllers/FrmUpdatesController.php:535
+#: pro/classes/controllers/FrmUpdatesController.php:518
 #@ formidable
 msgid "A Formidable Pro update is available, but your license is invalid."
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:136
+#: classes/helpers/FrmAppHelper.php:127
 #@ formidable
 msgid "Add/Edit Views"
 msgstr ""
 
-#: classes/helpers/FrmFormsHelper.php:79
-#: classes/helpers/FrmListHelper.php:182
+#: classes/controllers/FrmFormsController.php:658
+#: classes/helpers/FrmFormsHelper.php:77
+#: classes/helpers/FrmListHelper.php:169
 #: classes/views/shared/form-nav.php:1
 #@ default
 msgid "(no title)"
 msgstr ""
 
-#: classes/helpers/FrmListHelper.php:85
+#: classes/helpers/FrmListHelper.php:81
 #, php-format
 #@ formidable
 msgid "Create a new %1$sform%2$s."
 msgstr ""
 
-#: classes/helpers/FrmListHelper.php:86
+#: classes/helpers/FrmListHelper.php:82
 #, php-format
 #@ formidable
 msgid "After your form is created, go to Formidable -> %1$sForms%2$s."
 msgstr ""
 
-#: classes/helpers/FrmListHelper.php:207
+#: classes/helpers/FrmListHelper.php:194
 #@ formidable
 msgid "Add Entry"
 msgstr ""
 
-#: classes/helpers/FrmListHelper.php:209
+#: classes/helpers/FrmListHelper.php:196
 #@ formidable
 msgid "Create template from form"
-msgstr ""
-
-#: classes/helpers/FrmListHelper.php:212
-#@ formidable
-msgid "Export form template"
 msgstr ""
 
 #: classes/views/frm-entries/new.php:4
@@ -6492,38 +6331,37 @@ msgstr ""
 msgid "View all forms"
 msgstr ""
 
-#: pro/classes/controllers/FrmProDisplaysController.php:862
+#: pro/classes/controllers/FrmProDisplaysController.php:863
 #@ formidable
 msgid "There are no views with that ID"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:98
+#: pro/classes/controllers/FrmProEntriesController.php:121
 #@ formidable
 msgid "Hovering over a row in the posts list will display action links that allow you to manage your entry."
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:359
+#: pro/classes/controllers/FrmProEntriesController.php:374
 #@ formidable
 msgid "Draft was Successfully Created"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:389
+#: pro/classes/controllers/FrmProEntriesController.php:404
 #@ formidable
 msgid "Draft was Successfully Updated"
 msgstr ""
 
-#: pro/classes/controllers/FrmProEntriesController.php:443
-#: pro/classes/controllers/FrmProXMLController.php:161
+#: pro/classes/controllers/FrmProXMLController.php:149
 #@ formidable
 msgid "CSV cannot be opened."
 msgstr ""
 
-#: pro/classes/helpers/FrmProEntriesHelper.php:112
+#: pro/classes/helpers/FrmProEntriesHelper.php:196
 #@ formidable
 msgid "Download CSV"
 msgstr ""
 
-#: pro/classes/views/displays/mb_advanced.php:86
+#: pro/classes/views/displays/mb_advanced.php:90
 #@ formidable
 msgid "If the view doesn't show automatically when it should, insert a higher number here."
 msgstr ""
@@ -6543,13 +6381,13 @@ msgstr ""
 msgid "Separate values"
 msgstr ""
 
-#: pro/classes/views/frmpro-fields/options-form.php:265
+#: pro/classes/views/frmpro-fields/options-form.php:266
 #, php-format
 #@ formidable
 msgid "next page if %s of the following match:"
 msgstr ""
 
-#: pro/classes/views/frmpro-fields/options-form.php:265
+#: pro/classes/views/frmpro-fields/options-form.php:266
 #, php-format
 #@ formidable
 msgid "this field if %s of the following match:"
@@ -6566,7 +6404,7 @@ msgstr ""
 msgid "Editing this box will update your existing view or create a new one."
 msgstr ""
 
-#: pro/classes/views/settings/form.php:18
+#: pro/classes/views/settings/form.php:30
 #@ formidable
 msgid "Turn off the visual editor when building views."
 msgstr ""
@@ -6591,17 +6429,12 @@ msgstr ""
 msgid "Click a button below to insert sample logic into your view"
 msgstr ""
 
-#: pro/classes/widgets/FrmListEntries.php:165
-#@ formidable
-msgid "Only views will show here if they are showing \"Both (Dynamic)\" data."
-msgstr ""
-
-#: classes/controllers/FrmAppController.php:276
+#: classes/controllers/FrmAppController.php:303
 #@ formidable
 msgid "Are you sure?"
 msgstr ""
 
-#: pro/classes/controllers/FrmUpdatesController.php:181
+#: pro/classes/controllers/FrmUpdatesController.php:164
 #@ formidable
 msgid "Enter your license number here"
 msgstr ""
@@ -6611,8 +6444,8 @@ msgstr ""
 msgid "Styling & Scripts"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:125
-#: pro/classes/views/settings/form.php:7
+#: classes/views/frm-settings/form.php:123
+#: pro/classes/views/settings/form.php:19
 #@ formidable
 msgid "Miscellaneous"
 msgstr ""
@@ -6622,28 +6455,28 @@ msgstr ""
 msgid "# Format"
 msgstr ""
 
-#: pro/classes/controllers/FrmProFormsController.php:213
+#: pro/classes/controllers/FrmProFormsController.php:179
 #@ formidable
 msgid "Increment"
 msgstr ""
 
-#: pro/classes/controllers/FrmProXMLController.php:64
+#: classes/controllers/FrmXMLController.php:123
 #@ formidable
 msgid "XML import is not enabled on your server."
 msgstr ""
 
-#: pro/classes/controllers/FrmProXMLController.php:50
+#: classes/controllers/FrmXMLController.php:91
 #@ formidable
 msgid "The file does not exist, please try again."
 msgstr ""
 
-#: pro/classes/controllers/FrmProXMLController.php:41
+#: classes/controllers/FrmXMLController.php:82
 #@ formidable
 msgid "Oops, you didn't select a file."
 msgstr ""
 
-#: pro/classes/helpers/FrmProXMLHelper.php:27
-#: pro/classes/helpers/FrmProXMLHelper.php:34
+#: classes/helpers/FrmXMLHelper.php:40
+#: classes/helpers/FrmXMLHelper.php:48
 #@ formidable
 msgid "There was an error when reading this XML file"
 msgstr ""
@@ -6658,19 +6491,12 @@ msgstr ""
 msgid "Updated By"
 msgstr ""
 
-#: pro/classes/views/frmpro-entries/import.php:96
-#: pro/classes/views/xml/map_csv_fields.php:48
-#@ formidable
-msgid "created by"
-msgstr ""
-
-#: pro/classes/views/frmpro-entries/import.php:98
 #: pro/classes/views/xml/map_csv_fields.php:50
 #@ formidable
 msgid "updated by"
 msgstr ""
 
-#: pro/classes/views/settings/formroller.php:293
+#: pro/classes/views/settings/formroller.php:298
 #@ formidable
 msgid "Radios & Check Boxes"
 msgstr ""
@@ -6705,29 +6531,18 @@ msgstr ""
 msgid "Importing CSV"
 msgstr ""
 
-#: pro/classes/views/xml/import_csv.php:13
-#, php-format
-#@ formidable
-msgid "The next %1$s of the remaining %2$s entries are importing."
-msgstr ""
-
-#: pro/classes/views/xml/import_form.php:13
-#@ formidable
-msgid "Upload your Formidable XML or CSV file to import the forms, entries, and custom displays into this site."
-msgstr ""
-
-#: pro/classes/views/xml/import_form.php:14
+#: pro/classes/controllers/FrmProXMLController.php:68
 #@ formidable
 msgid "Choose a Formidable XML or any CSV file to upload, then click \"Upload file and import.\""
 msgstr ""
 
-#: pro/classes/views/xml/import_form.php:18
+#: classes/views/xml/import_form.php:18
 #, php-format
 #@ formidable
 msgid "Maximum size: %s"
 msgstr ""
 
-#: pro/classes/views/xml/import_form.php:34
+#: pro/classes/views/xml/csv_opts.php:13
 #@ formidable
 msgid "Note: Only entries can by imported via CSV."
 msgstr ""
@@ -6737,56 +6552,48 @@ msgstr ""
 msgid "Map Fields"
 msgstr ""
 
-#: pro/classes/views/frmpro-entries/import.php:97
 #: pro/classes/views/xml/map_csv_fields.php:49
 #@ formidable
 msgid "last updated"
 msgstr ""
 
-#: classes/helpers/FrmAppHelper.php:343
+#: classes/helpers/FrmAppHelper.php:331
 #, php-format
 #@ formidable
 msgid "%s is invalid"
 msgstr ""
 
-#: classes/views/frm-settings/form.php:110
+#: classes/views/frm-settings/form.php:94
 #@ formidable
 msgid "Failed/Duplicate Entry"
 msgstr ""
 
-#: pro/classes/views/frmpro-entries/import.php:95
-#: pro/classes/views/xml/map_csv_fields.php:47
-#@ formidable
-msgid "created at"
-msgstr ""
-
-#: pro/classes/views/frmpro-entries/import.php:97
 #: pro/classes/views/xml/map_csv_fields.php:49
 #@ formidable
 msgid "updated at"
 msgstr ""
 
-#: pro/classes/views/frmpro-fields/options-form.php:205
+#: pro/classes/views/frmpro-fields/options-form.php:206
 #@ formidable
 msgid "Visibility"
 msgstr ""
 
-#: pro/classes/views/frmpro-fields/options-form.php:206
+#: pro/classes/views/frmpro-fields/options-form.php:207
 #@ formidable
 msgid "Determines who can see this field. The selected user role and higher user roles will be able to see this field. The only exception is logged-out users. Only logged-out users will be able to see the field if that option is selected."
 msgstr ""
 
-#: pro/classes/views/xml/import_form.php:71
+#: classes/views/xml/import_form.php:88
 #@ formidable
 msgid "(default template)"
 msgstr ""
 
-#: pro/classes/views/xml/import_form.php:73
+#: classes/views/xml/import_form.php:90
 #@ formidable
 msgid "(template)"
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:129
+#: classes/controllers/FrmAppController.php:155
 #@ formidable
 msgid "Are you sure you want to deauthorize Formidable Pro on this site?"
 msgstr ""
@@ -6951,7 +6758,7 @@ msgstr ""
 msgid "Invalid post format."
 msgstr ""
 
-#: classes/controllers/FrmAppController.php:126
+#: classes/controllers/FrmAppController.php:152
 #, php-format
 #@ formidable
 msgid "This site has been previously authorized to run Formidable Pro.<br/>%1$sInstall the pro version%2$s or %3$sdeauthorize%4$s this site to continue running the free version and remove this message."
@@ -6970,5 +6777,222 @@ msgstr ""
 #: classes/views/frm-forms/form.php:21
 #@ formidable
 msgid "(Just click or drag)"
+msgstr ""
+
+#: classes/controllers/FrmAppController.php:103
+#@ formidable
+msgid "Click here to complete the upgrade"
+msgstr ""
+
+#: classes/controllers/FrmAppController.php:114
+#@ formidable
+msgid "Congratulations! Formidable is ready to roll."
+msgstr ""
+
+#: classes/controllers/FrmAppController.php:305
+#@ formidable
+msgid "Import Complete"
+msgstr ""
+
+#: classes/controllers/FrmFormsController.php:419
+#@ formidable
+msgid "You are trying to edit a form that does not exist."
+msgstr ""
+
+#: classes/controllers/FrmFormsController.php:646
+#: classes/controllers/FrmFormsController.php:649
+#@ formidable
+msgid "Edit Forms"
+msgstr ""
+
+#: classes/controllers/FrmXMLController.php:139
+#@ formidable
+msgid "Imported"
+msgstr ""
+
+#: classes/controllers/FrmXMLController.php:140
+#@ formidable
+msgid "Updated"
+msgstr ""
+
+#: classes/controllers/FrmXMLController.php:154
+#, php-format
+#@ formidable
+msgid "%1$s Form"
+msgid_plural "%1$s Forms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/controllers/FrmXMLController.php:155
+#, php-format
+#@ formidable
+msgid "%1$s Field"
+msgid_plural "%1$s Fields"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/controllers/FrmXMLController.php:156
+#, php-format
+#@ formidable
+msgid "%1$s Entry"
+msgid_plural "%1$s Entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/controllers/FrmXMLController.php:157
+#, php-format
+#@ formidable
+msgid "%1$s View"
+msgid_plural "%1$s Views"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/controllers/FrmXMLController.php:158
+#, php-format
+#@ formidable
+msgid "%1$s Post"
+msgid_plural "%1$s Posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/controllers/FrmXMLController.php:159
+#, php-format
+#@ formidable
+msgid "%1$s Term"
+msgid_plural "%1$s Terms"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classes/controllers/FrmXMLController.php:178
+#@ formidable
+msgid "Nothing was imported or updated"
+msgstr ""
+
+#: classes/views/frm-forms/notification.php:77
+#, php-format
+#@ formidable
+msgid "If you leave the subject blank, the default will be used: %1$s Form submitted on %2$s"
+msgstr ""
+
+#: classes/views/frm-forms/settings.php:78
+#@ formidable
+msgid "Show the form with the confirmation message"
+msgstr ""
+
+#: classes/views/xml/import_form.php:13
+#@ formidable
+msgid "Upload your Formidable XML file to import the forms into this site."
+msgstr ""
+
+#: classes/views/xml/import_form.php:14
+#@ formidable
+msgid "Choose a Formidable XML file to upload, then click \"Upload file and import.\""
+msgstr ""
+
+#: classes/views/xml/import_form.php:44
+#@ formidable
+msgid "Export Format"
+msgstr ""
+
+#: classes/views/xml/import_form.php:69
+#@ formidable
+msgid "Data to Export"
+msgstr ""
+
+#: classes/views/xml/import_form.php:71
+#@ formidable
+msgid "Include the following in the export file"
+msgstr ""
+
+#: classes/views/xml/import_form.php:80
+#@ formidable
+msgid "Select Form(s)"
+msgstr ""
+
+#: classes/views/xml/import_form.php:95
+#@ formidable
+msgid "Hold down the CTRL/Command button to select multiple forms"
+msgstr ""
+
+#: classes/views/xml/importing_xml.php:11
+#@ formidable
+msgid "Importing XML"
+msgstr ""
+
+#: classes/views/xml/importing_xml.php:13
+#, php-format
+#@ formidable
+msgid "The next %1$s of the remaining %2$s items are importing."
+msgstr ""
+
+#: pro/classes/controllers/FrmProEntriesController.php:1325
+#@ formidable
+msgid "Your import is complete"
+msgstr ""
+
+#: pro/classes/controllers/FrmProXMLController.php:64
+#@ formidable
+msgid "Upload your Formidable XML or CSV file to import the forms, entries, and views into this site."
+msgstr ""
+
+#: pro/classes/views/displays/mb_advanced.php:70
+#@ formidable
+msgid "Insert View"
+msgstr ""
+
+#: pro/classes/views/frmpro-fields/options-form.php:69
+#@ formidable
+msgid "Use four digit years or +/- years to make it dynamic. For example, use -5 for the start year and +5 for the end year."
+msgstr ""
+
+#: pro/classes/views/frmpro-forms/add_form_options.php:84
+#@ formidable
+msgid "Action After Edit"
+msgstr ""
+
+#: pro/classes/views/settings/form.php:1
+#@ formidable
+msgid "Edit Message"
+msgstr ""
+
+#: pro/classes/views/settings/form.php:1
+#@ formidable
+msgid "The default message seen when after an entry is updated."
+msgstr ""
+
+#: pro/classes/views/settings/form.php:5
+#@ formidable
+msgid "Update Button"
+msgstr ""
+
+#: pro/classes/views/settings/form.php:5
+#@ formidable
+msgid "The label on the submit button when editing and entry."
+msgstr ""
+
+#: pro/classes/views/xml/import_csv.php:13
+#, php-format
+#@ formidable
+msgid "%1$s entries are importing"
+msgstr ""
+
+#: pro/classes/views/xml/map_csv_fields.php:62
+#@ formidable
+msgid "Note: If you select a field for the Entry ID, the matching entry with that ID will be updated."
+msgstr ""
+
+#: pro/classes/widgets/FrmListEntries.php:176
+#@ formidable
+msgid "Use Settings from View"
+msgstr ""
+
+#: pro/classes/widgets/FrmListEntries.php:184
+#@ formidable
+msgid "Views with a \"Both (Dynamic)\" format will show here."
+msgstr ""
+
+#: pro/classes/widgets/FrmListEntries.php:186
+#@ formidable
+msgid "Page if not specified in View settings"
 msgstr ""
 
