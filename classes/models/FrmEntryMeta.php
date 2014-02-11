@@ -33,9 +33,10 @@ class FrmEntryMeta{
     function update_entry_meta($entry_id, $field_id, $meta_key = null, $meta_value){
         global $wpdb;
         
-        $where_values = array( 'item_id' => $entry_id, 'field_id' => $field_id );
-        $meta_value = apply_filters('frm_update_entry_meta', $meta_value, $where_values);
-        $meta_value = maybe_serialize($meta_value);
+        $values = $where_values = array( 'item_id' => $entry_id, 'field_id' => $field_id );
+        $values['meta_value'] = $meta_value;
+        $values = apply_filters('frm_update_entry_meta', $values);
+        $meta_value = maybe_serialize($values['meta_value']);
         
         return $wpdb->update( $wpdb->prefix .'frm_item_metas', array( 'meta_value' => $meta_value ), $where_values );
     }
