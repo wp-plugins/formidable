@@ -255,7 +255,7 @@ class FrmFormsController{
         $controller = FrmAppHelper::get_param('controller');
         $key = (isset($_GET['form']) ? $_GET['form'] : (isset($_POST['form']) ? $_POST['form'] : ''));
         $form = $frm_form->getAll(array('form_key' => $key), '', 1);
-        if (!$form) $form = $frm_form->getAll(array(), '', 1);
+        if (!$form) $form = $frm_form->getAll('', '', 1);
         
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/direct.php');
         die(); 

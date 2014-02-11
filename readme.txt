@@ -83,6 +83,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added update message and button to global default messages
 * PRO: Added progress bar to csv import
 * PRO: Added frm_csv_line_break filter for changing line breaks in csv export
+* PRO: Change the updated_at and updated_by values when a field is changed with the edit field link
 * PRO: Fixed adding new conditional logic to newly added notifications
 * PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL
 * PRO: Don't apply custom display filters to single post page
@@ -93,6 +94,10 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow data from entries fields to be used as x_axis in graphs
 * PRO: Add height and line-height to Global Settings
 * PRO: Filter the empty_msg for Views
+* PRO: Added draft status to csv export/import
+* PRO: Check for valid file type when saving a draft
+* PRO: Added frm_get_categories hook
+* PRO: Added frm_jquery_themes hook for creating custom jQuery calendar themes
 
 = 1.07.04 =
 * Minor back-end styling fixes

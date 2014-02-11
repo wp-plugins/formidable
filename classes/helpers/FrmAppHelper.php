@@ -574,12 +574,16 @@ class FrmAppHelper{
     }
     
     public static function prepend_and_or_where( $starts_with = ' WHERE ', $where = '' ){
+        if ( empty($where) ) {
+            return '';
+        }
+        
         if(is_array($where)){
             global $frmdb, $wpdb;
             extract($frmdb->get_where_clause_and_values( $where ));
             $where = $wpdb->prepare($where, $values);
         }else{
-            $where = (( $where == '' ) ? '' : $starts_with . $where);
+            $where = $starts_with . $where;
         }
         
         return $where;
