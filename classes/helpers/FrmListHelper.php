@@ -84,7 +84,7 @@ class FrmListHelper extends WP_List_Table {
             </ol>
 <?php   }else{ 
             _e('No Forms Found', 'formidable') ?>. 
-            <a href="?page=formidable&amp;frm_action=new-selection"><?php _e('Add New'); ?></a>
+            <a href="?page=formidable&amp;frm_action=new-selection"><?php _e('Add New', 'formidable'); ?></a>
 <?php   }
 	}
 	

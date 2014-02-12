@@ -239,20 +239,23 @@ class FrmFieldsController{
         global $current_screen, $hook_suffix;
 
         // Catch plugins that include admin-header.php before admin.php completes.
-        if ( empty( $current_screen ) ) {
+        if ( empty( $current_screen ) && function_exists('set_current_screen') ) {
             $hook_suffix = '';
         	set_current_screen();
         }
         
-        register_admin_color_schemes();
+        if ( function_exists('register_admin_color_schemes') ) {
+            register_admin_color_schemes();
+        }
         
         $hook_suffix = $admin_body_class = '';
         
         if ( get_user_setting('mfold') == 'f' )
         	$admin_body_class .= ' folded';
 
-        if ( is_admin_bar_showing() )
+        if ( function_exists('is_admin_bar_showing') && is_admin_bar_showing() ) {
         	$admin_body_class .= ' admin-bar';
+        }
 
         if ( is_rtl() )
         	$admin_body_class .= ' rtl';
@@ -262,8 +265,14 @@ class FrmFieldsController{
         $prepop[__('Countries', 'formidable')] = FrmAppHelper::get_countries();
         
         $states = FrmAppHelper::get_us_states();
-        $prepop[__('U.S. States', 'formidable')] = sort(array_values($states));
-        $prepop[__('U.S. State Abbreviations', 'formidable')] = sort(array_keys($states));
+        $state_abv = array_keys($states);
+        sort($state_abv);
+        $prepop[__('U.S. State Abbreviations', 'formidable')] = $state_abv;
+        $states = array_values($states);
+        sort($states);
+        $prepop[__('U.S. States', 'formidable')] = $states;
+        unset($state_abv);
+        unset($states);
         
         $prepop[__('Age', 'formidable')] = array(
             __('Under 18', 'formidable'), __('18-24', 'formidable'), __('25-34', 'formidable'), 
