@@ -96,6 +96,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Filter the empty_msg for Views
 * PRO: Added draft status to csv export/import
 * PRO: Check for valid file type when saving a draft
+* PRO: Added sorting on entry listing table for non-post fields
 * PRO: Added frm_get_categories hook
 * PRO: Added frm_jquery_themes hook for creating custom jQuery calendar themes
 

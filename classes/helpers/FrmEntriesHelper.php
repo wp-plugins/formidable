@@ -14,24 +14,28 @@ class FrmEntriesHelper{
             $values[$var] = FrmAppHelper::get_post_param($var, $default);
         
         $values['fields'] = array();
-        if (!empty($fields)){
-            foreach((array)$fields as $field){
-                $field->field_options = maybe_unserialize($field->field_options);
-                $default = $field->default_value;
+        if (empty($fields)){
+            return apply_filters('frm_setup_new_entry', $values);
+        }
+        
+        foreach ( (array) $fields as $field ) {
+            $field->field_options = maybe_unserialize($field->field_options);
+            $default = $field->default_value;
               
-                if ($reset)
-                    $new_value = $default;
-                else
-                    $new_value = ($_POST and isset($_POST['item_meta'][$field->id]) and $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : ((isset($field->field_options['clear_on_focus']) and $field->field_options['clear_on_focus'] ) ? '' : $default );
+            if ( $reset ) {
+                $new_value = $default;
+            } else {
+                $new_value = ($_POST && isset($_POST['item_meta'][$field->id]) && $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : ((isset($field->field_options['clear_on_focus']) && $field->field_options['clear_on_focus'] ) ? '' : $default );
+            }
+            
+            $is_default = ($new_value == $default) ? true : false;
                 
-                $is_default = ($new_value == $default) ? true : false;
+            $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
                 
-                $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
-                
-                if (!is_array($new_value)){
-                    $new_value = $is_default ? $field->default_value : apply_filters('frm_filter_default_value', $new_value, $field);
-                    $new_value = str_replace('"', '&quot;', $new_value);
-                }
+            if ( !is_array($new_value) ) {
+                $new_value = $is_default ? $field->default_value : apply_filters('frm_filter_default_value', $new_value, $field);
+                $new_value = str_replace('"', '&quot;', $new_value);
+            }
                 
                 $field_array = array(
                     'id' => $field->id,
@@ -80,7 +84,7 @@ class FrmEntriesHelper{
                     $frm_form = new FrmForm();
                     $form = $frm_form->getOne($field->form_id);
                 }
-            }
+        }
 
             $form->options = maybe_unserialize($form->options);
             if (is_array($form->options)){
@@ -111,7 +115,6 @@ class FrmEntriesHelper{
                 
             if (!isset($values['submit_html']))
                 $values['submit_html'] = FrmFormsHelper::get_default_html('submit');
-        }
         
         return apply_filters('frm_setup_new_entry', $values);
     }

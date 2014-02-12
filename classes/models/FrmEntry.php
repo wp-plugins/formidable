@@ -271,6 +271,12 @@ class FrmEntry{
                 it.created_at, it.updated_at, it.is_draft FROM {$wpdb->prefix}frm_items it" .
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         }
+        
+        if ( preg_match( '/ meta_([0-9]+)/', $order_by, $order_matches ) ) {
+    		// sort by a requested field
+    		$query = str_replace( " FROM {$wpdb->prefix}frm_items ", ", (SELECT meta_value FROM {$wpdb->prefix}frm_item_metas WHERE field_id = {$order_matches[1]} AND item_id = it.id) as meta_{$order_matches[1]} FROM {$wpdb->prefix}frm_items ", $query );
+		}
+		
         $entries = $wpdb->get_results($query, OBJECT_K);
         unset($query);
         
