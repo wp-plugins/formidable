@@ -289,6 +289,10 @@ function frmClickTab(t, link){
 	jQuery(t).show();
 	jQuery(c).show();
 	
+	if(jQuery(link).closest('#frm_adv_info').length){
+		return;
+	}
+	
 	if(jQuery('.frm_form_settings').length){
 		jQuery('.frm_form_settings').attr('action', '?page=formidable&frm_action=settings&id='+jQuery('.frm_form_settings input[name="id"]').val()+'&t='+t.replace('#', ''));
 	}else{
