@@ -99,6 +99,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added sorting on entry listing table for non-post fields
 * PRO: Added frm_get_categories hook
 * PRO: Added frm_jquery_themes hook for creating custom jQuery calendar themes
+* PRO: Added frm_no_data_graph hook for customizing "No Data" message for graphs
 
 = 1.07.04 =
 * Minor back-end styling fixes
