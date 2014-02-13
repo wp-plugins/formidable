@@ -187,7 +187,8 @@ class FrmEntry{
         
         $entry = $this->getOne($id);
         if ( !$entry ) {
-            return false;
+            $result = false;
+            return $result;
         }
         
         do_action('frm_before_destroy_entry', $id, $entry);
