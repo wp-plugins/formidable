@@ -21,11 +21,17 @@ class FrmEntriesHelper{
         foreach ( (array) $fields as $field ) {
             $field->field_options = maybe_unserialize($field->field_options);
             $default = $field->default_value;
-              
+            $posted_val = false;
+            
             if ( $reset ) {
                 $new_value = $default;
+            } else if ( $_POST && isset($_POST['item_meta'][$field->id]) && $_POST['item_meta'][$field->id] != '' ) {
+                $new_value = stripslashes_deep($_POST['item_meta'][$field->id]);
+                $posted_val = true;
+            } else if ( isset($field->field_options['clear_on_focus']) && $field->field_options['clear_on_focus'] ) {
+                $new_value = '';
             } else {
-                $new_value = ($_POST && isset($_POST['item_meta'][$field->id]) && $_POST['item_meta'][$field->id] != '') ? stripslashes_deep($_POST['item_meta'][$field->id]) : ((isset($field->field_options['clear_on_focus']) && $field->field_options['clear_on_focus'] ) ? '' : $default );
+                $new_value = $default;
             }
             
             $is_default = ($new_value == $default) ? true : false;
@@ -33,9 +39,17 @@ class FrmEntriesHelper{
             $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
                 
             if ( !is_array($new_value) ) {
-                $new_value = $is_default ? $field->default_value : apply_filters('frm_filter_default_value', $new_value, $field);
+                if ( $is_default ) {
+                    $new_value = $field->default_value;
+                } else if ( !$posted_val ) {
+                    $new_value = apply_filters('frm_filter_default_value', $new_value, $field);
+                }
+                
                 $new_value = str_replace('"', '&quot;', $new_value);
             }
+            
+            unset($is_default);
+            unset($posted_val);
                 
                 $field_array = array(
                     'id' => $field->id,

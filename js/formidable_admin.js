@@ -327,9 +327,9 @@ function frmLoadField(field_id){
 }
 
 function frmSubmitBuild(b){
+	var p=jQuery(b).val();
 	frmPreFormSave(b);
 	
-	var p=jQuery(b).val();
 	var form=jQuery('#frm_build_form');
 	var v=JSON.stringify(form.serializeArray());
 	jQuery('#frm_compact_fields').val(v);
