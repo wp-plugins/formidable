@@ -10,12 +10,11 @@
     <div class="postbox ">
     <h3 class="hndle"><span><?php _e('Import', 'formidable') ?></span></h3>
     <div class="inside">
-        <p><?php echo apply_filters('frm_upload_instructions1', __('Upload your Formidable XML file to import the forms into this site.', 'formidable')) ?></p>
-        <p><?php echo apply_filters('frm_upload_instructions2', __('Choose a Formidable XML file to upload, then click "Upload file and import."', 'formidable')) ?></p>
+        <p class="howto"><?php echo apply_filters('frm_upload_instructions1', __('Upload your Formidable XML file to import the forms into this site. If your imported form key and creation date match a form on your site, that form will be updated.', 'formidable')) ?></p>
         <br/>
         <form enctype="multipart/form-data" method="post">
             <input type="hidden" name="frm_action" value="import_xml" />
-            <p><label><?php _e('Choose a file from your computer', 'formidable') ?></label> (<?php printf(__('Maximum size: %s', 'formidable'), ini_get('upload_max_filesize')) ?>)
+            <p><label><?php echo apply_filters('frm_upload_instructions2', __('Choose a Formidable XML file', 'formidable')) ?> (<?php printf(__('Maximum size: %s', 'formidable'), ini_get('upload_max_filesize')) ?>)</label>
             <input type="file" name="frm_import_file" size="25" />
             </p>
             

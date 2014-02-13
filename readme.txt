@@ -75,6 +75,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Expanded conditional logic for email notifications
 * PRO: Allow the frm-field-value shortcode to get the entry ID from the URL. [frm-field-value field_id=x entry_id=id]. Replace "id" with the name of the parameter in your URL
 * PRO: Added separate set of confirmation options for editing
+* PRO: Added option to disable visual tab on each view
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
 * PRO: Added drafts parameter to view shortcode to show draft entries. [display-frm-data id=40 drafts=1]
 * PRO: Switched star ratings to icon font
