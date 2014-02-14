@@ -148,7 +148,7 @@ class FrmEntry{
         $new_values = array(
             'name'      => isset($values['name']) ? $values['name'] : '',
             'form_id'   => isset($values['form_id']) ? (int) $values['form_id'] : null,
-            'is_draft'  => ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ? 1 : 0,
+            'is_draft'  => ( ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ||  ( isset($values['is_draft']) && $values['is_draft'] == 1) ) ? 1 : 0,
             'updated_at' => current_time('mysql', 1),
             'updated_by' => isset($values['updated_by']) ? $values['updated_by'] : $user_ID,
         );
