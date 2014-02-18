@@ -91,7 +91,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Fixed showing only file name in views
 * PRO: Removed Pretty Link plugin integration to be placed in an add-on
 * PRO: Added delete_link and confirm parameter to formresults shortcode
-* PRO: Added entry_id, x_title, y_title, and tooltip_label to graph shortcode options
+* PRO: Added entry_id, x_title, y_title, start_date, and tooltip_label to graph shortcode options
 * PRO: Allow data from entries fields to be used as x_axis in graphs
 * PRO: Add height and line-height to Global Settings
 * PRO: Filter the empty_msg for Views
