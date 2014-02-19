@@ -98,6 +98,9 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added draft status to csv export/import
 * PRO: Check for valid file type when saving a draft
 * PRO: Added sorting on entry listing table for non-post fields
+* PRO: Fixed form pagination with errors and no ajax validation
+* PRO: Changed image to a link when editing an entry with an image
+* PRO: Moved the frm_setup_new_fields_vars hook to fire later when dynamically getting options from a dependent data from entries field
 * PRO: Added frm_get_categories hook
 * PRO: Added frm_jquery_themes hook for creating custom jQuery calendar themes
 * PRO: Added frm_no_data_graph hook for customizing "No Data" message for graphs

@@ -169,7 +169,7 @@ return false;
         global $pagenow;
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
-        wp_register_script('bootstrap_tooltip', FrmAppHelper::plugin_url() .'/js/bootstrap.min.js', array('jquery'), '3.0.2');
+        wp_register_script('bootstrap_tooltip', FrmAppHelper::plugin_url() .'/js/bootstrap.min.js', array('jquery'), '3.0.3');
         
         if ( isset($_GET) && (isset($_GET['page']) && preg_match('/formidable*/', $_GET['page'])) || ($pagenow == 'edit.php' && isset($_GET) && isset($_GET['post_type']) && $_GET['post_type'] == 'frm_display') ) {
             $version = FrmAppHelper::plugin_version();
@@ -180,7 +180,7 @@ return false;
             wp_enqueue_script('admin-widgets');
             wp_enqueue_style('widgets');
             wp_enqueue_script('formidable');
-            wp_enqueue_script('formidable_admin', FrmAppHelper::plugin_url() .'/js/formidable_admin.js', array('formidable', 'jquery', 'jquery-ui-draggable'), $version);
+            wp_enqueue_script('formidable_admin', FrmAppHelper::plugin_url() .'/js/formidable_admin.js', array('formidable', 'jquery', 'jquery-ui-draggable', 'bootstrap_tooltip'), $version);
             self::localize_script('admin');
             
             wp_enqueue_style('formidable-admin', FrmAppHelper::plugin_url() .'/css/frm_admin.css', array(), $version);
@@ -188,7 +188,7 @@ return false;
             
             wp_register_script('formidable-editinplace', FrmAppHelper::plugin_url() .'/js/jquery/jquery.editinplace.packed.js', array('jquery'), '2.3.0');
             wp_register_script('jquery-frm-themepicker', FrmAppHelper::plugin_url() .'/js/jquery/jquery-ui-themepicker.js', array('jquery'), $version);
-            wp_enqueue_script('bootstrap_tooltip');
+            
             
         }else if($pagenow == 'post.php' or ($pagenow == 'post-new.php' and isset($_REQUEST['post_type']) and $_REQUEST['post_type'] == 'frm_display')){
             if(isset($_REQUEST['post_type'])){
@@ -205,9 +205,8 @@ return false;
             if($post_type == 'frm_display'){
                 $version = FrmAppHelper::plugin_version();
                 wp_enqueue_script('jquery-ui-draggable');
-                wp_enqueue_script('formidable_admin', FrmAppHelper::plugin_url() . '/js/formidable_admin.js', array('formidable', 'jquery', 'jquery-ui-draggable'), $version);
+                wp_enqueue_script('formidable_admin', FrmAppHelper::plugin_url() . '/js/formidable_admin.js', array('formidable', 'jquery', 'jquery-ui-draggable', 'bootstrap_tooltip'), $version);
                 wp_enqueue_style('formidable-admin', FrmAppHelper::plugin_url(). '/css/frm_admin.css', array(), $version);
-                wp_enqueue_script('bootstrap_tooltip');
                 self::localize_script('admin');
             }
         }
