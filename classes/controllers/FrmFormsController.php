@@ -199,6 +199,9 @@ class FrmFormsController{
         }else{
             $record = $frm_form->update( $id, $values );
             $message = __('Form was Successfully Updated', 'formidable');
+            if ( defined('DOING_AJAX') ) {
+                die($message);
+            }
             return self::get_edit_vars($id, '', $message);
         }
     }

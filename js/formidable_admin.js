@@ -336,10 +336,12 @@ function frmSubmitBuild(b){
 	jQuery.ajax({
 		type:"POST",url:ajaxurl,
 	    data:{action:'frm_save_form','frm_compact_fields':v},
-	    success:function(errObj){
+	    success:function(msg){
 			jQuery(b).val(frm_admin_js.saved);
 			jQuery(b).nextAll('.frm-loading-img').css('visibility', 'hidden');
+			jQuery('#poststuff').prepend('<div id="message" class="frm_message updated" style="padding:5px;">'+msg+'</div>');
 			setTimeout(function(){
+				jQuery('#message.frm_message').fadeOut('slow');
 				jQuery(b).fadeOut('slow', function(){
 					jQuery(b).val(p);
 					jQuery(b).show();
