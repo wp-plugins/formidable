@@ -99,22 +99,13 @@ class FrmXMLController{
             'xml' => array( 'name' => 'XML', 'support' => 'forms', 'count' => 'multiple'),
         ));
         
-        if ( $_FILES['frm_import_file']['type'] != 'text/xml' ) {
-            
+        $file_type = strtolower(pathinfo($_FILES['frm_import_file']['name'], PATHINFO_EXTENSION));
+        if ( $file_type != 'xml' && isset($export_format[$file_type]) ) {
             // allow other file types to be imported
-            foreach ( $export_format as $format => $format_opts ) {
-                if ( $format == 'xml' ) {
-                    continue;
-                }
-                
-                do_action('frm_before_import_'. $format );
-                
-                unset($format);
-                unset($format_opts);
-            }
-            
+            do_action('frm_before_import_'. $file_type );
             return;
         }
+        unset($file_type);
         
         //$media_id = FrmProAppHelper::upload_file('frm_import_file');
         //if(is_numeric($media_id)){
