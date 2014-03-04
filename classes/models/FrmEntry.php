@@ -13,7 +13,7 @@ class FrmEntry{
             'item_key'  => FrmAppHelper::get_unique_key($values['item_key'], $wpdb->prefix .'frm_items', 'item_key'),
             'name'      => isset($values['name']) ? $values['name'] : $values['item_key'],
             'ip'        => $_SERVER['REMOTE_ADDR'],
-            'is_draft'  => ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ? 1 : 0,
+            'is_draft'  => ( ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ||  ( isset($values['is_draft']) && $values['is_draft'] == 1) ) ? 1 : 0,
             'form_id'   => isset($values['form_id']) ? (int) $values['form_id']: null,
             'post_id'   => isset($values['post_id']) ? (int) $values['post_id']: null,
             'created_at' => isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1),
@@ -422,7 +422,8 @@ class FrmEntry{
     	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
         
-        return apply_filters('frm_validate_entry', $errors, $values);
+        $errors = apply_filters('frm_validate_entry', $errors, $values);
+        return $errors;
     }
     
     //Check entries for spam -- returns true if is spam
