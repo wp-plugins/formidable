@@ -125,7 +125,12 @@ form label.frm_primary_label input{font-size:12px;}
 	border:solid 1px #dfdfdf;
 }
 .frm_form_fields textarea.wp-editor-area{width:100%;border:none;}
-.frm_form_fields input[type="file"]{background:transparent;border:none;}
+.frm_form_fields input[type="file"], .frm_form_fields input[type="file"]:disabled{
+	background:transparent;
+	border:none;
+	box-shadow:none;
+	width:auto;
+}
 .frm_form_fields select{width:auto;}
 .frm_form_fields input[type="radio"], .frm_form_fields input[type="checkbox"]{width:auto;padding:0;}
 .frm_catlevel_2, .frm_catlevel_3, .frm_catlevel_4, .frm_catlevel_5{margin-left:18px;}
