@@ -160,6 +160,14 @@ class FrmXMLHelper{
     		        'field_options' => FrmAppHelper::maybe_json_decode( (string) $field->field_options)
     		    );
     		    
+    		    if ( is_array($f['default_value']) && in_array($f['type'], array('text', 'email', 'url', 'textarea', 'number', 'phone', 'date', 'time', 'image', 'hidden', 'password', 'tag')) ) {
+    		        if ( count($f['default_value']) === 1 ) {
+    		            $f['default_value'] = '['. reset($f['default_value']) .']';
+    		        } else {
+    		            $f['default_value'] = reset($f['default_value']);
+    		        }
+    		    }
+    		    
     		    $f = apply_filters('frm_duplicated_field', $f);
     		    
     		    if ( $this_form ) {

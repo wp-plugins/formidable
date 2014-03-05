@@ -10,7 +10,7 @@
     <div class="postbox ">
     <h3 class="hndle"><span><?php _e('Import', 'formidable') ?></span></h3>
     <div class="inside">
-        <p class="howto"><?php echo apply_filters('frm_upload_instructions1', __('Upload your Formidable XML file to import the forms into this site. If your imported form key and creation date match a form on your site, that form will be updated.', 'formidable')) ?></p>
+        <p class="howto"><?php echo apply_filters('frm_upload_instructions1', __('Upload your Formidable XML file to import forms into this site. If your imported form key and creation date match a form on your site, that form will be updated.', 'formidable')) ?></p>
         <br/>
         <form enctype="multipart/form-data" method="post">
             <input type="hidden" name="frm_action" value="import_xml" />
