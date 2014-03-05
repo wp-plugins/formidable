@@ -521,10 +521,17 @@ jQuery(this).parent('.frm_uploaded_files').fadeOut('slow').replaceWith('');
 }
 
 function frmNextUpload(obj,id){
-obj.wrap('<div class="frm_file_names frm_uploaded_files">'); 
-obj.after(obj.val()+' <a href="#" onclick="frmClearFile(jQuery(this));return false;">'+frm_js.remove+'</a>');
-obj.hide(); 
-jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" type="file" onchange="frmNextUpload(jQuery(this),'+id+')"/>');
+	obj.wrap('<div class="frm_file_names frm_uploaded_files">');
+	var files = obj.get(0).files;
+	for (var i = 0; i < files.length; i++){
+		if(files.length == 1){
+			obj.after(files[i].name+' <a href="#" onclick="frmClearFile(jQuery(this));return false;">'+frm_js.remove+'</a>');
+		} else {
+			obj.after(files[i].name +'<br/>');
+		}
+	}
+	obj.hide(); 
+	jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" multiple="multiple" type="file" onchange="frmNextUpload(jQuery(this),'+id+')"/>');
 }
 
 function frmClearFile(file){
