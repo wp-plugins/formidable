@@ -93,6 +93,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added delete_link and confirm parameter to formresults shortcode
 * PRO: Added entry_id, x_title, y_title, start_date, and tooltip_label to graph shortcode options
 * PRO: Allow data from entries fields to be used as x_axis in graphs
+* PRO: Allow field keys in graph shortcode
 * PRO: Add height and line-height to Global Settings
 * PRO: Filter the empty_msg for Views
 * PRO: Added draft status to csv export/import
