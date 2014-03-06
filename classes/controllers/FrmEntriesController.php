@@ -157,7 +157,7 @@ class FrmEntriesController{
                 );
                 $frmpro_settings = (object) $frmpro_settings;
             }
-            $content .= "<table cellspacing='0' style='font-size:12px;line-height:135%; border-bottom:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color};'><tbody>\r\n";
+            $content .= "<table cellspacing='0' style='font-size:{$frmpro_settings->font_size};line-height:135%; border-bottom:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color};'><tbody>\r\n";
             $bg_color = " style='background-color:#{$frmpro_settings->bg_color};'";
             $bg_color_alt = " style='background-color:#{$frmpro_settings->bg_color_active};'";
             $row_style = "style='text-align:left;color:#{$frmpro_settings->text_color};padding:7px 9px;border-top:{$frmpro_settings->field_border_width} solid #{$frmpro_settings->border_color}'";
@@ -168,7 +168,18 @@ class FrmEntriesController{
                 continue;
             
             if ( !isset($entry->metas[$f->id]) ) {
-                if ( !$include_blank && !$default_email ) {
+                if ( $entry->post_id  && ( $f->type == 'tag' || (isset($f->field_options['post_field']) && $f->field_options['post_field'])) ) {
+                    $p_val = FrmProEntryMetaHelper::get_post_value($entry->post_id, $f->field_options['post_field'], $f->field_options['custom_field'], array(
+                        'truncate' => (($f->field_options['post_field'] == 'post_category') ? true : false), 
+                        'form_id' => $entry->form_id, 'field' => $f, 'type' => $f->type, 
+                        'exclude_cat' => (isset($f->field_options['exclude_cat']) ? $f->field_options['exclude_cat'] : 0)
+                    ));
+                    if ( $p_val != '' ) {
+                        $entry->metas[$f->id] = $p_val;
+                    }
+                }
+                
+                if ( !isset($entry->metas[$f->id]) && !$include_blank && !$default_email ) {
                     continue;
                 }
                 

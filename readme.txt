@@ -79,6 +79,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Added 'action' parameter back to the frm_redirect_url hook
 * PRO: Added drafts parameter to view shortcode to show draft entries. [display-frm-data id=40 drafts=1]
 * PRO: Switched star ratings to icon font
+* PRO: Added multiple="multiple" into multiple file upload fields
 * PRO: Allow field keys in the exlude_fields shortcode option
 * PRO: Allow updated-at, created-at, updated-by to by used in conditional statements
 * PRO: Added update message and button to global default messages
