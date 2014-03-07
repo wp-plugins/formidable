@@ -201,7 +201,9 @@ DEFAULT_HTML;
         
 
         /**** ADD/UPDATE DEFAULT TEMPLATES ****/
-        FrmXMLController::add_default_templates();
+        if ( class_exists('FrmXMLController') ) {
+            FrmXMLController::add_default_templates();
+        }
 
       
         /***** SAVE DB VERSION *****/
