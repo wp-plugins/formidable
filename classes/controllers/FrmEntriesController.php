@@ -44,12 +44,12 @@ class FrmEntriesController{
     
     public static function show_form($id='', $key='', $title=false, $description=false){
         _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::show_form()' );
-        FrmFormsController::show_form($id, $key, $title, $description);
+        return FrmFormsController::show_form($id, $key, $title, $description);
     }
     
     public static function get_form($filename, $form, $title, $description) {
         _deprecated_function( __FUNCTION__, '1.07.05', 'FrmFormsController::get_form()' );
-        FrmFormsController::get_form($form, $title, $description);
+        return FrmFormsController::get_form($form, $title, $description);
     }
     
     public static function process_entry($errors='', $ajax=false){

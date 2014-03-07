@@ -34,6 +34,10 @@ class FrmXMLHelper{
             define('WP_IMPORTING', true);
         }
         
+        if ( !class_exists('DOMDocument') ) {
+            return new WP_Error( 'SimpleXML_parse_error', __( 'Your server does not have XML enabled', 'formidable' ), libxml_get_errors() );
+        }
+        
         $dom = new DOMDocument;
 		$success = $dom->loadXML( file_get_contents( $file ) );
 		if ( !$success ) {
@@ -131,9 +135,7 @@ class FrmXMLHelper{
                 $old_fields = array();
                 foreach ( $form_fields as $f ) {
                     $old_fields[$f->id] = $f;
-                    if ( $form['is_template'] ) {
-                        $old_fields[$f->field_key] = $f->id;
-                    }
+                    $old_fields[$f->field_key] = $f->id;
                     unset($f);
                 }
                 $form_fields = $old_fields;

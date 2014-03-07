@@ -98,7 +98,9 @@ class FrmForm{
     function after_duplicate($form_id, $values) {
         $new_opts = $values['options'] = maybe_unserialize($values['options']);
         
-        $new_opts['success_msg'] = FrmFieldsHelper::switch_field_ids($new_opts['success_msg']);
+        if ( isset($new_opts['success_msg']) ) {
+            $new_opts['success_msg'] = FrmFieldsHelper::switch_field_ids($new_opts['success_msg']);
+        }
         
         $new_opts = apply_filters('frm_after_duplicate_form_values', $new_opts, $form_id);
         

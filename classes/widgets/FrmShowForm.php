@@ -60,5 +60,3 @@ class FrmShowForm extends WP_Widget {
 <?php 
 	}
 }
-
-?>

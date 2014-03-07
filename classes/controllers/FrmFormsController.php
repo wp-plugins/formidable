@@ -66,7 +66,7 @@ class FrmFormsController{
     }
     
     public static function register_widgets(){
-        require(FrmAppHelper::plugin_path() . '/classes/widgets/FrmShowForm.php');
+        require_once(FrmAppHelper::plugin_path() . '/classes/widgets/FrmShowForm.php');
         register_widget('FrmShowForm');
     }
     
@@ -678,10 +678,14 @@ class FrmFormsController{
             return $sc .']';
         }
         
-        $shortcode_atts = shortcode_atts(array('id' => '', 'key' => '', 'title' => false, 'description' => false, 'readonly' => false, 'entry_id' => false, 'fields' => array(), 'exclude_fields' => array()), $atts);
+        $shortcode_atts = shortcode_atts(array(
+            'id' => '', 'key' => '', 'title' => false, 'description' => false,
+            'readonly' => false, 'entry_id' => false, 'fields' => array(),
+            'exclude_fields' => array(), 'minimize' => false,
+        ), $atts);
         do_action('formidable_shortcode_atts', $shortcode_atts, $atts);
         extract($shortcode_atts);
-        return self::show_form($id, $key, $title, $description); 
+        return self::show_form($id, $key, $title, $description, $atts); 
     }
     
     //filter form shortcode in text widgets
@@ -690,7 +694,7 @@ class FrmFormsController{
     	return preg_replace_callback( $regex, 'FrmAppController::widget_text_filter_callback', $content );
     }
     
-    public static function show_form($id = '', $key = '', $title = false, $description = false) {
+    public static function show_form($id = '', $key = '', $title = false, $description = false, $atts = array()) {
         global $frm_settings, $post;
         
         $frm_form = new FrmForm();
@@ -724,7 +728,7 @@ class FrmFormsController{
             return do_shortcode($frm_settings->login_msg);
         }
         
-        $form = self::get_form($form, $title, $description);
+        $form = self::get_form($form, $title, $description, $atts);
         
         // check for external shortcodes
         $form = do_shortcode($form);
@@ -732,7 +736,7 @@ class FrmFormsController{
         return $form;
     }
     
-    public static function get_form($form, $title, $description) {
+    public static function get_form($form, $title, $description, $atts = array()) {
         global $frm_field, $frm_entry, $frm_entry_meta, $frm_settings, $frm_vars;
         $form_name = $form->name;
 
@@ -761,8 +765,10 @@ class FrmFormsController{
             include $filename;
             $contents = ob_get_contents();
             ob_end_clean();
-            // TODO: check if minimizing is turned on
-            //$contents = preg_replace('(\r|\n|\t)', '', $contents);
+            // check if minimizing is turned on
+            if ( isset($atts['minimize']) && !empty($atts['minimize']) ) {
+                $contents = preg_replace('(\r|\n|\t)', '', $contents);
+            }
             return $contents;
         }
         return false;
