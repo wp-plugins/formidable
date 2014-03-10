@@ -21,7 +21,7 @@ Text Domain: formidable
     GNU General Public License for more details.
 */
 
-require(dirname( __FILE__ ) .'/classes/models/FrmSettings.php');
+require_once(dirname( __FILE__ ) .'/classes/models/FrmSettings.php');
 
 global $frm_vars;
 $frm_vars = array(
@@ -29,7 +29,7 @@ $frm_vars = array(
     'created_entries' => array(), 'pro_is_installed' => false
 );
 
-require(dirname( __FILE__ ) .'/classes/helpers/FrmAppHelper.php');
+require_once(dirname( __FILE__ ) .'/classes/helpers/FrmAppHelper.php');
 $obj = new FrmAppHelper();
 
 /***** SETUP SETTINGS OBJECT *****/
@@ -58,12 +58,12 @@ $frm_settings->set_default_options(); // Sets defaults for unset options
 $frm_path = FrmAppHelper::plugin_path();
 
 // Instansiate Models
-require($frm_path .'/classes/models/FrmDb.php');  
-require($frm_path .'/classes/models/FrmField.php');
-require($frm_path .'/classes/models/FrmForm.php');
-require($frm_path .'/classes/models/FrmEntry.php');
-require($frm_path .'/classes/models/FrmEntryMeta.php');
-require($frm_path .'/classes/models/FrmNotification.php');
+require_once($frm_path .'/classes/models/FrmDb.php');  
+require_once($frm_path .'/classes/models/FrmField.php');
+require_once($frm_path .'/classes/models/FrmForm.php');
+require_once($frm_path .'/classes/models/FrmEntry.php');
+require_once($frm_path .'/classes/models/FrmEntryMeta.php');
+require_once($frm_path .'/classes/models/FrmNotification.php');
 
 global $frmdb;
 global $frm_field;
@@ -80,10 +80,10 @@ $obj = new FrmNotification();
 
 
 // Instansiate Controllers
-require($frm_path .'/classes/controllers/FrmAppController.php');
-require($frm_path .'/classes/controllers/FrmFieldsController.php');
-require($frm_path .'/classes/controllers/FrmFormsController.php');
-require($frm_path .'/classes/controllers/FrmEntriesController.php');
+require_once($frm_path .'/classes/controllers/FrmAppController.php');
+require_once($frm_path .'/classes/controllers/FrmFieldsController.php');
+require_once($frm_path .'/classes/controllers/FrmFormsController.php');
+require_once($frm_path .'/classes/controllers/FrmEntriesController.php');
 
 FrmAppController::load_hooks();
 FrmEntriesController::load_hooks();
@@ -91,24 +91,24 @@ FrmFieldsController::load_hooks();
 FrmFormsController::load_hooks();
 
 if(is_admin()){
-    require($frm_path .'/classes/controllers/FrmSettingsController.php');
+    require_once($frm_path .'/classes/controllers/FrmSettingsController.php');
     FrmSettingsController::load_hooks();
     
-    require($frm_path .'/classes/controllers/FrmStatisticsController.php');
+    require_once($frm_path .'/classes/controllers/FrmStatisticsController.php');
     FrmStatisticsController::load_hooks();
     
-    require($frm_path .'/classes/controllers/FrmXMLController.php');
+    require_once($frm_path .'/classes/controllers/FrmXMLController.php');
     FrmXMLController::load_hooks();
 }
 
 // Instansiate Helpers
-require($frm_path .'/classes/helpers/FrmEntriesHelper.php');
-require($frm_path .'/classes/helpers/FrmFieldsHelper.php');
-require($frm_path .'/classes/helpers/FrmFormsHelper.php');
+require_once($frm_path .'/classes/helpers/FrmEntriesHelper.php');
+require_once($frm_path .'/classes/helpers/FrmFieldsHelper.php');
+require_once($frm_path .'/classes/helpers/FrmFormsHelper.php');
 
 if ( file_exists($frm_path . '/pro/formidable-pro.php') ) {
-    require($frm_path .'/pro/formidable-pro.php');
+    require_once($frm_path .'/pro/formidable-pro.php');
 }
 
-include($frm_path .'/deprecated.php');
+include_once($frm_path .'/deprecated.php');
 unset($frm_path);
