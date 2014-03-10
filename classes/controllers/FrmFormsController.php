@@ -767,7 +767,7 @@ class FrmFormsController{
             ob_end_clean();
             // check if minimizing is turned on
             if ( isset($atts['minimize']) && !empty($atts['minimize']) ) {
-                $contents = preg_replace('(\r|\n|\t)', '', $contents);
+                $contents = str_replace(array("\r\n", "\r", "\n", "\t", "    "), '', $contents);
             }
             return $contents;
         }

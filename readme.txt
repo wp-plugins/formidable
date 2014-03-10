@@ -64,6 +64,14 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.06 =
+* Return graceful error message if no DOMDocument enabled
+* Allow fields to be updated via XML import by field key for non-templates
+* Added minimize=1 option to the [formidable] short code to minimize the form HTML to prevent wpautop interference
+* Correctly return fallbacks on a couple deprecated functions
+* PRO: Allow field keys in the frm-stats shortcode for fieldid=value
+* PRO: Fixed attaching file upload to entries when using single files
+
 = 1.07.05 =
 * Added XML import/export
 * Moved more email settings and bulk form delete to free version

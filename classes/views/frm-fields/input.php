@@ -73,4 +73,3 @@ if (FrmAppHelper::check_selected($field['value'], $field_val)) echo ' selected="
         if (!empty($frm_settings->pubkey))
             FrmFieldsHelper::display_recaptcha($field, $error_msg);
 }else do_action('frm_form_fields', $field, $field_name);
-?>
