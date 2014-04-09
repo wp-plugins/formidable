@@ -22,7 +22,7 @@
         if(!empty($values['fields'])){ ?>
         <optgroup label="<?php _e('Fields', 'formidable') ?>">
         <?php
-        $field_select = array('text', 'email', 'user_id', 'hidden');
+        $field_select = array('text', 'email', 'user_id', 'hidden', 'select', 'radio');
         foreach($values['fields'] as $val_key => $fo){
             if(in_array($fo['type'], $field_select)){ ?>
                 <option value="<?php echo $fo['id'] ?>" <?php selected($notification['reply_to_name'], $fo['id']); ?>><?php echo FrmAppHelper::truncate($fo['name'], 40) ?></option>

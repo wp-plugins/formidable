@@ -3,7 +3,7 @@
  * @package Formidable
  */ 
 
-if(!defined('ABSPATH')) die(__('You are not allowed to call this page directly.', 'formidable'));
+if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 if(class_exists('FrmFormsController'))
     return;
@@ -539,10 +539,11 @@ class FrmFormsController{
             include($templates[$i]);
             
             //get updated form
-            if($form)
+            if ( isset($form) && $form ) {
                 $form = $frm_form->getOne($form->id);
-            else
+            } else {
                 $form = $frm_form->getAll($template_query, '', 1);
+            }
             
             if($form)
                 do_action('frm_after_duplicate_form', $form->id, (array)$form);

@@ -1162,7 +1162,7 @@ function frmValidateExport(e){
 		var s = 'stop';
 	}
 	
-	if (!jQuery('input[name="type[]"]:checked').val()){
+	if (!jQuery('input[name="type[]"]:checked').val() && jQuery('input[name="type[]"]').attr('type') == 'checkbox'){
 		jQuery('input[name="type[]"]').closest('.form-field').addClass('frm_blank_field');
 		var s = 'stop';
 	}
@@ -1210,7 +1210,7 @@ function frmAddRemoveExportError(){
 function frmCheckCSVExtension(){
 	var f=jQuery(this).val();
 	var re = /\..+$/;
-	if (f.match(re) == '.csv')
+	if (f.match(re) == '.csv' || f.match(re) == '.CSV')
 		jQuery('.show_csv').fadeIn();
 	else
 		jQuery('.show_csv').fadeOut();

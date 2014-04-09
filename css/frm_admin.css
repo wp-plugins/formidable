@@ -638,6 +638,8 @@ ul .frm_col_two{float:right;}
 iframe#dyncontent_ifr{min-height:150px;}
 #frm-insert-fields-box ul.frm_code_list, #frm-conditionals ul.frm_code_list{padding-right:0.9em;}
 
+.frm_uninstall a.button{margin-top:1px;}
+
 #message.fade:not(.out){opacity:1;}
 
 /*!
@@ -885,6 +887,9 @@ span.clear{display:block;}
 }
 
 .clearfix {display: inline-block;}
+
+/*Override styling from other plugins*/
+.frm_form_fields .clear{height:auto;}
 
 /* Hides from IE-mac \*/
 * html .clearfix {height: 1%;}

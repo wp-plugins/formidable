@@ -31,6 +31,10 @@ class FrmEntryMeta{
     }
 
     function update_entry_meta($entry_id, $field_id, $meta_key = null, $meta_value){
+        if ( ! $field_id ) {
+            return false;
+        }
+        
         global $wpdb;
         
         $values = $where_values = array( 'item_id' => $entry_id, 'field_id' => $field_id );
@@ -44,13 +48,18 @@ class FrmEntryMeta{
     function update_entry_metas($entry_id, $values){
         global $frm_field, $wpdb;
         
-        $prev_values = $wpdb->get_col($wpdb->prepare("SELECT field_id FROM {$wpdb->prefix}frm_item_metas WHERE item_id=%d", $entry_id));
+        $prev_values = $wpdb->get_col($wpdb->prepare("SELECT field_id FROM {$wpdb->prefix}frm_item_metas WHERE item_id=%d AND field_id != %d", $entry_id, 0));
         
         foreach ( $values as $field_id => $meta_value ) {
             
             if ( $prev_values && in_array($field_id, $prev_values) ) {
-                // if value exists, then update it
-                $this->update_entry_meta($entry_id, $field_id, '', $values[$field_id]);
+                if ( (is_array($meta_value) && empty($meta_value) ) || ( !is_array($meta_value) && trim($meta_value) == '' ) ) {
+                    // remove blank fields
+                    unset($values[$field_id]);
+                } else {
+                    // if value exists, then update it
+                    $this->update_entry_meta($entry_id, $field_id, '', $values[$field_id]);
+                }
             } else {
                 // if value does not exist, then create it
                 $this->add_entry_meta($entry_id, $field_id, '', $values[$field_id]);
@@ -194,10 +203,7 @@ class FrmEntryMeta{
                 FROM {$wpdb->prefix}frm_item_metas it LEFT OUTER JOIN {$wpdb->prefix}frm_fields fi ON it.field_id=fi.id" . 
                 FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
 
-        if ($limit == ' LIMIT 1')
-            $results = $wpdb->get_row($query);
-        else    
-            $results = $wpdb->get_results($query);
+        $results = ($limit == ' LIMIT 1') ? $wpdb->get_row($query) : $wpdb->get_results($query);
     
         if($results and $stripslashes){
             foreach($results as $k => $result){
