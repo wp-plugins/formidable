@@ -15,7 +15,7 @@ class FrmEntryMeta{
         }
         
         $new_values = array(
-            'meta_value'    => is_array($meta_value) ? serialize($meta_value) : trim($meta_value),
+            'meta_value'    => is_array($meta_value) ? serialize(array_filter($meta_value)) : trim($meta_value),
             'item_id'       => $entry_id,
             'field_id'      => $field_id,
             'created_at'    => current_time('mysql', 1),
@@ -40,6 +40,9 @@ class FrmEntryMeta{
         $values = $where_values = array( 'item_id' => $entry_id, 'field_id' => $field_id );
         $values['meta_value'] = $meta_value;
         $values = apply_filters('frm_update_entry_meta', $values);
+		if ( is_array($meta_value) ) {
+			$meta_value = array_filter($meta_value);
+		}
         $meta_value = maybe_serialize($values['meta_value']);
         
         return $wpdb->update( $wpdb->prefix .'frm_item_metas', array( 'meta_value' => $meta_value ), $where_values );

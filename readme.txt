@@ -64,6 +64,19 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.08 =
+* Check the words on the WordPress blacklist before submitting an entry
+* PRO: Added server dynamic default value for getting values from the PHP SERVER array like the current url
+* PRO: Added frm_csv_sep hook for changing , to a different separator for checkbox fields
+* PRO: Exclude child categories in regular dropdown fields
+* PRO: Added drafts parameter to formresults shortcode
+* PRO: Added x_order parameter to graph shortcode and modified graphs to work correctly with checkboxes
+* PRO: Added frm_delete_message hook (to customize the message shown after an entry is deleted)
+* PRO: Added != option to frm-stats shortcode options
+* PRO: Added repeating events
+* PRO: Improved database call for Views.
+* PRO: Added a no conflict styling mode for overriding theme styling in the styling settings
+
 = 1.07.07 =
 * Added clarity to message in license box when pro is not installed
 * Added Spanish and Serbian translations. Thank you Ognjen Djuraskovic!

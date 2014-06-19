@@ -75,32 +75,42 @@ class FrmFieldsController{
         die();
     }
     
-    public static function edit_name(){
-        $id = str_replace('field_label_', '', $_POST['element_id']);
-        $values = array('name' => trim($_POST['update_value']));
+    public static function edit_name($field = 'name', $id = '') {
+        if ( empty($field) ) {
+            $field = 'name';
+        }
+        
+        if ( empty($id) ) {
+            $id = str_replace('field_label_', '', $_POST['element_id']);
+        }
+        
+        $value = trim($_POST['update_value']);
+        if ( trim(strip_tags($value)) == '' ) {
+            // set blank value if there is no content
+            $value = '';
+        }
+        
         $frm_field = new FrmField();
-        $form = $frm_field->update($id, $values);
-        echo stripslashes($_POST['update_value']);  
+        $form = $frm_field->update($id, array($field => $value));
+        echo stripslashes($value);  
         die();
     }
     
 
     public static function edit_description(){
-        $frm_field = new FrmField();
         $id = str_replace('field_description_', '', $_POST['element_id']);
-        $frm_field->update($id, array('description' => $_POST['update_value']));
-        echo stripslashes($_POST['update_value']);
-        die();
+        self::edit_name('description', $id);
     }
     
     public static function update_ajax_option(){
         $frm_field = new FrmField();
         $field = $frm_field->getOne($_POST['field']);
-        foreach(array('clear_on_focus', 'separate_value', 'default_blank') as $val){
-            if(isset($_POST[$val])){
+        foreach ( array('clear_on_focus', 'separate_value', 'default_blank') as $val ) {
+            if ( isset($_POST[$val]) ) {
                 $new_val = $_POST[$val];
-                if($val == 'separate_value')
-                    $new_val = (isset($field->field_options[$val]) and $field->field_options[$val]) ? 0 : 1;
+                if ( $val == 'separate_value' ) {
+                    $new_val = (isset($field->field_options[$val]) && $field->field_options[$val]) ? 0 : 1;
+                }
                 
                 $field->field_options[$val] = $new_val;   
                 unset($new_val);       
@@ -189,33 +199,37 @@ class FrmFieldsController{
     public static function edit_option(){
         $ids = explode('-', $_POST['element_id']);
         $id = str_replace('field_', '', $ids[0]);
-        if(strpos($_POST['element_id'], 'key_')){
+        if ( strpos($_POST['element_id'], 'key_') ) {
             $id = str_replace('key_', '', $id);
-            $new_value = $_POST['update_value'];
-        }else{
-            $new_label = $_POST['update_value'];
+            $new_value = trim($_POST['update_value']);
+        } else {
+            $new_label = trim($_POST['update_value']);
         }
         
         $frm_field = new FrmField();
         $field = $frm_field->getOne($id);
         $options = maybe_unserialize($field->options);
-        $this_opt = (array)$options[$ids[1]];
+        $this_opt = (array) $options[$ids[1]];
         
         $label = isset($this_opt['label']) ? $this_opt['label'] : reset($this_opt);
-        if(isset($this_opt['value']))
+        if ( isset($this_opt['value']) ) {
             $value =  $this_opt['value'];
+        }
             
-        if(!isset($new_label))
+        if ( !isset($new_label) ) {
             $new_label = $label;
+        }
             
-        if(isset($new_value) or isset($value))
+        if ( isset($new_value) || isset($value) ) {
             $update_value = isset($new_value) ? $new_value : $value;
+        }
         
-        if(isset($update_value) and $update_value != $new_label)
+        if ( isset($update_value) && $update_value != $new_label ) {
             $options[$ids[1]] = array('value' => $update_value, 'label' => $new_label);
-        else
-            $options[$ids[1]] = $_POST['update_value'];
-   
+        } else {
+            $options[$ids[1]] = trim($_POST['update_value']);
+        }
+        
         $frm_field->update($id, array('options' => maybe_serialize($options)));
         echo (trim($_POST['update_value']) == '') ? __('(Blank)', 'formidable') : stripslashes($_POST['update_value']);
         die();
@@ -231,8 +245,9 @@ class FrmFieldsController{
     }
     
     public static function import_choices(){
-        if(!current_user_can('frm_edit_forms'))
+        if ( !current_user_can('frm_edit_forms') ) {
             return;
+        }
         
         $field_id = $_REQUEST['field_id'];
         	
@@ -316,12 +331,13 @@ class FrmFieldsController{
         
         $field = FrmFieldsHelper::setup_edit_vars($field);
         $opts = explode("\n", rtrim($opts, "\n"));
-        if($field['separate_value']){
-            foreach($opts as $opt_key => $opt){
-                if(strpos($opt, '|') !== false){
+        if ( $field['separate_value'] ) {
+            foreach ( $opts as $opt_key => $opt ) {
+                if ( strpos($opt, '|') !== false ) {
                     $vals = explode('|', $opt);
-                    if($vals[0] != $vals[1])
-                        $opts[$opt_key] = array('label' => $vals[0], 'value' => $vals[1]);
+                    if ( $vals[0] != $vals[1] ) {
+                        $opts[$opt_key] = array('label' => trim($vals[0]), 'value' => trim($vals[1]));
+                    }
                     unset($vals);
                 }
                 unset($opt_key);
@@ -334,10 +350,10 @@ class FrmFieldsController{
         $field['options'] = $opts;
         $field_name = $field['name'];
         
-        if ($field['type'] == 'radio' or $field['type'] == 'checkbox'){
+        if ( $field['type'] == 'radio' || $field['type'] == 'checkbox' ) {
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/radio.php');
-        }else{
-            foreach ($field['options'] as $opt_key => $opt){ 
+        } else {
+            foreach ( $field['options'] as $opt_key => $opt ) { 
                 $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
                 $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
                 require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/single-option.php');
@@ -416,8 +432,9 @@ class FrmFieldsController{
             $class .= " auto_width";
         }
         
-        if(isset($field['max']) and !in_array($field['type'], array('textarea', 'rte', 'hidden')) and !empty($field['max']))
+        if ( isset($field['max']) && !in_array($field['type'], array('textarea', 'rte', 'hidden')) && !empty($field['max']) && (!is_admin() || !isset($_GET) || !isset($_GET['page']) || $_GET['page'] != 'formidable') ) {
             $add_html .= ' maxlength="'. $field['max'] .'"';
+        }
         
         if(!is_admin() or defined('DOING_AJAX') or !isset($_GET) or !isset($_GET['page']) or $_GET['page'] == 'formidable-entries'){
             /*if(isset($field['required']) and $field['required']){

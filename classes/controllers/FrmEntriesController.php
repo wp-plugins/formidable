@@ -245,9 +245,15 @@ class FrmEntriesController{
             } else {
                 $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>". __('IP Address', 'formidable') . "</th><td $row_style>". $entry->ip ."</td></tr>\r\n";
                 $odd = ($odd) ? false : true;
-                $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>".__('User-Agent (Browser/OS)', 'formidable') . "</th><td $row_style>". $data['browser']."</td></tr>\r\n";
+                
+                if ( isset($data['browser']) ) {
+                    $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>".__('User-Agent (Browser/OS)', 'formidable') . "</th><td $row_style>". $data['browser']."</td></tr>\r\n";
+                }
                 $odd = ($odd) ? false : true;
-                $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>".__('Referrer', 'formidable') . "</th><td $row_style>". str_replace("\r\n", '<br/>', $data['referrer']) ."</td></tr>\r\n";
+                
+                if ( isset($data['referrer']) ) {
+                    $content .= "<tr".(($odd) ? $bg_color : $bg_color_alt)."><th $row_style>".__('Referrer', 'formidable') . "</th><td $row_style>". str_replace("\r\n", '<br/>', $data['referrer']) ."</td></tr>\r\n";
+                }
             }
         }
 

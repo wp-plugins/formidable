@@ -95,10 +95,11 @@ class FrmSettings{
         global $wp_roles;
         
         $this->mu_menu = isset($params['frm_mu_menu']) ? $params['frm_mu_menu'] : 0;
-        if($this->mu_menu)
+        if ( $this->mu_menu ) {
             update_site_option('frm_admin_menu_name', $this->menu);
-        else if(is_super_admin())
+        } else if ( current_user_can('administrator') ) {
             update_site_option('frm_admin_menu_name', false);
+        }
         
         $this->pubkey = trim($params['frm_pubkey']);
         $this->privkey = $params['frm_privkey'];

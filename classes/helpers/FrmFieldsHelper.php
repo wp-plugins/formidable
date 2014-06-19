@@ -362,7 +362,8 @@ DEFAULT_HTML;
         $args = array(
             'show_option_all' => $show_option_all, 'hierarchical' => 1, 'name' => $name,
             'id' => $id, 'exclude' => $exclude, 'class' => $class, 'selected' => $selected, 
-            'hide_empty' => false, 'echo' => 0, 'orderby' => 'name'
+            'hide_empty' => false, 'echo' => 0, 'orderby' => 'name',
+            'exclude_tree' => $exclude,
         );
         
         $args = apply_filters('frm_dropdown_cat', $args, $field);

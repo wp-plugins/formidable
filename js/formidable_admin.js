@@ -572,7 +572,7 @@ function frmGetFieldValues(f,cur,r,t,n){
 if(f){
     jQuery.ajax({
         type:"POST",url:ajaxurl,
-        data:"action=frm_get_field_values&current_field="+cur+"&field_id="+f+'&name='+n+'&t='+t,
+        data:"action=frm_get_field_values&current_field="+cur+"&field_id="+f+'&name='+n+'&t='+t+'&form_action='+jQuery('input[name="frm_action"]').val(),
         success:function(msg){jQuery("#frm_show_selected_values_"+cur+'_'+r).html(msg);} 
     });
 }
@@ -722,7 +722,11 @@ function frm_delete_field_option(){
 	var fk=cont.replace('frm_delete_field_', '').replace('_container', '').split('-');
 	jQuery.ajax({type:'POST',url:ajaxurl,
         data:'action=frm_delete_field_option&field_id='+fk[0]+'&opt_key='+fk[1],
-        success:function(msg){ jQuery('#'+cont).fadeOut('slow');}
+        success:function(msg){
+			jQuery('#'+cont).fadeOut('slow', function(){
+				jQuery('#'+cont).remove();
+			});
+		}
     });
 };
 
@@ -817,7 +821,7 @@ function frmDisplayFormSelected(form_id){
     });
     jQuery.ajax({type:"POST",url:ajaxurl,
         data:"action=frm_get_date_field_select&form_id="+form_id,
-        success:function(html){ jQuery('#date_field_id').html(html);}
+        success:function(html){ jQuery('#date_select_container').html(html);}
     });
 }
 

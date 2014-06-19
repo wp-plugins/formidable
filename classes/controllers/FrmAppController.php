@@ -33,7 +33,7 @@ class FrmAppController{
     public static function menu(){
         global $frm_vars, $frm_settings;
         
-        if(is_super_admin() and !current_user_can('frm_view_forms')){
+        if ( current_user_can('administrator') && !current_user_can('frm_view_forms') ) {
             global $current_user;
             $frm_roles = FrmAppHelper::frm_capabilities();
             foreach($frm_roles as $frm_role => $frm_role_description)
@@ -120,8 +120,9 @@ class FrmAppController{
         if(isset($_GET['action']) and $_GET['action'] == 'upgrade-plugin')
             return;
     
-        if (is_multisite() and !is_super_admin())
+        if ( is_multisite() && !current_user_can('administrator') ) {
             return;
+        }
         
         if(!isset($_GET['activate'])){  
             global $frm_vars;
@@ -339,11 +340,11 @@ return false;
     }
     
     public static function uninstall(){
-        if(is_super_admin()){
+        if ( current_user_can('administrator') ) {
             global $frmdb;
             $frmdb->uninstall();
             echo true;
-        }else{
+        } else {
             global $frm_settings;
             wp_die($frm_settings->admin_permission);
         }

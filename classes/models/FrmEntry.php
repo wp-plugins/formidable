@@ -336,14 +336,6 @@ class FrmEntry{
             return ceil((int)$this->getRecordCount($where) / (int)$p_size);
     }
 
-    function getPage($current_p, $p_size, $where = '', $order_by = ''){
-        global $wpdb;
-        $end_index = $current_p * $p_size;
-        $start_index = $end_index - $p_size;
-        $results = $this->getAll($where, $order_by, " LIMIT $start_index,$p_size;", true);
-        return $results;
-    }
-
     function validate( $values, $exclude=false ){
         global $wpdb, $frm_field, $frm_entry_meta, $frm_settings;
         
@@ -413,34 +405,70 @@ class FrmEntry{
             
         }
         
-        global $wpcom_api_key;
-        if (isset($values['item_meta']) and !empty($values['item_meta']) and empty($errors) and function_exists( 'akismet_http_post' ) and ((get_option('wordpress_api_key') or $wpcom_api_key)) and $this->akismet($values)){
-            $frm_form = new FrmForm();
-            $form = $frm_form->getOne($values['form_id']);
+        
+        // check for spam
+        if ( isset($values['item_meta']) && !empty($values['item_meta']) && empty($errors) ) {
+            global $wpcom_api_key;
+            if ( (function_exists( 'akismet_http_post' ) || method_exists('Akismet', 'http_post')) && ((get_option('wordpress_api_key') || $wpcom_api_key)) && $this->akismet($values) ) {
+                $frm_form = new FrmForm();
+                $form = $frm_form->getOne($values['form_id']);
             
-            if (isset($form->options['akismet']) && !empty($form->options['akismet']) && ($form->options['akismet'] != 'logged' or !is_user_logged_in()))
-    	        $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
+                if ( isset($form->options['akismet']) && !empty($form->options['akismet']) && ($form->options['akismet'] != 'logged' || !is_user_logged_in()) ) {
+    	            $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
+    	        }
+    	    }
+    	    
+    	    // check for blacklist keys
+        	if ( $this->blacklist_check($values) ) {
+                $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
+        	}
     	}
+
         
         $errors = apply_filters('frm_validate_entry', $errors, $values);
         return $errors;
+    }
+    
+    // check the blacklisted words
+    function blacklist_check( $values ) {
+    	$mod_keys = trim( get_option( 'blacklist_keys' ) );
+
+    	if ( empty( $mod_keys ) ) {
+    		return false;
+    	}
+    	
+    	$content = FrmEntriesHelper::entry_array_to_string($values);
+		
+		if ( empty($content) ) {
+		    return false;
+		}
+
+    	$words = explode( "\n", $mod_keys );
+
+    	foreach ( (array) $words as $word ) {
+    		$word = trim( $word );
+
+    		if ( empty($word) ) {
+    			continue;
+    		}
+
+    		if ( preg_match('#' . preg_quote( $word, '#' ) . '#', $content) ) {
+    			return true;
+    		}
+    	}
+
+    	return false;
     }
     
     //Check entries for spam -- returns true if is spam
     function akismet($values) {
 	    global $akismet_api_host, $akismet_api_port;
 
-		$content = '';
-		foreach ( $values['item_meta'] as $val ) {
-			if ( $content != '' )
-				$content .= "\n\n";
-			if(is_array($val))
-			    $val = implode(',', $val);
-			$content .= $val;
-		}
+		$content = FrmEntriesHelper::entry_array_to_string($values);
 		
-		if ($content == '')
+		if ( empty($content) ) {
 		    return false;
+		}
         
         $datas = array();
 		$datas['blog'] = FrmAppHelper::site_url();
@@ -461,7 +489,12 @@ class FrmEntry{
 		foreach ( $datas as $key => $data )
 			$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
 
-		$response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+        if ( method_exists('Akismet', 'http_post') ) {
+            $response = Akismet::http_post($query_string, 'comment-check', $akismet_api_port);
+        } else {
+            $response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
+        }
+		
 		return ( is_array($response) and $response[1] == 'true' ) ? true : false;
     }
     

@@ -316,10 +316,11 @@ class FrmForm{
                 $results->options = maybe_unserialize($results->options);
             }
         }else{
-            if(is_array($where))
+            if ( is_array($where) && !empty($where) ) {
                 $results = $frmdb->get_records($wpdb->prefix .'frm_forms', $where, $order_by, $limit);
-            else
+            } else {
                 $results = $wpdb->get_results($query);
+            }
             
             if($results){
                 foreach($results as $result){

@@ -165,4 +165,22 @@ class FrmEntriesHelper{
     public static function enqueue_scripts($params){
         do_action('frm_enqueue_form_scripts', $params);
     }
+    
+    // Add submitted values to a string for spam checking
+    public static function entry_array_to_string($values) {
+        $content = '';
+		foreach ( $values['item_meta'] as $val ) {
+			if ( $content != '' ) {
+				$content .= "\n\n";
+			}
+			
+			if ( is_array($val) ) {
+			    $val = implode(',', $val);
+			}
+			
+			$content .= $val;
+		}
+		
+		return $content;
+    }
 }
