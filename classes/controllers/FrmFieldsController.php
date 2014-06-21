@@ -310,6 +310,8 @@ class FrmFieldsController{
             __('Disagree', 'formidable'), __('Strongly Disagree', 'formidable'), __('N/A', 'formidable')
         );
         
+        $prepop = apply_filters('frm_bulk_field_choices', $prepop);
+        
         $frm_field = new FrmField();
         $field = $frm_field->getOne($field_id);
         
@@ -417,12 +419,13 @@ class FrmFieldsController{
     }
     
     public static function input_html($field, $echo=true){
-        global $frm_settings;
+        global $frm_settings, $frm_vars;
         
         $class = ''; //$field['type'];
         
-        if(is_admin() and !defined('DOING_AJAX') and !in_array($field['type'], array('scale', 'radio', 'checkbox', 'data')))
+        if ( is_admin() && (!isset($frm_vars['preview']) || !$frm_vars['preview']) && !in_array($field['type'], array('scale', 'radio', 'checkbox', 'data')) ) {
             $class .= 'dyn_default_value';
+        }
         
         $add_html = '';
         

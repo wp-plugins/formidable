@@ -46,9 +46,9 @@
 }
 </style>
 </head>
-<body class="wp-admin no-js <?php echo apply_filters( 'admin_body_class', '' ) . " $admin_body_class"; ?>" style="min-width:300px;">
+<body class="wp-admin no-js wp-core-ui <?php echo apply_filters( 'admin_body_class', '' ) . " $admin_body_class"; ?>" style="min-width:300px;background-color:#fff;">
 <div style="padding:10px;">
-<p><?php _e('Edit or add field options (one per line)', 'formidable') ?></p>
+<p class="howto"><?php _e('Edit or add field options (one per line)', 'formidable') ?></p>
 <ul class="prepop">
     <?php foreach($prepop as $label => $pop){ ?>
     <li><a onclick='frmPrePop(<?php echo str_replace("'", '&#145;', json_encode($pop)) ?>); return false;'><?php echo $label ?></a></li>
@@ -71,7 +71,6 @@ if(is_array($fopt)){
 
 <p class="submit clear">
 <input type="button" onclick="window.top.frmUpdateOpts(<?php echo $field->id ?>,jQuery('#frm_bulk_options').val()); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
-<input type="button" onclick="window.top.tb_remove();" class="button" value="<?php _e('Cancel', 'formidable') ?>" />
 </p>
 </div>
 

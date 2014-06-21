@@ -277,5 +277,16 @@ BEFORE_HTML;
         
         return $html;
     }
+    
+    public static function form_loaded($form) {
+        global $frm_vars;
+        $small_form = new stdClass();
+        foreach ( array('id', 'form_key', 'name' ) as $var ) {
+            $small_form->{$var} = $form->{$var};
+            unset($var);
+        }
+        
+        $frm_vars['forms_loaded'][] = $small_form;
+    }
 
 }

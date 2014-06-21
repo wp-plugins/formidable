@@ -464,7 +464,7 @@ function frmGetFormErrors(object){
 }
 
 function frmEditEntry(entry_id,prefix,post_id,form_id,cancel,hclass){
-	var label=jQuery('#frm_edit_'+entry_id).text();
+	var label=jQuery('#frm_edit_'+entry_id).html();
 	var orig=jQuery('#'+prefix+entry_id).html();
 	jQuery('#'+prefix+entry_id).html('<span class="frm-loading-img" id="'+prefix+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
 	jQuery.ajax({
@@ -472,18 +472,18 @@ function frmEditEntry(entry_id,prefix,post_id,form_id,cancel,hclass){
 		data:"action=frm_entries_edit_entry_ajax&post_id="+post_id+"&entry_id="+entry_id+"&id="+form_id,
 		success:function(html){
 			jQuery('#'+prefix+entry_id).children('.frm-loading-img').replaceWith(html);
-			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+label+'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
+			jQuery('#frm_edit_'+entry_id).replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+frm_escape_html(label)+'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
 		}
 	});
 }
 
 function frmCancelEdit(entry_id,prefix,label,post_id,form_id,hclass){
-	var cancel=jQuery('#frm_edit_'+entry_id).text();
+	var cancel=jQuery('#frm_edit_'+entry_id+' a').html();
 	if(!jQuery('#frm_edit_'+entry_id).find('a').hasClass('frm_ajax_edited')){
 		jQuery('#'+prefix+entry_id).children('.frm_forms').replaceWith('');
 		jQuery('#'+prefix+entry_id).children('.frm_orig_content').fadeIn('slow').removeClass('frm_orig_content');
 	}
-	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+prefix+'\','+post_id+','+form_id+',\''+cancel+'\',\''+hclass+'\')">'+label+'</a>');
+	jQuery('#frm_edit_'+entry_id).replaceWith('<a id="frm_edit_'+entry_id+'" class="frm_edit_link '+hclass+'" href="javascript:frmEditEntry('+entry_id+',\''+prefix+'\','+post_id+','+form_id+',\''+frm_escape_html(cancel)+'\',\''+hclass+'\')">'+label+'</a>');
 }
 
 function frmUpdateField(entry_id,field_id,value,message,num){
@@ -552,6 +552,15 @@ function frmScrollMsg(id){
 	var frmPos = jQuery('#frm_form_'+id+'_container').offset();
 	if(frmPos) 
 		window.scrollTo(frmPos.left, (frmPos.top-28));
+}
+
+function frm_escape_html(text){
+  return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 }
 
 jQuery.fn.frmVisible = function() {

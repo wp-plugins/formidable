@@ -89,7 +89,7 @@ class FrmEntry{
         }
         
         $query_results = $wpdb->insert( $wpdb->prefix .'frm_items', $new_values );
-
+        
         if ( $query_results ) {
             $entry_id = $wpdb->insert_id;
             
@@ -407,9 +407,9 @@ class FrmEntry{
         
         
         // check for spam
-        if ( isset($values['item_meta']) && !empty($values['item_meta']) && empty($errors) ) {
+        if ( empty($exclude) && isset($values['item_meta']) && !empty($values['item_meta']) && empty($errors) ) {
             global $wpcom_api_key;
-            if ( (function_exists( 'akismet_http_post' ) || method_exists('Akismet', 'http_post')) && ((get_option('wordpress_api_key') || $wpcom_api_key)) && $this->akismet($values) ) {
+            if ( (function_exists( 'akismet_http_post' ) || is_callable('Akismet::http_post')) && ((get_option('wordpress_api_key') || $wpcom_api_key)) && $this->akismet($values) ) {
                 $frm_form = new FrmForm();
                 $form = $frm_form->getOne($values['form_id']);
             
@@ -463,7 +463,7 @@ class FrmEntry{
     //Check entries for spam -- returns true if is spam
     function akismet($values) {
 	    global $akismet_api_host, $akismet_api_port;
-
+        
 		$content = FrmEntriesHelper::entry_array_to_string($values);
 		
 		if ( empty($content) ) {
@@ -489,7 +489,7 @@ class FrmEntry{
 		foreach ( $datas as $key => $data )
 			$query_string .= $key . '=' . urlencode( stripslashes( $data ) ) . '&';
 
-        if ( method_exists('Akismet', 'http_post') ) {
+        if ( is_callable('Akismet::http_post') ) {
             $response = Akismet::http_post($query_string, 'comment-check', $akismet_api_port);
         } else {
             $response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );

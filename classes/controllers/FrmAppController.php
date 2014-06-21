@@ -168,11 +168,18 @@ return false;
     
     public static function admin_js(){
         global $pagenow;
+        
+        if ( 'admin-ajax.php' == $pagenow && isset($_GET['action']) && $_GET['action'] != 'frm_import_choices' ) {
+            return;
+        }
+        
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
         wp_register_script('bootstrap_tooltip', FrmAppHelper::plugin_url() .'/js/bootstrap.min.js', array('jquery'), '3.0.3');
         
-        if ( isset($_GET) && (isset($_GET['page']) && preg_match('/formidable*/', $_GET['page'])) || ($pagenow == 'edit.php' && isset($_GET) && isset($_GET['post_type']) && $_GET['post_type'] == 'frm_display') ) {
+        if ( isset($_GET) && ((isset($_GET['page']) && strpos($_GET['page'], 'formidable') === 0 ) ||
+            ($pagenow == 'edit.php' && isset($_GET['post_type']) && $_GET['post_type'] == 'frm_display'))
+        ) {
             $version = FrmAppHelper::plugin_version();
             add_filter('admin_body_class', 'FrmAppController::admin_body_class');
             
@@ -241,7 +248,6 @@ return false;
 
         if (is_multisite()){
             global $frm_vars;
-            
             $old_db_version = get_option('frm_db_version');
             $pro_db_version = ($frm_vars['pro_is_installed']) ? get_option('frmpro_db_version') : false;
             if ( ( (int) $old_db_version < (int) FrmAppHelper::$db_version ) ||
@@ -252,19 +258,25 @@ return false;
         
         $version = FrmAppHelper::plugin_version();
         wp_register_script('formidable', FrmAppHelper::plugin_url() . '/js/formidable.min.js', array('jquery'), $version, true);
-        if(!is_admin() or defined('DOING_AJAX'))
-            self::localize_script('front');
-        
-        wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
-        wp_enqueue_script('jquery');
         wp_register_script('jquery-placeholder', FrmAppHelper::plugin_url() .'/js/jquery/jquery.placeholder.js', array('jquery'), '2.0.7', true);
+        wp_register_script('recaptcha-ajax', 'http'. (is_ssl() ? 's' : '').'://www.google.com/recaptcha/api/js/recaptcha_ajax.js', '', true);
+        
+        if ( is_admin() && !defined('DOING_AJAX') ) {
+            // don't load this in back-end
+            return;
+        }
+        
+        self::localize_script('front');
+        
+        wp_enqueue_script('jquery');
         
         $style = apply_filters('get_frm_stylesheet', array('frm-forms' => FrmAppHelper::plugin_url() .'/css/frm_display.css'));
         if($style){
             foreach((array)$style as $k => $file){
                 wp_register_style($k, $file, array(), $version);
-                if((!is_admin() or defined('DOING_AJAX')) and $frm_settings->load_style == 'all')
+                if ( 'all' == $frm_settings->load_style ) {
                     wp_enqueue_style($k);
+                }
                 unset($k);
                 unset($file);
             }

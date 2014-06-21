@@ -4,7 +4,7 @@ Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.3
 Tested up to: 3.8
-Stable tag: 1.07.07
+Stable tag: 1.07.08
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
 
@@ -64,6 +64,15 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.09 =
+* Added frm_bulk_field_choices hook for adding custom prepopulated options
+* Cleanup styling on bulk option popup
+* Fixed submission error affecting some sites
+* PRO: Don't reload javascripts after ajax submit
+* PRO: Improve no conflict styling mode
+* PRO: Fixed cascading calculations
+* PRO: Allow HTML for the label and cancel links in the edit link shortcodes
+
 = 1.07.08 =
 * Check the words on the WordPress blacklist before submitting an entry
 * PRO: Added server dynamic default value for getting values from the PHP SERVER array like the current url

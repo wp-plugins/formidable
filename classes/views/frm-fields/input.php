@@ -61,15 +61,22 @@ if (FrmAppHelper::check_selected($field['value'], $field_val)) echo ' selected="
         }
     }
 
-}else if ($field['type'] == 'captcha' and (!is_admin() or defined('DOING_AJAX'))){
-        global $frm_settings;
-        $error_msg = null;
-        if(!empty($errors)){
-            foreach($errors as $error_key => $error){
-                if(preg_match('/^captcha-/', $error_key))
-                    $error_msg = preg_replace('/^captcha-/', '', $error_key);
+} else if ( $field['type'] == 'captcha' && (!is_admin() || defined('DOING_AJAX')) ) {
+    global $frm_settings;
+    $error_msg = null;
+    
+    if ( !empty($errors) ) {
+        foreach ( $errors as $error_key => $error ) {
+            if ( strpos($error_key, 'captcha-') === 0 ) {
+                $error_msg = preg_replace('/^captcha-/', '', $error_key);
             }
+            unset($error);
         }
-        if (!empty($frm_settings->pubkey))
-            FrmFieldsHelper::display_recaptcha($field, $error_msg);
-}else do_action('frm_form_fields', $field, $field_name);
+    }
+    
+    if ( !empty($frm_settings->pubkey) ) {
+        FrmFieldsHelper::display_recaptcha($field, $error_msg);
+    }
+} else {
+    do_action('frm_form_fields', $field, $field_name);
+}

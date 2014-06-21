@@ -1,6 +1,6 @@
 <?php 
 global $frm_vars, $frm_settings;
-$frm_vars['forms_loaded'][] = $form; 
+FrmFormsHelper::form_loaded($form);
 if($values['custom_style']) $frm_vars['load_css'] = true;
 
 if((!isset($frm_vars['css_loaded']) || !$frm_vars['css_loaded']) && $frm_vars['load_css']){

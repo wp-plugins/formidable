@@ -25,7 +25,7 @@ if ( $params['action'] == 'create' && $params['posted_form_id'] == $form->id && 
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/new.php');
         } else { 
             global $frm_vars;
-            $frm_vars['forms_loaded'][] = $form; 
+            FrmFormsHelper::form_loaded($form);
             if ( $values['custom_style'] ) {
                 $frm_vars['load_css'] = true;
             }
