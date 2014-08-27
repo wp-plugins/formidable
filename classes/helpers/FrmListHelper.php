@@ -53,13 +53,16 @@ class FrmListHelper extends WP_List_Table {
 		$s_query =  " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ". (int)$this->params['template'];
 
 	    if($s != ''){
-	        foreach((array)$search_terms as $term){
-	            $term = esc_sql( like_escape( $term ) );
-                if(!empty($s_query))
+	        foreach ( (array) $search_terms as $term ) {
+	            if ( !empty($s_query) ) {
                     $s_query .= " AND";
-
-                $s_query .= " (name like '%$term%' OR description like '%$term%' OR created_at like '%$term%')";
-                unset($term);
+                }
+                
+	            $term = FrmAppHelper::esc_like($term);
+	            
+	            $s_query .= $wpdb->prepare(" (name like %s OR description like %s OR created_at like %s)", '%'. $term .'%', '%'. $term .'%', '%'. $term .'%');
+	            
+	            unset($term);
             }
 	    }
 	    
@@ -89,7 +92,10 @@ class FrmListHelper extends WP_List_Table {
 	}
 	
 	function get_bulk_actions(){
-	    $actions = array('bulk_delete' => __('Delete'));
+	    $actions = array();
+	    if ( current_user_can('frm_delete_forms') ) {
+            $actions['bulk_delete'] = __('Delete');
+        }
             
         return $actions;
     }
@@ -110,22 +116,20 @@ class FrmListHelper extends WP_List_Table {
 		$actions = array();
 		$title = esc_attr(strip_tags($item->name));
 		
-		$edit_link = "?page=formidable&frm_action=edit&id={$item->id}";
-		$actions['frm_edit'] = "<a href='" . wp_nonce_url( $edit_link ) . "'>". __('Edit') ."</a>";
-		
-		$duplicate_link = "?page=formidable&frm_action=duplicate&id={$item->id}";
-		
-		$view_link = "?page=formidable-{$this->page_name}&frm_action=show&id={$item->id}";
-		
-		
-		if ($this->params['template']){
-		    $actions['frm_duplicate'] = "<a href='" . wp_nonce_url( $duplicate_link ) . "'>". __('Create Form from Template', 'formidable') ."</a>";
-        }else{
-            if(current_user_can('frm_edit_forms')){
+		if ( current_user_can('frm_edit_forms') ) {
+		    $edit_link = "?page=formidable&frm_action=edit&id={$item->id}";
+		    $duplicate_link = "?page=formidable&frm_action=duplicate&id={$item->id}";
+		    
+		    $actions['frm_edit'] = "<a href='" . esc_url( $edit_link ) . "'>". __('Edit') ."</a>";
+		    
+		    if ( $this->params['template'] ) {
+		        $actions['frm_duplicate'] = "<a href='" . wp_nonce_url( $duplicate_link ) . "'>". __('Create Form from Template', 'formidable') ."</a>";
+            } else {
     		    $actions['frm_settings'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=settings&id={$item->id}" ) . "'>". __('Settings', 'formidable') ."</a>";
     		    
-    		    if($frm_vars['pro_is_installed'])
+    		    if ( $frm_vars['pro_is_installed'] ) {
         	        $actions['duplicate'] = '<a href="' . wp_nonce_url( $duplicate_link ) . '">'. __('Duplicate', 'formidable') .'</a>';
+        	    }
         	}
         }
         
@@ -193,7 +197,9 @@ class FrmListHelper extends WP_List_Table {
                     if($frm_vars['pro_is_installed'] and current_user_can('frm_create_entries'))
                 		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_add_entry_icon frm_icon_font frm_bstooltip" title="'. __('Add Entry', 'formidable'). '" data-toggle="tooltip"> </a>';
                 	
-                	$links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_icon_font frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
+                	if ( current_user_can('frm_edit_forms') ){
+                	    $links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_icon_font frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
+                	}
                 	
                     $val = implode(' ', $links);
                     break;
@@ -205,7 +211,7 @@ class FrmListHelper extends WP_List_Table {
 			if(isset($val)){
 			    $r .= "<td $attributes>";
 			    if($column_name == $action_col){                              
-			        $r .= '<a class="row-title" href="'. (isset($actions['frm_edit']) ? $edit_link : $view_link) .'">'. $val .'</a> ';
+			        $r .= '<a class="row-title" href="'. ( isset($actions['frm_edit']) ? $edit_link : FrmFormsHelper::get_direct_link($item->form_key, $item) ) .'">'. $val .'</a> ';
 			        $r .= $action_links;
 			    }else{
 			        $r .= $val;

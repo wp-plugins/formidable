@@ -218,9 +218,12 @@ class FrmField{
                     $results[$r_key]->options = maybe_unserialize($result->options);
                     $results[$r_key]->default_value = maybe_unserialize($result->default_value);
                     $form_id = $result->form_id;
+                    
+                    unset($r_key, $result);
                 }
                 if(isset($save_cache))
                     set_transient('frm_all_form_fields_'. $form_id, $results, 60*60*6);
+                unset($form_id);
             }else{
                 wp_cache_set($results->id, $results, 'frm_field');
                 wp_cache_set($results->field_key, $results, 'frm_field');
@@ -237,13 +240,18 @@ class FrmField{
 
     function getIds($where = '', $order_by = '', $limit = ''){
         global $wpdb;
+        
+        if ( !empty($order_by) && !preg_match("/ORDER BY/", $order_by) ){
+            $order_by = ' ORDER BY '. $order_by;
+        }
+        
         $query = "SELECT fi.id  FROM {$wpdb->prefix}frm_fields fi " .
                  "LEFT OUTER JOIN {$wpdb->prefix}frm_forms fr ON fi.form_id=fr.id" . 
                  FrmAppHelper::prepend_and_or_where(' WHERE ', $where) . $order_by . $limit;
         if ($limit == ' LIMIT 1' or $limit == 1)
-            $results = $wpdb->get_row($query);
+            $results = $wpdb->get_var($query);
         else
-            $results = $wpdb->get_results($query);
+            $results = $wpdb->get_col($query);
         return $results;
     }
 }

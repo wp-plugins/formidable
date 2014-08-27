@@ -3,6 +3,7 @@ if (isset($message) && $message != ''){
     if(is_admin() and !defined('DOING_AJAX')){ 
         ?><div id="message" class="frm_message updated" style="padding:5px;"><?php echo $message ?></div><?php 
     }else{ 
+        ?><script type="text/javascript">jQuery(document).ready(function($){frmScrollMsg(<?php echo $form->id ?>);})</script><?php
         echo $message; 
     }
 } 

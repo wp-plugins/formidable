@@ -95,6 +95,7 @@ class FrmFormsController{
             $frm_field_selection = FrmFieldsHelper::field_selection();  
             $values = FrmFormsHelper::setup_new_vars($values);
             $id = $frm_form->create( $values );
+            $form = $frm_form->getOne($id);
             $values['id'] = $id;
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
         }else{
@@ -108,7 +109,7 @@ class FrmFormsController{
         if(!$values)
             $values = $_POST;
         
-        if($_POST and (!isset($values['frm_save_form']) or !wp_verify_nonce($values['frm_save_form'], 'frm_save_form_nonce'))){
+        if ( ! current_user_can('frm_edit_forms') || ( $_POST && (!isset($values['frm_save_form']) || !wp_verify_nonce($values['frm_save_form'], 'frm_save_form_nonce'))) ) {
             global $frm_settings;
             $errors['form'] = $frm_settings->admin_permission;
         }
@@ -121,12 +122,12 @@ class FrmFormsController{
         if( count($errors) > 0 ){
             $hide_preview = true;
             $frm_field_selection = FrmFieldsHelper::field_selection();
-            $record = $frm_form->getOne( $id );
+            $form = $frm_form->getOne( $id );
             $fields = $frm_field->getAll(array('fi.form_id' => $id), 'field_order');
-            $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
+            $values = FrmAppHelper::setup_edit_vars($form, 'forms', $fields, true);
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
         }else{    
-            $record = $frm_form->update( $id, $values, true );
+            $form = $frm_form->update( $id, $values, true );
             die(FrmAppHelper::js_redirect(admin_url('admin.php?page=formidable&frm_action=settings&id='. $id)));
             //$message = __('Form was Successfully Created', 'formidable');
             //return self::settings($record, $message);
@@ -134,6 +135,11 @@ class FrmFormsController{
     }
     
     public static function edit($values=false){
+        if ( ! current_user_can('frm_edit_forms') ) {
+            global $frm_settings;
+            wp_die($frm_settings->admin_permission);
+        }
+        
         $id = isset($values['id']) ? (int)$values['id'] : (int)FrmAppHelper::get_param('id');
         return self::get_edit_vars($id);
     }
@@ -160,6 +166,10 @@ class FrmFormsController{
     }
     
     public static function edit_key(){
+        if ( ! current_user_can('frm_edit_forms') ) {
+            die();
+        }
+        
         global $wpdb;
         $values = array('form_key' => trim($_POST['update_value']));
         $frm_form = new FrmForm();
@@ -170,6 +180,10 @@ class FrmFormsController{
     }
 
     public static function edit_description(){
+        if ( ! current_user_can('frm_edit_forms') ) {
+            die();
+        }
+        
         $frm_form = new FrmForm();
         $form = $frm_form->update($_POST['form_id'], array('description' => $_POST['update_value']));
         $description = stripslashes($_POST['update_value']);
@@ -187,7 +201,7 @@ class FrmFormsController{
         
         $errors = $frm_form->validate($values);
         
-        if($_POST and (!isset($values['frm_save_form']) or !wp_verify_nonce($values['frm_save_form'], 'frm_save_form_nonce'))){
+        if ( ! current_user_can('frm_edit_forms') || ( $_POST && (!isset($values['frm_save_form']) || !wp_verify_nonce($values['frm_save_form'], 'frm_save_form_nonce')) ) ) {
             global $frm_settings;
             $errors['form'] = $frm_settings->admin_permission;
         }
@@ -207,15 +221,21 @@ class FrmFormsController{
     }
     
     public static function duplicate(){
+        if ( ! current_user_can('frm_edit_forms') ) {
+            global $frm_settings;
+            wp_die($frm_settings->admin_permission);
+        }
+        
         $frm_form = new FrmForm();
         
         $params = self::get_params();
-        $record = $frm_form->duplicate( $params['id'], $params['template'], true );
+        $form = $frm_form->duplicate( $params['id'], $params['template'], true );
         $message = ($params['template']) ? __('Form template was Successfully Created', 'formidable') : __('Form was Successfully Copied', 'formidable');
-        if ($record)
-            return self::get_edit_vars($record, '', $message, true);
-        else
+        if ( $form ) {
+            return self::get_edit_vars($form, '', $message, true);
+        } else {
             return self::display_forms_list($params, __('There was a problem creating new template.', 'formidable'));
+        }
     }
     
     
@@ -417,27 +437,29 @@ class FrmFormsController{
     private static function get_edit_vars($id, $errors = '', $message='', $create_link=false){
         global $frm_entry, $frm_field, $frm_vars;
         $frm_form = new FrmForm();
-        $record = $frm_form->getOne( $id );
-        if ( !$record ) {
+        $form = $frm_form->getOne( $id );
+        if ( !$form ) {
             wp_die( __('You are trying to edit a form that does not exist.', 'formidable') );
         }
         
         $frm_field_selection = FrmFieldsHelper::field_selection();
-        $fields = $frm_field->getAll(array('fi.form_id' => $record->id), 'field_order');
-        $values = FrmAppHelper::setup_edit_vars($record, 'forms', $fields, true);
+        $fields = $frm_field->getAll(array('fi.form_id' => $form->id), 'field_order');
+        $values = FrmAppHelper::setup_edit_vars($form, 'forms', $fields, true);
         
         $edit_message = __('Form was Successfully Updated', 'formidable');
-        if ($values['is_template'] and $message == $edit_message)
+        if ( $form->is_template && $message == $edit_message ) {
             $message = __('Template was Successfully Updated', 'formidable');
+        }
         
-        if (isset($values['default_template']) && $values['default_template'])
+        if ( $form->default_template ) {
             wp_die(__('That template cannot be edited', 'formidable'));
-        else if(defined('DOING_AJAX'))
+        } else if ( defined('DOING_AJAX') ) {
             die();
-        else if($create_link)
+        } else if ( $create_link ) {
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new.php');
-        else
+        } else {
             require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/edit.php');
+        }
     }
     
     public static function get_settings_vars($id, $errors = '', $message=''){
@@ -558,10 +580,20 @@ class FrmFormsController{
                 global $frm_settings;
                 wp_die($frm_settings->admin_permission);
             }
-            $json_vars = htmlspecialchars_decode(nl2br(stripslashes($_POST['frm_compact_fields'])));
+            $json_vars = htmlspecialchars_decode(nl2br(stripslashes(str_replace('&quot;', '\\\"', $_POST['frm_compact_fields'] ))));
             $json_vars = json_decode($json_vars, true);
-            $vars = FrmAppHelper::json_to_array($json_vars);
-            $action = $vars[$action];
+            if ( empty($json_vars) ) {
+                // json decoding failed so we should return an error message
+                $action = FrmAppHelper::get_param($action);
+                if ( 'edit' == $action ) {
+                    $action = 'update';
+                }
+                
+                add_filter('frm_validate_form', array(__CLASS__, 'json_error'));
+            } else {
+                $vars = FrmAppHelper::json_to_array($json_vars);
+                $action = $vars[$action];
+            }
         }else{
             $action = FrmAppHelper::get_param($action);
         }
@@ -604,6 +636,11 @@ class FrmFormsController{
                 return self::display_forms_list();
             }
         }
+    }
+    
+    public static function json_error($errors) {
+        $errors['json'] = __('Abnormal HTML characters prevented your form from saving correctly', 'formidable');
+        return $errors;
     }
     
     

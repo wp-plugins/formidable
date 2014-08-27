@@ -31,24 +31,40 @@ class FrmFieldsController{
     }
     
     public static function load_field(){
-        $id = $field_id = $_POST['field_id'];
-        if(!$field_id or !is_numeric($field_id))
+        $fields = $_POST['field'];
+        if ( empty($fields) ) {
             die();
+        }
         
         $_GET['page'] = 'formidable';
-        $field = htmlspecialchars_decode(nl2br(stripslashes_deep($_POST['field'])));
-        $field = json_decode($field, true);
-        if(!isset($field['value']))
-            $field['value'] = '';
+        $fields = stripslashes_deep($fields);
         
-        $field_name = "item_meta[$field_id]";
         $ajax = true;
         $values = array();
+        $path = FrmAppHelper::plugin_path();
+        $field_html = array();
         
-        $path = FrmAppHelper::plugin_path();    
-        include($path .'/classes/views/frm-forms/add_field.php'); 
-        include($path .'/classes/views/frm-forms/new-field-js.php');
+        foreach ( $fields as $field ) {
+            $field = htmlspecialchars_decode(nl2br($field));
+            $field = json_decode($field, true);
+            
+            $field_id = $field['id'];
+            
+            if ( !isset($field['value']) ) {
+                $field['value'] = '';
+            }
+            
+            $field_name = "item_meta[$field_id]";
+            
+            ob_start();
+            include($path .'/classes/views/frm-forms/add_field.php');
+            $field_html[$field_id] = ob_get_contents();
+            ob_end_clean();
+        }
+        
         unset($path);
+        
+        echo json_encode($field_html);
         
         die();
     }
@@ -69,8 +85,7 @@ class FrmFieldsController{
             $field = FrmFieldsHelper::setup_edit_vars($frm_field->getOne($field_id));
             $field_name = "item_meta[$field_id]";
             $id = $form_id;
-            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php'); 
-            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-field-js.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php');
         }
         die();
     }
@@ -147,8 +162,7 @@ class FrmFieldsController{
             $id = $field['form_id'];
             if($field['type'] == 'html')
                 $field['stop_filter'] = true;
-            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php'); 
-            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-field-js.php'); 
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php');
         }
         die();
     }
@@ -362,8 +376,6 @@ class FrmFieldsController{
             }
         }
         
-        require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/new-field-js.php'); 
-        
         die();
     }
 
@@ -477,12 +489,19 @@ class FrmFieldsController{
         if(!empty($class))
             $add_html .= ' class="'. trim($class) .'"';
             
-        if(isset($field['shortcodes']) and !empty($field['shortcodes'])){
-            foreach($field['shortcodes'] as $k => $v){
-                if($k == 'opt' or strpos($add_html, " $k=")) continue;
-                $add_html .= ' '. $k .'="'. $v .'"';
-                unset($k);
-                unset($v);
+        if ( isset($field['shortcodes']) && !empty($field['shortcodes']) ) {
+            foreach ( $field['shortcodes'] as $k => $v ) {
+                if ( 'opt' === $k  || (!is_numeric($k) && strpos($add_html, " $k=")) ) {
+                    continue;
+                }
+                
+                if ( is_numeric($k) && strpos($v, '=') ) {
+                    $add_html .= ' '. $v;
+                } else {
+                    $add_html .= ' '. $k .'="'. $v .'"';
+                }
+                
+                unset($k, $v);
             }
         }
         

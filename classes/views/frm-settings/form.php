@@ -75,9 +75,11 @@
 
 		    <p><label class="frm_left_label"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
 			<select name="frm_re_theme" id="frm_re_theme">
-			<?php foreach(array('red' => __('Red', 'formidable'), 'white' => __('White', 'formidable'), 'blackglass' => __('Black Glass', 'formidable'), 'clean' => __('Clean', 'formidable')) as $theme_value => $theme_name){ ?>
+			<?php foreach($recaptcha_themes as $theme_value => $theme_name){ ?>
 			<option value="<?php echo esc_attr($theme_value) ?>" <?php selected($frm_settings->re_theme, $theme_value) ?>><?php echo $theme_name ?></option>
-			<?php } ?>
+			<?php } 
+			unset($recaptcha_themes, $theme_value, $theme_name);
+			?>
 			</select></p>
     		
 		    <p><label class="frm_left_label"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
@@ -151,7 +153,10 @@
             </div>
         <?php } ?>
         
-        <p class="alignright frm_uninstall" style="padding-top:1.25em;"><a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a></p>
+        <p class="alignright frm_uninstall" style="padding-top:1.25em;">
+            <a href="javascript:frm_uninstall_now()"><?php _e('Uninstall Formidable', 'formidable') ?></a>
+            <span class="spinner frm_spinner"></span>
+        </p>
         <p class="submit">
         <input class="button-primary" type="submit" value="<?php _e('Update Options', 'formidable') ?>" />
         </p>

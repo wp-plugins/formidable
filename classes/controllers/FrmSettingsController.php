@@ -33,7 +33,15 @@ class FrmSettingsController{
         $sections = apply_filters('frm_add_settings_section', array(
             'styling' => array('name' => __('Form Styling', 'formidable'), 'class' => 'FrmSettingsController', 'function' => 'styling_tab')
         ));
-      
+        
+        $recaptcha_themes = array(
+            'red' => __('Red', 'formidable'),
+            'white' => __('White', 'formidable'),
+            'blackglass' => __('Black Glass', 'formidable'),
+            'clean' => __('Clean', 'formidable'),
+            //'custom' => __('Custom', 'formidable'),
+        );
+        
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }
 

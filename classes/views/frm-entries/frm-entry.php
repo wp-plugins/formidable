@@ -34,8 +34,8 @@ if ( $params['action'] == 'create' && $params['posted_form_id'] == $form->id && 
                 echo FrmAppController::footer_js('header');
                 $frm_vars['css_loaded'] = true;
             }
-?>
-<div class="frm_forms<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>" id="frm_form_<?php echo $form->id ?>_container"><?php echo $message ?></div>
+            ?>
+<div class="frm_forms<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>" id="frm_form_<?php echo $form->id ?>_container"><?php require(FrmAppHelper::plugin_path() .'/classes/views/frm-entries/errors.php') ?></div>
 <?php
         }
     } else {

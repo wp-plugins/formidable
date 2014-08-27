@@ -16,6 +16,8 @@ if($.isFunction($.fn.placeholder)){
 	});
 }
 
+$(document).on('click', '.frm-show-form input[name^="item_meta"][type="radio"], .frm-show-form input[name^="item_meta"][type="checkbox"]', frmMaybeCheckDependent);
+$(document).on('change', '.frm-show-form input[name^="item_meta"]:not([type=radio], [type=checkbox]), .frm-show-form select[name^="item_meta"], .frm-show-form textarea[name^="item_meta"]', frmMaybeCheckDependent);
 $(document).on('click', '.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft', frmSetNextPage);
 $(document).on('click', '.frm_remove_link', frmRemoveDiv);
 });
@@ -59,6 +61,13 @@ var v = default_value.replace(/(\n|\r\n)/g, '\r');
 if(jQuery(thefield).val() === ''){
 	jQuery(thefield).addClass('frm_default').val(v);
 }
+}
+
+function frmMaybeCheckDependent(){
+	var field_id = jQuery(this).attr('name').replace('item_meta[', '').split(']')[0];
+	if(field_id){
+		frmCheckDependent('und',field_id);
+	}
 }
 
 function frmCheckDependent(selected,field_id,rec){
@@ -256,8 +265,20 @@ function frmOperators(op,a,b){
 		'!=': function(c,d){ return c != d; },
 		'<': function(c,d){ return c > d; },
 		'>': function(c,d){ return c < d; },
-		'LIKE': function(c,d){return d.indexOf(c) != -1;},
-		'not LIKE': function(c,d){return d.indexOf(c) == -1;}
+		'LIKE': function(c,d){
+			if(!d){
+				/* If no value, then assume no match */
+				return 0;
+			}
+			return d.indexOf(c) != -1;
+		},
+		'not LIKE': function(c,d){
+			if(!d){
+				/* If no value, then assume no match */
+				return 1;
+			}
+			return d.indexOf(c) == -1;
+		}
 	};
 	return operators[op](a,b);
 }
@@ -409,12 +430,14 @@ function frmGetFormErrors(object){
 				newPos=jump.offset().top;
 				jump.replaceWith(errObj);
 				cOff = document.documentElement.scrollTop || document.body.scrollTop;
-				if(newPos && newPos > 0 && cOff > newPos) jQuery(window).scrollTop(newPos);
+				if(newPos && newPos > frm_js.offset && cOff > newPos){
+					jQuery(window).scrollTop(newPos-frm_js.offset);
+				}
 				if(typeof(frmThemeOverride_frmAfterSubmit) == 'function'){
 					var fin=jQuery(errObj).find('input[name="form_id"]').val();
 					var p = '';
 					if(fin) p = jQuery('input[name="frm_page_order_'+fin+'"]').val();
-					frmThemeOverride_frmAfterSubmit(fin,p,errObj);
+					frmThemeOverride_frmAfterSubmit(fin,p,errObj,object);
 				}
 				if(jQuery(object).find('input[name="id"]').length){
 					var eid = jQuery(object).find('input[name="id"]').val();
@@ -434,12 +457,8 @@ function frmGetFormErrors(object){
 					if(jQuery(object).find('#frm_field_'+key+'_container').length && jQuery('#frm_field_'+key+'_container').is(":visible")){
 						cont_submit=false;
 						if(jump === ''){
+							frmScrollMsg(key, object);
 							jump='#frm_field_'+key+'_container';
-							newPos=jQuery(object).find(jump).offset().top;
-							var m=jQuery('html').css('margin-top');
-							if(newPos && m) newPos=newPos-parseInt(m);
-							cOff = document.documentElement.scrollTop || document.body.scrollTop;
-							if(newPos && cOff > newPos) jQuery(window).scrollTop(newPos-4);
 						}
 						if(jQuery(object).find('#frm_field_'+key+'_container #recaptcha_area').length){
 							show_captcha = true;
@@ -531,7 +550,7 @@ function frmNextUpload(obj,id){
 		}
 	}
 	obj.hide(); 
-	jQuery('#frm_field_'+id+'_container').append('<input name="file'+id+'[]" multiple="multiple" type="file" onchange="frmNextUpload(jQuery(this),'+id+')"/>');
+	jQuery('#frm_field_'+id+'_container .frm_uploaded_files:last').after('<input name="file'+id+'[]" multiple="multiple" type="file" onchange="frmNextUpload(jQuery(this),'+id+')"/>');
 }
 
 function frmClearFile(file){
@@ -548,10 +567,28 @@ function frm_resend_email(entry_id,form_id){
 	});
 }
 
-function frmScrollMsg(id){
-	var frmPos = jQuery('#frm_form_'+id+'_container').offset();
-	if(frmPos) 
-		window.scrollTo(frmPos.left, (frmPos.top-28));
+function frmScrollMsg(id, object){
+	if(typeof(object) == 'undefined'){
+		var newPos = jQuery('#frm_form_'+id+'_container').offset().top;
+	}else{
+		var newPos = jQuery(object).find('#frm_field_'+id+'_container').offset().top;
+	}
+	
+	if(!newPos){
+		return;
+	}
+	newPos = newPos-frm_js.offset;
+	
+	var m=jQuery('html').css('margin-top');
+	var b=jQuery('body').css('margin-top');
+	if(m || b){
+		newPos=newPos-parseInt(m)-parseInt(b);
+	}
+	
+	cOff = document.documentElement.scrollTop || document.body.scrollTop;
+	if(newPos && (!cOff || cOff > newPos)){
+		jQuery(window).scrollTop(newPos);
+	}
 }
 
 function frm_escape_html(text){

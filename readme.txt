@@ -3,7 +3,7 @@ Contributors: sswells, srwells, jamie.wahlin
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.3
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: 1.07.09
 
 Quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
@@ -64,8 +64,46 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 1.07.10 =
+* Improve ajax form load speed on form builder page
+* Added 4.0 compatibility for deprecated like_escape function
+* Remove label html in radio and checkbox fields when label=0 is used on the [input] tag in the customizable HTML
+* Fix Akismet integration for current version of Akismet
+* Added Italian translation
+* Added a few ajax nonce checks but don't require valid nonce for logged-out users for caching reasons
+* Allow data-something="value" inside the [input] short code
+* Pro: Allow [default-message] to have short code parameters to set rtl (direction=rtl), font size (font_size="14px"), and styling (text_color="000" border_width="1px" border_color="000" bg_color="fff" alt_bg_color="eee").
+* Pro: Added frm_html_scoll_box class for scrolling content in an HTML field
+* Pro: Allow recurring entries using values like "Third Wednesday of [frmcal-date]"
+* Pro: Allow comma separated view filters for entry key and id
+* Pro: Allow drafts=both in view short code and form results short code
+* Pro: Added created_at and updated_at support to the frm-stats short code
+* Pro: Added column separation option to csv export
+* Pro: Added hook: frm_csv_column_sep for changing the , separation between columns in csv
+* Pro: Added hook: frm_csv_field_ids to specify fields to export in CSV
+* Pro: Added hook: frm_filter_where_val and frm_filter_dfe_where_val for filtering only the value instead of the full WHERE statement
+* Pro: Added hook: frm_rte_options for adding options to the TinyMce editor
+* Pro: Added hook: frm_show_form_after_edit to show or hide the form differently from create
+* Pro: Added hook: frm_scroll_offset to change the point of scroll after submit to allow for static headers
+* Pro: Added hook: frm_ajax_load_styles for allowing additional styles on ajax loaded form pages
+* Pro: Added hook: frm_create_cookies for preventing cookie creation
+* Pro: Added hook: frm_filter_auto_content to prevent filtering on auto-inserted views
+* Pro: Added hook: frm_file_icon to change what is displayed for a upload field when editing
+* Pro: Import CSV values for a taxonomy field correctly when the term name is in the CSV instead of requiring the ID
+* Pro: Import CSV dates correctly in entries if format has been changed to a day-first format
+* Pro: Added Post ID into the view filtering options
+* Pro: Added support for multiselect drop downs in calculations
+* Pro: Updated the way templates are fetched for wpmu copying
+* Pro: Show any additional info on the entry view page that is stored in the entry description
+* Pro: Update to Chosen 1.1.0
+* Pro: Allow comma-separated values to populate a checkbox field
+* Pro: Make fields and exclude_fields parameter work with multi-page forms (required fields are still a limitation)
+* Pro: Allow drafts=1 or drafts=both in stats shortcode
+* Pro: Allow field keys in stats filtering
+* Miscellaneous bug fixes
+
 = 1.07.09 =
-* Added frm_bulk_field_choices hook for adding custom prepopulated options
+* Added hook: frm_bulk_field_choices for adding custom prepopulated options
 * Cleanup styling on bulk option popup
 * Fixed submission error affecting some sites
 * PRO: Don't reload javascripts after ajax submit
@@ -76,11 +114,11 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 = 1.07.08 =
 * Check the words on the WordPress blacklist before submitting an entry
 * PRO: Added server dynamic default value for getting values from the PHP SERVER array like the current url
-* PRO: Added frm_csv_sep hook for changing , to a different separator for checkbox fields
+* PRO: Added hook: frm_csv_sep for changing , to a different separator for checkbox fields
 * PRO: Exclude child categories in regular dropdown fields
 * PRO: Added drafts parameter to formresults shortcode
 * PRO: Added x_order parameter to graph shortcode and modified graphs to work correctly with checkboxes
-* PRO: Added frm_delete_message hook (to customize the message shown after an entry is deleted)
+* PRO: Added hook: frm_delete_message to customize the message shown after an entry is deleted
 * PRO: Added != option to frm-stats shortcode options
 * PRO: Added repeating events
 * PRO: Improved database call for Views.
@@ -126,7 +164,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * PRO: Allow updated-at, created-at, updated-by to by used in conditional statements
 * PRO: Added update message and button to global default messages
 * PRO: Added progress bar to csv import
-* PRO: Added frm_csv_line_break filter for changing line breaks in csv export
+* PRO: Added hook: frm_csv_line_break filter for changing line breaks in csv export
 * PRO: Change the updated_at and updated_by values when a field is changed with the edit field link
 * PRO: Fixed adding new conditional logic to newly added notifications
 * PRO: Allow "GROUP BY" addition to form in frm_where_filter by rearranging SQL

@@ -35,8 +35,15 @@ class FrmEntriesHelper{
             }
             
             $is_default = ($new_value == $default) ? true : false;
-                
-            $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field);
+              
+    		//If checkbox, multi-select dropdown, or checkbox data from entries field, set return array to true
+    		if ( $field && ( ( $field->type == 'data' && $field->field_options['data_type'] == 'checkbox' ) || $field->type == 'checkbox' || ( $field->type == 'select' && $field->field_options['multiple'] == 1 ) ) ) {
+                $return_array = true;
+    		} else {
+    		    $return_array = false;
+    		}
+            
+            $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field, true, $return_array);
                 
             if ( !is_array($new_value) ) {
                 if ( $is_default ) {
@@ -140,6 +147,38 @@ class FrmEntriesHelper{
         $values['is_draft'] = $record->is_draft;
         return apply_filters('frm_setup_edit_entry_vars', $values, $record);
     }
+    
+    public static function replace_default_message($message, $atts) {
+        if ( strpos($message, '[default-message') === false && 
+            strpos($message, '[default_message') === false && 
+            !empty($message) ) {
+            return $message;
+        }
+        
+        if ( empty($message) ) {
+            $message = '[default-message]';
+        }
+        
+        preg_match_all("/\[(default-message|default_message)\b(.*?)(?:(\/))?\]/s", $message, $shortcodes, PREG_PATTERN_ORDER);
+        
+        foreach ( $shortcodes[0] as $short_key => $tag ) {
+            $add_atts = shortcode_parse_atts( $shortcodes[2][$short_key] );
+            if ( $add_atts ){
+                $this_atts = array_merge($atts, $add_atts);
+            } else {
+                $this_atts = $atts;
+            }
+            
+            $default = FrmEntriesController::show_entry_shortcode($this_atts);
+            
+            // Add the default message
+            $message = str_replace($shortcodes[0][$short_key], $default, $message);
+        }
+
+        return $message;
+    }
+    
+
 
     public static function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
         _deprecated_function( __FUNCTION__, '1.07.09');

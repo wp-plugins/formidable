@@ -33,7 +33,7 @@ class FrmXMLController{
         else if($result)
             $message = $result;
             
-        unset($file);
+        unset($files);
             
         libxml_use_internal_errors( $set_err );
     	libxml_disable_entity_loader( $loader );

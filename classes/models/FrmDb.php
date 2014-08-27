@@ -60,6 +60,7 @@ class FrmDb{
                 form_key varchar(255) default NULL,
                 name varchar(255) default NULL,
                 description text default NULL,
+                parent_form_id int(11) default NULL,
                 logged_in tinyint(1) default NULL,
                 editable tinyint(1) default NULL,
                 is_template tinyint(1) default 0,

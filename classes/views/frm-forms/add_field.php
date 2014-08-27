@@ -65,18 +65,26 @@ $display = apply_filters('frm_display_field_options', array(
         </div>
     <?php
     }
-        
-?>
-    <div id="frm_add_field_<?php echo $field['id']; ?>" class="frm-show-click">
-        <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>)" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
-        
-        <?php if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
-        <?php _e('or', 'formidable'); ?>
-        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
-        <?php } ?>
-    </div>
+    ?>
+
+    <div class="frm-show-click" style="margin-top:5px;">
 <?php
 
+    if ( isset($field['post_field']) && $field['post_field'] == 'post_category' ) {
+        echo '<p class="howto">'. FrmFieldsHelper::get_term_link($field['taxonomy']) .'</p>';
+    } else if ( !isset($field['post_field']) || $field['post_field'] != 'post_status' ) {
+?>
+    <div id="frm_add_field_<?php echo $field['id']; ?>">
+        <a href="javascript:frm_add_field_option(<?php echo $field['id']; ?>)" class="frm_orange frm_add_opt">+ <?php _e('Add an Option', 'formidable') ?></a>
+        
+        <?php _e('or', 'formidable'); ?>
+        <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
+    </div>
+<?php
+    }
+?>
+    </div>
+<?php
 }else if ($field['type'] == 'select'){ 
     if(isset($field['post_field']) and $field['post_field'] == 'post_category'){
         echo FrmFieldsHelper::dropdown_categories(array('name' => $field_name, 'field' => $field) );
@@ -99,16 +107,20 @@ $display = apply_filters('frm_display_field_options', array(
     <?php } ?>
     <div class="clear"></div>
     <div class="frm-show-click" style="margin-top:5px;">
-    <?php if(isset($field['post_field']) and $field['post_field'] == 'post_category'){ ?>
-        <p class="howto"><?php _e('Please add options from the WordPress "Categories" page', 'formidable') ?></p>
-    <?php }else if(!isset($field['post_field']) or $field['post_field'] != 'post_status'){ ?>
+    <?php 
+    
+    if ( isset($field['post_field']) && $field['post_field'] == 'post_category' ) {
+        echo '<p class="howto">'. FrmFieldsHelper::get_term_link($field['taxonomy']) .'</p>';
+    } else if ( !isset($field['post_field']) || $field['post_field'] != 'post_status' ) { ?>
         <div id="frm_field_<?php echo $field['id'] ?>_opts"<?php echo (count($field['options']) > 10) ? ' class="frm_field_opts_list"' : ''; ?>>
         <?php do_action('frm_add_multiple_opts_labels', $field); ?>
-        <?php foreach ($field['options'] as $opt_key => $opt){ 
-                $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
-                $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
-                require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/single-option.php');
-            }
+        <?php 
+        
+        foreach ( $field['options'] as $opt_key => $opt ) {
+            $field_val = apply_filters('frm_field_value_saved', $opt, $opt_key, $field);
+            $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
+            require(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/single-option.php');
+        }
         ?>
         </div>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
@@ -119,13 +131,14 @@ $display = apply_filters('frm_display_field_options', array(
             <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Field Choices', 'formidable') ?></a>
             <?php } ?>
         </div>
-<?php } ?>
+<?php 
+    } ?>
     </div>
 <?php
 }else if ($field['type'] == 'captcha'){ 
 ?>
-    <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" class="alignleft"/>
-    <span class="howto"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></span>
+    <img src="<?php echo FrmAppHelper::plugin_url() ?>/images/<?php echo $frm_settings->re_theme ?>-captcha.png" alt="captcha" />
+    <p class="howto" style="margin-top:0;"><?php printf(__('Hint: Change colors in the %1$sFormidable settings', 'formidable'), '<a href="?page=formidable-settings">') ?></a></p>
     <div class="clear"></div>
     <?php if (empty($frm_settings->pubkey)){ ?>
     <div class="howto" style="font-weight:bold;color:red;"><?php printf(__('Your captcha will not appear on your form until you %1$sset up%2$s the Public and Private Keys', 'formidable'), '<a href="?page=formidable-settings">', '</a>') ?></div>

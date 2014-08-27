@@ -12,7 +12,11 @@ class FrmFormsHelper{
         return $target_url;
     }
     
-    public static function get_template_dropdown($templates){ ?>
+    public static function get_template_dropdown($templates) {
+        if ( ! current_user_can('frm_edit_forms') ) {
+            return;
+        }
+        ?>
         <select id="select_form" name="select_form" onChange="frmAddNewForm(this.value,'duplicate')">
             <option value="">&mdash; <?php _e('Create Form from Template', 'formidable') ?> &mdash;</option>
             <?php foreach ($templates as $temp){ ?>
@@ -247,7 +251,7 @@ BEFORE_HTML;
                 $replace_with = $_GET['entry'];
             }
                 
-            if (($show == true || $show == 'true') && $replace_with != '' ){
+            if ( FrmAppHelper::is_true($show) && $replace_with != '' ) {
                 $html = str_replace('[if '.$code.']', '', $html); 
         	    $html = str_replace('[/if '.$code.']', '', $html);
             }else{

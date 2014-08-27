@@ -357,22 +357,25 @@ DEFAULT_HTML;
             $selected = reset($field['value']);
         }else{
             $selected = $field['value'];
-        }      
+        }
         
         $args = array(
             'show_option_all' => $show_option_all, 'hierarchical' => 1, 'name' => $name,
             'id' => $id, 'exclude' => $exclude, 'class' => $class, 'selected' => $selected, 
             'hide_empty' => false, 'echo' => 0, 'orderby' => 'name',
-            'exclude_tree' => $exclude,
         );
         
         $args = apply_filters('frm_dropdown_cat', $args, $field);
         
-        if(class_exists('FrmProFormsHelper')){
+        if ( class_exists('FrmProFormsHelper') ) {
             $post_type = FrmProFormsHelper::post_type($field['form_id']);
             $args['taxonomy'] = FrmProAppHelper::get_custom_taxonomy($post_type, $field);
-            if ( !$args['taxonomy'] ) {
+            if ( ! $args['taxonomy'] ) {
                 return;
+            }
+            
+            if ( is_taxonomy_hierarchical($args['taxonomy']) ) {
+                $args['exclude_tree'] = $exclude;
             }
         }
         
@@ -398,6 +401,21 @@ DEFAULT_HTML;
         }
         
         return $dropdown;
+    }
+    
+    public static function get_term_link($tax_id) {
+        $tax = get_taxonomy($tax_id);
+        if ( !$tax ) {
+            return;
+        }
+        
+        $link = sprintf(
+            __('Please add options from the WordPress "%1$s" page', 'formidable'),
+            '<a href="'. esc_url(admin_url('edit-tags.php?taxonomy='. $tax->name)) .'" target="_blank">'. ( empty($tax->labels->name) ? __('Categories') : $tax->labels->name ) .'</a>'
+        );
+        unset($tax);
+        
+        return $link;
     }
     
     public static function get_field_types($type){

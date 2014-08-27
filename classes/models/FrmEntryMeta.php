@@ -105,7 +105,6 @@ class FrmEntryMeta{
         global $wpdb;
       
         $entry_id = (int)$entry_id;
-        $field_id = (int)$field_id;
       
         $cached = wp_cache_get( $entry_id, 'frm_entry' );
         if($cached and isset($cached->metas) and isset($cached->metas[$field_id])){

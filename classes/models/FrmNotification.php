@@ -54,21 +54,12 @@ class FrmNotification{
         
         // Set the email message
         $plain_text = (isset($notification['plain_text']) && $notification['plain_text']) ? true : false;
-        $default = FrmEntriesController::show_entry_shortcode(array(
-            'id' => $entry->id, 'entry' => $entry, 'plain_text' => $plain_text,
-            'user_info' => (isset($notification['inc_user_info']) ? $notification['inc_user_info'] : false)
-        ));
-        
         $mail_body = isset($notification['email_message']) ? $notification['email_message'] : '';
         
-        // Add the default message
-        if ( strpos($mail_body, '[default-message]') !== false ) {
-            $mail_body = str_replace('[default-message]', $default, $mail_body);
-        } else {
-            $mail_body = $default;
-        }
-                
-        unset($default);
+        $mail_body = FrmEntriesHelper::replace_default_message($mail_body, array(
+            'id' => $entry->id, 'entry' => $entry, 'plain_text' => $plain_text,
+            'user_info' => (isset($notification['inc_user_info']) ? $notification['inc_user_info'] : false),
+        ) );
         
         // Set the subject
         $subject = isset($notification['email_subject']) ? $notification['email_subject'] : '';

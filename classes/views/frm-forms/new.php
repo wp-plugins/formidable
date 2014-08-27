@@ -4,8 +4,9 @@
 		<a href="?page=formidable-new" class="add-new-h2" style="visibility:hidden;"><?php _e('Add New', 'formidable'); ?></a>
 	</h2>
     <?php 
-    if (!$values['is_template'])
+    if ( !$form->is_template ) {
         FrmAppController::get_form_nav($id, true);
+    }
 	require(FrmAppHelper::plugin_path() .'/classes/views/shared/errors.php');
     
     if(version_compare( $GLOBALS['wp_version'], '3.3.3', '<')){ ?>
@@ -18,10 +19,10 @@
 
     <div id="post-body" class="metabox-holder columns-2">
     <div id="post-body-content">
-    <div class="frm_form_builder<?php echo ($values['custom_style']) ? ' with_frm_style' : ''; ?>">
+    <div class="frm_form_builder<?php echo (isset($form->options['custom_style']) && $form->options['custom_style']) ? ' with_frm_style' : ''; ?>">
         
             <p style="margin-top:0;">
-                <input type="button" onclick="frmSubmit<?php echo (isset($values['ajax_load']) and $values['ajax_load']) ? 'Build' : 'NoAjax'; ?>(this)" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <input type="button" onclick="frmSubmit<?php echo (isset($form->options['ajax_load']) && $form->options['ajax_load']) ? 'Build' : 'NoAjax'; ?>(this)" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
                 <span class="frm-loading-img"></span>
@@ -35,7 +36,7 @@
             <?php require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/form.php'); ?>
 
             <p>
-                <input type="button" onclick="frmSubmit<?php echo (isset($values['ajax_load']) and $values['ajax_load']) ? 'Build' : 'NoAjax'; ?>(this)" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
+                <input type="button" onclick="frmSubmit<?php echo (isset($form->options['ajax_load']) && $form->options['ajax_load']) ? 'Build' : 'NoAjax'; ?>(this)" value="<?php _e('Create', 'formidable') ?>" class="button-primary" />
                 <?php _e('or', 'formidable') ?>
                 <a class="button-secondary cancel" href="?page=formidable&amp;frm_action=destroy&amp;id=<?php echo $id; ?>"><?php _e('Cancel', 'formidable') ?></a>
                 <span class="frm-loading-img"></span>
