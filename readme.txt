@@ -6,16 +6,16 @@ Requires at least: 3.3
 Tested up to: 4.0
 Stable tag: 1.07.10
 
-Quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
+Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing. 
 
 == Description ==
-Quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
-There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
+Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing.
+There are dozens of form-building plugins out there, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
 
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
 
 = Features =
-* Save all responses to the database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
+* Save all responses to your WordPress database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
 * Integrate with reCAPTCHA and Akismet for Spam control (and a math captcha plugin in Pro)
 * Shortcode [formidable id=x] for use in pages, posts, or text widgets
 * Alternatively use `<?php echo FrmFormsController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
@@ -34,7 +34,7 @@ There are dozens of form-building plugins out there to create forms, but most ar
 4. Use shortcode [formidable id=x] in pages, posts, or text widgets.
 
 == Screenshots ==
-1. Create beautiful forms without any code.
+1. Create beautiful WordPress forms without any code.
 2. Form creation page
 3. Field Options and CSS Layout Classes
 4. Field Options for checkbox fields
