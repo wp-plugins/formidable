@@ -133,6 +133,8 @@ class FrmEntry{
             $frm_vars['saved_entries'][] = (int)$entry_id;
             
             $frm_entry_meta->duplicate_entry_metas($id, $entry_id);
+            
+            do_action('frm_after_duplicate_entry', $entry_id, $new_values['form_id']);
             return $entry_id;
         }else
             return false;
@@ -341,13 +343,13 @@ class FrmEntry{
         
         $errors = array();
         
-        if ( is_admin() && is_user_logged_in() && (!isset($values['frm_submit_entry']) || !wp_verify_nonce($values['frm_submit_entry'], 'frm_submit_entry_nonce')) ) {
-            $errors['form'] = __('You do not have permission to do that', 'formidable');
-        }
-        
-        if ( !isset($values['form_id']) || !isset($values['item_meta']) ) {
+        if ( ! isset($values['form_id']) || ! isset($values['item_meta']) ) {
             $errors['form'] = __('There was a problem with your submission. Please try again.', 'formidable');
             return $errors;
+        }
+        
+        if ( is_admin() && is_user_logged_in() && ( ! isset($values['frm_submit_entry_'. $values['form_id']]) || ! wp_verify_nonce($values['frm_submit_entry_'. $values['form_id']], 'frm_submit_entry_nonce') ) ) {
+            $errors['form'] = __('You do not have permission to do that', 'formidable');
         }
         
         if( !isset($values['item_key']) or $values['item_key'] == '' ){
@@ -431,6 +433,10 @@ class FrmEntry{
     
     // check the blacklisted words
     function blacklist_check( $values ) {
+        if ( ! apply_filters('frm_check_blacklist', true, $values) ) {
+            return false;
+        }
+        
     	$mod_keys = trim( get_option( 'blacklist_keys' ) );
 
     	if ( empty( $mod_keys ) ) {

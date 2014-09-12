@@ -14,6 +14,7 @@
         <br/>
         <form enctype="multipart/form-data" method="post">
             <input type="hidden" name="frm_action" value="import_xml" />
+            <?php wp_nonce_field('import-xml-nonce', 'import-xml'); ?>
             <p><label><?php echo apply_filters('frm_upload_instructions2', __('Choose a Formidable XML file', 'formidable')) ?> (<?php printf(__('Maximum size: %s', 'formidable'), ini_get('upload_max_filesize')) ?>)</label>
             <input type="file" name="frm_import_file" size="25" />
             </p>
@@ -33,7 +34,8 @@
     <div class="inside with_frm_style">
         <form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>" id="frm_export_xml">
             <input type="hidden" name="action" value="frm_export_xml" />
-            <?php //wp_nonce_field('export-xml'); ?>
+            <?php wp_nonce_field('export-xml-nonce', 'export-xml'); ?>
+            
             <table class="form-table">
                 <?php if (count($export_format) == 1) { 
                     reset($export_format); ?>

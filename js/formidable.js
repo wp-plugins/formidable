@@ -382,8 +382,9 @@ function frmGetDataOpts(f,selected,field_id,rec){
 					}
 				});
 			}
-			if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen)
-				jQuery('.frm_chzn').chosen();
+			if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen){
+				jQuery('.frm_chzn').chosen({allow_single_deselect:true});
+			}
 			
 			frmCheckDependent(prev,f.HideField,'stop');
 		}

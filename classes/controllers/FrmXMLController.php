@@ -78,6 +78,14 @@ class FrmXMLController{
     public static function import_xml() {
         $errors = array();
         $message = '';
+        
+        if ( !current_user_can('frm_edit_forms') || ! isset($_POST['import-xml']) || ! wp_verify_nonce($_POST['import-xml'], 'import-xml-nonce') ) {
+            global $frm_settings;
+            $errors[] = $frm_settings->admin_permission;
+            self::form($errors);
+            return;
+        }
+        
         if ( !isset($_FILES) || !isset($_FILES['frm_import_file']) || empty($_FILES['frm_import_file']['name']) || (int)$_FILES['frm_import_file']['size'] < 1) {
             $errors[] = __( 'Oops, you didn\'t select a file.', 'formidable' );
             self::form($errors);

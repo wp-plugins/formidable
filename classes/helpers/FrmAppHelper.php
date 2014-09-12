@@ -129,7 +129,7 @@ class FrmAppHelper{
     <?php
     }
     
-    public static function frm_capabilities(){
+    public static function frm_capabilities($type = 'auto'){
         global $frm_vars;
         $cap = array(
             'frm_view_forms'        => __('View Forms and Templates', 'formidable'),
@@ -137,7 +137,7 @@ class FrmAppHelper{
             'frm_delete_forms'      => __('Delete Forms and Templates', 'formidable'),
             'frm_change_settings'   => __('Access this Settings Page', 'formidable')
         );
-        if($frm_vars['pro_is_installed']){
+        if ( $frm_vars['pro_is_installed'] || 'pro' == $type ) {
             $cap['frm_view_entries'] = __('View Entries from Admin Area', 'formidable');
             $cap['frm_create_entries'] = __('Add Entries from Admin Area', 'formidable');
             $cap['frm_edit_entries'] = __('Edit Entries from Admin Area', 'formidable');
@@ -584,7 +584,7 @@ class FrmAppHelper{
         foreach ($words as $word){
             $part = (($sub != '') ? ' ' : '') . $word;
             $total_len = (function_exists('mb_strlen')) ? mb_strlen($sub . $part) : strlen($sub. $part);
-            if ( $total_len > $length ) {
+            if ( $total_len > $length && str_word_count($sub) ) {
                 break;
             }
             

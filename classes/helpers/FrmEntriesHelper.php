@@ -37,7 +37,7 @@ class FrmEntriesHelper{
             $is_default = ($new_value == $default) ? true : false;
               
     		//If checkbox, multi-select dropdown, or checkbox data from entries field, set return array to true
-    		if ( $field && ( ( $field->type == 'data' && $field->field_options['data_type'] == 'checkbox' ) || $field->type == 'checkbox' || ( $field->type == 'select' && $field->field_options['multiple'] == 1 ) ) ) {
+    		if ( $field && ( ( $field->type == 'data' && $field->field_options['data_type'] == 'checkbox' ) || $field->type == 'checkbox' || ( $field->type == 'select' && isset($field->field_options['multiple']) && $field->field_options['multiple'] == 1 ) ) ) {
                 $return_array = true;
     		} else {
     		    $return_array = false;

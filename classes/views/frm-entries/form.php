@@ -15,7 +15,7 @@ echo FrmFormsHelper::replace_shortcodes($values['before_html'], $form, $title, $
 <input type="hidden" name="frm_action" value="<?php echo esc_attr($form_action) ?>" />
 <input type="hidden" name="form_id" value="<?php echo esc_attr($form->id) ?>" />
 <input type="hidden" name="form_key" value="<?php echo esc_attr($form->form_key) ?>" />
-<?php wp_nonce_field('frm_submit_entry_nonce', 'frm_submit_entry'); ?>
+<?php wp_nonce_field('frm_submit_entry_nonce', 'frm_submit_entry_'. $form->id); ?>
 
 <?php if (isset($id)){ ?><input type="hidden" name="id" value="<?php echo esc_attr($id) ?>" /><?php } ?>
 <?php if (isset($controller) && isset($plugin)){ ?>

@@ -143,7 +143,7 @@
            
         <?php foreach($sections as $sec_name => $section){ 
             if($a == $sec_name .'_settings'){ ?>
-<style type="text/css">.<?php echo $sec_name ?>_settings{display:block !important;}</style><?php }?>
+<style type="text/css">.<?php echo $sec_name ?>_settings{display:block;}</style><?php }?>
             <div id="<?php echo $sec_name ?>_settings" class="<?php echo $sec_name ?>_settings tabs-panel" style="display:<?php echo ($a == $sec_name .'_settings') ? 'block' : 'none'; ?>;"><?php
                 if(isset($section['class'])){
                     call_user_func(array($section['class'], $section['function'])); 

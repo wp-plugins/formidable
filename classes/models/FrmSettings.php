@@ -79,7 +79,7 @@ class FrmSettings{
             }
         }
         
-        $frm_roles = FrmAppHelper::frm_capabilities();
+        $frm_roles = FrmAppHelper::frm_capabilities('pro');
         foreach($frm_roles as $frm_role => $frm_role_description){
             if(!isset($this->$frm_role))
                 $this->$frm_role = 'administrator';
