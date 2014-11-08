@@ -3,7 +3,7 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
     <title><?php bloginfo('name'); ?></title>
-    <?php 
+    <?php
     wp_admin_css( 'global' );
     wp_admin_css();
     wp_admin_css( 'colors' );
@@ -14,7 +14,7 @@
 
     do_action('admin_print_styles');
     do_action('admin_print_scripts');
-    
+
     ?>
 <style type="text/css">
 #wpadminbar{display:none;}
@@ -55,22 +55,29 @@
     <?php } ?>
 </ul>
 <textarea name="frm_bulk_options" id="frm_bulk_options" style="height:240px;width:335px;float:right;">
-<?php foreach($field->options as $fopt){
-if(is_array($fopt)){
-    $label = (isset($fopt['label'])) ? $fopt['label'] : reset($fopt);
-    $value = (isset($fopt['value'])) ? $fopt['value'] : $label;
-    if($label != $value and isset($field->field_options['separate_value']) and $field->field_options['separate_value'])
-        echo "$label|$value\n";
-    else
-        echo $label ."\n";        
-}else{
-    echo $fopt ."\n";
-}   
+<?php
+$other_array = array();
+foreach($field->options as $fkey => $fopt){
+    //If it is an other option, don't include it
+    if ( $fkey && strpos( $fkey, 'other') !== false ) {
+        continue;
+    }
+    if(is_array($fopt)){
+        $label = (isset($fopt['label'])) ? $fopt['label'] : reset($fopt);
+        $value = (isset($fopt['value'])) ? $fopt['value'] : $label;
+        if ( $label != $value && isset($field->field_options['separate_value']) && $field->field_options['separate_value'] ) {
+            echo "$label|$value\n";
+        } else{
+            echo $label ."\n";
+        }
+    }else{
+        echo $fopt ."\n";
+    }
 } ?>
 </textarea>
 
 <p class="submit clear">
-<input type="button" onclick="window.top.frmUpdateOpts(<?php echo $field->id ?>,jQuery('#frm_bulk_options').val()); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
+<input type="button" onclick="window.top.frmAdminBuild.updateOpts(<?php echo $field->id ?>,document.getElementById('frm_bulk_options').value); window.top.tb_remove();" class="button-primary" value="<?php _e('Update Field Choices', 'formidable') ?>" />
 </p>
 </div>
 

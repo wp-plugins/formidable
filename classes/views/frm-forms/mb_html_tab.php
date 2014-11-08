@@ -3,7 +3,7 @@
     <?php
     $col = 'one';
     $entry_shortcodes = array(
-        'id' => __('Field ID', 'formidable'), 
+        'id' => __('Field ID', 'formidable'),
         'key' => __('Field Key', 'formidable'),
         'field_name' => __('Field Name', 'formidable'),
         'description' => __('Field Description', 'formidable'),
@@ -28,27 +28,27 @@
     }
     ?>
     </ul>
-    
+
     <ul class="frm_code_list clear">
-        <?php 
+        <?php
         $col = 'one';
         foreach(array(
-            'form_name' => __('Form Name', 'formidable'), 'form_description' => __('Form Description', 'formidable'), 
+            'form_name' => __('Form Name', 'formidable'), 'form_description' => __('Form Description', 'formidable'),
             'form_key' => __('Form Key', 'formidable'), 'deletelink' => __('Delete Entry Link', 'formidable')) as $skey => $sname){ ?>
         <li class="frm_col_<?php echo $col ?>">
     	    <a class="show_before_html show_after_html frmbutton button frm_insert_code" data-code="<?php echo esc_attr($skey) ?>" href="javascript:void(0)"><?php echo $sname; ?></a>
     	</li>
         <?php
-            $col = ($col == 'one') ? 'two' : 'one'; 
+            $col = ($col == 'one') ? 'two' : 'one';
         }
-        
+
         foreach(array(
             'button_label' => __('Button Label', 'formidable'), 'button_action' => __('Button Hook', 'formidable')) as $skey => $sname){ ?>
         <li class="frm_col_<?php echo $col ?>">
     	    <a class="show_submit_html frmbutton button frm_insert_code" data-code="<?php echo esc_attr($skey) ?>" href="javascript:void(0)"><?php echo $sname; ?></a>
     	</li>
         <?php
-            $col = ($col == 'one') ? 'two' : 'one'; 
+            $col = ($col == 'one') ? 'two' : 'one';
         } ?>
     </ul>
 </div>

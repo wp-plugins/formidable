@@ -1,28 +1,23 @@
 <?php
-
 if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
-
-if(class_exists('FrmEntriesHelper'))
-    return;
 
 class FrmEntriesHelper{
 
     public static function setup_new_vars($fields, $form='', $reset=false){
-        global $frm_settings, $frm_vars;
+        global $frm_vars;
         $values = array();
         foreach (array('name' => '', 'description' => '', 'item_key' => '') as $var => $default)
             $values[$var] = FrmAppHelper::get_post_param($var, $default);
-        
+
         $values['fields'] = array();
         if (empty($fields)){
             return apply_filters('frm_setup_new_entry', $values);
         }
-        
+
         foreach ( (array) $fields as $field ) {
-            $field->field_options = maybe_unserialize($field->field_options);
             $default = $field->default_value;
             $posted_val = false;
-            
+
             if ( $reset ) {
                 $new_value = $default;
             } else if ( $_POST && isset($_POST['item_meta'][$field->id]) && $_POST['item_meta'][$field->id] != '' ) {
@@ -33,31 +28,31 @@ class FrmEntriesHelper{
             } else {
                 $new_value = $default;
             }
-            
+
             $is_default = ($new_value == $default) ? true : false;
-              
+
     		//If checkbox, multi-select dropdown, or checkbox data from entries field, set return array to true
     		if ( $field && ( ( $field->type == 'data' && $field->field_options['data_type'] == 'checkbox' ) || $field->type == 'checkbox' || ( $field->type == 'select' && isset($field->field_options['multiple']) && $field->field_options['multiple'] == 1 ) ) ) {
                 $return_array = true;
     		} else {
     		    $return_array = false;
     		}
-            
+
             $field->default_value = apply_filters('frm_get_default_value', $field->default_value, $field, true, $return_array);
-                
+
             if ( !is_array($new_value) ) {
                 if ( $is_default ) {
                     $new_value = $field->default_value;
                 } else if ( !$posted_val ) {
                     $new_value = apply_filters('frm_filter_default_value', $new_value, $field);
                 }
-                
+
                 $new_value = str_replace('"', '&quot;', $new_value);
             }
-            
+
             unset($is_default);
             unset($posted_val);
-                
+
                 $field_array = array(
                     'id' => $field->id,
                     'value' => $new_value,
@@ -74,72 +69,72 @@ class FrmEntriesHelper{
 
                 $opt_defaults = FrmFieldsHelper::get_default_field_opts($field_array['type'], $field, true);
                 $opt_defaults['required_indicator'] = '';
-                
+
                 foreach ($opt_defaults as $opt => $default_opt){
                     $field_array[$opt] = (isset($field->field_options[$opt]) && $field->field_options[$opt] != '') ? $field->field_options[$opt] : $default_opt;
                     unset($opt);
                     unset($default_opt);
                 }
-                  
+
                 unset($opt_defaults);
-                
-                if ($field_array['size'] == '')
-                    $field_array['size'] = isset($frm_vars['sidebar_width']) ? $frm_vars['sidebar_width'] : '';
-            
-                
+
+                $field_array['size'] = FrmAppHelper::get_field_size($field_array);
+
                 if ($field_array['custom_html'] == '')
                     $field_array['custom_html'] = FrmFieldsHelper::get_default_html($field->type);
-                    
+
                 $field_array = apply_filters('frm_setup_new_fields_vars', $field_array, $field);
-                
-                foreach((array)$field->field_options as $k => $v){
+
+                foreach ( (array) $field->field_options as $k => $v ) {
                     if(!isset($field_array[$k]))
                         $field_array[$k] = $v;
                     unset($k);
                     unset($v);
                 }
-                
+
                 $values['fields'][] = $field_array;
-             
+
                 if (!$form or !isset($form->id)){
                     $frm_form = new FrmForm();
                     $form = $frm_form->getOne($field->form_id);
                 }
         }
 
-            $form->options = maybe_unserialize($form->options);
-            if (is_array($form->options)){
-                foreach ($form->options as $opt => $value)
-                    $values[$opt] = FrmAppHelper::get_post_param($opt, $value);
+        $form->options = maybe_unserialize($form->options);
+        if ( is_array($form->options) ) {
+            foreach ( $form->options as $opt => $value ) {
+                $values[$opt] = FrmAppHelper::get_post_param($opt, $value);
             }
-            
-            if (!isset($values['custom_style']))
-                $values['custom_style'] = ($frm_settings->load_style != 'none');
-                
-            if (!isset($values['email_to']))
-                $values['email_to'] = '';
+        }
 
-            if (!isset($values['submit_value']))
-                $values['submit_value'] = $frm_settings->submit_value;
+        $frm_settings = FrmAppHelper::get_settings();
 
-            if (!isset($values['success_msg']))
-                $values['success_msg'] = $frm_settings->success_msg;
+        $form_defaults = array(
+            'custom_style'  => ($frm_settings->load_style != 'none'),
+            'email_to'      => '',
+            'submit_value'  => $frm_settings->submit_value,
+            'success_msg'   => $frm_settings->success_msg,
+            'akismet'       => '',
+            'form_class'    => '',
+        );
 
-            if (!isset($values['akismet']))
-                $values['akismet'] = '';
+        $values = array_merge($form_defaults, $values);
 
-            if (!isset($values['before_html']))
-                $values['before_html'] = FrmFormsHelper::get_default_html('before');
+        if ( ! isset($values['before_html']) ) {
+            $values['before_html'] = FrmFormsHelper::get_default_html('before');
+        }
 
-            if (!isset($values['after_html']))
-                $values['after_html'] = FrmFormsHelper::get_default_html('after');
-                
-            if (!isset($values['submit_html']))
-                $values['submit_html'] = FrmFormsHelper::get_default_html('submit');
-        
+        if ( ! isset($values['after_html']) ) {
+            $values['after_html'] = FrmFormsHelper::get_default_html('after');
+        }
+
+        if ( ! isset($values['submit_html']) ) {
+            $values['submit_html'] = FrmFormsHelper::get_default_html('submit');
+        }
+
         return apply_filters('frm_setup_new_entry', $values);
     }
-    
+
     public static function setup_edit_vars($values, $record){
         //$values['description'] = maybe_unserialize( $record->description );
         $values['item_key'] = isset($_POST['item_key']) ? $_POST['item_key'] : $record->item_key;
@@ -147,20 +142,177 @@ class FrmEntriesHelper{
         $values['is_draft'] = $record->is_draft;
         return apply_filters('frm_setup_edit_entry_vars', $values, $record);
     }
-    
+
+    public static function fill_entry_values($atts, $f, array &$values) {
+        if ( FrmFieldsHelper::is_no_save_field($f->type) ) {
+            return;
+        }
+
+        if ( $atts['default_email'] ) {
+            $values[$f->id] = array('label' => '['. $f->id .' show=field_label]', 'val' => '['. $f->id .']');
+            return;
+        }
+
+        //Remove signature from default-message shortcode
+        if ( $f->type == 'signature' ) {
+            return;
+        }
+
+        if ( $atts['entry'] && !isset($atts['entry']->metas[$f->id]) ) {
+            if ( $atts['entry']->post_id  && ( $f->type == 'tag' || (isset($f->field_options['post_field']) && $f->field_options['post_field'])) ) {
+                $p_val = FrmProEntryMetaHelper::get_post_value($atts['entry']->post_id, $f->field_options['post_field'], $f->field_options['custom_field'], array(
+                    'truncate' => (($f->field_options['post_field'] == 'post_category') ? true : false),
+                    'form_id' => $atts['entry']->form_id, 'field' => $f, 'type' => $f->type,
+                    'exclude_cat' => (isset($f->field_options['exclude_cat']) ? $f->field_options['exclude_cat'] : 0)
+                ));
+                if ( $p_val != '' ) {
+                    $atts['entry']->metas[$f->id] = $p_val;
+                }
+            }
+
+            if ( ! isset($atts['entry']->metas[$f->id]) && ! $atts['include_blank'] ) {
+                return;
+            }
+
+            $atts['entry']->metas[$f->id] = '';
+        }
+
+        $val = '';
+        if ( $atts['entry'] ) {
+            $prev_val = maybe_unserialize($atts['entry']->metas[$f->id]);
+            $meta = array('item_id' => $atts['id'], 'field_id' => $f->id, 'meta_value' => $prev_val, 'field_type' => $f->type);
+
+            //This filter applies to the default-message shortcode and frm-show-entry shortcode only
+            $val = apply_filters('frm_email_value', $prev_val, (object) $meta, $atts['entry']);
+        }
+
+        if ( $f->type == 'textarea' && ! $atts['plain_text'] ) {
+            $val = str_replace(array("\r\n", "\r", "\n"), ' <br/>', $val);
+        }
+
+        if ( is_array($val) && $atts['format'] == 'text' ) {
+            $val = implode(', ', $val);
+        }
+
+        if ( $atts['format'] != 'text' ) {
+            $values[$f->field_key] = $val;
+        } else {
+            $values[$f->id] = array('label' => $f->name, 'val' => $val);
+        }
+    }
+
+    public static function fill_entry_user_info($atts, array &$values) {
+        if ( ! $atts['user_info'] ) {
+            return;
+        }
+
+        if ( isset($atts['entry']->description) ) {
+            $data = maybe_unserialize($atts['entry']->description);
+        } else if ( $atts['default_email'] ) {
+            $atts['entry']->ip = '[ip]';
+            $data = array(
+                'browser' => '[browser]',
+                'referrer' => '[referrer]',
+            );
+        } else {
+            $data = array(
+                'browser' => '',
+                'referrer' => '',
+            );
+        }
+
+        if ( $atts['format'] != 'text' ) {
+            $values['ip'] = $atts['entry']->ip;
+            $values['browser'] = $data['browser'];
+            $values['referrer'] = $data['referrer'];
+        } else {
+            //$content .= "\r\n\r\n" . __('User Information', 'formidable') ."\r\n";
+            $values['ip'] = array('label' => __('IP Address', 'formidable'), 'val' => $atts['entry']->ip);
+            $values['browser'] = array('label' => __('User-Agent (Browser/OS)', 'formidable'), 'val' => $data['browser']);
+            $values['referrer'] = array('label' => __('Referrer', 'formidable'), 'val' => $data['referrer']);
+        }
+    }
+
+    public static function convert_entry_to_content($values, $atts, array &$content) {
+
+        if ( $atts['plain_text'] ) {
+            $bg_color_alt = $row_style = '';
+        } else {
+            $default_settings = apply_filters('frm_show_entry_styles', array(
+                'border_color' => 'dddddd',
+                'bg_color' => 'f7f7f7',
+                'text_color' => '444444',
+                'font_size' => '12px',
+                'border_width' => '1px',
+                'alt_bg_color' => 'ffffff',
+            ) );
+
+            // merge defaults, global settings, and shortcode options
+            foreach ( $default_settings as $key => $setting ) {
+                if ( $atts[$key] != '' ) {
+                    continue;
+                }
+
+                $atts[$key] = $setting;
+                unset($key, $setting);
+            }
+
+            unset($default_settings);
+
+            $content[] = '<table cellspacing="0" style="font-size:'. $atts['font_size'] .';line-height:135%; border-bottom:'. $atts['border_width'] .' solid #'. $atts['border_color'] .';"><tbody>'."\r\n";
+            $atts['bg_color'] = ' style="background-color:#'. $atts['bg_color'] .';"';
+            $bg_color_alt = ' style="background-color:#'. $atts['alt_bg_color'] .';"';
+            $row_style = 'style="text-align:'. ( $atts['direction'] == 'rtl' ? 'right' : 'left' ) .';color:#'. $atts['text_color'] .';padding:7px 9px;border-top:'. $atts['border_width'] .' solid #'. $atts['border_color'] .'"';
+        }
+
+        $odd = true;
+        foreach ( $values as $id => $value ) {
+            if ( $atts['plain_text'] ) {
+                if ( 'rtl' == $atts['direction'] ) {
+                    $content[] =  $value['val'] . ' :'. $value['label'] ."\r\n";
+                } else {
+                    $content[] = $value['label'] . ': '. $value['val'] ."\r\n";
+                }
+                continue;
+            }
+
+            if ( $atts['default_email'] && is_numeric($id) ) {
+                $content[] = '[if '. $id .']<tr style="[frm-alt-color]">';
+            } else {
+                $content[] = '<tr'. ( $odd ? $atts['bg_color'] : $bg_color_alt ) .'>';
+            }
+
+            if ( 'rtl' == $atts['direction'] ) {
+                $content[] = '<td '. $row_style .'>'. $value['val'] .'</td><th '. $row_style .'>'. $value['label'] . '</th>';
+            } else {
+                $content[] = '<th '. $row_style .'>'. $value['label'] .'</th><td '. $row_style .'>'. $value['val'] .'</td>';
+            }
+            $content[] = '</tr>'. "\r\n";
+
+            if ( $atts['default_email'] && is_numeric($id) ) {
+                $content[] = '[/if '. $id .']';
+            }
+            $odd = $odd ? false : true;
+        }
+
+        if ( ! $atts['plain_text'] ) {
+            $content[] = '</tbody></table>';
+        }
+    }
+
     public static function replace_default_message($message, $atts) {
-        if ( strpos($message, '[default-message') === false && 
-            strpos($message, '[default_message') === false && 
+        if ( strpos($message, '[default-message') === false &&
+            strpos($message, '[default_message') === false &&
             !empty($message) ) {
             return $message;
         }
-        
+
         if ( empty($message) ) {
             $message = '[default-message]';
         }
-        
+
         preg_match_all("/\[(default-message|default_message)\b(.*?)(?:(\/))?\]/s", $message, $shortcodes, PREG_PATTERN_ORDER);
-        
+
         foreach ( $shortcodes[0] as $short_key => $tag ) {
             $add_atts = shortcode_parse_atts( $shortcodes[2][$short_key] );
             if ( $add_atts ){
@@ -168,26 +320,107 @@ class FrmEntriesHelper{
             } else {
                 $this_atts = $atts;
             }
-            
+
             $default = FrmEntriesController::show_entry_shortcode($this_atts);
-            
+
             // Add the default message
             $message = str_replace($shortcodes[0][$short_key], $default, $message);
         }
 
         return $message;
     }
-    
 
+    /*
+    * Sets radio or checkbox value equal to "other" value if it is set
+    * @since 2.0
+    * @eturn array of updated POST values
+    */
+    public static function set_other_vals( $values ){
+        if ( ! isset( $values['item_meta']['other'] ) ) {
+            return $values;
+        }
 
-    public static function entries_dropdown( $form_id, $field_name, $field_value='', $blank=true, $blank_label='', $onchange=false ){
+        $other_array = $values['item_meta']['other'];
+        foreach ( $other_array as $f_id => $o_val ) {
+            //For checkboxes
+            if ( is_array( $o_val ) ) {
+                foreach ( $o_val as $opt_key => $opt_val ) {
+                    $_POST['item_meta'][$f_id][$opt_key] = $values['item_meta'][$f_id][$opt_key] = $opt_val;
+                    unset( $opt_key, $opt_val );
+                }
+            //For radio buttons
+            } else if ( $o_val ) {
+                $_POST['item_meta'][$f_id] = $values['item_meta'][$f_id] = $o_val;
+            }
+        }
+        unset( $_POST['item_meta']['other'] );
+
+        return $values;
+    }
+
+    /*
+    * Sets radio or checkbox value equal to "other" value if it is set - FOR REPEATING SECTIONS
+    * @since 2.0
+    * @return array of updated POST values
+    */
+    public static function set_other_repeating_vals( $values, $field ){
+        if ( $field->type != 'divider' || ! isset($field->field_options['repeat']) || ! $field->field_options['repeat'] ) {
+            return $values;
+        }
+
+        foreach ( $values['item_meta'][$field->id] as $k => $val ) {
+            if ( ! isset( $val['other'] ) || ! is_array( $val['other'] ) ) {
+                continue;
+            }
+
+            foreach ( $val['other'] as $sub_fid => $o_val ) {
+
+                //For checkboxes
+                if ( is_array( $o_val ) ) {
+                    foreach ( $o_val as $opt_key => $opt_val ) {
+                        $values['item_meta'][$field->id][$k][$sub_fid][$opt_key] = $opt_val;
+                        unset( $values['item_meta'][$field->id][$k]['other'][$sub_fid][$opt_key] );
+                        unset( $opt_key, $opt_val );
+                    }
+
+                //For radio buttons
+                } else if ( $o_val ) {
+                    $values['item_meta'][$field->id][$k][$sub_fid] = $o_val;
+                    unset( $values['item_meta'][$field->id][$k]['other'][$sub_fid] );
+                }
+                unset( $sub_fid, $o_val);
+            }
+
+            unset( $k, $val );
+        }
+
+        return $values;
+    }
+
+    public static function set_posted_value($field, $value, $args) {
+        if ( empty($args['parent_field_id']) ) {
+            $_POST['item_meta'][$field->id] = $value;
+        } else {
+            $_POST['item_meta'][$args['parent_field_id']][$args['key_pointer']][$field->id] = $value;
+        }
+    }
+
+    public static function get_posted_value($field, &$value, $args) {
+        if ( empty($args['parent_field_id']) ) {
+            $value = isset($_POST['item_meta'][$field->id]) ? $_POST['item_meta'][$field->id] : '';
+        } else {
+            $value = $_POST['item_meta'][$args['parent_field_id']][$args['key_pointer']][$field->id];
+        }
+    }
+
+    public static function entries_dropdown() {
         _deprecated_function( __FUNCTION__, '1.07.09');
     }
-    
+
     public static function enqueue_scripts($params){
         do_action('frm_enqueue_form_scripts', $params);
     }
-    
+
     // Add submitted values to a string for spam checking
     public static function entry_array_to_string($values) {
         $content = '';
@@ -195,14 +428,14 @@ class FrmEntriesHelper{
 			if ( $content != '' ) {
 				$content .= "\n\n";
 			}
-			
+
 			if ( is_array($val) ) {
 			    $val = implode(',', $val);
 			}
-			
+
 			$content .= $val;
 		}
-		
+
 		return $content;
     }
 }

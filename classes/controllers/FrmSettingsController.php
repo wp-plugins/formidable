@@ -1,12 +1,5 @@
 <?php
-/**
- * @package Formidable
- */
-
 if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
-
-if(class_exists('FrmSettingsController'))
-    return;
 
 class FrmSettingsController{
     public static function load_hooks(){
@@ -17,23 +10,22 @@ class FrmSettingsController{
     public static function menu(){
         add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', 'FrmSettingsController::route');
     }
-    
+
     public static function license_box(){
         $a = isset($_GET['t']) ? $_GET['t'] : 'general_settings';
         include(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/license_box.php');
     }
 
     public static function display_form($errors=array(), $message=''){
-        global $frm_settings, $frm_vars;
-        
+        global $frm_vars;
+
+        $frm_settings = FrmAppHelper::get_settings();
         $frm_roles = FrmAppHelper::frm_capabilities();
-      
+
         $uploads = wp_upload_dir();
         $target_path = $uploads['basedir'] . '/formidable/css';
-        $sections = apply_filters('frm_add_settings_section', array(
-            'styling' => array('name' => __('Form Styling', 'formidable'), 'class' => 'FrmSettingsController', 'function' => 'styling_tab')
-        ));
-        
+        $sections = apply_filters('frm_add_settings_section', array());
+
         $recaptcha_themes = array(
             'red' => __('Red', 'formidable'),
             'white' => __('White', 'formidable'),
@@ -41,19 +33,21 @@ class FrmSettingsController{
             'clean' => __('Clean', 'formidable'),
             //'custom' => __('Custom', 'formidable'),
         );
-        
+
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }
 
-    public static function process_form($stop_load=false){        
-        global $frm_settings, $frm_vars;
-        
+    public static function process_form($stop_load=false){
+        global $frm_vars;
+
+        $frm_settings = FrmAppHelper::get_settings();
+
         if(!isset($_POST['process_form']) or !wp_verify_nonce($_POST['process_form'], 'process_form_nonce'))
             wp_die($frm_settings->admin_permission);
-        
+
         $errors = array();
         $message = '';
-        
+
         if(!isset($frm_vars['settings_routed']) or !$frm_vars['settings_routed']){
             //$errors = $frm_settings->validate($_POST,array());
             $frm_settings->update(stripslashes_deep($_POST));
@@ -65,19 +59,15 @@ class FrmSettingsController{
         }else{
             $message = __('Settings Saved', 'formidable');
         }
-        
+
         if($stop_load == 'stop_load'){
             $frm_vars['settings_routed'] = true;
             return;
         }
-        
+
         self::display_form($errors, $message);
     }
-    
-    public static function styling_tab(){
-        include(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/styling_tab.php');
-    }
-    
+
     public static function route($stop_load=false){
         $action = isset($_REQUEST['frm_action']) ? 'frm_action' : 'action';
         $action = FrmAppHelper::get_param($action);

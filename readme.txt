@@ -2,9 +2,9 @@
 Contributors: sswells, srwells, jamie.wahlin
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
-Requires at least: 3.3
+Requires at least: 3.3.3
 Tested up to: 4.0
-Stable tag: 1.07.11
+Stable tag: 1.07.10
 
 Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing. 
 
@@ -64,6 +64,28 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
 
 == Changelog ==
+= 2.0 =
+* Move visular form styler to free version
+* Added multiple emails to free version
+* Added BCC, CC, and reply to options to emails
+* Allow multiple roles to be selected for the permissions on the global settings page
+* Updated the UI
+* Added a trash can for forms as well as draft forms
+* Change the field width option from characters to pixels
+* Pro: Added multiple form styling templates, more styling options, and updated the default styling
+* Pro: Added repeatable fields and embeded forms
+* Pro: Created form actions and consolidated notifications and add-ons
+* Pro: All form actions can use conditional logic
+* Pro: Added confirmation fields
+* Pro: Added read-only radio and check box fields
+* Pro: View pagination will automatically take on Genesis theme styling
+* Pro: Entire sections can be moved and duplicated
+* Lots of other small features and bug fixes. Too many little features to list!
+
+= 1.07.12 =
+* Add a bunch more caching
+* Scroll to field on click in form builder
+
 = 1.07.11 =
 * Added hook: frm_check_blacklist for disabling the comment blacklist spam check
 * Make nonce id unique per form

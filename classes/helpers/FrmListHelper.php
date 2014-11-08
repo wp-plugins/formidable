@@ -1,15 +1,9 @@
 <?php
-
 if ( !defined('ABSPATH') ) die('You are not allowed to call this page directly.');
 
-if(class_exists('FrmListHelper'))
-    return;
-
 class FrmListHelper extends WP_List_Table {
-    
+
 	function __construct($args) {
-	    global $frm_settings;
-	    
 	    $args = wp_parse_args( $args, array(
 			'ajax' => false,
 			'table_name' => '',
@@ -19,8 +13,7 @@ class FrmListHelper extends WP_List_Table {
 		$this->table_name = $args['table_name'];
 		$this->page_name = $args['page_name'];
 		$this->params = $args['params'];
-		
-	    $screen = get_current_screen();
+		$this->status = isset( $_REQUEST['form_type'] ) ? $_REQUEST['form_type'] : '';
 
 		parent::__construct( $args );
 	}
@@ -30,75 +23,179 @@ class FrmListHelper extends WP_List_Table {
 	}
 
 	function prepare_items() {
-	    global $wpdb, $per_page, $frm_settings;
-		$paged = $this->get_pagenum();
+	    global $wpdb, $per_page, $mode;
+
+	    $mode = empty( $_REQUEST['mode'] ) ? 'list' : $_REQUEST['mode'];
+
 		$default_orderby = 'name';
 		$default_order = 'ASC';
-		
+
         $orderby = ( isset( $_REQUEST['orderby'] ) ) ? $_REQUEST['orderby'] : $default_orderby;
 		$order = ( isset( $_REQUEST['order'] ) ) ? $_REQUEST['order'] : $default_order;
-		
+
 		$page = $this->get_pagenum();
 		$default_count = empty($this->page_name) ? 20 : 10;
 		$per_page = $this->get_items_per_page( 'formidable_page_formidable'. str_replace('-', '_', $this->page_name) .'_per_page', $default_count);
 
 		$start = ( isset( $_REQUEST['start'] ) ) ? $_REQUEST['start'] : (( $page - 1 ) * $per_page);
-		$s = isset( $_REQUEST['s'] ) ? stripslashes($_REQUEST['s']) : '';
-		$fid = isset( $_REQUEST['fid'] ) ? $_REQUEST['fid'] : '';
-		if($s != ''){
-		    preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $s, $matches);
-		    $search_terms = array_map('trim', $matches[0]);
-		}
-		
-		$s_query =  " (status is NULL OR status = '' OR status = 'published') AND default_template=0 AND is_template = ". (int)$this->params['template'];
 
-	    if($s != ''){
+		$s_query = ' (parent_form_id IS NULL OR parent_form_id < 1) AND ';
+		switch ( $this->status ) {
+		    case 'template':
+		        $s_query .=  "is_template = 1 AND status != 'trash'";
+		        break;
+		    case 'draft':
+		        $s_query .=  "is_template = 0 AND status = 'draft'";
+		        break;
+		    case 'trash':
+		        $s_query .= "status='trash'";
+		        break;
+		    default:
+		        $s_query .= "is_template = 0 AND status != 'trash'";
+		        break;
+		}
+
+        $s = isset( $_REQUEST['s'] ) ? stripslashes($_REQUEST['s']) : '';
+	    if ( $s != '' ) {
+	        preg_match_all('/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $s, $matches);
+		    $search_terms = array_map('trim', $matches[0]);
 	        foreach ( (array) $search_terms as $term ) {
 	            if ( !empty($s_query) ) {
                     $s_query .= " AND";
                 }
-                
+
 	            $term = FrmAppHelper::esc_like($term);
-	            
+
 	            $s_query .= $wpdb->prepare(" (name like %s OR description like %s OR created_at like %s)", '%'. $term .'%', '%'. $term .'%', '%'. $term .'%');
-	            
+
 	            unset($term);
             }
 	    }
-	    
+
 	    $frm_form = new FrmForm();
-        $this->items = $frm_form->getAll($s_query, " ORDER BY $orderby $order", " LIMIT $start, $per_page", true, false);
+        $this->items = $frm_form->getAll($s_query, $orderby .' '. $order, $start .','. $per_page);
         $total_items = FrmAppHelper::getRecordCount($s_query, $this->table_name);
-		
+
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items,
 			'per_page' => $per_page
 		) );
 	}
-	
+
 	function no_items() {
-	    if ($this->params['template']){
-            _e('No Templates Found', 'formidable') ?>. 
+	    if ( 'template' == $this->status ) {
+            _e('No Templates Found', 'formidable') ?>.
             <br/><br/><?php _e('To add a new template','formidable') ?>:
             <ol><li><?php printf(__('Create a new %1$sform%2$s.', 'formidable'), '<a href="?page=formidable&amp;frm_action=new-selection">', '</a>') ?></li>
                 <li><?php printf(__('After your form is created, go to Formidable -> %1$sForms%2$s.', 'formidable'), '<a href="?page=formidable">', '</a>') ?></li>
                 <li><?php _e('Place your mouse over the name of the form you just created, and click the "Create Template" link.', 'formidable') ?></li>
             </ol>
-<?php   }else{ 
-            _e('No Forms Found', 'formidable') ?>. 
+<?php   }else{
+            _e('No Forms Found', 'formidable') ?>.
             <a href="?page=formidable&amp;frm_action=new-selection"><?php _e('Add New', 'formidable'); ?></a>
 <?php   }
 	}
-	
+
 	function get_bulk_actions(){
 	    $actions = array();
-	    if ( current_user_can('frm_delete_forms') ) {
-            $actions['bulk_delete'] = __('Delete');
-        }
-            
+
+	    if ( in_array($this->status, array('', 'published')) ) {
+	        $actions['bulk_create_template'] = __('Create Template', 'formidable');
+	    }
+
+	    if ( 'trash' == $this->status ) {
+	        if ( current_user_can('frm_edit_forms') ) {
+	            $actions['bulk_untrash'] = __('Restore', 'formidable');
+	        }
+
+	        if ( current_user_can('frm_delete_forms') ) {
+	            $actions['bulk_delete'] = __('Delete Permanently', 'formidable');
+	        }
+	    } else if ( EMPTY_TRASH_DAYS && current_user_can('frm_delete_forms') ) {
+	        $actions['bulk_trash'] = __('Move to Trash', 'formidable');
+	    } else if ( current_user_can('frm_delete_forms') ) {
+	        $actions['bulk_delete'] = __('Delete');
+	    }
+
         return $actions;
     }
+
+    function extra_tablenav( $which ) {
+        if ( 'top' != $which || 'template' != $this->status ) {
+            return;
+        }
+
+        $where = apply_filters('frm_forms_dropdown', "(parent_form_id IS NULL OR parent_form_id < 1) AND is_template=0 AND (status is NULL OR status = '' OR status = 'published')", '');
+
+        $frm_form = new FrmForm();
+        $forms = $frm_form->getAll($where, 'name');
+        unset($frm_form);
+
+        $base = admin_url('admin.php?page=formidable&form_type=template');
+        $args = array(
+            'frm_action'    => 'duplicate',
+            'template'      => true,
+        );
+
+?>
+    <div class="alignleft actions" style="overflow:visible;">
+    <div class="button dropdown" style="margin-top:1px;">
+        <a href="#" id="frm-templateDrop" class="frm-dropdown-toggle" data-toggle="dropdown"><?php _e('Create New Template', 'formidable') ?> <b class="caret"></b></a>
+		<ul class="frm-dropdown-menu" role="menu" aria-labelledby="frm-templateDrop">
+		<?php foreach ( $forms as $form ) {
+		        $args['id'] = $form->id; ?>
+			<li><a href="<?php echo add_query_arg($args, $base); ?>" tabindex="-1"><?php echo empty($form->name) ? __('(no title)') : FrmAppHelper::truncate($form->name, 33); ?></a></li>
+			<?php
+			    unset($form);
+			} ?>
+		</ul>
+	</div>
+	</div>
+<?php
+	}
+
+	function get_views() {
+
+		$statuses = array(
+		    'published' => __('My Forms', 'formidable'),
+		    'template'  => __('Templates', 'formidable'),
+		    'draft'     => __('Drafts', 'formidable'),
+		    'trash'     => __('Trash', 'formidable'),
+		);
+
+	    $links = array();
+
+	    global $frm_form;
+	    $counts = $frm_form->get_count();
+
+	    foreach ( $statuses as $status => $name ) {
+
+	        if ( (isset($_REQUEST['form_type']) && $status == $_REQUEST['form_type']) || ( !isset($_REQUEST['form_type']) && 'published' == $status ) ) {
+    			$class = ' class="current"';
+    		} else {
+    		    $class = '';
+    		}
+
+    		if ( $counts->{$status} || 'published' == $status ) {
+		        $links[$status] = '<a href="?page=formidable&form_type='. $status .'" '. $class .'>'. sprintf( __('%1$s <span class="count">(%2$s)</span>', 'formidable'), $name, number_format_i18n( $counts->{$status} ) ) .'</a>';
+		    }
+
+		    unset($status, $name);
+	    }
+
+		return $links;
+	}
+
+	function pagination( $which ) {
+		global $mode;
+
+		parent::pagination ( $which );
+
+		if ( 'top' == $which ) {
+			$this->view_switcher( $mode );
+		}
+	}
 
 	function display_rows() {
 		$style = '';
@@ -107,58 +204,67 @@ class FrmListHelper extends WP_List_Table {
 			echo "\n\t", $this->single_row( $item, $style );
 		}
 	}
-	
+
 	function single_row( $item, $style='') {
-	    global $frm_vars, $frm_entry;
-		$checkbox = '';
-		
+	    global $frm_vars, $frm_entry, $mode;
+
 		// Set up the hover actions for this user
 		$actions = array();
-		$title = esc_attr(strip_tags($item->name));
-		
+        $edit_link = '?page=formidable&frm_action=edit&id='. $item->id;
+	    $duplicate_link = '?page=formidable&frm_action=duplicate&id='. $item->id;
+
 		if ( current_user_can('frm_edit_forms') ) {
-		    $edit_link = "?page=formidable&frm_action=edit&id={$item->id}";
-		    $duplicate_link = "?page=formidable&frm_action=duplicate&id={$item->id}";
-		    
-		    $actions['frm_edit'] = "<a href='" . esc_url( $edit_link ) . "'>". __('Edit') ."</a>";
-		    
-		    if ( $this->params['template'] ) {
-		        $actions['frm_duplicate'] = "<a href='" . wp_nonce_url( $duplicate_link ) . "'>". __('Create Form from Template', 'formidable') ."</a>";
+		    $actions['frm_edit'] = '<a href="'. esc_url( $edit_link ) . '">'. __('Edit') .'</a>';
+
+		    if ( $item->is_template ) {
+		        $actions['frm_duplicate'] = '<a href="'. wp_nonce_url( $duplicate_link ) .'">'. __('Create Form from Template', 'formidable') .'</a>';
             } else {
-    		    $actions['frm_settings'] = "<a href='" . wp_nonce_url( "?page=formidable&frm_action=settings&id={$item->id}" ) . "'>". __('Settings', 'formidable') ."</a>";
-    		    
-    		    if ( $frm_vars['pro_is_installed'] ) {
+    		    $actions['frm_settings'] = '<a href="'. esc_url('?page=formidable&frm_action=settings&id='. $item->id ) . '">'. __('Settings', 'formidable') .'</a>';
+
+    		    if ( FrmAppHelper::pro_is_installed() ) {
         	        $actions['duplicate'] = '<a href="' . wp_nonce_url( $duplicate_link ) . '">'. __('Duplicate', 'formidable') .'</a>';
         	    }
         	}
         }
-        
-        $delete_link = "?page=formidable&frm_action=destroy&id={$item->id}";
-        if(current_user_can('frm_delete_forms'))
-		    $actions['trash'] = '<a class="submitdelete" href="' . wp_nonce_url( $delete_link ) .'" onclick="return confirm(\''. __('Are you sure you want to delete that?', 'formidable') .'\')">' . __( 'Delete' ) . '</a>';
-		
-		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item) .'" target="_blank">'. __('Preview') .'</a>';  
-        
+
+        if ( !$item->default_template ) {
+		    $actions['trash'] = FrmFormsHelper::delete_trash_link($item->id, $item->status, 'short');
+		}
+
+		$actions['view'] = '<a href="'. FrmFormsHelper::get_direct_link($item->form_key, $item) .'" target="_blank">'. __('Preview') .'</a>';
+
+		if ( 'trash' == $this->status ) {
+		    $actions = array();
+		    $actions['restore'] = FrmFormsHelper::delete_trash_link($item->id, $item->status, 'short');
+		    if ( current_user_can('frm_delete_forms') && !$item->default_template ) {
+    		    $actions['trash'] = '<a class="submitdelete" href="' . esc_url(wp_nonce_url( '?page=formidable&form_status=trash&frm_action=destroy&id='. $item->id, 'destroy_form_'. $item->id )) .'" onclick="return confirm(\''. __('Are you sure you want to permanently delete that?', 'formidable') .'\')">' . __( 'Delete Permanently' ) . '</a>';
+    		}
+		}
+
         $action_links = $this->row_actions( $actions );
-        
+
 		// Set up the checkbox ( because the user is editable, otherwise its empty )
 		$checkbox = '<input type="checkbox" name="item-action[]" id="cb-item-action-'. $item->id .'" value="'. $item->id .'" />';
 
 		$r = '<tr id="item-action-'. $item->id .'"'. $style .'>';
 
 		list( $columns, $hidden ) = $this->get_column_info();
-        $action_col = false;
+
+        if ( 'list' == $mode ) {
+			$format = 'Y/m/d';
+		} else {
+			$format = 'Y/m/d \<\b\r \/\> g:i:s a';
+		}
 
 		foreach ( $columns as $column_name => $column_display_name ) {
-			$class = 'class="'. $column_name .' column-'. $column_name .'"';
+			$class = 'class="'. $column_name .' column-'. $column_name . ( ('name' == $column_name) ? ' post-title page-title column-title' : '' ) .'"';
 
 			$style = '';
-			if ( in_array( $column_name, $hidden ) )
+			if ( in_array( $column_name, $hidden ) ) {
 				$style = ' style="display:none;"';
-			else if(!$action_col and !in_array($column_name, array('cb', 'id')))
-			    $action_col = $column_name;
+			}
 
-			$attributes = "$class$style";
+			$attributes = $class . $style;
 
 			switch ( $column_name ) {
 				case 'cb':
@@ -169,53 +275,64 @@ class FrmListHelper extends WP_List_Table {
 				    $val = $item->{$column_name};
 				    break;
 				case 'name':
-				    if(trim($item->{$column_name}) == '')
-				        $val = __('(no title)');
-				    else
-				        $val = FrmAppHelper::truncate(strip_tags($item->{$column_name}), 50);
+				    if ( trim($item->{$column_name}) == '' ) {
+				        $form_name = __('(no title)');
+				    } else {
+				        $form_name = FrmAppHelper::truncate(strip_tags($item->{$column_name}), 50);
+				    }
+
+				    $val = '<strong>';
+				    if ( 'trash' == $this->status ) {
+				        $val .= $form_name;
+				    } else {
+				        $val .= '<a class="row-title" href="'. ( isset($actions['frm_edit']) ? $edit_link : FrmFormsHelper::get_direct_link($item->form_key, $item) ) .'">'. $form_name .'</a> ';
+				    }
+
+			        if ( 'draft' == $item->status && 'draft' != $this->status ) {
+				        $val .= ' - <span class="post-state">'. __('Draft', 'formidable') .'</span>';
+				    }
+				    $val .= '</strong>';
+
+				    if ( isset($item->description) && 'excerpt' == $mode ) {
+				        $val .= FrmAppHelper::truncate(strip_tags($item->description), 50);
+				    }
+
+			        $val .= $action_links;
+
 				    break;
 				case 'description':
 				    $val = FrmAppHelper::truncate(strip_tags($item->{$column_name}), 50);
 				    break;
 				case 'created_at':
-				    $format = 'Y/m/d'; //get_option('date_format');
 				    $date = date($format, strtotime($item->{$column_name}));
-					$val = "<abbr title='". date($format .' g:i:s A', strtotime($item->{$column_name})) ."'>". $date ."</abbr>";
+					$val = "<abbr title='". date('Y/m/d g:i:s A', strtotime($item->{$column_name})) ."'>". $date ."</abbr>";
 					break;
 				case 'shortcode':
 				    $val = '<input type="text" readonly="true" class="frm_select_box" value="'. esc_attr("[formidable id={$item->id}]") .'" /><br/>';
-				    $val .= '<input type="text" readonly="true" class="frm_select_box" value="'. esc_attr("[formidable key={$item->form_key}]") .'" />';
+				    if ( 'excerpt' == $mode ) {
+				        $val .= '<input type="text" readonly="true" class="frm_select_box" value="'. esc_attr("[formidable key={$item->form_key}]") .'" />';
+				    }
 			        break;
 			    case 'entries':
-			        $text = $frm_entry->getRecordCount($item->id);
-                    //$text = sprintf(_n( '%1$s Entry', '%1$s Entries', $text, 'formidable' ), $text);
-                    $val = (current_user_can('frm_view_entries')) ? '<a href="'. esc_url(admin_url('admin.php') .'?page=formidable-entries&form='. $item->id ) .'">'. $text .'</a>' : $text;
-                    unset($text);
+			        if( isset($item->options['no_save']) && $item->options['no_save'] ) {
+			            $val = '<i class="frm_icon_font frm_forbid_icon frm_bstooltip" title="'. esc_attr('Entries are not being saved', 'formidable') .'"></i>';
+			        } else {
+			            $text = $frm_entry->getRecordCount($item->id);
+                        $val = (current_user_can('frm_view_entries')) ? '<a href="'. esc_url(admin_url('admin.php') .'?page=formidable-entries&form='. $item->id ) .'">'. $text .'</a>' : $text;
+                        unset($text);
+                    }
 			        break;
-			    case 'link':
-			        $links = array();
-                    if($frm_vars['pro_is_installed'] and current_user_can('frm_create_entries'))
-                		$links[] = '<a href="'. wp_nonce_url( "?page=formidable-entries&frm_action=new&form={$item->id}" ) .'" class="frm_add_entry_icon frm_icon_font frm_bstooltip" title="'. __('Add Entry', 'formidable'). '" data-toggle="tooltip"> </a>';
-                	
-                	if ( current_user_can('frm_edit_forms') ){
-                	    $links[] = '<a href="' . wp_nonce_url( "?page=formidable&frm_action=duplicate&id={$item->id}&template=1" ) .'" class="frm_icon_font frm_new_template_icon frm_bstooltip" title="'. __('Create template from form', 'formidable') .'" data-toggle="tooltip"> </a>';
-                	}
-                	
-                    $val = implode(' ', $links);
+                case 'type':
+                    $val = ( $item->is_template && $item->default_template ) ? __('Default', 'formidable') : __('Custom', 'formidable');
                     break;
 				default:
 				    $val = $column_name;
 				break;
 			}
-			
+
 			if(isset($val)){
 			    $r .= "<td $attributes>";
-			    if($column_name == $action_col){                              
-			        $r .= '<a class="row-title" href="'. ( isset($actions['frm_edit']) ? $edit_link : FrmFormsHelper::get_direct_link($item->form_key, $item) ) .'">'. $val .'</a> ';
-			        $r .= $action_links;
-			    }else{
-			        $r .= $val;
-			    }
+			    $r .= $val;
 			    $r .= '</td>';
 			}
 			unset($val);
@@ -224,5 +341,5 @@ class FrmListHelper extends WP_List_Table {
 
 		return $r;
 	}
-	
+
 }

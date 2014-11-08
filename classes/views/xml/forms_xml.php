@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if ( !$item_ids )
     return;
@@ -27,9 +27,9 @@ foreach ( $forms as $form ) {
 		<options><?php echo FrmXMLHelper::cdata($form->options) ?></options>
 		<status><?php echo FrmXMLHelper::cdata($form->status) ?></status>
 <?php
-		
+
 		$fields = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}frm_fields WHERE form_id=%d ORDER BY field_order", $form->id));
-		
+
 		foreach ( $fields as $field ){ ?>
 		<field>
 		    <id><?php echo $field->id ?></id>
@@ -40,7 +40,7 @@ foreach ( $forms as $form ) {
             <default_value><?php echo FrmXMLHelper::cdata($field->default_value) ?></default_value>
             <field_order><?php echo $field->field_order ?></field_order>
             <form_id><?php echo $field->form_id ?></form_id>
-            <required><?php echo (bool)$field->required ?></required>
+            <required><?php echo (bool) $field->required ?></required>
             <options><?php echo FrmXMLHelper::cdata($field->options) ?></options>
             <field_options><?php echo FrmXMLHelper::cdata($field->field_options) ?></field_options>
 		</field>
