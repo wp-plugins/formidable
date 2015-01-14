@@ -6,13 +6,15 @@ Requires at least: 3.3.3
 Tested up to: 4.0
 Stable tag: 1.07.10
 
-Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing. 
+This WordPress form builder enables you to quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
 
 == Description ==
 Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing.
 There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
 
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
+
+Checkout the [2.0 beta version](https://downloads.wordpress.org/plugin/formidable.2.0b5.zip "2.0 beta version") now that allows you to style your forms and view your collected submissions.
 
 = Features =
 * Save all responses to your WordPress database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
