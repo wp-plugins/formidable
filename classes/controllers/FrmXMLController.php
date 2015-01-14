@@ -1,11 +1,6 @@
 <?php
-if ( !defined('ABSPATH') ) die('You are not allowed to call this page directly.');
 
 class FrmXMLController{
-    public static function load_hooks(){
-        add_action('admin_menu', 'FrmXMLController::menu', 41);
-        add_action('wp_ajax_frm_export_xml', 'FrmXMLController::export_xml');
-    }
 
     public static function menu() {
         add_submenu_page('formidable', 'Formidable | Import/Export', 'Import/Export', 'frm_edit_forms', 'formidable-import', 'FrmXMLController::route');
@@ -54,9 +49,7 @@ class FrmXMLController{
     }
 
     public static function form($errors = array(), $message = '') {
-        $frm_form = new FrmForm();
-        $forms = $frm_form->getAll("status is NULL OR status = '' OR status = 'published'", 'name');
-        unset($frm_form);
+        $forms = FrmForm::getAll("status is NULL OR status = '' OR status = 'published'", 'name');
 
         $export_types = apply_filters('frm_xml_export_types',
             array('forms' => __('Forms', 'formidable'))
@@ -66,7 +59,7 @@ class FrmXMLController{
             'xml' => array( 'name' => 'XML', 'support' => 'forms', 'count' => 'multiple'),
         ));
 
-        if ( class_exists('FrmProSettings') ) {
+        if ( FrmAppHelper::pro_is_installed() ) {
             $frmpro_settings = new FrmProSettings();
             $csv_format = $frmpro_settings->csv_format;
         } else {
@@ -129,58 +122,7 @@ class FrmXMLController{
             $loader = libxml_disable_entity_loader( true );
 
             $result = FrmXMLHelper::import_xml($file);
-            if ( is_wp_error($result) ) {
-                $errors[] = $result->get_error_message();
-            } else if ( $result ) {
-                if ( is_array($result) ) {
-                    $t_strings = array(
-                        'imported'  => __('Imported', 'formidable'),
-                        'updated'   => __('Updated', 'formidable'),
-                    );
-
-                    $message = '<ul>';
-                    foreach ( $result as $type => $results ) {
-                        if ( !isset($t_strings[$type]) ) {
-                            // only print imported and updated
-                            continue;
-                        }
-
-                        $s_message = array();
-                        foreach ( $results as $k => $m ) {
-                            if ( $m ) {
-                                $strings = array(
-                                    'forms'     => sprintf(_n( '%1$s Form', '%1$s Forms', $m, 'formidable' ), $m ),
-                                    'fields'    => sprintf(_n( '%1$s Field', '%1$s Fields', $m, 'formidable' ), $m),
-                                    'items'     => sprintf(_n( '%1$s Entry', '%1$s Entries', $m, 'formidable' ), $m),
-                                    'views'     => sprintf(_n( '%1$s View', '%1$s Views', $m, 'formidable' ), $m),
-                                    'posts'     => sprintf(_n( '%1$s Post', '%1$s Posts', $m, 'formidable' ), $m),
-                                    'terms'     => sprintf(_n( '%1$s Term', '%1$s Terms', $m, 'formidable' ), $m),
-                                );
-
-                                $s_message[] = isset($strings[$k]) ? $strings[$k] : $t_strings[$type] .' '. $m .' '. ucfirst($k);
-                            }
-                            unset($k);
-                            unset($m);
-                        }
-
-                        if ( !empty($s_message) ) {
-                            $message .= '<li><strong>'. $t_strings[$type] .':</strong> ';
-                            $message .= implode(', ', $s_message);
-                            $message .= '</li>';
-                        }
-
-                    }
-
-                    if ( $message == '<ul>' ) {
-                        $message = '';
-                        $errors[] = __('Nothing was imported or updated', 'formidable');
-                    } else {
-                        $message .= '</ul>';
-                    }
-                } else {
-                    $message = $result;
-                }
-            }
+            FrmXMLHelper::parse_message($result, $message, $errors);
 
             unset($file);
 
@@ -222,14 +164,6 @@ class FrmXMLController{
             do_action('frm_export_format_'. $format, compact('ids'));
         }
 
-        die();
-    }
-
-    public static function export_xml_direct($controller = 'forms', $ids = false) {
-        FrmAppHelper::permission_check('frm_edit_forms');
-
-        $is_template = FrmAppHelper::get_param('is_template', false);
-        self::generate_xml($controller, compact('ids', 'is_template'));
         die();
     }
 
@@ -324,8 +258,6 @@ class FrmXMLController{
             $records[$tb_type] = $wpdb->get_col( "SELECT $select FROM $table $join $where" );
             unset($tb_type);
         }
-
-        $frm_field = new FrmField();
 
         echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . "\" ?>\n";
         include(FrmAppHelper::plugin_path() .'/classes/views/xml/xml.php');

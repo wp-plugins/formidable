@@ -1,31 +1,6 @@
 <?php
-if ( ! defined('ABSPATH') ) {
-    die('You are not allowed to call this page directly.');
-}
 
 class FrmFieldsController{
-    public static function load_hooks(){
-        add_action('wp_ajax_frm_load_field', 'FrmFieldsController::load_field');
-        add_action('wp_ajax_frm_insert_field', 'FrmFieldsController::create');
-        add_action('wp_ajax_frm_update_field_form_id', 'FrmFieldsController::update_form_id');
-        add_action('wp_ajax_frm_field_name_in_place_edit', 'FrmFieldsController::edit_name');
-        add_action('wp_ajax_frm_update_ajax_option', 'FrmFieldsController::update_ajax_option');
-        add_action('wp_ajax_frm_duplicate_field', 'FrmFieldsController::duplicate');
-        add_action('wp_ajax_frm_delete_field', 'FrmFieldsController::destroy');
-        add_action('wp_ajax_frm_add_field_option', 'FrmFieldsController::add_option');
-        add_action('wp_ajax_frm_field_option_ipe', 'FrmFieldsController::edit_option');
-        add_action('wp_ajax_frm_delete_field_option', 'FrmFieldsController::delete_option');
-        add_action('wp_ajax_frm_import_choices', 'FrmFieldsController::import_choices');
-        add_action('wp_ajax_frm_import_options', 'FrmFieldsController::import_options');
-        add_action('wp_ajax_frm_update_field_order', 'FrmFieldsController::update_order');
-        add_filter('frm_field_type', 'FrmFieldsController::change_type');
-        add_filter('frm_display_field_options', 'FrmFieldsController::display_field_options');
-        add_action('frm_field_input_html', 'FrmFieldsController::input_html');
-        add_filter('frm_field_value_saved', 'FrmFieldsController::check_value', 50, 3);
-        add_filter('frm_field_label_seen', 'FrmFieldsController::check_label');
-        
-        add_action('frm_field_options_form', array(__CLASS__, 'add_conditional_update_msg'), 50);
-    }
 
     public static function load_field(){
         $fields = $_POST['field'];
@@ -51,7 +26,7 @@ class FrmFieldsController{
                 $field['value'] = '';
             }
 
-            $field_name = "item_meta[$field_id]";
+            $field_name = 'item_meta['. $field_id .']';
             $html_id = FrmFieldsHelper::get_html_id($field);
 
             ob_start();
@@ -81,23 +56,18 @@ class FrmFieldsController{
 
     public static function include_new_field($field_type, $form_id) {
         $values = array();
-        if ( class_exists('FrmProFormsHelper') ) {
+        if ( FrmAppHelper::pro_is_installed() ) {
             $values['post_type'] = FrmProFormsHelper::post_type($form_id);
         }
 
         $field_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars($field_type, $form_id));
+        $field_id = FrmField::create( $field_values );
 
-        $frm_field = new FrmField();
-        $field_id = $frm_field->create( $field_values );
-        $field = false;
-
-        if ( $field_id ) {
-            $field = FrmFieldsHelper::setup_edit_vars($frm_field->getOne($field_id));
-            $field_name = "item_meta[$field_id]";
-            $html_id = FrmFieldsHelper::get_html_id($field);
-            $id = $form_id;
-            require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php');
+        if ( ! $field_id ) {
+            return false;
         }
+
+        $field = self::include_single_field($field_id, $values, $form_id);
 
         return $field;
     }
@@ -111,8 +81,7 @@ class FrmFieldsController{
             return;
         }
 
-        $frm_field = new FrmField();
-        $frm_field->update( $field_id, compact('form_id') );
+        FrmField::update( $field_id, compact('form_id') );
 
         die();
     }
@@ -132,15 +101,13 @@ class FrmFieldsController{
             $value = '';
         }
 
-        $frm_field = new FrmField();
-        $frm_field->update($id, array($field => $value));
+        FrmField::update($id, array($field => $value));
         echo stripslashes($value);
         wp_die();
     }
 
     public static function update_ajax_option(){
-        $frm_field = new FrmField();
-        $field = $frm_field->getOne($_POST['field']);
+        $field = FrmField::getOne($_POST['field']);
         foreach ( array('clear_on_focus', 'separate_value', 'default_blank') as $val ) {
             if ( isset($_POST[$val]) ) {
                 $new_val = $_POST[$val];
@@ -153,8 +120,8 @@ class FrmFieldsController{
             }
             unset($val);
         }
-        
-        $frm_field->update( $_POST['field'], array(
+
+        FrmField::update( $_POST['field'], array(
             'field_options' => $field->field_options,
             'form_id' => $field->form_id
         ) );
@@ -164,8 +131,7 @@ class FrmFieldsController{
     public static function duplicate(){
         global $wpdb;
 
-        $frm_field = new FrmField();
-        $copy_field = $frm_field->getOne($_POST['field_id']);
+        $copy_field = FrmField::getOne($_POST['field_id']);
         if ( ! $copy_field ) {
             die();
         }
@@ -175,44 +141,41 @@ class FrmFieldsController{
         do_action('frm_duplicate_field', $copy_field, $form_id);
         do_action('frm_duplicate_field_'. $copy_field->type, $copy_field, $form_id);
 
-        $values = array(
-            'field_key'     => FrmAppHelper::get_unique_key('', $wpdb->prefix . 'frm_fields', 'field_key'),
-            'options'       => maybe_serialize($copy_field->options),
-            'default_value' => maybe_serialize($copy_field->default_value),
-            'form_id'       => $form_id,
-        );
+        $values = array();
+        FrmFieldsHelper::fill_field( $values, $copy_field, $form_id );
 
-        foreach ( array( 'name', 'description', 'type', 'field_options', 'required' ) as $col ) {
-            $values[$col] = $copy_field->{$col};
-        }
-
-        $query = $wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}frm_fields fi LEFT JOIN {$wpdb->prefix}frm_forms fr ON (fi.form_id = fr.id) WHERE fr.id = %d OR fr.parent_form_id = %d", $form_id, $form_id);
-        $field_count = $wpdb->get_var($query);
+        $field_count = $wpdb->get_var( $wpdb->prepare('SELECT COUNT(*) FROM '. $wpdb->prefix .'frm_fields fi LEFT JOIN '. $wpdb->prefix .'frm_forms fr ON (fi.form_id = fr.id) WHERE fr.id = %d OR fr.parent_form_id = %d', $form_id, $form_id) );
 
         $values['field_order'] = $field_count + 1;
 
-        $field_id = $frm_field->create($values);
-
-        if ( ! $field_id ) {
+        if ( ! $field_id = FrmField::create($values) ) {
             die();
         }
 
-        $field = FrmFieldsHelper::setup_edit_vars($frm_field->getOne($field_id));
-        $field_name = "item_meta[$field_id]";
+        self::include_single_field($field_id, $values);
+
+        die();
+    }
+
+    /*
+    * Load a single field in the form builder along with all needed variables
+    */
+    public static function include_single_field( $field_id, $values, $form_id = 0 ) {
+        $field = FrmFieldsHelper::setup_edit_vars(FrmField::getOne($field_id));
+        $field_name = 'item_meta['. $field_id .']';
         $html_id = FrmFieldsHelper::get_html_id($field);
-        $id = $field['form_id'];
+        $id = $form_id ? $form_id : $field['form_id'];
         if ( $field['type'] == 'html' ) {
             $field['stop_filter'] = true;
         }
 
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-forms/add_field.php');
 
-        die();
+        return $field;
     }
 
     public static function destroy(){
-        $frm_field = new FrmField();
-        $frm_field->destroy($_POST['field_id']);
+        FrmField::destroy($_POST['field_id']);
         die();
     }
 
@@ -220,13 +183,11 @@ class FrmFieldsController{
 
     //Add Single Option or Other Option
     public static function add_option(){
-        $frm_field = new FrmField();
-
         $id = $_POST['field_id'];
         $opt_type = $_POST['opt_type'];
 
         //Get the field
-        $field = $frm_field->getOne($id);
+        $field = FrmField::getOne($id);
         $options = maybe_unserialize($field->options);
         if ( !empty($options) ) {
             $keys = array_keys( $options );
@@ -244,7 +205,7 @@ class FrmFieldsController{
             //Update value of "other" in DB
             $field_options = maybe_unserialize( $field->field_options );
             $field_options['other'] = 1;
-            $frm_field->update( $id, array( 'field_options' => maybe_serialize( $field_options ) ) );
+            FrmField::update( $id, array( 'field_options' => maybe_serialize( $field_options ) ) );
         } else {
             $first_opt = reset($options);
             $next_opt = count($options);
@@ -258,7 +219,7 @@ class FrmFieldsController{
         $options[$opt_key] = $opt;
 
         //Update options in DB
-        $frm_field->update($id, array('options' => maybe_serialize($options)));
+        FrmField::update($id, array('options' => maybe_serialize($options)));
 
         $field_data = $field;
         $field = array(
@@ -281,28 +242,26 @@ class FrmFieldsController{
         die();
     }
 
-    public static function edit_option(){
+    public static function edit_option() {
         $ids = explode('-', $_POST['element_id']);
-        $id = str_replace('field_', '', $ids[0]);
+        $id = $_POST['field_id'];
+        $update_value = trim($_POST['update_value']);
         if ( strpos($_POST['element_id'], 'key_') ) {
-            $id = str_replace('key_', '', $id);
-            $new_value = trim($_POST['update_value']);
+            $new_value = $update_value;
         } else {
-            $new_label = trim($_POST['update_value']);
+            $new_label = $update_value;
         }
 
-        $frm_field = new FrmField();
-        $field = $frm_field->getOne($id);
+        $field = FrmField::getOne($id);
+        $separate_values = ( isset($field->field_options['separate_value']) && $field->field_options['separate_value'] );
         $options = maybe_unserialize($field->options);
-        $this_opt = (array) $options[$ids[1]];
-        $other_opt = ( $ids[1] && strpos( $ids[1], 'other') !== false ? true : false );
+
+        $this_opt_id = end($ids);
+        $this_opt = (array) $options[$this_opt_id];
+        $other_opt = ( $this_opt_id && strpos( $this_opt_id, 'other') !== false ? true : false );
 
         $label = isset($this_opt['label']) ? $this_opt['label'] : reset($this_opt);
-        if ( isset($this_opt['value']) ) {
-            $value =  $this_opt['value'];
-        } else {
-            $value = '';
-        }
+        $value =  isset($this_opt['value']) ? $this_opt['value'] : '';
 
         if ( !isset($new_label) ) {
             $new_label = $label;
@@ -312,20 +271,19 @@ class FrmFieldsController{
             $update_value = isset($new_value) ? $new_value : $value;
         }
 
-        if ( isset($update_value) && $update_value != $new_label && $other_opt == false ) {
-            $options[$ids[1]] = array('value' => $update_value, 'label' => $new_label);
+        if ( $update_value != $new_label && $other_opt == false && $separate_values ) {
+            $options[$this_opt_id] = array('value' => $update_value, 'label' => $new_label);
         } else {
-            $options[$ids[1]] = trim($_POST['update_value']);
+            $options[$this_opt_id] = trim($_POST['update_value']);
         }
 
-        $frm_field->update($field->id, array('options' => $options));
+        FrmField::update($field->id, array('options' => $options));
         echo (trim($_POST['update_value']) == '') ? __('(Blank)', 'formidable') : stripslashes($_POST['update_value']);
         die();
     }
 
     public static function delete_option(){
-        $frm_field = new FrmField();
-        $field = $frm_field->getOne($_POST['field_id']);
+        $field = FrmField::getOne($_POST['field_id']);
         $opt_key = $_POST['opt_key'];
         $options = maybe_unserialize($field->options);
         unset($options[$opt_key]);
@@ -351,13 +309,13 @@ class FrmFieldsController{
             if ( false === $other ) {
                 $field_options = maybe_unserialize( $field->field_options );
                 $field_options['other'] = 0;
-                $frm_field->update( $_POST['field_id'], array( 'field_options' => maybe_serialize( $field_options ) ) );
+                FrmField::update( $_POST['field_id'], array( 'field_options' => maybe_serialize( $field_options ) ) );
                 $response = array('other' => false );
             }
         }
         echo json_encode( $response );
 
-        $frm_field->update($_POST['field_id'], array('options' => maybe_serialize($options)));
+        FrmField::update($_POST['field_id'], array('options' => maybe_serialize($options)));
 
         die();
     }
@@ -399,8 +357,7 @@ class FrmFieldsController{
         $prepop = array();
         self::get_bulk_prefilled_opts($prepop);
 
-        $frm_field = new FrmField();
-        $field = $frm_field->getOne($field_id);
+        $field = FrmField::getOne($field_id);
 
         include(FrmAppHelper::plugin_path() .'/classes/views/frm-fields/import_choices.php');
         die();
@@ -449,8 +406,7 @@ class FrmFieldsController{
         }
 
         $field_id = $_POST['field_id'];
-        $frm_field = new FrmField();
-        $field = $frm_field->getOne($field_id);
+        $field = FrmField::getOne($field_id);
 
         if ( ! in_array($field->type, array('radio', 'checkbox', 'select')) ) {
             return;
@@ -487,7 +443,7 @@ class FrmFieldsController{
             }
         }
 
-        $frm_field->update( $field_id, array( 'options' => maybe_serialize( $opts ) ) );
+        FrmField::update( $field_id, array( 'options' => maybe_serialize( $opts ) ) );
 
         $field['options'] = $opts;
         $field_name = $field['name'];
@@ -503,10 +459,8 @@ class FrmFieldsController{
 
     public static function update_order(){
         if ( isset($_POST) && isset($_POST['frm_field_id']) ) {
-            $frm_field = new FrmField();
-
             foreach ($_POST['frm_field_id'] as $position => $item)
-                $frm_field->update($item, array('field_order' => $position));
+                FrmField::update($item, array('field_order' => $position));
         }
         die();
     }

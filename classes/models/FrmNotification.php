@@ -5,7 +5,7 @@ class FrmNotification{
         if ( ! defined('ABSPATH') ) {
             die('You are not allowed to call this page directly.');
         }
-        add_action('frm_trigger_email_action', array(__CLASS__, 'trigger_email'), 10, 3);
+        add_action('frm_trigger_email_action', 'FrmNotification::trigger_email', 10, 3);
     }
 
     public static function trigger_email($action, $entry, $form) {
@@ -13,7 +13,7 @@ class FrmNotification{
             return;
         }
 
-        global $wpdb, $frm_entry_meta;
+        global $wpdb;
 
         $notification = $action->post_content;
         $email_key = $action->ID;
@@ -33,10 +33,9 @@ class FrmNotification{
         );
 
         add_filter('frm_plain_text_email', ($plain_text ? '__return_true' : '__return_false'));
-        add_filter('frmpro_fields_replace_shortcodes', 'FrmFormsController::filter_email_value', 20, 4);
 
         //Get all values in entry in order to get User ID field ID
-        $values = $frm_entry_meta->getAll('it.field_id != 0 and it.item_id ='. $entry->id .' ORDER BY fi.field_order');
+        $values = FrmEntryMeta::getAll('it.field_id != 0 and it.item_id ='. $entry->id .' ORDER BY fi.field_order');
         $user_id_field = $user_id_key = '';
         foreach ( $values as $value ) {
             if ( $value->field_type == 'user_id' ) {
@@ -77,7 +76,7 @@ class FrmNotification{
         $to_emails = apply_filters('frm_to_email', $to_emails, array(), $form->id, compact('email_key', 'entry', 'form'));
 
         // Stop now if there aren't any recipients
-        if ( empty($to_emails) ) {
+        if ( empty( $to_emails ) && empty( $cc ) && empty( $bcc ) ) {
             return;
         }
 
@@ -149,7 +148,7 @@ class FrmNotification{
         return $sent_to;
     }
 
-    function entry_created($entry_id, $form_id, $create = true) {
+    function entry_created($entry_id, $form_id) {
         _deprecated_function( __FUNCTION__, '2.0', 'FrmFormActionsController::trigger_actions("create", '. $form_id .', '. $entry_id .', "email")');
         FrmFormActionsController::trigger_actions('create', $form_id, $entry_id, 'email');
     }
@@ -210,7 +209,7 @@ class FrmNotification{
                 // add sender's name if not included in $from
                 if ( $f == 'from' ) {
                     $part_2 = $atts[$f];
-                    $part_1  = ( '' == $atts['from_name'] ) ? wp_specialchars_decode( get_option('blogname'), ENT_QUOTES ) : $atts['from_name'];
+                    $part_1  = ( '' == $atts['from_name'] ) ? wp_specialchars_decode( FrmAppHelper::site_name(), ENT_QUOTES ) : $atts['from_name'];
                 } else {
                     continue;
                 }
@@ -260,8 +259,9 @@ class FrmNotification{
         $atts['subject'] = wp_specialchars_decode(strip_tags(stripslashes($atts['subject'])), ENT_QUOTES );
 
         $message        = do_shortcode($atts['message']);
-        $message        = wordwrap($message, 70, "\r\n"); //in case any lines are longer than 70 chars
+
         if ( $atts['plain_text'] ) {
+            $message    = wordwrap($message, 70, "\r\n"); //in case any lines are longer than 70 chars
             $message    = wp_specialchars_decode(strip_tags($message), ENT_QUOTES );
         }
 

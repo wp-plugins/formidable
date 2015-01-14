@@ -3,8 +3,6 @@
 if ( !$item_ids )
     return;
 
-$frm_form = new FrmForm();
-
 // fetch 20 posts at a time rather than loading the entire table into memory
 while ( $next_set = array_splice( $item_ids, 0, 20 ) ) {
 $where = 'WHERE id IN (' . join( ',', $next_set ) . ')';

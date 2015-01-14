@@ -106,7 +106,7 @@ jQuery(document).ready(function($){
 <div id="frm_insert_form" style="display:none;">
     <div id="frm_popup_content">
     <div class="media-modal wp-core-ui">
-    	<a class="media-modal-close" href="#"><span class="media-modal-icon"><span class="screen-reader-text"><?php _e('Close panel', 'formidable') ?></span></span></a>
+    	<a href="#" class="media-modal-close"><span class="media-modal-icon"><span class="screen-reader-text"><?php _e('Close panel', 'formidable') ?></span></span></a>
 
     	<div class="media-modal-content">
     	<div class="media-frame mode-select wp-core-ui hide-router">
@@ -116,7 +116,7 @@ jQuery(document).ready(function($){
         <div class="media-frame-menu">
         <div class="media-menu">
             <?php foreach ( $shortcodes as $shortcode => $labels ) { ?>
-            <a class="media-menu-item frm_switch_sc" id="sc-link-<?php echo $shortcode ?>" href="#">
+            <a href="#" class="media-menu-item frm_switch_sc" id="sc-link-<?php echo $shortcode ?>">
                 <?php echo $labels['name'] ?>
                 <span class="howto"><?php echo $labels['label'] ?></span>
             </a>
@@ -141,9 +141,10 @@ jQuery(document).ready(function($){
                 <input type="text" value="" id="frm_complete_shortcode" />
             </div>
             <div class="media-toolbar-primary search-form">
-                <a class="button-primary button button-large media-button-group" id="frm_insert_shortcode"><?php _e('Insert into Post', 'formidable') ?></a>
+                <a href="javascript:void(0);" class="button-primary button button-large media-button-group" id="frm_insert_shortcode"><?php _e('Insert into Post', 'formidable') ?></a>
             </div>
             </div>
+        </div>
         </div>
         </div>
 

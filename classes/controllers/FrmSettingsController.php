@@ -1,11 +1,6 @@
 <?php
-if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 class FrmSettingsController{
-    public static function load_hooks(){
-        add_action('admin_menu', 'FrmSettingsController::menu', 45);
-        add_action('frm_before_settings', 'FrmSettingsController::license_box');
-    }
 
     public static function menu(){
         add_submenu_page('formidable', 'Formidable | '. __('Global Settings', 'formidable'), __('Global Settings', 'formidable'), 'frm_change_settings', 'formidable-settings', 'FrmSettingsController::route');
@@ -26,13 +21,7 @@ class FrmSettingsController{
         $target_path = $uploads['basedir'] . '/formidable/css';
         $sections = apply_filters('frm_add_settings_section', array());
 
-        $recaptcha_themes = array(
-            'red' => __('Red', 'formidable'),
-            'white' => __('White', 'formidable'),
-            'blackglass' => __('Black Glass', 'formidable'),
-            'clean' => __('Clean', 'formidable'),
-            //'custom' => __('Custom', 'formidable'),
-        );
+        $captcha_lang = FrmAppHelper::locales('captcha');
 
         require(FrmAppHelper::plugin_path() .'/classes/views/frm-settings/form.php');
     }

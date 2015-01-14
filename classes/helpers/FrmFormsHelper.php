@@ -2,6 +2,15 @@
 if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 class FrmFormsHelper{
+    /*
+    * If $form is numeric, get the form object
+    */
+    public static function maybe_get_form( &$form ) {
+        if ( ! is_object($form) && ! is_array($form) ) {
+            $form = FrmForm::getOne($form);
+        }
+    }
+
     public static function get_direct_link($key, $form = false ) {
         $target_url = esc_url(admin_url('admin-ajax.php') . '?action=frm_forms_preview&form='. $key);
         $target_url = apply_filters('frm_direct_link', $target_url, $key, $form);
@@ -30,8 +39,7 @@ class FrmFormsHelper{
         }
 
         $where = apply_filters('frm_forms_dropdown', $query, $field_name);
-        $frm_form = new FrmForm();
-        $forms = $frm_form->getAll($where, 'name');
+        $forms = FrmForm::getAll($where, 'name');
         ?>
         <select name="<?php echo $field_name; ?>" id="<?php echo $args['field_id'] ?>" <?php
             if ( $args['onchange'] ) {
@@ -50,9 +58,7 @@ class FrmFormsHelper{
     public static function form_switcher(){
         $where = apply_filters('frm_forms_dropdown', "(parent_form_id IS NULL OR parent_form_id < 1) AND is_template=0 AND (status is NULL OR status = '' OR status = 'published')", '');
 
-        $frm_form = new FrmForm();
-        $forms = $frm_form->getAll($where, 'name');
-        unset($frm_form);
+        $forms = FrmForm::getAll($where, 'name');
 
         $args = array('id' => 0, 'form' => 0);
         if ( isset($_GET['id']) && ! isset($_GET['form']) ) {
@@ -95,8 +101,11 @@ class FrmFormsHelper{
         echo ($sort_col == $col and $sort_dir == 'desc') ? ' asc' : ' desc';
     }
 
+    /*
+    * Used when a form is created
+    */
     public static function setup_new_vars($values=array()){
-        global $wpdb, $frmdb;
+        global $wpdb;
 
         if(!empty($values)){
             $post_values = $values;
@@ -136,6 +145,9 @@ class FrmFormsHelper{
         return apply_filters('frm_setup_new_form_vars', $values);
     }
 
+    /*
+    * Used when editing a form
+    */
     public static function setup_edit_vars($values, $record, $post_values=array()){
         if(empty($post_values))
             $post_values = stripslashes_deep($_POST);
@@ -217,7 +229,7 @@ BEFORE_HTML;
     }
 
     public static function get_draft_link(){
-        $link = '[if save_draft]<a class="frm_save_draft" [draft_hook]>[draft_label]</a>[/if save_draft]';
+        $link = '[if save_draft]<a href="javascript:void(0)" class="frm_save_draft" [draft_hook]>[draft_label]</a>[/if save_draft]';
         return $link;
     }
 
@@ -238,6 +250,53 @@ BEFORE_HTML;
 
         do_action('frm_submit_button_action', $form, $form_action);
         echo $button_parts[1];
+    }
+
+    /*
+    * Automatically add end section fields if they don't exist (2.0 migration)
+    * @since 2.0
+    */
+    public static function auto_add_end_section_fields( $form, $fields, &$reset_fields ) {
+        $end_section_values = apply_filters('frm_before_field_created', FrmFieldsHelper::setup_new_vars('end_divider', $form->id));
+        $open = false;
+        foreach ( $fields as $field ) {
+            switch ( $field->type ) {
+                case 'divider':
+                    // create an end section if open
+                    FrmFormsHelper::maybe_create_end_section($open, $reset_fields, $end_section_values, ( $field->field_order - 1 ) );
+                    // mark it open for the next end section
+                    $open = true;
+                break;
+                case 'break';
+                    FrmFormsHelper::maybe_create_end_section($open, $reset_fields, $end_section_values, ( $field->field_order - 1 ) );
+                break;
+                case 'end_divider':
+                    // There is already an end section here, so there is no need to create one
+                    $open = false;
+            }
+
+            unset($field);
+        }
+
+        $last_order = end($fields);
+        $last_order = $last_order->field_order;
+        FrmFormsHelper::maybe_create_end_section($open, $reset_fields, $end_section_values, ( $last_order + 1 ) );
+    }
+
+    /*
+    * Create end section field if it doesn't exist. This is for migration from < 2.0
+    */
+    public static function maybe_create_end_section( &$open, &$reset_fields, $end_section_values, $order ) {
+        if ( ! $open ) {
+            return;
+        }
+
+        $end_section_values['field_order'] = $order;
+
+        FrmField::create( $end_section_values );
+
+        $open = false;
+        $reset_fields = true;
     }
 
     public static function replace_shortcodes($html, $form, $title=false, $description=false, $values=array()){
@@ -265,9 +324,10 @@ BEFORE_HTML;
         $html = str_replace('[form_key]', $form->form_key, $html);
 
         //replace [frmurl]
-        $html = str_replace('[frmurl]', FrmAppHelper::plugin_url(), $html);
+        $html = str_replace('[frmurl]', FrmFieldsHelper::dynamic_default_values( 'frmurl' ), $html);
 
         if(strpos($html, '[button_label]')){
+            add_filter('frm_submit_button', 'FrmFormsHelper::submit_button_label');
             $replace_with = apply_filters('frm_submit_button', $title, $form);
             $html = str_replace('[button_label]', $replace_with, $html);
         }
@@ -283,14 +343,26 @@ BEFORE_HTML;
         return $html;
     }
 
-    public static function get_form_style_class($form = false) {
-        $style = self::get_form_style($form);
-
-        if ( empty($style) ) {
-            return;
+    public static function submit_button_label($submit){
+        if ( ! $submit || empty($submit) ) {
+            $frm_settings = FrmAppHelper::get_settings();
+            $submit = $frm_settings->submit_value;
         }
 
+        return $submit;
+    }
+
+    public static function get_form_style_class($form = false) {
+        $style = self::get_form_style($form);
         $class = ' with_frm_style';
+
+        if ( empty($style) ) {
+            if ( FrmAppHelper::is_admin_page('formidable-entries') ) {
+                return $class;
+            } else {
+                return;
+            }
+        }
 
         //If submit button needs to be inline or centered
         if ( is_object($form) ) {
@@ -313,7 +385,7 @@ BEFORE_HTML;
         return $class;
     }
 
-    public static function get_form_style() {
+    public static function get_form_style( $form ) {
         if ( empty($form) ) {
             $style = 1;
         } else if ( is_object($form) ) {
@@ -323,8 +395,7 @@ BEFORE_HTML;
         } else if ( 'default' == 'form' ) {
             $style = 1;
         } else {
-            $frm_form = new FrmForm();
-            $form = $frm_form->getOne($form);
+            $form = FrmForm::getOne($form);
             $style = ( $form && isset($form->options['custom_style']) ) ? $form->options['custom_style'] : 1;
         }
 
@@ -361,8 +432,7 @@ BEFORE_HTML;
             $name = $form->name;
             $form_id = $form->id;
         } else {
-            $frm_form = new FrmForm();
-            $name = $frm_form->getName($form_id);
+            $name = FrmForm::getName($form_id);
         }
 
         if ( $form_id ) {
@@ -394,12 +464,12 @@ BEFORE_HTML;
         $current_page = isset( $_REQUEST['form_type'] ) ? $_REQUEST['form_type'] : '';
         $base_url = '?page=formidable&form_type='. $current_page .'&id='. $id;
         if ( 'trash' == $status ) {
-            $link = '<a class="submitdelete deletion" href="'. esc_url(wp_nonce_url( $base_url .'&frm_action=untrash', 'untrash_form_' . $id )) .'" >'. $labels['restore'][$length] .'</a>';
+            $link = '<a href="'. esc_url(wp_nonce_url( $base_url .'&frm_action=untrash', 'untrash_form_' . $id )) .'" class="submitdelete deletion">'. $labels['restore'][$length] .'</a>';
         } else if ( current_user_can('frm_delete_forms') ) {
             if ( EMPTY_TRASH_DAYS ) {
-                $link = '<a class="submitdelete deletion" href="'. wp_nonce_url( $base_url .'&frm_action=trash', 'trash_form_' . $id ) .'">'. $labels['trash'][$length] .'</a>';
+                $link = '<a href="'. wp_nonce_url( $base_url .'&frm_action=trash', 'trash_form_' . $id ) .'" class="submitdelete deletion">'. $labels['trash'][$length] .'</a>';
             } else {
-                $link = '<a class="submitdelete deletion" href="'. wp_nonce_url( $base_url .'&frm_action=destroy', 'destroy_form_' . $id ) .'" onclick="return confirm(\''. __('Are you sure you want to delete this form and all its entries?', 'formidable') .'\')">'. $labels['delete'][$length] .'</a>';
+                $link = '<a href="'. wp_nonce_url( $base_url .'&frm_action=destroy', 'destroy_form_' . $id ) .'" class="submitdelete deletion" onclick="return confirm(\''. __('Are you sure you want to delete this form and all its entries?', 'formidable') .'\')">'. $labels['delete'][$length] .'</a>';
             }
         }
 
@@ -407,15 +477,65 @@ BEFORE_HTML;
     }
 
     public static function status_nice_name($status) {
-        if ( 'draft' == $status ) {
-            $name = __('Draft', 'formidable');
-        } else if ( 'trash' == $status ) {
-            $name = __('Trash', 'formidable');
-        } else {
-            $name = __('Published', 'formidable');
+        $nice_names = array(
+            'draft'     => __('Draft', 'formidable'),
+            'trash'     => __('Trash', 'formidable'),
+            'publish'   => __('Published', 'formidable'),
+        );
+
+        if ( ! in_array($status, array_keys($nice_names)) ) {
+            $status = 'publish';
         }
+
+        $name = $nice_names[$status];
 
         return $name;
     }
 
+    public static function get_params() {
+        $values = array();
+        foreach ( array('template' => 0, 'id' => '', 'paged' => 1, 'form' => '', 'search' => '', 'sort' => '', 'sdir' => '') as $var => $default ) {
+            $values[$var] = FrmAppHelper::get_param($var, $default);
+        }
+
+        return $values;
+    }
+
+    /*
+    *
+    * @return int The number of forms changed
+    */
+    public static function change_form_status( $status ) {
+        $available_status = array(
+            'untrash'   => array(
+                'permission' => 'frm_edit_forms', 'new_status' => 'published',
+            ),
+            'trash'     => array(
+                'permission' => 'frm_delete_forms', 'new_status' => 'trash',
+            ),
+        );
+
+        if ( ! isset($available_status[$status]) ) {
+            return;
+        }
+
+        FrmAppHelper::permission_check($available_status[$status]['permission']);
+
+        $params = self::get_params();
+
+        //check nonce url
+        check_admin_referer($status .'_form_' . $params['id']);
+
+        $count = 0;
+        if ( FrmForm::set_status( $params['id'], $available_status[$status]['new_status'] ) ) {
+            $count++;
+        }
+
+        $available_status['untrash']['message'] = sprintf(_n( '%1$s form restored from the Trash.', '%1$s forms restored from the Trash.', $count, 'formidable' ), $count );
+        $available_status['trash']['message'] = sprintf(_n( '%1$s form moved to the Trash. %2$sUndo%3$s', '%1$s forms moved to the Trash. %2$sUndo%3$s', $count, 'formidable' ), $count, '<a href="'. esc_url(wp_nonce_url( '?page=formidable&frm_action=untrash&form_type='. ( isset( $_REQUEST['form_type'] ) ? $_REQUEST['form_type'] : '' ) .'&id='. $params['id'], 'untrash_form_' . $params['id'] )) .'">', '</a>' );
+
+        $message = $available_status[$status]['message'];
+
+        FrmFormsController::display_forms_list($params, $message, 1);
+    }
 }

@@ -56,7 +56,7 @@ do_action('frm_field_input_html', $field);
                     //What if section number and field ID are same
             } else {
                 $other_opt = false;
-            }?>
+            } ?>
 
             <input type="radio" name="<?php echo $field_name ?>" id="<?php echo $html_id ?>-<?php echo $opt_key ?>" value="<?php echo esc_attr($field_val) ?>" <?php
             echo $checked;
@@ -166,21 +166,10 @@ if (FrmAppHelper::check_selected($field['value'], $field_val)) echo ' selected="
     }
 
 } else if ( $field['type'] == 'captcha' && ! FrmAppHelper::is_admin() ) {
-    $error_msg = null;
-
-    if ( !empty($errors) ) {
-        foreach ( $errors as $error_key => $error ) {
-            if ( strpos($error_key, 'captcha-') === 0 ) {
-                $error_msg = preg_replace('/^captcha-/', '', $error_key);
-            }
-            unset($error);
-        }
-    }
-
     $frm_settings = FrmAppHelper::get_settings();
-    if ( !empty($frm_settings->pubkey) ) {
-        FrmFieldsHelper::display_recaptcha($field, $error_msg);
+    if ( ! empty($frm_settings->pubkey) ) {
+        FrmFieldsHelper::display_recaptcha($field);
     }
 } else {
-    do_action('frm_form_fields', $field, $field_name, array('errors' => $errors));
+    do_action('frm_form_fields', $field, $field_name, compact('errors', 'html_id'));
 }

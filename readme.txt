@@ -4,7 +4,7 @@ Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.3.3
 Tested up to: 4.0
-Stable tag: 1.07.11
+Stable tag: 1.07.10
 
 Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing. 
 
@@ -13,9 +13,6 @@ Quickly and easily build WordPress forms with a simple drag-and-drop interface a
 There are dozens of form-building plugins out there to create forms, but most are confusing and overly complicated. With Formidable, it is easy to create forms within a simple drag-and-drop interface. You can construct custom forms or generate them from a template. Shortcodes can be used as well as spam catching services.
 
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
-
-= 2.0 Alpha =
-Try out our awesome new 2.0 version. You'll find your saved entries, email and url fields, a visual form styler, and more features that have been moved out of the pro version. Check it out and let us know if you run into any issues. Thanks!
 
 = Features =
 * Save all responses to your WordPress database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
@@ -68,7 +65,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 
 == Changelog ==
 = 2.0 =
-* Move visular form styler to free version
+* Move visual form styler to free version
 * Added multiple emails to free version
 * Added BCC, CC, and reply to options to emails
 * Allow multiple roles to be selected for the permissions on the global settings page
@@ -76,7 +73,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Added a trash can for forms as well as draft forms
 * Change the field width option from characters to pixels
 * Pro: Added multiple form styling templates, more styling options, and updated the default styling
-* Pro: Added repeatable fields and embeded forms
+* Pro: Added repeatable fields and embedded forms
 * Pro: Created form actions and consolidated notifications and add-ons
 * Pro: All form actions can use conditional logic
 * Pro: Added confirmation fields

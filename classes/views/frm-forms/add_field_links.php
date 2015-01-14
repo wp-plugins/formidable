@@ -113,10 +113,10 @@
     	            $title = ( ! empty($d) && is_array($d) && isset($d['title']) ) ? $d['title'] : '';
     	        ?>
     	        <li class="frm_col_<?php echo $col ?>">
-                    <a class="frmbutton frm_insert_code button show_frm_classes<?php
+                    <a href="javascript:void(0);" class="frmbutton frm_insert_code button show_frm_classes<?php
                     if ( ! empty($title) ) {
                         echo ' frm_help';
-                    } ?>" data-code="<?php echo esc_attr($c) ?>" href="javascript:void(0)" <?php
+                    } ?>" data-code="<?php echo esc_attr($c) ?>" <?php
                     if ( ! empty($title) ) {
                         ?>title="<?php echo esc_attr($title); ?>"<?php
                     } ?>>

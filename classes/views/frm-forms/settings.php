@@ -150,7 +150,7 @@
                 //For each add-on, add an li, class, and javascript function. If active, add an additional class.
                 foreach ( $action_controls as $action_control ) {
                     ?>
-                    <li><a class="frm_<?php echo $action_control->id_base ?>_action frm_bstooltip <?php
+                    <li><a href="javascript:void(0)" class="frm_<?php echo $action_control->id_base ?>_action frm_bstooltip <?php
                     echo ( isset($action_control->action_options['active']) && $action_control->action_options['active']) ? 'frm_active_action ' : 'frm_inactive_action ';
                     echo $action_control->action_options['classes'];
                     ?>" title="<?php echo esc_attr($action_control->action_options['tooltip']) ?>" data-limit="<?php echo isset($action_control->action_options['limit']) ? $action_control->action_options['limit'] : '99' ?>" data-actiontype="<?php echo esc_attr($action_control->id_base) ?>"></a></li>
@@ -172,7 +172,7 @@
 
         <div id="html_settings" class="tabs-panel" style="display:<?php echo ($a == 'html_settings') ? 'block' : 'none'; ?>;">
 
-            <div id="post-body-content" class="frm_top_container" style="margin-right:260px;">
+            <div class="frm_field_html_box frm_top_container" style="margin-right:260px;">
                 <p><label><?php _e('Form Classes', 'formidable') ?></label>
                     <input type="text" name="options[form_class]" value="<?php echo esc_attr($values['form_class']) ?>" />
                 </p>

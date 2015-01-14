@@ -62,28 +62,17 @@
 
             <h3><?php _e('reCAPTCHA', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" ></span></h3>
 
-            <p class="howto">reCAPTCHA requires an API key, consisting of a "public" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create" target="_blank">free reCAPTCHA key</a>.</p>
+            <p class="howto">reCAPTCHA requires an API key, consisting of a "site" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create" target="_blank">free reCAPTCHA key</a>.</p>
 
-			<!-- reCAPTCHA public key -->
-			<p><label class="frm_left_label"><?php _e('Public Key', 'formidable') ?></label>
+			<p><label class="frm_left_label"><?php _e('Site Key', 'formidable') ?></label>
 			<input type="text" name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" /></p>
 
-			<!-- reCAPTCHA private key -->
 			<p><label class="frm_left_label"><?php _e('Private Key', 'formidable') ?></label>
 			<input type="text" name="frm_privkey" id="frm_privkey" size="42" value="<?php echo esc_attr($frm_settings->privkey) ?>" /></p>
 
-		    <p><label class="frm_left_label"><?php _e('reCAPTCHA Theme', 'formidable') ?></label>
-			<select name="frm_re_theme" id="frm_re_theme">
-			<?php foreach($recaptcha_themes as $theme_value => $theme_name){ ?>
-			<option value="<?php echo esc_attr($theme_value) ?>" <?php selected($frm_settings->re_theme, $theme_value) ?>><?php echo $theme_name ?></option>
-			<?php }
-			unset($recaptcha_themes, $theme_value, $theme_name);
-			?>
-			</select></p>
-
 		    <p><label class="frm_left_label"><?php _e('reCAPTCHA Language', 'formidable') ?></label>
 			<select name="frm_re_lang" id="frm_re_lang">
-			    <?php foreach(array('en' => __('English', 'formidable'), 'nl' => __('Dutch', 'formidable'), 'fr' => __('French', 'formidable'), 'de' => __('German', 'formidable'), 'pt' => __('Portuguese', 'formidable'), 'ru' => __('Russian', 'formidable'), 'es' => __('Spanish', 'formidable'), 'tr' => __('Turkish', 'formidable')) as $lang => $lang_name){ ?>
+			    <?php foreach ( $captcha_lang as $lang => $lang_name ) { ?>
 				<option value="<?php echo esc_attr($lang) ?>" <?php selected($frm_settings->re_lang, $lang) ?>><?php echo $lang_name ?></option>
                 <?php } ?>
             </select></p>
@@ -104,8 +93,8 @@
             <input type="text" id="frm_unique_msg" name="frm_unique_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" /></p>
 <?php }else{ ?>
     <input type="hidden" id="frm_unique_msg" name="frm_unique_msg" value="<?php echo esc_attr($frm_settings->unique_msg) ?>" />
+    <input type="hidden" id="frm_login_msg" name="frm_login_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->login_msg) ?>" />
 <?php } ?>
-        <input type="hidden" id="frm_login_msg" name="frm_login_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->login_msg) ?>" />
 
         <p><label class="frm_left_label"><?php _e('Success Message', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('The default message seen after a form is submitted.', 'formidable') ?>" ></span></label>
             <input type="text" id="frm_success_msg" name="frm_success_msg" class="frm_with_left_label" value="<?php echo esc_attr($frm_settings->success_msg) ?>" /></p>
@@ -148,7 +137,7 @@
         <?php } ?>
 
         <p class="alignright frm_uninstall" style="padding-top:1.25em;">
-            <a id="frm_uninstall_now"><?php _e('Uninstall Formidable', 'formidable') ?></a>
+            <a href="javascript:void(0)" id="frm_uninstall_now"><?php _e('Uninstall Formidable', 'formidable') ?></a>
             <span class="spinner frm_spinner"></span>
         </p>
         <p class="submit">

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable
 Description: Quickly and easily create drag-and-drop forms
-Version: 2.0a
+Version: 2.0b5
 Plugin URI: http://formidablepro.com/
 Author URI: http://strategy11.com
 Author: Strategy11
@@ -63,40 +63,12 @@ if ( is_array(spl_autoload_functions()) && in_array('__autoload', spl_autoload_f
 // Add the autoloader
 spl_autoload_register('frm_forms_autoloader');
 
-
-// Instansiate Models
-global $frmdb;
-global $frm_field;
-global $frm_form;
-global $frm_entry;
-global $frm_entry_meta;
-
-$frmdb              = new FrmDb();
-$frm_field          = new FrmField();
-$frm_form           = new FrmForm();
-$frm_entry          = new FrmEntry();
-$frm_entry_meta     = new FrmEntryMeta();
-
-
-// Instansiate Controllers
-FrmAppController::load_hooks();
-FrmEntriesController::load_hooks();
-FrmFieldsController::load_hooks();
-FrmFormsController::load_hooks();
-FrmFormActionsController::load_hooks();
-FrmStylesController::load_hooks();
-
-if ( is_admin() ) {
-    FrmSettingsController::load_hooks();
-    FrmStatisticsController::load_hooks();
-    FrmXMLController::load_hooks();
-}
-
-
 $frm_path = dirname(__FILE__);
 if ( file_exists($frm_path . '/pro/formidable-pro.php') ) {
     require_once($frm_path .'/pro/formidable-pro.php');
 }
+
+FrmHooksController::trigger_load_hook();
 
 include_once($frm_path .'/deprecated.php');
 unset($frm_path);

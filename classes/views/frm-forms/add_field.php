@@ -54,7 +54,7 @@ if ( $field['type'] == 'divider' ) { ?>
     <?php do_action('frm_extra_field_actions', $field['id']); ?>
     <?php if ( $display['required'] ) { ?>
     <span id="require_field_<?php echo $field['id']; ?>">
-        <a class="frm_req_field frm_action_icon frm_required_icon frm_icon_font alignleft frm_required<?php echo (int) $field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
+        <a href="javascript:void(0);" class="frm_req_field frm_action_icon frm_required_icon frm_icon_font alignleft frm_required<?php echo (int) $field['required'] ?>" id="req_field_<?php echo $field['id']; ?>" title="Click to Mark as <?php echo ($field['required'] == '0') ? '' : 'not '; ?>Required"></a>
     </span>
     <?php }
 
@@ -124,15 +124,15 @@ if ( in_array($field['type'], array( 'select', 'radio', 'checkbox')) ) { ?>
     } else if ( !isset($field['post_field']) || !in_array($field['post_field'], array('post_category', 'post_status')) ) {
 ?>
         <div id="frm_add_field_<?php echo $field['id']; ?>">
-            <a data-opttype="single" class="button frm_cb_button frm_add_opt"><?php _e('Add Option', 'formidable') ?></a>
+            <a href="javascript:void(0);" data-opttype="single" class="button frm_cb_button frm_add_opt"><?php _e('Add Option', 'formidable') ?></a>
 
             <?php if ( FrmAppHelper::pro_is_installed() && $field['type'] != 'select' ) { ?>
-                <a id="other_button_<?php echo $field['id']; ?>" data-opttype="other" data-ftype="<?php echo $field['type']?>" class="button frm_cb_button frm_add_opt<?php echo ( $field['type'] == 'radio' && $field['other'] == true ? ' frm_hidden' : '' ); ?>"><?php _e('Add "Other"', 'formidable') ?></a>
+                <a href="javascript:void(0);" id="other_button_<?php echo $field['id']; ?>" data-opttype="other" data-ftype="<?php echo $field['type']?>" class="button frm_cb_button frm_add_opt<?php echo ( $field['type'] == 'radio' && $field['other'] == true ? ' frm_hidden' : '' ); ?>"><?php _e('Add "Other"', 'formidable') ?></a>
                 <input type="hidden" value="<?php echo $field['other']; ?>" id="other_input_<?php echo $field['id']; ?>" name="field_options[other_<?php echo $field['id']; ?>]">
             <?php }
 
             if (!isset($field['post_field']) or $field['post_field'] != 'post_category'){ ?>
-            <a title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Options', 'formidable') ?></a>
+            <a href="<?php echo esc_url(admin_url('admin-ajax.php') .'?action=frm_import_choices&field_id='. $field['id'] .'&TB_iframe=1') ?>" title="<?php echo FrmAppHelper::truncate(esc_attr(strip_tags(str_replace('"', '&quot;', $field['name']))), 20) . ' '. __('Field Choices', 'formidable'); ?>" class="thickbox frm_orange"><?php _e('Bulk Edit Options', 'formidable') ?></a>
             <?php } ?>
         </div>
 <?php
@@ -147,7 +147,7 @@ do_action('frm_before_field_options', $field);
 if ($display['options']){ ?>
     <div class="widget">
         <div class="widget-top">
-    	    <div class="widget-title-action"><a class="widget-action"></a></div>
+    	    <div class="widget-title-action"><a href="javascript:void(0);" class="widget-action"></a></div>
     		<div class="widget-title"><h4><?php _e('Field Options', 'formidable') ?> (ID <?php echo $field['id'] ?>)</h4></div>
         </div>
     	<div class="widget-inside">
@@ -238,7 +238,7 @@ if ($display['options']){ ?>
                     </tr>
                 <?php } ?>
                 <?php do_action('frm_field_options_form', $field, $display, $values);
-                
+
                 if ( $display['required'] || $display['invalid'] || $display['unique'] || $display['conf_field'] ) { ?>
                     <tr class="frm_validation_msg <?php echo ($display['invalid'] || $field['required'] || (isset($field['unique']) && $field['unique']) || ( isset($field['conf_field']) && $field['conf_field'] ) ) ? '' : 'frm_hidden'; ?>"><td colspan="2">
                     <div class="menu-settings">

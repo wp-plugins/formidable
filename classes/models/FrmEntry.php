@@ -3,8 +3,8 @@ if(!defined('ABSPATH')) die('You are not allowed to call this page directly.');
 
 class FrmEntry{
 
-    function create( $values ){
-        global $wpdb, $frm_entry_meta;
+    public static function create( $values ) {
+        global $wpdb;
 
         $values = apply_filters('frm_pre_create_entry', $values);
 
@@ -16,7 +16,7 @@ class FrmEntry{
         $new_values = array(
             'item_key'  => FrmAppHelper::get_unique_key($values['item_key'], $wpdb->prefix .'frm_items', 'item_key'),
             'name'      => isset($values['name']) ? $values['name'] : $values['item_key'],
-            'ip'        => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '',
+            'ip'        => FrmAppHelper::get_ip_address(),
             'is_draft'  => ( ( isset($values['frm_saving_draft']) && $values['frm_saving_draft'] == 1 ) ||  ( isset($values['is_draft']) && $values['is_draft'] == 1) ) ? 1 : 0,
             'form_id'   => isset($values['form_id']) ? (int) $values['form_id']: null,
             'post_id'   => isset($values['post_id']) ? (int) $values['post_id']: null,
@@ -25,16 +25,19 @@ class FrmEntry{
             'updated_at' => isset($values['updated_at']) ? $values['updated_at'] : ( isset($values['created_at']) ? $values['created_at'] : current_time('mysql', 1) ),
         );
 
-        if(is_array($new_values['name']))
+        if ( is_array($new_values['name']) ) {
             $new_values['name'] = reset($new_values['name']);
+        }
 
-        if(isset($values['description']) and !empty($values['description'])){
+        if ( isset($values['description']) && ! empty($values['description']) ) {
             $new_values['description'] = maybe_serialize($values['description']);
-        }else{
+        } else {
             $referrerinfo = FrmAppHelper::get_referer_info();
 
-            $new_values['description'] = serialize(array('browser' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
-                                                        'referrer' => $referrerinfo));
+            $new_values['description'] = serialize( array(
+                'browser' => FrmAppHelper::get_server_value('HTTP_USER_AGENT'),
+                'referrer' => $referrerinfo,
+            ) );
         }
 
         //if(isset($values['id']) and is_numeric($values['id']))
@@ -49,77 +52,93 @@ class FrmEntry{
 
         $new_values['updated_by'] = isset($values['updated_by']) ? $values['updated_by'] : $new_values['user_id'];
 
-        //check for duplicate entries created in the last 5 minutes
-        if(!defined('WP_IMPORTING')){
-            $create_entry = true;
-
-            $check_val = $new_values;
-            $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*5)));
-            unset($check_val['created_at']);
-            unset($check_val['updated_at']);
-            unset($check_val['is_draft']);
-            unset($check_val['id']);
-            unset($check_val['item_key']);
-            if($new_values['item_key'] == $new_values['name'])
-                unset($check_val['name']);
-
-            global $frmdb;
-            $entry_exists = $frmdb->get_records($wpdb->prefix .'frm_items', $check_val, 'created_at DESC', '', 'id');
-            unset($frmdb);
-
-            if($entry_exists and !empty($entry_exists)){
-                foreach($entry_exists as $entry_exist){
-                    if($create_entry){
-                        $create_entry = false;
-                        //add more checks here to make sure it's a duplicate
-                        if (isset($values['item_meta'])){
-                            $metas = $frm_entry_meta->get_entry_meta_info($entry_exist->id);
-                            $field_metas = array();
-                            foreach($metas as $meta)
-                                $field_metas[$meta->field_id] = $meta->meta_value;
-
-                            $diff = array_diff_assoc($field_metas, array_map('maybe_serialize', $values['item_meta']));
-                            foreach($diff as $field_id => $meta_value){
-                                if(!empty($meta_value) and !$create_entry)
-                                    $create_entry = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if ( !$create_entry ) {
-                return false;
-            }
+        // don't create duplicate entry
+        if ( self::is_duplicate($new_values, $values) ) {
+            return false;
         }
 
         $query_results = $wpdb->insert( $wpdb->prefix .'frm_items', $new_values );
 
-        if ( $query_results ) {
-            $entry_id = $wpdb->insert_id;
-
-            global $frm_vars;
-            if ( !isset($frm_vars['saved_entries']) ) {
-                $frm_vars['saved_entries'] = array();
-            }
-            $frm_vars['saved_entries'][] = (int) $entry_id;
-
-            if ( isset($values['item_meta']) ) {
-                $frm_entry_meta->update_entry_metas($entry_id, $values['item_meta']);
-            }
-
-            do_action('frm_after_create_entry', $entry_id, $new_values['form_id']);
-            do_action('frm_after_create_entry_'. $new_values['form_id'], $entry_id);
-            return $entry_id;
-        } else {
+        if ( ! $query_results ) {
             return false;
         }
+
+        $entry_id = $wpdb->insert_id;
+
+        global $frm_vars;
+        if ( ! isset($frm_vars['saved_entries']) ) {
+            $frm_vars['saved_entries'] = array();
+        }
+        $frm_vars['saved_entries'][] = (int) $entry_id;
+
+        if ( isset($values['item_meta']) ) {
+            FrmEntryMeta::update_entry_metas($entry_id, $values['item_meta']);
+        }
+
+        do_action('frm_after_create_entry', $entry_id, $new_values['form_id']);
+        do_action('frm_after_create_entry_'. $new_values['form_id'], $entry_id);
+        return $entry_id;
     }
 
-    function duplicate( $id ){
-        global $wpdb, $frm_entry, $frm_entry_meta;
+    /*
+    * check for duplicate entries created in the last 5 minutes
+    * @return boolean
+    */
+    public static function is_duplicate($new_values, $values) {
+        if ( defined('WP_IMPORTING') ) {
+            return false;
+        }
 
-        $values = $frm_entry->getOne( $id );
+        $check_val = $new_values;
+        $check_val['created_at >'] = date('Y-m-d H:i:s', (strtotime($new_values['created_at']) - (60*5)));
+
+        unset($check_val['created_at'], $check_val['updated_at']);
+        unset($check_val['is_draft'], $check_val['id'], $check_val['item_key']);
+
+        if ( $new_values['item_key'] == $new_values['name'] ) {
+            unset($check_val['name']);
+        }
+
+        global $wpdb;
+
+        $check_val = FrmAppHelper::get_where_clause_and_values( $check_val );
+        $entry_exists = $wpdb->get_results( $wpdb->prepare('SELECT id FROM '. $wpdb->prefix .'frm_items '. $check_val['where'] . ' ORDER BY created_at DESC', $check_val['values']) );
+
+        if ( ! $entry_exists || empty($entry_exists) || ! isset($values['item_meta']) ) {
+            return false;
+        }
+
+        $is_duplicate = false;
+        foreach ( $entry_exists as $entry_exist ) {
+            $is_duplicate = true;
+
+            //add more checks here to make sure it's a duplicate
+            $metas = FrmEntryMeta::get_entry_meta_info($entry_exist->id);
+            $field_metas = array();
+            foreach ( $metas as $meta ) {
+                $field_metas[$meta->field_id] = $meta->meta_value;
+            }
+
+            $diff = array_diff_assoc($field_metas, array_map('maybe_serialize', $values['item_meta']));
+            foreach ( $diff as $field_id => $meta_value ) {
+                if ( ! empty($meta_value) ) {
+                    $is_duplicate = false;
+                    continue;
+                }
+            }
+
+            if ( $is_duplicate ) {
+                return $is_duplicate;
+            }
+        }
+
+        return $is_duplicate;
+    }
+
+    public static function duplicate( $id ){
+        global $wpdb;
+
+        $values = FrmEntry::getOne( $id );
 
         $new_values = array();
         $new_values['item_key'] = FrmAppHelper::get_unique_key('', $wpdb->prefix .'frm_items', 'item_key');
@@ -138,7 +157,7 @@ class FrmEntry{
                 $frm_vars['saved_entries'] = array();
             $frm_vars['saved_entries'][] = (int) $entry_id;
 
-            $frm_entry_meta->duplicate_entry_metas($id, $entry_id);
+            FrmEntryMeta::duplicate_entry_metas($id, $entry_id);
 
             do_action('frm_after_duplicate_entry', $entry_id, $new_values['form_id']);
             return $entry_id;
@@ -147,8 +166,8 @@ class FrmEntry{
         }
     }
 
-    function update( $id, $values ){
-        global $wpdb, $frm_entry_meta, $frm_field, $frm_vars;
+    public static function update( $id, $values ){
+        global $wpdb, $frm_vars;
         if ( isset($frm_vars['saved_entries']) && is_array($frm_vars['saved_entries']) && in_array( (int) $id, (array) $frm_vars['saved_entries'] ) ) {
             return;
         }
@@ -194,18 +213,19 @@ class FrmEntry{
 
         $frm_vars['saved_entries'][] = (int) $id;
 
-        if (isset($values['item_meta']))
-            $frm_entry_meta->update_entry_metas($id, $values['item_meta']);
+        if ( isset($values['item_meta']) ) {
+            FrmEntryMeta::update_entry_metas($id, $values['item_meta']);
+        }
         do_action('frm_after_update_entry', $id, $new_values['form_id']);
         do_action('frm_after_update_entry_'. $new_values['form_id'], $id);
         return $query_results;
     }
 
-    function &destroy( $id ){
+    public static function &destroy( $id ){
         global $wpdb;
         $id = (int) $id;
 
-        $entry = $this->getOne($id);
+        $entry = self::getOne($id);
         if ( !$entry ) {
             $result = false;
             return $result;
@@ -219,7 +239,7 @@ class FrmEntry{
         return $result;
     }
 
-    function &update_form( $id, $value, $form_id ){
+    public static function &update_form( $id, $value, $form_id ){
         global $wpdb;
         $form_id = isset($value) ? $form_id : NULL;
         $result = $wpdb->update( $wpdb->prefix .'frm_items', array('form_id' => $form_id), array( 'id' => $id ) );
@@ -228,7 +248,7 @@ class FrmEntry{
         return $result;
     }
 
-    function getOne( $id, $meta = false){
+    public static function getOne( $id, $meta = false){
         global $wpdb;
 
         $query = "SELECT it.*, fr.name as form_name, fr.form_key as form_key FROM {$wpdb->prefix}frm_items it
@@ -246,12 +266,12 @@ class FrmEntry{
         }
 
         $entry = $wpdb->get_row($query);
-        $entry = $this->get_meta($entry);
+        $entry = self::get_meta($entry);
 
         return stripslashes_deep($entry);
     }
 
-    function get_meta($entry) {
+    public static function get_meta($entry) {
         if ( ! $entry ) {
             return $entry;
         }
@@ -283,7 +303,7 @@ class FrmEntry{
         return $entry;
     }
 
-    function &exists( $id ){
+    public static function &exists( $id ){
         global $wpdb;
 
         if ( FrmAppHelper::check_cache( $id, 'frm_entry' ) ) {
@@ -299,7 +319,7 @@ class FrmEntry{
         return $exists;
     }
 
-    function getAll($where, $order_by = '', $limit = '', $meta=false, $inc_form=true){
+    public static function getAll($where, $order_by = '', $limit = '', $meta=false, $inc_form=true){
         global $wpdb;
 
         $limit = FrmAppHelper::esc_limit($limit);
@@ -379,7 +399,7 @@ class FrmEntry{
     }
 
     // Pagination Methods
-    function getRecordCount($where=''){
+    public static function getRecordCount($where=''){
         global $wpdb;
         $cache_key = 'count_'. maybe_serialize($where);
 
@@ -395,16 +415,16 @@ class FrmEntry{
         return $count;
     }
 
-    function getPageCount($p_size, $where=''){
+    public static function getPageCount($p_size, $where=''){
         if ( is_numeric($where) ) {
             return ceil( (int) $where / (int) $p_size );
         } else {
-            return ceil( (int) $this->getRecordCount($where) / (int) $p_size );
+            return ceil( (int) self::getRecordCount($where) / (int) $p_size );
         }
     }
 
-    function validate( $values, $exclude=false ){
-        global $wpdb, $frm_field, $frm_entry_meta;
+    public static function validate( $values, $exclude=false ){
+        global $wpdb;
 
         $errors = array();
 
@@ -426,7 +446,7 @@ class FrmEntry{
             $where .= " and fi.type not in ('". implode("','", array_filter($exclude, 'esc_sql')) ."')";
         }
 
-        $posted_fields = $frm_field->getAll($where, 'field_order');
+        $posted_fields = FrmField::getAll($where, 'field_order');
 
         //Set Radio button and checkbox meta equal to "other" value, if it is set
         $values = FrmEntriesHelper::set_other_vals( $values );
@@ -438,14 +458,14 @@ class FrmEntry{
 
 
         // check for spam
-        $this->spam_check($exclude, $values, $errors);
+        self::spam_check($exclude, $values, $errors);
 
         $errors = apply_filters('frm_validate_entry', $errors, $values);
 
         return $errors;
     }
 
-    function validate_field($posted_field, &$errors, $values, $args = array()) {
+    public static function validate_field($posted_field, &$errors, $values, $args = array()) {
         $defaults = array(
             'id'    => $posted_field->id,
             'parent_field_id' => '', // the id of the repeat or embed form
@@ -486,17 +506,17 @@ class FrmEntry{
             $_POST['name'] = $value;
         }
 
-        $this->validate_url_field($errors, $posted_field, $value, $args);
-        $this->validate_email_field($errors, $posted_field, $value, $args);
+        self::validate_url_field($errors, $posted_field, $value, $args);
+        self::validate_email_field($errors, $posted_field, $value, $args);
 
         FrmEntriesHelper::set_posted_value($posted_field, $value, $args);
 
-        $this->validate_recaptcha($errors, $posted_field);
+        self::validate_recaptcha($errors, $posted_field, $args);
 
         $errors = apply_filters('frm_validate_field_entry', $errors, $posted_field, $value, $args);
     }
 
-    function validate_url_field(&$errors, $field, &$value, $args) {
+    public static function validate_url_field(&$errors, $field, &$value, $args) {
         if ( $value == '' || ! in_array($field->type, array('website', 'url', 'image')) ) {
             return;
         }
@@ -514,7 +534,7 @@ class FrmEntry{
         }
     }
 
-    function validate_email_field(&$errors, $field, $value, $args) {
+    public static function validate_email_field(&$errors, $field, $value, $args) {
         if ( $value == '' || $field->type != 'email' ) {
             return;
         }
@@ -525,41 +545,43 @@ class FrmEntry{
         }
     }
 
-    function validate_recaptcha(&$errors, $field) {
-        if ( $field->type != 'captcha' || ! isset($_POST['recaptcha_challenge_field']) ) {
+    public static function validate_recaptcha(&$errors, $field, $args) {
+        if ( $field->type != 'captcha' ) {
+            return;
+        }
+
+        if ( ! isset($_POST['g-recaptcha-response']) ) {
+            // If captcha is missing, check if it was already verified
+            if ( ! isset($_POST['recaptcha_checked']) || ! wp_verify_nonce($_POST['recaptcha_checked'], 'frm_form')) {
+                // There was no captcha submitted
+                $errors['field'. $args['id']] = __('The captcha is missing from this form', 'formidable');
+            }
             return;
         }
 
         $frm_settings = FrmAppHelper::get_settings();
 
-        if ( ! function_exists('recaptcha_check_answer') ) {
-            require(FrmAppHelper::plugin_path().'/classes/recaptchalib.php');
-        }
+        $resp = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify?secret='. $frm_settings->privkey .'&response='. $_POST['g-recaptcha-response'] .'&remoteip='. FrmAppHelper::get_ip_address() );
+        $response = json_decode(wp_remote_retrieve_body( $resp ), true);
 
-        $response = recaptcha_check_answer($frm_settings->privkey,
-                                        $_SERVER['REMOTE_ADDR'],
-                                        $_POST['recaptcha_challenge_field'],
-                                        $_POST['recaptcha_response_field']);
-
-        if ( ! $response->is_valid ) {
+        if ( ! $response['success'] ) {
             // What happens when the CAPTCHA was entered incorrectly
-            $errors['captcha-'. $response->error] = $errors['field'. $args['id']] = ( ! isset($field->field_options['invalid']) || $field->field_options['invalid'] == '' ) ? $frm_settings->re_msg : $field->field_options['invalid'];
+            $errors['field'. $args['id']] = ( ! isset($field->field_options['invalid']) || $field->field_options['invalid'] == '' ) ? $frm_settings->re_msg : $field->field_options['invalid'];
         }
     }
 
     /*
     * check for spam
     */
-    function spam_check($exclude, $values, &$errors) {
+    public static function spam_check($exclude, $values, &$errors) {
         if ( ! empty($exclude) || ! isset($values['item_meta']) || empty($values['item_meta']) || ! empty($errors) ) {
             // only check spam if there are no other errors
             return;
         }
 
         global $wpcom_api_key;
-        if ( ( function_exists( 'akismet_http_post' ) || is_callable('Akismet::http_post') ) && ( get_option('wordpress_api_key') || $wpcom_api_key ) && $this->akismet($values) ) {
-            $frm_form = new FrmForm();
-            $form = $frm_form->getOne($values['form_id']);
+        if ( ( function_exists( 'akismet_http_post' ) || is_callable('Akismet::http_post') ) && ( get_option('wordpress_api_key') || $wpcom_api_key ) && self::akismet($values) ) {
+            $form = FrmForm::getOne($values['form_id']);
 
             if ( isset($form->options['akismet']) && ! empty($form->options['akismet']) && ( $form->options['akismet'] != 'logged' || ! is_user_logged_in() ) ) {
 	            $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
@@ -567,13 +589,13 @@ class FrmEntry{
 	    }
 
 	    // check for blacklist keys
-    	if ( $this->blacklist_check($values) ) {
+    	if ( self::blacklist_check($values) ) {
             $errors['spam'] = __('Your entry appears to be spam!', 'formidable');
     	}
     }
 
     // check the blacklisted words
-    function blacklist_check( $values ) {
+    public static function blacklist_check( $values ) {
         if ( ! apply_filters('frm_check_blacklist', true, $values) ) {
             return false;
         }
@@ -607,8 +629,12 @@ class FrmEntry{
     	return false;
     }
 
-    //Check entries for spam -- returns true if is spam
-    function akismet($values) {
+    /*
+    * Check entries for spam
+    *
+    * @return boolean true if is spam
+    */
+    public static function akismet($values) {
 	    $content = FrmEntriesHelper::entry_array_to_string($values);
 
 		if ( empty($content) ) {
@@ -616,25 +642,7 @@ class FrmEntry{
 		}
 
         $datas = array();
-		$datas['blog'] = FrmAppHelper::site_url();
-		$datas['user_ip'] = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
-		$datas['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-		$datas['referrer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : false;
-		$datas['comment_type'] = 'formidable';
-		if ( $permalink = get_permalink() )
-			$datas['permalink'] = $permalink;
-
-		$datas['comment_content'] = $content;
-
-		foreach ( $_SERVER as $key => $value ) {
-			if ( !in_array($key, array('HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW')) && is_string($value) ) {
-				$datas["$key"] = $value;
-			} else {
-			    $datas["$key"] = '';
-			}
-
-			unset($key, $value);
-		}
+        self::parse_akismet_array($datas, $content);
 
 		$query_string = '';
 		foreach ( $datas as $key => $data ) {
@@ -649,7 +657,33 @@ class FrmEntry{
             $response = akismet_http_post( $query_string, $akismet_api_host, '/1.1/comment-check', $akismet_api_port );
         }
 
-		return ( is_array($response) and $response[1] == 'true' ) ? true : false;
+		return ( is_array($response) && $response[1] == 'true' ) ? true : false;
     }
 
+    /*
+    * Called by FrmEntry::akismet
+    * @since 2.0
+    */
+    private  static function parse_akismet_array( &$datas, $content ) {
+        $datas['blog'] = FrmAppHelper::site_url();
+        $datas['user_ip'] = preg_replace( '/[^0-9., ]/', '', FrmAppHelper::get_ip_address() );
+        $datas['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $datas['referrer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : false;
+        $datas['comment_type'] = 'formidable';
+        $datas['comment_content'] = $content;
+
+        if ( $permalink = get_permalink() ) {
+            $datas['permalink'] = $permalink;
+        }
+
+        foreach ( $_SERVER as $key => $value ) {
+            if ( ! in_array($key, array('HTTP_COOKIE', 'HTTP_COOKIE2', 'PHP_AUTH_PW')) && is_string($value) ) {
+                $datas[$key] = $value;
+            } else {
+                $datas[$key] = '';
+            }
+
+            unset($key, $value);
+        }
+    }
 }

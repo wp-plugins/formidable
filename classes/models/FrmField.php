@@ -5,10 +5,10 @@ if(class_exists('FrmField'))
     return;
 
 class FrmField{
-    var $use_cache = true;
+    static $use_cache = true;
 
-    function create( $values, $return=true ){
-        global $wpdb;
+    public static function create( $values, $return=true ){
+        global $wpdb, $frm_duplicate_ids;
 
         $new_values = array();
         $key = isset($values['field_key']) ? $values['field_key'] : $values['name'];
@@ -25,8 +25,8 @@ class FrmField{
         $new_values['form_id'] = isset($values['form_id']) ? (int) $values['form_id'] : NULL;
         $new_values['field_options'] = $values['field_options'];
         $new_values['created_at'] = current_time('mysql', 1);
+
         if(isset($values['id'])){
-            global $frm_duplicate_ids;
             $frm_duplicate_ids[$values['field_key']] = $new_values['field_key'];
             $new_values = apply_filters('frm_duplicated_field', $new_values);
         }
@@ -44,7 +44,7 @@ class FrmField{
         $query_results = $wpdb->insert( $wpdb->prefix .'frm_fields', $new_values );
         if($return){
             if($query_results){
-                $this->delete_form_transient($new_values['form_id']);
+                self::delete_form_transient($new_values['form_id']);
                 $new_id = $wpdb->insert_id;
                 if ( isset($values['id']) ) {
                     $frm_duplicate_ids[$values['id']] = $new_id;
@@ -56,29 +56,27 @@ class FrmField{
         }
     }
 
-    function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
-        global $frm_duplicate_ids, $wpdb;
-        $fields = $this->getAll(array('fi.form_id' => $old_form_id), 'field_order', '', $blog_id);
+    public static function duplicate($old_form_id, $form_id, $copy_keys=false, $blog_id=false){
+        global $frm_duplicate_ids;
+        $fields = self::getAll(array('fi.form_id' => $old_form_id), 'field_order', '', $blog_id);
         foreach ( (array) $fields as $field ) {
-            $values = array();
             $new_key = ($copy_keys) ? $field->field_key : '';
             if ( $copy_keys && substr($field->field_key, -1) == 2 ) {
                 $new_key = rtrim($new_key, 2);
             }
-            $values['field_key'] = FrmAppHelper::get_unique_key($new_key, $wpdb->prefix .'frm_fields', 'field_key');
-            $values['options'] = maybe_serialize($field->options);
-            $values['form_id'] = $form_id;
-            foreach (array('name', 'description', 'type', 'default_value', 'field_order', 'required', 'field_options') as $col)
-                $values[$col] = $field->{$col};
+
+            $values = array();
+            FrmFieldsHelper::fill_field( $values, $field, $form_id, $new_key );
+
             $values = apply_filters('frm_duplicated_field', $values);
-            $new_id = $this->create($values);
+            $new_id = self::create($values);
             $frm_duplicate_ids[$field->id] = $new_id;
             $frm_duplicate_ids[$field->field_key] = $new_id;
             unset($field);
         }
     }
 
-    function update( $id, $values ){
+    public static function update( $id, $values ){
         global $wpdb;
 
         if (isset($values['field_key']))
@@ -106,7 +104,7 @@ class FrmField{
         if(isset($values['form_id'])){
             $form_id = $values['form_id'];
         }else{
-            $field = $this->getOne($id);
+            $field = self::getOne($id);
             if ( $field ) {
                 $form_id = $field->form_id;
             }
@@ -117,70 +115,72 @@ class FrmField{
         if($query_results){
             wp_cache_delete( $id, 'frm_field' );
             if ( $form_id ) {
-                $this->delete_form_transient($form_id);
+                self::delete_form_transient($form_id);
             }
         }
 
         return $query_results;
     }
 
-    function destroy( $id ){
+    public static function destroy( $id ){
       global $wpdb;
 
       do_action('frm_before_destroy_field', $id);
 
       wp_cache_delete( $id, 'frm_field' );
-      $field = $this->getOne($id);
+      $field = self::getOne($id);
       if ( !$field ) {
           return false;
       }
 
-      $this->delete_form_transient($field->form_id);
+      self::delete_form_transient($field->form_id);
 
       $wpdb->query($wpdb->prepare('DELETE FROM '. $wpdb->prefix .'frm_item_metas WHERE field_id=%d', $id));
       return $wpdb->query($wpdb->prepare('DELETE FROM '. $wpdb->prefix .'frm_fields WHERE id=%d', $id));
     }
 
-    function delete_form_transient($form_id) {
+    public static function delete_form_transient($form_id) {
         delete_transient('frm_all_form_fields_'. $form_id .'exclude');
         delete_transient('frm_all_form_fields_'. $form_id .'include');
 
         $cache_key = serialize(array('fi.form_id' => (int) $form_id)) . 'field_orderlb';
         wp_cache_delete($cache_key, 'frm_field');
 
-        $frm_form = new FrmForm();
-        $form = $frm_form->getOne($form_id);
-        if ( $form->parent_form_id ) {
-            $this->delete_form_transient( $form->parent_form_id );
+        $form = FrmForm::getOne($form_id);
+        if ( $form && $form->parent_form_id ) {
+            self::delete_form_transient( $form->parent_form_id );
         }
     }
 
-    function getOne( $id ){
+    public static function getOne( $id ){
         global $wpdb;
 
         $where = is_numeric($id) ? 'id=%d' : 'field_key=%s';
         $query = $wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'frm_fields WHERE '. $where, $id);
 
         $results = FrmAppHelper::check_cache( $id, 'frm_field', $query, 'get_row', 0 );
+
+        if ( empty($results) ) {
+            return $results;
+        }
+
         if ( is_numeric($id) ) {
             wp_cache_set( $results->field_key, $results, 'frm_field' );
         } else if ( $results ) {
             wp_cache_set( $results->id, $results, 'frm_field' );
         }
 
-        if($results){
-            $results->field_options = maybe_unserialize($results->field_options);
-            if ( isset($results->field_options['format']) && ! empty($results->field_options['format']) ) {
-                $results->field_options['format'] = addslashes($results->field_options['format']);
-            }
-            $results->options = maybe_unserialize($results->options);
-            $results->default_value = maybe_unserialize($results->default_value);
+        $results->field_options = maybe_unserialize($results->field_options);
+        if ( isset($results->field_options['format']) && ! empty($results->field_options['format']) ) {
+            $results->field_options['format'] = addslashes($results->field_options['format']);
         }
+        $results->options = maybe_unserialize($results->options);
+        $results->default_value = maybe_unserialize($results->default_value);
 
         return stripslashes_deep($results);
     }
 
-    function get_all_types_in_form($form_id, $type, $limit = '') {
+    public static function get_all_types_in_form($form_id, $type, $limit = '') {
         if ( ! $form_id ) {
             return array();
         }
@@ -210,14 +210,14 @@ class FrmField{
             return stripslashes_deep($fields);
         }
 
-        $this->use_cache = false;
-        $results = $this->getAll(array('fi.form_id' => (int) $form_id, 'fi.type' => $type), 'field_order', $limit);
-        $this->use_cache = true;
+        self::$use_cache = false;
+        $results = self::getAll(array('fi.form_id' => (int) $form_id, 'fi.type' => $type), 'field_order', $limit);
+        self::$use_cache = true;
 
         return $results;
     }
 
-    function get_all_for_form($form_id, $limit = '', $inc_sub = 'exclude') {
+    public static function get_all_for_form($form_id, $limit = '', $inc_sub = 'exclude') {
         if ( ! (int) $form_id ) {
             return array();
         }
@@ -240,9 +240,9 @@ class FrmField{
             return stripslashes_deep($fields);
         }
 
-        $this->use_cache = false;
-        $results = $this->getAll(array('fi.form_id' => (int) $form_id), 'field_order', $limit);
-        $this->use_cache = true;
+        self::$use_cache = false;
+        $results = self::getAll(array('fi.form_id' => (int) $form_id), 'field_order', $limit);
+        self::$use_cache = true;
 
         if ( 'include' == $inc_sub ) {
             $form_fields = $results;
@@ -250,7 +250,7 @@ class FrmField{
                 if ( 'form' != $field->type || ! isset($field->field_options['form_select']) ) {
                     continue;
                 }
-                $sub_fields = $this->get_all_for_form($field->field_options['form_select']);
+                $sub_fields = self::get_all_for_form($field->field_options['form_select']);
                 if ( ! empty($sub_fields) ) {
                     array_splice($results, $k, 1, $sub_fields);
                 }
@@ -266,9 +266,9 @@ class FrmField{
         return $results;
     }
 
-    function getAll($where=array(), $order_by = '', $limit = '', $blog_id=false){
+    public static function getAll($where=array(), $order_by = '', $limit = '', $blog_id=false){
         $cache_key = maybe_serialize($where) . $order_by .'l'. $limit .'b'. $blog_id;
-        if ( $this->use_cache ) {
+        if ( self::$use_cache ) {
             // make sure old cache doesn't get saved as a transient
             $results = wp_cache_get($cache_key, 'frm_field');
             if ( false !== $results ) {
@@ -302,8 +302,7 @@ class FrmField{
 
         $old_where = $where;
         if ( is_array($where) ) {
-            global $frmdb;
-            $where = $frmdb->get_where_clause_and_values( $where );
+            $where = FrmAppHelper::get_where_clause_and_values( $where );
 
             $query .= $where['where'] . $order_by . $limit;
             $query = $wpdb->prepare($query, $where['values']);
@@ -362,7 +361,7 @@ class FrmField{
         return stripslashes_deep($results);
     }
 
-    function getIds($where = '', $order_by = '', $limit = ''){
+    public static function getIds($where = '', $order_by = '', $limit = ''){
         global $wpdb;
         if ( ! empty($order_by) && ! strpos($order_by, 'ORDER BY') !== false ) {
             $order_by = ' ORDER BY '. $order_by;

@@ -25,7 +25,6 @@ class FrmSettings{
     public $custom_style;
 
     public $pubkey;
-    public $re_theme;
     public $re_lang;
     public $re_msg;
 
@@ -143,7 +142,6 @@ class FrmSettings{
 
     private function fill_recaptcha_settings() {
         $privkey = '';
-        $re_theme = 'red';
         $re_lang = 'en';
 
         if ( ! isset($this->pubkey) ) {
@@ -151,7 +149,6 @@ class FrmSettings{
             $recaptcha_opt = is_multisite() ? get_site_option('recaptcha') : get_option('recaptcha');
             $this->pubkey = isset($recaptcha_opt['pubkey']) ? $recaptcha_opt['pubkey'] : '';
             $privkey = isset($recaptcha_opt['privkey']) ? $recaptcha_opt['privkey'] : $privkey;
-            $re_theme = isset($recaptcha_opt['re_theme']) ? $recaptcha_opt['re_theme'] : $re_theme;
             $re_lang = isset($recaptcha_opt['re_lang']) ? $recaptcha_opt['re_lang'] : $re_lang;
         }
 
@@ -161,10 +158,6 @@ class FrmSettings{
 
         if ( ! isset($this->privkey) ) {
             $this->privkey = $privkey;
-        }
-
-        if ( ! isset($this->re_theme) ) {
-            $this->re_theme = $re_theme;
         }
 
         if ( ! isset($this->re_lang) ) {
@@ -197,7 +190,6 @@ class FrmSettings{
 
         $this->pubkey = trim($params['frm_pubkey']);
         $this->privkey = $params['frm_privkey'];
-        $this->re_theme = $params['frm_re_theme'];
         $this->re_lang = $params['frm_re_lang'];
 
         $this->load_style = $params['frm_load_style'];

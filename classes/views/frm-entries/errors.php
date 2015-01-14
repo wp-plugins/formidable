@@ -44,7 +44,7 @@ if(empty($frm_settings->invalid_msg)){
 
     $show_img = true;
     foreach( $errors as $err_key => $error ){
-        if ( ! is_numeric($err_key) && ($err_key == 'cptch_number' || strpos($err_key, 'field') === 0 || strpos($err_key, 'captcha') === 0 ) ) {
+        if ( ! is_numeric($err_key) && ( $err_key == 'cptch_number' || strpos($err_key, 'field') === 0 ) ) {
             continue;
         }
 
