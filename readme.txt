@@ -15,7 +15,7 @@ There are dozens of form-building plugins out there to create forms, but most ar
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
 
 = New Beta Features =
-Check out the [2.0 beta version](https://downloads.wordpress.org/plugin/formidable.2.0b5.zip "2.0 beta version") now that allows you to style your forms and view your collected submissions. Let us know if you run into any bugs!
+Check out the [2.0 beta version](https://downloads.wordpress.org/plugin/formidable.2.0b7.zip "2.0 beta version") now that allows you to style your forms and view your collected submissions. Let us know if you run into any bugs!
 
 = Features =
 * Save all responses to your WordPress database (even in the free version) for future retrieval, reports, and display in [Formidable Pro](http://formidablepro.com/ "Formidable Pro") Learn more at: http://formidablepro.com
