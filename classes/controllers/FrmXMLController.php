@@ -236,8 +236,21 @@ class FrmXMLController{
                     }
                 break;
                 case 'styles':
+                    // Loop through all exported forms and get their selected style IDs
+                    $form_ids = explode( ',', $args['ids'] );
+                    $style_ids = array();
+                    foreach ( $form_ids as $form_id ) {
+                        $form_data = FrmForm::getOne( $form_id );
+                        $style_ids[] = $form_data->options['custom_style'];
+                        unset( $form_id, $form_data );
+                    }
                     $select = "$table.ID";
                     $where = $wpdb->prepare('post_type=%s', 'frm_styles');
+
+                    // Only export selected styles
+                    if ( ! empty( $style_ids ) ) {
+                        $where .= " AND ID IN (". implode( ',', $style_ids ) .")";
+                    }
                 break;
                 default:
                     $select = "$table.ID";

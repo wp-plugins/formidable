@@ -30,6 +30,10 @@ class FrmEntriesListHelper extends FrmListHelper {
 	    }
 
         $orderby = isset( $_REQUEST['orderby'] ) ? $_REQUEST['orderby'] : $default_orderby;
+        if ( strpos($orderby, 'meta') !== false ) {
+            $order_field = FrmField::getOne(str_replace('meta_', '', $orderby));
+            $orderby .= in_array($order_field->type, array('number', 'scale')) ? ' +0 ' : '';
+        }
 		$order = isset( $_REQUEST['order'] ) ? $_REQUEST['order'] : $default_order;
         $page = $this->get_pagenum();
         $start = isset( $_REQUEST['start'] ) ? $_REQUEST['start'] : (( $page - 1 ) * $per_page);

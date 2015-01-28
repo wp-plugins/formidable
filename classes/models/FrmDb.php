@@ -488,7 +488,7 @@ class FrmDb{
                 $new_notification['post_title']     = __('Email Notification', 'formidable');
                 $new_notification['menu_order']     = $form->id;
                 $new_notification['post_status']    = 'publish';
-                $new_notification['post_content']   = FrmFormActionsHelper::prepare_and_encode( $new_notification['post_content'] );
+                $new_notification['post_content']   = FrmAppHelper::prepare_and_encode( $new_notification['post_content'] );
 
                 $exists = get_posts( array(
                     'name'          => $new_notification['post_name'],
@@ -507,8 +507,10 @@ class FrmDb{
         }
     }
 
+    /*
+    * Migrate post settings to form action
+    */
     private function migrate_to_16_post_to_action( $form, $post_type ) {
-        //migrate posts
         if ( ! isset($form->options['create_post']) || ! $form->options['create_post'] ) {
             return;
         }

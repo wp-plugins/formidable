@@ -423,7 +423,7 @@ function frmFrontFormJS(){
 			if ( !match ) {
 				document.getElementById('frm_field_'+f.HideField+'_container').style.display = 'none';
 				document.getElementById('frm_data_field_'+f.HideField+'_container').innerHTML = '';
-				frmCheckDependent('', f.HideField, 'stop');
+				checkDependentField('', f.HideField, 'stop');
 				return false;
 			}
 		}

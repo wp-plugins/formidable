@@ -62,7 +62,7 @@
 
             <h3><?php _e('reCAPTCHA', 'formidable'); ?> <span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php _e('reCAPTCHA is a free, accessible CAPTCHA service that helps to digitize books while blocking spam on your blog. reCAPTCHA asks commenters to retype two words scanned from a book to prove that they are a human. This verifies that they are not a spambot.', 'formidable') ?>" ></span></h3>
 
-            <p class="howto">reCAPTCHA requires an API key, consisting of a "site" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/admin/create" target="_blank">free reCAPTCHA key</a>.</p>
+            <p class="howto">reCAPTCHA requires an API key, consisting of a "site" and a "private" key. You can sign up for a <a href="https://www.google.com/recaptcha/" target="_blank">free reCAPTCHA key</a>.</p>
 
 			<p><label class="frm_left_label"><?php _e('Site Key', 'formidable') ?></label>
 			<input type="text" name="frm_pubkey" id="frm_pubkey" size="42" value="<?php echo esc_attr($frm_settings->pubkey) ?>" /></p>

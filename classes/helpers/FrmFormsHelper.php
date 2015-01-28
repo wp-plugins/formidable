@@ -70,7 +70,7 @@ class FrmFormsHelper{
         if ( FrmAppHelper::is_admin_page('formidable-entries') && isset($_GET['frm_action']) && in_array($_GET['frm_action'], array('edit', 'show', 'destroy_all')) ) {
             $args['frm_action'] = 'list';
             $args['form'] = 0;
-        }else if ( FrmAppHelper::is_admin_page('formidable') && isset($_GET['frm_action']) && $_GET['frm_action'] == 'new' ) {
+        }else if ( FrmAppHelper::is_admin_page('formidable') && isset($_GET['frm_action']) && in_array($_GET['frm_action'], array('new', 'duplicate')) ) {
             $args['frm_action'] = 'edit';
         }else if(isset($_GET['post'])){
             $args['form'] = 0;

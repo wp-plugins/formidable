@@ -68,7 +68,7 @@ class FrmHooksController{
         add_action('frm_after_create_entry', 'FrmFormActionsController::trigger_create_actions', 20, 2);
 
         // Forms Controller
-        add_action('widgets_init', 'FrmFormsController::register_widgets' ); //.055
+        add_action('widgets_init', 'FrmFormsController::register_widgets' );
         add_filter('frm_content', 'FrmFormsController::filter_content', 10, 3);
         add_filter('frm_replace_content_shortcodes', 'FrmFormsController::replace_content_shortcodes', 20, 3);
         add_action('admin_bar_init', 'FrmFormsController::admin_bar_css' );
@@ -111,7 +111,7 @@ class FrmHooksController{
         add_action('frm_after_duplicate_form', 'FrmFormActionsController::duplicate_form_actions', 20, 3);
 
         // Forms Controller
-        add_action('admin_menu', 'FrmFormsController::menu', 10); //.059
+        add_action('admin_menu', 'FrmFormsController::menu', 10);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head' );
         add_action('frm_after_duplicate_form', 'FrmFormsController::after_duplicate', 10, 2);
 

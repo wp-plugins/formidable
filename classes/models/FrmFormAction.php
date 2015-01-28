@@ -166,13 +166,39 @@ class FrmFormAction {
     }
 
     public function duplicate_form_actions($form_id, $old_id) {
+        if ( $form_id == $old_id ) {
+            // don't duplicate the actions if this is a template getting updated
+            return;
+        }
+
         $this->form_id = $old_id;
         $actions = $this->get_all();
 
         $this->form_id = $form_id;
         foreach ( $actions as $action ) {
             $this->duplicate_one($action, $form_id);
+            unset($action);
         }
+    }
+
+    /* Check if imported action should be created or updated
+    *
+    * Since 2.0
+    *
+    * @param $action array
+    * @return $post_id integer
+    */
+    public function maybe_create_action( $action, $forms ) {
+        if ( isset( $action['ID'] ) && is_numeric( $action['ID'] ) && $forms[$action['menu_order']] == 'updated' ) {
+            // Update action only
+            $action['post_content'] = FrmAppHelper::maybe_json_decode( $action['post_content'] );
+            $post_id = $this->save_settings( $action );
+        } else {
+            // Create action
+            $action['post_content'] = FrmAppHelper::maybe_json_decode($action['post_content']);
+            $post_id = $this->duplicate_one( (object) $action, $action['menu_order']);
+        }
+        return $post_id;
     }
 
     public function duplicate_one($action, $form_id) {
@@ -269,6 +295,7 @@ class FrmFormAction {
             $new_instance['post_name']    = $this->form_id .'_'. $this->id_base .'_'. $this->number;
             $new_instance['menu_order']   = $this->form_id;
             $new_instance['post_status']  = 'publish';
+            $new_instance['post_date'] = isset( $old_instance->post_date ) ? $old_instance->post_date : '';
 
  			$instance = $this->update( $new_instance, $old_instance );
 
@@ -305,7 +332,7 @@ class FrmFormAction {
 	public function save_settings($settings) {
 	    $settings = (array) $settings;
 
-        $settings['post_content'] = FrmFormActionsHelper::prepare_and_encode( $settings['post_content'] );
+        $settings['post_content'] = FrmAppHelper::prepare_and_encode( $settings['post_content'] );
 
 	    if ( empty($settings['ID']) ) {
             unset($settings['ID']);

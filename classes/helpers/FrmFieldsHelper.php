@@ -190,14 +190,12 @@ class FrmFieldsHelper{
         }else{
             foreach ($defaults as $var => $default){
                 $values[$var] = htmlspecialchars(FrmAppHelper::get_param($var, $default));
-                unset($var);
-                unset($default);
+                unset($var, $default);
             }
 
             foreach (array('field_key' => $record->field_key, 'type' => $record->type, 'default_value'=> $record->default_value, 'field_order' => $record->field_order, 'required' => $record->required) as $var => $default){
                 $values[$var] = FrmAppHelper::get_param($var, $default);
-                unset($var);
-                unset($default);
+                unset($var, $default);
             }
 
             $values['form_name'] = ($record->form_id) ? FrmForm::getName( $record->form_id ) : '';
@@ -334,6 +332,9 @@ DEFAULT_HTML;
 
         //replace [id]
         $html = str_replace('[id]', $field_id, $html);
+
+        // set the label for
+        $html = str_replace('field_[key]', $html_id, $html);
 
         //replace [key]
         $html = str_replace('[key]', $field['field_key'], $html);
@@ -832,7 +833,7 @@ DEFAULT_HTML;
     * @since 2.0
     * @return string
     */
-    public static function dynamic_default_values( $tag, $atts = array(), $return_array = false ) {
+    public static function dynamic_default_values( $tag, $atts = array() ) {
         $new_value = '';
         switch ( $tag ) {
             case 'admin_email':
@@ -848,7 +849,7 @@ DEFAULT_HTML;
                 $new_value = FrmAppHelper::site_name();
                 break;
             case 'get':
-                $new_value = self::process_get_shortcode( $atts, $return_array );
+                $new_value = self::process_get_shortcode( $atts );
                 break;
         }
 

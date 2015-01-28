@@ -103,37 +103,4 @@ class FrmFormActionsHelper{
             'limit'     => 0,
         );
     }
-
-    /* Prepare and json_encode post content
-    *
-    * Since 2.0
-    *
-    * @param $post_content array
-    * @return $post_content string ( json encoded array )
-    */
-    public static function prepare_and_encode( $post_content ) {
-
-        //Loop through array to strip slashes and add only the needed ones
-        foreach( $post_content as $key => $val ) {
-            if ( !is_array( $val ) ) {
-                // Strip all slashes so everything is the same, no matter where the value is coming from
-                $val = stripslashes( $val );
-
-                // Add backslashes before double quotes and forward slashes only
-                $post_content[$key] = addcslashes( $val, '"\\/' );
-            }
-            unset( $key, $val );
-        }
-
-        // json_encode the array
-        $post_content = json_encode( $post_content );
-
-	    // add extra slashes for \r\n since WP strips them
-	    $post_content = str_replace( array('\\r', '\\n', '\\u'), array('\\\\r', '\\\\n', '\\\\u'), $post_content );
-
-        // allow for &quot
-	    $post_content = str_replace( '&quot;', '\\"', $post_content );
-
-        return $post_content;
-    }
 }

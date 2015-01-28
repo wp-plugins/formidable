@@ -42,6 +42,8 @@ class FrmEntryMeta{
 		}
         $meta_value = maybe_serialize($values['meta_value']);
 
+        wp_cache_delete( $entry_id, 'frm_entry');
+
         return $wpdb->update( $wpdb->prefix .'frm_item_metas', array( 'meta_value' => $meta_value ), $where_values );
     }
 

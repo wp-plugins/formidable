@@ -28,13 +28,7 @@ class FrmStyle{
     }
 
     function save($settings) {
-        $settings['post_content'] = json_encode($settings['post_content']);
-
-        // add extra slashes for \r\n since WP strips them
-        $settings['post_content'] = str_replace(array('\\r', '\\n', '\\t'), array('\\\\r', '\\\\n', '\\\\t'), $settings['post_content']);
-
-        // allow for &quot and remove extra slashes from '
-        $settings['post_content'] = str_replace( array('&quot;', "\\'"), array('\\"', "'"), $settings['post_content'] );
+        $settings['post_content'] = FrmAppHelper::prepare_and_encode( $settings['post_content'] );
 
 	    if ( empty($settings['ID']) ) {
             unset($settings['ID']);

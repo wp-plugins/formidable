@@ -6,7 +6,7 @@ Requires at least: 3.3.3
 Tested up to: 4.0
 Stable tag: 1.07.11
 
-This WordPress form builder enables you to quickly and easily build forms with a simple drag-and-drop interface and in-place editing. 
+This WordPress form builder enables you to quickly and easily build forms with a simple drag-and-drop interface and in-place editing.
 
 == Description ==
 Quickly and easily build WordPress forms with a simple drag-and-drop interface and in-place editing.

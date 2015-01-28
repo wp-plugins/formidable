@@ -221,7 +221,7 @@ return false;
     * Filter shortcodes in text widgets
     */
     public static function widget_text_filter( $content ) {
-    	$regex = '/\[\s*formidable|display-frm-data|frm-stats|frm-graph|frm-entry-links|formresults|frm-search\s+.*\]/';
+    	$regex = '/\[\s*(formidable|display-frm-data|frm-stats|frm-graph|frm-entry-links|formresults|frm-search)\s+.*\]/';
     	return preg_replace_callback( $regex, 'FrmAppHelper::widget_text_filter_callback', $content );
     }
 

@@ -22,6 +22,7 @@ class FrmXMLHelper{
         $defaults = array(
             'forms' => 0, 'fields' => 0, 'terms' => 0,
             'posts' => 0, 'views' => 0, 'actions' => 0,
+            'styles' => 0,
         );
 
         $imported = array(
@@ -125,6 +126,8 @@ class FrmXMLHelper{
                 $old_id = $form_id = $this_form->id;
                 FrmForm::update($form_id, $form );
                 $imported['updated']['forms']++;
+                // Keep track of whether this specific form was updated or not
+                $imported['form_status'][$form_id] = 'updated';
 
                 $form_fields = FrmField::get_all_for_form($form_id);
                 $old_fields = array();
@@ -140,6 +143,8 @@ class FrmXMLHelper{
                 //form does not exist, so create it
                 if ( $form_id = FrmForm::create( $form ) ) {
                     $imported['imported']['forms']++;
+                    // Keep track of whether this specific form was updated or not
+                    $imported['form_status'][$form_id] = 'imported';
                 }
             }
 
@@ -216,7 +221,6 @@ class FrmXMLHelper{
                 unset($form_fields);
             }
 
-
 		    // Update field ids/keys to new ones
 		    do_action('frm_after_duplicate_form', $form_id, $form, array('old_id' => $old_id));
 
@@ -235,6 +239,7 @@ class FrmXMLHelper{
         $post_types = array(
             'frm_display' => 'views',
             $form_action_type => 'actions',
+            'frm_styles'    => 'styles',
         );
 
         foreach ( $views as $item ) {
@@ -267,11 +272,17 @@ class FrmXMLHelper{
 
             if ( $post['post_type'] == $form_action_type ) {
                 $action_control = FrmFormActionsController::get_form_actions( $post['post_excerpt'] );
-                $post['post_content'] = FrmAppHelper::maybe_json_decode($post['post_content']);
-                $post_id = $action_control->duplicate_one( (object) $post, $post['menu_order']);
+                $post_id = $action_control->maybe_create_action( $post, $imported['form_status'] );
                 unset($action_control);
+            } else if ( $post['post_type'] == 'frm_styles' ) {
+                // Properly encode post content before inserting the post
+                $post['post_content'] = FrmAppHelper::maybe_json_decode( $post['post_content'] );
+                $post['post_content'] = FrmAppHelper::prepare_and_encode( $post['post_content'] );
+
+                // Create/update post now
+                $post_id = wp_insert_post( $post );
             } else {
-                //create post
+                // Create/update post now
                 $post_id = wp_insert_post( $post );
             }
 
@@ -505,6 +516,7 @@ class FrmXMLHelper{
             'items'     => sprintf( _n( '%1$s Entry', '%1$s Entries', $m, 'formidable' ), $m ),
             'views'     => sprintf( _n( '%1$s View', '%1$s Views', $m, 'formidable' ), $m ),
             'posts'     => sprintf( _n( '%1$s Post', '%1$s Posts', $m, 'formidable' ), $m ),
+            'styles'     => sprintf( _n( '%1$s Style', '%1$s Styles', $m, 'formidable' ), $m ),
             'terms'     => sprintf( _n( '%1$s Term', '%1$s Terms', $m, 'formidable' ), $m ),
             'actions'   => sprintf( _n( '%1$s Form Action', '%1$s Form Actions', $m, 'formidable' ), $m ),
         );

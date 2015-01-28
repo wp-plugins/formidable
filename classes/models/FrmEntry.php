@@ -149,21 +149,22 @@ class FrmEntry{
         $new_values['created_at'] = $new_values['updated_at'] = current_time('mysql', 1);
 
         $query_results = $wpdb->insert( $wpdb->prefix .'frm_items', $new_values );
-        if ( $query_results ) {
-            $entry_id = $wpdb->insert_id;
-
-            global $frm_vars;
-            if(!isset($frm_vars['saved_entries']))
-                $frm_vars['saved_entries'] = array();
-            $frm_vars['saved_entries'][] = (int) $entry_id;
-
-            FrmEntryMeta::duplicate_entry_metas($id, $entry_id);
-
-            do_action('frm_after_duplicate_entry', $entry_id, $new_values['form_id']);
-            return $entry_id;
-        } else {
+        if ( ! $query_results ) {
             return false;
         }
+
+        $entry_id = $wpdb->insert_id;
+
+        global $frm_vars;
+        if ( ! isset($frm_vars['saved_entries']) ) {
+            $frm_vars['saved_entries'] = array();
+        }
+        $frm_vars['saved_entries'][] = (int) $entry_id;
+
+        FrmEntryMeta::duplicate_entry_metas($id, $entry_id);
+
+        do_action('frm_after_duplicate_entry', $entry_id, $new_values['form_id'], array('old_id' => $id));
+        return $entry_id;
     }
 
     public static function update( $id, $values ){
@@ -204,6 +205,7 @@ class FrmEntry{
         $query_results = $wpdb->update( $wpdb->prefix .'frm_items', $new_values, compact('id') );
 
         if ( $query_results ) {
+            wp_cache_delete( $id .'_nometa', 'frm_entry');
             wp_cache_delete( $id, 'frm_entry');
         }
 
@@ -233,6 +235,7 @@ class FrmEntry{
 
         do_action('frm_before_destroy_entry', $id, $entry);
 
+        wp_cache_delete( $id .'_nometa', 'frm_entry');
         wp_cache_delete( $id, 'frm_entry');
         $wpdb->query('DELETE FROM ' . $wpdb->prefix .'frm_item_metas WHERE item_id=' . $id);
         $result = $wpdb->query('DELETE FROM ' . $wpdb->prefix .'frm_items WHERE id=' . $id);
@@ -340,7 +343,9 @@ class FrmEntry{
 
             if ( preg_match( '/ meta_([0-9]+)/', $order_by, $order_matches ) ) {
     		    // sort by a requested field
-    		    $query = str_replace( " FROM {$wpdb->prefix}frm_items ", ", (SELECT meta_value FROM {$wpdb->prefix}frm_item_metas WHERE field_id = {$order_matches[1]} AND item_id = it.id) as meta_{$order_matches[1]} FROM {$wpdb->prefix}frm_items ", $query );
+                $new_query = ', (SELECT meta_value FROM '. $wpdb->prefix .'frm_item_metas WHERE field_id = '. $order_matches[1] .' AND item_id = it.id) as meta_'. $order_matches[1] .' FROM '. $wpdb->prefix .'frm_items ';
+    		    $query = str_replace( ' FROM '. $wpdb->prefix .'frm_items ', $new_query, $query );
+                unset($order_field);
 		    }
 
             $entries = $wpdb->get_results($query, OBJECT_K);

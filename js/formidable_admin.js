@@ -1230,9 +1230,7 @@ function frmAdminBuildJS(){
 			type:'POST',url:ajaxurl,
 			data:{action:'frm_add_posttax_row', form_id:id, post_type:post_type, tax_key:tax_key, action_key:key},
 			success:function(html){
-				jQuery(document.getElementById('frm_posttax_rows')).append(html).find('.frm_exclude_cat_list').each(function(){
-					showLevCheck(jQuery(this));
-				});
+				jQuery(document.getElementById('frm_posttax_rows')).append(html);
 			}
 		});
 	}
@@ -1291,29 +1289,8 @@ function frmAdminBuildJS(){
 			success:function(html){
 				var $tax = jQuery(document.getElementById('frm_posttax_'+tax_key));
 				$tax.replaceWith(html);
-				if($tax.find('.frm_exclude_cat_list').length){
-					var cat = $tax.find('.frm_exclude_cat_list');
-					showLevCheck(cat);
-				}
 			}
 		});
-	}
-
-	function showLevCheck(cat){
-		var frm_lev = cat.find('.frm_catlevel_2');
-		if(frm_lev.length){
-			cat.find('.check_lev1_label, .check_lev2_label').show();
-		}
-		
-		frm_lev = cat.find('.frm_catlevel_3');
-		if(frm_lev.length){
-			cat.find('.check_lev3_label').show();
-		}
-		
-		frm_lev = cat.find('.frm_catlevel_4');
-		if(frm_lev.length){
-			cat.find('.check_lev4_label').show();
-		}
 	}
 
 	function toggleCfOpts(){
@@ -1378,7 +1355,7 @@ function frmAdminBuildJS(){
 			type:'POST',url:ajaxurl,
 			data:{action:'frm_get_date_field_select',form_id:form_id},
 			success:function(html){
-				jQuery(document.getElementById('date_select_container')).html(html).show();
+				jQuery(document.getElementById('date_select_container')).html(html);
 			}
 		});
 	}
@@ -1905,7 +1882,10 @@ function frmAdminBuildJS(){
 			//Warning when user selects "Do not store entries ..."
 			jQuery(document.getElementById('no_save')).change(function(){
 				if( this.checked ) {
-					alert(frm_admin_js.no_save_warning);
+                    if ( confirm(frm_admin_js.no_save_warning) !== true ) {
+                        // Uncheck box if user hits "Cancel"
+                        jQuery(this).attr('checked', false);
+                    }
 				}
 			});
 
@@ -1981,12 +1961,6 @@ function frmAdminBuildJS(){
 					jQuery('.edit_action_message_box').fadeOut('slow');//Hide On Update message box
 				}
 			});
-
-			if(jQuery('.frm_exclude_cat_list .frm_catlevel_2').length){
-				jQuery('.frm_exclude_cat_list').each(function(){
-					showLevCheck($(this));
-				});
-			}
 		},
 		
 		panelInit: function(){

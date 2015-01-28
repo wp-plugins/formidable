@@ -1661,4 +1661,16 @@ html[xmlns] .frm_clearfix{
     }
 
 }
+
+@media only screen and (max-width: 500px) {
+    .frm_form_field.frm_two_col .frm_radio,
+    .frm_form_field.frm_two_col .frm_checkbox,
+    .frm_form_field.frm_three_col .frm_radio,
+    .frm_form_field.frm_three_col .frm_checkbox{
+        width: auto;
+        margin-right: 0;
+        float: none;
+        display:block;
+    }
+}
 <?php echo $defaults['custom_css']; ?>
