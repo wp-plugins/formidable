@@ -3,7 +3,7 @@ Contributors: sswells, srwells, jamie.wahlin
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.3.3
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: 1.07.11
 
 Beautiful forms in 60 seconds. The WordPress form builder that enables you to create forms with a simple drag-and-drop interface and in-place editing.
@@ -40,7 +40,8 @@ Check out the [2.0 beta version](https://downloads.wordpress.org/plugin/formidab
 * Send forms to the trash
 * Generate shortcodes with an advanced shortcode UI
 
-= [Pro Features](http://formidablepro.com/ "Pro Features") =
+= Pro Features =
+* Learn more about [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
 * Access even more field types: Section headings (repeatable in 2.0), page breaks, file upload, rich text, number, phone number, date, time, scale, dynamic fields populated from other forms, hidden field, user ID field, password, HTML, and tags
 * Conditionally send your email notifications based on values in your form
 * Create multiple styling templates and assign them to any of your forms, and add instant Bootstrap styling
@@ -61,10 +62,11 @@ Learn more at: http://formidablepro.com
 == Installation ==
 1. Go to your Plugins -> Add New page in your WordPress admin
 2. Search for 'Formidable'
-3. Click the 'Install
-2. Activate the plugin through the 'Plugins' menu
-3. Go to the Formidable menu and create a new custom form or use the existing Contact Form template.
-4. Use shortcode [formidable id=x] in pages, posts, or text widgets. Alternatively use `<?php echo FrmFormsController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
+3. Click the 'Install Now' button
+4. Activate the plugin through the 'Plugins' menu
+5. Go to the Formidable menu
+6. Click the 'Add New' button to create a new form
+7. Insert your form with the shortcode [formidable id=x] in pages, posts, or text widgets. Alternatively use `<?php echo FrmFormsController::show_form(2, $key = '', $title=true, $description=true); ?>` in your template
 
 == Screenshots ==
 1. Create beautiful WordPress forms without any code.
