@@ -14,7 +14,7 @@ Build WordPress forms the fast and simple way with a simple drag-and-drop interf
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
 
 = New Beta Features =
-Check out the [2.0 beta version](https://downloads.wordpress.org/plugin/formidable.2.0rc1.zip "2.0 beta version") now that allows you to style your forms and view your collected submissions. Let us know if you run into any bugs!
+Check out the [2.0 beta version](https://downloads.wordpress.org/plugin/formidable.2.0rc3.zip "2.0 beta version") now that allows you to style your forms and view your collected submissions. Let us know if you run into any bugs!
 
 = Features =
 * Create forms with 5 field types: text, paragraph text, radio, checkbox, and dropdown
