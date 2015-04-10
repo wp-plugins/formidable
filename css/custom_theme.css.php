@@ -1,6 +1,6 @@
 <?php
 if ( ! isset($saving) ) {
-    header("Content-type: text/css");
+    header( 'Content-type: text/css' );
 
     if ( isset($css) && $css ) {
         echo $css;
@@ -16,6 +16,30 @@ $styles = $frm_style->get_all();
 $default_style = $frm_style->get_default_style($styles);
 $defaults = $default_style->post_content;
 ?>
+
+.frm_hidden,
+.with_frm_style .frm_button.frm_hidden{
+    display:none;
+}
+
+.frm_transparent{
+	color:transparent;
+}
+
+.input[type=file].frm_transparent:focus, .with_frm_style input[type=file]{
+	background-color:transparent;
+	border:none;
+	outline:none;
+	box-shadow:none;
+}
+
+.frm_preview_page:before{
+    content:normal !important;
+}
+
+.frm_preview_page{
+    padding:25px;
+}
 
 .with_frm_style .form-field.frm_col_field{
     clear:none;
@@ -42,9 +66,7 @@ $defaults = $default_style->post_content;
 }
 
 .with_frm_style .frm_left_container label.frm_primary_label{
-    display:inline;
     float:left;
-    margin-right:10px;
 }
 
 .with_frm_style .frm_right_container label.frm_primary_label,
@@ -58,6 +80,10 @@ $defaults = $default_style->post_content;
 .with_frm_style .frm_pos_none,
 .frm_none_container label.frm_primary_label{
     display:none;
+}
+
+.with_frm_style .frm_section_heading.frm_hide_section{
+	margin-top:0px !important;
 }
 
 .with_frm_style .frm_hidden_container label.frm_primary_label,
@@ -74,7 +100,6 @@ $defaults = $default_style->post_content;
 
 .with_frm_style .frm_scale input{
     display:block;
-    margin-bottom:5px;
 }
 
 .with_frm_style select[multiple="multiple"]{
@@ -87,11 +112,6 @@ $defaults = $default_style->post_content;
 .with_frm_style .frm_catlevel_4,
 .with_frm_style .frm_catlevel_5{
     margin-left:18px;
-}
-
-.frm_other_input{
-    width:auto;
-    margin-left:5px;
 }
 
 .with_frm_style .wp-editor-container{
@@ -121,7 +141,8 @@ $defaults = $default_style->post_content;
 .with_frm_style .frm_button{
     text-decoration:none;
     border:1px solid #eee;
-    padding:5px;
+	padding:5px;
+	display:inline-block;
 }
 
 .with_frm_style .frm_submit{
@@ -196,6 +217,10 @@ foreach ( $styles as $style ) {
 
 .frm_ajax_loading{
     visibility:hidden;
+}
+
+.frm_ajax_loading.frm_loading_now{
+    visibility:visible !important;
 }
 
 .frm_form_submit_style{
@@ -343,8 +368,17 @@ table.form_results.with_frm_style tr.frm_odd,
 }
 
 .frm_toggle_container ul{
-    margin-left:0;
+	margin:5px 0;
     padding-left:0;
+	list-style-type:none;
+}
+
+.frm_toggle_container .frm_month_heading{
+	text-indent:15px;
+}
+
+.frm_toggle_container .frm_month_listing{
+	margin-left:40px;
 }
 
 #frm_loading{
@@ -599,6 +633,7 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
     clear:both;
 }
 
+.frm_form_field.frm_half,
 .frm_form_field.frm_third,
 .frm_form_field.frm_fourth,
 .frm_form_field.frm_fifth,
@@ -624,7 +659,8 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_first_sixth,
 .frm_form_field.frm_first_seventh,
 .frm_form_field.frm_first_eighth,
-.frm_form_field.frm_first_inline{
+.frm_form_field.frm_first_inline,
+.frm_form_field.frm_first{
     clear:left;
     float:left;
 }
@@ -643,7 +679,8 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_last_sixth,
 .frm_form_field.frm_last_seventh,
 .frm_form_field.frm_last_eighth,
-.frm_form_field.frm_last_inline{
+.frm_form_field.frm_last_inline,
+.frm_form_field.frm_last{
     clear:none;
     float:right;
 }
@@ -651,12 +688,14 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_left_half,
 .frm_form_field.frm_right_half,
 .frm_form_field.frm_first_half,
-.frm_form_field.frm_last_half{
+.frm_form_field.frm_last_half,
+.frm_form_field.frm_half{
     width:48%;
 }
 
 .frm_form_field.frm_left_half,
-.frm_form_field.frm_first_half{
+.frm_form_field.frm_first_half,
+.frm_form_field.frm_half.frm_first{
     margin-right:4%;
 }
 
@@ -667,7 +706,8 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_first_half.frm_left_container .frm_primary_label,
 .frm_form_field.frm_last_half.frm_left_container .frm_primary_label,
 .frm_form_field.frm_first_half.frm_right_container .frm_primary_label,
-.frm_form_field.frm_last_half.frm_right_container .frm_primary_label{
+.frm_form_field.frm_last_half.frm_right_container .frm_primary_label,
+.frm_form_field.frm_half.frm_right_container .frm_primary_label{
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
     box-sizing:border-box;
@@ -679,24 +719,17 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_left_half.frm_left_container .frm_primary_label,
 .frm_form_field.frm_right_half.frm_left_container .frm_primary_label,
 .frm_form_field.frm_first_half.frm_left_container .frm_primary_label,
-.frm_form_field.frm_last_half.frm_left_container .frm_primary_label{
+.frm_form_field.frm_last_half.frm_left_container .frm_primary_label,
+.frm_form_field.frm_half.frm_left_container .frm_primary_label{
     padding-right:10px;
 }
 
 .frm_form_field.frm_left_half.frm_right_container .frm_primary_label,
 .frm_form_field.frm_right_half.frm_right_container .frm_primary_label,
 .frm_form_field.frm_first_half.frm_right_container .frm_primary_label,
-.frm_form_field.frm_last_half.frm_right_container .frm_primary_label{
+.frm_form_field.frm_last_half.frm_right_container .frm_primary_label,
+.frm_form_field.frm_half.frm_right_container .frm_primary_label{
     padding-left:10px;
-}
-
-.frm_form_field.frm_left_container input,
-.frm_form_field.frm_left_container select,
-.frm_form_field.frm_left_container textarea,
-.frm_form_field.frm_right_container input,
-.frm_form_field.frm_right_container select,
-.frm_form_field.frm_right_container textarea{
-    max-width:75%;
 }
 
 .frm_form_field.frm_left_third,
@@ -710,7 +743,8 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_left_two_thirds,
 .frm_form_field.frm_right_two_thirds,
 .frm_form_field.frm_first_two_thirds,
-.frm_form_field.frm_last_two_thirds{
+.frm_form_field.frm_last_two_thirds,
+.frm_form_field.frm_two_thirds{
     width:65%;
 }
 
@@ -718,7 +752,8 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_first_third,
 .frm_form_field.frm_third,
 .frm_form_field.frm_left_two_thirds,
-.frm_form_field.frm_first_two_thirds{
+.frm_form_field.frm_first_two_thirds,
+.frm_form_field.frm_two_thirds{
     margin-right:5%;
 }
 
@@ -797,9 +832,13 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
     margin-right:4%;
 }
 
+.frm_form_field.frm_last{
+    margin-right:0;
+}
+
 .frm_full,
 .frm_full .wp-editor-wrap,
-.frm_full input:not([type='checkbox']):not([type='radio']),
+.frm_full input:not([type='checkbox']):not([type='radio']):not([type='button']),
 .frm_full select,
 .frm_full textarea{
     width:100% !important;
@@ -830,8 +869,8 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
     border-right:none;
 }
 
-.frm_grid,
-.frm_grid_odd{
+.with_frm_style .frm_grid,
+.with_frm_style .frm_grid_odd{
     border-top:none;
 }
 
@@ -1022,29 +1061,29 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
     margin-top:20px;
 }
 
+.with_frm_style .frm_repeat_inline{
+	clear:both;
+}
+
 .frm_form_field .frm_repeat_sec .frm_add_form_row{
     opacity:0;
 	*visibility:visible;
 	-moz-transition: opacity .15s ease-in-out;
 	-webkit-transition: opacity .15s ease-in-out;
 	transition: opacity .15s ease-in-out;
+    pointer-events:none;
 }
 
-.frm_form_field .frm_repeat_sec:last-child .frm_add_form_row{
+.frm_section_heading div.frm_repeat_sec:last-child .frm_add_form_row{
     opacity:100;
-}
-
-.frm_form_field .frm_repeat_sec:first-of-type .frm_remove_form_row,
-.frm_form_field .frm_repeat_grid:first-of-type .frm_remove_form_row,
-.frm_form_field .frm_repeat_inline:first-of-type .frm_remove_form_row{
-    display:none;
+    pointer-events:auto;
 }
 
 .frm_form_field .frm_repeat_grid .frm_form_field label.frm_primary_label{
     display:none !important;
 }
 
-.frm_form_field .frm_repeat_grid:first-of-type .frm_form_field label.frm_primary_label{
+.frm_form_field .frm_repeat_grid.frm_first_repeat .frm_form_field label.frm_primary_label{
     display:inherit !important;
 }
 
@@ -1125,14 +1164,20 @@ table.frmcal-calendar .frmcal-today .frmcal_date{
 .frm_form_field.frm_total input,
 .frm_form_field.frm_total textarea{
     opacity:1;
-    background-color:transparent;
-    border:none;
+    background-color:transparent !important;
+    border:none !important;
     font-weight:bold;
     -moz-box-shadow:none;
     -webkit-box-shadow:none;
     box-shadow:none !important;
     display:inline;
-    width:auto;
+    width:auto !important;
+	-moz-appearance:textfield;
+}
+
+.frm_form_field.frm_total input::-webkit-outer-spin-button,
+.frm_form_field.frm_total input::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
 }
 
 .frm_form_field.frm_total input:focus,
@@ -1614,6 +1659,7 @@ html[xmlns] .frm_clearfix{
 }
 
 @media only screen and (max-width: 600px) {
+	.frm_form_field.frm_half,
     .frm_form_field.frm_left_half,
     .frm_form_field.frm_right_half,
     .frm_form_field.frm_first_half,
@@ -1622,7 +1668,8 @@ html[xmlns] .frm_clearfix{
     .frm_form_field.frm_third,
     .frm_form_field.frm_last_third,
     .frm_form_field.frm_first_two_thirds,
-    .frm_form_field.frm_last_two_thirds{
+	.frm_form_field.frm_last_two_thirds,
+	.frm_form_field.frm_two_thirds{
         width:100%;
         margin-left:0;
         margin-right:0;
@@ -1637,7 +1684,8 @@ html[xmlns] .frm_clearfix{
         width:48%;
     }
 
-    .frm_form_field.frm_first_fourth + .frm_form_field.frm_fourth{
+	.frm_form_field.frm_first_fourth + .frm_form_field.frm_fourth,
+	.frm_form_field.frm_first.frm_fourth + .frm_form_field.frm_fourth{
         margin-right:0;
     }
 
@@ -1673,4 +1721,5 @@ html[xmlns] .frm_clearfix{
         display:block;
     }
 }
-<?php echo $defaults['custom_css']; ?>
+<?php
+echo $defaults['custom_css'];

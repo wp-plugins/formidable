@@ -1,21 +1,20 @@
-
 <?php
 
-if ( !$item_ids )
+if ( ! $item_ids ) {
     return;
+}
 
 global $wp_query;
 $wp_query->in_the_loop = true; // Fake being in the loop.
 
 // fetch 20 posts at a time rather than loading the entire table into memory
 while ( $next_posts = array_splice( $item_ids, 0, 20 ) ) {
-$where = 'WHERE ID IN (' . join( ',', $next_posts ) . ')';
-$posts = $wpdb->get_results( "SELECT * FROM {$wpdb->posts} $where" );
+	$posts = FrmDb::get_results( $wpdb->posts, array( 'ID' => $next_posts) );
 
-// Begin Loop
-foreach ( $posts as $post ) {
-	setup_postdata( $post );
-	$is_sticky = is_sticky( $post->ID ) ? 1 : 0;
+	// Begin Loop
+	foreach ( $posts as $post ) {
+		setup_postdata( $post );
+		$is_sticky = is_sticky( $post->ID ) ? 1 : 0;
 ?>
 	<view>
 		<title><?php echo apply_filters( 'the_title_rss', $post->post_title ); ?></title>
@@ -39,10 +38,12 @@ foreach ( $posts as $post ) {
 <?php	if ( $post->post_type == 'attachment' ) : ?>
 		<attachment_url><?php echo wp_get_attachment_url( $post->ID ); ?></attachment_url>
 <?php 	endif; ?>
-<?php	$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );
+<?php
+        $postmeta = FrmDb::get_results( $wpdb->postmeta, array( 'post_id' => $post->ID) );
 		foreach ( $postmeta as $meta ) :
-			if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) )
+			if ( apply_filters( 'wxr_export_skip_postmeta', false, $meta->meta_key, $meta ) ) {
 				continue;
+			}
 		?>
 		<postmeta>
 			<meta_key><?php echo $meta->meta_key; ?></meta_key>
@@ -50,32 +51,42 @@ foreach ( $posts as $post ) {
 		</postmeta>
 <?php	endforeach;
 
-$taxonomies = get_object_taxonomies( $post->post_type );
-if ( !empty( $taxonomies ) ){
-    $terms = wp_get_object_terms( $post->ID, $taxonomies );
+		$taxonomies = get_object_taxonomies( $post->post_type );
+		if ( ! empty( $taxonomies ) ) {
+			$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
-    foreach ( (array) $terms as $term ) {
-	    echo "\t\t<category domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . FrmXMLHelper::cdata( $term->name ) . "</category>\n";
-    }
-} ?>
+			foreach ( (array) $terms as $term ) {
+				echo "\t\t<category domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . FrmXMLHelper::cdata( $term->name ) . "</category>\n";
+			}
+		} ?>
 	</view>
 <?php
-}
+	}
 }
 
-if ( empty( $taxonomies ) )
+if ( empty( $taxonomies ) ) {
     return;
+}
 
 global $frm_inc_tax;
-if(empty($frm_inc_tax))
-   $frm_inc_tax = array();
+if ( empty( $frm_inc_tax ) ) {
+	$frm_inc_tax = array();
+}
 
 foreach ( (array) $terms as $term ) {
-    if(in_array($term->term_id, $frm_inc_tax))
+	if ( in_array( $term->term_id, $frm_inc_tax ) ) {
         return;
+	}
+
     $frm_inc_tax[] = $term->term_id;
     $label = ($term->taxonomy == 'category' || $term->taxonomy == 'tag') ? $term->taxonomy : 'term'; ?>
-	<term><term_id><?php echo $term->term_id ?></term_id><term_taxonomy><?php echo $term->taxonomy; ?></term_taxonomy><?php if(!empty($term->name)){ echo '<term_name>' . FrmXMLHelper::cdata( $term->name ) . '</term_name>';} ?><?php if(!empty($term->description)){ ?><term_description><?php echo FrmXMLHelper::cdata( $term->description ) ?></term_description><?php } ?><term_slug><?php echo $term->slug; ?></term_slug></term>
+	<term><term_id><?php echo $term->term_id ?></term_id><term_taxonomy><?php echo $term->taxonomy; ?></term_taxonomy><?php
+    if ( ! empty( $term->name ) ) {
+        echo '<term_name>' . FrmXMLHelper::cdata( $term->name ) . '</term_name>';
+    }
+    if ( ! empty( $term->description ) ) {
+    ?><term_description><?php echo FrmXMLHelper::cdata( $term->description ) ?></term_description><?php
+    }
+    ?><term_slug><?php echo $term->slug; ?></term_slug></term>
 <?php
 }
-?>

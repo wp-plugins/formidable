@@ -3,45 +3,34 @@ Contributors: sswells, srwells, jamie.wahlin
 Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.3.3
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: 1.07.11
 
 Beautiful forms in 60 seconds. The WordPress form builder that enables you to create forms with a simple drag-and-drop interface and in-place editing.
 
 == Description ==
-Build WordPress forms the fast and simple way with a simple drag-and-drop interface (and a visual form styler in version 2.0). Create custom Formidable forms or generate forms from a template.
+Build WordPress forms the fast and simple way with a simple drag-and-drop interface (and a visual form styler in version 2.0). Create custom Formidable forms or generate them from a template.
 
 [View Documentation](http://formidablepro.com/knowledgebase/ "View Documentation")
 
-= New Beta Features =
-Check out the [2.0 beta version](https://downloads.wordpress.org/plugin/formidable.2.0rc9.zip "2.0 beta version") now that allows you to style your forms and view your collected submissions. Let us know if you run into any bugs!
-
 = Features =
-* Create forms with 5 field types: text, paragraph text, radio, checkbox, and dropdown
+* Create forms with 7 field types: text, email, url, paragraph text, radio, checkbox, and dropdown
 * Create forms from existing templates or add your own. A contact form template is included.
-* Send an email notification to one or more email addresses, defaulting to the admin email in your WordPress settings
-* Customize the HTML in your form for any layout you would like, or use our CSS classes to arrange your fields
-* Save all responses to your WordPress database (but without a UI to view them)
-* Integrate with reCAPTCHA and Akismet for Spam control
-* Use placeholder default values in form fields that clear when clicked
-* Direct links available for previews and emailing surveys with and without integration with your theme
-* Track the pages visited and include them in your email notifications
-* Change the name on the Formidable menu to anything you would like
-* Insert your forms on a page, post, or widget using a shortcode [formidable id=x]
-* Support for bugs. We want it to be perfect!
-
-= Version 2.0 Features =
-* Insert Email and URL fields in your forms
-* Integrate with the one-click reCaptcha
-* Send multiple emails, including an autoresponder to the form submitter
+* Send unlimited email notifications, including autoresponders to the form submitter
 * Create a single styling template using our visual form styler
 * View form submissions from the back-end
 * Import and export forms with XML
 * Send forms to the trash
 * Generate shortcodes with an advanced shortcode UI
+* Customize the HTML in your form for any layout you would like, or use our CSS classes to arrange your fields
+* Integrate with the one-click reCAPTCHA and Akismet for Spam control
+* Use placeholder default values in form fields that clear when clicked
+* Direct links available for previews and emailing surveys with and without integration with your theme
+* Change the name on the Formidable menu to anything you would like
+* Insert your forms on a page, post, or widget using a shortcode [formidable id=x]
+* Support for bugs. We want it to be perfect!
 
-= Pro Features =
-* Learn more about [Formidable Pro](http://formidablepro.com/ "Formidable Pro")
+= [Pro Features](http://formidablepro.com/ "Pro Features") =
 * Access even more field types: Section headings (repeatable in 2.0), page breaks, file upload, rich text, number, phone number, date, time, scale, dynamic fields populated from other forms, hidden field, user ID field, password, HTML, and tags
 * Conditionally send your email notifications based on values in your form
 * Create multiple styling templates and assign them to any of your forms, and add instant Bootstrap styling
@@ -96,17 +85,27 @@ A. The field and form names and descriptions are all changed with in-place edit.
 
 A. Try clearing your browser cache. As plugin modifications are made, frequent javascript and stylesheet changes are also made. However, the previous versions may be cached so you aren't using the modified files. After clearing your cache and you're still having issues, please let us know.
 
-[See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Pro FAQs")
+[See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Form FAQs")
 
 == Changelog ==
 = 2.0 =
 * Move visual form styler to free version
 * Added multiple emails to free version
 * Added BCC, CC, and reply to options to emails
+* Replaced the reCaptcha with the new no-captcha recaptcha
 * Allow multiple roles to be selected for the permissions on the global settings page
 * Updated the UI
 * Added a trash can for forms as well as draft forms
+* Extra security with sanitizing output and prepare database queries extra just to be sure
+* Switch to frm_first frm_last frm_half classes for more flexibility
+* Added more responsiveness to the styling classes
 * Change the field width option from characters to pixels
+* Change the user browser info into a more easily readable format, and include it in the lite version
+* Add (hidden) legend tag for accessibility
+* Fix preview page with 2015 theme
+* Reduce duplicate entry check to 1 minute
+* Remove a bunch of upgrade messages in the lite version
+* Reduce size of indexed db columns for utf8mb4 in WordPress 4.2
 * Pro: Added multiple form styling templates, more styling options, and updated the default styling
 * Pro: Added repeatable fields and embedded forms
 * Pro: Created form actions and consolidated notifications and add-ons
@@ -115,7 +114,38 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Pro: Added read-only radio and check box fields
 * Pro: View pagination will automatically take on Genesis theme styling
 * Pro: Entire sections can be moved and duplicated
-* Lots of other small features and bug fixes. Too many little features to list!
+* Pro: Add frm_repeat_start_rows filter to allow the form to start with multiple rows in a repeating section
+* Pro: Make the query work for custom code returning a string query on the frm_where_filter hook for reverse compatibility
+* Pro: Escape all quotes in CSV
+* Pro: Don't require dynamic fields with no options
+* Pro: Remove stray div in the calendar view
+* Pro: Remove 'no files selected' text if files are selected
+* Pro: Add decimal option to calculations
+* Pro: Add starts with, ends with, and group by options in View filters
+* Pro: Add IP option to view filters
+* Pro: Added entry ID to view order options
+* Pro: Added hooks: frm_selectable_dates, frm_main_feedback, frm_allowed_times, frm_view_order, frm_csv_headers, frm_map_csv_field
+* Pro: Allow min or max in the graph shortcode to be equal to 0
+* Pro: Keep users on current page when they click "Save Draft"
+* Pro: Add pending for post status options in the post settings
+* Pro: Include JS with form when editing in place
+* Pro: Fix displaying stats accuracy with partial stars
+* Pro: Enqueued scripts right before they are printed for easier integration with more popup plugins
+* Pro: Allow slashes in Phone Number Format option
+* Pro: Allow default templates to be deleted
+* Pro: Reduce the baseline memory load
+* Pro: Load the form styling on view pages when set to only load styling on applicable pages
+* Pro: Change deletelink so it deletes with ajax
+* Pro: Add [user_role] shortcode for current user's role 
+* Pro: Add read-only option to Dynamic fields
+* Pro: Add single row and multiple row options to Dynamic Radio and Checkbox fields
+* Pro: Allow arrays in View filters
+* Pro: Allow drafts to be searched with the frm-search form
+* Pro: Fix sql error when searching by Hebrew characters
+* Pro: Allow the use of field keys in the frm-stats shortcode
+* Pro: Force tooltip wrapping in graphs
+* Pro: Improve frm_total class for number fields
+* Lots of other small features, bug fixes, and code cleanup. Too many little features to list!
 
 = 1.07.12 =
 * Add a bunch more caching

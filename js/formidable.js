@@ -32,27 +32,74 @@ function frmFrontFormJS(){
 	
 	function toggleSection(){
 		/*jshint validthis:true */
-		jQuery(this).next('.frm_toggle_container').slideToggle('fast');
+		jQuery(this).parent().children('.frm_toggle_container').slideToggle('fast');
 		jQuery(this).toggleClass('active').children('.ui-icon-triangle-1-e, .ui-icon-triangle-1-s')
 			.toggleClass('ui-icon-triangle-1-s ui-icon-triangle-1-e');
 	}
-    
-    //Show "Other" text box when item is checked
-	function showOtherText(){
+
+	// Remove the frm_transparent class from a single file upload field when it changes
+	// Hide the old file when a new file is uploaded
+	function showFileUploadText(){
 		/*jshint validthis:true */
-        if ( this.checked ) {
-            var type = this.type;
-            
-            if ( type == 'radio' ) {
-                jQuery(this).closest('.frm_radio').children('.frm_other_input').removeClass('frm_pos_none');
-                jQuery(this).closest('.frm_radio').siblings().children('.frm_other_input')
-                	.addClass('frm_pos_none').val('');
-            } else if ( type == 'checkbox' ) {
-                jQuery(this).closest('.frm_checkbox').children('.frm_other_input').removeClass('frm_pos_none');                
+		this.className = this.className.replace( 'frm_transparent', '');
+		this.parentNode.getElementsByTagName('a')[0].className += ' frm_hidden';
+	}
+
+    // Show "Other" text box when Other item is checked/selected
+    // Hide and clear text box when item is unchecked/unselected
+	function showOtherText(){
+        /*jshint validthis:true */
+        var type = this.type;
+        var other = false;
+        var select = false;
+
+        // Dropdowns
+        if ( type == 'select-one' ) {
+            select = true;
+            var curOpt = this.options[this.selectedIndex];
+            if ( curOpt.className == 'frm_other_trigger' ) {
+                other = true;
             }
-        } else {
-            //For checkboxes only
-            jQuery(this).closest('.frm_checkbox').children('.frm_other_input').addClass('frm_pos_none').val('');
+        } else if ( type == 'select-multiple' ) {
+            select = true;
+            var allOpts = this.options;
+            other = false;
+            for ( var i = 0; i < allOpts.length; i++ ) {
+                if ( allOpts[i].className == 'frm_other_trigger' ) {
+                    if ( allOpts[i].selected ) {
+                        other = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if ( select ) {
+			var otherField = jQuery(this).parent().children('.frm_other_input');
+
+            if ( other ) {
+                // Remove frm_pos_none
+                otherField[0].className = otherField[0].className.replace( 'frm_pos_none', '' );
+            } else {
+                // Add frm_pos_none
+                if ( otherField[0].className.indexOf( 'frm_pos_none' ) < 1 ) {
+                    otherField[0].className = otherField[0].className + ' frm_pos_none';
+                }
+                otherField[0].value = '';
+            }
+
+        // Radio
+        } else if ( type == 'radio' ) {
+            jQuery(this).closest('.frm_radio').children('.frm_other_input').removeClass('frm_pos_none');
+            jQuery(this).closest('.frm_radio').siblings().children('.frm_other_input')
+            .addClass('frm_pos_none').val('');
+            
+        // Checkboxes
+        } else if ( type == 'checkbox' ) {
+            if ( this.checked ) {
+                jQuery(this).closest('.frm_checkbox').children('.frm_other_input').removeClass('frm_pos_none'); 
+            } else {
+                jQuery(this).closest('.frm_checkbox').children('.frm_other_input').addClass('frm_pos_none').val('');
+            }
         }
 	}
 
@@ -68,15 +115,16 @@ function frmFrontFormJS(){
 			// this is a repeatable section with name: item_meta[370][0][414]
 			field_id = nameParts[2].replace('[', '');
 		}
-		checkDependentField('und', field_id);
+
+		checkDependentField('und', field_id, null, jQuery(this));
 		doCalculation(e, field_id);
 	}
 	
-	function checkDependentField(selected, field_id, rec){
+	function checkDependentField(selected, field_id, rec, parentField, reset){
 		if(typeof(__FRMRULES) == 'undefined'){
 			return;
 		}
-		
+
 		var all_rules=__FRMRULES;
 		var rules = all_rules[field_id];
 		if ( typeof rules =='undefined'){
@@ -88,219 +136,273 @@ function frmFrontFormJS(){
 			rec = 'go';
 		}
 
-        show_fields = []; // reset this variable after each click
+        if ( reset != 'persist' ) {
+            show_fields = []; // reset this variable after each click
+        }
 		var this_opts = [];
 		for ( var i = 0, l = rules.length; i < l; i++ ) {
-		    var rule = rules[i];
-		    if ( typeof rule != 'undefined' ) {
-		        for ( var j = 0, rcl = rule.Conditions.length; j < rcl; j++ ) {
+            var rule = rules[i];
+            if ( typeof rule != 'undefined' ) {
+                for ( var j = 0, rcl = rule.Conditions.length; j < rcl; j++ ) {
 					var c = rule.Conditions[j];
 					c.HideField = rule.Setting.FieldName;
 					c.MatchType = rule.MatchType;
 					c.Show = rule.Show;
-		            this_opts.push(c);
-		        }
-		    }
-		}
-		
+                    this_opts.push(c);
+                }
+            }
+        }
+
 		var len = this_opts.length;
 		for ( i = 0, l = len; i < l; i++ ) {
-			hideOrShowField(i, this_opts[i], field_id, selected, rec);
+            if ( this_opts[i].FieldName == field_id ) {
+			    hideOrShowField(i, this_opts[i], field_id, selected, rec, parentField);
+            } else {
+                hideOrShowField(i, this_opts[i], field_id, selected, rec);
+            }
 			
 			if ( i == (len-1) ) {
 				hideFieldLater(rec);
 			}
 		}
-
 	}
 
-	function hideOrShowField(i, f, field_id, selected, rec){	
+	function hideOrShowField(i, f, field_id, selected, rec, parentField){
 		if ( typeof show_fields[f.HideField] == 'undefined' ) { 
 			show_fields[f.HideField] = [];
 		}
 
-		if ( f.FieldName != field_id || typeof selected == 'undefined' || selected == 'und' ) {
-			if ( f.Type=='radio' || f.Type=='data-radio' ) {
-				selected = jQuery('input[name="item_meta['+ f.FieldName +']"]:checked, input[type="hidden"][name="item_meta['+ f.FieldName +']"]').val();
-			} else if ( f.Type=='select' || f.Type=='time' || f.Type=='data-select' ) {
-				selected = jQuery('select[name^="item_meta['+ f.FieldName +']"], input[type="hidden"][name^="item_meta['+ f.FieldName +']"]').val();
-				if ( jQuery('input[type="hidden"][name^="item_meta['+ f.FieldName +']"]').length ) {
-					selected = [];
-					jQuery('input[type="hidden"][name^="item_meta['+ f.FieldName +']"]').each(function(){
-						selected.push(jQuery(this).val());
-					});
+        f.inputName = 'item_meta['+ f.FieldName +']';
+        f.hiddenName = 'item_meta['+ f.HideField +']';
+        f.containerID = 'frm_field_'+ f.FieldName +'_container';
+        f.hideContainerID = 'frm_field_'+ f.HideField +'_container';
+		f.hideBy = '#';
+        var getRepeat = false;
+
+        if ( typeof parentField !== 'undefined' && parentField !== null ) {
+            if ( parentField.length > 1 ) {
+                parentField = parentField.eq(0);
+            }
+
+            if ( typeof parentField.attr('name') === 'undefined' ) {
+                return;
+            }
+
+            // Accommodate for "other" options
+            f.inputName = parentField.attr('name').replace( '[other]', '' ).replace('[]', '');
+
+            var container = parentField.closest('.frm_repeat_sec');
+            if ( container.length ) {
+                var repeatInput = container.children('.frm_field_'+ f.FieldName +'_container');
+                f.containerID = repeatInput.attr('id');
+                f.hideContainerID = f.containerID.replace(f.FieldName, f.HideField);
+                f.hiddenName = f.inputName.replace('['+ f.FieldName +']', '['+ f.HideField +']');
+            }
+        } else {
+            getRepeat = true;
+            parentField = jQuery('input[name^="'+ f.inputName +'"], textarea[name^="'+ f.inputName +'"], select[name^="'+ f.inputName +'"]');
+            if ( parentField.length < 1 ) {
+				// logic triggered on page load for fields in repeating section
+				parentField = jQuery('.'+f.containerID+' input, .'+f.containerID+' textarea, .'+f.containerID+' select');
+				if ( parentField.length ) {
+					hideOrShowField(i, f, field_id, selected, rec, parentField);
+					return;
 				}
-			} else if ( f.Type !='checkbox' && f.Type !='data-checkbox' ) {
-				selected = jQuery('input[name^="item_meta['+ f.FieldName +']"], textarea[name^="item_meta['+ f.FieldName +']"]').val();
+			}
+
+			if ( parentField.length > 1 ) {
+                parentField = parentField.eq(0);
+            }
+        }
+
+		// check if only the dependent field is in a repeating section
+		var hideContainer = document.getElementById(f.hideContainerID);
+		if(hideContainer === null){
+			// it is a repeating section, use the class
+			f.hideBy = '.';
+		}
+
+		if ( f.FieldName != field_id || typeof selected == 'undefined' || selected == 'und' ) {
+			if ( (f.Type == 'radio' || f.Type == 'data-radio') && parentField.attr('type') == 'radio') {
+				selected = jQuery('input[name="'+ f.inputName +'"]:checked').val();
+                if ( typeof selected == 'undefined' ) {
+                    selected = '';
+                }
+			} else if ( f.Type == 'select' || f.Type == 'time' || f.Type == 'data-select' || (f.Type != 'checkbox' && f.Type != 'data-checkbox')) {
+				selected = parentField.val();
 			}
 		}
 
 		if ( typeof selected == 'undefined' ) {
-			selected = jQuery('input[type=hidden][name^="item_meta['+ f.FieldName +']"]').val();
-			if ( typeof selected == 'undefined' ) {
-				selected = '';
-			}
+			selected = parentField.val();
+        }
+
+		if ( typeof selected == 'undefined' ) {
+            // check for repeating/embedded field
+            if ( getRepeat === true ) {
+                var repeat = jQuery('.'+ f.containerID +' input, .'+ f.containerID +' select, .'+ f.containerID +' textarea');
+                if ( repeat.length ) {
+                    repeat.each(function(){
+                        hideOrShowField(i, f, f.FieldName, selected, rec, jQuery(this));
+                    });
+                    return;
+                }
+            }
+			selected = '';
 		}
 
-	    if ( f.Type=='checkbox' || (f.Type=='data-checkbox' && typeof(f.LinkedField)=='undefined') ) {
-	        show_fields[f.HideField][i] = false;
-            var checkVals = jQuery('input[name="item_meta['+ f.FieldName +'][]"]:checked, input[type="hidden"][name^="item_meta['+ f.FieldName +']"]');
+        // get selected checkbox values
+        var checkVals = [];
+        if ( f.Type == 'checkbox' || f.Type == 'data-checkbox' ) {
+            checkVals = getCheckedVal(f.containerID, f.inputName);
+
             if ( checkVals.length ) {
+                selected = checkVals;
+            }else{
+                selected = '';
+            }
+        }
+
+		if ( selected === '' ) {
+			show_fields[f.HideField][i] = false;
+		} else {
+			show_fields[f.HideField][i] = {'funcName':'getDataOpts', 'f':f, 'sel':selected};
+		}
+
+        if ( f.Type == 'checkbox' || (f.Type == 'data-checkbox' && typeof(f.LinkedField) == 'undefined') ) {
+            show_fields[f.HideField][i] = false;
+
+            var match = false;
+            if ( selected !== '') {
                 if ( f.Condition == '!=' ) {
                     show_fields[f.HideField][i] = true;
                 }
-                checkVals.each(function(){
-        			var match = operators(f.Condition,f.Value,jQuery(this).val());
+                for ( var b = 0; b<selected.length; b++ ) {
+                    match = operators(f.Condition, f.Value, selected[b]);
                     if ( f.Condition == '!=' ) {
                         if ( show_fields[f.HideField][i] === true && match === false ) {
                             show_fields[f.HideField][i] = false;
                         }
-        			} else if(show_fields[f.HideField][i] === false && match){
-        				show_fields[f.HideField][i] = true;
+                    } else if(show_fields[f.HideField][i] === false && match){
+                        show_fields[f.HideField][i] = true;
                     }
-        		});
+                }
             } else {
-    			var match = operators(f.Condition, f.Value, '');
-    			if(show_fields[f.HideField][i] === false && match){
-    				show_fields[f.HideField][i] = true;
+                match = operators(f.Condition, f.Value, '');
+                if(show_fields[f.HideField][i] === false && match){
+                    show_fields[f.HideField][i] = true;
                 }
             }
-	    } else if ( f.Type=='data-radio' ) {
-			if ( typeof f.DataType == 'undefined' || f.DataType === '' || f.DataType === 'data' ) {
-				if ( selected === '' ) {	
-					show_fields[f.HideField][i] = false;
-					jQuery(document.getElementById('frm_field_'+f.HideField+'_container')).fadeOut('slow');
-					empty(document.getElementById('frm_data_field_'+f.HideField+'_container'));
-				} else {
-					if ( typeof f.DataType =='undefined' ) {
-						show_fields[f.HideField][i] = operators(f.Condition, f.Value, selected);	
-					} else {
-						show_fields[f.HideField][i] = {'funcName':'getData','f':f,'sel':selected};
-					}
-				}
+        } else if ( typeof f.LinkedField != 'undefined' && f.Type.indexOf('data-') === 0 ) {
+			if ( typeof(f.DataType) == 'undefined' || f.DataType === 'data' ) {
+                if ( selected === '' ) {
+                    hideAndClearField(f.hideContainerID, f.hideBy);
+    			} else if ( f.Type == 'data-radio' ) {
+                    if ( typeof f.DataType == 'undefined' ) {
+                        show_fields[f.HideField][i] = operators(f.Condition, f.Value, selected);
+                    } else {
+                        show_fields[f.HideField][i] = {'funcName':'getData','f':f,'sel':selected};
+                    }
+                } else if ( f.Type == 'data-checkbox' || ( f.Type == 'data-select' && jQuery.isArray(selected) ) ) {
+                    hideAndClearField(f.hideContainerID, f.hideBy);
+    				show_fields[f.HideField][i] = true;
+    				getData(f, selected, 1);
+                } else if ( f.Type == 'data-select' ) {
+                    show_fields[f.HideField][i] = {'funcName':'getData','f':f,'sel':selected};
+                }
+            }
+        }else if ( typeof(f.Value)=='undefined' && f.Type.indexOf('data') === 0 ) {
+			if ( selected === '' ) {
+				f.Value = '1';
 			} else {
-				if ( selected === '' ) {
-					show_fields[f.HideField][i] = false;
-				} else {
-					show_fields[f.HideField][i] = {'funcName':'getDataOpts','f':f,'sel':selected};
-				}
+				f.Value = selected;
 			}
-	    }else if(f.Type=='data-checkbox' && typeof f.LinkedField != 'undefined' ) {
-			var checked_vals = [];
-			jQuery('input[name="item_meta['+ f.FieldName +'][]"]:checked, input[type="hidden"][name="item_meta['+ f.FieldName +'][]"]').each(function(){checked_vals.push(jQuery(this).val());});
-			if(typeof(f.DataType) == 'undefined' || f.DataType === '' || f.DataType === 'data'){
-				if(checked_vals.length){
-					show_fields[f.HideField][i] = true;
-					empty(document.getElementById('frm_data_field_'+f.HideField+'_container'));
-					getData(f,checked_vals,1);
-					//jQuery.each(checked_vals, function(ckey,cval){getData(f,cval,1); });
-				}else{
-					show_fields[f.HideField][i] = false;
-					jQuery(document.getElementById('frm_field_'+f.HideField+'_container')).fadeOut('slow');
-					empty(document.getElementById('frm_data_field_'+f.HideField+'_container'));
-				}
-			}else{
-				if(checked_vals.length){
-					show_fields[f.HideField][i] = {'funcName':'getDataOpts','f':f,'sel':checked_vals};
-				}else{
-					show_fields[f.HideField][i] = false;
-				}
-	        }
-	    } else if ( f.Type=='data-select' && typeof f.LinkedField != 'undefined' ) {
-			if(f.DataType === '' || f.DataType == 'data'){
-	            if(selected === ''){
-					show_fields[f.HideField][i] = false;
-					empty(document.getElementById('frm_data_field_'+f.HideField+'_container'));
-				}else if(selected && jQuery.isArray(selected)){
-					show_fields[f.HideField][i] = true;
-					empty(document.getElementById('frm_data_field_'+f.HideField+'_container'));
-					getData(f,selected,1);
-				}else{
-					show_fields[f.HideField][i] = {'funcName':'getData','f':f,'sel':selected};
-				}
-	        }else{
-	            if(selected === ''){
-					show_fields[f.HideField][i] = false;
-				}else{
-					show_fields[f.HideField][i] = {'funcName':'getDataOpts','f':f,'sel':selected};
-				}
-	        }
-	    }else{
-			if(typeof(f.Value)=='undefined' && f.Type.indexOf('data') === 0){
-				if ( selected === '' ) {
-					f.Value = '1';
-				} else {
-					f.Value = selected;
-				}
-				show_fields[f.HideField][i] = operators(f.Condition, f.Value, selected);
-				f.Value = undefined;
-			}else{
-				show_fields[f.HideField][i] = operators(f.Condition, f.Value, selected);
-			}
-	    }
+			show_fields[f.HideField][i] = operators(f.Condition, f.Value, selected);
+			f.Value = undefined;
+		}else{
+			show_fields[f.HideField][i] = operators(f.Condition, f.Value, selected);
+        }
 
 		hideFieldNow(i, f, rec);
 	}
 
+	function hideAndClearField(hideContainer, hideBy){
+		if(hideBy === '.'){
+			hideContainer = jQuery('.'+hideContainer);
+		}else{
+			hideContainer = jQuery(document.getElementById(hideContainer));
+		}
+		hideContainer.fadeOut('slow');
+		hideContainer.find('.frm_data_field_container').empty();
+    }
+
 	function hideFieldNow(i, f, rec){
-		if ( f.MatchType == 'all' ) {
+		if ( f.MatchType == 'all' || show_fields[f.HideField][i] === false ) {
 			hide_later.push({
 				'result':show_fields[f.HideField][i], 'show':f.Show,
-				'match':f.MatchType, 'fname':f.FieldName, 'fkey':f.HideField
+                'match':f.MatchType, 'fname':f.FieldName, 'fkey':f.HideField,
+				'hideContainerID':f.hideContainerID, 'hideBy':f.hideBy
 			});
 			return;
 		}
 
-		if ( show_fields[f.HideField][i] !== false ) {
-			if ( f.Show == 'show' ) {
-				if ( show_fields[f.HideField][i] !== true ) {
-					showField(show_fields[f.HideField][i], f.FieldName, rec);
+		var display = 'none';
+		if ( f.Show == 'show' ) {
+			if ( show_fields[f.HideField][i] !== true ) {
+				showField(show_fields[f.HideField][i], f.FieldName, rec);
+				return;
+			}
+			display = '';
+		}
+
+		if(f.hideBy === '.'){
+			var hideClass = jQuery('.'+f.hideContainerID);
+			if(hideClass.length){
+				if(display === 'none'){
+					hideClass.hide();
 				}else{
-					var hideMe = document.getElementById('frm_field_'+f.HideField+'_container');
-					if ( hideMe !== null ) {
-						hideMe.style.display = '';
-					}
+					hideClass.show();
 				}
-			}else{
-				document.getElementById('frm_field_'+f.HideField+'_container').style.display = 'none';
 			}
 		}else{
-			hide_later.push({
-				'result':show_fields[f.HideField][i], 'show':f.Show,
-				'match':f.MatchType, 'fname':f.FieldName, 'fkey':f.HideField
-			});
+			var hideMe = document.getElementById(f.hideContainerID);
+			if ( hideMe !== null ) {
+				hideMe.style.display = display;
+			}
 		}
 	}
 
 	function hideFieldLater(rec){
-		jQuery.each(hide_later, function(hkey,hvalue){ 
-			if ( typeof hvalue != 'undefined' && typeof hvalue.result != 'undefined' ) {
-                var container = document.getElementById('frm_field_'+hvalue.fkey+'_container');
-                if ( container !== null ) {
-                    if ( ( hvalue.match == 'any' && (jQuery.inArray(true, show_fields[hvalue.fkey]) == -1) ) ||
-                        ( hvalue.match == 'all' && (jQuery.inArray(false, show_fields[hvalue.fkey]) > -1) ) ) {
-                        if ( hvalue.show == 'show' ) {
-                            jQuery(container).filter(':hidden').hide();
-                            container.style.display = 'none';
-                        } else {
-                            container.style.display = '';
-                        }
+		jQuery.each(hide_later, function(hkey,hvalue){
+            if ( typeof hvalue == 'undefined' || typeof hvalue.result == 'undefined' ) {
+                return;
+            }
+
+			var container = jQuery(hvalue.hideBy + hvalue.hideContainerID);
+            var hideField = hvalue.show;
+            if ( container.length ) {
+                if ( ( hvalue.match == 'any' && (jQuery.inArray(true, show_fields[hvalue.fkey]) == -1) ) ||
+                    ( hvalue.match == 'all' && (jQuery.inArray(false, show_fields[hvalue.fkey]) > -1) ) ) {
+                    if ( hvalue.show == 'show' ) {
+                        hideField = 'hide';
                     } else {
-                        if ( hvalue.show == 'show' ) {
-                            container.style.display = '';
-                        } else {
-                            jQuery(container).filter(':hidden').hide();
-                            container.style.display = 'none';
-                        }
+                        hideField = 'show';
                     }
-                    if ( typeof hvalue.result !== false && typeof hvalue.result !== true ) {
-                        showField(hvalue.result,hvalue.fname,rec);
-                    }
-                } else {
-                    //console.log('no frm_field_'+hvalue.fkey+'_container');
                 }
-				delete hide_later[hkey];
-			}
+
+                if ( hideField == 'show' ) {
+                    container.show();
+                } else {
+                    container.filter(':hidden').hide();
+                    container.hide();
+                }
+
+                if ( typeof hvalue.result !== false && typeof hvalue.result !== true ) {
+                    showField(hvalue.result,hvalue.fname,rec);
+                }
+            }
+
+			delete hide_later[hkey];
 		});
 	}
 
@@ -351,32 +453,38 @@ function frmFrontFormJS(){
 	}
 
 	function getData(f,selected,append){
-		var cont = document.getElementById('frm_data_field_'+f.HideField+'_container');
-		if ( cont === null ) {
+        var fcont = document.getElementById(f.hideContainerID);
+		var cont = jQuery(fcont).find('.frm_data_field_container');
+		if ( cont.length === 0 ) {
 			return true;
 		}
 
 		if ( !append ) {
-			cont.innerHTML = '<span class="frm-loading-img"></span>';
+			cont.html('<span class="frm-loading-img"></span>');
 		}
+
 		jQuery.ajax({
 			type:'POST',url:frm_js.ajax_url,
-			data:{action:'frm_fields_ajax_get_data', entry_id:selected, field_id:f.LinkedField, current_field:f.HideField},
+			data:{
+                action:'frm_fields_ajax_get_data', entry_id:selected,
+                field_id:f.LinkedField, current_field:f.HideField,
+                hide_id:f.hideContainerID, nonce:frm_js.nonce
+            },
 			success:function(html){
-				var fcont = document.getElementById('frm_field_'+f.HideField+'_container');
 				if ( html !== '' ) {
 					fcont.style.display = '';
 				}
 				
 				if ( append ) {
-					jQuery(cont).append(html);
+					cont.append(html);
 				} else {
-					cont.innerHTML = html;
-					var val = jQuery(cont).children('input').val();
+					cont.html(html);
+                    var parentField = cont.children('input');
+					var val = parentField.val();
 					if(html === '' || val === ''){
 						fcont.style.display = 'none';
 					}
-					checkDependentField(selected, f.HideField);
+					checkDependentField(selected, f.HideField, null, parentField);
 				}
 				return true;
 			}
@@ -385,63 +493,77 @@ function frmFrontFormJS(){
 
 	function getDataOpts(f,selected,field_id,rec) {
 		//don't check the same field twice when more than a 2-level dependency, and parent is not on this page
-		if(rec == 'stop' && (jQuery.inArray(f.HideField, frm_checked_dep) > -1) && jQuery('input[type="hidden"][name^="item_meta['+ field_id +']"]').length){
+		if(rec == 'stop' && (jQuery.inArray(f.HideField, frm_checked_dep) > -1) && f.parentField.attr('type') == 'hidden'){
 			return;
 		}
 
+		var hiddenInput = jQuery('input[name^="'+ f.hiddenName +'"], select[name^="'+ f.hiddenName +'"], textarea[name^="'+ f.hiddenName +'"]');
+
 		var prev = [];
-		if(f.DataType=='checkbox' || f.DataType=='radio'){
-			jQuery('input[name^="item_meta['+ f.HideField +']"]:checked, input[type="hidden"][name^="item_meta['+ f.HideField +']"]').each(function(){prev.push(jQuery(this).val());});
-		}else if(f.DataType == 'select'){
-			var hiddenSelect = jQuery('input[type="hidden"][name^="item_meta['+ f.HideField +']"]');
-			if(hiddenSelect.length){
-				hiddenSelect.each(function(){
-					prev.push(jQuery(this).val());
-				});
-			}else if(jQuery('select[name^="item_meta['+ f.HideField +']"]').length){
-				prev = jQuery('select[name^="item_meta['+ f.HideField +']"]').val();
-			}else if((rec == 'stop' || jQuery('#frm_data_field_'+ f.HideField +'_container .frm-loading-img').length) && (jQuery.inArray(f.HideField, frm_checked_dep) > -1)){
+		hiddenInput.each(function(){
+            if ( this.type == 'radio' || this.type == 'checkbox' ) {
+                if ( this.checked === true ) {
+                    prev.push(jQuery(this).val());
+                }
+            } else {
+                prev.push(jQuery(this).val());
+            }
+		});
+
+        if(f.DataType == 'select'){
+			if((rec == 'stop' || jQuery('#'+ f.hideContainerID +' .frm-loading-img').length) && (jQuery.inArray(f.HideField, frm_checked_dep) > -1)){
 				return;
 			}
-		}else{
-			prev.push(jQuery('input[name^="item_meta['+ f.HideField +']"]').val());
 		}
 		
-		if(prev === null || prev.length === 0) prev = '';
+		if(prev.length === 0){
+            prev = '';
+        }
 
 		frm_checked_dep.push(f.HideField);
 
+        var fcont = document.getElementById(f.hideContainerID);
 		//don't get values for fields that are to remain hidden on the page
-		var $dataField = document.getElementById('frm_data_field_'+f.HideField+'_container');
-		if($dataField === null && jQuery('input[type="hidden"][name^="item_meta['+ f.HideField +']"]').length){
-			checkDependentField(prev, f.HideField, 'stop');
-			return false;
+		var $dataField = jQuery(fcont).find('.frm_data_field_container');
+        if($dataField.length === 0 && hiddenInput.length ){
+		    checkDependentField(prev, f.HideField, 'stop', hiddenInput);
+            return false;
 		}
 
 		if ( f.Value !== '' ) {
 			var match = operators(f.Condition, f.Value, selected);
 			if ( !match ) {
-				document.getElementById('frm_field_'+f.HideField+'_container').style.display = 'none';
-				document.getElementById('frm_data_field_'+f.HideField+'_container').innerHTML = '';
-				checkDependentField('', f.HideField, 'stop');
+				fcont.style.display = 'none';
+				$dataField.html('');
+				checkDependentField('', f.HideField, 'stop', hiddenInput);
 				return false;
 			}
 		}
 
-		$dataField.innerHTML = '<span class="frm-loading-img" style="visibility:visible;display:inline;"></span>';
+		$dataField.html('<span class="frm-loading-img" style="visibility:visible;display:inline;"></span>');
+
+        // save the current f value for use after ajax
+        var hiddenName = f.hiddenName;
+        var dataType = f.DataType;
 
 		jQuery.ajax({
-			type:'POST',url:frm_js.ajax_url,
-			data:{action:'frm_fields_ajax_data_options', hide_field:field_id, entry_id:selected, selected_field_id:f.LinkedField, field_id:f.HideField},
+			type:'POST',
+            url:frm_js.ajax_url,
+			data:{
+                action:'frm_fields_ajax_data_options', hide_field:field_id,
+                entry_id:selected, selected_field_id:f.LinkedField, field_id:f.HideField,
+                hide_id:f.hideContainerID, nonce:frm_js.nonce
+            },
 			success:function(html){
 				if(html === ''){
-					document.getElementById('frm_field_'+f.HideField+'_container').style.display = 'none';
-					prev='';
-				}else if(f.MatchType!='all'){
-					document.getElementById('frm_field_'+f.HideField+'_container').style.display = '';
+					fcont.style.display = 'none';
+					prev = '';
+				}else if(f.MatchType != 'all'){
+					fcont.style.display = '';
 				}
 				
-				$dataField.innerHTML = html;
+				$dataField.html(html);
+                var parentField = $dataField.find('select, input, textarea');
 
 				if(html !== '' && prev !== ''){
 					if(!jQuery.isArray(prev)){
@@ -450,29 +572,36 @@ function frmFrontFormJS(){
 						prev = new_prev;
 					}
 
-					//select options that were selected previously			
+					//select options that were selected previously
 					jQuery.each(prev, function(ckey,cval){
-						if(typeof(cval) != 'undefined'){
-							if(f.DataType == 'checkbox' || f.DataType == 'radio'){
-								jQuery(document.getElementById('field_'+ f.HideField +'-'+ cval)).attr('checked','checked');
-							}else if(f.DataType == 'select'){
-								var selOpt = jQuery('select[name^="item_meta['+ f.HideField +']"] option[value='+ cval +']'); 
-								if(selOpt.length){
-									selOpt.prop('selected', true);
-								}else{
-									prev.splice(ckey,1); //remove options that no longer exist
-								}
+                        if ( typeof(cval) == 'undefined' || cval === '' ) {
+                            return;
+                        }
+						if ( dataType == 'checkbox' || dataType == 'radio' ) {
+                            if ( parentField.length > 1 ) {
+                                parentField.filter('[value="' + cval+ '"]').attr('checked','checked');
+                            } else if ( parentField.val() == cval ){
+                                parentField.attr('checked','checked');
+                            }
+						} else if ( dataType == 'select' ) {
+							var selOpt = parentField.children('option[value='+ cval +']');
+							if(selOpt.length){
+								selOpt.prop('selected', true);
 							}else{
-								jQuery('input[name^="item_meta['+ f.HideField +']"]').val(cval);
+                                //remove options that no longer exist
+								prev.splice(ckey, 1);
 							}
+						}else{
+							parentField.val(cval);
 						}
 					});
 				}
-				if(jQuery(html).hasClass('frm_chzn') && jQuery().chosen){
+
+				if(parentField.hasClass('frm_chzn') && jQuery().chosen){
 					jQuery('.frm_chzn').chosen({allow_single_deselect:true});
 				}
 
-				checkDependentField(prev, f.HideField, 'stop');
+				checkDependentField(prev, f.HideField, 'stop', parentField);
 			}
 		});
 	}
@@ -516,50 +645,39 @@ function frmFrontFormJS(){
 				} else if ( thisField.type == 'radio' || thisField.type == 'scale' ) {
 					thisFieldCall = thisFieldCall +':checked,'+ thisFieldCall +'[type=hidden]';
 				} else if ( thisField.type == 'textarea' ) {
-				    thisFieldCall = thisFieldCall + ',textarea'+ all_calcs.fieldKeys[thisFieldId];
+                    thisFieldCall = thisFieldCall + ',textarea'+ all_calcs.fieldKeys[thisFieldId];
 				}
 
-                if ( typeof vals[thisFieldId] === 'undefined' || vals[thisFieldId] === 0 ) {
-    				jQuery(thisFieldCall).each(function(){
-    					if ( typeof vals[thisFieldId] === 'undefined' ) {
-    						vals[thisFieldId] = 0;
-    					}
-    					var thisVal = jQuery(this).val();
-
-    					if ( thisField.type == 'date' ) {
-    						d = jQuery.datepicker.parseDate(all_calcs.date, thisVal);
-    						if ( d !== null ) {
-    							vals[thisFieldId] = Math.ceil(d/(1000*60*60*24));
-    						}
-    					}
-                        var n = thisVal;
-                        if ( n !== '' ){
-    					    n = parseFloat(n.replace(/,/g,'').match(/-?[\d\.]+$/));
-                        }
-
-    					if ( typeof n === 'undefined' ) {
-    						n = 0;
-    					}
-    					vals[thisFieldId] += n;
-    				});
-                }
+                vals[thisFieldId] = getCalcFieldId(thisFieldCall, thisFieldId, thisField, all_calcs, vals);
 
 				if ( typeof vals[thisFieldId] === 'undefined' ) {
 					vals[thisFieldId] = 0;
 				}
 
-				thisFullCalc = thisFullCalc.replace('['+thisFieldId+']', vals[thisFieldId]);
+				var findVar = '['+ thisFieldId +']';
+				findVar = findVar.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+				thisFullCalc = thisFullCalc.replace(new RegExp(findVar, 'g'), vals[thisFieldId]);
 			}
+
+			// Set the number of decimal places
+			var dec = thisCalc.calc_dec;
 
 			// allow .toFixed for reverse compatability
 			if ( thisFullCalc.indexOf(').toFixed(') ) {
-				var calcParts = thisFullCalc.split(').toFixed(');
+			var calcParts = thisFullCalc.split(').toFixed(');
 				if ( isNumeric(calcParts[1]) ) {
-					thisFullCalc = 'parseFloat('+ thisFullCalc +')';
+					dec = calcParts[1];
+					thisFullCalc = thisFullCalc.replace(').toFixed(' + dec, '');
 				}
 			}
 
 			var total = parseFloat(eval(thisFullCalc));
+
+			// Set decimal points
+			if ( isNumeric( dec ) ) {
+				total = total.toFixed(dec);
+			}
+
 			if ( typeof total === 'undefined' ) {
 				total = 0;
 			}
@@ -570,9 +688,40 @@ function frmFrontFormJS(){
 		}
 	}
 
+    function getCalcFieldId(thisFieldCall, thisFieldId, thisField, all_calcs, vals){
+        if ( typeof vals[thisFieldId] !== 'undefined' && vals[thisFieldId] !== 0 ) {
+            return vals[thisFieldId];
+        }
+
+        jQuery(thisFieldCall).each(function(){
+            if ( typeof vals[thisFieldId] === 'undefined' ) {
+                vals[thisFieldId] = 0;
+            }
+            var thisVal = jQuery(this).val();
+
+            if ( thisField.type == 'date' ) {
+                d = jQuery.datepicker.parseDate(all_calcs.date, thisVal);
+                if ( d !== null ) {
+                    vals[thisFieldId] = Math.ceil(d/(1000*60*60*24));
+                }
+            }
+            var n = thisVal;
+            if ( n !== '' ){
+                n = parseFloat(n.replace(/,/g,'').match(/-?[\d\.]+$/));
+            }
+
+			if ( typeof n === 'undefined' ) {
+				n = 0;
+			}
+			vals[thisFieldId] += n;
+		});
+
+        return vals[thisFieldId];
+    }
+
 	function getFormErrors(object){
 		jQuery(object).find('input[type="submit"], input[type="button"]').attr('disabled','disabled');
-		jQuery(object).find('.frm_ajax_loading').addClass('frm_loading_now').css('visibility', 'visible');
+		jQuery(object).find('.frm_ajax_loading').addClass('frm_loading_now');
 
 		var jump = '';
 		var newPos = 0;
@@ -580,7 +729,7 @@ function frmFrontFormJS(){
 
 		jQuery.ajax({
 			type:'POST',url:frm_js.ajax_url,
-			data:jQuery(object).serialize() +'&action=frm_entries_'+ jQuery(object).find('input[name="frm_action"]').val()+'&_ajax_nonce=1',
+			data:jQuery(object).serialize() +'&action=frm_entries_'+ jQuery(object).find('input[name="frm_action"]').val()+'&nonce='+frm_js.nonce,
 			success:function(errObj){
 				errObj = errObj.replace(/^\s+|\s+$/g,'');
 				if(errObj.indexOf('{') === 0){
@@ -603,9 +752,12 @@ function frmFrontFormJS(){
 
 					object.submit();
 				}else if(typeof errObj != 'object'){
-					jQuery(object).find('.frm_ajax_loading').removeClass('frm_loading_now').css('visibility', 'hidden');
+					jQuery(object).find('.frm_ajax_loading').removeClass('frm_loading_now');
 					jump=jQuery(object).closest(document.getElementById('frm_form_'+jQuery(object).find('input[name="form_id"]').val()+'_container'));
-					newPos=jump.offset().top;
+					var offset = jump.offset();
+					if ( typeof offset !== 'undefined' ) {
+						newPos = offset.top;
+					}
 					jump.replaceWith(errObj);
 					cOff = document.documentElement.scrollTop || document.body.scrollTop;
 					if(newPos && newPos > frm_js.offset && cOff > newPos){
@@ -623,7 +775,7 @@ function frmFrontFormJS(){
 					}
 				}else{
 					jQuery(object).find('input[type="submit"], input[type="button"]').removeAttr('disabled');
-					jQuery(object).find('.frm_ajax_loading').removeClass('frm_loading_now').css('visibility', 'hidden');
+					jQuery(object).find('.frm_ajax_loading').removeClass('frm_loading_now');
 
 					//show errors
 					var cont_submit=true;
@@ -705,13 +857,194 @@ function frmFrontFormJS(){
 		$link.append('<span class="spinner" style="display:inline"></span>');
 		jQuery.ajax({
 			type:'POST',url:frm_js.ajax_url,
-			data:{action:'frm_entries_send_email', entry_id:entry_id, form_id:form_id},
+			data:{action:'frm_entries_send_email', entry_id:entry_id, form_id:form_id, nonce:frm_js.nonce},
 			success:function(msg){
 				$link.replaceWith(msg);
 			}
 		});
 		return false;
 	}
+
+    /* Google Tables */
+    function compileGoogleTable(opts){
+        var data = new google.visualization.DataTable();
+
+        var showID = false;
+        if ( jQuery.inArray('id', opts.options.fields) ) {
+            showID = true;
+            data.addColumn('number',frm_js.id);
+        }
+
+        var colCount = opts.fields.length;
+        var type = 'string';
+        for ( var i = 0, l = colCount; i < l; i++ ) {
+            var thisCol = opts.fields[i];
+            type = getGraphType(thisCol);
+
+            data.addColumn(type, thisCol.name);
+        }
+
+        var showEdit = false;
+        if ( opts.options.edit_link ) {
+            showEdit = true;
+            data.addColumn('string', opts.options.edit_link);
+        }
+
+        var showDelete = false;
+        if ( opts.options.delete_link ) {
+            showDelete = true;
+            data.addColumn('string', opts.options.delete_link);
+        }
+
+        var col = 0;
+        if ( opts.entries !== null ) {
+            var entryCount = opts.entries.length;
+            data.addRows(entryCount);
+
+            var row = 0;
+
+            for ( var e = 0, len = entryCount; e < len; e++ ) {
+                col = 0;
+                var entry = opts.entries[e];
+                if ( showID ) {
+                    data.setCell(row, col, entry.id);
+                    col++;
+                }
+
+                for ( var field = 0, fieldCount = colCount; field < fieldCount; field++ ) {
+                    var thisEntryCol = opts.fields[field];
+                    type = getGraphType(thisEntryCol);
+
+                    var fieldVal = entry.metas[thisEntryCol.id];
+                    if ( type == 'number' && ( fieldVal === null || fieldVal === '' ) ) {
+                        fieldVal = 0;
+                    } else if ( type == 'boolean' ) {
+                        if ( fieldVal === null || fieldVal == 'false' || fieldVal === false ) {
+                            fieldVal = 'false';
+                        } else {
+                            fieldVal = 'true';
+                        }
+                    }
+
+                    data.setCell(row, col, fieldVal);
+
+                    col++;
+                }
+
+                if ( showEdit ) {
+					if ( typeof entry.editLink !== 'undefined' ) {
+                    	data.setCell(row, col, '<a href="'+ entry.editLink +'">'+ opts.options.edit_link +'</a>');
+					} else {
+						data.setCell(row, col, '');
+					}
+         		    col++;
+        	    }
+
+                if ( showDelete ) {
+					if ( typeof entry.deleteLink !== 'undefined' ) {
+                    	data.setCell(row, col,'<a href="'+ entry.deleteLink +'" class="frm_delete_link" onclick="return confirm('+ opts.options.confirm +')">'+ opts.options.delete_link +'</a>');
+					} else {
+						data.setCell(row, col, '');
+					}
+                }
+
+                row++;
+            }
+        } else {
+            data.addRows(1);
+            col = 0;
+
+            for ( i = 0, l = colCount; i < l; i++ ) {
+                if ( col > 0 ) {
+                    data.setCell(0, col, '');
+                } else {
+                    data.setCell(0, col, opts.options.no_entries);
+                }
+                col++;
+            }
+        }
+
+        var chart = new google.visualization.Table(document.getElementById('frm_google_table_'+ opts.options.form_id));
+        chart.draw( data, opts.graphOpts );
+    }
+
+    function getGraphType(field){
+        var type = 'string';
+        if ( field.type == 'number' ){
+            type = 'number';
+        } else if ( field.type == 'checkbox' || field.type == 'select' ) {
+            var optCount = field.options.length;
+            if ( field.type == 'select' && field.options[0] === '' ) {
+                if ( field.field_options.post_field == 'post_status' ) {
+                    optCount = 3;
+                } else {
+                    optCount = optCount - 1;
+                }
+            }
+            if ( optCount == 1 ) {
+                type = 'boolean';
+            }
+        }
+        return type;
+    }
+
+    function compileGraph(opts){
+        var data = new google.visualization.DataTable();
+        var useSepCol = false;
+
+        // add the rows
+        var rowCount = opts.rows.length;
+        if ( rowCount > 0 ) {
+            if ( opts.type == 'table' ) {
+                useSepCol = true;
+                var lastRow = opts.rows[rowCount - 1];
+                var count = lastRow[0] + 1;
+                data.addRows(count);
+
+                for ( var r = 0, len = rowCount; r < len; r++ ) {
+                    data.setCell( opts.rows[r] ); //data.setCell(0, 0, 'Mike');
+                }
+            }else{
+                var firstRow = opts.rows[0];
+                if ( typeof firstRow.tooltip != 'undefined' ) {
+                    useSepCol = true;
+                    data.addColumn({type:'string',role:'tooltip'});
+
+                    // remove the tooltip key from the array
+                    for ( var row = 0, rc = rowCount; row < rc; row++ ) {
+                        var tooltip = opts.rows[row].tooltip;
+                        opts.rows[row].tooltip = null;
+                        opts.rows[row].push(tooltip);
+                    }
+
+                    data.addRows(opts.rows);
+                }
+            }
+        }
+
+        // add the columns
+        var colCount = opts.cols.length;
+        if ( useSepCol ) {
+            if ( colCount > 0 ) {
+                for ( var i = 0, l = colCount; i < l; i++ ) {
+                    var col = opts.cols[i];
+                    data.addColumn(col.type, col.name);
+                }
+            }
+        } else {
+            var graphData = [];
+            graphData[0] = [];
+            for ( var c = 0, cur = colCount; c < cur; c++ ) {
+                graphData[0].push(opts.cols[c].name);
+            }
+            graphData = graphData.concat(opts.rows);
+            data = google.visualization.arrayToDataTable(graphData);
+        }
+
+        var type = (opts.type.charAt(0).toUpperCase() + opts.type.slice(1)) + 'Chart';
+        var chart = new google.visualization[type](document.getElementById('chart_'+ opts.graph_id));
+        chart.draw(data, opts.options);
+    }
 
 	/* File Fields */
 	function nextUpload(){
@@ -740,7 +1073,7 @@ function frmFrontFormJS(){
             }
         }
 
-        obj.closest('.frm_form_field').find('.frm_uploaded_files:last').after('<input name="'+ fileName +'[]" data-fid="'+ id +'"class="frm_multiple_file" multiple="multiple" type="file" />');
+        obj.closest('.frm_form_field').find('.frm_uploaded_files:last').after('<input name="'+ fname +'" data-fid="'+ id +'"class="frm_transparent frm_multiple_file" multiple="multiple" type="file" />');
 	}
 
 	function removeDiv(){
@@ -775,10 +1108,42 @@ function frmFrontFormJS(){
 
 		jQuery.ajax({
 			type:'POST',url:frm_js.ajax_url,
-			data:'action=frm_add_form_row&field_id='+id+'&i='+i,
-			success:function(html){
+			dataType: 'json',
+			data:{action:'frm_add_form_row', field_id:id, i:i, nonce:frm_js.nonce},
+			success:function(r){
+				var html = r.html;
 				var item = jQuery(html).hide().fadeIn('slow');
 				jQuery('.frm_repeat_'+ id +':last').after(item);
+
+                var checked = ['other'];
+                var fieldID;
+                var reset = 'reset';
+
+				frmFrontForm.hideCondFields(JSON.stringify(r.logic.hide));
+
+                // hide fields with conditional logic
+                jQuery(html).find('input, select, textarea').each(function(){
+					if ( this.type != 'file' ) {
+						fieldID = this.name.replace('item_meta[', '').split(']')[2].replace('[', '');
+						if ( jQuery.inArray(fieldID, checked ) == -1 ) {
+							checked.push(fieldID);
+							checkDependentField('und', fieldID, null, jQuery(this), reset);
+							reset = 'persist';
+						}
+					}
+                });
+
+				// check logic on fields outside of this section
+				var checkLen = r.logic.check.length;
+				for ( var f = 0, l = checkLen; f < l; f++ ) {
+					if ( jQuery.inArray(r.logic.check[f], checked ) == -1 ) {
+						if(jQuery(html).find('.frm_field_'+r.logic.check[f]+'_container').length < 1){
+							checkDependentField('und', r.logic.check[f], null, null, reset);
+	                		reset = 'persist';
+						}
+					}
+				}
+
                 var star = jQuery(html).find('.star');
                 if ( star.length > 0 ) {
                     // trigger star fields
@@ -789,6 +1154,10 @@ function frmFrontFormJS(){
 				if ( autocomplete.length > 0 && jQuery().chosen ) {
                     // trigger autocomplete
 					jQuery('.frm_chzn').chosen({allow_single_deselect:true});
+				}
+
+				if(typeof(frmThemeOverride_frmAddRow) == 'function'){
+					frmThemeOverride_frmAddRow(id, r);
 				}
 			}
 		});
@@ -816,10 +1185,28 @@ function frmFrontFormJS(){
 		return !jQuery.isArray( obj ) && (obj - parseFloat( obj ) + 1) >= 0;
 	}
 
+    /* Get checked values with IE8 fallback */
+    function getCheckedVal(containerID, inputName) {
+        var checkVals = [];
+        if ( typeof document.querySelector == 'undefined') {
+            var ieVals = jQuery('#'+ containerID +' input[type=checkbox]:checked, input[type=hidden][name^="'+ inputName +'"]');
+            ieVals.each(function(){
+                checkVals.push( this.value );
+            });
+        } else {
+            var checkboxes = document.querySelectorAll('#'+ containerID +' input[type=checkbox], input[type=hidden][name^="'+ inputName +'"]');
+            for ( var b = 0; b < checkboxes.length; b++ ) {
+                if (( checkboxes[b].type == 'checkbox' && checkboxes[b].checked ) || checkboxes[b].type == 'hidden' ){
+                    checkVals.push( checkboxes[b].value );
+                }
+            }
+        }
+
+        return checkVals;
+    }
+
 	return{
 		init: function(){
-			frmFrontForm.invisible('.frm_ajax_loading');
-
 			jQuery(document).on('click', '.frm_trigger', toggleSection);
 			var $blankField = jQuery('.frm_blank_field');
 			if ( $blankField.length ) {
@@ -850,8 +1237,10 @@ function frmFrontFormJS(){
 			
 			jQuery(document).on('click', '.frm-show-form input[type="submit"], .frm-show-form input[name="frm_prev_page"], .frm-show-form .frm_save_draft', setNextPage);
             
-            jQuery(document).on('change', '.frm_other_container input[type="checkbox"], .frm_other_container input[type="radio"]', showOtherText);
+            jQuery(document).on('change', '.frm_other_container input[type="checkbox"], .frm_other_container input[type="radio"], .frm_other_container select', showOtherText);
 			
+			jQuery(document).on('change', 'input[type=file].frm_transparent', showFileUploadText);
+
 			jQuery(document).on('click', '.frm_remove_form_row', removeRow);
 			jQuery(document).on('click', '.frm_add_form_row', addRow);
 
@@ -875,6 +1264,11 @@ function frmFrontFormJS(){
 			}
 			getFormErrors(this);
 		},
+
+        scrollToID: function(id){
+            var frm_pos = jQuery(document.getElementBtId(id).offset());
+            window.scrollTo(frm_pos.left, frm_pos.top);
+        },
 
 		scrollMsg: function(id, object){
 			var newPos = '';
@@ -907,9 +1301,10 @@ function frmFrontFormJS(){
 			for ( var i = 0, l = len; i < l; i++ ) {
                 var container = document.getElementById('frm_field_'+ ids[i] +'_container');
                 if ( container !== null ) {
-				    container.style.display = 'none';
+                    container.style.display = 'none';
                 } else {
-                    //frm_field_189-1022-0_container
+                    // repeating or embedded fields
+                    jQuery('.frm_field_'+ ids[i] +'_container').hide();
                 }
 			}
 		},
@@ -917,10 +1312,26 @@ function frmFrontFormJS(){
 		checkDependent: function(ids){
 			ids = JSON.parse(ids);
 			var len = ids.length;
+            var reset = 'reset';
 			for ( var i = 0, l = len; i < l; i++ ) {
-				checkDependentField('und', ids[i]);
+				checkDependentField('und', ids[i], null, null, reset);
+                reset = 'persist';
 			}
 		},
+
+        generateGoogleTable: function(num, type){
+            var graphs = __FRMTABLES;
+    		if ( typeof graphs == 'undefined' ) {
+    			// there are no tables on this page
+    			return;
+    		}
+
+            if(type == 'table'){
+                compileGoogleTable(graphs.table[num]);
+            }else{
+                compileGraph(graphs[type][num]);
+            }
+        },
 		
 		/* Time fields */
 		removeUsedTimes: function(obj, timeField){
@@ -932,7 +1343,8 @@ function frmFrontFormJS(){
 				data:{
 					action:'frm_fields_ajax_time_options',
 					time_field:timeField, date_field:obj.id,
-					entry_id: (e ? e.val() : ''), date: jQuery(obj).val()
+					entry_id: (e ? e.val() : ''), date: jQuery(obj).val(),
+					nonce:frm_js.nonce
 				},
 				success:function(opts){
 					var $timeField = jQuery(document.getElementById(timeField));
@@ -978,7 +1390,7 @@ function frmEditEntry(entry_id,prefix,post_id,form_id,cancel,hclass){
 	$cont.html('<span class="frm-loading-img" id="'+prefix+entry_id+'"></span><div class="frm_orig_content" style="display:none">'+orig+'</div>');
 	jQuery.ajax({
 		type:'POST',url:frm_js.ajax_url,dataType:'html',
-		data:{action:'frm_entries_edit_entry_ajax', post_id:post_id, entry_id:entry_id, id:form_id},
+		data:{action:'frm_entries_edit_entry_ajax', post_id:post_id, entry_id:entry_id, id:form_id, nonce:frm_js.nonce},
 		success:function(html){
 			$cont.children('.frm-loading-img').replaceWith(html);
 			$edit.replaceWith('<span id="frm_edit_'+entry_id+'"><a onclick="frmCancelEdit('+entry_id+',\''+prefix+'\',\''+ frmFrontForm.escapeHtml(label) +'\','+post_id+','+form_id+',\''+hclass+'\')" class="'+hclass+'">'+cancel+'</a></span>');
@@ -1003,7 +1415,7 @@ function frmUpdateField(entry_id,field_id,value,message,num){
 	jQuery(document.getElementById('frm_update_field_'+entry_id+'_'+field_id)).html('<span class="frm-loading-img"></span>');
 	jQuery.ajax({
 		type:'POST',url:frm_js.ajax_url,
-		data:{action:'frm_entries_update_field_ajax', entry_id:entry_id, field_id:field_id, value:value},
+		data:{action:'frm_entries_update_field_ajax', entry_id:entry_id, field_id:field_id, value:value, nonce:frm_js.nonce},
 		success:function(){
 			if(message.replace(/^\s+|\s+$/g,'') === ''){
 				jQuery(document.getElementById('frm_update_field_'+entry_id+'_'+field_id+'_'+num)).fadeOut('slow');
@@ -1018,7 +1430,7 @@ function frmDeleteEntry(entry_id,prefix){
 	jQuery(document.getElementById('frm_delete_'+entry_id)).replaceWith('<span class="frm-loading-img" id="frm_delete_'+entry_id+'"></span>');
 	jQuery.ajax({
 		type:'POST',url:frm_js.ajax_url,
-		data:{action:'frm_entries_destroy', entry:entry_id},
+		data:{action:'frm_entries_destroy', entry:entry_id, nonce:frm_js.nonce},
 		success:function(html){
 			if(html.replace(/^\s+|\s+$/g,'') == 'success')
 				jQuery(document.getElementById(prefix+entry_id)).fadeOut('slow');
@@ -1040,7 +1452,7 @@ function frm_resend_email(entry_id,form_id){
 	$link.append('<span class="spinner" style="display:inline"></span>');
 	jQuery.ajax({
 		type:'POST',url:frm_js.ajax_url,
-		data:{action:'frm_entries_send_email', entry_id:entry_id, form_id:form_id},
+		data:{action:'frm_entries_send_email', entry_id:entry_id, form_id:form_id, nonce:frm_js.nonce},
 		success:function(msg){
 			$link.replaceWith(msg);
 		}

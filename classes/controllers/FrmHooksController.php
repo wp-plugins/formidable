@@ -1,11 +1,11 @@
 <?php
-    
-class FrmHooksController{
-    /*
-    * Trigger plugin-wide hook loading
-    */
+
+class FrmHooksController {
+    /**
+     * Trigger plugin-wide hook loading
+     */
     public static function trigger_load_hook( $hooks = 'load_hooks' ) {
-        $controllers = apply_filters('frm_load_controllers', array( 'FrmHooksController' ) );
+        $controllers = apply_filters( 'frm_load_controllers', array( 'FrmHooksController' ) );
 
         $trigger_hooks = $hooks;
         $hooks = (array) $hooks;
@@ -13,7 +13,7 @@ class FrmHooksController{
         if ( 'load_hooks' == $trigger_hooks ) {
             if ( is_admin() ) {
                 $hooks[] = 'load_admin_hooks';
-                if ( defined('DOING_AJAX') ) {
+                if ( defined( 'DOING_AJAX' ) ) {
                     $hooks[] = 'load_ajax_hooks';
                     $hooks[] = 'load_form_hooks';
                 }
@@ -26,19 +26,20 @@ class FrmHooksController{
             // Make sure the hooks are only triggered once
             add_filter('frm'. str_replace('load', '', $trigger_hooks) .'_loaded', '__return_true');
         }
+        unset($trigger_hooks);
 
         // Instansiate Controllers
         foreach ( $controllers as $c ) {
             foreach ( $hooks as $hook ) {
-                $c::$hook();
-                unset($hook);
+				call_user_func( array( $c, $hook ) );
+				unset( $hook );
             }
-            unset($c);
+			unset( $c );
         }
 
     }
 
-    public static function load_hooks(){
+	public static function load_hooks() {
         if ( ! is_admin() ) {
             add_filter('the_content', 'FrmAppController::page_route', 10);
         }
@@ -46,12 +47,7 @@ class FrmHooksController{
         add_action('plugins_loaded', 'FrmAppController::load_lang' );
         add_action('init', 'FrmAppController::front_head' );
         add_filter('widget_text', 'FrmAppController::widget_text_filter', 8 );
-        add_filter('get_frm_stylesheet', 'FrmAppController::custom_stylesheet' );
-
         add_action('wp_footer', 'FrmAppController::footer_js', 1, 0);
-
-        // Update the session data
-        add_action('init', 'FrmAppController::referer_session', 1);
 
         // Entries controller
         add_action('wp', 'FrmEntriesController::process_entry', 10, 0);
@@ -62,10 +58,8 @@ class FrmHooksController{
         add_filter('frmpro_fields_replace_shortcodes', 'FrmEntriesController::filter_shortcode_value', 10, 4);
 
         // Form Actions Controller
-        add_action('init', 'FrmFormActionsController::register_post_types', 0);
-        add_action('init', 'FrmFormActionsController::actions_init', 1);
-        add_action('frm_form_actions_init', 'FrmFormActionsController::register_actions');
-        add_action('frm_after_create_entry', 'FrmFormActionsController::trigger_create_actions', 20, 2);
+        add_action('init', 'FrmFormActionsController::register_post_types', 1);
+		add_action( 'frm_after_create_entry', 'FrmFormActionsController::trigger_create_actions', 20, 3 );
 
         // Forms Controller
         add_action('widgets_init', 'FrmFormsController::register_widgets' );
@@ -85,7 +79,7 @@ class FrmHooksController{
         add_filter('frm_show_entry_styles', 'FrmStylesController::show_entry_styles');
     }
 
-    public static function load_admin_hooks() {
+	public static function load_admin_hooks() {
         add_action('admin_menu', 'FrmAppController::menu', 1);
         add_action('admin_enqueue_scripts', 'FrmAppController::load_wp_admin_style' );
         add_filter('update_plugin_complete_actions', 'FrmAppController::update_action_links', 10, 2 );
@@ -105,7 +99,7 @@ class FrmHooksController{
         add_action('frm_field_options_form', 'FrmFieldsController::add_conditional_update_msg', 50);
 
         // Form Actions Controller
-        if ( FrmAppHelper::is_admin_page('formidable') ) {
+        if ( FrmAppHelper::is_admin_page('formidable' ) ) {
             add_action('frm_before_update_form_settings', 'FrmFormActionsController::update_settings');
         }
         add_action('frm_after_duplicate_form', 'FrmFormActionsController::duplicate_form_actions', 20, 3);
@@ -113,13 +107,13 @@ class FrmHooksController{
         // Forms Controller
         add_action('admin_menu', 'FrmFormsController::menu', 10);
         add_action('admin_head-toplevel_page_formidable', 'FrmFormsController::head' );
-        add_action('frm_after_duplicate_form', 'FrmFormsController::after_duplicate', 10, 2);
 
         add_filter('set-screen-option', 'FrmFormsController::save_per_page', 10, 3);
         add_action('admin_footer',  'FrmFormsController::insert_form_popup' );
         add_filter('media_buttons_context', 'FrmFormsController::insert_form_button' );
 
-        add_filter('frm_admin_list_form_action', 'FrmFormsController::process_bulk_form_actions' );
+        // Forms Model
+        add_action('frm_after_duplicate_form', 'FrmForm::after_duplicate', 10, 2);
 
         // Settings Controller
         add_action('admin_menu', 'FrmSettingsController::menu', 45);
@@ -137,7 +131,7 @@ class FrmHooksController{
         add_action('admin_menu', 'FrmXMLController::menu', 41);
     }
 
-    public static function load_ajax_hooks() {
+	public static function load_ajax_hooks() {
         add_action('wp_ajax_frm_install', 'FrmAppController::install' );
         add_action('wp_ajax_frm_uninstall', 'FrmAppController::uninstall' );
         add_action('wp_ajax_frm_deauthorize', 'FrmAppController::deauthorize' );
@@ -165,9 +159,10 @@ class FrmHooksController{
         add_action('wp_ajax_frm_form_action_fill', 'FrmFormActionsController::fill_action');
 
         // Forms Controller
-        add_action('wp_ajax_frm_save_form', 'FrmFormsController::route' ); //.0015
-        add_action('wp_ajax_frm_form_key_in_place_edit', 'FrmFormsController::edit_key' ); //.0016
-        add_action('wp_ajax_frm_form_desc_in_place_edit', 'FrmFormsController::edit_description' ); //.0015
+		add_action( 'wp_ajax_frm_create_from_template', 'FrmFormsController::_create_from_template' );
+		add_action( 'wp_ajax_frm_save_form', 'FrmFormsController::route' );
+		add_action( 'wp_ajax_frm_form_key_in_place_edit', 'FrmFormsController::edit_key' );
+		add_action( 'wp_ajax_frm_form_desc_in_place_edit', 'FrmFormsController::edit_description' );
         add_action('wp_ajax_frm_get_default_html', 'FrmFormsController::get_email_html' );
         add_action('wp_ajax_frm_get_shortcode_opts',  'FrmFormsController::get_shortcode_opts' );
         add_action('wp_ajax_frm_forms_preview', 'FrmFormsController::preview' );
@@ -183,7 +178,7 @@ class FrmHooksController{
         add_action('wp_ajax_frm_export_xml', 'FrmXMLController::export_xml');
     }
 
-    public static function load_form_hooks() {
+	public static function load_form_hooks() {
         // Fields Controller
         add_filter('frm_field_type', 'FrmFieldsController::change_type');
         add_action('frm_field_input_html', 'FrmFieldsController::input_html');
@@ -194,11 +189,11 @@ class FrmHooksController{
         add_filter('frm_use_important_width', 'FrmStylesController::important_style', 10, 2 );
     }
 
-    public static function load_view_hooks() {
+	public static function load_view_hooks() {
         // Hooks go here when a view is loaded
     }
 
-    public static function load_multisite_hooks() {
+	public static function load_multisite_hooks() {
         // drop tables when mu site is deleted
         add_filter( 'wpmu_drop_tables', 'FrmAppController::drop_tables' );
     }

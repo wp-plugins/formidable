@@ -1,7 +1,7 @@
 <?php
 
 class FrmNotification{
-    function __construct(){
+    public function __construct(){
         if ( ! defined('ABSPATH') ) {
             die('You are not allowed to call this page directly.');
         }
@@ -20,7 +20,7 @@ class FrmNotification{
 
         // Set the subject
         if ( empty($notification['email_subject']) ) {
-            $notification['email_subject'] = sprintf(__('%1$s Form submitted on %2$s', 'formidable'), $form->name, '[sitename]');
+            $notification['email_subject'] = sprintf(__( '%1$s Form submitted on %2$s', 'formidable' ), $form->name, '[sitename]');
         }
 
         $plain_text = $notification['plain_text'] ? true : false;
@@ -35,7 +35,7 @@ class FrmNotification{
         add_filter('frm_plain_text_email', ($plain_text ? '__return_true' : '__return_false'));
 
         //Get all values in entry in order to get User ID field ID
-        $values = FrmEntryMeta::getAll('it.field_id != 0 and it.item_id ='. $entry->id .' ORDER BY fi.field_order');
+        $values = FrmEntryMeta::getAll( array( 'it.field_id !' => 0, 'it.item_id' => $entry->id ), ' ORDER BY fi.field_order' );
         $user_id_field = $user_id_key = '';
         foreach ( $values as $value ) {
             if ( $value->field_type == 'user_id' ) {
@@ -49,19 +49,19 @@ class FrmNotification{
         //Filter and prepare the email fields
         foreach ( $filter_fields as $f ) {
             //Don't allow empty From
-            if  ( in_array($f, array('from')) && empty($notification[$f]) ) {
+            if  ( $f == 'from' && empty($notification[$f]) ) {
                 $notification[$f] = '[admin_email]';
-            //Remove brackets
-            } else if ( in_array($f, array('email_to', 'cc', 'bcc', 'reply_to', 'from')) ) {
+            } else if ( in_array($f, array( 'email_to', 'cc', 'bcc', 'reply_to', 'from')) ) {
+				//Remove brackets
                 //Add a space in case there isn't one
                 $notification[$f] = str_replace('<', ' ', $notification[$f]);
-                $notification[$f] = str_replace(array('"', '>'), '', $notification[$f]);
+                $notification[$f] = str_replace( array( '"', '>'), '', $notification[$f]);
 
                 //Switch userID shortcode to email address
                 if ( strpos($notification[$f], '[' . $user_id_field . ']' ) !== false || strpos($notification[$f], '[' . $user_id_key . ']' ) !== false ) {
                     $user_data = get_userdata($entry->metas[$user_id_field]);
                     $user_email = $user_data->user_email;
-                    $notification[$f] = str_replace( array('[' . $user_id_field . ']','[' . $user_id_key . ']') , $user_email , $notification[$f]);
+					$notification[ $f ] = str_replace( array( '[' . $user_id_field . ']', '[' . $user_id_key . ']' ), $user_email, $notification[ $f ] );
                 }
             }
 
@@ -69,9 +69,9 @@ class FrmNotification{
         }
 
         //Put recipients, cc, and bcc into an array if they aren't empty
-        $to_emails = ( ! empty( $notification['email_to'] ) ? preg_split( "/(,|;)/", $notification['email_to'] ) : '' );
-        $cc = ( ! empty( $notification['cc'] ) ? preg_split( "/(,|;)/", $notification['cc'] ) : '' );
-        $bcc = ( ! empty( $notification['bcc'] ) ? preg_split( "/(,|;)/", $notification['bcc'] ) : '' );
+		$to_emails = ( ! empty( $notification['email_to'] ) ? preg_split( '/(,|;)/', $notification['email_to'] ) : '' );
+		$cc = ( ! empty( $notification['cc'] ) ? preg_split( '/(,|;)/', $notification['cc'] ) : '' );
+		$bcc = ( ! empty( $notification['bcc'] ) ? preg_split( '/(,|;)/', $notification['bcc'] ) : '' );
 
         $to_emails = apply_filters('frm_to_email', $to_emails, array(), $form->id, compact('email_key', 'entry', 'form'));
 
@@ -91,10 +91,10 @@ class FrmNotification{
         // Add the user info if it isn't already included
         if ( $notification['inc_user_info'] && $prev_mail_body == $mail_body ) {
             $data = maybe_unserialize($entry->description);
-            $mail_body .= "\r\n\r\n" . __('User Information', 'formidable') ."\r\n";
-            $mail_body .= __('IP Address', 'formidable') . ": ". $entry->ip ."\r\n";
-            $mail_body .= __('User-Agent (Browser/OS)', 'formidable') . ": ". $data['browser']."\r\n";
-            $mail_body .= __('Referrer', 'formidable') . ": ". $data['referrer']."\r\n";
+            $mail_body .= "\r\n\r\n" . __( 'User Information', 'formidable' ) ."\r\n";
+            $mail_body .= __( 'IP Address', 'formidable' ) . ': '. $entry->ip ."\r\n";
+            $mail_body .= __( 'User-Agent (Browser/OS)', 'formidable' ) . ': '. FrmEntriesHelper::get_browser($data['browser']) ."\r\n";
+            $mail_body .= __( 'Referrer', 'formidable' ) . ': '. $data['referrer']."\r\n";
         }
         unset($prev_mail_body);
 
@@ -148,12 +148,12 @@ class FrmNotification{
         return $sent_to;
     }
 
-    function entry_created($entry_id, $form_id) {
+    public function entry_created($entry_id, $form_id) {
         _deprecated_function( __FUNCTION__, '2.0', 'FrmFormActionsController::trigger_actions("create", '. $form_id .', '. $entry_id .', "email")');
         FrmFormActionsController::trigger_actions('create', $form_id, $entry_id, 'email');
     }
 
-    function send_notification_email($to_email, $subject, $message, $from = '', $from_name = '', $plain_text = true, $attachments = array(), $reply_to = '') {
+    public function send_notification_email($to_email, $subject, $message, $from = '', $from_name = '', $plain_text = true, $attachments = array(), $reply_to = '') {
         _deprecated_function( __FUNCTION__, '2.0', 'FrmNotification::send_email' );
 
         return self::send_email(compact(
@@ -163,7 +163,109 @@ class FrmNotification{
         ));
     }
 
-    static function send_email($atts) {
+    /**
+    * Put To, BCC, CC, Reply To, and From fields in Name <test@mail.com> format
+    * Formats that should work: Name, "Name", test@mail.com, <test@mail.com>, Name <test@mail.com>,
+    * "Name" <test@mail.com>, Name test@mail.com, "Name" test@mail.com, Name<test@mail.com>, "Name"<test@mail.com>
+    * "First Last" <test@mail.com>
+    *
+    * Things that won't work: First Last (with no email entered)
+    * @since 2.0
+    * @param array $atts array of email fields, pass by reference
+    * @param $admin_email
+    */
+    private static function format_email_fields( &$atts, $admin_email ) {
+
+        // If from is empty or is set to admin_email, set it now
+        $atts['from'] = ( empty($atts['from']) || $atts['from'] == '[admin_email]' ) ? $admin_email : $atts['from'];
+
+        // Filter values in these fields
+		$filter_fields = array( 'to_email', 'bcc', 'cc', 'from', 'reply_to' );
+
+        foreach ( $filter_fields as $f ) {
+            // If empty, just skip it
+            if ( empty($atts[$f]) ) {
+                continue;
+            }
+
+            // to_email, cc, and bcc can be an array
+            if ( is_array($atts[$f]) ) {
+                foreach ( $atts[$f] as $key => $val ) {
+                    self::format_single_field( $atts, $f, $val, $key );
+                    unset( $key, $val );
+                }
+                unset($f);
+                continue;
+            }
+
+            self::format_single_field( $atts, $f, $atts[$f] );
+        }
+
+        // If reply-to isn't set, make it match the from settings
+        if ( empty( $atts['reply_to'] ) ) {
+            $atts['reply_to'] = $atts['from'];
+        }
+
+        if ( ! is_array($atts['to_email']) && '[admin_email]' == $atts['to_email'] ) {
+            $atts['to_email'] = $admin_email;
+        }
+    }
+
+    /**
+    * Format individual email fields
+    *
+    * @since 2.0
+    * @param array $atts pass by reference
+    * @param string $f (to, from, reply_to, etc)
+    * @param string $val value saved in field
+    * @param int $key if in array, this will be set
+    */
+    private static function format_single_field( &$atts, $f, $val, $key = false ) {
+        $val = trim($val);
+
+        // If just a plain email is used
+        if ( is_email($val) ) {
+            // add sender's name if not included in $from
+            if ( $f == 'from' ) {
+                $part_2 = $atts[$f];
+                $part_1  = $atts['from_name'] ? $atts['from_name'] : wp_specialchars_decode( FrmAppHelper::site_name(), ENT_QUOTES );
+            } else {
+                return;
+            }
+        } else {
+            $parts = explode(' ', $val);
+            $part_2 = end($parts);
+
+            // If inputted correcly, $part_2 should be an email
+            if ( is_email( $part_2 ) ) {
+                $part_1 = trim( str_replace( $part_2, '', $val ) );
+            } else if ( in_array( $f, array( 'from', 'reply_to' ) ) ) {
+				// In case someone just puts a name in the From or Reply To field
+                $part_1 = $part_2;
+                $part_2 = get_option('admin_email');
+            } else {
+				// In case someone just puts a name in any other email field
+                if ( false !== $key ) {
+                    unset( $atts[$f][$key] );
+                    return;
+                }
+                $atts[$f] = '';
+                return;
+            }
+        }
+
+        // Set up formatted value
+        $final_val = '"'. str_replace( '"', '', $part_1 ) . '" <'. $part_2 .'>';
+
+        // If value is an array
+        if ( false !== $key ) {
+            $atts[$f][$key] = $final_val;
+            return;
+        }
+        $atts[$f] = $final_val;
+    }
+
+    public static function send_email($atts) {
         $admin_email = get_option('admin_email');
         $defaults = array(
             'to_email'      => $admin_email,
@@ -179,64 +281,15 @@ class FrmNotification{
         );
         $atts = wp_parse_args($atts, $defaults);
 
-        //senders e-mail address
-        $atts['from'] = ( empty($atts['from']) || $atts['from'] == '[admin_email]' ) ? $admin_email : $atts['from'];
-
-        //Allow name <test@mail.com> format in To, BCC, CC, Reply To, and From fields
-        $filter_fields = array('to_email','bcc','cc','from','reply_to');
-        foreach ( $filter_fields as $f ) {
-            if ( empty($atts[$f]) ) {
-                continue;
-            }
-            if ( is_array($atts[$f]) ) {//to_email, cc, and bcc can be an array
-                foreach ( $atts[$f] as $key => $val ) {
-                    $val = trim($val);
-                    if ( is_email($val) ) {
-                        continue;
-                    } else {
-                        $parts = explode(' ', $val);
-                        $part_2 = end($parts);
-                        $part_1 = trim(str_replace($part_2, '', $val));
-                        $atts[$f][$key] = $part_1 . ' <'. $part_2 .'>';
-                        $atts[$f][$key] = str_replace('"', '', $atts[$f][$key]);
-                        unset($part_1,$part_2,$val);
-                    }
-                }
-                unset($f);
-                continue;
-            }
-            if ( is_email($atts[$f]) ) {
-                // add sender's name if not included in $from
-                if ( $f == 'from' ) {
-                    $part_2 = $atts[$f];
-                    $part_1  = ( '' == $atts['from_name'] ) ? wp_specialchars_decode( FrmAppHelper::site_name(), ENT_QUOTES ) : $atts['from_name'];
-                } else {
-                    continue;
-                }
-            } else {
-                $parts = explode(' ', $atts[$f]);
-                $part_2 = end($parts);
-                $part_1 = trim(str_replace($part_2, '', $atts[$f]));
-            }
-            $atts[$f] = $part_1 . ' <'. $part_2 .'>';
-            $atts[$f] = str_replace('"', '', $atts[$f]);
-            unset($part_1, $part_2, $f);
-        }
-
-        if ( empty($atts['reply_to']) ) {
-            $atts['reply_to'] = $atts['from'];
-        }
-
-        if ( ! is_array($atts['to_email']) && '[admin_email]' == $atts['to_email'] ) {
-            $atts['to_email'] = $admin_email;
-        }
+        // Put To, BCC, CC, Reply To, and From fields in the correct format
+        self::format_email_fields( $atts, $admin_email );
 
         $recipient      = $atts['to_email']; //recipient
         $header         = array();
         $header[]       = 'From: ' . $atts['from'];
 
         //Allow for cc and bcc arrays
-        $array_fields = array('CC' => $atts['cc'], 'BCC' => $atts['bcc']);
+        $array_fields = array( 'CC' => $atts['cc'], 'BCC' => $atts['bcc']);
         foreach ( $array_fields as $key => $a_field ) {
             if ( empty($a_field) ) {
                 continue;
@@ -261,13 +314,16 @@ class FrmNotification{
         $message        = do_shortcode($atts['message']);
 
         if ( $atts['plain_text'] ) {
-            $message    = wordwrap($message, 70, "\r\n"); //in case any lines are longer than 70 chars
+            //$message    = wordwrap($message, 70, "\r\n"); //in case any lines are longer than 70 chars
             $message    = wp_specialchars_decode(strip_tags($message), ENT_QUOTES );
+        } else {
+			// remove line breaks in HTML emails to prevent conflicts with Mandrill
+        	add_filter( 'mandrill_nl2br', 'FrmNotification::remove_mandrill_br' );
         }
 
         $header         = apply_filters('frm_email_header', $header, array(
-            'to_email' => $atts['to_email'], 'subject' => $atts['subject'])
-        );
+			'to_email' => $atts['to_email'], 'subject' => $atts['subject'],
+		) );
 
         if ( apply_filters('frm_encode_subject', 1, $atts['subject'] ) ) {
             $atts['subject'] = '=?'. $charset .'?B?'. base64_encode($atts['subject']) .'?=';
@@ -283,6 +339,9 @@ class FrmNotification{
             $sent = mail($recipient, $atts['subject'], $message, $header);
         }
 
+		// remove the filter now so other emails can still use it
+		remove_filter( 'mandrill_nl2br', 'FrmNotification::remove_mandrill_br' );
+
         do_action('frm_notification', $recipient, $atts['subject'], $message);
 
         if ( $sent ) {
@@ -296,4 +355,13 @@ class FrmNotification{
         }
     }
 
+	/**
+	 * This function should only be fired when Mandrill is sending an HTML email
+	 * This will make sure Mandrill doesn't mess with our HTML emails
+	 *
+	 * @since 2.0
+	 */
+	public static function remove_mandrill_br() {
+		return false;
+	}
 }

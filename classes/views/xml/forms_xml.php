@@ -1,16 +1,15 @@
 <?php
 
-if ( !$item_ids )
+if ( ! $item_ids ) {
     return;
+}
 
 // fetch 20 posts at a time rather than loading the entire table into memory
 while ( $next_set = array_splice( $item_ids, 0, 20 ) ) {
-$where = 'WHERE id IN (' . join( ',', $next_set ) . ')';
-$forms = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}frm_forms $where");
-unset($where);
+	$forms = FrmDb::get_results( $wpdb->prefix .'frm_forms', array( 'id' => $next_set));
 
-// Begin Loop
-foreach ( $forms as $form ) {
+	// Begin Loop
+	foreach ( $forms as $form ) {
 ?>
 	<form>
 		<id><?php echo $form->id ?></id>
@@ -24,9 +23,10 @@ foreach ( $forms as $form ) {
 		<editable><?php echo $form->editable ?></editable>
 		<options><?php echo FrmXMLHelper::cdata($form->options) ?></options>
 		<status><?php echo FrmXMLHelper::cdata($form->status) ?></status>
+        <parent_form_id><?php echo $form->parent_form_id ?></parent_form_id>
 <?php
 
-		$fields = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}frm_fields WHERE form_id=%d ORDER BY field_order", $form->id));
+        $fields = FrmDb::get_results( $wpdb->prefix .'frm_fields', array( 'form_id' => $form->id), '*', array( 'order_by' => 'field_order') );
 
 		foreach ( $fields as $field ){ ?>
 		<field>
@@ -45,7 +45,6 @@ foreach ( $forms as $form ) {
 <?php	} ?>
 	</form>
 <?php
-    unset($fields);
+    	unset( $fields );
+	}
 }
-}
-?>

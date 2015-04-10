@@ -10,7 +10,7 @@ class FrmFormAction {
 
     public $form_id;        // The ID of the form to evaluate
 	public $number = false;	// Unique ID number of the current instance.
-	public $id = false;		// Unique ID string of the current instance (id_base-number)
+	public $id = '';		// Unique ID string of the current instance (id_base-number)
 	public $updated = false;	// Set true when we update the data after a POST submit - makes sure we don't do it twice.
 
 	// Member functions that you must over-ride.
@@ -29,18 +29,19 @@ class FrmFormAction {
 		return $new_instance;
 	}
 
-	/** Echo the settings update form
+	/**
+     * Echo the settings update form
 	 *
 	 * @param array $instance Current settings
 	 */
 	public function form($instance, $args = array()) {
-		echo '<p class="no-options-widget">' . __('There are no options for this action.', 'formidable') . '</p>';
+		echo '<p class="no-options-widget">' . __( 'There are no options for this action.', 'formidable' ) . '</p>';
 		return 'noform';
 	}
 
-	/*
-	* Return an array of the default options
-	*/
+	/**
+	 * @return array of the default options
+	 */
 	public function get_defaults() {
 	    return array();
 	}
@@ -80,7 +81,7 @@ class FrmFormAction {
         $default_options = array(
             'classes'   => '',
             'active'    => true,
-            'event'     => array('create'),
+            'event'     => array( 'create'),
             'limit'     => 1,
             'force_event' => false,
             'priority'  => 20,
@@ -89,9 +90,12 @@ class FrmFormAction {
         );
 
 		$this->action_options = wp_parse_args( $action_options, $default_options );
-		$this->control_options = wp_parse_args( $control_options, array('id_base' => $this->id_base) );
+		$this->control_options = wp_parse_args( $control_options, array( 'id_base' => $this->id_base) );
 	}
 
+	/**
+	 * @param string $id_base
+	 */
 	public function FrmFormAction( $id_base, $name, $action_options = array(), $control_options = array() ) {
 		FrmFormAction::__construct( $id_base, $name, $action_options, $control_options );
 	}
@@ -185,8 +189,8 @@ class FrmFormAction {
     *
     * Since 2.0
     *
-    * @param $action array
-    * @return $post_id integer
+    * @param array $action
+    * @return integer $post_id
     */
     public function maybe_create_action( $action, $forms ) {
         if ( isset( $action['ID'] ) && is_numeric( $action['ID'] ) && $forms[$action['menu_order']] == 'updated' ) {
@@ -209,7 +213,7 @@ class FrmFormAction {
         foreach ( $action->post_content as $key => $val ) {
             if ( is_numeric($val) && isset($frm_duplicate_ids[$val]) ) {
                 $action->post_content[$key] = $frm_duplicate_ids[$val];
-            } else if ( !is_array($val) ) {
+            } else if ( ! is_array( $val ) ) {
                 $action->post_content[$key] = FrmFieldsHelper::switch_field_ids($val);
             } else if ( isset($switch[$key]) && is_array($switch[$key]) ) {
                 // loop through each value if empty
@@ -341,6 +345,9 @@ class FrmFormAction {
         // delete all styling caches
         FrmAppHelper::cache_delete_group('frm_actions');
 
+		// Remove the balanceTags filter in case WordPress is trying to validate the XHTML
+		remove_filter( 'content_save_pre', 'balanceTags', 50 );
+
 		return wp_insert_post($settings);
 	}
 
@@ -367,8 +374,8 @@ class FrmFormAction {
 
 	    add_filter( 'posts_where' , 'FrmFormActionsController::limit_by_type' );
         $query = array(
-            'post_type'     => FrmFormsController::$action_post_type,
-            'post_status'   => 'all',
+            'post_type'     => FrmFormActionsController::$action_post_type,
+            'post_status'   => 'any',
             'numberposts'   => 99,
             'order'         => 'ASC',
             'suppress_filters' => false,
@@ -384,7 +391,7 @@ class FrmFormAction {
 
         remove_filter( 'posts_where' , 'FrmFormActionsController::limit_by_type' );
 
-        if ( ! $actions ) {
+        if ( empty($actions) ) {
             return array();
         }
 
@@ -435,16 +442,15 @@ class FrmFormAction {
 
 	    $this->form_id = $form_id;
 
-	    $query = $wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_type=%s", FrmFormsController::$action_post_type);
+	    $query = array( 'post_type' => FrmFormActionsController::$action_post_type );
 	    if ( $form_id ) {
-	        $query .= $wpdb->prepare(" AND menu_order=%d", $form_id);
+	        $query['menu_order'] = $form_id;
 	    }
-
 	    if ( 'all' != $type ) {
-	        $query .= $wpdb->prepare(" AND post_excerpt=%s", $this->id_base);
+	        $query['post_excerpt'] = $this->id_base;
 	    }
 
-        $post_ids = $wpdb->get_col($query);
+        $post_ids = FrmDb::get_col( $wpdb->posts, $query, 'ID' );
 
         foreach ( $post_ids as $id ) {
             wp_delete_post($id);
@@ -459,7 +465,7 @@ class FrmFormAction {
 	    $defaults = $this->get_defaults();
 
 	    if ( ! isset($defaults['event']) ) {
-	        $defaults['event'] = array('create');
+	        $defaults['event'] = array( 'create');
 	    }
 
 	    if ( ! isset($defaults['conditions']) ) {
@@ -474,15 +480,16 @@ class FrmFormAction {
 
 	public function get_global_switch_fields() {
 	    $switch = $this->get_switch_fields();
-	    $switch['conditions'] = array('hide_field');
+	    $switch['conditions'] = array( 'hide_field');
 	    return $switch;
 	}
 
-	/*
-	* Migrate settings from form->options into new action.
-	*/
+	/**
+	 * Migrate settings from form->options into new action.
+	 */
 	public function migrate_to_2($form, $update = 'update') {
-	    $action = $this->prepare_new($form->id);
+        $action = $this->prepare_new($form->id);
+        $form->options = maybe_unserialize($form->options);
 
         // fill with existing options
         foreach ( $action->post_content as $name => $val ) {
@@ -497,7 +504,7 @@ class FrmFormAction {
         // check if action already exists
         $post_id = get_posts( array(
             'name'          => $action->post_name,
-            'post_type'     => FrmFormsController::$action_post_type,
+            'post_type'     => FrmFormActionsController::$action_post_type,
             'post_status'   => $action->post_status,
             'numberposts'   => 1,
         ) );
@@ -512,7 +519,7 @@ class FrmFormAction {
             $form->options = maybe_serialize($form->options);
 
             // update form options
-            $wpdb->update($wpdb->prefix .'frm_forms', array('options' => $form->options), array('id' => $form->id));
+            $wpdb->update($wpdb->prefix .'frm_forms', array( 'options' => $form->options), array( 'id' => $form->id));
             wp_cache_delete( $form->id, 'frm_form');
         }
 

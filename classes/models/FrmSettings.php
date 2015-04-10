@@ -6,7 +6,6 @@ class FrmSettings{
     public $mu_menu;
     public $preview_page_id;
     public $lock_keys;
-    public $track;
     public $use_html;
     public $jquery_css;
     public $accordion_js;
@@ -25,10 +24,11 @@ class FrmSettings{
     public $custom_style;
 
     public $pubkey;
+    public $privkey;
     public $re_lang;
     public $re_msg;
 
-    function __construct() {
+    public function __construct() {
         if ( ! defined('ABSPATH') ) {
             die('You are not allowed to call this page directly.');
         }
@@ -47,7 +47,7 @@ class FrmSettings{
         $this->set_default_options();
     }
 
-    function translate_settings($settings) {
+    private function translate_settings($settings) {
         if ( $settings ) { //workaround for W3 total cache conflict
             return unserialize(serialize($settings));
         }
@@ -71,34 +71,33 @@ class FrmSettings{
         return $settings;
     }
 
-    /*
-    * @return array
-    */
-    function default_options(){
+    /**
+     * @return array
+     */
+    public function default_options(){
         return array(
             'menu'      => 'Formidable',
             'mu_menu'   => 0,
             'preview_page_id' => 0,
             'lock_keys' => false,
-            'track'     => false,
             'use_html'  => true,
             'jquery_css' => false,
             'accordion_js' => false,
 
-            'success_msg' => __('Your responses were successfully submitted. Thank you!', 'formidable'),
-            'blank_msg' => __('This field cannot be blank.', 'formidable'),
-            'unique_msg' => __('This value must be unique.', 'formidable'),
-            'invalid_msg' => __('There was a problem with your submission. Errors are marked below.', 'formidable'),
-            'failed_msg' => __('We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable'),
-            'submit_value' => __('Submit', 'formidable'),
-            'login_msg' => __('You do not have permission to view this form.', 'formidable'),
-            'admin_permission' => __('You do not have permission to do that', 'formidable'),
+            'success_msg' => __( 'Your responses were successfully submitted. Thank you!', 'formidable' ),
+            'blank_msg' => __( 'This field cannot be blank.', 'formidable' ),
+            'unique_msg' => __( 'This value must be unique.', 'formidable' ),
+            'invalid_msg' => __( 'There was a problem with your submission. Errors are marked below.', 'formidable' ),
+            'failed_msg' => __( 'We\'re sorry. It looks like you\'ve  already submitted that.', 'formidable' ),
+            'submit_value' => __( 'Submit', 'formidable' ),
+            'login_msg' => __( 'You do not have permission to view this form.', 'formidable' ),
+            'admin_permission' => __( 'You do not have permission to do that', 'formidable' ),
 
             'email_to' => '[admin_email]',
         );
     }
 
-    function set_default_options(){
+    private function set_default_options(){
         $this->fill_recaptcha_settings();
 
         if ( ! isset($this->load_style) ) {
@@ -127,7 +126,7 @@ class FrmSettings{
         }
     }
 
-    function fill_with_defaults($params = array()) {
+    public function fill_with_defaults($params = array()) {
         $settings = $this->default_options();
 
         foreach ( $settings as $setting => $default ) {
@@ -153,7 +152,7 @@ class FrmSettings{
         }
 
         if ( ! isset($this->re_msg) || empty($this->re_msg) ) {
-            $this->re_msg = __('The reCAPTCHA was not entered correctly', 'formidable');
+            $this->re_msg = __( 'The reCAPTCHA was not entered correctly', 'formidable' );
         }
 
         if ( ! isset($this->privkey) ) {
@@ -165,12 +164,12 @@ class FrmSettings{
         }
     }
 
-    function validate($params,$errors){
+    public function validate( $params, $errors ) {
         $errors = apply_filters( 'frm_validate_settings', $errors, $params );
         return $errors;
     }
 
-    function update($params){
+    public function update($params){
         $this->fill_with_defaults($params);
         $this->update_settings($params);
 
@@ -195,7 +194,6 @@ class FrmSettings{
         $this->load_style = $params['frm_load_style'];
         $this->preview_page_id = (int) $params['frm-preview-page-id'];
         $this->lock_keys = isset($params['frm_lock_keys']) ? $params['frm_lock_keys'] : 0;
-        $this->track = isset($params['frm_track']) ? $params['frm_track'] : 0;
 
         $this->use_html = isset($params['frm_use_html']) ? $params['frm_use_html'] : 0;
         //$this->custom_style = isset($params['frm_custom_style']) ? $params['frm_custom_style'] : 0;
@@ -210,7 +208,7 @@ class FrmSettings{
         $frm_roles = FrmAppHelper::frm_capabilities();
         $roles = get_editable_roles();
         foreach ( $frm_roles as $frm_role => $frm_role_description ) {
-            $this->$frm_role = (array) ( isset($params[$frm_role]) ? $params[$frm_role] : 'administrator' );
+            $this->$frm_role = (array) ( isset( $params[ $frm_role ] ) ? $params[ $frm_role ] : 'administrator' );
 
             if ( count($this->$frm_role) === 1 ) {
                 $set_role = reset($this->$frm_role);
@@ -238,7 +236,7 @@ class FrmSettings{
 		}
     }
 
-    function store(){
+    public function store(){
         // Save the posted value in the database
 
         update_option('frm_options', $this);

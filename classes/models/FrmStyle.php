@@ -1,14 +1,17 @@
 <?php
 class FrmStyle{
     public $number = false;	// Unique ID number of the current instance.
-    public $id = false; // the id of the post
+	public $id = 0; // the id of the post
 
-    function __construct($id = false) {
+	/**
+	 * @param int|string $id The id of the stylsheet or 'default'
+	 */
+	public function __construct( $id = 0 ) {
         $this->id = $id;
     }
 
-    function get_new() {
-        $this->id = false;
+    public function get_new() {
+		$this->id = 0;
 
         $max_slug_value = pow(36, 6);
         $min_slug_value = 37; // we want to have at least 2 characters in the slug
@@ -17,7 +20,7 @@ class FrmStyle{
         $style = array(
             'post_type'     => FrmStylesController::$post_type,
             'ID'            => '',
-            'post_title'    => __('New Style', 'formidable'),
+            'post_title'    => __( 'New Style', 'formidable' ),
             'post_name'     => $key,
             'post_content'  => $this->get_defaults(),
             'menu_order'    => '',
@@ -27,7 +30,7 @@ class FrmStyle{
         return (object) $style;
     }
 
-    function save($settings) {
+    public function save($settings) {
         $settings['post_content'] = FrmAppHelper::prepare_and_encode( $settings['post_content'] );
 
 	    if ( empty($settings['ID']) ) {
@@ -40,7 +43,7 @@ class FrmStyle{
 		return wp_insert_post($settings);
     }
 
-    function duplicate($id) {
+    public function duplicate($id) {
         // duplicating is a pro feature
     }
 
@@ -70,11 +73,11 @@ class FrmStyle{
  			    continue;
  			}
 
- 			$new_instance['post_title'] = $_POST['frm_style_setting']['post_title'];
+ 			$new_instance['post_title'] = sanitize_text_field( $_POST['frm_style_setting']['post_title'] );
  			$new_instance['post_content'] = $_POST['frm_style_setting']['post_content'];
  			$new_instance['post_type']  = FrmStylesController::$post_type;
             $new_instance['post_status']  = 'publish';
-            $new_instance['menu_order']  = isset($_POST['frm_style_setting']['menu_order']) ? $_POST['frm_style_setting']['menu_order'] : 0;
+            $new_instance['menu_order']  = isset($_POST['frm_style_setting']['menu_order']) ? (int) $_POST['frm_style_setting']['menu_order'] : 0;
 
             if ( empty($id) ) {
                 $new_instance['post_name'] = $new_instance['post_title'];
@@ -83,10 +86,10 @@ class FrmStyle{
             $default_settings = $this->get_defaults();
 
             foreach ( $default_settings as $setting => $default ) {
-                if ( strpos($setting, 'color') !== false || in_array($setting, array('error_bg', 'error_border', 'error_text')) ) {
+                if ( strpos($setting, 'color') !== false || in_array($setting, array( 'error_bg', 'error_border', 'error_text')) ) {
                     //if is a color
                     $new_instance['post_content'][$setting] = str_replace('#', '', $new_instance['post_content'][$setting]);
-                } else if ( in_array($setting, array('submit_style', 'important_style', 'auto_width')) && ! isset($new_instance['post_content'][$setting]) ) {
+                } else if ( in_array($setting, array( 'submit_style', 'important_style', 'auto_width')) && ! isset($new_instance['post_content'][$setting]) ) {
                     $new_instance['post_content'][$setting] = 0;
                 }
             }
@@ -102,6 +105,9 @@ class FrmStyle{
  		return $action_ids;
  	}
 
+    /**
+     * Create static css file
+     */
     public function save_settings($styles) {
         $filename = FrmAppHelper::plugin_path() .'/css/custom_theme.css.php';
 
@@ -111,46 +117,52 @@ class FrmStyle{
 
         $defaults = $this->get_defaults();
         $uploads = wp_upload_dir();
-        $target_path = $uploads['basedir'];
-
-        // create static css file
-        wp_mkdir_p($target_path);
-
-        $target_path .= "/formidable";
-        wp_mkdir_p($target_path);
-
-        if ( ! file_exists($target_path .'/index.php') ) {
-            // create index.php in uploads/formidable folder
-            if ( $fp = fopen($target_path .'/index.php', 'w') ) {
-                $index = "<?php\n// Silence is golden.\n?>";
-                fwrite($fp, $index);
-                fclose($fp);
-                unset($index);
-            }
-            unset($fp);
-        }
-
-        $target_path .= "/css";
-        wp_mkdir_p($target_path);
+        $target_path = $uploads['basedir'] .'/formidable';
+        $needed_dirs = array( $target_path, $target_path .'/css' );
+        $dirs_exist = true;
 
         $saving = true;
-        $css = '/* '. __('WARNING: Any changes made to this file will be lost when your Formidable settings are updated', 'formidable') .' */'. "\n";
+        $css = '/* '. __( 'WARNING: Any changes made to this file will be lost when your Formidable settings are updated', 'formidable' ) .' */'. "\n";
 
         ob_start();
         $frm_style = $this;
         include($filename);
-        $css .= preg_replace('/\/\*(.|\s)*?\*\//', '', str_replace(array("\r\n", "\r", "\n", "\t", "    "), '', ob_get_contents()));
+		$css .= preg_replace( '/\/\*(.|\s)*?\*\//', '', str_replace( array( "\r\n", "\r", "\n", "\t", '    ' ), '', ob_get_contents() ) );
         ob_end_clean();
 
-        $css_file = $target_path .'/formidablepro.css';
-        if ( $fp = fopen($css_file, 'w') ) {
-            fwrite($fp, $css);
-            fclose($fp);
+        $access_type = get_filesystem_method();
+        if ( $access_type === 'direct' ) {
+        	$creds = request_filesystem_credentials( site_url() .'/wp-admin/', '', false, false, array() );
 
-            $stat = @stat( dirname( $css_file ) );
-            $perms = $stat['mode'] & 0007777;
-            //$perms = $perms & 0000666;
-            @chmod( $css_file, $perms );
+        	// initialize the API
+        	if ( ! WP_Filesystem($creds) ) {
+        		// any problems and we exit
+        		$dirs_exist = false;
+			}
+
+        	global $wp_filesystem;
+
+            if ( $dirs_exist ) {
+            	$chmod_dir = defined('FS_CHMOD_DIR') ? FS_CHMOD_DIR : ( fileperms( ABSPATH ) & 0777 | 0755 );
+            	$chmod_file = defined('FS_CHMOD_FILE') ? FS_CHMOD_FILE : ( fileperms( ABSPATH . 'index.php' ) & 0777 | 0644 );
+
+                // Create the directories if need be:
+            	foreach ( $needed_dirs as $_dir ) {
+                    // Only check to see if the Dir exists upon creation failure. Less I/O this way.
+            		if ( ! $wp_filesystem->mkdir( $_dir, $chmod_dir ) && ! $wp_filesystem->is_dir( $_dir ) ) {
+            			$dirs_exist = false;
+                    }
+            	}
+
+                $index_path = $target_path .'/index.php';
+                $wp_filesystem->put_contents( $index_path, "<?php\n// Silence is golden.\n?>", $chmod_file );
+
+                // only write the file if the folders exist
+                if ( $dirs_exist ) {
+                    $css_file = $target_path .'/css/formidablepro.css';
+                    $wp_filesystem->put_contents( $css_file, $css, $chmod_file );
+                }
+            }
         }
 
         update_option('frmpro_css', $css);
@@ -159,17 +171,17 @@ class FrmStyle{
         set_transient('frmpro_css', $css);
 	}
 
-	function destroy($id) {
+	public function destroy($id) {
         return wp_delete_post($id);
     }
 
-    function get_one() {
+    public function get_one() {
         if ( 'default' == $this->id ) {
             $style = $this->get_default_style();
             if ( $style ) {
                 $this->id = $style->ID;
             } else {
-                $this->id = false;
+                $this->id = 0;
             }
             return $style;
         }
@@ -191,28 +203,35 @@ class FrmStyle{
         return $style;
     }
 
-    function get_all() {
+    public function get_all( $orderby = 'title', $order = 'ASC', $limit = 99 ) {
         $post_atts = array(
-            'post_type'     => FrmStylesController::$post_type,
-            'post_status'   => 'publish',
-            'numberposts'   => 99,
-            'order_by'      => 'title',
-            'order'         => 'ASC',
+			'post_type'   => FrmStylesController::$post_type,
+			'post_status' => 'publish',
+			'numberposts' => $limit,
+			'orderby'     => $orderby,
+			'order'       => $order,
         );
 
         $temp_styles = FrmAppHelper::check_cache(serialize($post_atts), 'frm_styles', $post_atts, 'get_posts');
 
         if ( empty($temp_styles) ) {
-            // create a new style if there are none
-     		$new = $this->get_new();
-     		$new->post_title = $new->post_name = __('Formidable Style', 'formidable');
-     		$new->menu_order = 1;
-     		$new = $this->save( (array) $new);
-     		$this->update('default');
+            global $wpdb;
+            // make sure there wasn't a conflict with the query
+            $query = $wpdb->prepare('SELECT * FROM '. $wpdb->posts .' WHERE post_type=%s AND post_status=%s ORDER BY post_title ASC LIMIT 99', FrmStylesController::$post_type, 'publish');
+            $temp_styles = FrmAppHelper::check_cache('frm_backup_style_check', 'frm_styles', $query, 'get_results');
 
-            $post_atts['include'] = $new;
+            if ( empty($temp_styles) ) {
+                // create a new style if there are none
+         		$new = $this->get_new();
+         		$new->post_title = $new->post_name = __( 'Formidable Style', 'formidable' );
+         		$new->menu_order = 1;
+         		$new = $this->save( (array) $new);
+         		$this->update('default');
 
-            $temp_styles = get_posts( $post_atts );
+                $post_atts['include'] = $new;
+
+                $temp_styles = get_posts( $post_atts );
+            }
         }
 
         $default_values = $this->get_defaults();
@@ -248,9 +267,9 @@ class FrmStyle{
         return $styles;
     }
 
-    function get_default_style($styles = null) {
+    public function get_default_style($styles = null) {
         if ( ! isset($styles) ) {
-            $styles = $this->get_all();
+			$styles = $this->get_all( 'menu_order', 'DESC', 1 );
         }
 
         foreach ( $styles as $style ) {
@@ -260,7 +279,7 @@ class FrmStyle{
         }
     }
 
-	function override_defaults($settings) {
+	public function override_defaults($settings) {
 	    if ( ! is_array($settings) ) {
 	        return $settings;
 	    }
@@ -291,7 +310,7 @@ class FrmStyle{
 	    return $settings;
 	}
 
-    function get_defaults(){
+    public function get_defaults(){
         return array(
             'theme_css'         => 'ui-lightness',
             'theme_name'        => 'UI Lightness',
@@ -318,7 +337,7 @@ class FrmStyle{
             'width'             => '150px',
             'required_color'    => 'B94A48',
             'required_weight'   => 'bold',
-            'label_padding'     =>  '0 0 3px 0',
+            'label_padding'     => '0 0 3px 0',
 
             'description_font_size' => '12px',
             'description_color' => '666666',

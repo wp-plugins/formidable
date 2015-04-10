@@ -1,6 +1,6 @@
 <div id="form_show_entry_page" class="wrap">
     <div class="frmicon icon32"><br/></div>
-    <h2><?php _e('View Entry', 'formidable') ?>
+    <h2><?php _e( 'View Entry', 'formidable' ) ?>
         <?php do_action('frm_entry_inside_h2', $entry->form_id); ?>
     </h2>
 
@@ -11,39 +11,30 @@
             <div id="post-body-content">
                 <?php FrmAppController::get_form_nav($entry->form_id, true); ?>
                 <div class="postbox">
-                    <h3 class="hndle"><span><?php _e('Entry', 'formidable') ?></span></h3>
+                    <h3 class="hndle"><span><?php _e( 'Entry', 'formidable' ) ?></span></h3>
                     <div class="inside">
                         <table class="form-table"><tbody>
                         <?php
                         $first_h3 = 'frm_first_h3';
-                        $embedded_field_id = 0;
                         foreach ( $fields as $field ) {
-                            if ( in_array($field->type, array('divider', 'end_divider')) ) {
-                                $embedded_field_id = 0;
-                            }
-
-                            if ( in_array($field->type, array('captcha', 'html', 'end_divider')) ) {
+							if ( in_array( $field->type, array( 'captcha', 'html', 'end_divider', 'form' ) ) ) {
                                 continue;
                             }
 
-                            if ( in_array($field->type, array('form', 'divider')) && isset($field->field_options['form_select']) && ! empty($field->field_options['form_select']) ) {
-                                $embedded_field_id = $field->type == 'form' ? '' : 'form';
-                                $embedded_field_id .= $field->field_options['form_select'];
-                            }
-
-                            if ( in_array($field->type, array('break', 'divider') ) ) {
+                            if ( in_array($field->type, array( 'break', 'divider' ) ) ) {
                             ?>
                         </tbody></table>
-                        <br/><h3 class="<?php echo $first_h3 ?>"><?php echo $field->name ?></h3>
+                        <br/><h3 class="<?php echo esc_attr( $first_h3 ) ?>"><?php echo esc_html( $field->name ) ?></h3>
                         <table class="form-table"><tbody>
                         <?php
                                 $first_h3 = '';
                             } else {
                         ?>
                         <tr>
-                            <th scope="row"><?php echo $field->name ?>:</th>
+                            <th scope="row"><?php echo esc_html( $field->name ) ?>:</th>
                             <td>
                             <?php
+							$embedded_field_id = ( $entry->form_id != $field->form_id ) ? 'form' . $field->form_id : 0;
                             $atts = array(
                                 'type' => $field->type, 'post_id' => $entry->post_id,
                                 'show_filename' => true, 'show_icon' => true, 'entry_id' => $entry->id,
@@ -63,8 +54,8 @@
                         ?>
 
                         <?php if ( $entry->parent_item_id ) { ?>
-                        <tr><th><?php _e('Parent Entry ID', 'formidable') ?>:</th>
-                            <td><?php echo $entry->parent_item_id ?>
+                        <tr><th><?php _e( 'Parent Entry ID', 'formidable' ) ?>:</th>
+                            <td><?php echo (int) $entry->parent_item_id ?>
                         </td></tr>
                         <?php } ?>
                         </tbody></table>

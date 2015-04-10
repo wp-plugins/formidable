@@ -11,19 +11,18 @@ if ( isset($_GET['frm_style_setting']) || isset($_GET['flat']) ) {
     $auto_width = isset($auto_width) ? $auto_width : 0;
     $submit_style = isset($submit_style) ? $submit_style : 0;
 
-    if ( isset($_GET['style_name']) && !empty($_GET['style_name']) ) {
-        $style_class = $_GET['style_name'] .'.with_frm_style';
+    if ( isset( $_GET['style_name'] ) && ! empty( $_GET['style_name'] ) ) {
+        $style_class = sanitize_text_field( $_GET['style_name'] ) .'.with_frm_style';
     } else {
         $style_class = 'with_frm_style';
     }
-
 } else {
     $style_class = 'frm_style_'. $style->post_name .'.with_frm_style';
     extract($style->post_content);
 }
 
 $important = empty($important_style) ? '' : ' !important';
-$label_margin = (int) $width + 15;
+$label_margin = (int) $width + 10;
 
 $minus_icons = FrmStylesHelper::minus_icons();
 $arrow_icons = FrmStylesHelper::arrow_icons();
@@ -120,6 +119,11 @@ if ( ! isset($collapse_icon) ) {
     content:"\e<?php echo isset($minus_icons[$repeat_icon]) ? $minus_icons[$repeat_icon]['+'] : $minus_icons[1]['+'] ?>";
 }
 
+.<?php echo $style_class ?> .frm_icon_font.frm_minus_icon:before,
+.<?php echo $style_class ?> .frm_icon_font.frm_plus_icon:before{
+	color:#<?php echo $submit_text_color . $important ?>;
+}
+
 .<?php echo $style_class ?> .frm_trigger.active .frm_icon_font.frm_arrow_icon:before{
     content:"\e<?php echo isset($arrow_icons[$collapse_icon]) ? $arrow_icons[$collapse_icon]['-'] : $arrow_icons[1]['-'] ?>";
 }
@@ -193,7 +197,23 @@ if ( ! isset($collapse_icon) ) {
 
 .<?php echo $style_class ?> .frm_left_container label.frm_primary_label{
     display:inline<?php echo $important ?>;
-    width:<?php echo $width ?>;
+	width:<?php echo $width . $important ?>;
+	max-width:25%<?php echo $important ?>;
+	margin-right:10px<?php echo $important ?>;
+}
+
+.<?php echo $style_class ?> .frm_form_field.frm_left_container input,
+.<?php echo $style_class ?> .frm_form_field.frm_left_container select,
+.<?php echo $style_class ?> .frm_form_field.frm_left_container textarea,
+.<?php echo $style_class ?> .frm_form_field.frm_right_container input,
+.<?php echo $style_class ?> .frm_form_field.frm_right_container select,
+.<?php echo $style_class ?> .frm_form_field.frm_right_container textarea{
+	max-width:68%<?php echo $important ?>;
+}
+
+.<?php echo $style_class ?> .frm_right_container label.frm_primary_label{
+	max-width:25%<?php echo $important ?>;
+	margin-left:10px<?php echo $important ?>;
 }
 
 .<?php echo $style_class ?> .frm_right_container label.frm_primary_label,
@@ -209,6 +229,9 @@ if ( ! isset($collapse_icon) ) {
 
 .<?php echo $style_class ?> .frm_scale label{
     font-weight:<?php echo $check_weight . $important ?>;
+    font-family:<?php echo stripslashes($font) . $important ?>;
+    font-size:<?php echo $check_font_size . $important ?>;
+    color:#<?php echo $check_label_color . $important ?>;
 }
 
 .<?php echo $style_class ?> .frm_required{
@@ -290,10 +313,18 @@ if ( ! isset($collapse_icon) ) {
 
 .<?php echo $style_class ?> input[type=file]{
     color:#<?php echo $text_color . $important ?>;
-    border:none;
     padding:0px;
-    font-family:<?php echo stripslashes($font) ?>;
-    font-size:<?php echo $field_font_size ?>;
+    font-family:<?php echo stripslashes($font) . $important ?>;
+    font-size:<?php echo $field_font_size . $important ?>;
+}
+
+.<?php echo $style_class ?> input[type=file].frm_transparent{
+    color:transparent<?php echo $important ?>;
+}
+
+.<?php echo $style_class ?> .frm_file_names, .<?php echo $style_class ?> .frm_uploaded_files .frm_remove_link{
+	font-family:<?php echo stripslashes($font) . $important ?>;
+	font-size:<?php echo $field_font_size . $important ?>;
 }
 
 .<?php echo $style_class ?> .frm_default,
@@ -309,9 +340,18 @@ if ( ! isset($collapse_icon) ) {
     max-width:100%;
 }
 
-.<?php echo $style_class ?> input.frm_other_input{
+.<?php echo $style_class ?> input.frm_other_input:not(.frm_other_full){
     width:auto <?php echo $important; ?>;
     margin-left:5px <?php echo $important ?>;
+}
+
+.<?php echo $style_class ?> .frm_full input.frm_other_input:not(.frm_other_full){
+    margin-left:0 <?php echo $important ?>;
+    margin-top:8px;
+}
+
+.<?php echo $style_class ?> .frm_other_container select:not([multiple="multiple"]){
+    width:auto;
 }
 
 .<?php echo $style_class ?> .wp-editor-wrap{
@@ -346,7 +386,7 @@ if ( ! isset($collapse_icon) ) {
 }
 
 
-.<?php echo $style_class ?> .form-field input:focus,
+.<?php echo $style_class ?> .form-field input:not([type=file]):focus,
 .<?php echo $style_class ?> select:focus,
 .<?php echo $style_class ?> textarea:focus,
 .<?php echo $style_class ?> .frm_focus_field input[type=text],
@@ -360,10 +400,11 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .chosen-container-active .chosen-choices{
     background-color:#<?php echo $bg_color_active . $important ?>;
     border-color:#<?php echo $border_color_active . $important ?>;
-    box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(<?php echo FrmProFormsHelper::hex2rgb($border_color_active) ?>, 0.6);
+    box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(<?php echo FrmStylesHelper::hex2rgb($border_color_active) ?>, 0.6);
 }
 
-<?php if ( ! $submit_style ) { ?>
+<?php
+if ( ! $submit_style ) { ?>
 .<?php echo $style_class ?> input[type=submit],
 .<?php echo $style_class ?> .frm_submit input[type=button],
 .frm_form_submit_style,
@@ -372,9 +413,12 @@ if ( ! isset($collapse_icon) ) {
     font-family:<?php echo stripslashes($font) ?>;
     font-size:<?php echo $submit_font_size; ?>;
     height:<?php echo $submit_height . $important ?>;
-    line-height:normal <?php echo $important ?>;
+    line-height:normal<?php echo $important ?>;
     text-align:center;
-    background:#<?php echo $submit_bg_color; if ( ! empty($submit_bg_img) ) echo ' url('. $submit_bg_img .')'; ?>;
+    background:#<?php echo $submit_bg_color;
+	if ( ! empty($submit_bg_img) ) {
+		echo ' url('. $submit_bg_img .')';
+	} ?>;
     border-width:<?php echo $submit_border_width ?>;
     border-color:#<?php echo $submit_border_color . $important ?>;
     border-style:solid;
@@ -400,7 +444,7 @@ if ( ! isset($collapse_icon) ) {
 }
 
 <?php
-    if ( empty($submit_bg_img) ) {
+	if ( empty( $submit_bg_img ) ) {
 ?>.<?php echo $style_class ?> input[type=submit]:hover,
 .<?php echo $style_class ?> .frm_submit input[type=button]:hover,
 .<?php echo $style_class ?>.frm_login_form input[type=submit]:hover{
@@ -411,11 +455,6 @@ if ( ! isset($collapse_icon) ) {
 
 .<?php echo $style_class ?>.frm_center_submit .frm_submit .frm_ajax_loading{
     margin-bottom:<?php echo $submit_margin ?>;
-}
-
-.<?php echo $style_class ?>.frm_inline_form .frm_submit input[type=submit]{
-    margin-top:<?php echo ( str_replace( 'px', '', $font_size ) + 9 ) . 'px' . $important ?>;
-    margin-bottom:<?php echo ( str_replace( 'px', '', $font_size ) + 9 ) . 'px' . $important ?>;
 }
 
 .<?php echo $style_class ?> input[type=submit]:focus,
@@ -430,7 +469,6 @@ if ( ! isset($collapse_icon) ) {
 }
 <?php
     }
-
 }
 ?>
 
@@ -627,7 +665,6 @@ if ( ! isset($collapse_icon) ) {
 }
 .<?php echo $style_class ?> .frm_button .frm_icon_font:before{
     font-size:<?php echo $submit_font_size . $important ?>;
-    vertical-align:bottom;
 }
 
 /* RTL Grids */
@@ -637,11 +674,11 @@ if ( ! isset($collapse_icon) ) {
     float:right;
 }
 
+.<?php echo $style_class ?> .frm_form_field.frm_half,
 .<?php echo $style_class ?> .frm_form_field.frm_third,
 .<?php echo $style_class ?> .frm_form_field.frm_fourth,
 .<?php echo $style_class ?> .frm_form_field.frm_fifth,
 .<?php echo $style_class ?> .frm_form_field.frm_inline,
-
 .<?php echo $style_class ?> .frm_form_field.frm_left_half,
 .<?php echo $style_class ?> .frm_form_field.frm_left_third,
 .<?php echo $style_class ?> .frm_form_field.frm_left_two_thirds,
@@ -651,6 +688,7 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .frm_form_field.frm_first_half,
 .<?php echo $style_class ?> .frm_form_field.frm_first_third,
 .<?php echo $style_class ?> .frm_form_field.frm_first_two_thirds,
+.<?php echo $style_class ?> .frm_form_field.frm_two_thirds.frm_first,
 .<?php echo $style_class ?> .frm_form_field.frm_first_fourth,
 .<?php echo $style_class ?> .frm_form_field.frm_first_fifth,
 .<?php echo $style_class ?> .frm_form_field.frm_first_inline{
@@ -668,12 +706,14 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .frm_form_field.frm_last_two_thirds,
 .<?php echo $style_class ?> .frm_form_field.frm_last_fourth,
 .<?php echo $style_class ?> .frm_form_field.frm_last_fifth,
-.<?php echo $style_class ?> .frm_form_field.frm_last_inline{
+.<?php echo $style_class ?> .frm_form_field.frm_last_inline,
+.<?php echo $style_class ?> .frm_form_field.frm_last{
     float:left;
 }
 
 .<?php echo $style_class ?> .frm_form_field.frm_left_half,
-.<?php echo $style_class ?> .frm_form_field.frm_first_half{
+.<?php echo $style_class ?> .frm_form_field.frm_first_half,
+.<?php echo $style_class ?> .frm_form_field.frm_half.frm_first{
     margin-left:4%;
     margin-right:0
 }
@@ -681,7 +721,8 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .frm_form_field.frm_left_half.frm_left_container .frm_primary_label,
 .<?php echo $style_class ?> .frm_form_field.frm_right_half.frm_left_container .frm_primary_label,
 .<?php echo $style_class ?> .frm_form_field.frm_first_half.frm_left_container .frm_primary_label,
-.<?php echo $style_class ?> .frm_form_field.frm_last_half.frm_left_container .frm_primary_label{
+.<?php echo $style_class ?> .frm_form_field.frm_last_half.frm_left_container .frm_primary_label,
+.<?php echo $style_class ?> .frm_form_field.frm_half.frm_last.frm_left_container .frm_primary_label{
     padding-left:10px;
     padding-right:0;
 }
@@ -689,7 +730,8 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .frm_form_field.frm_left_half.frm_right_container .frm_primary_label,
 .<?php echo $style_class ?> .frm_form_field.frm_right_half.frm_right_container .frm_primary_label,
 .<?php echo $style_class ?> .frm_form_field.frm_first_half.frm_right_container .frm_primary_label,
-.<?php echo $style_class ?> .frm_form_field.frm_last_half.frm_right_container .frm_primary_label{
+.<?php echo $style_class ?> .frm_form_field.frm_last_half.frm_right_container .frm_primary_label,
+.<?php echo $style_class ?> .frm_form_field.frm_half.frm_right_container .frm_primary_label{
     padding-right:10px;
     padding-left:0;
 }
@@ -698,7 +740,8 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .frm_form_field.frm_first_third,
 .<?php echo $style_class ?> .frm_form_field.frm_third,
 .<?php echo $style_class ?> .frm_form_field.frm_left_two_thirds,
-.<?php echo $style_class ?> .frm_form_field.frm_first_two_thirds{
+.<?php echo $style_class ?> .frm_form_field.frm_first_two_thirds,
+.<?php echo $style_class ?> .frm_form_field.frm_two_thirds{
     margin-right:0;
     margin-left:5%;
 }
@@ -722,6 +765,10 @@ if ( ! isset($collapse_icon) ) {
 .<?php echo $style_class ?> .frm_form_field.frm_inline{
     margin-right:0;
     margin-left:4%;
+}
+
+.frm_form_field.frm_last{
+    margin-left:0;
 }
 
 .<?php echo $style_class ?> .frm_grid .frm_primary_label,

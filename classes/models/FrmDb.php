@@ -1,12 +1,12 @@
 <?php
 
-class FrmDb{
+class FrmDb {
     var $fields;
     var $forms;
     var $entries;
     var $entry_metas;
 
-    function __construct(){
+    public function __construct() {
         if ( ! defined('ABSPATH') ) {
             die('You are not allowed to call this page directly.');
         }
@@ -18,7 +18,7 @@ class FrmDb{
         $this->entry_metas    = $wpdb->prefix . 'frm_item_metas';
     }
 
-    function upgrade($old_db_version=false){
+    public function upgrade( $old_db_version = false ) {
         global $wpdb;
         //$frm_db_version is the version of the database we're moving to
         $frm_db_version = FrmAppHelper::$db_version;
@@ -47,7 +47,7 @@ class FrmDb{
         $frm_style->update( 'default' );
     }
 
-    function collation() {
+    public function collation() {
         global $wpdb;
         if ( ! $wpdb->has_cap( 'collation' ) ) {
             return '';
@@ -72,7 +72,7 @@ class FrmDb{
         /* Create/Upgrade Fields Table */
         $sql[] = 'CREATE TABLE '. $this->fields .' (
                 id int(11) NOT NULL auto_increment,
-                field_key varchar(255) default NULL,
+				field_key varchar(100) default NULL,
                 name text default NULL,
                 description text default NULL,
                 type text default NULL,
@@ -91,10 +91,10 @@ class FrmDb{
         /* Create/Upgrade Forms Table */
         $sql[] = 'CREATE TABLE '. $this->forms .' (
                 id int(11) NOT NULL auto_increment,
-                form_key varchar(255) default NULL,
+				form_key varchar(100) default NULL,
                 name varchar(255) default NULL,
                 description text default NULL,
-                parent_form_id int(11) default NULL,
+                parent_form_id int(11) default 0,
                 logged_in tinyint(1) default NULL,
                 editable tinyint(1) default NULL,
                 is_template tinyint(1) default 0,
@@ -109,14 +109,14 @@ class FrmDb{
         /* Create/Upgrade Items Table */
         $sql[] = 'CREATE TABLE '. $this->entries .' (
                 id int(11) NOT NULL auto_increment,
-                item_key varchar(255) default NULL,
+				item_key varchar(100) default NULL,
                 name varchar(255) default NULL,
                 description text default NULL,
                 ip text default NULL,
                 form_id int(11) default NULL,
                 post_id int(11) default NULL,
                 user_id int(11) default NULL,
-                parent_item_id int(11) default NULL,
+                parent_item_id int(11) default 0,
                 is_draft tinyint(1) default 0,
                 updated_by int(11) default NULL,
                 created_at datetime NOT NULL,
@@ -147,97 +147,299 @@ class FrmDb{
         }
     }
 
+    /**
+     * @param integer $frm_db_version
+     */
     private function migrate_data($frm_db_version, $old_db_version) {
-        if ( $frm_db_version >= 4 && $old_db_version < 4 ) {
-            $this->migrate_to_4();
-        }
-
-        if ( $frm_db_version >= 6 && $old_db_version < 6 ) {
-            $this->migrate_to_6();
-        }
-
-        if ( $frm_db_version >= 11 && $old_db_version < 11 ) {
-            $this->migrate_to_11();
-        }
-
-        if ( $frm_db_version >= 16 && $old_db_version < 16 ) {
-            $this->migrate_to_16();
-        }
-
-        if ( $frm_db_version >= 17 && $old_db_version < 17 ) {
-            $this->migrate_to_17();
+        $migrations = array(4, 6, 11, 16, 17);
+        foreach ( $migrations as $migration ) {
+            if ( $frm_db_version >= $migration && $old_db_version < $migration ) {
+                $function_name = 'migrate_to_'. $migration;
+                $this->$function_name();
+            }
         }
     }
 
-    function get_count($table, $args=array()){
+    /**
+     * Change array into format $wpdb->prepare can use
+     */
+    public static function get_where_clause_and_values( &$args, $starts_with = ' WHERE ' ) {
+        if ( empty($args) ) {
+			// add an arg to prevent prepare from failing
+			$args = array( 'where' => $starts_with . '1=%d', 'values' => array( 1 ) );
+			return;
+        }
+
+		$where = '';
+		$values = array();
+
+		if ( is_array( $args ) ) {
+			$base_where = $starts_with;
+			self::parse_where_from_array( $args, $base_where, $where, $values );
+		}
+
+		$args = compact( 'where', 'values' );
+    }
+
+    /**
+     * @param string $base_where
+     * @param string $where
+     */
+    public static function parse_where_from_array( $args, $base_where, &$where, &$values ) {
+        $condition = ' AND';
+        if ( isset( $args['or'] ) ) {
+            $condition = ' OR';
+            unset( $args['or'] );
+        }
+
+        foreach ( $args as $key => $value ) {
+            $where .= empty( $where ) ? $base_where : $condition;
+            $array_inc_null = ( ! is_numeric( $key ) && is_array( $value ) && in_array( null, $value ) );
+            if ( is_numeric( $key ) || $array_inc_null ) {
+                $where .= ' ( ';
+                $nested_where = '';
+                if ( $array_inc_null ) {
+                    foreach ( $value as $val ) {
+                        self::parse_where_from_array( array( $key => $val, 'or' => 1 ), '', $nested_where, $values );
+                    }
+                } else {
+                    self::parse_where_from_array( $value, '', $nested_where, $values );
+                }
+                $where .= $nested_where;
+                $where .= ' ) ';
+            } else {
+                self::interpret_array_to_sql( $key, $value, $where, $values );
+            }
+        }
+    }
+
+    /**
+     * @param string $key
+     * @param string $where
+     */
+    private static function interpret_array_to_sql( $key, $value, &$where, &$values ) {
+        if ( strpos( $key, 'created_at' ) !== false || strpos( $key, 'updated_at' ) !== false  ) {
+            $k = explode(' ', $key);
+            $where .= ' DATE_FORMAT(' . reset( $k ) . ', %s) ' . str_replace( reset( $k ), '', $key );
+            $values[] = '%Y-%m-%d %H:%i:%s';
+        } else {
+            $where .= ' '. $key;
+        }
+
+		$lowercase_key = explode( ' ', strtolower( $key ) );
+		$lowercase_key = end( $lowercase_key );
+        if ( is_array( $value ) ) {
+            // translate array of values to "in"
+			if ( strpos( $lowercase_key, 'like' ) !== false ) {
+				$where = rtrim( $where, $key );
+				$where .= '(';
+				$start = true;
+				foreach ( $value as $v ) {
+					if ( ! $start ) {
+						$where .= ' OR ';
+					}
+					$start = false;
+					$where .= $key . ' %s';
+					$values[] = '%' . FrmAppHelper::esc_like( $v ) . '%';
+				}
+				$where .= ')';
+			} else {
+            	$where .= ' in ('. FrmAppHelper::prepare_array_values( $value, '%s' ) .')';
+				$values = array_merge( $values, $value );
+			}
+        } else if ( strpos( $lowercase_key, 'like' ) !== false ) {
+			/**
+			 * Allow string to start or end with the value
+			 * If the key is like% then skip the first % for starts with
+			 * If the key is %like then skip the last % for ends with
+			 */
+			$start = $end = '%';
+			if ( $lowercase_key == 'like%' ) {
+				$start = '';
+				$where = rtrim( $where, '%' );
+			} else if ( $lowercase_key == '%like' ) {
+				$end = '';
+				$where = rtrim( rtrim( $where, '%like' ), '%LIKE' );
+				$where .= 'like';
+			}
+
+			$where .= ' %s';
+			$values[] = $start . FrmAppHelper::esc_like( $value ) . $end;
+
+        } else if ( $value === null ) {
+            $where .= ' IS NULL';
+        } else {
+			// allow a - to prevent = from being added
+			if ( substr( $key, -1 ) == '-' ) {
+				$where = rtrim( $where, '-' );
+			} else {
+				$where .= '=';
+			}
+
+            $where .= is_numeric( $value ) ? ( strpos( $value, '.' ) !== false ? '%f' : '%d' ) : '%s';
+            $values[] = $value;
+        }
+    }
+
+    /**
+     * @param string $table
+     */
+    public static function get_count( $table, $where = array(), $args = array() ) {
+        $count = self::get_var( $table, $where, 'COUNT(*)', $args );
+        return $count;
+    }
+
+    public static function get_var( $table, $where = array(), $field = 'id', $args = array(), $limit = '', $type = 'var' ) {
+        $group = '';
+        self::get_group_and_table_name( $table, $group );
+		self::convert_options_to_array( $args, '', $limit );
+
+		$query = 'SELECT ' . $field . ' FROM ' . $table;
+		if ( is_array( $where ) || empty( $where ) ) {
+			// only separate into array values and query string if is array
+        	self::get_where_clause_and_values( $where );
+			global $wpdb;
+			$query = $wpdb->prepare( $query . $where['where'] . ' ' . implode( ' ', $args ), $where['values'] );
+		} else {
+			/**
+			 * Allow the $where to be prepared before we recieve it here.
+			 * This is a fallback for reverse compatability, but is not recommended
+			 */
+			_deprecated_argument( 'where', '2.0', __( 'Use the query in an array format so it can be properly prepared.', 'formidable' ) );
+			$query .= $where . ' ' . implode( ' ', $args );
+		}
+
+        $cache_key = str_replace( array( ' ', ',' ), '_', trim( implode('_', FrmAppHelper::array_flatten( $where ) ) . implode( '_', $args ) . $field .'_'. $type, ' WHERE' ) );
+        $results = FrmAppHelper::check_cache( $cache_key, $group, $query, 'get_'. $type );
+        return $results;
+    }
+
+    /**
+     * @param string $table
+     * @param array $where
+     */
+    public static function get_col( $table, $where = array(), $field = 'id', $args = array(), $limit = '' ) {
+        return self::get_var( $table, $where, $field, $args, $limit, 'col' );
+    }
+
+    /**
+     * @since 2.0
+     * @param string $table
+     */
+    public static function get_row( $table, $where = array(), $fields = '*', $args = array() ) {
+        $args['limit'] = 1;
+        return self::get_var( $table, $where, $fields, $args, '', 'row' );
+    }
+
+    /**
+     * @param string $table
+     */
+    public static function get_one_record( $table, $args = array(), $fields = '*', $order_by = '' ) {
+        _deprecated_function( __FUNCTION__, '2.0', 'FrmDb::get_row' );
+        return self::get_var( $table, $args, $fields, array( 'order_by' => $order_by, 'limit' => 1), '', 'row' );
+    }
+
+    public static function get_records( $table, $args = array(), $order_by = '', $limit = '', $fields = '*' ) {
+        _deprecated_function( __FUNCTION__, '2.0', 'FrmDb::get_results' );
+        return self::get_results( $table, $args, $fields, compact('order_by', 'limit') );
+    }
+
+    /**
+     * Prepare a key/value array before DB call
+     * @since 2.0
+     * @param string $table
+     */
+    public static function get_results( $table, $where = array(), $fields = '*', $args = array() ) {
+        return self::get_var( $table, $where, $fields, $args, '', 'results' );
+    }
+
+	/**
+	 * Check for like, not like, in, not in, =, !=, >, <, <=, >=
+	 * Return a value to append to the where array key
+	 *
+	 * @return string
+	 */
+	public static function append_where_is( $where_is ) {
+		$switch_to = array(
+			'='		=> '',
+			'!=' 	=> '!',
+			'<='	=> '<',
+			'>='	=> '>',
+			'like'	=> 'like',
+			'not like' => 'not like',
+			'in'	=> '',
+			'not in' => 'not',
+			'like%'	=> 'like%',
+			'%like'	=> '%like',
+		);
+
+		$where_is = strtolower( $where_is );
+		if ( isset( $switch_to[ $where_is ] ) ) {
+			return ' ' . $switch_to[ $where_is ];
+		}
+
+		// > and < need a little more work since we don't want them switched to >= and <=
+		if ( $where_is == '>' || $where_is == '<' ) {
+			return ' ' . $where_is . '-'; // the - indicates that the = should not be added later
+		}
+
+		// fallback to = if the query is none of these
+		return '';
+	}
+
+    /**
+     * Get 'frm_forms' from wp_frm_forms or a longer table param that includes a join
+     * Also add the wpdb->prefix to the table if it's missing
+     *
+     * @param string $table
+     * @param string $group
+     */
+    private static function get_group_and_table_name( &$table, &$group ) {
         global $wpdb;
-        $args = FrmAppHelper::get_where_clause_and_values( $args );
 
-        $query = "SELECT COUNT(*) FROM {$table}". $args['where'];
-        $query = $wpdb->prepare($query, $args['values']);
-        return $wpdb->get_var($query);
-    }
+        $table_parts = explode(' ', $table);
+        $group = reset($table_parts);
+        $group = str_replace( $wpdb->prefix, '', $group );
 
-    function get_where_clause_and_values( $args ){
-        _deprecated_function( __FUNCTION__, '2.0', 'FrmAppHelper::get_where_clause_and_values');
-        return FrmAppHelper::get_where_clause_and_values( $args );
-    }
-
-    function get_var($table, $args=array(), $field='id', $order_by=''){
-        global $wpdb;
-
-        $args = FrmAppHelper::get_where_clause_and_values( $args );
-        if(!empty($order_by))
-            $order_by = " ORDER BY {$order_by}";
-
-        $query = $wpdb->prepare("SELECT {$field} FROM ". $table . $args['where'] . $order_by ." LIMIT 1", $args['values']);
-        return $wpdb->get_var($query);
-    }
-
-    function get_col($table, $args=array(), $field='id', $order_by=''){
-        global $wpdb;
-
-        $args = FrmAppHelper::get_where_clause_and_values( $args );
-        if(!empty($order_by))
-            $order_by = " ORDER BY {$order_by}";
-
-        $query = $wpdb->prepare("SELECT {$field} FROM ". $table . $args['where'] . $order_by, $args['values']);
-        return $wpdb->get_col($query);
-    }
-
-    function get_one_record($table, $args=array(), $fields='*', $order_by=''){
-        global $wpdb;
-
-        $args = FrmAppHelper::get_where_clause_and_values( $args );
-
-        if ( ! empty($order_by) ) {
-            $order_by = ' ORDER BY '. $order_by;
+        if ( $group == $table ) {
+            $table = $wpdb->prefix . $table;
         }
 
-        $query = 'SELECT '. $fields .' FROM '. $table . $args['where'] . $order_by .' LIMIT 1';
-        $query = $wpdb->prepare($query, $args['values']);
-        return $wpdb->get_row($query);
+		// switch to singular group name
+		$group = rtrim( $group, 's' );
     }
 
-    function get_records($table, $args=array(), $order_by='', $limit='', $fields='*'){
-        global $wpdb;
-
-        $args = FrmAppHelper::get_where_clause_and_values( $args );
-
-        if ( !empty($order_by) && strpos($order_by, ' ORDER BY ') === false ) {
-            $order_by = ' ORDER BY '. $order_by;
+    private static function convert_options_to_array( &$args, $order_by = '', $limit = '' ) {
+        if ( ! is_array($args) ) {
+            $args = array( 'order_by' => $args);
         }
 
-        if ( !empty($limit) && strpos($order_by, ' LIMIT ') === false ) {
-            $limit = ' LIMIT '. $limit;
+        if ( ! empty( $order_by ) ) {
+            $args['order_by'] = $order_by;
         }
 
-        $query = 'SELECT '. $fields .' FROM '. $table . $args['where'] . $order_by . $limit;
-        $query = $wpdb->prepare($query, $args['values']);
-        return $wpdb->get_results($query);
+        if ( ! empty( $limit ) ) {
+            $args['limit'] = $limit;
+        }
+
+        $temp_args = $args;
+        foreach ( $temp_args as $k => $v ) {
+            if ( $v == '' ) {
+                unset($args[$k]);
+                continue;
+            }
+
+            if ( $k == 'limit' ) {
+                 $args[$k] = FrmAppHelper::esc_limit( $v );
+            }
+            $db_name = strtoupper( str_replace( '_', ' ', $k ) );
+            if ( strpos( $v, $db_name ) === false ) {
+                $args[$k] = $db_name .' '. $v;
+            }
+        }
     }
 
-    function uninstall(){
+    public function uninstall() {
         if ( !current_user_can('administrator') ) {
             $frm_settings = FrmAppHelper::get_settings();
             wp_die($frm_settings->admin_permission);
@@ -245,10 +447,10 @@ class FrmDb{
 
         global $wpdb, $wp_roles;
 
-        $wpdb->query('DROP TABLE IF EXISTS '. $this->fields);
-        $wpdb->query('DROP TABLE IF EXISTS '. $this->forms);
-        $wpdb->query('DROP TABLE IF EXISTS '. $this->entries);
-        $wpdb->query('DROP TABLE IF EXISTS '. $this->entry_metas);
+        $wpdb->query( 'DROP TABLE IF EXISTS '. $this->fields );
+        $wpdb->query( 'DROP TABLE IF EXISTS '. $this->forms );
+        $wpdb->query( 'DROP TABLE IF EXISTS '. $this->entries );
+        $wpdb->query( 'DROP TABLE IF EXISTS '. $this->entry_metas );
 
         delete_option('frm_options');
         delete_option('frm_db_version');
@@ -265,17 +467,31 @@ class FrmDb{
 		}
 		unset($roles, $frm_roles);
 
+		// delete actions, views, and styles
+		$post_ids = $wpdb->get_col( $wpdb->prepare( 'SELECT ID FROM ' . $wpdb->posts .' WHERE post_type in (%s, %s, %s)', FrmFormActionsController::$action_post_type, FrmStylesController::$post_type, 'frm_display' ) );
+		foreach( $post_ids as $post_id ) {
+			// Delete's each post.
+			wp_delete_post( $post_id, true );
+		}
+		unset( $post_ids );
+
         do_action('frm_after_uninstall');
         return true;
     }
 
-    /*
-    * Change field size from character to pixel -- Multiply by 7.08
-    */
+    /**
+     * Change field size from character to pixel -- Multiply by 9
+     */
     private function migrate_to_17() {
         global $wpdb;
+		$pixel_conversion = 9;
 
-        $fields = $wpdb->get_results("SELECT id, field_options FROM $this->fields WHERE type in ('textarea', 'text', 'number', 'email', 'url', 'rte', 'date', 'phone', 'password', 'image', 'tag', 'file') AND field_options LIKE '%s:4:\"size\";%' AND field_options NOT LIKE '%s:4:\"size\";s:0:%'");
+        // Get query arguments
+		$field_types = array( 'textarea', 'text', 'number', 'email', 'url', 'rte', 'date', 'phone', 'password', 'image', 'tag', 'file' );
+		$query = array( 'type' => $field_types, 'field_options like' => 's:4:"size";', 'field_options not like' => 's:4:"size";s:0:' );
+
+        // Get results
+		$fields = FrmDb::get_results( $this->fields, $query, 'id, field_options' );
 
         $updated = 0;
         foreach ( $fields as $f ) {
@@ -284,7 +500,7 @@ class FrmDb{
                 continue;
             }
 
-            $f->field_options['size'] = round(7.08 * (int) $f->field_options['size']);
+			$f->field_options['size'] = round( $pixel_conversion * (int) $f->field_options['size'] );
             $f->field_options['size'] .= 'px';
             $u = FrmField::update( $f->id, array( 'field_options' => $f->field_options ) );
             if ( $u ) {
@@ -292,17 +508,35 @@ class FrmDb{
             }
             unset($f);
         }
+
+        // Change the characters in widgets to pixels
+        $widgets = get_option('widget_frm_show_form');
+        if ( empty($widgets) ) {
+            return;
+        }
+
+        $widgets = maybe_unserialize($widgets);
+        foreach ( $widgets as $k => $widget ) {
+            if ( ! is_array($widget) || ! isset($widget['size']) ) {
+                continue;
+            }
+			$size = round( $pixel_conversion * (int) $widget['size'] );
+            $size .= 'px';
+            $widgets[$k]['size'] = $size;
+        }
+        update_option('widget_frm_show_form', $widgets);
     }
 
-    /*
-    * Migrate post and email notification settings into actions
-    */
+    /**
+     * Migrate post and email notification settings into actions
+     */
     private function migrate_to_16() {
         global $wpdb;
 
-        $forms = $wpdb->get_results('SELECT id, options FROM '. $this->forms);
+        $forms = FrmDb::get_results( $this->forms, array(), 'id, options, is_template, default_template' );
 
-        /* Old email settings format:
+        /**
+        * Old email settings format:
         * email_to: Email or field id
         * also_email_to: array of fields ids
         * reply_to: Email, field id, 'custom'
@@ -332,232 +566,26 @@ class FrmDb{
         *
         */
 
-        $post_type = FrmFormsController::$action_post_type;
         foreach ( $forms as $form ) {
-            $form->options = maybe_unserialize($form->options);
+			if ( $form->is_template && $form->default_template ) {
+				// don't migrate the default templates since the email will be added anyway
+				continue;
+			}
 
-            self::migrate_to_16_post_to_action($form, $post_type);
+            // Format form options
+            $form_options = maybe_unserialize($form->options);
 
-            if ( ! isset($form->options['notification']) && isset($form->options['email_to']) && ! empty($form->options['email_to']) ) {
-                // add old settings into notification array
-                $form->options['notification'] = array(0 => $form->options);
-            } else if ( isset($form->options['notification']['email_to']) ) {
-                // make sure it's in the correct format
-                $form->options['notification'] = array(0 => $form->options['notification']);
-            }
-
-            $notifications = array();
-            if ( isset($form->options['notification']) && is_array($form->options['notification']) ) {
-                foreach ( $form->options['notification'] as $email_key => $notification ) {
-
-                    // format the email recipient data
-                    if ( isset($notification['email_to']) ) {
-                        $email_to = preg_split( "/ (,|;) /", $notification['email_to']);
-                    } else {
-                        $email_to = array();
-                    }
-
-                    if ( isset($notification['also_email_to']) ) {
-                        $email_fields = (array) $notification['also_email_to'];
-                        $email_to = array_merge($email_fields, $email_to);
-                        unset($email_fields);
-                    }
-
-                    foreach ( $email_to as $key => $email_field ) {
-
-                        if ( is_numeric($email_field) ) {
-                            $email_to[$key] = '['. $email_field .']';
-                        }
-
-                        if ( strpos( $email_field, '|') ) {
-                            $email_opt = explode('|', $email_field);
-                            if ( isset($email_opt[0]) ) {
-                                $email_to[$key] = '['. $email_opt[0] .' show='. $email_opt[1] .']';
-                            }
-                            unset($email_opt);
-                        }
-                    }
-                    $email_to = implode(', ', $email_to);
-
-                    // format the reply to email
-                    if ( isset($notification['reply_to']) ) {
-                        $reply_to = $notification['reply_to'];
-                        if ( 'custom' == $notification['reply_to'] ) {
-                            $reply_to = $notification['cust_reply_to'];
-                        } else if ( is_numeric($reply_to) && ! empty($reply_to) ) {
-                            $reply_to = '['. $reply_to .']';
-                        }
-                    }
-
-                    // format the reply to name
-                    if ( isset($notification['reply_to_name']) ) {
-                        $reply_to_name = $notification['reply_to_name'];
-                        if ( 'custom' == $notification['reply_to_name'] ) {
-                            $reply_to_name = $notification['cust_reply_to_name'];
-                        } else if ( !is_numeric($reply_to_name) && ! empty($reply_to_name) ) {
-                            $reply_to_name = '['. $reply_to_name .']';
-                        }
-                    }
-
-                    $event = array('create');
-                    if ( isset($notification['update_email']) && 1 == $notification['update_email'] ) {
-                        $event[] = 'update';
-                    } else if ( isset($notification['update_email']) && 2 == $notification['update_email'] ) {
-                        $event = array('update');
-                    }
-
-                    $new_notification = array(
-                        'post_content'  => array(
-                            'email_message' => isset($notification['email_message']) ? $notification['email_message'] : '',
-                            'email_subject' => isset($notification['email_subject']) ? $notification['email_subject'] : '',
-                            'email_to'      => $email_to,
-                            'plain_text'    => isset($notification['plain_text']) ? $notification['plain_text'] : 0,
-                            'inc_user_info' => isset($notification['inc_user_info']) ? $notification['inc_user_info'] : 0,
-                            'event'         => $event,
-                            'conditions'    => isset($notification['conditions']) ? $notification['conditions'] : '',
-                        ),
-                        'post_name'         => $form->id .'_email_'. $email_key,
-                    );
-
-                    if ( isset($notification['twilio']) && $notification['twilio'] ) {
-                        $new_notification['post_content'] = $notification['twilio'];
-                    }
-
-                    if ( !empty($reply_to) ) {
-                       $new_notification['post_content']['reply_to'] = $reply_to;
-                    }
-
-                    if ( !empty($reply_to) || !empty($reply_to_name) ) {
-                        $new_notification['post_content']['from'] = ( empty($reply_to_name) ? '[sitename]' : $reply_to_name ) .' <'. ( empty($reply_to) ? '[admin_email]' : $reply_to ) .'>';
-                    }
-
-                    $notifications[] = $new_notification;
-                }
-            }
-
-            if ( isset($form->options['auto_responder']) && $form->options['auto_responder'] && isset($form->options['ar_email_message']) && $form->options['ar_email_message'] ) {
-                // migrate autoresponder
-
-                $email_field = isset($form->options['ar_email_to']) ? $form->options['ar_email_to'] : 0;
-                if ( strpos($email_field, '|') ) {
-                    // data from entries field
-                    $email_field = explode('|', $email_field);
-                    if ( isset($email_field[1]) ) {
-                        $email_field = $email_field[1];
-                    }
-                }
-                if ( is_numeric($email_field) && ! empty($email_field) ) {
-                    $email_field = '['. $email_field .']';
-                }
-
-                $notification = $form->options;
-                $new_notification2 = array(
-                    'post_content'  => array(
-                        'email_message' => $notification['ar_email_message'],
-                        'email_subject' => isset($notification['ar_email_subject']) ? $notification['ar_email_subject'] : '',
-                        'email_to'      => $email_field,
-                        'plain_text'    => isset($notification['ar_plain_text']) ? $notification['ar_plain_text'] : 0,
-                        'inc_user_info' => 0,
-                    ),
-                    'post_name'     => $form->id .'_email_'. (isset($new_notification) ? '1' : '0'),
-                );
-
-
-                $reply_to = isset($notification['ar_reply_to']) ? $notification['ar_reply_to'] : '';
-                $reply_to_name = isset($notification['ar_reply_to_name']) ? $notification['ar_reply_to_name'] : '';
-
-                if ( !empty($reply_to) ) {
-                   $new_notification2['post_content']['reply_to'] = $reply_to;
-                }
-
-                if ( !empty($reply_to) || !empty($reply_to_name) ) {
-                    $new_notification2['post_content']['from'] = ( empty($reply_to_name) ? '[sitename]' : $reply_to_name ) .' <'. ( empty($reply_to) ? '[admin_email]' : $reply_to ) .'>';
-                }
-
-                $notifications[] = $new_notification2;
-                unset($new_notification2);
-            }
-
-            if (  empty($notifications) ) {
-                continue;
-            }
-
-            foreach ( $notifications as $new_notification ) {
-                $new_notification['post_type']      = $post_type;
-                $new_notification['post_excerpt']   = 'email';
-                $new_notification['post_title']     = __('Email Notification', 'formidable');
-                $new_notification['menu_order']     = $form->id;
-                $new_notification['post_status']    = 'publish';
-                $new_notification['post_content']   = FrmAppHelper::prepare_and_encode( $new_notification['post_content'] );
-
-                $exists = get_posts( array(
-                    'name'          => $new_notification['post_name'],
-                    'post_type'     => $new_notification['post_type'],
-                    'post_status'   => $new_notification['post_status'],
-                    'numberposts'   => 1,
-                ) );
-
-                if ( empty($exists) ) {
-                    wp_insert_post($new_notification);
-                }
-                unset($new_notification);
-            }
-
-            unset($form, $new_notification2);
-        }
-    }
-
-    /*
-    * Migrate post settings to form action
-    */
-    private function migrate_to_16_post_to_action( $form, $post_type ) {
-        if ( ! isset($form->options['create_post']) || ! $form->options['create_post'] ) {
-            return;
-        }
-
-        $new_action = array(
-            'post_type'     => $post_type,
-            'post_excerpt'  => 'wppost',
-            'post_title'    => __('Create Posts', 'formidable'),
-            'menu_order'    => $form->id,
-            'post_status'   => 'publish',
-            'post_content'  => array(),
-            'post_name'     => $form->id .'_wppost_1',
-        );
-
-        $post_settings = array(
-            'post_type', 'post_category', 'post_content',
-            'post_excerpt', 'post_title', 'post_name', 'post_date',
-            'post_status', 'post_custom_fields', 'post_password'
-        );
-
-        foreach ( $post_settings as $post_setting ) {
-            if ( isset($form->options[$post_setting]) ) {
-                $new_action['post_content'][$post_setting] = $form->options[$post_setting];
-            }
-            unset($post_setting);
-        }
-
-        $new_action['event'] = array('create', 'update');
-        $new_action['post_content'] = json_encode($new_action['post_content']);
-
-        $exists = get_posts( array(
-            'name'          => $new_action['post_name'],
-            'post_type'     => $new_action['post_type'],
-            'post_status'   => $new_action['post_status'],
-            'numberposts'   => 1,
-        ) );
-
-        if ( ! $exists ) {
-            wp_insert_post($new_action);
+            // Migrate settings to actions
+            FrmXMLHelper::migrate_form_settings_to_actions( $form_options, $form->id );
         }
     }
 
     private function migrate_to_11() {
         global $wpdb;
 
-        $forms = $wpdb->get_results("SELECT id, options FROM $this->forms");
-        $sending = __('Sending', 'formidable');
+        $forms = FrmDb::get_results( $this->forms, array(), 'id, options');
+
+        $sending = __( 'Sending', 'formidable' );
         $img = FrmAppHelper::plugin_url() .'/images/ajax_loader.gif';
         $old_default_html = <<<DEFAULT_HTML
 <div class="frm_submit">
@@ -570,17 +598,18 @@ DEFAULT_HTML;
 
         $new_default_html = FrmFormsHelper::get_default_html('submit');
         $draft_link = FrmFormsHelper::get_draft_link();
-        foreach($forms as $form){
+		foreach ( $forms as $form ) {
             $form->options = maybe_unserialize($form->options);
-            if(!isset($form->options['submit_html']) or empty($form->options['submit_html']))
+            if ( ! isset($form->options['submit_html']) || empty($form->options['submit_html']) ) {
                 continue;
+            }
 
             if ( $form->options['submit_html'] != $new_default_html && $form->options['submit_html'] == $old_default_html ) {
                 $form->options['submit_html'] = $new_default_html;
-                $wpdb->update($this->forms, array('options' => serialize($form->options)), array( 'id' => $form->id ));
-            }else if(!strpos($form->options['submit_html'], 'save_draft')){
+                $wpdb->update($this->forms, array( 'options' => serialize($form->options)), array( 'id' => $form->id ));
+			} else if ( ! strpos( $form->options['submit_html'], 'save_draft' ) ) {
                 $form->options['submit_html'] = preg_replace('~\<\/div\>(?!.*\<\/div\>)~', $draft_link ."\r\n</div>", $form->options['submit_html']);
-                $wpdb->update($this->forms, array('options' => serialize($form->options)), array( 'id' => $form->id ));
+                $wpdb->update($this->forms, array( 'options' => serialize($form->options)), array( 'id' => $form->id ));
             }
             unset($form);
         }
@@ -590,7 +619,8 @@ DEFAULT_HTML;
     private function migrate_to_6() {
         global $wpdb;
 
-        $fields = $wpdb->get_results("SELECT id, field_options FROM $this->fields WHERE type not in ('form', 'hidden', 'user_id', '". implode("','", FrmFieldsHelper::no_save_fields()) ."')");
+        $no_save = array_merge( FrmFieldsHelper::no_save_fields(), array( 'form', 'hidden', 'user_id' ) );
+        $fields = FrmDb::get_results( $this->fields, array( 'type NOT' => $no_save), 'id, field_options' );
 
         $default_html = <<<DEFAULT_HTML
 <div id="frm_field_[id]_container" class="form-field [required_class] [error_class]">
@@ -615,9 +645,9 @@ DEFAULT_HTML;
         $new_default_html = FrmFieldsHelper::get_default_html('text');
         foreach ( $fields as $field ) {
             $field->field_options = maybe_unserialize($field->field_options);
-            if ( !isset($field->field_options['custom_html']) || empty($field->field_options['custom_html']) || $field->field_options['custom_html'] == $default_html || $field->field_options['custom_html'] == $old_default_html ) {
+            if ( ! isset( $field->field_options['custom_html'] ) || empty( $field->field_options['custom_html'] ) || $field->field_options['custom_html'] == $default_html || $field->field_options['custom_html'] == $old_default_html ) {
                 $field->field_options['custom_html'] = $new_default_html;
-                $wpdb->update($this->fields, array('field_options' => maybe_serialize($field->field_options)), array( 'id' => $field->id ));
+                $wpdb->update($this->fields, array( 'field_options' => maybe_serialize($field->field_options)), array( 'id' => $field->id ));
             }
             unset($field);
         }
@@ -626,9 +656,9 @@ DEFAULT_HTML;
 
     private function migrate_to_4() {
         global $wpdb;
-        $user_ids = FrmEntryMeta::getAll(array('fi.type' => 'user_id'));
+		$user_ids = FrmEntryMeta::getAll( array( 'fi.type' => 'user_id' ) );
         foreach ( $user_ids as $user_id ) {
-            $wpdb->update( $this->entries, array('user_id' => $user_id->meta_value), array('id' => $user_id->item_id) );
+            $wpdb->update( $this->entries, array( 'user_id' => $user_id->meta_value), array( 'id' => $user_id->item_id) );
         }
     }
 }
