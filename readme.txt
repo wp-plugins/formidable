@@ -30,7 +30,7 @@ Build WordPress forms the fast and simple way with a simple drag-and-drop interf
 * Insert your forms on a page, post, or widget using a shortcode [formidable id=x]
 * Support for bugs. We want it to be perfect!
 
-= [Pro Features](http://formidablepro.com/ "Pro Features") =
+= Pro Features =
 * Access even more field types: Section headings (repeatable in 2.0), page breaks, file upload, rich text, number, phone number, date, time, scale, dynamic fields populated from other forms, hidden field, user ID field, password, HTML, and tags
 * Conditionally send your email notifications based on values in your form
 * Create multiple styling templates and assign them to any of your forms, and add instant Bootstrap styling
