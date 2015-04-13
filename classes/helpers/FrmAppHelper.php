@@ -4,13 +4,13 @@ if ( ! defined('ABSPATH') ) {
 }
 
 class FrmAppHelper {
-    public static $db_version = 21; //version of the database we are moving to
+    public static $db_version = 22; //version of the database we are moving to
     public static $pro_db_version = 27;
 
     /**
      * @since 2.0
      */
-    public static $plug_version = '2.0';
+    public static $plug_version = '2.0.01';
 
     /**
      * @since 1.07.02
@@ -442,7 +442,7 @@ class FrmAppHelper {
     }
 
     public static function get_pages() {
-		return get_posts( array( 'post_type' => 'page', 'post_status' => array( 'publish', 'private' ), 'numberposts' => 999, 'orderby' => 'title', 'order' => 'ASC' ) );
+		return get_posts( array( 'post_type' => 'page', 'post_status' => array( 'publish', 'private' ), 'numberposts' => -1, 'orderby' => 'title', 'order' => 'ASC' ) );
     }
 
     public static function wp_pages_dropdown( $field_name, $page_id, $truncate = false ) {

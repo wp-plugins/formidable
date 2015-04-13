@@ -89,6 +89,21 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Form FAQs")
 
 == Changelog ==
+= 2.0.01 =
+* Break transients into chunks for large forms ( > 200 fields )
+* Remove the upgrade link and perform the upgrade automatically
+* Allow upgrades to be done automatically in WordPress multisite with the 'Upgrade Network' option
+* Updated translations
+* Only add one line in the email headers for cc and bcc
+* Added frm_include_meta_keys hook for including the previously included meta values referenced by field key
+* Delete transients with uninstall
+* Make sure the legend stays hidden after opening form in a popup
+* Pro: Fixed issue with losing conditional logic on fields loaded with ajax on the form builder page
+* Pro: Fixed the auto field reordering when adding end sections to old forms
+* Pro: Fixed the daily entries graph on the reports page
+* Pro: Allow the post author to be overridden with hooks
+* Pro: Fixed the [get-param] shortcode for reverse compatibility
+
 = 2.0 =
 * Move visual form styler to free version
 * Added multiple emails to free version
@@ -107,6 +122,7 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 * Reduce duplicate entry check to 1 minute
 * Remove a bunch of upgrade messages in the lite version
 * Reduce size of indexed db columns for utf8mb4 in WordPress 4.2
+* Fixed a SQL vulnerability. Thanks @KacperSzurek for finding it!
 * Pro: Added multiple form styling templates, more styling options, and updated the default styling
 * Pro: Added repeatable fields and embedded forms
 * Pro: Created form actions and consolidated notifications and add-ons
