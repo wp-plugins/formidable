@@ -4,7 +4,7 @@ Donate link: http://formidablepro.com/donate
 Tags: admin, AJAX, captcha, contact, contact form, database, email, feedback, form, forms, javascript, jquery, page, plugin, poll, Post, spam, survey, template, widget, wpmu, form builder
 Requires at least: 3.3.3
 Tested up to: 4.2
-Stable tag: 2.0.02
+Stable tag: 2.0.03
 
 Beautiful forms in 60 seconds. The WordPress form builder that enables you to create forms with a simple drag-and-drop interface and in-place editing.
 
@@ -89,6 +89,20 @@ A. Try clearing your browser cache. As plugin modifications are made, frequent j
 [See more FAQs](http://formidablepro.com/formidable-faqs/ "Formidable Form FAQs")
 
 == Changelog ==
+= 2.0.03 =
+* Use frm_clear instead of clear to minimize conflicts
+* Add js fallback for database update on sites without CURL
+* Fix issues with emails migrating to actions in php 5.3, and t showing in some emails after updating settings
+* Pro: Add frm_date_format filter
+* Pro: If a comma separated list of dates is sent for formatting, explode it before formatting
+* Pro: Increase the backtrack limit when needed when replacing shortcodes in the view content if server has the limit below default
+* Pro: Fix issue causing csv export error
+* Pro: Fix the issue causing new posts to not be linked to a view if a field is selected for the post content
+* Pro: Fix issue some users are having with blank date fields
+* Pro: Fix ending collapsible sections at the end of a section instead of waiting for the next section
+* Pro: Fix firing calculations on page load when there are multiple calculations
+* Pro: Don't allow theme to affect the font size of stars
+
 = 2.0.02 =
 * Make sure frm_to_email hook is reverse compatible
 * Fix php example in the shortcode examples
